@@ -6,17 +6,10 @@ Algunos notebooks de las clases de Introducción al lenguaje Python orientado a 
 Programa
 ==========
 
-Autor
+Autor:   Juan Fiol
 
-:   Juan Fiol
+Version:   2017
 
-Version
-
-:   \$Revision: 1\$
-
-Copyright
-
-:   Libre
 
 Clase 1: Introducción, Instalación y ejemplos básicos de Python
 ---------------------------------------------------------------
