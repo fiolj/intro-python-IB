@@ -3,12 +3,38 @@
 Algunos notebooks de las clases de Introducción al lenguaje Python orientado a Ingenierías y Física
 
 
+
+**Docente: Juan Fiol**
+** Versión: 2017**
+
+
+Licencia
+--------
+
+[![Licencia Creative
+Commons](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)Esta obra está bajo una [Licencia Creative Commons
+Atribución-CompartirIgual 4.0
+Internacional](http://creativecommons.org/licenses/by-sa/4.0/).
+
+
+Bibliografía
+--------------
+
+Se ha logrado constituir una gran comunidad en torno a Python, y en particular a las aplicaciones científicas en python, por lo que existe mucha información disponible. En la preparación de estas clases se leyó/tomó inspiración y se copió/adaptó material de las siguientes fuentes:
+
+* La [documentación](https://docs.python.org/3/) oficial de Python 
+* El [Tutorial de Python](https://docs.python.org/3/tutorial/), también [en español](http://docs.python.org.ar/tutorial/3/)
+* [Documentación de Numpy](http://docs.scipy.org/doc/numpy/user/)
+* [Documentación de Scipy](https://docs.scipy.org/doc/scipy/reference/)
+* [Documentación de Matplotlib](http://matplotlib.org), en particular la [Galería](http://matplotlib.org/gallery.html)
+* [Introduction to Python for Science](http://www.physics.nyu.edu/pine/pymanual/html/pymanMaster.html)
+* El curso de [Python científico](https://github.com/mgaitan/curso-python-cientifico)
+* Las clases de Scipy [Scipy Lectures](http://scipy-lectures.org)
+* [Scipy Cookbook](http://scipy-cookbook.readthedocs.io/index.html)
+
+
 Programa
 ==========
-
-Autor:   Juan Fiol
-
-Version:   2017
 
 
 Clase 1: Introducción, Instalación y ejemplos básicos de Python
@@ -56,3 +82,5 @@ Clase 3: Conceptos básicos: Tipos y Control de flujo
     > -   Loops e iteraciones
 
 -   Ejercicios
+
+
