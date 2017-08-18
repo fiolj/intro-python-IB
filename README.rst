@@ -114,3 +114,19 @@ Clase 3: `Conceptos básicos: Tipos y Control de flujo`
    * Loops e iteraciones  
 
 * Ejercicios 
+
+
+Clase 4: `Control de flujo, funciones`
+---------------------------------------------------------
+
+* Más información sobre tipos y control de flujo
+   * Loops e iteraciones sobre listas
+   * Loops e iteraciones sobre diccionarios
+
+* Funciones
+   * Definición de funciones
+   * Funciones con argumentos mandatorios
+   * Número variable de argumentos 
+
+* Ejercicios 
+  
