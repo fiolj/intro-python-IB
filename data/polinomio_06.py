@@ -79,7 +79,7 @@ if __name__ == '__main__':
 
   print('Nombre Apellido')
 
-  P1 = Polinomio([1, 2.1, 3, 1.])   # 1 + 2.1x + 3 x^2 + x^4
+  P1 = Polinomio([1, 2.1, 3, 1.])   # 1 + 2.1x + 3 x^2 + x^3
   P2 = Polinomio([0, 1, 0, -1, -2])  # x - x^3 - 2x^4
 
   print(P1.get_coeficientes())
