@@ -130,3 +130,50 @@ Clase 4: `Control de flujo, funciones`
 
 * Ejercicios 
   
+Clase 5: `Módulos y funciones`
+------------------------------
+
+* Detalles sobre argumentos de funciones
+* Uso de módulos
+* Manejo de archivos y estructura de directorios
+* Entrada y salida de datos, archivos comprimidos
+
+* Ejercicios 
+
+
+Clase 6 `Breve introducción a la programación orientada a objetos en Python`
+----------------------------------------------------------------------------
+
+* Definición y características
+* Objetos y clases: diseños y encapsulamiento
+* Herencia
+* Desarrollo de un ejemplo
+
+* Ejercicios
+
+
+Clase 7: `Paquetes científicos: Introducción a Numpy y Matplotlib`
+------------------------------------------------------------------
+
+* Introducción a Numpy
+* Variables del tipo arreglo (*arrays*)
+  
+   * Creación manual y mediante funciones
+   * Tipos de datos
+   * Arrays multidimensionales
+
+* Cómo seleccionar partes de arreglos: *indexing* y *Slicing*
+* Algunas operaciones y métodos sobre arrays
+
+* Ejercicios 
+
+
+Clase 8: `Más sobre *Numpy* y visualización: *Matplotlib*`
+----------------------------------------------------------
+
+* Introducción a Matplotlib
+* Creación de gráficos simples
+* Títulos, leyendas, y otros
+* Otros tipos de gráficos
+* Documentación y ayuda
+* Ejercicios
