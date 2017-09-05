@@ -174,6 +174,7 @@ Clase 8: `Más sobre *Numpy* y visualización: *Matplotlib*`
 * Introducción a Matplotlib
 * Creación de gráficos simples
 * Títulos, leyendas, y otros
+* Textos y anotaciones
 * Otros tipos de gráficos
 * Documentación y ayuda
 * Ejercicios
