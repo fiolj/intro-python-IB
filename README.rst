@@ -44,6 +44,7 @@ Se ha logrado constituir una gran comunidad en torno a Python, y en particular a
 -  El curso de `Python científico <https://github.com/mgaitan/curso-python-cientifico>`__
 -  Las clases de Scipy `Scipy Lectures <http://scipy-lectures.org>`__
 -  `Scipy Cookbook <http://scipy-cookbook.readthedocs.io/index.html>`__
+- `Computational Statistics in Python <http://people.duke.edu/~ccc14/sta-663-2017/index.html>`__
 
 Otras referencias de interés
 ----------------------------
@@ -62,6 +63,9 @@ Otras referencias de interés
      - `The Glowing Python <http://glowingpython.blogspot.com.ar/>`__
      - `Python for Signal Processing <http://python-for-signal-processing.blogspot.com.ar/>`__
 
+
+- Otros:
+     - `Ejercicios en Numpy <http://www.labri.fr/perso/nrougier/teaching/numpy.100/>`__
 
 
 Programa
@@ -129,7 +133,8 @@ Clase 4: `Control de flujo, funciones`
    * Número variable de argumentos 
 
 * Ejercicios 
-  
+
+
 Clase 5: `Módulos y funciones`
 ------------------------------
 
@@ -152,8 +157,9 @@ Clase 6 `Breve introducción a la programación orientada a objetos en Python`
 * Ejercicios
 
 
-Clase 7: `Paquetes científicos: Introducción a Numpy y Matplotlib`
-------------------------------------------------------------------
+Clase 7: `Paquete para manipulación de vectores: Numpy`
+-------------------------------------------------------
+
 
 * Introducción a Numpy
 * Variables del tipo arreglo (*arrays*)
@@ -168,13 +174,68 @@ Clase 7: `Paquetes científicos: Introducción a Numpy y Matplotlib`
 * Ejercicios 
 
 
-Clase 8: `Más sobre *Numpy* y visualización: *Matplotlib*`
-----------------------------------------------------------
+Clase 8: `Introducción a visualización: Matplotlib`
+---------------------------------------------------
 
 * Introducción a Matplotlib
 * Creación de gráficos simples
-* Títulos, leyendas, y otros
-* Textos y anotaciones
-* Otros tipos de gráficos
-* Documentación y ayuda
+* Títulos, leyendas, y otros. Introducción de fórmulas. 
+* Más de un gráfico por figura
+* Ejercicios
+
+
+Clase 9: `Más sobre Numpy y manipulación de vectores`
+-----------------------------------
+
+* Operaciones entre vectores
+* Uso de condicionales y arrays lógicos
+* Métodos de arrays, funciones y manipulación de arrays
+* Cambio de forma de arrays multidimensionales
+* Extensión de las dimensiones (broadcasting)
+* Generación de números aleatorios
+* Histogramas
+* Ejercicios
+
+
+Clase 10: `Entrada y salida de datos`
+----------------------------------------
+
+* Lectura y escritura de datos a archivos
+   * Trabajar con archivos comprimidos
+   * Datos en formato texto
+   * Datos en formatos binario
+   * Datos en otros formatos
+
+* Personalizando la visualización
+   * Archivos de configuración de matplotlib
+   * Hojas de estilo
+   * Creación de nuevos estilos y modificaciones
+     
+* Ejercicios
+ 
+
+Clase 11: `Introducción al paquete científico Scipy`
+----------------------------------------------------
+  
+* Introducción rápida a Scipy
+   * Funciones especiales
+   * Integración numérica
+   * Minimización y optimización
+* Breve uso en álgebra lineal
+  * Descomposición de matrices 
+  * Autovalores y autovectores
+  * Resolución de ecuaciones lineales
+* Una mirada rápida sobre imágenes
+* Ejercicios
+
+
+Clase 12: `Interpolación y ajuste de curvas (fiteo)`
+----------------------------------------------------
+  
+* Interpolación de datos
+* Splines y B-Splines
+* Ajuste de datos por cuadrados mínimos con polinomios
+* Ajuste de curvas con funciones arbitrarias
+* Fiteos utilizando el paquete científico Scipy
+* Ejemplo: Fiteo de picos
 * Ejercicios
