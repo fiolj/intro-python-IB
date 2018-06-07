@@ -3,6 +3,7 @@
 ==================================================================
 
 Material de clase para el Curso dictado, por primera vez en 2017, en el IB.
+En revisión para su nuevo dictado en el primer semestre de 2019.
 
 Autor
 -----
@@ -12,7 +13,7 @@ Juan Fiol
 Version
 -------
 
-IB - 2017
+IB - 2019
 
 
 Licencia
