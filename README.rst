@@ -67,6 +67,7 @@ Otras referencias de interés
 
 - Otros:
      - `Ejercicios en Numpy <http://www.labri.fr/perso/nrougier/teaching/numpy.100/>`__
+     - `Videos de Curso para Científicos e Ingenieros <https://www.youtube.com/playlist?list=PLoGFizEtm_6iheDXw2-8onKClyxgstBO1>`__ 
 
 
 Programa
@@ -240,3 +241,43 @@ Clase 12: `Interpolación y ajuste de curvas (fiteo)`
 * Fiteos utilizando el paquete científico Scipy
 * Ejemplo: Fiteo de picos
 * Ejercicios
+
+
+Clase 13: `"Widgets" y algunos cabos sueltos`
+---------------------------------------------
+
+* Algo más sobre manipulación de vectores
+   * Vectorización de funciones escalares
+   * Unión (concatenación) de arrays
+   * Enumerate para arrays
+   * Un poco más sobre imágenes
+
+* Widgets y gráficos interactivos
+   * Agregar un cursor a las figuras
+   * Interacción del usuario: manejo de eventos
+   * Ejemplo integrado
+
+
+
+Clase 14: `Transformadas de Fourier y Graficación 3D`
+-----------------------------------------------------
+
+* Introducción a transformadas de Fourier
+   * Transformada rápida de Fourier (FFT)
+   * Ejemplos: Funciones periódicas y Gaussianas
+   * Tranformación de funciones reales
+* Graficación 2D y 3D con **Matplotlib**
+   * Histogramas en 2D (colores, colormaps, particiones hexagonales)
+   * Gráficos de contornos
+   * Superficies y contornes en 3D
+   * Gráficos de campos vectoriales
+
+
+
+Clase 15: `Interfaces con otros lenguajes y animaciones`
+--------------------------------------------------------
+
+* Interfaces con Fortran (moderno y heredado)
+
+* Animaciones con matplotlib
+
