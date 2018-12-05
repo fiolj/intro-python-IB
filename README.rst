@@ -67,6 +67,7 @@ Otras referencias de interés
 
 - Otros:
      - `Ejercicios en Numpy <http://www.labri.fr/perso/nrougier/teaching/numpy.100/>`__
+     - `Videos de Curso para Científicos e Ingenieros <https://www.youtube.com/playlist?list=PLoGFizEtm_6iheDXw2-8onKClyxgstBO1>`__ 
 
 
 Programa
