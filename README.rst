@@ -6,18 +6,18 @@ Material de clase para el Curso dictado, por primera vez en 2017, en el IB.
 Esta versión corresponde al Curso dictado en el primer semestre de 2019.
 
 Autor
------
+~~~~~
 
 Juan Fiol
 
 Version
--------
+~~~~~~~
 
 IB - 2019
 
 
 Licencia
---------
+~~~~~~~~
 
 |Licencia Creative Commons|
 Esta obra está bajo una `Licencia Creative Commons
@@ -29,9 +29,12 @@ Internacional <http://creativecommons.org/licenses/by-sa/4.0/>`__.
 
 
 Bibliografía
-------------
+~~~~~~~~~~~~
 
 Se ha logrado constituir una gran comunidad en torno a Python, y en particular a las aplicaciones científicas en python, por lo que existe mucha información disponible. En la preparación de estas clases se leyó/tomó inspiración y se copió/adaptó material de las siguientes fuentes:
+
+Accesible en línea
+------------------
 
 -  `La documentación oficial de Python <https://docs.python.org/3/>`__
 -  El `Tutorial de Python <https://docs.python.org/3/tutorial/>`__,
@@ -47,6 +50,16 @@ Se ha logrado constituir una gran comunidad en torno a Python, y en particular a
 -  `Scipy Cookbook <http://scipy-cookbook.readthedocs.io/index.html>`__
 - `Computational Statistics in Python <http://people.duke.edu/~ccc14/sta-663-2017/index.html>`__
 
+
+Libros
+------
+- `The Python Standard Library by Example <https://doughellmann.com/blog/the-python-3-standard-library-by-example/>`__ de Doug Hellman, Addison-Wesley, 2017
+- `Python Cookbook <https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377>`__ de David Beazley, Brian K. Jones, O'Reilly Pub., 2013.
+- `Elegant Scipy <https://www.oreilly.com/library/view/elegant-scipy/9781491922927/>`__ de Harriet Dashnow, Stéfan van der Walt, Juan Nunez-Iglesias, O'Reilly Pub., 2017.
+- `Scientific Computing with Python 3 <https://www.packtpub.com/big-data-and-business-intelligence/scientific-computing-python-3>`__ de Claus Führer, Jan Erik Solem, Olivier Verdier, Packt Pub., 2016.
+- `Interactive Applications Using Matplotlib <https://www.packtpub.com/application-development/interactive-applications-using-matplotlib>`__ de Benjamin V Root, Packt Pub., 2015.
+- `Mastering Python Regular Expressions <https://www.packtpub.com/application-development/mastering-python-regular-expressions>`__ de Félix López, Víctor Romero, Packt Pub., 2014,
+
 Otras referencias de interés
 ----------------------------
 
@@ -60,14 +73,13 @@ Otras referencias de interés
     - `<http://mathesaurus.sourceforge.net/matlab-numpy.html>`__
     
 
-- Blogs:
-     - `The Glowing Python <http://glowingpython.blogspot.com.ar/>`__
-     - `Python for Signal Processing <http://python-for-signal-processing.blogspot.com.ar/>`__
+Blogs y otras publicaciones
+---------------------------
 
-
-- Otros:
-     - `Ejercicios en Numpy <http://www.labri.fr/perso/nrougier/teaching/numpy.100/>`__
-     - `Videos de Curso para Científicos e Ingenieros <https://www.youtube.com/playlist?list=PLoGFizEtm_6iheDXw2-8onKClyxgstBO1>`__ 
+ - `The Glowing Python <http://glowingpython.blogspot.com.ar/>`__
+ - `Python for Signal Processing <http://python-for-signal-processing.blogspot.com.ar/>`__
+ - `Ejercicios en Numpy <http://www.labri.fr/perso/nrougier/teaching/numpy.100/>`__
+ - `Videos de Curso para Científicos e Ingenieros <https://www.youtube.com/playlist?list=PLoGFizEtm_6iheDXw2-8onKClyxgstBO1>`__ 
 
 
 Programa
