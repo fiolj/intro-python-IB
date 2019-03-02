@@ -29,6 +29,20 @@ class Polinomio("Objeto padre"):
     """
     pass
 
+  def mul(self, k):
+    """Al polinomio lo multiplica por `k` y devuelve un nuevo polinomio
+    Keyword Arguments:
+    Agregar Documentación
+    """
+    pass
+
+  def eval(self, x):
+    """Evalúa el polinomio en el valor `x` y devuelve el resultado
+    Keyword Arguments:
+    Agregar Documentación
+    """
+    pass
+
   def derivada(agregue los argumentos):
     """Devuelve la derivada (n-ésima) del polinomio (un nuevo polinomio)
     Keyword Arguments:
@@ -74,6 +88,14 @@ class Polinomio("Objeto padre"):
     """
     pass
 
+  def __call__(self, x):
+    """Evalúa el polinomio en el valor `x` y devuelve el resultado
+    permite simplemente llamar p(x) para evaluar el polinomio
+    Keyword Arguments:
+    Agregar Documentación
+    """
+    pass
+
 
 if __name__ == '__main__':
 
@@ -95,3 +117,5 @@ if __name__ == '__main__':
   P3 = Polinomio()
   P3.from_string('x + 1 - x^2 - 3x^3')
   print(P3.get_coeficientes())
+
+  print(P3(3.3))
