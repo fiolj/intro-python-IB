@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Control Automático de versiones (con git) &mdash; documentación de Clases de control de versiones - 2018</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Instalación y uso: Una versión breve" href="02_instalacion_uso.html" />
+    <link rel="prev" title="Clases de control de versiones" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Clases de control de versiones
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2018
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Índice:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Control Automático de versiones (con git)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#que-es-y-para-que-sirve">¿Qué es y para qué sirve?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cambios-en-paralelo">Cambios en paralelo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#historia-completa">Historia completa</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02_instalacion_uso.html">Instalación y uso: Una versión breve</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de control de versiones</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Control Automático de versiones (con git)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/01_introduccion.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="control-automatico-de-versiones-con-git">
+<h1>Control Automático de versiones (con git)<a class="headerlink" href="#control-automatico-de-versiones-con-git" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p>Esta clase está <span class="strike">copiada</span> (muy fuertemente) inspirada en las siguientes fuentes:</p>
+<ul class="last simple">
+<li><a class="reference external" href="http://swcarpentry.github.io/git-novice">Lecciones de Software Carpentry</a>, y la <a class="reference external" href="https://swcarpentry.github.io/git-novice-es/">versión en castellano</a>).</li>
+<li>El libro <a class="reference external" href="https://git-scm.com/book/en/v2">Pro Git</a> de Scott Chacon y Ben Straub, y la <a class="reference external" href="https://git-scm.com/book/es/">versión en castellano</a>. Ambos disponibles libremente.</li>
+<li>El libro <a class="reference external" href="http://www.packtpub.com/">Mastering git</a> escrito por Jakub Narębski.</li>
+</ul>
+</div>
+<div class="section" id="que-es-y-para-que-sirve">
+<h2>¿Qué es y para qué sirve?<a class="headerlink" href="#que-es-y-para-que-sirve" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>El control de versiones permite ir grabando puntos en la historia de la evolución de un proyecto. Esta capacidad nos permite:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Acceder a versiones anteriores de nuestro trabajo («undo ilimitado»)</li>
+<li>Trabajar en forma paralela con otras personas sobre un mismo documento.</li>
+</ul>
+</div></blockquote>
+<p>Habitualmente, nos podemos encontrar con situaciones como esta:</p>
+<div class="figure">
+<img alt="" src="_images/alternativa.png" />
+</div>
+<p>o, más gracioso pero igualmente común, esta otra:</p>
+<div class="figure">
+<img alt="“Piled Higher and Deeper” por Jorge Cham, http://www.phdcomics.com" src="_images/phd101212s.png" />
+</div>
+<p>Todos hemos estado en esta situación alguna vez: parece ridículo tener varias versiones casi idénticas del mismo documento. Algunos procesadores de texto nos permiten lidiar con esto un poco mejor, como por ejemplo el <a class="reference external" href="https://support.office.com/en-us/article/Track-changes-in-Word-197ba630-0f5f-4a8e-9a77-3712475e806a">Track Changes de Microsoft Word</a>, el <a class="reference external" href="https://support.google.com/docs/answer/190843?hl=en">historial de versiones de Google</a>, o el <a class="reference external" href="https://help.libreoffice.org/Common/Recording_and_Displaying_Changes">Track-changes de LibreOffice</a>.</p>
+<p>Estas herramientas permiten solucionar el problema del trabajo en colaboración. Si tenemos una versión de un archivo (documento, programa, etc) podemos compartirlo con los otros autores para modificar, y luego ir aceptando o rechazando los cambios propuestos.</p>
+<p>Algunos problemas aún aparecen cuando se trabaja intensivamente en un documento, porque al aceptar o rechazar los cambios no queda registro de cuáles eran las alternativas. Además, estos sistemas actúan sólo sobre los documentos; en nuestro caso puede haber datos, gráficos, etc que cambien (o que queremos estar seguros que no cambiaron y estamos usando la versión correcta).</p>
+<p>En el fondo, la manera de evitar esto es manteniendo una buena organización. Una posible buena manera es designar una persona responsable, que vaya llevando la contabilidad de quién hizo qué correcciones, las integre en un único documento, y vaya guardando copias de todas los documentos que recibe en un lugar separado. Cuando hay varios autores (cuatro o cinco) éste es un trabajo bastante arduo y con buenas posibilidades de pequeños errores. Los sistemas de control de versiones tratan de automatizar la mayor parte del trabajo para hacer más fácil la colaboración, manteniendo registro de los cambios que se hicieron desde que se inició el documento, y produciendo poca interferencia, permitiendo al mismo tiempo trabajar de manera similar a como lo hacemos habitualmente.</p>
+<p>Consideremos un proyecto con varios archivos y autores.
+En este esquema de trabajo, podemos compartir una versión de todos los archivos del proyecto</p>
+<div class="section" id="cambios-en-paralelo">
+<h3>Cambios en paralelo<a class="headerlink" href="#cambios-en-paralelo" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Una de las ventajas de los sistemas de control de versiones es que cada autor hace su aporte en su propia copia (en paralelo)</p>
+<div class="figure">
+<img alt="versiones corregidas en paralelo" src="_images/versions.svg" /></div>
+<p>y después estos son compatibilizados e incorporados en un único documento.</p>
+<div class="figure">
+<img alt="Compaginando versiones corregidas en paralelo" src="_images/merge.svg" /></div>
+<p>En casos en que los autores trabajen en zonas distintas la compaginación se puede hacer en forma automática. Por otro lado, si dos personas cambian la misma frase obviamente se necesita tomar una decisión y la compaginación no puede (ni quiere) hacerse automáticamente.</p>
+</div>
+<div class="section" id="historia-completa">
+<h3>Historia completa<a class="headerlink" href="#historia-completa" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Otra característica importante de los sistemas de control de versiones es que guardan la historia completa de todos los archivos que componen el proyecto. Imaginen, por ejemplo, que escribieron una función para resolver parte de un problema. La función no sólo hace su trabajo sino que está muy bien escrita, es elegante y funciona rápidamente. Unos días después encuentran que toda esa belleza era innecesaria, porque el problema que resuelve la función no aparece en su proyecto, y por supuesto la borra. La version oficial no tiene esa parte del código.</p>
+<p>Dos semanas, y varias líneas de código, después aparece un problema parecido y querríamos tener la función que borramos …</p>
+<p>Los sistemas de control de versiones guardan toda la información de la historia de cada archivo, con un comentario del autor. Este modo de trabajar nos permite recuperar (casi) toda la información previa, incluso aquella que en algún momento decidimos descartar.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02_instalacion_uso.html" class="btn btn-neutral float-right" title="Instalación y uso: Una versión breve" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Clases de control de versiones" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Juan Fiol.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'2018',
+            LANGUAGE:'es',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+===========================================
+ Control Automático de versiones (con git)
+===========================================
+.. role:: strike
+   :class: strike
+	   
+.. note::
+  Esta clase está :strike:`copiada` (muy fuertemente) inspirada en las siguientes fuentes:
+  
+  * `Lecciones de Software Carpentry <http://swcarpentry.github.io/git-novice>`__, y la `versión en castellano <https://swcarpentry.github.io/git-novice-es/>`__).
+  * El libro `Pro Git <https://git-scm.com/book/en/v2>`__ de Scott Chacon y Ben Straub, y la `versión en castellano <https://git-scm.com/book/es/>`__. Ambos disponibles libremente.
+  * El libro `Mastering git <http://www.packtpub.com/>`__ escrito por Jakub Narębski.
+
+
+¿Qué es y para qué sirve?
+=========================
+
+El control de versiones permite ir grabando puntos en la historia de la evolución de un proyecto. Esta capacidad nos permite:
+
+  - Acceder a versiones anteriores de nuestro trabajo ("undo ilimitado")
+  - Trabajar en forma paralela con otras personas sobre un mismo documento.
+
+Habitualmente, nos podemos encontrar con situaciones como esta:
+
+.. figure:: figuras/alternativa.png
+   :alt: 
+
+
+o, más gracioso pero igualmente común, esta otra:
+
+.. figure:: figuras/phd101212s.png
+   :alt: “Piled Higher and Deeper” por Jorge Cham, http://www.phdcomics.com
+
+Todos hemos estado en esta situación alguna vez: parece ridículo tener varias versiones casi idénticas del mismo documento. Algunos procesadores de texto nos permiten lidiar con esto un poco mejor, como por ejemplo el `Track Changes de Microsoft Word <https://support.office.com/en-us/article/Track-changes-in-Word-197ba630-0f5f-4a8e-9a77-3712475e806a>`__, el `historial de versiones de Google <https://support.google.com/docs/answer/190843?hl=en>`__, o el `Track-changes de LibreOffice <https://help.libreoffice.org/Common/Recording_and_Displaying_Changes>`__.
+
+Estas herramientas permiten solucionar el problema del trabajo en colaboración. Si tenemos una versión de un archivo (documento, programa, etc) podemos compartirlo con los otros autores para modificar, y luego ir aceptando o rechazando los cambios propuestos.
+
+Algunos problemas aún aparecen cuando se trabaja intensivamente en un documento, porque al aceptar o rechazar los cambios no queda registro de cuáles eran las alternativas. Además, estos sistemas actúan sólo sobre los documentos; en nuestro caso puede haber datos, gráficos, etc que cambien (o que queremos estar seguros que no cambiaron y estamos usando la versión correcta).
+
+
+
+En el fondo, la manera de evitar esto es manteniendo una buena organización. Una posible buena manera es designar una persona responsable, que vaya llevando la contabilidad de quién hizo qué correcciones, las integre en un único documento, y vaya guardando copias de todas los documentos que recibe en un lugar separado. Cuando hay varios autores (cuatro o cinco) éste es un trabajo bastante arduo y con buenas posibilidades de pequeños errores. Los sistemas de control de versiones tratan de automatizar la mayor parte del trabajo para hacer más fácil la colaboración, manteniendo registro de los cambios que se hicieron desde que se inició el documento, y produciendo poca interferencia, permitiendo al mismo tiempo trabajar de manera similar a como lo hacemos habitualmente.
+
+Consideremos un proyecto con varios archivos y autores.
+En este esquema de trabajo, podemos compartir una versión de todos los archivos del proyecto
+
+Cambios en paralelo
+-------------------
+
+Una de las ventajas de los sistemas de control de versiones es que cada autor hace su aporte en su propia copia (en paralelo) 
+
+.. figure:: figuras/versions.svg
+   :alt: versiones corregidas en paralelo
+
+y después estos son compatibilizados e incorporados en un único documento.
+
+.. figure:: figuras/merge.svg
+   :alt: Compaginando versiones corregidas en paralelo
+
+En casos en que los autores trabajen en zonas distintas la compaginación se puede hacer en forma automática. Por otro lado, si dos personas cambian la misma frase obviamente se necesita tomar una decisión y la compaginación no puede (ni quiere) hacerse automáticamente.
+
+Historia completa
+-----------------
+
+Otra característica importante de los sistemas de control de versiones es que guardan la historia completa de todos los archivos que componen el proyecto. Imaginen, por ejemplo, que escribieron una función para resolver parte de un problema. La función no sólo hace su trabajo sino que está muy bien escrita, es elegante y funciona rápidamente. Unos días después encuentran que toda esa belleza era innecesaria, porque el problema que resuelve la función no aparece en su proyecto, y por supuesto la borra. La version oficial no tiene esa parte del código. 
+
+Dos semanas, y varias líneas de código, después aparece un problema parecido y querríamos tener la función que borramos ...
+
+Los sistemas de control de versiones guardan toda la información de la historia de cada archivo, con un comentario del autor. Este modo de trabajar nos permite recuperar (casi) toda la información previa, incluso aquella que en algún momento decidimos descartar.
