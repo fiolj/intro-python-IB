@@ -1,0 +1,266 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Análisis de datos &mdash; documentación de Examen Final IPyCI - 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Efecto Doppler" href="ej_doppler.html" />
+    <link rel="prev" title="Tiempo de Vuelo" href="ej_tof.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Examen Final IPyCI
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ej_criptografia.html">Análisis criptográfico de texto</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ej_tof.html">Tiempo de Vuelo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Análisis de datos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#extras">Extras:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ej_doppler.html">Efecto Doppler</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Examen Final IPyCI</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Análisis de datos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ej_analisisdatos1.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="analisis-de-datos">
+<h1>Análisis de datos<a class="headerlink" href="#analisis-de-datos" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>En el archivo <em>espectros.tar.gz</em> hay una estructura de directorios y
+archivos de mediciones, correspondiente a datos que se toman en un
+experimento. Cada espectro corresponde a mediciones que se toman en
+forma consecutiva a intervalos regulares por lo que, para cada día, el
+número <code class="docutils literal notranslate"><span class="pre">n</span></code> del espectro está relacionado con el tiempo de la medición
+en la evolución del experimento. Los espectros tienen la forma:</p>
+<p><img alt="image0" src="_images/ejemplo_espectros.png" /></p>
+<p>Se cree que cada una de las curvas experimentales puede modelarse
+mediante la función</p>
+<p>$$ f_{n}(x) = A_{n} e^{-(x-a n)^{2}/2 \sigma_{n}} \sin{(\omega_{n} x
++ \phi_{n})} $$
+donde <span class="math notranslate nohighlight">\(a\)</span> es la misma constante para todos los
+espectros y <span class="math notranslate nohighlight">\(n\)</span> es el número de espectro, que se supone proporcional al
+tiempo.</p>
+<p>Se pide que haga un programa que permita leer y analizar los datos. El
+programa debe:</p>
+<ul class="simple">
+<li>Leer los datos para cada espectro, recorriendo la estructura de
+subdirectorios.</li>
+<li>Utilizar los datos correspondientes a grandes valores del eje x para
+determinar la línea de base y restarla de los espectros (la línea de
+base puede tener una componente no-constante).</li>
+<li>Obtener numéricamente los valores de <span class="math notranslate nohighlight">\(\sigma_{n}\)</span> y <span class="math notranslate nohighlight">\(\omega_{n}\)</span>, y
+graficarlas en dos paneles del mismo gráfico, como función de <span class="math notranslate nohighlight">\(n\)</span>
+(correspondiente a un tiempo <span class="math notranslate nohighlight">\(t\)</span>).</li>
+<li>Ajustar ambas curvas con polinomios y presentar los parámetros en el
+gráfico correspondiente.</li>
+</ul>
+<p><strong>NOTA:</strong> No trabaje con el archivo comprimido; descargue y descomprima
+el archivo, creando un árbol de directorios y archivos.</p>
+<div class="section" id="extras">
+<h2>Extras:<a class="headerlink" href="#extras" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Agregar un tercer panel, donde se graficará el espectro corregido (con
+la línea de base restada) correspondiente a un tiempo determinado. Este
+panel se actualizará cuando uno seleccione con el <em>mouse</em> en el gráfico
+de <span class="math notranslate nohighlight">\(\omega_{n}\)</span>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ej_doppler.html" class="btn btn-neutral float-right" title="Efecto Doppler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ej_tof.html" class="btn btn-neutral" title="Tiempo de Vuelo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Juan Fiol
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'2019',
+              LANGUAGE:'es',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

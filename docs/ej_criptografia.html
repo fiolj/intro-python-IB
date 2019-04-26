@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Análisis criptográfico de texto &mdash; documentación de Examen Final IPyCI - 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Tiempo de Vuelo" href="ej_tof.html" />
+    <link rel="prev" title="Examen Final IPyIC" href="index.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Examen Final IPyCI
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Análisis criptográfico de texto</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#extras">Extras</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ej_tof.html">Tiempo de Vuelo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ej_analisisdatos1.html">Análisis de datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ej_doppler.html">Efecto Doppler</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Examen Final IPyCI</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Análisis criptográfico de texto</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ej_criptografia.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="analisis-criptografico-de-texto">
+<h1>Análisis criptográfico de texto<a class="headerlink" href="#analisis-criptografico-de-texto" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Se tiene una serie de mensajes cifrados los cuales se quieren descifrar.
+Gracias a nuestro servicio de inteligencia sabemos que la técnica de
+cifrado utilizada es la siguiente. Los mensajes sólo contienen
+caracteres de la A a la Z y espacios entre palabras, no se utilizan
+signos diacríticos (acentos o la virgulilla de la Ñ) ni signos de
+puntuación. A todos estos caracteres se les asigna un número entero del
+0 al 26 de acuerdo a la siguiente tabla:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="2%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="3%" />
+<col width="7%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Letra</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>F</td>
+<td>G</td>
+<td>H</td>
+<td>I</td>
+<td>J</td>
+<td>K</td>
+<td>L</td>
+<td>M</td>
+<td>N</td>
+<td>O</td>
+<td>P</td>
+<td>Q</td>
+<td>R</td>
+<td>S</td>
+<td>T</td>
+<td>U</td>
+<td>V</td>
+<td>W</td>
+<td>X</td>
+<td>Y</td>
+<td>Z</td>
+<td>Espacio</td>
+</tr>
+<tr class="row-even"><td>Equivalente numérico</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>10</td>
+<td>11</td>
+<td>12</td>
+<td>13</td>
+<td>14</td>
+<td>15</td>
+<td>16</td>
+<td>17</td>
+<td>18</td>
+<td>19</td>
+<td>20</td>
+<td>21</td>
+<td>22</td>
+<td>23</td>
+<td>24</td>
+<td>25</td>
+<td>26</td>
+</tr>
+</tbody>
+</table>
+<p>Luego cada equivalente numérico (P) del mensaje original es convertido a
+otro entero (C) mediante la transformación afín:</p>
+<p>$$C \equiv a P + b \quad (mod 27)$$</p>
+<p>donde ‘a’ y ‘b’ son las “claves” utilizadas. Finalmente, los nuevos
+números se convierten a caracteres utilizando la misma tabla. Observar
+que la expresión anterior es una congruencia, por lo tanto si el entero
+resultante luego de hacer aP + b es mayor o igual a 27 (la cantidad de
+caracteres con los cuales se trabaja), se utiliza el caracter de la
+tabla tal que su equivalente numérico sea congruente módulo 27 con el
+valor obtenido. Por otro lado, para que cada caracter se cifre a un
+caracter diferente, es necesario que el entero utilizado como clave ‘a’
+sea coprimo con 27, es decir, que su único común divisor sea 1.</p>
+<ol class="arabic simple">
+<li>Realice un programa que acepte como argumento el nombre del archivo
+con el mensaje cifrado y el valor de las claves ‘a’ y ‘b’ e imprima
+en pantalla el mensaje descifrado.</li>
+</ol>
+<p>Nuestros espías han descubierto las claves utilizadas para cifrar el
+mensaje del archivo mensaje_cifrado_00.txt. Puede utilizar este mensaje
+para comprobar su algoritmo. Las claves descubiertas son</p>
+<p>a = 7, b = 25</p>
+<p>Suponiendo que su programa se llama descifrar.py un ejemplo de su
+invocación puede ser (python corresponde a python3):</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ python descifrar.py mensaje_cifrado_00.txt 7 25
+</pre></div>
+</div>
+<p>Desafortunadamente, para los siguientes mensajes no se tienen sus claves
+de cifrado. Se le pide por lo tanto que realice un algoritmo que vulnere
+al sistema y las descubra. Para ello tenga en cuenta la siguiente
+observación: como cada caracter se transforma siempre al mismo caracter
+cifrado, puede comparar su frecuencia de ocurrencia con las de un texto
+ordinario para hallar una correspondencia.</p>
+<p>Se le pide que:</p>
+<ol class="arabic simple" start="2">
+<li>Realice un programa que calcule la frecuencia de aparición de cada
+caracter en el texto de un archivo que se le pase como argumento y
+guarde la distribución calculada en otro archivo. Para ello quite del
+texto los signos diacríticos de todas las letras y omita los signos
+de puntuación y caracteres especiales, exceptuando el caracter de
+espacio que sí deberá incluir en la distribución ya que este caracter
+se encuentra en los mensajes cifrados. El programa deberá generar una
+figura similar a la siguiente:</li>
+</ol>
+<p><img alt="image0" src="_images/cripto_f1.png" /></p>
+<p>Utilice este programa para generar la distribución de frecuencia de
+aparición de letras en el idioma español utilizando el primer capítulo
+de la novela “Don Quijote de la Mancha”, el cual puede encontrar en el
+archivo quijote_es.txt.</p>
+<p>Nos ha llegado la información de que los textos cifrados pueden estar en
+otros idiomas además del español. Para ello, nuestros agentes le han
+conseguido traducciones de este capítulo en varios idiomas diferentes.
+Genere la distribución de frecuencia de aparición de letras para el
+idioma inglés, alemán y finlandés utilizando el texto en los archivos
+quijote_en.txt, quijote_de.txt y quijote_fi.txt, respectivamente.
+Tenga en cuenta que estos idiomas pueden poseer signos diacríticos diferentes
+a los del español.</p>
+<p>Para descifrar los mensajes cifrados, puede hacer una correspondencia
+entre los caracteres más frecuentes del texto cifrado con los más
+frecuentes de cada idioma, como se observa en la siguiente figura:</p>
+<p><img alt="image1" src="_images/cripto_f2.png" /></p>
+<p>Eligiendo dos pares de caracteres que se consideren correspondientes
+entre sí, es posible encontrar las claves ‘a’ y ‘b’ resolviendo el
+siguiente sistema:</p>
+<p><span class="math notranslate nohighlight">\(\begin{align*}C1 &amp;\equiv a P1 + b (mod 27) \\C2 &amp;\equiv a P2 + b (mod 27)\end{align*}\)</span></p>
+<p>donde <span class="math notranslate nohighlight">\((C1,P1)\)</span> y <span class="math notranslate nohighlight">\((C2,P2)\)</span> son los equivalentes numéricos
+de los caracteres elegidos.</p>
+<p>Para verificar que el mensaje se ha descifrado con éxito, puede calcular
+la frecuencia de aparición de los caracteres del mensaje descifrado y
+calcular su correlación con la de cada idioma. Puede utilizar para ello
+el coeficiente de correlación de Pearson, función que puede encontrar en
+el módulo scipy. Un valor superior a 0,8 ya debería indicar un correcto
+descifrado. Este coeficiente representa cuánto se acercan los puntos a
+la recta identidad en el siguiente gráfico:</p>
+<p><img alt="image2" src="_images/cripto_f3.png" /></p>
+<p>Se le pide entonces que:</p>
+<ol class="arabic simple" start="3">
+<li>Modifique su primer programa para que, si no se le especifican las
+claves ‘a’ y ‘b’, descifre el mensaje utilizando las distribuciones
+ya generadas de frecuencia de aparición de letras en los diferentes
+idiomas. El programa deberá:<ul>
+<li>Imprimir en pantalla el mensaje descifrado.</li>
+<li>Imprimir en pantalla el idioma que mejor se corresponda con el
+mensaje descifrado.</li>
+<li>Realizar un gráfico que compare los caracteres más frecuentes del
+mensaje cifrado con los más frecuentes del idioma correspondiente,
+similar al mostrado en la segunda figura.</li>
+<li>Realizar un gráfico que muestre la correlación entre la frecuencia
+de aparición de letras del mensaje descifrado y la del idioma
+correspondiente, similar al mostrado en la última figura.</li>
+</ul>
+</li>
+</ol>
+<p>Utilice este programa para descifrar los mensajes mensaje_cifrado_01.txt
+a mensaje_cifrado_09.txt.</p>
+<div class="section" id="extras">
+<h2>Extras<a class="headerlink" href="#extras" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic simple">
+<li>El centro de inteligencia quiere ser capaz de cifrar sus propios
+mensajes. Se le pide para ello que realice un programa que tome un
+texto normal cualquiera y lo cifre utilizando claves ‘a’ y ‘b’
+pasadas como argumento. El mensaje devuelto tiene que ser descifrable
+mediante el programa del punto 1 utilizando las mismas claves ‘a’ y
+‘b’.</li>
+<li>Nuestros espías han interceptado un mensaje muy peculiar que, aunque
+se sabe que está en español, se distingue del resto de mensajes. El
+mismo se encuentra en el archivo mensaje_cifrado_10.txt. Es capaz de
+descifrarlo?</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ej_tof.html" class="btn btn-neutral float-right" title="Tiempo de Vuelo" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Examen Final IPyIC" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Juan Fiol
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'2019',
+              LANGUAGE:'es',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

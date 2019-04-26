@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tiempo de Vuelo &mdash; documentación de Examen Final IPyCI - 2019</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Análisis de datos" href="ej_analisisdatos1.html" />
+    <link rel="prev" title="Análisis criptográfico de texto" href="ej_criptografia.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Examen Final IPyCI
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ej_criptografia.html">Análisis criptográfico de texto</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tiempo de Vuelo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#extras">Extras:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ej_analisisdatos1.html">Análisis de datos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ej_doppler.html">Efecto Doppler</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Examen Final IPyCI</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Tiempo de Vuelo</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ej_tof.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tiempo-de-vuelo">
+<h1>Tiempo de Vuelo<a class="headerlink" href="#tiempo-de-vuelo" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Considerar un analizador de masas mediante medición del tiempo de vuelo.
+Este aparato permite correlacionar el tiempo en el cuál se detectan los
+iones de una dada especie con su masa. El sistema consiste de tres
+etapas: una zona de creación y extracción de los iones (de longitud
+2<em>s</em>), una zona de aceleración (de longitud $d$), y una zona de vuelo
+libre (de longitud <em>D</em>) La figura muestra un esquema, con las distancias
+y potenciales,</p>
+<p><img alt="image0" src="_images/diagrama_tof.png" /></p>
+<ol class="arabic">
+<li><p class="first">Se pide que haga un esquema similar al de la figura usando
+<strong>Matplotlib</strong></p>
+</li>
+<li><p class="first">Realice un programa que, dada una secuencia de especies de iones
+atómicos o moleculares, calcule su tiempo de vuelo. El programa debe
+realizar diferentes acciones dependiendo de los argumentos que se le
+pasen. Suponiendo que el programa se llama tiempo_vuelo.py un ejemplo
+de su invocación puede ser (python corresponde a python3):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python tiempo_vuelo.py &quot;CO2^1,Ar^1, Ar^2,Al^1,CH3^2&quot;
+</pre></div>
+</div>
+</li>
+</ol>
+<p>y el programa debe devolver los tiempos expresados en unidades
+«razonables», la información de las unidades debe estar disponible de
+alguna manera adecuada.</p>
+<p>Realice los siguientes pasos:</p>
+<ol class="arabic">
+<li><p class="first">Lea los datos de los elementos del archivo <strong>nist_data.txt</strong> y
+guárdelo en alguna estructura adecuada. Note que para cada elemento
+hay una entrada para cada isótopo. Sólo debe mantener la
+correspondiente al isótopo de mayor población (Isotopic composition).</p>
+</li>
+<li><p class="first">Dado un string con los iones como en el ejemplo («CO2^1,Ar^1,
+Ar^2,Al^1,CH3^2»), sepárelo en sustancias individuales, y calcule la
+masa y carga de cada uno.</p>
+</li>
+<li><p class="first">Calcule el tiempo de vuelo como la suma de los tiempos en cada uno de
+los tres tramos acorde a:
+<span class="math notranslate nohighlight">\(\begin{align*}
+T_{s} &amp;= \left[{2 s /(q E_{s})}\right]^{1/2} , &amp; u_{s}= q \,E_{s} T_{s},\,\\
+T_{d} &amp;= \left[({u_{s}^{2} + 2, q\,d E_{d}})^{1/2} - u_{s}\right]/(q E_{d}) \,,
+&amp; u_{d} = u_{s} + q, E_{d} \,T_{d} \,, \\
+T_{D} &amp;= D/u_{d} &amp; ~
+\end{align*}\)</span></p>
+<p>donde <span class="math notranslate nohighlight">\(T=t /\sqrt{m}\)</span> es el tiempo escalado con la raíz de la masa,
+<span class="math notranslate nohighlight">\(u=\sqrt{m}v\)</span> es la velocidad escalada. Note que debe utilizar las
+unidades adecuadas. Para realizar la conversión de unidades puede
+utilizar el módulo <code class="docutils literal notranslate"><span class="pre">scipy.constants</span></code></p>
+</li>
+</ol>
+<p>4. Utilice el módulo argparse
+para hacer que su programa acepte argumentos. Debe tener al menos los
+siguientes comportamientos:</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">python</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span>
+<span class="n">Usage</span><span class="p">:</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">s</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span> <span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span> <span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">salida</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">Vs</span><span class="o">=</span><span class="n">extraccion</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">Vd</span><span class="o">=</span><span class="n">aceleracion</span><span class="p">]</span> <span class="n">sustancias</span>
+<span class="o">...</span> <span class="p">(</span><span class="n">texto</span> <span class="n">explicativo</span> <span class="n">de</span> <span class="n">como</span> <span class="n">usar</span> <span class="n">el</span> <span class="n">programa</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">python</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">h</span>
+<span class="n">Usage</span><span class="p">:</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">d</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">D</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">salida</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">Vs</span><span class="o">=</span><span class="n">extraccion</span><span class="p">]</span> <span class="p">[</span><span class="o">--</span><span class="n">Vd</span><span class="o">=</span><span class="n">aceleracion</span><span class="p">]</span> <span class="n">sustancias</span>
+<span class="o">...</span> <span class="p">(</span><span class="n">texto</span> <span class="n">explicativo</span> <span class="n">de</span> <span class="n">como</span> <span class="n">usar</span> <span class="n">el</span> <span class="n">programa</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">python</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="s2">&quot;XpXb^1, O2^1&quot;</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">debe</span> <span class="n">ingresar</span> <span class="n">una</span> <span class="n">sustancia</span> <span class="n">válida</span>
+<span class="o">...</span> <span class="p">(</span><span class="n">texto</span> <span class="n">explicativo</span> <span class="n">de</span> <span class="n">como</span> <span class="n">usar</span> <span class="n">el</span> <span class="n">programa</span><span class="p">)</span>
+
+<span class="o">&gt;</span> <span class="n">python</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="s2">&quot;H2O^1, N2^1, O2^1&quot;</span>
+<span class="c1"># Sust  tiempo</span>
+<span class="n">H2O</span><span class="o">^</span><span class="mi">1</span><span class="p">:</span> <span class="mf">7.07</span> <span class="n">us</span>
+<span class="n">N2</span><span class="o">^</span><span class="mi">1</span><span class="p">:</span>  <span class="mf">8.82</span> <span class="n">us</span>
+<span class="n">O2</span><span class="o">^</span><span class="mi">1</span><span class="p">:</span>  <span class="mf">9.43</span> <span class="n">us</span>
+
+<span class="o">&gt;</span> <span class="n">python</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="s2">&quot;H2O^1, N2^1, O2^1&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="n">tiempos</span><span class="o">.</span><span class="n">png</span>
+<span class="o">&gt;</span> <span class="n">ls</span> <span class="n">tiempos</span><span class="o">.</span><span class="n">png</span>
+<span class="n">tiempos</span><span class="o">.</span><span class="n">png</span>
+
+<span class="o">&gt;</span> <span class="n">python</span> <span class="n">tiempo_vuelo</span><span class="o">.</span><span class="n">py</span> <span class="s2">&quot;H2O^1, N2^1, O2^1&quot;</span> <span class="o">-</span><span class="n">o</span> <span class="n">tiempos</span><span class="o">.</span><span class="n">dat</span>
+<span class="o">&gt;</span> <span class="n">cat</span> <span class="n">tiempos</span><span class="o">.</span><span class="n">dat</span>
+<span class="c1"># Sust  tiempo</span>
+<span class="n">H2O</span><span class="o">^</span><span class="mi">1</span><span class="p">:</span> <span class="mf">7.07</span> <span class="n">us</span>
+<span class="n">N2</span><span class="o">^</span><span class="mi">1</span><span class="p">:</span>  <span class="mf">8.82</span> <span class="n">us</span>
+<span class="n">O2</span><span class="o">^</span><span class="mi">1</span><span class="p">:</span>  <span class="mf">9.43</span> <span class="n">us</span>
+</pre></div>
+</div>
+<p><strong>Notar:</strong></p>
+<ul class="simple">
+<li>En los tres primeros casos debe dar un mensaje informativo, y si
+corresponde información sobre algún error de uso.</li>
+<li>El argumento «-o» permite sacar los resultados a un archivo en lugar
+de escribirlos por pantalla. Notar que en los ejemplos el tipo de
+salida está dado por la extensión del archivo dado como argumento.
+Debería, al menos, funcionar con extensiones «.dat», «.png», «.pdf»,
+«.eps».</li>
+<li>El resto de los argumentos mostrados en el ejemplo corresponden a los
+parámetros del analizador, excepto «-h» que se utilizará para dar
+información sobre el uso del programa.</li>
+</ul>
+<div class="section" id="extras">
+<h2>Extras:<a class="headerlink" href="#extras" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Utilice el módulo configparser para leer un archivo de configuración que
+tendrá los parámetros del tiempo de vuelo en una forma similar a la
+siguiente</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parámetros del TOF (esto es un comentario)</span>
+<span class="p">[</span><span class="n">tof</span><span class="p">]</span>
+<span class="n">s</span><span class="o">=</span> <span class="mf">0.59</span>
+<span class="n">d</span><span class="o">=</span> <span class="mf">1.30</span>
+<span class="n">D</span><span class="o">=</span> <span class="mf">100.0</span>
+<span class="n">Vs</span><span class="o">=</span> <span class="mi">200</span>
+<span class="n">Vd</span><span class="o">=</span> <span class="mi">3000</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ej_analisisdatos1.html" class="btn btn-neutral float-right" title="Análisis de datos" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ej_criptografia.html" class="btn btn-neutral" title="Análisis criptográfico de texto" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Juan Fiol
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'2019',
+              LANGUAGE:'es',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
