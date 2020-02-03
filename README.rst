@@ -3,21 +3,21 @@
 ==================================================================
 
 Material de clase para el Curso dictado, por primera vez en 2017, en el IB.
-Esta versión corresponde al Curso dictado en el primer semestre de 2019.
+En revisión para su nuevo dictado en el primer semestre de 2020.
 
 Autor
-~~~~~
+-----
 
 Juan Fiol
 
 Version
-~~~~~~~
+-------
 
-IB - 2019
+IB - 2020
 
 
 Licencia
-~~~~~~~~
+--------
 
 |Licencia Creative Commons|
 Esta obra está bajo una `Licencia Creative Commons
@@ -83,7 +83,7 @@ Blogs y otras publicaciones
 
 
 Programa
-========
+--------
 
 Clase 1: `Introducción, Instalación y ejemplos básicos de Python`
 -----------------------------------------------------------------
@@ -97,4 +97,199 @@ Clase 1: `Introducción, Instalación y ejemplos básicos de Python`
 *  Ejemplos
 *  Ejercicios
 
+
+Clase 2: `Conceptos básicos: Tipos`
+-----------------------------------
+
+* Biblioteca Standard y paquetes
+* Tipos de variables, asignaciones, operaciones y métodos:
+
+   * Variables numéricas
+   * Variables lógicas
+   * Variables de texto: strings
+   * Introducción a Listas
+
+* Introducción a control de flujo
+* Ejercicios 
+
+
+Clase 3: `Conceptos básicos: Tipos y Control de flujo`
+------------------------------------------------------
+
+* Tipos de variables, asignaciones, operaciones y métodos:
+
+   * Más operaciones con strings
+   * Listas y tuples
+   * Diccionarios 
+   * Conjuntos
+
+* Introducción a la entrada y salida de datos
+
+* Control de flujo
+  
+   * Condicionales (if/elif/else)
+   * Operadores lógicos
+   * Loops e iteraciones  
+
+* Ejercicios 
+
+
+Clase 4: `Control de flujo, funciones`
+--------------------------------------
+
+* Más información sobre tipos y control de flujo
+   * Loops e iteraciones sobre listas
+   * Loops e iteraciones sobre diccionarios
+
+* Funciones
+   * Definición de funciones
+   * Funciones con argumentos mandatorios
+   * Número variable de argumentos 
+
+* Ejercicios 
+
+
+Clase 5: `Módulos y funciones`
+------------------------------
+
+* Detalles sobre argumentos de funciones
+* Uso de módulos
+* Manejo de archivos y estructura de directorios
+* Entrada y salida de datos, archivos comprimidos
+
+* Ejercicios 
+
+
+Clase 6 `Breve introducción a la programación orientada a objetos en Python`
+----------------------------------------------------------------------------
+
+* Definición y características
+* Objetos y clases: diseños y encapsulamiento
+* Herencia
+* Desarrollo de un ejemplo
+
+* Ejercicios
+
+
+Clase 7: `Paquete para manipulación de vectores: Numpy`
+-------------------------------------------------------
+
+
+* Introducción a Numpy
+* Variables del tipo arreglo (*arrays*)
+  
+   * Creación manual y mediante funciones
+   * Tipos de datos
+   * Arrays multidimensionales
+
+* Cómo seleccionar partes de arreglos: *indexing* y *Slicing*
+* Algunas operaciones y métodos sobre arrays
+
+* Ejercicios 
+
+
+Clase 8: `Introducción a visualización: Matplotlib`
+---------------------------------------------------
+
+* Introducción a Matplotlib
+* Creación de gráficos simples
+* Títulos, leyendas, y otros. Introducción de fórmulas. 
+* Más de un gráfico por figura
+* Ejercicios
+
+
+Clase 9: `Más sobre Numpy y manipulación de vectores`
+-----------------------------------
+
+* Operaciones entre vectores
+* Uso de condicionales y arrays lógicos
+* Métodos de arrays, funciones y manipulación de arrays
+* Cambio de forma de arrays multidimensionales
+* Extensión de las dimensiones (broadcasting)
+* Generación de números aleatorios
+* Histogramas
+* Ejercicios
+
+
+Clase 10: `Entrada y salida de datos`
+----------------------------------------
+
+* Lectura y escritura de datos a archivos
+   * Trabajar con archivos comprimidos
+   * Datos en formato texto
+   * Datos en formatos binario
+   * Datos en otros formatos
+
+* Personalizando la visualización
+   * Archivos de configuración de matplotlib
+   * Hojas de estilo
+   * Creación de nuevos estilos y modificaciones
+     
+* Ejercicios
+ 
+
+Clase 11: `Introducción al paquete científico Scipy`
+----------------------------------------------------
+  
+* Introducción rápida a Scipy
+   * Funciones especiales
+   * Integración numérica
+   * Minimización y optimización
+* Breve uso en álgebra lineal
+  * Descomposición de matrices 
+  * Autovalores y autovectores
+  * Resolución de ecuaciones lineales
+* Una mirada rápida sobre imágenes
+* Ejercicios
+
+
+Clase 12: `Interpolación y ajuste de curvas (fiteo)`
+----------------------------------------------------
+  
+* Interpolación de datos
+* Splines y B-Splines
+* Ajuste de datos por cuadrados mínimos con polinomios
+* Ajuste de curvas con funciones arbitrarias
+* Fiteos utilizando el paquete científico Scipy
+* Ejemplo: Fiteo de picos
+* Ejercicios
+
+
+Clase 13: `"Widgets" y algunos cabos sueltos`
+---------------------------------------------
+
+* Algo más sobre manipulación de vectores
+   * Vectorización de funciones escalares
+   * Unión (concatenación) de arrays
+   * Enumerate para arrays
+   * Un poco más sobre imágenes
+
+* Widgets y gráficos interactivos
+   * Agregar un cursor a las figuras
+   * Interacción del usuario: manejo de eventos
+   * Ejemplo integrado
+
+
+
+Clase 14: `Transformadas de Fourier y Graficación 3D`
+-----------------------------------------------------
+
+* Introducción a transformadas de Fourier
+   * Transformada rápida de Fourier (FFT)
+   * Ejemplos: Funciones periódicas y Gaussianas
+   * Tranformación de funciones reales
+* Graficación 2D y 3D con **Matplotlib**
+   * Histogramas en 2D (colores, colormaps, particiones hexagonales)
+   * Gráficos de contornos
+   * Superficies y contornes en 3D
+   * Gráficos de campos vectoriales
+
+
+
+Clase 15: `Interfaces con otros lenguajes y animaciones`
+--------------------------------------------------------
+
+* Interfaces con Fortran (moderno y heredado)
+
+* Animaciones con matplotlib
 
