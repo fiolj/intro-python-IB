@@ -1,0 +1,1485 @@
+Clase 4: Algunas Técnicas de iteración 
+========================================
+
+
+En la clase anterior introdujimos tipos complejos en adición a las
+listas: tuples, diccionarios (``dict``), conjuntos (``set``). Algunas
+técnicas usuales de iteración sobre estos objetos. ## Iteración sobre
+conjuntos (*set*)
+
+.. code:: python
+
+    conj = set("Hola amigos, como están") # Creamos un conjunto desde un string
+    conj
+
+
+
+
+.. parsed-literal::
+
+    {' ', ',', 'H', 'a', 'c', 'e', 'g', 'i', 'l', 'm', 'n', 'o', 's', 't', 'á'}
+
+
+
+.. code:: python
+
+    # Iteramos sobre los elementos del conjunto
+    for elem in conj:
+      print(elem, end='')
+
+
+.. parsed-literal::
+
+    cs omHgtaánlei,
+
+Comparemos que pasa cuando lo ejecutamos reiteradamente como un script
+en Python…
+
+.. code:: python
+
+    # %load scripts/04_ejemplo_1.py
+    conj = set("Hola amigos, como están")
+    for elem in conj:
+      print (elem, end='')
+    print('\n')
+
+
+
+.. parsed-literal::
+
+    cs omHgtaánlei,
+    
+
+
+Iteración sobre elementos de dos listas
+---------------------------------------
+
+Consideremos las listas:
+
+.. code:: python
+
+    temp_min = [-3.2, -2, 0, -1, 4, -5, -2, 0, 4, 0]
+    temp_max = [13.2, 12, 13, 7, 18, 5, 11, 14, 10 , 10]
+
+Queremos imprimir una lista que combine los dos datos:
+
+.. code:: python
+
+    for t1, t2 in zip(temp_min, temp_max):
+      print('La temperatura mínima fue {} y la máxima fue {}'.format(t1, t2))
+
+
+.. parsed-literal::
+
+    La temperatura mínima fue -3.2 y la máxima fue 13.2
+    La temperatura mínima fue -2 y la máxima fue 12
+    La temperatura mínima fue 0 y la máxima fue 13
+    La temperatura mínima fue -1 y la máxima fue 7
+    La temperatura mínima fue 4 y la máxima fue 18
+    La temperatura mínima fue -5 y la máxima fue 5
+    La temperatura mínima fue -2 y la máxima fue 11
+    La temperatura mínima fue 0 y la máxima fue 14
+    La temperatura mínima fue 4 y la máxima fue 10
+    La temperatura mínima fue 0 y la máxima fue 10
+
+
+Como vemos, la función ``zip`` combina los elementos, tomando uno de
+cada lista
+
+Podemos mejorar la salida anterior por pantalla si volvemos a utilizar
+la función ``enumerate``
+
+.. code:: python
+
+    for j, t1, t2 in enumerate(zip(temp_min, temp_max)):
+      print('El día {} la temperatura mínima fue {} y la máxima fue {}'.format(1+j, t[0], t[1]))
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    <ipython-input-8-6170f6c3b697> in <module>
+    ----> 1 for j, t1, t2 in enumerate(zip(temp_min, temp_max)):
+          2   print('El día {} la temperatura mínima fue {} y la máxima fue {}'.format(1+j, t[0], t[1]))
+
+
+    ValueError: not enough values to unpack (expected 3, got 2)
+
+
+¿Cuál fue el problema acá? ¿qué retorna zip?
+
+.. code:: python
+
+    list(zip(temp_min, temp_max))
+
+
+
+
+.. parsed-literal::
+
+    [(-3.2, 13.2),
+     (-2, 12),
+     (0, 13),
+     (-1, 7),
+     (4, 18),
+     (-5, 5),
+     (-2, 11),
+     (0, 14),
+     (4, 10),
+     (0, 10)]
+
+
+
+.. code:: python
+
+    for j, t in enumerate(zip(temp_min, temp_max),1):
+      print('El día {} la temperatura mínima fue {} y la máxima fue {}'.
+            format(j, t[0], t[1]))
+
+
+
+.. parsed-literal::
+
+    El día 1 la temperatura mínima fue -3.2 y la máxima fue 13.2
+    El día 2 la temperatura mínima fue -2 y la máxima fue 12
+    El día 3 la temperatura mínima fue 0 y la máxima fue 13
+    El día 4 la temperatura mínima fue -1 y la máxima fue 7
+    El día 5 la temperatura mínima fue 4 y la máxima fue 18
+    El día 6 la temperatura mínima fue -5 y la máxima fue 5
+    El día 7 la temperatura mínima fue -2 y la máxima fue 11
+    El día 8 la temperatura mínima fue 0 y la máxima fue 14
+    El día 9 la temperatura mínima fue 4 y la máxima fue 10
+    El día 10 la temperatura mínima fue 0 y la máxima fue 10
+
+
+.. code:: python
+
+    # ¿Qué pasa cuńdo una se consume antes que la otra?
+    for t1, t2 in zip([1,2,3,4,5],[3,4,5]):
+        print(t1,t2)
+
+
+.. parsed-literal::
+
+    1 3
+    2 4
+    3 5
+
+
+Podemos utilizar la función ``zip`` para sumar dos listas término a
+término. ``zip`` funciona también con más de dos listas
+
+.. code:: python
+
+    for j,t1,t2 in zip(range(1,len(temp_min)+1),temp_min, temp_max):
+      print('El día {} la temperatura mínima fue {} y la máxima fue {}'
+            .format(j, t1, t2))
+
+
+
+.. parsed-literal::
+
+    El día 1 la temperatura mínima fue -3.2 y la máxima fue 13.2
+    El día 2 la temperatura mínima fue -2 y la máxima fue 12
+    El día 3 la temperatura mínima fue 0 y la máxima fue 13
+    El día 4 la temperatura mínima fue -1 y la máxima fue 7
+    El día 5 la temperatura mínima fue 4 y la máxima fue 18
+    El día 6 la temperatura mínima fue -5 y la máxima fue 5
+    El día 7 la temperatura mínima fue -2 y la máxima fue 11
+    El día 8 la temperatura mínima fue 0 y la máxima fue 14
+    El día 9 la temperatura mínima fue 4 y la máxima fue 10
+    El día 10 la temperatura mínima fue 0 y la máxima fue 10
+
+
+.. code:: python
+
+    tmedia = []
+    for t1, t2 in zip(temp_min, temp_max):
+      tmedia.append((t1+t2)/2)
+    print(tmedia)
+
+
+.. parsed-literal::
+
+    [5.0, 5.0, 6.5, 3.0, 11.0, 0.0, 4.5, 7.0, 7.0, 5.0]
+
+
+También podemos escribirlo en forma más compacta usando comprensiones de
+listas
+
+.. code:: python
+
+    tm = [(t1+t2)/2 for t1,t2 in zip(temp_min,temp_max)]
+    print(tm)
+
+
+.. parsed-literal::
+
+    [5.0, 5.0, 6.5, 3.0, 11.0, 0.0, 4.5, 7.0, 7.0, 5.0]
+
+
+Más sobre diccionarios
+----------------------
+
+Creación
+~~~~~~~~
+
+.. code:: python
+
+    d0 = {}                         # Equivalente a:  dict()
+    d1 = {'S': 'Al', 'Z': 13, 'A': 27, 'M':26.98153863 }
+    d2 = {'A': 27, 'M':26.98153863, 'S': 'Al', 'Z': 13 }
+    d3 = dict( [('S','Al'), ('Z',13), ('A',27), ('M',26.98153863)])
+
+.. code:: python
+
+    d0
+
+
+
+
+.. parsed-literal::
+
+    {}
+
+
+
+.. code:: python
+
+    d1
+
+
+
+
+.. parsed-literal::
+
+    {'S': 'Al', 'Z': 13, 'A': 27, 'M': 26.98153863}
+
+
+
+.. code:: python
+
+    d2 == d1
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    d2 is d1
+
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
+.. code:: python
+
+    d6 = d2.copy()
+    print(d6 == d2)
+    print(d6 is d2)
+
+
+.. parsed-literal::
+
+    True
+    False
+
+
+.. code:: python
+
+    d3 == d1
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    d4 = dict(zip(temp_min, temp_max)) # temp_min tendrá "keys" y temp_max los "values"
+    d5 = {n: n**2 for n in range(6)}
+
+.. code:: python
+
+    d4
+
+
+
+
+.. parsed-literal::
+
+    {-3.2: 13.2, -2: 11, 0: 10, -1: 7, 4: 10, -5: 5}
+
+
+
+.. code:: python
+
+    d5
+
+
+
+
+.. parsed-literal::
+
+    {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
+
+
+
+¿Qué espera que produzca el siguiente código?
+
+.. code:: python
+
+    temps = {j: {'Tmin': t[0], 'Tmax': t[1]}
+          for j, t in enumerate(zip(temp_min, temp_max), 1)}
+
+.. code:: python
+
+    temps
+
+
+
+
+.. parsed-literal::
+
+    {1: {'Tmin': -3.2, 'Tmax': 13.2},
+     2: {'Tmin': -2, 'Tmax': 12},
+     3: {'Tmin': 0, 'Tmax': 13},
+     4: {'Tmin': -1, 'Tmax': 7},
+     5: {'Tmin': 4, 'Tmax': 18},
+     6: {'Tmin': -5, 'Tmax': 5},
+     7: {'Tmin': -2, 'Tmax': 11},
+     8: {'Tmin': 0, 'Tmax': 14},
+     9: {'Tmin': 4, 'Tmax': 10},
+     10: {'Tmin': 0, 'Tmax': 10}}
+
+
+
+Iteraciones sobre diccionarios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    for k in temps:
+      print('La temperatura máxima del día {} fue {} y la mínima {}'
+            .format(k, temps[k]['Tmin'], temps[k]['Tmax']))
+
+
+.. parsed-literal::
+
+    La temperatura máxima del día 1 fue -3.2 y la mínima 13.2
+    La temperatura máxima del día 2 fue -2 y la mínima 12
+    La temperatura máxima del día 3 fue 0 y la mínima 13
+    La temperatura máxima del día 4 fue -1 y la mínima 7
+    La temperatura máxima del día 5 fue 4 y la mínima 18
+    La temperatura máxima del día 6 fue -5 y la mínima 5
+    La temperatura máxima del día 7 fue -2 y la mínima 11
+    La temperatura máxima del día 8 fue 0 y la mínima 14
+    La temperatura máxima del día 9 fue 4 y la mínima 10
+    La temperatura máxima del día 10 fue 0 y la mínima 10
+
+
+Cómo comentamos anteriormente, cuando iteramos sobre un diccionario
+estamos moviéndonos sobre las ``(k)eys``
+
+.. code:: python
+
+    temps.keys()
+
+
+
+
+.. parsed-literal::
+
+    dict_keys([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+
+
+.. code:: python
+
+    7 in temps
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    7 in temps.keys()
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    11 in temps
+
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
+Para referirnos al valor tenemos que hacerlo en la forma ``temps[k]``, y
+no siempre es una manera muy clara de escribir las cosas. Otra manera
+similar, pero más limpia en este caso sería:
+
+.. code:: python
+
+    list(temps.items())
+
+
+
+
+.. parsed-literal::
+
+    [(1, {'Tmin': -3.2, 'Tmax': 13.2}),
+     (2, {'Tmin': -2, 'Tmax': 12}),
+     (3, {'Tmin': 0, 'Tmax': 13}),
+     (4, {'Tmin': -1, 'Tmax': 7}),
+     (5, {'Tmin': 4, 'Tmax': 18}),
+     (6, {'Tmin': -5, 'Tmax': 5}),
+     (7, {'Tmin': -2, 'Tmax': 11}),
+     (8, {'Tmin': 0, 'Tmax': 14}),
+     (9, {'Tmin': 4, 'Tmax': 10}),
+     (10, {'Tmin': 0, 'Tmax': 10})]
+
+
+
+.. code:: python
+
+    for k, v in temps.items():
+      print('La temperatura máxima del día {} fue {} y la mínima {}'
+            .format(k,v['Tmin'], v['Tmax']))
+
+
+.. parsed-literal::
+
+    La temperatura máxima del día 1 fue -3.2 y la mínima 13.2
+    La temperatura máxima del día 2 fue -2 y la mínima 12
+    La temperatura máxima del día 3 fue 0 y la mínima 13
+    La temperatura máxima del día 4 fue -1 y la mínima 7
+    La temperatura máxima del día 5 fue 4 y la mínima 18
+    La temperatura máxima del día 6 fue -5 y la mínima 5
+    La temperatura máxima del día 7 fue -2 y la mínima 11
+    La temperatura máxima del día 8 fue 0 y la mínima 14
+    La temperatura máxima del día 9 fue 4 y la mínima 10
+    La temperatura máxima del día 10 fue 0 y la mínima 10
+
+
+Si queremos iterar sobre los valores podemos utilizar simplemente:
+
+.. code:: python
+
+    for v in temps.values():
+      print(v)
+
+
+
+.. parsed-literal::
+
+    {'Tmin': -3.2, 'Tmax': 13.2}
+    {'Tmin': -2, 'Tmax': 12}
+    {'Tmin': 0, 'Tmax': 13}
+    {'Tmin': -1, 'Tmax': 7}
+    {'Tmin': 4, 'Tmax': 18}
+    {'Tmin': -5, 'Tmax': 5}
+    {'Tmin': -2, 'Tmax': 11}
+    {'Tmin': 0, 'Tmax': 14}
+    {'Tmin': 4, 'Tmax': 10}
+    {'Tmin': 0, 'Tmax': 10}
+
+
+Remarquemos que los diccionarios no tienen definidos un orden por lo que
+no hay garantías que la próxima vez que ejecutemos cualquiera de estas
+líneas de código el resultado sea exactamente el mismo. Además, si
+queremos imprimirlos en un orden predecible debemos escribirlo
+explícitamente. Por ejemplo:
+
+.. code:: python
+
+    l=list(temps.keys())
+    l.sort(reverse=True)
+
+.. code:: python
+
+    l
+
+
+
+
+.. parsed-literal::
+
+    [10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+
+
+
+.. code:: python
+
+    for k in l:
+      print(k, temps[k])
+
+
+.. parsed-literal::
+
+    10 {'Tmin': 0, 'Tmax': 10}
+    9 {'Tmin': 4, 'Tmax': 10}
+    8 {'Tmin': 0, 'Tmax': 14}
+    7 {'Tmin': -2, 'Tmax': 11}
+    6 {'Tmin': -5, 'Tmax': 5}
+    5 {'Tmin': 4, 'Tmax': 18}
+    4 {'Tmin': -1, 'Tmax': 7}
+    3 {'Tmin': 0, 'Tmax': 13}
+    2 {'Tmin': -2, 'Tmax': 12}
+    1 {'Tmin': -3.2, 'Tmax': 13.2}
+
+
+La secuencia anterior puede escribirse en forma más compacta como
+
+.. code:: python
+
+    for k in sorted(list(temps),reverse=True):
+      print(k, temps[k])
+
+
+.. parsed-literal::
+
+    10 {'Tmin': 0, 'Tmax': 10}
+    9 {'Tmin': 4, 'Tmax': 10}
+    8 {'Tmin': 0, 'Tmax': 14}
+    7 {'Tmin': -2, 'Tmax': 11}
+    6 {'Tmin': -5, 'Tmax': 5}
+    5 {'Tmin': 4, 'Tmax': 18}
+    4 {'Tmin': -1, 'Tmax': 7}
+    3 {'Tmin': 0, 'Tmax': 13}
+    2 {'Tmin': -2, 'Tmax': 12}
+    1 {'Tmin': -3.2, 'Tmax': 13.2}
+
+
+.. code:: python
+
+    list(temps)
+
+
+
+
+.. parsed-literal::
+
+    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+
+
+.. code:: python
+
+    for k in sorted(list(temps.keys()), reverse=True):
+        print(k, temps[k])
+
+
+.. parsed-literal::
+
+    10 {'Tmin': 0, 'Tmax': 10}
+    9 {'Tmin': 4, 'Tmax': 10}
+    8 {'Tmin': 0, 'Tmax': 14}
+    7 {'Tmin': -2, 'Tmax': 11}
+    6 {'Tmin': -5, 'Tmax': 5}
+    5 {'Tmin': 4, 'Tmax': 18}
+    4 {'Tmin': -1, 'Tmax': 7}
+    3 {'Tmin': 0, 'Tmax': 13}
+    2 {'Tmin': -2, 'Tmax': 12}
+    1 {'Tmin': -3.2, 'Tmax': 13.2}
+
+
+Ejercicios 04 (a)
+-----------------
+
+1. Realice un programa para:
+
+   -  Leer los datos del archivo **aluminio.dat** y poner los datos del
+      elemento en un diccionario de la forma:
+
+   .. code:: python
+
+       d = {'S': 'Al', 'Z':13, 'A':27, 'M': '26.98153863(12)', 'P': 1.0000, 'MS':26.9815386(8)'}
+
+   -  Modifique el programa anterior para que las masas sean números
+      (``float``) y descarte el valor de la incerteza (el número entre
+      paréntesis)
+   -  Agregue el código necesario para obtener una impresión de la
+      forma:
+
+   ::
+
+       Elemento: Al
+       Número Atómico: 13
+       Número de Masa: 27
+       Masa: 26.98154
+
+   Note que la masa sólo debe contener 5 números decimales
+
+
+
+Funciones 
+----------
+
+Las funciones son objetos
+-------------------------
+
+Las funciones en **Python**, como en la mayoría de los lenguajes, usan
+una notación similar a la de las funciones matemáticas, con un nombre y
+uno o más argumentos entre paréntesis. Por ejemplo, ya usamos la función
+``sum`` cuyo argumento es una lista o una *tuple* de números
+
+.. code:: python
+
+    a = [1, 3.3, 5, 7.5, 2.2]
+    sum(a)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
+.. code:: python
+
+    b = tuple(a)
+    sum(b)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
+.. code:: python
+
+    sum
+
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, start=0, /)>
+
+
+
+.. code:: python
+
+    print
+
+
+
+
+.. parsed-literal::
+
+    <function print>
+
+
+
+En **Python** ``function`` es un objeto, con una única operación
+posible: podemos llamarla, en la forma: ``func(lista-de-argumentos)``
+
+Como con todos los objetos, podemos definir una variable y asignarle una
+función (algo así como lo que en C sería un puntero a funciones)
+
+.. code:: python
+
+    f = sum
+    help(f)
+
+
+.. parsed-literal::
+
+    Help on built-in function sum in module builtins:
+    
+    sum(iterable, start=0, /)
+        Return the sum of a 'start' value (default: 0) plus an iterable of numbers
+        
+        When the iterable is empty, return the start value.
+        This function is intended specifically for use with numeric values and may
+        reject non-numeric types.
+    
+
+
+.. code:: python
+
+    print('¿f is sum? ', f is sum)
+    print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+
+.. parsed-literal::
+
+    ¿f is sum?  True
+    f(a)= 19.0   sum(a)= 19.0
+
+
+También podemos crear un diccionario donde los valores sean funciones:
+
+.. code:: python
+
+    funciones = {'suma': sum, 'minimo': min, 'maximo': max}
+
+.. code:: python
+
+    funciones['suma']
+
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, start=0, /)>
+
+
+
+.. code:: python
+
+    funciones['suma'](a)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
+.. code:: python
+
+    print('\n', 'a =', a,'\n')
+    for k, v in funciones.items():
+      print(k, v(a))
+
+
+.. parsed-literal::
+
+    
+     a = [1, 3.3, 5, 7.5, 2.2] 
+    
+    suma 19.0
+    minimo 1
+    maximo 7.5
+
+
+Definición básica de funciones
+------------------------------
+
+Tomemos el ejemplo del tutorial de la documentación de Python. Vimos, al
+introducir el elemento de control **while** una forma de calcular la
+serie de Fibonacci. Usemos ese ejemplo para mostrar como se definen las
+funciones
+
+.. code:: python
+
+    def fib(n):
+      """Devuelve una lista con los términos
+      de la serie de Fibonacci hasta n."""
+      result = []
+      a, b = 0, 1
+      while a < n:
+        result.append(a)    
+        a, b = b, a+b
+      return result
+
+
+.. code:: python
+
+    fib(100)
+
+
+
+
+.. parsed-literal::
+
+    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+
+
+.. code:: python
+
+    fib
+
+
+
+
+.. parsed-literal::
+
+    <function __main__.fib(n)>
+
+
+
+**Puntos a notar:** \* Las funciones se definen utilizando la palabra
+``def`` seguida por el nombre, \* A continuación, entre paréntesis se
+escriben los argumentos, en este caso el entero ``n``, \* La función
+devuelve (*retorna*) algo, en este caso una lista. Si una función no
+devuelve algo explícitamente, entonces devuelve ``None``. \* Lo que
+devuelve la función se especifica mediante la palabra reservada
+``return`` \* Al principio de la definición de la función se escribe la
+documentación
+
+.. code:: python
+
+    help(fib)
+
+
+.. parsed-literal::
+
+    Help on function fib in module __main__:
+    
+    fib(n)
+        Devuelve una lista con los términos
+        de la serie de Fibonacci hasta n.
+    
+
+
+.. code:: python
+
+    fib?
+
+.. code:: python
+
+    fib.__doc__
+
+
+
+
+.. parsed-literal::
+
+    'Devuelve una lista con los términos\n  de la serie de Fibonacci hasta n.'
+
+
+
+Como segundo ejemplo, consideremos el ejercicio donde pedimos la
+velocidad y altura de una pelota en caída libre. Pero esta vez definimos
+una función para realizar los cálculos:
+
+.. code:: python
+
+    h_0 = 500                       # altura inicial en m
+    v_0 = 0                         # velocidad inicial en m/s
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida(t):
+      v = v_0 - g*t
+      h = h_0 - v_0*t - g*t**2/2.
+      return v,h
+
+.. code:: python
+
+    print(caida(1))
+
+
+.. parsed-literal::
+
+    (-9.8, 495.1)
+
+
+.. code:: python
+
+    v, h = caida(1.5)
+
+.. code:: python
+
+    print('Para t = {0}, la velocidad será v={1}\
+     y estará a una altura {2:.2f}'.format(1.5, v, h))
+
+
+.. parsed-literal::
+
+    Para t = 1.5, la velocidad será v=-14.700000000000001 y estará a una altura 488.98
+
+
+.. code:: python
+
+    v, h = caida(2.2)
+    print('Para t = {0}, la velocidad será v={1}, y estará a una altura {2}'.format(
+           2.2, v, h))
+
+
+.. parsed-literal::
+
+    Para t = 2.2, la velocidad será v=-21.560000000000002, y estará a una altura 476.284
+
+
+Podemos mejorar considerablemente la funcionalidad si le damos la
+posibilidad al usuario de dar la posición y la velocidad iniciales
+
+.. code:: python
+
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida2(t, h_0, v_0):
+      """Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+      h_0 es la altura inicial
+      v_0 es la velocidad inicial
+      Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+      """
+      v = v_0 - g*t
+      h = h_0 - v_0*t - g*t**2/2.
+      return v,h
+
+.. code:: python
+
+    v,h = caida2(2.2, 100, 12)
+    print('''Para caída desde {h0}m, con vel. inicial {v0}m/s, a t = {0}, 
+    la velocidad será v={1}, y estará a una altura {2}'''.
+          format(2.2, v, h, h0=100, v0=12))
+
+
+.. parsed-literal::
+
+    Para caída desde 100m, con vel. inicial 12m/s, a t = 2.2, 
+    la velocidad será v=-9.560000000000002, y estará a una altura 49.883999999999986
+
+
+Notemos que podemos llamar a esta función de varias maneras. Podemos
+llamarla con la constante, o con una variable indistintamente. En este
+caso, el argumento está definido por su posición: El primero es la
+altura inicial (h_0) y el segundo la velocidad inicial (v_0).
+
+.. code:: python
+
+    v0 = 12
+    caida2(2.2, 100, v0)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+Pero en Python podemos usar el nombre de la variable. Por ejemplo:
+
+.. code:: python
+
+    caida2(v_0=v0,t=2.2, h_0=100)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+Argumentos de las funciones
+---------------------------
+
+Ámbito de las variables en los argumentos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consideremos la siguiente función
+
+.. code:: python
+
+    def func1(x):
+      print('x entró a la función con el valor', x)
+      x = 2
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    x = 50
+    print('Originalmente x vale',x)
+    func1(x)
+    print('Ahora x vale',x)  
+
+
+.. parsed-literal::
+
+    Originalmente x vale 50
+    x entró a la función con el valor 50
+    El nuevo valor de x es 2
+    Ahora x vale 50
+
+
+.. code:: python
+
+    def func2(x):
+      print('x entró a la función con el valor', x)
+      print('Id adentro:',id(x))
+      x = [2,7]
+      print('El nuevo valor de x es', x)
+      print('Id adentro:',id(x))
+
+.. code:: python
+
+    x = [50]
+    print('Originalmente x vale',x)
+    func2(x)
+    print('Ahora x vale',x)
+    print('Id afuera:', id(x))
+
+
+.. parsed-literal::
+
+    Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    Id adentro: 139793404910720
+    El nuevo valor de x es [2, 7]
+    Id adentro: 139793405075776
+    Ahora x vale [50]
+    Id afuera: 139793404910720
+
+
+¿Qué está pasando acá? Cuando se realiza la llamada a la función, se le
+pasa una copia del nombre ``x``. Cuando le damos un nuevo valor dentro
+de la función, como en el caso ``x = [2]``, entonces esta copia apunta a
+un nuevo objeto que estamos creando. Por lo tanto, la variable original
+–definida fuera de la función– no cambia.
+
+En el primer caso, como los escalares son inmutables (de la misma manera
+que los strings y tuplas) no puede ser modificada, y al reasignarla
+siempre estamos haciendo apuntar la copia a una nueva variable.
+
+Consideremos estas variantes:
+
+.. code:: python
+
+    def func3a(x):
+      print('x entró a la función con el valor', x)
+      x.append(2)
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    x = [50]
+    print('Originalmente x vale',x)
+    func3a(x)
+    print('Ahora x vale',x)  
+
+
+.. parsed-literal::
+
+    Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    El nuevo valor de x es [50, 2]
+    Ahora x vale [50, 2]
+
+
+.. code:: python
+
+    def func4(x):
+      print('x entró a la función con el valor', x)
+      x[0] = 2
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    x = [50]
+    print('Originalmente x vale',x)
+    func4(x)
+    print('Ahora x vale',x)  
+
+
+.. parsed-literal::
+
+    Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    El nuevo valor de x es [2]
+    Ahora x vale [2]
+
+
+Por otro lado, cuando asignamos directamente un valor a uno o más de sus
+elementos o agregamos elementos a la lista, la copia sigue apuntando a
+la variable original y el valor de la variable, definida originalmente
+afuera, cambia.
+
+Funciones con argumentos opcionales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Las funciones pueden tener muchos argumentos. En **Python** pueden tener
+un número variable de argumentos y pueden tener valores por *default*
+para algunos de ellos. En el caso de la función de caída libre, vamos a
+extenderlo de manera que podamos usarlo fuera de la tierra (o en otras
+latitudes) permitiendo cambiar el valor de la gravedad y asumiendo que,
+a menos que lo pidamos explícitamente se trata de una simple caída
+libre:
+
+.. code:: python
+
+    def caida_libre(t, h0, v0 = 0., g=9.8):
+      """Devuelve la velocidad y la posición de una partícula en
+      caída libre para condiciones iniciales dadas
+    
+      Parameters
+      ----------
+      t : float
+          el tiempo al que queremos realizar el cálculo
+      h0: float 
+          la altura inicial
+      v0: float (opcional)
+          la velocidad inicial (default = 0.0)
+       g: float (opcional)
+          valor de la aceleración de la gravedad (default = 9.8)
+    
+      Returns
+      -------
+      (v,h):  tuple of floats
+           v= v0 - g*t
+           h= h0 - v0*t -g*t^2/2
+      
+      """
+      v = v0 - g*t
+      h = h0 - v0*t - g*t**2/2.
+      return v,h
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero
+    print( caida_libre(2,1000))
+
+
+.. parsed-literal::
+
+    (-19.6, 980.4)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial hacia arriba
+    print(caida_libre(1, 1000, 10))
+
+
+.. parsed-literal::
+
+    (0.1999999999999993, 985.1)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero
+    print(caida_libre(h0= 1000, t=2))
+
+
+.. parsed-literal::
+
+    (-19.6, 980.4)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre( v0=0, h0=1000, t=14.2857137))
+
+
+.. parsed-literal::
+
+    (-139.99999426000002, 8.199999820135417e-05)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre( v0=0, h0=1000, t=14.2857137, g=1.625))
+
+
+.. parsed-literal::
+
+    (-23.2142847625, 834.1836870663262)
+
+
+.. code:: python
+
+    help(caida_libre)
+
+
+.. parsed-literal::
+
+    Help on function caida_libre in module __main__:
+    
+    caida_libre(t, h0, v0=0.0, g=9.8)
+        Devuelve la velocidad y la posición de una partícula en
+        caída libre para condiciones iniciales dadas
+        
+        Parameters
+        ----------
+        t : float
+            el tiempo al que queremos realizar el cálculo
+        h0: float 
+            la altura inicial
+        v0: float (opcional)
+            la velocidad inicial (default = 0.0)
+         g: float (opcional)
+            valor de la aceleración de la gravedad (default = 9.8)
+        
+        Returns
+        -------
+        (v,h):  tuple of floats
+             v= v0 - g*t
+             h= h0 - v0*t -g*t^2/2
+    
+
+
+Tipos mutables en argumentos opcionales
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Hay que tener cuidado cuando usamos valores por defecto con tipos que
+pueden modificarse dentro de la función. Consideremos la siguiente
+función:
+
+.. code:: python
+
+    def func2b(x1, x=[]):
+      print('x entró a la función con el valor', x)
+      x.append(x1)
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    func2b(1)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor []
+    El nuevo valor de x es [1]
+
+
+.. code:: python
+
+    func2b(2)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor [1]
+    El nuevo valor de x es [1, 2]
+
+
+**Notar:** No se pueden usar argumentos con *nombre* antes de los
+argumentos requeridos (en este caso ``t``).
+
+Tampoco se pueden usar argumentos sin su *nombre* después de haber
+incluido alguno con su nombre. Por ejemplo no son válidas las llamadas:
+
+.. code:: python
+
+   caida_libre(t=2, 0.)
+   caida_libre(2, v0=0., 1000)
+
+Número variable de argumentos y argumentos *keywords*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se pueden definir funciones que toman un número variable de argumentos
+(como una lista), o que aceptan un diccionario como argumento. Este tipo
+de argumentos se llaman argumentos *keyword* (``kwargs``). Una buena
+explicación se encuentra en el `Tutorial de la
+documentación <https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments>`__.
+Ahora vamos a usar otra explicación rápida. Consideremos la función
+``f``, que imprime sus argumentos:
+
+.. code:: python
+
+    def f(p, *args, **kwargs):
+      print( "p: {}, tipo: {}".format( p, type(p)) )
+      print( "args: {}, tipo: {}".format( args, type(args)))
+      print( "kwargs: {}, tipo: {}".format( kwargs, type(kwargs)))
+
+.. code:: python
+
+    f(1,2,3)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (2, 3), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1,2,3,4,5,6)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (2, 3, 4, 5, 6), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+En este ejemplo, el primer valor se asigna al argumento requerido ``p``,
+y los siguientes a una variable que se llama ``args``, que es del tipo
+``tuple``
+
+.. code:: python
+
+    f(1,2, 3, 5, anteultimo= 9, ultimo = -1)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (2, 3, 5), tipo: <class 'tuple'>
+    kwargs: {'anteultimo': 9, 'ultimo': -1}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1, (1,2,3), 4, ultimo=-1)
+
+Con ``*args`` se indica *“mapear todos los argumentos posicionales no
+explícitos a una tupla llamada ``args``”*. Con ``**kwargs`` se indica
+“mapear todos los argumentos de palabra clave no explícitos a un
+diccionario llamado ``kwargs``”. Esta acción de convertir un conjunto de
+argumentos a una tuple o diccionario se conoce como *empacar* o
+*empaquetar* los datos.
+
+**NOTA**: Por supuesto, no es necesario utilizar los nombres “args” y
+“kwargs”. Podemos llamarlas de cualquier otra manera! los simbolos que
+indican cantidades arbitrarias de parametros son ``*`` y ``**``. Además
+es posible poner parametros “comunes” antes de los parametros
+arbitrarios, como se muestra en el ejemplo.
+
+Exploremos otras variantes de llamadas a la función:
+
+.. code:: python
+
+    f(1, ultimo=-1)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1, ultimo=-1, 2)
+
+
+::
+
+
+      File "<ipython-input-59-acd06ccc380f>", line 1
+        f(1, ultimo=-1, 2)
+                       ^
+    SyntaxError: positional argument follows keyword argument
+
+
+
+.. code:: python
+
+    f(ultimo=-1, p=2)
+
+
+.. parsed-literal::
+
+    p: 2, tipo: <class 'int'>
+    args: (), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
+
+Un ejemplo de una función con número variable de argumentos puede ser la
+función ``multiplica``:
+
+.. code:: python
+
+    def multiplica(*args):
+      s = 1
+      for a in args:
+        s *= a
+      return s
+
+.. code:: python
+
+    multiplica(2,5)
+
+
+
+
+.. parsed-literal::
+
+    10
+
+
+
+.. code:: python
+
+    multiplica(2,3,5,9,12)
+
+
+
+
+.. parsed-literal::
+
+    3240
+
+
+
+Ejercicios 4 (b)
+----------------
+
+2. Escriba funciones para analizar la divisibilidad de enteros:
+
+   -  La función ``es_divisible1(x)`` que retorna verdadero si x es
+      divisible por alguno de ``2,3,5,7`` o falso en caso contrario.
+   -  La función ``es_divisible_por_lista`` que cumple la misma función
+      que ``es_divisible1`` pero recibe dos argumentos: el entero ``x``
+      y una variable del tipo lista que contiene los valores para los
+      cuáles debemos examinar la divisibilidad. Las siguientes
+      expresiones deben retornar el mismo valor:
+
+   .. code:: python
+
+      es_divisible1(x) 
+      es_divisible_por_lista(x, [2,3,5,7])
+      es_divisible_por_lista(x)
+
+   -  La función ``es_divisible_por`` cuyo primer argumento (mandatorio)
+      es ``x``, y luego puede aceptar un número indeterminado de
+      argumentos:
+
+   .. code:: python
+
+      es_divisible_por(x)  # retorna verdadero siempre
+      es_divisible_por(x, 2) # verdadero si x es par
+      es_divisible_por(x, 2, 3, 5, 7) # igual resultado que es_divisible1(x) e igual a es_divisible_por_lista(x)
+      es_divisible_por(x, 2, 3, 5, 7, 9, 11, 13)  # o cualquier secuencia de argumentos debe funcionar
