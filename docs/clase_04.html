@@ -1,0 +1,1277 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Clase 4: Técnicas de iteración y Funciones &mdash; documentación de Clases de Python - 2020.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Clase 5: Funciones" href="clase_05.html" />
+    <link rel="prev" title="Clase 3: Control de flujo y tipos complejos" href="clase_03.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Clases de Python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2020
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Tipos de datos y control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Control de flujo y tipos complejos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 4: Técnicas de iteración y Funciones</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#iteracion-sobre-conjuntos-set">Iteración sobre conjuntos (<em>set</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#iteracion-sobre-elementos-de-dos-listas">Iteración sobre elementos de dos listas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mas-sobre-diccionarios">Más sobre diccionarios</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creacion">Creación</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteraciones-sobre-diccionarios">Iteraciones sobre diccionarios</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-04-a">Ejercicios 04 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funciones">Funciones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#las-funciones-son-objetos">Las funciones son objetos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#definicion-basica-de-funciones">Definición básica de funciones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#argumentos-de-las-funciones">Argumentos de las funciones</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ambito-de-las-variables-en-los-argumentos">Ámbito de las variables en los argumentos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#funciones-con-argumentos-opcionales">Funciones con argumentos opcionales</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tipos-mutables-en-argumentos-opcionales">Tipos mutables en argumentos opcionales</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numero-variable-de-argumentos-y-argumentos-keywords">Número variable de argumentos y argumentos <em>keywords</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-4-b">Ejercicios 4 (b)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Programación Orientada a Objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Control de versiones y biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_01.html">Ejercicios de Clase 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_02.html">Ejercicios de Clase 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_03.html">Ejercicios de Clase 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_04.html">Ejercicios de Clase 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_05.html">Ejercicios de Clase 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_06.html">Ejercicios de Clase 6</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Clase 4: Técnicas de iteración y Funciones</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/clase_04.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="clase-4-tecnicas-de-iteracion-y-funciones">
+<h1>Clase 4: Técnicas de iteración y Funciones<a class="headerlink" href="#clase-4-tecnicas-de-iteracion-y-funciones" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>En la clase anterior introdujimos tipos complejos en adición a las
+listas: tuples, diccionarios (<code class="docutils literal notranslate"><span class="pre">dict</span></code>), conjuntos (<code class="docutils literal notranslate"><span class="pre">set</span></code>). Algunas
+técnicas usuales de iteración sobre estos objetos.</p>
+<div class="section" id="iteracion-sobre-conjuntos-set">
+<h2>Iteración sobre conjuntos (<em>set</em>)<a class="headerlink" href="#iteracion-sobre-conjuntos-set" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conj</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">&quot;Hola amigos, como están&quot;</span><span class="p">)</span> <span class="c1"># Creamos un conjunto desde un string</span>
+<span class="n">conj</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;l&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;t&#39;</span><span class="p">,</span> <span class="s1">&#39;á&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Iteramos sobre los elementos del conjunto</span>
+<span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">conj</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cs</span> <span class="n">omHgtaánlei</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Comparemos que pasa cuando lo ejecutamos reiteradamente como un script
+en Python…</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load scripts/04_ejemplo_1.py</span>
+<span class="n">conj</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="s2">&quot;Hola amigos, como están&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">conj</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cs</span> <span class="n">omHgtaánlei</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iteracion-sobre-elementos-de-dos-listas">
+<h2>Iteración sobre elementos de dos listas<a class="headerlink" href="#iteracion-sobre-elementos-de-dos-listas" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Consideremos las listas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_min</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">temp_max</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Queremos imprimir una lista que combine los dos datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;La temperatura mínima fue {} y la máxima fue {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mf">3.2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mf">13.2</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">12</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">13</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">1</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">7</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">18</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">5</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">5</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">11</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">14</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">10</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Como vemos, la función <code class="docutils literal notranslate"><span class="pre">zip</span></code> combina los elementos, tomando uno de
+cada lista</p>
+<p>Podemos mejorar la salida anterior por pantalla si volvemos a utilizar
+la función <code class="docutils literal notranslate"><span class="pre">enumerate</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">)):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El día {} la temperatura mínima fue {} y la máxima fue {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">8</span><span class="o">-</span><span class="mi">6170</span><span class="n">f6c3b697</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">)):</span>
+      <span class="mi">2</span>   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El día </span><span class="si">{}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{}</span><span class="s1"> y la máxima fue </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+
+<span class="ne">ValueError</span><span class="p">:</span> <span class="ow">not</span> <span class="n">enough</span> <span class="n">values</span> <span class="n">to</span> <span class="n">unpack</span> <span class="p">(</span><span class="n">expected</span> <span class="mi">3</span><span class="p">,</span> <span class="n">got</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>¿Cuál fue el problema acá? ¿qué retorna zip?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">13.2</span><span class="p">),</span>
+ <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span>
+ <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span>
+ <span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+ <span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+ <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">),</span><span class="mi">1</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El día {} la temperatura mínima fue {} y la máxima fue {}&#39;</span><span class="o">.</span>
+        <span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">día</span> <span class="mi">1</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mf">3.2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mf">13.2</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">2</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">12</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">3</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">13</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">4</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">1</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">7</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">5</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">18</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">6</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">5</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">5</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">7</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">11</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">8</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">14</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">9</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">10</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">10</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ¿Qué pasa cuńdo una se consume antes que la otra?</span>
+<span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">3</span>
+<span class="mi">2</span> <span class="mi">4</span>
+<span class="mi">3</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Podemos utilizar la función <code class="docutils literal notranslate"><span class="pre">zip</span></code> para sumar dos listas término a
+término. <code class="docutils literal notranslate"><span class="pre">zip</span></code> funciona también con más de dos listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_min</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El día {} la temperatura mínima fue {} y la máxima fue {}&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">día</span> <span class="mi">1</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mf">3.2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mf">13.2</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">2</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">12</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">3</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">13</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">4</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">1</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">7</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">5</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">18</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">6</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">5</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">5</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">7</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">11</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">8</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">14</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">9</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">10</span>
+<span class="n">El</span> <span class="n">día</span> <span class="mi">10</span> <span class="n">la</span> <span class="n">temperatura</span> <span class="n">mínima</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">máxima</span> <span class="n">fue</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmedia</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="n">tmedia</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="o">+</span><span class="n">t2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tmedia</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>También podemos escribirlo en forma más compacta usando comprensiones de
+listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tm</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t1</span><span class="o">+</span><span class="n">t2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">t1</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span><span class="n">temp_max</span><span class="p">)]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">tm</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">11.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="mas-sobre-diccionarios">
+<h2>Más sobre diccionarios<a class="headerlink" href="#mas-sobre-diccionarios" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="creacion">
+<h3>Creación<a class="headerlink" href="#creacion" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d0</span> <span class="o">=</span> <span class="p">{}</span>                         <span class="c1"># Equivalente a:  dict()</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mf">26.98153863</span> <span class="p">}</span>
+<span class="n">d2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span><span class="mf">26.98153863</span><span class="p">,</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="mi">13</span> <span class="p">}</span>
+<span class="n">d3</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span> <span class="p">[(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span><span class="s1">&#39;Al&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Z&#39;</span><span class="p">,</span><span class="mi">13</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="mi">27</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="mf">26.98153863</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="mf">26.98153863</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d2</span> <span class="o">==</span> <span class="n">d1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d2</span> <span class="ow">is</span> <span class="n">d1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d6</span> <span class="o">=</span> <span class="n">d2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d6</span> <span class="o">==</span> <span class="n">d2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">d6</span> <span class="ow">is</span> <span class="n">d2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+<span class="kc">False</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d3</span> <span class="o">==</span> <span class="n">d1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d4</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">))</span> <span class="c1"># temp_min tendrá &quot;keys&quot; y temp_max los &quot;values&quot;</span>
+<span class="n">d5</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">n</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d4</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">-</span><span class="mf">3.2</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d5</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="mi">25</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>¿Qué espera que produzca el siguiente código?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
+      <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">),</span> <span class="mi">1</span><span class="p">)}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">},</span>
+ <span class="mi">2</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
+ <span class="mi">3</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">},</span>
+ <span class="mi">4</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+ <span class="mi">5</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">},</span>
+ <span class="mi">6</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+ <span class="mi">7</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">},</span>
+ <span class="mi">8</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+ <span class="mi">9</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+ <span class="mi">10</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="iteraciones-sobre-diccionarios">
+<h3>Iteraciones sobre diccionarios<a class="headerlink" href="#iteraciones-sobre-diccionarios" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;La temperatura máxima del día {} fue {} y la mínima {}&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;Tmin&#39;</span><span class="p">],</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s1">&#39;Tmax&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">1</span> <span class="n">fue</span> <span class="o">-</span><span class="mf">3.2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mf">13.2</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">2</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">12</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">3</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">13</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">4</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">1</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">7</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">5</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">18</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">6</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">5</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">5</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">7</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">11</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">8</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">14</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">9</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">10</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">10</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Cómo comentamos anteriormente, cuando iteramos sobre un diccionario
+estamos moviéndonos sobre las <code class="docutils literal notranslate"><span class="pre">(k)eys</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dict_keys</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span> <span class="ow">in</span> <span class="n">temps</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span> <span class="ow">in</span> <span class="n">temps</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>Para referirnos al valor tenemos que hacerlo en la forma <code class="docutils literal notranslate"><span class="pre">temps[k]</span></code>, y
+no siempre es una manera muy clara de escribir las cosas. Otra manera
+similar, pero más limpia en este caso sería:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}),</span>
+ <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">})]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;La temperatura máxima del día {} fue {} y la mínima {}&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;Tmin&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;Tmax&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">1</span> <span class="n">fue</span> <span class="o">-</span><span class="mf">3.2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mf">13.2</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">2</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">12</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">3</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">13</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">4</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">1</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">7</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">5</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">18</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">6</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">5</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">5</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">7</span> <span class="n">fue</span> <span class="o">-</span><span class="mi">2</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">11</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">8</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">14</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">9</span> <span class="n">fue</span> <span class="mi">4</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">10</span>
+<span class="n">La</span> <span class="n">temperatura</span> <span class="n">máxima</span> <span class="k">del</span> <span class="n">día</span> <span class="mi">10</span> <span class="n">fue</span> <span class="mi">0</span> <span class="n">y</span> <span class="n">la</span> <span class="n">mínima</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>Si queremos iterar sobre los valores podemos utilizar simplemente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Remarquemos que los diccionarios no tienen definidos un orden por lo que
+no hay garantías que la próxima vez que ejecutemos cualquiera de estas
+líneas de código el resultado sea exactamente el mismo. Además, si
+queremos imprimirlos en un orden predecible debemos escribirlo
+explícitamente. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">9</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">8</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="mi">7</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+<span class="mi">6</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="mi">5</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">}</span>
+<span class="mi">4</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="mi">3</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+<span class="mi">2</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="mi">1</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>La secuencia anterior puede escribirse en forma más compacta como</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span><span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">9</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">8</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="mi">7</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+<span class="mi">6</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="mi">5</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">}</span>
+<span class="mi">4</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="mi">3</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+<span class="mi">2</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="mi">1</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">9</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">8</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="mi">7</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+<span class="mi">6</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="mi">5</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">}</span>
+<span class="mi">4</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="mi">3</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+<span class="mi">2</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="mi">1</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ejercicios-04-a">
+<h2>Ejercicios 04 (a)<a class="headerlink" href="#ejercicios-04-a" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic">
+<li><p>Realice un programa para:</p>
+<ul class="simple">
+<li><p>Leer los datos del archivo <strong>aluminio.dat</strong> y poner los datos del
+elemento en un diccionario de la forma:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="s1">&#39;26.98153863(12)&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="mf">1.0000</span><span class="p">,</span> <span class="s1">&#39;MS&#39;</span><span class="p">:</span><span class="mf">26.9815386</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="s1">&#39;}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Modifique el programa anterior para que las masas sean números
+(<code class="docutils literal notranslate"><span class="pre">float</span></code>) y descarte el valor de la incerteza (el número entre
+paréntesis)</p></li>
+<li><p>Agregue el código necesario para obtener una impresión de la
+forma:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Elemento</span><span class="p">:</span> <span class="n">Al</span>
+<span class="n">Número</span> <span class="n">Atómico</span><span class="p">:</span> <span class="mi">13</span>
+<span class="n">Número</span> <span class="n">de</span> <span class="n">Masa</span><span class="p">:</span> <span class="mi">27</span>
+<span class="n">Masa</span><span class="p">:</span> <span class="mf">26.98154</span>
+</pre></div>
+</div>
+<p>Note que la masa sólo debe contener 5 números decimales</p>
+</li>
+</ol>
+</div>
+<div class="section" id="funciones">
+<h2>Funciones<a class="headerlink" href="#funciones" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="las-funciones-son-objetos">
+<h3>Las funciones son objetos<a class="headerlink" href="#las-funciones-son-objetos" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Las funciones en <strong>Python</strong>, como en la mayoría de los lenguajes, usan
+una notación similar a la de las funciones matemáticas, con un nombre y
+uno o más argumentos entre paréntesis. Por ejemplo, ya usamos la función
+<code class="docutils literal notranslate"><span class="pre">sum</span></code> cuyo argumento es una lista o una <em>tuple</em> de números</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">]</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">19.0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">sum</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">19.0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">function</span> <span class="nb">sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">function</span> <span class="nb">print</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>En <strong>Python</strong> <code class="docutils literal notranslate"><span class="pre">function</span></code> es un objeto, con una única operación
+posible: podemos llamarla, en la forma: <code class="docutils literal notranslate"><span class="pre">func(lista-de-argumentos)</span></code></p>
+<p>Como con todos los objetos, podemos definir una variable y asignarle una
+función (algo así como lo que en C sería un puntero a funciones)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">sum</span>
+<span class="n">help</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">function</span> <span class="nb">sum</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">builtins</span><span class="p">:</span>
+
+<span class="nb">sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+    <span class="n">Return</span> <span class="n">the</span> <span class="nb">sum</span> <span class="n">of</span> <span class="n">a</span> <span class="s1">&#39;start&#39;</span> <span class="n">value</span> <span class="p">(</span><span class="n">default</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span> <span class="n">plus</span> <span class="n">an</span> <span class="n">iterable</span> <span class="n">of</span> <span class="n">numbers</span>
+
+    <span class="n">When</span> <span class="n">the</span> <span class="n">iterable</span> <span class="ow">is</span> <span class="n">empty</span><span class="p">,</span> <span class="k">return</span> <span class="n">the</span> <span class="n">start</span> <span class="n">value</span><span class="o">.</span>
+    <span class="n">This</span> <span class="n">function</span> <span class="ow">is</span> <span class="n">intended</span> <span class="n">specifically</span> <span class="k">for</span> <span class="n">use</span> <span class="k">with</span> <span class="n">numeric</span> <span class="n">values</span> <span class="ow">and</span> <span class="n">may</span>
+    <span class="n">reject</span> <span class="n">non</span><span class="o">-</span><span class="n">numeric</span> <span class="n">types</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;¿f is sum? &#39;</span><span class="p">,</span> <span class="n">f</span> <span class="ow">is</span> <span class="nb">sum</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;f(a)=&#39;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s1">&#39;  sum(a)=&#39;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>¿f is sum?  True
+f(a)= 19.0   sum(a)= 19.0
+</pre></div>
+</div>
+<p>También podemos crear un diccionario donde los valores sean funciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">funciones</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;suma&#39;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">,</span> <span class="s1">&#39;minimo&#39;</span><span class="p">:</span> <span class="nb">min</span><span class="p">,</span> <span class="s1">&#39;maximo&#39;</span><span class="p">:</span> <span class="nb">max</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">funciones</span><span class="p">[</span><span class="s1">&#39;suma&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">function</span> <span class="nb">sum</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">funciones</span><span class="p">[</span><span class="s1">&#39;suma&#39;</span><span class="p">](</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">19.0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;a =&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">funciones</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">3.3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">]</span>
+
+<span class="n">suma</span> <span class="mf">19.0</span>
+<span class="n">minimo</span> <span class="mi">1</span>
+<span class="n">maximo</span> <span class="mf">7.5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="definicion-basica-de-funciones">
+<h3>Definición básica de funciones<a class="headerlink" href="#definicion-basica-de-funciones" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Tomemos el ejemplo del tutorial de la documentación de Python. Vimos, al
+introducir el elemento de control <strong>while</strong> una forma de calcular la
+serie de Fibonacci. Usemos ese ejemplo para mostrar como se definen las
+funciones</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Devuelve una lista con los términos</span>
+<span class="sd">  de la serie de Fibonacci hasta n.&quot;&quot;&quot;</span>
+  <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+  <span class="k">while</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+  <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fib</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">89</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fib</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">function</span> <span class="n">__main__</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p><strong>Puntos a notar:</strong> * Las funciones se definen utilizando la palabra
+<code class="docutils literal notranslate"><span class="pre">def</span></code> seguida por el nombre, * A continuación, entre paréntesis se
+escriben los argumentos, en este caso el entero <code class="docutils literal notranslate"><span class="pre">n</span></code>, * La función
+devuelve (<em>retorna</em>) algo, en este caso una lista. Si una función no
+devuelve algo explícitamente, entonces devuelve <code class="docutils literal notranslate"><span class="pre">None</span></code>. * Lo que
+devuelve la función se especifica mediante la palabra reservada
+<code class="docutils literal notranslate"><span class="pre">return</span></code> * Al principio de la definición de la función se escribe la
+documentación</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">fib</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">fib</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">Devuelve</span> <span class="n">una</span> <span class="n">lista</span> <span class="n">con</span> <span class="n">los</span> <span class="n">términos</span>
+    <span class="n">de</span> <span class="n">la</span> <span class="n">serie</span> <span class="n">de</span> <span class="n">Fibonacci</span> <span class="n">hasta</span> <span class="n">n</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">fib</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fib</span><span class="o">.</span><span class="vm">__doc__</span>
+</pre></div>
+</div>
+<pre class="literal-block">'Devuelve una lista con los términosn  de la serie de Fibonacci hasta n.'</pre>
+<p>Como segundo ejemplo, consideremos el ejercicio donde pedimos la
+velocidad y altura de una pelota en caída libre. Pero esta vez definimos
+una función para realizar los cálculos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h_0</span> <span class="o">=</span> <span class="mi">500</span>                       <span class="c1"># altura inicial en m</span>
+<span class="n">v_0</span> <span class="o">=</span> <span class="mi">0</span>                         <span class="c1"># velocidad inicial en m/s</span>
+<span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span>                         <span class="c1"># aceleración de la gravedad en m/s^2</span>
+<span class="k">def</span> <span class="nf">caida</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">v_0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">h_0</span> <span class="o">-</span> <span class="n">v_0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">2.</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">,</span><span class="n">h</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">caida</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">9.8</span><span class="p">,</span> <span class="mf">495.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">caida</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;Para t = {0}, la velocidad será v={1}</span><span class="se">\</span>
+<span class="s1"> y estará a una altura {2:.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Para</span> <span class="n">t</span> <span class="o">=</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">la</span> <span class="n">velocidad</span> <span class="n">será</span> <span class="n">v</span><span class="o">=-</span><span class="mf">14.700000000000001</span> <span class="n">y</span> <span class="n">estará</span> <span class="n">a</span> <span class="n">una</span> <span class="n">altura</span> <span class="mf">488.98</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">caida</span><span class="p">(</span><span class="mf">2.2</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Para t = {0}, la velocidad será v={1}, y estará a una altura {2}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+       <span class="mf">2.2</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Para</span> <span class="n">t</span> <span class="o">=</span> <span class="mf">2.2</span><span class="p">,</span> <span class="n">la</span> <span class="n">velocidad</span> <span class="n">será</span> <span class="n">v</span><span class="o">=-</span><span class="mf">21.560000000000002</span><span class="p">,</span> <span class="n">y</span> <span class="n">estará</span> <span class="n">a</span> <span class="n">una</span> <span class="n">altura</span> <span class="mf">476.284</span>
+</pre></div>
+</div>
+<p>Podemos mejorar considerablemente la funcionalidad si le damos la
+posibilidad al usuario de dar la posición y la velocidad iniciales</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="mf">9.8</span>                         <span class="c1"># aceleración de la gravedad en m/s^2</span>
+<span class="k">def</span> <span class="nf">caida2</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h_0</span><span class="p">,</span> <span class="n">v_0</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas</span>
+<span class="sd">  h_0 es la altura inicial</span>
+<span class="sd">  v_0 es la velocidad inicial</span>
+<span class="sd">  Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">v_0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">h_0</span> <span class="o">-</span> <span class="n">v_0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">2.</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">,</span><span class="n">h</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="p">,</span><span class="n">h</span> <span class="o">=</span> <span class="n">caida2</span><span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;Para caída desde {h0}m, con vel. inicial {v0}m/s, a t = {0},</span>
+<span class="s1">la velocidad será v={1}, y estará a una altura {2}&#39;&#39;&#39;</span><span class="o">.</span>
+      <span class="n">format</span><span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">h0</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mi">12</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Para</span> <span class="n">caída</span> <span class="n">desde</span> <span class="mi">100</span><span class="n">m</span><span class="p">,</span> <span class="n">con</span> <span class="n">vel</span><span class="o">.</span> <span class="n">inicial</span> <span class="mi">12</span><span class="n">m</span><span class="o">/</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span> <span class="n">t</span> <span class="o">=</span> <span class="mf">2.2</span><span class="p">,</span>
+<span class="n">la</span> <span class="n">velocidad</span> <span class="n">será</span> <span class="n">v</span><span class="o">=-</span><span class="mf">9.560000000000002</span><span class="p">,</span> <span class="n">y</span> <span class="n">estará</span> <span class="n">a</span> <span class="n">una</span> <span class="n">altura</span> <span class="mf">49.883999999999986</span>
+</pre></div>
+</div>
+<p>Notemos que podemos llamar a esta función de varias maneras. Podemos
+llamarla con la constante, o con una variable indistintamente. En este
+caso, el argumento está definido por su posición: El primero es la
+altura inicial (h_0) y el segundo la velocidad inicial (v_0).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v0</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">caida2</span><span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">v0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">9.560000000000002</span><span class="p">,</span> <span class="mf">49.883999999999986</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pero en Python podemos usar el nombre de la variable. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">caida2</span><span class="p">(</span><span class="n">v_0</span><span class="o">=</span><span class="n">v0</span><span class="p">,</span><span class="n">t</span><span class="o">=</span><span class="mf">2.2</span><span class="p">,</span> <span class="n">h_0</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">9.560000000000002</span><span class="p">,</span> <span class="mf">49.883999999999986</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="argumentos-de-las-funciones">
+<h3>Argumentos de las funciones<a class="headerlink" href="#argumentos-de-las-funciones" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="section" id="ambito-de-las-variables-en-los-argumentos">
+<h4>Ámbito de las variables en los argumentos<a class="headerlink" href="#ambito-de-las-variables-en-los-argumentos" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Consideremos la siguiente función</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="mi">50</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="mi">50</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="mi">2</span>
+<span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="mi">50</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Id afuera:&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">139793404910720</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">139793405075776</span>
+<span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">afuera</span><span class="p">:</span> <span class="mi">139793404910720</span>
+</pre></div>
+</div>
+<p>¿Qué está pasando acá? Cuando se realiza la llamada a la función, se le
+pasa una copia del nombre <code class="docutils literal notranslate"><span class="pre">x</span></code>. Cuando le damos un nuevo valor dentro
+de la función, como en el caso <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">[2]</span></code>, entonces esta copia apunta a
+un nuevo objeto que estamos creando. Por lo tanto, la variable original
+–definida fuera de la función– no cambia.</p>
+<p>En el primer caso, como los escalares son inmutables (de la misma manera
+que los strings y tuplas) no puede ser modificada, y al reasignarla
+siempre estamos haciendo apuntar la copia a una nueva variable.</p>
+<p>Consideremos estas variantes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func3a</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func3a</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func4</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Por otro lado, cuando asignamos directamente un valor a uno o más de sus
+elementos o agregamos elementos a la lista, la copia sigue apuntando a
+la variable original y el valor de la variable, definida originalmente
+afuera, cambia.</p>
+</div>
+<div class="section" id="funciones-con-argumentos-opcionales">
+<h4>Funciones con argumentos opcionales<a class="headerlink" href="#funciones-con-argumentos-opcionales" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Las funciones pueden tener muchos argumentos. En <strong>Python</strong> pueden tener
+un número variable de argumentos y pueden tener valores por <em>default</em>
+para algunos de ellos. En el caso de la función de caída libre, vamos a
+extenderlo de manera que podamos usarlo fuera de la tierra (o en otras
+latitudes) permitiendo cambiar el valor de la gravedad y asumiendo que,
+a menos que lo pidamos explícitamente se trata de una simple caída
+libre:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h0</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Devuelve la velocidad y la posición de una partícula en</span>
+<span class="sd">  caída libre para condiciones iniciales dadas</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  t : float</span>
+<span class="sd">      el tiempo al que queremos realizar el cálculo</span>
+<span class="sd">  h0: float</span>
+<span class="sd">      la altura inicial</span>
+<span class="sd">  v0: float (opcional)</span>
+<span class="sd">      la velocidad inicial (default = 0.0)</span>
+<span class="sd">   g: float (opcional)</span>
+<span class="sd">      valor de la aceleración de la gravedad (default = 9.8)</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  (v,h):  tuple of floats</span>
+<span class="sd">       v= v0 - g*t</span>
+<span class="sd">       h= h0 - v0*t -g*t^2/2</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">h0</span> <span class="o">-</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">2.</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">,</span><span class="n">h</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero</span>
+<span class="k">print</span><span class="p">(</span> <span class="n">caida_libre</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1000</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">19.6</span><span class="p">,</span> <span class="mf">980.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial hacia arriba</span>
+<span class="k">print</span><span class="p">(</span><span class="n">caida_libre</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.1999999999999993</span><span class="p">,</span> <span class="mf">985.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero</span>
+<span class="k">print</span><span class="p">(</span><span class="n">caida_libre</span><span class="p">(</span><span class="n">h0</span><span class="o">=</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">19.6</span><span class="p">,</span> <span class="mf">980.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero en la luna</span>
+<span class="k">print</span><span class="p">(</span> <span class="n">caida_libre</span><span class="p">(</span> <span class="n">v0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h0</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mf">14.2857137</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">139.99999426000002</span><span class="p">,</span> <span class="mf">8.199999820135417e-05</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero en la luna</span>
+<span class="k">print</span><span class="p">(</span> <span class="n">caida_libre</span><span class="p">(</span> <span class="n">v0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h0</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mf">14.2857137</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">1.625</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">23.2142847625</span><span class="p">,</span> <span class="mf">834.1836870663262</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">caida_libre</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">caida_libre</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h0</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">)</span>
+    <span class="n">Devuelve</span> <span class="n">la</span> <span class="n">velocidad</span> <span class="n">y</span> <span class="n">la</span> <span class="n">posición</span> <span class="n">de</span> <span class="n">una</span> <span class="n">partícula</span> <span class="n">en</span>
+    <span class="n">caída</span> <span class="n">libre</span> <span class="n">para</span> <span class="n">condiciones</span> <span class="n">iniciales</span> <span class="n">dadas</span>
+
+    <span class="n">Parameters</span>
+    <span class="o">----------</span>
+    <span class="n">t</span> <span class="p">:</span> <span class="nb">float</span>
+        <span class="n">el</span> <span class="n">tiempo</span> <span class="n">al</span> <span class="n">que</span> <span class="n">queremos</span> <span class="n">realizar</span> <span class="n">el</span> <span class="n">cálculo</span>
+    <span class="n">h0</span><span class="p">:</span> <span class="nb">float</span>
+        <span class="n">la</span> <span class="n">altura</span> <span class="n">inicial</span>
+    <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span> <span class="p">(</span><span class="n">opcional</span><span class="p">)</span>
+        <span class="n">la</span> <span class="n">velocidad</span> <span class="n">inicial</span> <span class="p">(</span><span class="n">default</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span>
+     <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="p">(</span><span class="n">opcional</span><span class="p">)</span>
+        <span class="n">valor</span> <span class="n">de</span> <span class="n">la</span> <span class="n">aceleración</span> <span class="n">de</span> <span class="n">la</span> <span class="n">gravedad</span> <span class="p">(</span><span class="n">default</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">)</span>
+
+    <span class="n">Returns</span>
+    <span class="o">-------</span>
+    <span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>  <span class="nb">tuple</span> <span class="n">of</span> <span class="n">floats</span>
+         <span class="n">v</span><span class="o">=</span> <span class="n">v0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+         <span class="n">h</span><span class="o">=</span> <span class="n">h0</span> <span class="o">-</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tipos-mutables-en-argumentos-opcionales">
+<h4>Tipos mutables en argumentos opcionales<a class="headerlink" href="#tipos-mutables-en-argumentos-opcionales" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Hay que tener cuidado cuando usamos valores por defecto con tipos que
+pueden modificarse dentro de la función. Consideremos la siguiente
+función:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2b</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="p">[]):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">func2b</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[]</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">func2b</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Notar:</strong> No se pueden usar argumentos con <em>nombre</em> antes de los
+argumentos requeridos (en este caso <code class="docutils literal notranslate"><span class="pre">t</span></code>).</p>
+<p>Tampoco se pueden usar argumentos sin su <em>nombre</em> después de haber
+incluido alguno con su nombre. Por ejemplo no son válidas las llamadas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+<span class="n">caida_libre</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="numero-variable-de-argumentos-y-argumentos-keywords">
+<h4>Número variable de argumentos y argumentos <em>keywords</em><a class="headerlink" href="#numero-variable-de-argumentos-y-argumentos-keywords" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Se pueden definir funciones que toman un número variable de argumentos
+(como una lista), o que aceptan un diccionario como argumento. Este tipo
+de argumentos se llaman argumentos <em>keyword</em> (<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>). Una buena
+explicación se encuentra en el <a class="reference external" href="https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments">Tutorial de la
+documentación</a>.
+Ahora vamos a usar otra explicación rápida. Consideremos la función
+<code class="docutils literal notranslate"><span class="pre">f</span></code>, que imprime sus argumentos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span> <span class="s2">&quot;p: {}, tipo: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">p</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">))</span> <span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span> <span class="s2">&quot;args: {}, tipo: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">args</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">args</span><span class="p">)))</span>
+  <span class="k">print</span><span class="p">(</span> <span class="s2">&quot;kwargs: {}, tipo: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">kwargs</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (2, 3), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (2, 3, 4, 5, 6), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<p>En este ejemplo, el primer valor se asigna al argumento requerido <code class="docutils literal notranslate"><span class="pre">p</span></code>,
+y los siguientes a una variable que se llama <code class="docutils literal notranslate"><span class="pre">args</span></code>, que es del tipo
+<code class="docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">anteultimo</span><span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">ultimo</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (2, 3, 5), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;anteultimo&#39;: 9, &#39;ultimo&#39;: -1}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">,</span> <span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Con <code class="docutils literal notranslate"><span class="pre">*args</span></code> se indica <em>“mapear todos los argumentos posicionales no
+explícitos a una tupla llamada ``args``”</em>. Con <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> se indica
+“mapear todos los argumentos de palabra clave no explícitos a un
+diccionario llamado <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>”. Esta acción de convertir un conjunto de
+argumentos a una tuple o diccionario se conoce como <em>empacar</em> o
+<em>empaquetar</em> los datos.</p>
+<p><strong>NOTA</strong>: Por supuesto, no es necesario utilizar los nombres “args” y
+“kwargs”. Podemos llamarlas de cualquier otra manera! los simbolos que
+indican cantidades arbitrarias de parametros son <code class="docutils literal notranslate"><span class="pre">*</span></code> y <code class="docutils literal notranslate"><span class="pre">**</span></code>. Además
+es posible poner parametros “comunes” antes de los parametros
+arbitrarios, como se muestra en el ejemplo.</p>
+<p>Exploremos otras variantes de llamadas a la función:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;ultimo&#39;: -1}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">File</span> <span class="s2">&quot;&lt;ipython-input-59-acd06ccc380f&gt;&quot;</span><span class="p">,</span> <span class="n">line</span> <span class="mi">1</span>
+    <span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                   <span class="o">^</span>
+<span class="ne">SyntaxError</span><span class="p">:</span> <span class="n">positional</span> <span class="n">argument</span> <span class="n">follows</span> <span class="n">keyword</span> <span class="n">argument</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 2, tipo: &lt;class &#39;int&#39;&gt;
+args: (), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;ultimo&#39;: -1}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<p>Un ejemplo de una función con número variable de argumentos puede ser la
+función <code class="docutils literal notranslate"><span class="pre">multiplica</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiplica</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">*=</span> <span class="n">a</span>
+  <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">multiplica</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">multiplica</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3240</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="ejercicios-4-b">
+<h2>Ejercicios 4 (b)<a class="headerlink" href="#ejercicios-4-b" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic" start="2">
+<li><p>Escriba funciones para analizar la divisibilidad de enteros:</p>
+<ul class="simple">
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible1(x)</span></code> que retorna verdadero si x es
+divisible por alguno de <code class="docutils literal notranslate"><span class="pre">2,3,5,7</span></code> o falso en caso contrario.</p></li>
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible_por_lista</span></code> que cumple la misma función
+que <code class="docutils literal notranslate"><span class="pre">es_divisible1</span></code> pero recibe dos argumentos: el entero <code class="docutils literal notranslate"><span class="pre">x</span></code>
+y una variable del tipo lista que contiene los valores para los
+cuáles debemos examinar la divisibilidad. Las siguientes
+expresiones deben retornar el mismo valor:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">es_divisible1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">es_divisible_por_lista</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
+<span class="n">es_divisible_por_lista</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible_por</span></code> cuyo primer argumento (mandatorio)
+es <code class="docutils literal notranslate"><span class="pre">x</span></code>, y luego puede aceptar un número indeterminado de
+argumentos:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># retorna verdadero siempre</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># verdadero si x es par</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c1"># igual resultado que es_divisible1(x) e igual a es_divisible_por_lista(x)</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>  <span class="c1"># o cualquier secuencia de argumentos debe funcionar</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="clase_05.html" class="btn btn-neutral float-right" title="Clase 5: Funciones" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clase_03.html" class="btn btn-neutral float-left" title="Clase 3: Control de flujo y tipos complejos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Juan Fiol
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

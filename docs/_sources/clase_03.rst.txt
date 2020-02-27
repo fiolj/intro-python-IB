@@ -1,0 +1,1659 @@
+Clase 3: Control de flujo y tipos complejos
+============================================
+
+
+Control de flujo
+----------------
+
+if/elif/else
+~~~~~~~~~~~~
+
+En todo lenguaje necesitamos controlar el flujo de una ejecución segun
+una condición Verdadero/Falso (booleana). *Si (condicion) es verdadero
+hacé (bloque A); Sino hacé (Bloque B)*. En pseudo código:
+
+::
+
+       Si condición 1:
+           bloque A
+       sino y condición 2:
+           bloque B
+       sino:
+           bloque B
+
+y en Python es muy parecido!
+
+.. code:: python
+
+       if condición_1:
+         bloque A
+       elif condicion_2:
+         bloque B
+       elif condicion_3:
+         bloque C
+       else:
+         Bloque final
+
+En un ``if``, la conversión a tipo *boolean* es implícita. El tipo
+``None`` (vacío), el ``0``, una secuencia (lista, tupla, string) (o
+conjunto o diccionario, que ya veremos) vacía siempre evalua a
+``False``. Cualquier otro objeto evalua a ``True``.
+
+Podemos tener multiples condiciones. Se ejecutará el primer bloque cuya
+condición sea verdadera, o en su defecto el bloque ``else``. Esto es
+equivalente a la sentencia ``switch`` de otros lenguajes.
+
+.. code:: python
+
+    Nota = 7
+    if Nota >= 8:
+        print ("Aprobó cómodo, felicidades!")
+    elif 6 <= Nota < 8:
+        print ("Bueno, al menos aprobó!")
+    elif 4 <= Nota < 6 :
+        print ("Bastante bien, pero no le alcanzó")
+    else:
+        print("Debe esforzarse más!")
+
+
+.. parsed-literal::
+
+    Bueno, al menos aprobó!
+
+
+Iteraciones
+~~~~~~~~~~~
+
+Sentencia for
+^^^^^^^^^^^^^
+
+Otro elemento de control es el que permite *iterar* sobre una secuencia
+(o *“iterador”*). Obtener cada elemento para hacer algo. En Python se
+logra con la sentencia ``for``. En lugar de iterar sobre una condición
+aritmética hasta que se cumpla una condición (como en C o en Fortran) en
+Python la sentencia ``for`` itera sobre los ítems de una secuencia en
+forma ordenada
+
+.. code:: python
+
+    for elemento in range(10):
+        print(elemento, end=', ')
+
+
+
+.. parsed-literal::
+
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+
+Veamos otro ejemplo:
+
+.. code:: python
+
+    Lista = ['auto', 'casa', "perro", "gato", "árbol", "lechuza"]
+    for L in Lista:
+      print(L.count("a"), len(L))
+      print(L)
+
+
+
+.. parsed-literal::
+
+    1 4
+    auto
+    2 4
+    casa
+    0 5
+    perro
+    1 4
+    gato
+    0 5
+    árbol
+    1 7
+    lechuza
+
+
+.. code:: python
+
+    suma = 0
+    for elemento in range(11):
+      suma += elemento
+      print("x={},  suma parcial={}".format(elemento, suma))
+    print ('Suma total =', suma)
+
+
+.. parsed-literal::
+
+    x=0,  suma parcial=0
+    x=1,  suma parcial=1
+    x=2,  suma parcial=3
+    x=3,  suma parcial=6
+    x=4,  suma parcial=10
+    x=5,  suma parcial=15
+    x=6,  suma parcial=21
+    x=7,  suma parcial=28
+    x=8,  suma parcial=36
+    x=9,  suma parcial=45
+    x=10,  suma parcial=55
+    Suma total = 55
+
+
+Notar que utilizamos el operador asignación de suma: ``+=``.
+
+.. code:: python
+
+   suma += elemento
+
+es equivalente a:
+
+.. code:: python
+
+   suma = suma + elemento
+
+que corresponde a realizar la suma de la derecha, y el resultado
+asignarlo a la variable de la izquierda.
+
+Por supuesto, para obtener la suma anterior podemos simplemente usar las
+funciones de python:
+
+.. code:: python
+
+    print (sum(range(11))) # El ejemplo anterior puede escribirse usando sum y range
+
+
+.. parsed-literal::
+
+    55
+
+
+Loops: ``for``, ``enumerate``, ``continue``, ``break``, ``else``
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+Veamos otros ejemplos de uso del bloque ``for``.
+
+.. code:: python
+
+    suma = 0
+    cuadrados = []
+    for i,elem in enumerate(range(3,21)):
+      if elem % 2:       # Si resto (%) es diferente de cero -> Impares
+        continue
+      suma += elem**2
+      cuadrados.append(elem**2)
+      print (i, elem, elem**2, suma)   # Imprimimos el índice y el elem al cuadrado
+    print ("sumatoria de números pares al cuadrado entre 3 y 20:", suma)
+    print ('cuadrados= ', cuadrados)
+
+
+.. parsed-literal::
+
+    1 4 16 16
+    3 6 36 52
+    5 8 64 116
+    7 10 100 216
+    9 12 144 360
+    11 14 196 556
+    13 16 256 812
+    15 18 324 1136
+    17 20 400 1536
+    sumatoria de números pares al cuadrado entre 3 y 20: 1536
+    cuadrados=  [16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+.. code:: python
+
+    suma = 0
+    cuadrados = []
+    for i,elem in enumerate(range(3,21)):
+      if elem % 2 == 0:       # Si resto (%) es diferente de cero -> Impares
+        suma += elem**2
+        cuadrados.append(elem**2)
+        print (i, elem, elem**2, suma)   # Imprimimos el índice y el elem al cuadrado
+    print ("sumatoria de números pares al cuadrado entre 3 y 20:", suma)
+    print ('cuadrados= ', cuadrados)
+
+
+.. parsed-literal::
+
+    1 4 16 16
+    3 6 36 52
+    5 8 64 116
+    7 10 100 216
+    9 12 144 360
+    11 14 196 556
+    13 16 256 812
+    15 18 324 1136
+    17 20 400 1536
+    sumatoria de números pares al cuadrado entre 3 y 20: 1536
+    cuadrados=  [16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+**Puntos a notar:**
+
+-  Inicializamos una variable entera en cero y una lista vacía
+-  ``range(3,30)`` nos da consecutivamente los números entre 3 y 29 en
+   cada iteración.
+-  ``enumerate`` nos permite iterar sobre algo, agregando un contador
+   automático.
+-  La línea condicional ``if elem % 2:`` es equivalente a
+   ``if (elem % 2) != 0:`` y es verdadero si ``elem`` no es divisible
+   por 2 (número impar)
+-  La sentencia ``continue`` hace que se omita la ejecución del resto
+   del bloque por esta iteración
+-  El método ``append`` agrega el elemento a la lista
+
+Antes de seguir veamos otro ejemplo de uso de ``enumerate``.
+Consideremos una iteración sobre una lista como haríamos normalmente en
+otros lenguajes:
+
+.. code:: python
+
+    L = "I've had a perfectly wonderful evening.  But this wasn't it.".split()
+
+.. code:: python
+
+    L
+
+
+
+
+.. parsed-literal::
+
+    ["I've",
+     'had',
+     'a',
+     'perfectly',
+     'wonderful',
+     'evening.',
+     'But',
+     'this',
+     "wasn't",
+     'it.']
+
+
+
+.. code:: python
+
+    for j in range(len(L)):
+      print('Índice: {} -> {} ({} caracteres)'.format(j, L[j], len(L[j])))
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
+
+Si bien esta es una solución al problema. Python ofrece la función
+enumerate que agrega un contador automático
+
+.. code:: python
+
+    for ind, elem in enumerate(L):
+      print('Índice: {} -> {} ({} caracteres)'.format(ind, elem, len(elem)))
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
+
+Veamos otro ejemplo, que puede encontrarse en la `documentación
+oficial <https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops>`__:
+
+.. code:: python
+
+    for n in range(2, 20):
+      for x in range(2, n):
+        # print ('valor de n,x = {},{}'.format(n,x))
+        if n % x == 0:
+          print( '{:2d} = {} x {}'.format(n,x,n//x))
+          break
+      else:
+         # Salió sin encontrar un factor, entonces ...
+         print('{:2d} es un número primo'.format(n))
+
+
+
+.. parsed-literal::
+
+     2 es un número primo
+     3 es un número primo
+     4 = 2 x 2
+     5 es un número primo
+     6 = 2 x 3
+     7 es un número primo
+     8 = 2 x 4
+     9 = 3 x 3
+    10 = 2 x 5
+    11 es un número primo
+    12 = 2 x 6
+    13 es un número primo
+    14 = 2 x 7
+    15 = 3 x 5
+    16 = 2 x 8
+    17 es un número primo
+    18 = 2 x 9
+    19 es un número primo
+
+
+**Puntos a notar:**
+
+-  Acá estamos usando dos *loops* anidados. Uno recorre ``n`` entre 2 y
+   9, y el otro ``x`` entre 2 y ``n``.
+-  La comparación ``if n % x == 0:`` chequea si ``x`` es un divisor de
+   ``n``
+-  La sentencia ``break`` interrumpe el *loop* interior (sobre ``x``)
+-  Notar la alineación de la sentencia ``else``. No está referida a
+   ``if`` sino a ``for``. Es opcional y se ejecuta cuando el loop se
+   termina normalmente (sin ``break``)
+
+While
+^^^^^
+
+Otra sentencia de control es *while*: que permite iterar mientras se
+cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
+(en la cuál cada término es la suma de los dos anteriores)
+
+.. code:: python
+
+    a, b = 0, 1
+    while b < 5000:
+      print (b, end=' ')
+      a, b = b, a+b
+
+
+.. parsed-literal::
+
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
+
+Ejercicios 03 (a)
+-----------------
+
+1. Imprimir los números que no son divisibles por 2, 3, 5 o 7 de los
+   primeros 100 números naturales
+
+2. Calcule la suma
+
+   .. math:: s_{2} = \sum_{k=1}^{\infty} \frac{(-1)^{k} (k+1)}{2 k^{3} + k^{2}}
+
+   con un error relativo estimado menor a :math:`\epsilon=10^{-5}`.
+   Imprima por pantalla el resultado, el valor máximo de :math:`k`
+   computado y el error relativo estimado.
+
+Tipos complejos de datos
+------------------------
+
+Listas y tuples
+~~~~~~~~~~~~~~~
+
+Listas y tuples son colecciones *ordenadas* sobre las que se puede
+iterar (moverse de un elemento al siguiente), y también tienen
+**métodos** que simplifican muchas operaciones de uso común.
+
+Ambos pueden contener elementos de cualquier tipo, y además no todos los
+elementos tienen que ser del mismo tipo. Por esta razón uno se refiere a
+estos tipos como **contenedores**.
+
+Listas y tuples son bastante similares. La diferencia es que una lista
+puede modificarse (agregar, borrar o modificar sus elementos) y una
+“tuple” es inmutable.
+
+Si bien en la práctica puede haber algunas diferencias de optimización,
+la principal diferencia es la mutabilidad o no del tipo. Desde el punto
+de vista del usuario podemos hacer una diferencia de modo de uso. Si
+bien no es un impoerativo del lenguaje, las listas podemos utilizarla
+principalmente para agrupar datos donde cada uno de ellos tiene un valor
+diferente pero cumplen la misma función (datos homogéneos), como en:
+
+.. code:: python
+
+    Temp_min = [13, 12, 7, 9, 11, 9, 13, 12, 13]
+    Temp_max = [23, 21, 22, 24, 27, 25, 22, 28, 26]
+
+donde un número, si bien diferente a otro, representa en cada caso el
+mismo dato (temperatura mínima o máxima) mientras que las *tuples* se
+utilizan para agrupar datos donde cada uno de ellos no representa lo
+mismo (como una versión simple de estructuras en C). Por ejemplo,
+podríamos guardar los datos climáticos por día
+
+.. code:: python
+
+    clima = []
+    clima_ayer = (13, 23, 78, "soleado", "6:30", "19:47")
+    clima_hoy = (12, 21, 87, "soleado", "6:30", "19:48")
+    clima.append(clima_ayer)
+    clima.append(clima_hoy)
+    print(clima)
+
+
+.. parsed-literal::
+
+    [(13, 23, 78, 'soleado', '6:30', '19:47'), (12, 21, 87, 'soleado', '6:30', '19:48')]
+
+
+Veamos algunas definiciones y ejemplos utilizando listas y tuples:
+
+.. code:: python
+
+    clima[0][4]
+
+
+
+
+.. parsed-literal::
+
+    '6:30'
+
+
+
+.. code:: python
+
+    l1 = [1, 2, 3]
+    l2 = ['bananas','manzanas','naranjas','uvas']
+    t1 = (1,2,3)
+    t2 = (1, 2, 3, 'manzanas')
+
+.. code:: python
+
+    print ('  tipo de l1:', type(l1), ',\n  tipo de t1:', type(t1))
+    print ('Primer elemento de l1, t1 y l2:  ', l1[0], t1[0], l2[0])
+    print ('  ¿l1 is t1? ', l1 is t1)
+
+
+.. parsed-literal::
+
+      tipo de l1: <class 'list'> ,
+      tipo de t1: <class 'tuple'>
+    Primer elemento de l1, t1 y l2:   1 1 bananas
+      ¿l1 is t1?  False
+
+
+.. code:: python
+
+    t3 = t2
+    print ('¿t3 is t2? ', t3 is t2)
+    l5 = list(t2)
+    print ('¿l5 is t2? ', l5 is t2)
+    print (t3)
+    print (l5)
+
+
+.. parsed-literal::
+
+    ¿t3 is t2?  True
+    ¿l5 is t2?  False
+    (1, 2, 3, 'manzanas')
+    [1, 2, 3, 'manzanas']
+
+
+.. code:: python
+
+    # Tampoco son "iguales" aunque tengan los mismos elementos
+    print ('¿l5 == t2? ', l5 == t2)
+    print ('¿l5 == list(t2)? ', l5 == list(t2))
+
+
+.. parsed-literal::
+
+    ¿l5 == t2?  False
+    ¿l5 == list(t2)?  True
+
+
+Mutabilidad
+^^^^^^^^^^^
+
+Como mencionamos, una diferencia importante entre listas y tuples es que
+las tuples son inmutables. Veamos que pasa cuando tratamos de modificar
+una y otra:
+
+.. code:: python
+
+    print ('l1 original:   ',l1)    
+    l1[0]=9
+    print ('l1 modificado: ',l1)    # Lista modificada
+
+
+.. parsed-literal::
+
+    l1 original:    [1, 2, 3]
+    l1 modificado:  [9, 2, 3]
+
+
+.. code:: python
+
+    print ('Modificamos tuples?')
+    print ('t1 original:   ',t1)
+    t1[0]= 9
+
+
+
+.. parsed-literal::
+
+    Modificamos tuples?
+    t1 original:    (1, 2, 3)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-48-1b4951c49fa3> in <module>
+          1 print ('Modificamos tuples?')
+          2 print ('t1 original:   ',t1)
+    ----> 3 t1[0]= 9
+    
+
+    TypeError: 'tuple' object does not support item assignment
+
+
+.. code:: python
+
+    a = "Hola Mundo"
+    b = "Chau Mundo"
+    print ('a original:',a)
+    print ('Primer elemento:', a[0])
+    print ('b original:', b, '  ->  id:', id(b))
+    b = a[:4]
+    print('b modificado:', b, '  ->  id:', id(b))
+    a[0] = 'u'
+    print ('modificado:', a)
+
+
+
+.. parsed-literal::
+
+    a original: Hola Mundo
+    Primer elemento: H
+    b original: Chau Mundo   ->  id: 139848166324784
+    b modificado: Hola   ->  id: 139848166366448
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-49-202f10b6c062> in <module>
+          6 b = a[:4]
+          7 print('b modificado:', b, '  ->  id:', id(b))
+    ----> 8 a[0] = 'u'
+          9 print ('modificado:', a)
+
+
+    TypeError: 'str' object does not support item assignment
+
+
+**Nota:** Esto nos dice que los *strings* son inmutables.
+
+No se puede cambiar partes de un string (un caracter). Sin embargo se
+puede modificar completamente (porque lo que está haciendo es
+destruyéndolo y creando uno nuevo).
+
+Como en el caso de *Strings*, a las listas y tuples se les puede
+calcular el número de elementos (su longitud) utilizando la función
+``len``. Además tiene métodos que son de utilidad, para ordenar, agregar
+(append) un elemento al final en forma eficiente, extenderla, etc.
+
+Puede encontrarse más información en `la Biblioteca de
+Python <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`__.
+
+Diccionarios
+~~~~~~~~~~~~
+
+Los diccionarios son colecciones de objetos *en principio heterogéneos*
+que no están ordenados y no se refieren por índice (como L[3]) sino por
+un nombre o clave (llamado **key**). Las claves pueden ser cualquier
+objeto inmutable (cadenas, numeros, tuplas) y los valores pueden ser
+cualquier tipo de objeto. Las claves no se pueden repetir pero los
+valores sí.
+
+.. code:: python
+
+    d0 = {'a': 123}
+
+.. code:: python
+
+    d0['a']
+
+
+
+
+.. parsed-literal::
+
+    123
+
+
+
+.. code:: python
+
+    d0
+
+
+
+
+.. parsed-literal::
+
+    {'a': 123}
+
+
+
+.. code:: python
+
+    d1 = {'nombre':'Juan', 
+          'apellido': 'García', 
+          'edad': 109, 
+          'dirección': '''Av Bustillo 9500,''', 
+          'cod':8400,  
+          1: ['hola', 'chau'],
+          'ciudad': "Bariloche"}
+    
+    print ('Nombre: ', d1['nombre'])
+    print ('\n' + 80*'+' + '\n\tDiccionario:')
+    print (d1)
+
+
+.. parsed-literal::
+
+    Nombre:  Juan
+    
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    	Diccionario:
+    {'nombre': 'Juan', 'apellido': 'García', 'edad': 109, 'dirección': 'Av Bustillo 9500,', 'cod': 8400, 1: ['hola', 'chau'], 'ciudad': 'Bariloche'}
+
+
+.. code:: python
+
+    d1['cod']
+
+
+
+
+.. parsed-literal::
+
+    8400
+
+
+
+.. code:: python
+
+    d1['tel'] = {'cel':1213, 'fijo':23848}
+
+.. code:: python
+
+    d1
+
+
+
+
+.. parsed-literal::
+
+    {'nombre': 'Juan',
+     'apellido': 'García',
+     'edad': 109,
+     'dirección': 'Av Bustillo 9500,',
+     'cod': 8400,
+     1: ['hola', 'chau'],
+     'ciudad': 'Bariloche',
+     'tel': {'cel': 1213, 'fijo': 23848}}
+
+
+
+.. code:: python
+
+    d1['tel']
+
+
+
+
+.. parsed-literal::
+
+    {'cel': 1213, 'fijo': 23848}
+
+
+
+.. code:: python
+
+    dd = d1['tel']
+    print(dd['cel'])
+    print(d1['tel']['cel'])
+
+
+.. parsed-literal::
+
+    1213
+    1213
+
+
+Los diccionarios pueden pensarse como pares *key*, *valor*. Para obtener
+todas las claves (*keys*), valores, o pares (clave, valor) usamos:
+
+.. code:: python
+
+    print ('\n' + 70*'+' + '\n\tkeys:')
+    print (list(d1.keys()))
+    print ('\n' + 70*'+'+ '\n\tvalues:')
+    print (list(d1.values()))
+    print ('\n' + 0*'+'+ '\n\titems:')
+    print (list(d1.items()))
+
+
+.. parsed-literal::
+
+    
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    	keys:
+    ['nombre', 'apellido', 'edad', 'dirección', 'cod', 1, 'ciudad', 'tel']
+    
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    	values:
+    ['Juan', 'García', 109, 'Av Bustillo 9500,', 8400, ['hola', 'chau'], 'Bariloche', {'cel': 1213, 'fijo': 23848}]
+    
+    
+    	items:
+    [('nombre', 'Juan'), ('apellido', 'García'), ('edad', 109), ('dirección', 'Av Bustillo 9500,'), ('cod', 8400), (1, ['hola', 'chau']), ('ciudad', 'Bariloche'), ('tel', {'cel': 1213, 'fijo': 23848})]
+
+
+.. code:: python
+
+    it = list(d1.items())
+    it
+
+
+
+
+.. parsed-literal::
+
+    [('nombre', 'Juan'),
+     ('apellido', 'García'),
+     ('edad', 109),
+     ('dirección', 'Av Bustillo 9500,'),
+     ('cod', 8400),
+     (1, ['hola', 'chau']),
+     ('ciudad', 'Bariloche'),
+     ('tel', {'cel': 1213, 'fijo': 23848})]
+
+
+
+.. code:: python
+
+    dict(it)
+
+
+
+
+.. parsed-literal::
+
+    {'nombre': 'Juan',
+     'apellido': 'García',
+     'edad': 109,
+     'dirección': 'Av Bustillo 9500,',
+     'cod': 8400,
+     1: ['hola', 'chau'],
+     'ciudad': 'Bariloche',
+     'tel': {'cel': 1213, 'fijo': 23848}}
+
+
+
+.. code:: python
+
+    it.append( ([a],'hola') )
+    it
+
+
+
+
+.. parsed-literal::
+
+    [('nombre', 'Juan'),
+     ('apellido', 'García'),
+     ('edad', 109),
+     ('dirección', 'Av Bustillo 9500,'),
+     ('cod', 8400),
+     (1, ['hola', 'chau']),
+     ('ciudad', 'Bariloche'),
+     ('tel', {'cel': 1213, 'fijo': 23848}),
+     (['Hola Mundo'], 'hola')]
+
+
+
+.. code:: python
+
+    dict(it)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-65-29b977625508> in <module>
+    ----> 1 dict(it)
+    
+
+    TypeError: unhashable type: 'list'
+
+
+.. code:: python
+
+    print ('\n' + 50*'+'+ '\n\tDatos:')
+    print (d1['nombre'] + ' ' + d1['apellido'])
+    print (d1[u'dirección'])
+    print (d1['ciudad'])
+    print ('\n' + 50*'+')
+
+
+.. parsed-literal::
+
+    
+    ++++++++++++++++++++++++++++++++++++++++++++++++++
+    	Datos:
+    Juan García
+    Av Bustillo 9500,
+    Bariloche
+    
+    ++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+.. code:: python
+
+    d1['pais']= 'Argentina'
+    
+    d1['ciudad']= "San Carlos de Bariloche"
+    print ('\n' + 70*'+'+ '\n\tDatos:')
+    print (d1['nombre'] + ' ' + d1['apellido'])
+    print (d1[u'dirección'])
+    print (d1['ciudad'])
+    print (d1['pais'])
+
+
+.. parsed-literal::
+
+    
+    ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    	Datos:
+    Juan García
+    Av Bustillo 9500,
+    San Carlos de Bariloche
+    Argentina
+
+
+.. code:: python
+
+    d2 = {'provincia': 'Río Negro', 'nombre':'José'}
+    print (70*'*'+'\nOtro diccionario:')
+    print ('d2=',d2)
+    print (70*'*')
+
+
+.. parsed-literal::
+
+    **********************************************************************
+    Otro diccionario:
+    d2= {'provincia': 'Río Negro', 'nombre': 'José'}
+    **********************************************************************
+
+
+Vimos que se pueden asignar campos a diccionarios. También se pueden
+completar utilizando otro diccionario.
+
+.. code:: python
+
+    print ('d1=',d1)
+    d1.update(d2)  # Corregimos valores o agregamos nuevos si no existen
+    print ('d1=',d1)
+    print (80*'*')
+
+
+.. parsed-literal::
+
+    d1= {'nombre': 'Juan', 'apellido': 'García', 'edad': 109, 'dirección': 'Av Bustillo 9500,', 'cod': 8400, 1: ['hola', 'chau'], 'ciudad': 'San Carlos de Bariloche', 'tel': {'cel': 1213, 'fijo': 23848}, 'pais': 'Argentina'}
+    d1= {'nombre': 'José', 'apellido': 'García', 'edad': 109, 'dirección': 'Av Bustillo 9500,', 'cod': 8400, 1: ['hola', 'chau'], 'ciudad': 'San Carlos de Bariloche', 'tel': {'cel': 1213, 'fijo': 23848}, 'pais': 'Argentina', 'provincia': 'Río Negro'}
+    ********************************************************************************
+
+
+.. code:: python
+
+    # Para borrar un campo de un diccionario usamos `del`
+    print ('provincia' in d1)
+    if 'provincia' in d1:
+      #print( d1['provincia'])
+      del d1['provincia']
+    print ('provincia' in d1)
+
+
+.. parsed-literal::
+
+    True
+    False
+
+
+El método ``pop`` nos devuelve un valor y lo borra del diccionario
+
+.. code:: python
+
+    d1
+
+
+
+
+.. parsed-literal::
+
+    {'nombre': 'José',
+     'apellido': 'García',
+     'edad': 109,
+     'dirección': 'Av Bustillo 9500,',
+     'cod': 8400,
+     1: ['hola', 'chau'],
+     'ciudad': 'San Carlos de Bariloche',
+     'tel': {'cel': 1213, 'fijo': 23848},
+     'pais': 'Argentina'}
+
+
+
+.. code:: python
+
+    d1[1]
+
+
+
+
+.. parsed-literal::
+
+    ['hola', 'chau']
+
+
+
+.. code:: python
+
+    d1.pop(1)
+
+
+
+
+.. parsed-literal::
+
+    ['hola', 'chau']
+
+
+
+.. code:: python
+
+    d1
+
+
+
+
+.. parsed-literal::
+
+    {'nombre': 'José',
+     'apellido': 'García',
+     'edad': 109,
+     'dirección': 'Av Bustillo 9500,',
+     'cod': 8400,
+     'ciudad': 'San Carlos de Bariloche',
+     'tel': {'cel': 1213, 'fijo': 23848},
+     'pais': 'Argentina'}
+
+
+
+.. code:: python
+
+    # Como crear un diccionario vacío:
+    d3 = {}
+    print(d3, type(d3))
+
+
+.. parsed-literal::
+
+    {} <class 'dict'>
+
+
+Conjuntos
+~~~~~~~~~
+
+Los conjuntos (``set()``) son grupos de claves únicas e inmutables.
+
+.. code:: python
+
+    mamiferos = {'perro', 'gato', 'león', 'perro'}
+    domesticos = {'perro', 'gato', 'gallina', 'ganso'}
+    aves = {"chimango", "bandurria", 'gallina', 'cóndor', 'ganso'}
+
+.. code:: python
+
+    mamiferos
+
+
+
+
+.. parsed-literal::
+
+    {'gato', 'león', 'perro'}
+
+
+
+.. code:: python
+
+    mamiferos.intersection(domesticos)
+
+
+
+
+.. parsed-literal::
+
+    {'gato', 'perro'}
+
+
+
+.. code:: python
+
+    # También se puede utilizar el operador "&" para la intersección
+    mamiferos & domesticos
+
+
+
+
+.. parsed-literal::
+
+    {'gato', 'perro'}
+
+
+
+.. code:: python
+
+    mamiferos.union(domesticos)
+
+
+
+
+.. parsed-literal::
+
+    {'gallina', 'ganso', 'gato', 'león', 'perro'}
+
+
+
+.. code:: python
+
+    # También se puede utilizar el operador "|" para la unión
+    mamiferos | domesticos
+
+
+
+
+.. parsed-literal::
+
+    {'gallina', 'ganso', 'gato', 'león', 'perro'}
+
+
+
+.. code:: python
+
+    aves.difference(domesticos)
+
+
+
+
+.. parsed-literal::
+
+    {'bandurria', 'chimango', 'cóndor'}
+
+
+
+.. code:: python
+
+    # También se puede utilizar el operador "-" para la diferencia
+    aves - domesticos
+
+
+
+
+.. parsed-literal::
+
+    {'bandurria', 'chimango', 'cóndor'}
+
+
+
+.. code:: python
+
+    domesticos - aves
+
+
+
+
+.. parsed-literal::
+
+    {'gato', 'perro'}
+
+
+
+.. code:: python
+
+    ll= list(aves.difference(domesticos))
+    print (ll)
+    ll.sort(reverse=True)
+    print(ll)
+    print (ll[1])
+
+
+
+.. parsed-literal::
+
+    ['chimango', 'bandurria', 'cóndor']
+    ['cóndor', 'chimango', 'bandurria']
+    chimango
+
+
+.. code:: python
+
+    # Como crear un conjunto vacío. Notar que: conj = {} hubiera creado un diccionario.
+    conj = set()
+    print(conj, type(conj))
+
+
+.. parsed-literal::
+
+    set() <class 'set'>
+
+
+Modificar conjuntos
+^^^^^^^^^^^^^^^^^^^
+
+Para agregar o borrar elementos a un conjunto usamos los métodos:
+``add``, ``update``, y ``remove``
+
+.. code:: python
+
+    c = set([1, 2, 2, 3, 5])
+    c
+
+
+
+
+.. parsed-literal::
+
+    {1, 2, 3, 5}
+
+
+
+.. code:: python
+
+    c.add(4)
+
+.. code:: python
+
+    c
+
+
+
+
+.. parsed-literal::
+
+    {1, 2, 3, 4, 5}
+
+
+
+.. code:: python
+
+    c.add(4)
+    c
+
+
+
+
+.. parsed-literal::
+
+    {1, 2, 3, 4, 5}
+
+
+
+.. code:: python
+
+    c.update((8,7,6))
+
+.. code:: python
+
+    c
+
+
+
+
+.. parsed-literal::
+
+    {1, 2, 3, 4, 5, 6, 7, 8}
+
+
+
+.. code:: python
+
+    c.remove(2)
+
+.. code:: python
+
+    c
+
+
+
+
+.. parsed-literal::
+
+    {1, 3, 4, 5, 6, 7, 8}
+
+
+
+.. code:: python
+
+    c.remove(2)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    <ipython-input-95-b4d051d0e502> in <module>
+    ----> 1 c.remove(2)
+    
+
+    KeyError: 2
+
+
+.. code:: python
+
+    c.discard(2)
+
+.. code:: python
+
+    c
+
+
+
+
+.. parsed-literal::
+
+    {1, 3, 4, 5, 6, 7, 8}
+
+
+
+Ejercicios 03 (b)
+-----------------
+
+3. Cree dos listas: una con los números que no son múltiplos de ninguno
+   de 2,7,11,13 y otra con los que no son múltiplos de 3,5,17. Considere
+   los primeros 5000 números naturales. Cree una nueva lista donde
+   combine las dos listas anteriores ordenada en forma creciente.
+
+Escritura y lectura a archivos
+------------------------------
+
+Nuestros programas necesitan interactuar con el mundo exterior. Hasta
+ahora utilizamos la función ``print()`` para imprimir por pantalla
+mensajes y resultados. Para leer o escribir un archivo primero debemos
+abrirlo, utilizando la función ``open()``
+
+.. code:: python
+
+    f = open('../data/names.txt')   # Abrimos el archivo (para leer)
+
+.. code:: python
+
+    f
+
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
+.. code:: python
+
+    s = f.read()                    # Leemos el archivo
+
+.. code:: python
+
+    f.close()                       # Cerramos el archivo
+
+Básicamente esta secuencia de trabajo es la que uno utilizará siempre.
+Sin embargo, hay un potencial problema, que ocurrirá si hay algún error
+entre la apertura y el cierre del archivo. Para ello existe una sintaxis
+alternativa
+
+.. code:: python
+
+    with open('../data/names.txt') as f:
+      s = f.read()
+
+La palabra ``with`` es una palabra reservada del lenguaje y la
+construcción se conoce como *contexto*. Básicamente dice que todo lo que
+está dentro del bloque se realizará en el contexto en que ``f`` es el
+objeto de archivo abierto para lectura.
+
+Ejemplos
+~~~~~~~~
+
+Vamos a repasar algunos de los conceptos discutidos las clases
+anteriores e introducir algunas nuevas funcionalidades con ejemplos
+
+Ejemplo 03-1
+^^^^^^^^^^^^
+
+.. code:: python
+
+    !head ../data/names.txt # Muestro el contenido del archivo
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+
+
+.. code:: python
+
+    # %load scripts/03_ejemplo_1.py
+    #!/usr/bin/env python3
+    
+    fname = '../data/names.txt'
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    
+    with  open(fname, 'r') as fi:
+      lines = fi.readlines()        # El resultado es una lista
+    
+    for line in lines:
+      if minlen <= len(line.strip()) <= maxlen:
+        n += 1
+        print(line.strip(), end=', ')  # No Newline
+    
+    print('\n')
+    if minlen == maxlen:
+      mensaje = 'Encontramos {} palabras que tienen {} letras'.format(n, minlen)
+    else:
+      mensaje = 'Encontramos {0} palabras que tienen entre {1} y {2} letras'\
+          .format(n, minlen, maxlen)
+    
+    print(mensaje)
+
+
+
+.. parsed-literal::
+
+    Aaa, Aba, Ada, Ada, Adam, Ala, Alan, Alex, Alf, Ama, Ami, Amir, Amos, Amy, Ana, Andy, Ann, Anna, Anna, Anne, Anya, Arne, Art, Axel, Bart, Bea, Ben, Bert, Beth, Bib, Bill, Bob, Bob, Boob, Boyd, Brad, Bret, Bub, Buck, Bud, Carl, Cary, Case, Cdc, Chet, Chip, Clay, Clem, Cody, Cole, Cory, Cris, Curt, Dad, Dale, Dan, Dana, Dani, Dave, Dawn, Dean, Deb, Debi, Deed, Del, Dick, Did, Dion, Dirk, Dod, Don, Donn, Dora, Dori, Dory, Doug, Drew, Dud, Duke, Earl, Eddy, Eke, Eli, Elsa, Emil, Emma, Enya, Ere, Eric, Erik, Esme, Eva, Evan, Eve, Eve, Ewe, Eye, Fay, Fred, Gag, Gaia, Gail, Gale, Gary, Gay, Gene, Gig, Gigi, Gil, Gill, Glen, Gog, Greg, Guy, Hal, Hank, Hans, Harv, Hein, Herb, Hohn, Hon, Hope, Hsi, Huey, Hugh, Huh, Hui, Hume, Hurf, Hwa, Iain, Ian, Igor, Iii, Ilya, Ima, Imad, Ira, Isis, Izzy, Jack, Jade, Jan, Jane, Jarl, Jay, Jean, Jef, Jeff, Jem, Jen, Jenn, Jess, Jill, Jim, Jin, Jiri, Joan, Job, Jock, Joe, Joel, John, Jon, Jong, Joni, Joon, Jos, Jose, Josh, Juan, Judy, Juha, Jun, June, Juri, Kaj, Kari, Karl, Kate, Kay, Kee, Kees, Ken, Kenn, Kent, Kiki, Kim, King, Kirk, Kit, Knut, Kory, Kris, Kurt, Kyle, Kylo, Kyu, Lana, Lar, Lara, Lars, Lea, Leah, Lee, Leif, Len, Leo, Leon, Les, Lex, Liam, Lila, Lin, Lisa, List, Liz, Liza, Lois, Lola, Lord, Lori, Lou, Loyd, Luc, Lucy, Lui, Luis, Luke, Lum, Lynn, Mac, Mah, Mann, Mara, Marc, Mark, Mary, Mat, Mats, Matt, Max, May, Mayo, Meg, Mick, Miek, Mike, Miki, Milo, Moe, Mott, Mum, Mwa, Naim, Nan, Nate, Neal, Ned, Neil, Nhan, Nici, Nick, Nils, Ning, Noam, Noel, Non, Noon, Nora, Norm, Nou, Novo, Nun, Ofer, Olaf, Old, Ole, Oleg, Olof, Omar, Otto, Owen, Ozan, Page, Pam, Pap, Part, Pat, Paul, Pdp, Peep, Pep, Per, Pete, Petr, Phil, Pia, Piet, Pim, Ping, Pip, Poop, Pop, Pria, Pup, Raif, Raj, Raja, Ralf, Ram, Rand, Raul, Ravi, Ray, Real, Rees, Reg, Reid, Rene, Renu, Rex, Ric, Rich, Rick, Rik, Rob, Rod, Rolf, Ron, Root, Rose, Ross, Roy, Rudy, Russ, Ruth, S's, Saad, Sal, Sam, Sara, Saul, Scot, Sean, Sees, Seth, Shai, Shaw, Shel, Sho, Sid, Sir, Sis, Skef, Skip, Son, Spy, Sri, Ssi, Stan, Stu, Sue, Sus, Suu, Syd, Syed, Syun, Tad, Tai, Tait, Tal, Tao, Tara, Tat, Ted, Teet, Teri, Tex, Thad, The, Theo, Tim, Timo, Tip, Tit, Tnt, Toby, Todd, Toft, Tom, Tony, Toot, Tor, Tot, Tran, Trey, Troy, Tuan, Tuna, Uma, Una, Uri, Urs, Val, Van, Vern, Vic, Vice, Vick, Wade, Walt, Wes, Will, Win, Wolf, Wow, Zoe, Zon, 
+    
+    Encontramos 420 palabras que tienen entre 3 y 4 letras
+
+
+Hemos utilizado aquí:
+
+-  Apertura, lectura, y cerrado de archivos
+-  Iteración en un loop ``for``
+-  Bloques condicionesles (if/else)
+-  Formato de cadenas de caracteres con reemplazo
+-  Impresión por pantalla
+
+La apertura de archivos se realiza utilizando la función ``open`` (este
+es un buen momento para mirar su documentación) con dos argumentos: el
+primero es el nombre del archivo y el segundo el modo en que queremos
+abrilo (en este caso la ``r`` indica lectura).
+
+Con el archivo abierto, en la línea 9 leemos línea por línea todo el
+archivo. El resultado es una lista, donde cada elemento es una línea.
+
+Recorremos la lista, y en cada elemento comparamos la longitud de la
+línea con ciertos valores. Imprimimos las líneas seleccionadas
+
+Finalmente, escribimos el número total de líneas.
+
+Veamos una leve modificación de este programa
+
+Ejemplo 03-2
+^^^^^^^^^^^^
+
+.. code:: python
+
+    # %load scripts/03_ejemplo_2.py
+    #!/usr/bin/env python3
+    
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    
+    fname = '../data/names.txt'
+    
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 3                      # longitud máxima
+    
+    with  open(fname, 'r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          print('({:02d}): {}'.format(n, p), end=', ')  # Vamos numerando las coincidencias
+    print('\n')
+    if minlen == maxlen:
+      mensaje = ('Encontramos un total de {} palabras capicúa que tienen {} letras'.
+                 format(n, minlen))
+    else:
+      mensaje = 'Encontramos un total de {} palabras que tienen\
+     entre {} y {} letras'.format(n, minlen, maxlen)
+    
+    print(mensaje)
+
+
+
+.. parsed-literal::
+
+    (01): aaa, (02): aba, (03): ada, (04): ada, (05): ala, (06): ama, (07): ana, (08): bib, (09): bob, (10): bob, (11): bub, (12): cdc, (13): dad, (14): did, (15): dod, (16): dud, (17): eke, (18): ere, (19): eve, (20): eve, (21): ewe, (22): eye, (23): gag, (24): gig, (25): gog, (26): huh, (27): iii, (28): mum, (29): nan, (30): non, (31): nun, (32): pap, (33): pdp, (34): pep, (35): pip, (36): pop, (37): pup, (38): s's, (39): sis, (40): sus, (41): tat, (42): tit, (43): tnt, (44): tot, (45): wow, 
+    
+    Encontramos un total de 45 palabras capicúa que tienen 3 letras
+
+
+Aquí en lugar de leer todas las líneas e iterar sobre las líneas
+resultantes, iteramos directamente sobre el archivo abierto.
+
+Además incluimos un string al principio del archivo, que servirá de
+documentación, y puede accederse mediante los mecanismos usuales de
+ayuda de Python.
+
+Imprimimos el número de palabra junto con la palabra, usamos ``02d``,
+indicando que es un entero (``d``), que queremos que el campo sea de un
+mínimo número de caracteres de ancho (en este caso 2). Al escribirlo
+como ``02`` le pedimos que complete los vacíos con ceros.
+
+.. code:: python
+
+    s = "Hola\n y chau"
+    with open('tmp.txt','w') as fo:
+        fo.write(s)
+        
+
+.. code:: python
+
+    !cat tmp.txt
+
+
+.. parsed-literal::
+
+    Hola
+     y chau
+
+Ejercicios 03 (c)
+-----------------
+
+2. Realice un programa que:
+
+-  Lea el archivo names.txt
+-  Guarde en un nuevo archivo (llamado pares.txt) palabra por medio del
+   archivo original (la primera, tercera, …) una por línea, pero en el
+   orden inverso al leído
+-  Agregue al final de dicho archivo, las palabras pares pero separadas
+   por un punto y coma (;)
+-  En un archivo llamado longitudes.txt guarde las palabras ordenadas
+   por su longitud, y para cada longitud ordenadas alfabéticamente.
+-  En un archivo llamado letras.txt guarde sólo aquellas palabras que
+   contienen las letras ``w,x,y,z``, con el formato:
+
+   -  w: Walter, ….
+   -  x: Xilofón, …
+   -  y: ….
+   -  z: ….
+
+-  Cree un diccionario, donde cada *key* es la primera letra y cada
+   valor es una lista, cuyo elemento es una tuple (palabra, longitud).
+   Por ejemplo:
+
+.. code:: python
+
+   d['a'] = [('Aaa',3),('Anna', 4), ...]
+
+4. Las funciones de Bessel de orden :math:`n` cumplen las relaciones de
+   recurrencia
+
+   .. math::
+
+
+      J_{n -1}(x)- \frac{2n }{x}\, J_{n }(x) + J_{n +1}(x) = 0 \\
+      J^{2}_{0}(x) + \sum_{n=1}^{\infty} 2 J^{2}_{n}(x) = 1
+        
+
+Para calcular la función de Bessel de orden :math:`N`, se empieza con un
+valor de :math:`M \gg N`, y utilizando los valores iniciales
+:math:`J_{M}=1`, :math:`J_{M+1}=0` se utiliza la primera relación para
+calcular todos los valores de :math:`n < M`. Luego, utilizando la
+segunda relación se normalizan todos los valores. **Nota:** Estas
+relaciones son válidas si :math:`M \gg x` (use algún valor estimado,
+como por ejemplo :math:`M=N+20`).
+
+Utilice estas relaciones para calcular :math:`J_{N}(x)` para
+:math:`N=3,4,7` y :math:`x=2.5, 5.7, 10`. Para referencia se dan los
+valores esperados
+
+.. math::
+
+
+   J_3( 2.5) =  0.21660\\
+   J_4( 2.5) =  0.07378\\
+   J_7( 2.5) =  0.00078\\
+   J_3( 5.7) =  0.20228\\
+   J_4( 5.7) =  0.38659\\
+   J_7( 5.7) =  0.10270\\
+   J_3(10.0) =  0.05838\\
+   J_4(10.0) = -0.21960\\
+   J_7(10.0) =  0.21671\\
+
+6. Imprima por pantalla una tabla con valores equiespaciados de x entre
+   0 y 180, con valores de las funciones trigonométricas de la forma:
+
+.. code:: python
+
+
+   """
+     |=================================|
+     | x  | sen(x) | cos(x) | tan(-x/4)|
+     |=================================|
+     |  0 |  0.000 |  1.000 |  -0.000  |
+     | 10 |  0.174 |  0.985 |  -0.044  |
+     | 20 |  0.342 |  0.940 |  -0.087  |
+     | 30 |  0.500 |  0.866 |  -0.132  |
+     | 40 |  0.643 |  0.766 |  -0.176  |
+     | 50 |  0.766 |  0.643 |  -0.222  |
+     | 60 |  0.866 |  0.500 |  -0.268  |
+     | 70 |  0.940 |  0.342 |  -0.315  |
+     | 80 |  0.985 |  0.174 |  -0.364  |
+     | 90 |  1.000 |  0.000 |  -0.414  |
+     |100 |  0.985 | -0.174 |  -0.466  |
+     |110 |  0.940 | -0.342 |  -0.521  |
+     |120 |  0.866 | -0.500 |  -0.577  |
+     |130 |  0.766 | -0.643 |  -0.637  |
+     |140 |  0.643 | -0.766 |  -0.700  |
+     |150 |  0.500 | -0.866 |  -0.767  |
+     |160 |  0.342 | -0.940 |  -0.839  |
+     |170 |  0.174 | -0.985 |  -0.916  |
+     |=================================|
+   """
+
+7. Dada una lista de números, vamos a calcular valores relacionados a su
+   estadística.
+
+   -  Calcular los valores de la media aritmética, la media geométrica y
+      la media armónica, dados por:
+
+      .. math::
+
+
+          A(x_1, \ldots, x_n) = \bar{x} = \frac{x_1 + \cdots + x_n}{n} \\
+          G(x_1, \ldots, x_n) = \sqrt[n]{x_1 \cdots x_n} \\
+          H(x_1, \ldots, x_n) = \frac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}
+          
+
+   -  Calcular la desviación estándard:
+
+      .. math::  \sigma\equiv\sqrt{\frac{1}{n}\sum_i \left(x_{i} - \bar{x} \right)^2} 
+
+   -  Calcular la mediana, que se define como el valor para el cual la
+      mitad de los valores de la lista es menor que ella. Si el número
+      de elementos es par, se toma el promedio entre los dos adyacentes.
+
+Realizar los cálculos para las listas de números:
+
+.. code:: python
+
+    L1 = [6.41, 1.28, 11.54, 5.13, 8.97, 3.84, 10.26, 14.1, 12.82, 16.67, 2.56, 17.95, 7.69, 15.39]
+    L2 = [4.79, 1.59, 2.13, 4.26, 3.72, 1.06, 6.92, 3.19, 5.32, 2.66, 5.85, 6.39, 0.53]
+
+-  La *moda* se define como el valor que ocurre más frecuentemente en
+   una colección. Note que la moda puede no ser única. En ese caso debe
+   obtener todos los valores. Calcule la moda de las siguientes listas
+   de números enteros:
+
+.. code:: python
+
+    L = [8, 9, 10, 11, 10, 6, 10, 17, 8, 8, 5, 10, 14, 7, 9, 12, 8, 17, 10, 12, 9, 11, 9, 12, 11, 11, 6, 9, 12, 5, 12, 9, 10, 16, 8, 4, 5, 8, 11, 12]
+
+7. Dada una lista de direcciones en el plano, expresadas por los ángulos
+   en grados a partir de un cierto eje, calcular la dirección promedio,
+   expresada en ángulos. Pruebe su algoritmo con las listas:
+
+.. code:: python
+
+    t1 = [0, 180, 370, 10]
+    t2 = [30, 0, 80, 180]
+    t3 = [80, 180, 540, 280]
+
+
