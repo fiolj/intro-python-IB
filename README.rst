@@ -3,7 +3,12 @@
 ==================================================================
 
 Material de clase para el Curso dictado, por primera vez en 2017, en el IB.
-En revisión para su nuevo dictado en el primer semestre de 2020.
+
+
+- Una versión en formto HTML puede encontrarse `aquí <https://fiolj.github.io/intro-python-IB/>`_
+
+- Aquí en `formato pdf <https://fiolj.github.io/data/ClasesdePython.pdf>`_
+
 
 Autor
 -----
