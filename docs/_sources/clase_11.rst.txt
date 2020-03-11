@@ -1,0 +1,2413 @@
+Clase 11: Introducción al paquete Scipy 
+=========================================
+
+
+El paquete **Scipy** es una colección de algoritmos y funciones
+construida sobre **Numpy** para facilitar cálculos y actividades
+relacionadas con el trabajo técnico/científico.
+
+Una mirada rápida a Scipy
+-------------------------
+
+La ayuda de scipy contiene (con ``help(scipy)`` entre otras cosas)
+
+::
+
+   Contents
+   --------
+   SciPy imports all the functions from the NumPy namespace, and in
+   addition provides:
+
+   Subpackages
+   -----------
+   Using any of these subpackages requires an explicit import.  For example,
+   ``import scipy.cluster``.
+
+   ::
+
+    cluster                      --- Vector Quantization / Kmeans
+    fftpack                      --- Discrete Fourier Transform algorithms
+    integrate                    --- Integration routines
+    interpolate                  --- Interpolation Tools
+    io                           --- Data input and output
+    linalg                       --- Linear algebra routines
+    linalg.blas                  --- Wrappers to BLAS library
+    linalg.lapack                --- Wrappers to LAPACK library
+    misc                         --- Various utilities that don't have
+                                     another home.
+    ndimage                      --- n-dimensional image package
+    odr                          --- Orthogonal Distance Regression
+    optimize                     --- Optimization Tools
+    signal                       --- Signal Processing Tools
+    sparse                       --- Sparse Matrices
+    sparse.linalg                --- Sparse Linear Algebra
+    sparse.linalg.dsolve         --- Linear Solvers
+    sparse.linalg.dsolve.umfpack --- :Interface to the UMFPACK library:
+                                     Conjugate Gradient Method (LOBPCG)
+    sparse.linalg.eigen          --- Sparse Eigenvalue Solvers
+    sparse.linalg.eigen.lobpcg   --- Locally Optimal Block Preconditioned
+                                     Conjugate Gradient Method (LOBPCG)
+    spatial                      --- Spatial data structures and algorithms
+    special                      --- Special functions
+    stats                        --- Statistical Functions
+    
+
+Más información puede encontrarse en la `documentación oficial de
+Scipy <https://docs.scipy.org/doc/scipy/reference>`__
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    %matplotlib inline
+
+Funciones especiales
+--------------------
+
+En el submódulo ``scipy.special`` están definidas un número de funciones
+especiales. Una lista general de las funciones definidas (De cada tipo
+hay varias funciones) es:
+
+-  Airy functions
+-  Elliptic Functions and Integrals
+-  Bessel Functions
+-  Struve Functions
+-  Raw Statistical Functions
+-  Information Theory Functions
+-  Gamma and Related Functions
+-  Error Function and Fresnel Integrals
+-  Legendre Functions
+-  Ellipsoidal Harmonics
+-  Orthogonal polynomials
+-  Hypergeometric Functions
+-  Parabolic Cylinder Functions
+-  Mathieu and Related Functions
+-  Spheroidal Wave Functions
+-  Kelvin Functions
+-  Combinatorics
+-  Other Special Functions
+-  Convenience Functions
+
+.. code:: python
+
+    from scipy import special
+
+Funciones de Bessel
+~~~~~~~~~~~~~~~~~~~
+
+Las funciones de Bessel son soluciones de la ecuación diferencial:
+
+.. math::  x^2 \frac{d^2 y}{dx^2} + x \frac{dy}{dx} + (x^2 - \nu^2)y = 0 . 
+
+Para valores enteros de :math:`\nu` se trata de una familia de funciones
+que aparecen como soluciones de problemas de propagación de ondas en
+problemas con simetría cilíndrica.
+
+.. code:: python
+
+    np.info(special.jv)
+
+
+.. parsed-literal::
+
+    jv(x1, x2, /, out=None, *, where=True, casting='same_kind', order='K', dtype=None, subok=True[, signature, extobj])
+    
+    jv(v, z)
+    
+    Bessel function of the first kind of real order and complex argument.
+    
+    Parameters
+    ----------
+    v : array_like
+        Order (float).
+    z : array_like
+        Argument (float or complex).
+    
+    Returns
+    -------
+    J : ndarray
+        Value of the Bessel function, :math:`J_v(z)`.
+    
+    Notes
+    -----
+    For positive `v` values, the computation is carried out using the AMOS
+    [1]_ `zbesj` routine, which exploits the connection to the modified
+    Bessel function :math:`I_v`,
+    
+    .. math::
+        J_v(z) = \exp(v\pi\imath/2) I_v(-\imath z)\qquad (\Im z > 0)
+    
+        J_v(z) = \exp(-v\pi\imath/2) I_v(\imath z)\qquad (\Im z < 0)
+    
+    For negative `v` values the formula,
+    
+    .. math:: J_{-v}(z) = J_v(z) \cos(\pi v) - Y_v(z) \sin(\pi v)
+    
+    is used, where :math:`Y_v(z)` is the Bessel function of the second
+    kind, computed using the AMOS routine `zbesy`.  Note that the second
+    term is exactly zero for integer `v`; to improve accuracy the second
+    term is explicitly omitted for `v` values such that `v = floor(v)`.
+    
+    Not to be confused with the spherical Bessel functions (see `spherical_jn`).
+    
+    See also
+    --------
+    jve : :math:`J_v` with leading exponential behavior stripped off.
+    spherical_jn : spherical Bessel functions.
+    
+    References
+    ----------
+    .. [1] Donald E. Amos, "AMOS, A Portable Package for Bessel Functions
+           of a Complex Argument and Nonnegative Order",
+           http://netlib.org/amos/
+
+
+.. code:: python
+
+    np.info(special.jn_zeros)
+
+
+.. parsed-literal::
+
+     jn_zeros(n, nt)
+    
+    Compute zeros of integer-order Bessel function Jn(x).
+    
+    Parameters
+    ----------
+    n : int
+        Order of Bessel function
+    nt : int
+        Number of zeros to return
+    
+    References
+    ----------
+    .. [1] Zhang, Shanjie and Jin, Jianming. "Computation of Special
+           Functions", John Wiley and Sons, 1996, chapter 5.
+           https://people.sc.fsu.edu/~jburkardt/f_src/special_functions/special_functions.html
+
+
+.. code:: python
+
+    # Ceros de la función de Bessel
+    # Los tres primeros valores de x en los cuales se anula la función de Bessel de orden 4.
+    special.jn_zeros(4,3)
+
+
+
+
+.. parsed-literal::
+
+    array([ 7.58834243, 11.06470949, 14.37253667])
+
+
+
+.. code:: python
+
+    x = np.linspace(0, 16, 50)
+    for n in range(0,8,2):
+      p= plt.plot(x, special.jn(n, x), label='$J_{}(x)$'.format(n))
+      z = special.jn_zeros(n, 6)
+      z = z[z < 15]
+      plt.plot(z, np.zeros(z.size), 'o', color= p[0].get_color())
+    
+    plt.legend(title='Funciones $J_n$ de Bessel', ncol=2);
+    plt.grid(True)
+
+
+
+.. image:: figuras/11_intro_scipy_10_0.png
+
+
+.. code:: python
+
+    # jn es otro nombre para jv
+    print(special.jn == special.jv)
+    print(special.jn is special.jv)
+
+
+.. parsed-literal::
+
+    True
+    True
+
+
+Como vemos, hay funciones para calcular funciones de Bessel. Aquí
+mostramos los órdenes enteros pero también se pueden utilizar órdenes
+:math:`\nu` reales. La lista de funciones de Bessel (puede obtenerse de
+la ayuda sobre ``scipy.special``) es:
+
+-  Bessel Functions
+-  Zeros of Bessel Functions
+-  Faster versions of common Bessel Functions
+-  Integrals of Bessel Functions
+-  Derivatives of Bessel Functions
+-  Spherical Bessel Functions
+-  Riccati-Bessel Functions
+
+Por ejemplo, podemos calcular las funciones esféricas de Bessel, que
+aparecen en problemas con simetría esférica:
+
+.. code:: python
+
+    x = np.linspace(0, 16, 50)
+    for n in range(0,7,2):
+      p= plt.plot(x, special.spherical_jn(n, x), label='$j_{}(x)$'.format(n))
+    plt.legend(title='Funciones esféricas de Bessel $j_n$', ncol=2);
+    plt.grid(True)
+
+
+
+.. image:: figuras/11_intro_scipy_13_0.png
+
+
+Función Error
+~~~~~~~~~~~~~
+
+La función error es el resultado de integrar una función Gaussiana
+
+.. math::  \operatorname{erf}z=\frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^{2}}\mathrm{d}t, 
+
+mientras que las integrales seno y coseno de Fresnel están definidas
+por: :raw-latex:`\begin{align*}
+\operatorname{ssa}= \int_{0}^{z} \sin(\pi/2  t^2) \mathrm{d} t \\
+\operatorname{csa}= \int_{0}^{z} \cos(\pi/2  t^2) \mathrm{d} t 
+\end{align*}`
+
+.. code:: python
+
+    x = np.linspace(-3, 3,100)
+    f = special.fresnel(x)
+    plt.plot(x, special.erf(x),'-', label=r'$\mathrm{erf}(x)$')
+    plt.plot(x, f[0],'-', label=r'$\mathrm{ssa}(x)$')
+    plt.plot(x, f[1],'-', label=r'$\mathrm{csa}(x)$')
+    plt.xlabel('$x$')
+    plt.ylabel('$f(x)$')
+    plt.legend(loc='best')
+    plt.grid(True)
+
+
+
+.. image:: figuras/11_intro_scipy_15_0.png
+
+
+Evaluación de polinomios ortogonales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``Scipy.special`` tiene funciones para evaluar eficientemente polinomios
+ortogonales
+
+Por ejemplo si queremos, evaluar los polinomios de Laguerre, solución de
+la ecuación diferencial:
+
+.. math::
+
+
+   x\frac{d^2}{dx^2}L_n + (1 - x)\frac{d}{dx}L_n + nL_n = 0
+
+.. code:: python
+
+    x = np.linspace(-1, 1,100)
+    for n in range(2,6):
+      plt.plot(x, special.eval_laguerre(n, x),'-', label=r'$n={}$'.format(n))
+    plt.xlabel('$x$')
+    plt.ylabel('$f(x)$')
+    plt.legend(loc='best', ncol=2)
+    plt.grid(True)
+
+
+
+.. image:: figuras/11_intro_scipy_17_0.png
+
+
+Los polinomios de Chebyshev son solución de
+
+.. math::  (1 - x^2)\frac{d^2}{dx^2}T_n - x\frac{d}{dx}T_n + n^2T_n = 0
+
+.. code:: python
+
+    x = np.linspace(-1, 1,100)
+    for n in range(2,6):
+      plt.plot(x, special.eval_chebyt(n, x),'-', label=r'$n={}$'.format(n))
+    plt.xlabel('$x$')
+    plt.ylabel('$f(x)$')
+    plt.legend(loc='best', ncol=2)
+    plt.ylim((-1.1,2))
+    plt.grid(True)
+
+
+
+.. image:: figuras/11_intro_scipy_19_0.png
+
+
+Factorial, permutaciones y combinaciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hay funciones para calcular varias funciones relacionadas con
+combinatoria
+
+La función ``comb()`` da el número de maneras de elegir ``k`` de un
+total de ``N`` elementos. Sin repeticiones está dada por:
+
+.. math::  \frac{N!}{k! (N-k)!}
+
+mientras que si cada elemento puede repetirse, la fórmula es:
+
+.. math::  \frac{(N+k-1)!}{k! (N-1)!}
+
+.. code:: python
+
+    N = 10
+    k =np.arange(2,4)
+
+.. code:: python
+
+    special.comb(N, k)
+
+
+
+
+.. parsed-literal::
+
+    array([ 45., 120.])
+
+
+
+.. code:: python
+
+    # Si usamos exact=True, k no puede ser un array
+    special.comb(N,3,exact=True)
+
+
+
+
+.. parsed-literal::
+
+    120
+
+
+
+.. code:: python
+
+    special.comb(N,k, repetition=True)
+
+
+
+
+.. parsed-literal::
+
+    array([ 55., 220.])
+
+
+
+El número de permutaciones se obtiene con la función ``perm()``, y está
+dado por:
+
+.. math::  \frac{N!}{(N-k)!}
+
+.. code:: python
+
+    special.perm(N,k)
+
+
+
+
+.. parsed-literal::
+
+    array([ 90., 720.])
+
+
+
+que corresponde a:
+
+.. math::  \frac{10!}{(10-3)!} = 10 \cdot 9 \cdot 8 
+
+Los números factorial (N!) y doble factorial (N!!) son:
+
+.. code:: python
+
+    N= np.array([3,6,8])
+    print("{}! = {}".format(N, special.factorial(N)))
+    print("{}!! = {}".format(N, special.factorial2(N)))
+
+
+.. parsed-literal::
+
+    [3 6 8]! = [6.000e+00 7.200e+02 4.032e+04]
+    [3 6 8]!! = [  3.  48. 384.]
+
+
+Integración numérica
+--------------------
+
+Scipy tiene rutinas para integrar numéricamente funciones o tablas de
+datos. Por ejemplo para integrar funciones en la forma:
+
+.. math:: I= \int_{a}^{b} f(x)\, dx 
+
+la función más utilizada es ``quad``, que llama a distintas rutinas del
+paquete **QUADPACK** dependiendo de los argumentos que toma. Entre los
+aspectos más notables está la posibilidad de elegir una función de peso
+entre un conjunto definido de funciones, y la posibilidad de elegir un
+dominio de integración finito o infinito.
+
+.. code:: python
+
+    from scipy import integrate
+
+.. code:: python
+
+    x = np.linspace(0., 10, 100)
+
+.. code:: python
+
+    def f1(x):
+      return np.sin(x)*np.exp(-np.square(x+1)/10)
+
+.. code:: python
+
+    plt.plot(x,f1(x))
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8f99ffb4d0>]
+
+
+
+
+.. image:: figuras/11_intro_scipy_34_1.png
+
+
+.. code:: python
+
+    integrate.quad(f1,0,1)
+
+
+
+
+.. parsed-literal::
+
+    (0.34858491873298725, 3.870070028144515e-15)
+
+
+
+.. code:: python
+
+    np.info(integrate.quad)
+
+
+.. parsed-literal::
+
+     quad(func, a, b, args=(), full_output=0, epsabs=1.49e-08, epsrel=1.49e-08,
+          limit=50, points=None, weight=None, wvar=None, wopts=None, maxp1=50,
+          limlst=50)
+    
+    Compute a definite integral.
+    
+    Integrate func from `a` to `b` (possibly infinite interval) using a
+    technique from the Fortran library QUADPACK.
+    
+    Parameters
+    ----------
+    func : {function, scipy.LowLevelCallable}
+        A Python function or method to integrate.  If `func` takes many
+        arguments, it is integrated along the axis corresponding to the
+        first argument.
+    
+        If the user desires improved integration performance, then `f` may
+        be a `scipy.LowLevelCallable` with one of the signatures::
+    
+            double func(double x)
+            double func(double x, void *user_data)
+            double func(int n, double *xx)
+            double func(int n, double *xx, void *user_data)
+    
+        The ``user_data`` is the data contained in the `scipy.LowLevelCallable`.
+        In the call forms with ``xx``,  ``n`` is the length of the ``xx``
+        array which contains ``xx[0] == x`` and the rest of the items are
+        numbers contained in the ``args`` argument of quad.
+    
+        In addition, certain ctypes call signatures are supported for
+        backward compatibility, but those should not be used in new code.
+    a : float
+        Lower limit of integration (use -numpy.inf for -infinity).
+    b : float
+        Upper limit of integration (use numpy.inf for +infinity).
+    args : tuple, optional
+        Extra arguments to pass to `func`.
+    full_output : int, optional
+        Non-zero to return a dictionary of integration information.
+        If non-zero, warning messages are also suppressed and the
+        message is appended to the output tuple.
+    
+    Returns
+    -------
+    y : float
+        The integral of func from `a` to `b`.
+    abserr : float
+        An estimate of the absolute error in the result.
+    infodict : dict
+        A dictionary containing additional information.
+        Run scipy.integrate.quad_explain() for more information.
+    message
+        A convergence message.
+    explain
+        Appended only with 'cos' or 'sin' weighting and infinite
+        integration limits, it contains an explanation of the codes in
+        infodict['ierlst']
+    
+    Other Parameters
+    ----------------
+    epsabs : float or int, optional
+        Absolute error tolerance.
+    epsrel : float or int, optional
+        Relative error tolerance.
+    limit : float or int, optional
+        An upper bound on the number of subintervals used in the adaptive
+        algorithm.
+    points : (sequence of floats,ints), optional
+        A sequence of break points in the bounded integration interval
+        where local difficulties of the integrand may occur (e.g.,
+        singularities, discontinuities). The sequence does not have
+        to be sorted.
+    weight : float or int, optional
+        String indicating weighting function. Full explanation for this
+        and the remaining arguments can be found below.
+    wvar : optional
+        Variables for use with weighting functions.
+    wopts : optional
+        Optional input for reusing Chebyshev moments.
+    maxp1 : float or int, optional
+        An upper bound on the number of Chebyshev moments.
+    limlst : int, optional
+        Upper bound on the number of cycles (>=3) for use with a sinusoidal
+        weighting and an infinite end-point.
+    
+    See Also
+    --------
+    dblquad : double integral
+    tplquad : triple integral
+    nquad : n-dimensional integrals (uses `quad` recursively)
+    fixed_quad : fixed-order Gaussian quadrature
+    quadrature : adaptive Gaussian quadrature
+    odeint : ODE integrator
+    ode : ODE integrator
+    simps : integrator for sampled data
+    romb : integrator for sampled data
+    scipy.special : for coefficients and roots of orthogonal polynomials
+    
+    Notes
+    -----
+    
+    **Extra information for quad() inputs and outputs**
+    
+    If full_output is non-zero, then the third output argument
+    (infodict) is a dictionary with entries as tabulated below.  For
+    infinite limits, the range is transformed to (0,1) and the
+    optional outputs are given with respect to this transformed range.
+    Let M be the input argument limit and let K be infodict['last'].
+    The entries are:
+    
+    'neval'
+        The number of function evaluations.
+    'last'
+        The number, K, of subintervals produced in the subdivision process.
+    'alist'
+        A rank-1 array of length M, the first K elements of which are the
+        left end points of the subintervals in the partition of the
+        integration range.
+    'blist'
+        A rank-1 array of length M, the first K elements of which are the
+        right end points of the subintervals.
+    'rlist'
+        A rank-1 array of length M, the first K elements of which are the
+        integral approximations on the subintervals.
+    'elist'
+        A rank-1 array of length M, the first K elements of which are the
+        moduli of the absolute error estimates on the subintervals.
+    'iord'
+        A rank-1 integer array of length M, the first L elements of
+        which are pointers to the error estimates over the subintervals
+        with ``L=K`` if ``K<=M/2+2`` or ``L=M+1-K`` otherwise. Let I be the
+        sequence ``infodict['iord']`` and let E be the sequence
+        ``infodict['elist']``.  Then ``E[I[1]], ..., E[I[L]]`` forms a
+        decreasing sequence.
+    
+    If the input argument points is provided (i.e. it is not None),
+    the following additional outputs are placed in the output
+    dictionary.  Assume the points sequence is of length P.
+    
+    'pts'
+        A rank-1 array of length P+2 containing the integration limits
+        and the break points of the intervals in ascending order.
+        This is an array giving the subintervals over which integration
+        will occur.
+    'level'
+        A rank-1 integer array of length M (=limit), containing the
+        subdivision levels of the subintervals, i.e., if (aa,bb) is a
+        subinterval of ``(pts[1], pts[2])`` where ``pts[0]`` and ``pts[2]``
+        are adjacent elements of ``infodict['pts']``, then (aa,bb) has level l
+        if ``|bb-aa| = |pts[2]-pts[1]| * 2**(-l)``.
+    'ndin'
+        A rank-1 integer array of length P+2.  After the first integration
+        over the intervals (pts[1], pts[2]), the error estimates over some
+        of the intervals may have been increased artificially in order to
+        put their subdivision forward.  This array has ones in slots
+        corresponding to the subintervals for which this happens.
+    
+    **Weighting the integrand**
+    
+    The input variables, *weight* and *wvar*, are used to weight the
+    integrand by a select list of functions.  Different integration
+    methods are used to compute the integral with these weighting
+    functions.  The possible values of weight and the corresponding
+    weighting functions are.
+    
+    ==========  ===================================   =====================
+    ``weight``  Weight function used                  ``wvar``
+    ==========  ===================================   =====================
+    'cos'       cos(w*x)                              wvar = w
+    'sin'       sin(w*x)                              wvar = w
+    'alg'       g(x) = ((x-a)**alpha)*((b-x)**beta)   wvar = (alpha, beta)
+    'alg-loga'  g(x)*log(x-a)                         wvar = (alpha, beta)
+    'alg-logb'  g(x)*log(b-x)                         wvar = (alpha, beta)
+    'alg-log'   g(x)*log(x-a)*log(b-x)                wvar = (alpha, beta)
+    'cauchy'    1/(x-c)                               wvar = c
+    ==========  ===================================   =====================
+    
+    wvar holds the parameter w, (alpha, beta), or c depending on the weight
+    selected.  In these expressions, a and b are the integration limits.
+    
+    For the 'cos' and 'sin' weighting, additional inputs and outputs are
+    available.
+    
+    For finite integration limits, the integration is performed using a
+    Clenshaw-Curtis method which uses Chebyshev moments.  For repeated
+    calculations, these moments are saved in the output dictionary:
+    
+    'momcom'
+        The maximum level of Chebyshev moments that have been computed,
+        i.e., if ``M_c`` is ``infodict['momcom']`` then the moments have been
+        computed for intervals of length ``|b-a| * 2**(-l)``,
+        ``l=0,1,...,M_c``.
+    'nnlog'
+        A rank-1 integer array of length M(=limit), containing the
+        subdivision levels of the subintervals, i.e., an element of this
+        array is equal to l if the corresponding subinterval is
+        ``|b-a|* 2**(-l)``.
+    'chebmo'
+        A rank-2 array of shape (25, maxp1) containing the computed
+        Chebyshev moments.  These can be passed on to an integration
+        over the same interval by passing this array as the second
+        element of the sequence wopts and passing infodict['momcom'] as
+        the first element.
+    
+    If one of the integration limits is infinite, then a Fourier integral is
+    computed (assuming w neq 0).  If full_output is 1 and a numerical error
+    is encountered, besides the error message attached to the output tuple,
+    a dictionary is also appended to the output tuple which translates the
+    error codes in the array ``info['ierlst']`` to English messages.  The
+    output information dictionary contains the following entries instead of
+    'last', 'alist', 'blist', 'rlist', and 'elist':
+    
+    'lst'
+        The number of subintervals needed for the integration (call it ``K_f``).
+    'rslst'
+        A rank-1 array of length M_f=limlst, whose first ``K_f`` elements
+        contain the integral contribution over the interval
+        ``(a+(k-1)c, a+kc)`` where ``c = (2*floor(|w|) + 1) * pi / |w|``
+        and ``k=1,2,...,K_f``.
+    'erlst'
+        A rank-1 array of length ``M_f`` containing the error estimate
+        corresponding to the interval in the same position in
+        ``infodict['rslist']``.
+    'ierlst'
+        A rank-1 integer array of length ``M_f`` containing an error flag
+        corresponding to the interval in the same position in
+        ``infodict['rslist']``.  See the explanation dictionary (last entry
+        in the output tuple) for the meaning of the codes.
+    
+    Examples
+    --------
+    Calculate :math:`\int^4_0 x^2 dx` and compare with an analytic result
+    
+    >>> from scipy import integrate
+    >>> x2 = lambda x: x**2
+    >>> integrate.quad(x2, 0, 4)
+    (21.333333333333332, 2.3684757858670003e-13)
+    >>> print(4**3 / 3.)  # analytical result
+    21.3333333333
+    
+    Calculate :math:`\int^\infty_0 e^{-x} dx`
+    
+    >>> invexp = lambda x: np.exp(-x)
+    >>> integrate.quad(invexp, 0, np.inf)
+    (1.0, 5.842605999138044e-11)
+    
+    >>> f = lambda x,a : a*x
+    >>> y, err = integrate.quad(f, 0, 1, args=(1,))
+    >>> y
+    0.5
+    >>> y, err = integrate.quad(f, 0, 1, args=(3,))
+    >>> y
+    1.5
+    
+    Calculate :math:`\int^1_0 x^2 + y^2 dx` with ctypes, holding
+    y parameter as 1::
+    
+        testlib.c =>
+            double func(int n, double args[n]){
+                return args[0]*args[0] + args[1]*args[1];}
+        compile to library testlib.*
+    
+    ::
+    
+       from scipy import integrate
+       import ctypes
+       lib = ctypes.CDLL('/home/.../testlib.*') #use absolute path
+       lib.func.restype = ctypes.c_double
+       lib.func.argtypes = (ctypes.c_int,ctypes.c_double)
+       integrate.quad(lib.func,0,1,(1))
+       #(1.3333333333333333, 1.4802973661668752e-14)
+       print((1.0**3/3.0 + 1.0) - (0.0**3/3.0 + 0.0)) #Analytic result
+       # 1.3333333333333333
+    
+    Be aware that pulse shapes and other sharp features as compared to the
+    size of the integration interval may not be integrated correctly using
+    this method. A simplified example of this limitation is integrating a
+    y-axis reflected step function with many zero values within the integrals
+    bounds.
+    
+    >>> y = lambda x: 1 if x<=0 else 0
+    >>> integrate.quad(y, -1, 1)
+    (1.0, 1.1102230246251565e-14)
+    >>> integrate.quad(y, -1, 100)
+    (1.0000000002199108, 1.0189464580163188e-08)
+    >>> integrate.quad(y, -1, 10000)
+    (0.0, 0.0)
+
+
+.. code:: python
+
+    [((0, xmax), integrate.quad(f1,0,xmax)[0]) for xmax in np.arange(1,5)]
+
+
+
+
+.. parsed-literal::
+
+    [((0, 1), 0.34858491873298725),
+     ((0, 2), 0.8600106383901718),
+     ((0, 3), 1.0438816972950689),
+     ((0, 4), 1.0074874684274517)]
+
+
+
+La rutina devuelve dos valores. El primero es la estimación del valor de
+la integral y el segundo una estimación del **error absoluto** . Además,
+la función acepta límites de integración infinitos (:math:`\pm \infty`,
+definidos en **Numpy**)
+
+.. code:: python
+
+    integrate.quad(f1,-np.inf,np.inf)
+
+
+
+
+.. parsed-literal::
+
+    (-0.3871487639489655, 5.459954581847885e-09)
+
+
+
+Ejemplo de función fuertemente oscilatoria
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    k = 200
+    L = 2*np.pi
+    a = 0.1
+    def f2(x):
+      return np.sin(k*x)*np.exp(-a*x)
+
+.. code:: python
+
+    # Valor exacto de la integral
+    I=k/a**2*(np.exp(-a*L)-1)/(1-k**2/a**2)
+    print(I)
+
+
+.. parsed-literal::
+
+    0.0023325601276845158
+
+
+.. code:: python
+
+    Iq= integrate.quad(f2,0,L)
+
+
+.. parsed-literal::
+
+    /usr/lib/python3.7/site-packages/ipykernel_launcher.py:1: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
+      If increasing the limit yields no improvement it is advised to analyze 
+      the integrand in order to determine the difficulties.  If the position of a 
+      local difficulty can be determined (singularity, discontinuity) one will 
+      probably gain from splitting up the interval and calling the integrator 
+      on the subranges.  Perhaps a special-purpose integrator should be used.
+      """Entry point for launching an IPython kernel.
+
+
+.. code:: python
+
+    I_err = (I-Iq[0])/I             # Error relativo con el valor exacto
+    print("I= {:.5g} ± {:.5g}\nError relativo= {:.6g}\n".format(*Iq, I_err))
+
+
+.. parsed-literal::
+
+    I= -0.0043611 ± 0.019119
+    Error relativo= 2.86965
+    
+
+
+El error relativo entre el valor obtenido numéricamente y el valor
+exacto ``I`` es grande. Esto se debe a la naturaleza del integrando.
+Grafiquemos sólo una pequeña parte
+
+.. code:: python
+
+    x = np.linspace(0,L,1500)
+    plt.plot(x, f2(x))
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8f99fe96d0>]
+
+
+
+
+.. image:: figuras/11_intro_scipy_46_1.png
+
+
+.. code:: python
+
+    x = np.linspace(0,L/10,1500)
+    plt.plot(x, f2(x))
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8f99f64090>]
+
+
+
+
+.. image:: figuras/11_intro_scipy_47_1.png
+
+
+La rutina ``quad`` es versatil y tiene una opción específica para
+integrandos oscilatorios, que permite calcular las integrales de una
+función :math:`f` multiplicadas por una función oscilatoria
+
+.. math:: I= \int_{a}^{b} f(x)\,weight( w x)\, dx 
+
+Para ello debemos usar el argumento ``weight`` y ``wvar``. En este caso
+usaremos ``weight='sin'``
+
+.. code:: python
+
+    # La función sin el factor oscilatorio:
+    def f3(x):
+      return np.exp(-a*x)
+
+.. code:: python
+
+    Is= integrate.quad(f3,0,L, weight='sin', wvar=k)
+
+.. code:: python
+
+    I_err = (I-Is[0])/I             # Error relativo con el valor exacto 
+    print("I= {:.5g} ± {:.5g}\nError relativo= {:.6g}\n".format(*Is, I_err))
+
+
+.. parsed-literal::
+
+    I= 0.0023326 ± 1.1788e-33
+    Error relativo= 5e-07
+    
+
+
+El error relativo obtenido respecto al valor exacto es varios órdenes de
+magnitud menor. Comparemos los tiempos de ejecución:
+
+.. code:: python
+
+    %timeit integrate.quad(f2,0,L)
+
+
+.. parsed-literal::
+
+    /usr/lib/python3.7/site-packages/ipykernel_launcher.py:1: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
+      If increasing the limit yields no improvement it is advised to analyze 
+      the integrand in order to determine the difficulties.  If the position of a 
+      local difficulty can be determined (singularity, discontinuity) one will 
+      probably gain from splitting up the interval and calling the integrator 
+      on the subranges.  Perhaps a special-purpose integrator should be used.
+      """Entry point for launching an IPython kernel.
+
+
+.. parsed-literal::
+
+    11.1 ms ± 50 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+
+
+.. code:: python
+
+    %timeit integrate.quad(f3,0,L, weight='sin', wvar=k)
+
+
+.. parsed-literal::
+
+    82.1 µs ± 626 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+
+
+Usar un integrador más específico para el integrando no sólo nos da un
+mejor resultado sino que el tiempo de ejecución es más de 100 veces más
+corto.
+
+Funciones de más de una variable
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consideremos el caso en que queremos integrar alguna función especial.
+Podemos usar Scipy para realizar la integración y para evaluar el
+integrando. Como ``special.jn`` depende de dos variables, tenemos que
+crear una función intermedia que dependa sólo de la variable de
+integración
+
+.. code:: python
+
+    integrate.quad(lambda x: special.jn(0,x), 0 , 10)
+
+
+
+
+.. parsed-literal::
+
+    (1.0670113039567362, 7.434789460651883e-14)
+
+
+
+En realidad, la función ``quad`` permite el uso de argumentos que se le
+pasan a la función a integrar. La forma de llamar al integrador será en
+general:
+
+.. code:: python
+
+     quad(func, a, b, args=(), full_output=0, epsabs=1.49e-08, epsrel=1.49e-08,
+         limit=50, points=None, weight=None, wvar=None, wopts=None, maxp1=50,
+         limlst=50)
+
+El argumento ``args`` debe ser una tupla, y contiene los argumentos
+extra que acepta la función a integrar, esta función debe llamarse en la
+forma ``func(x, *args)``. O sea que siempre la integramos respecto a su
+primer argumento. Apliquemos esto a la función de Bessel. En este caso,
+la variable a integrar es el segundo argumento de ``special.jn``, por lo
+que creamos una función con el orden correcto de argumentos:
+
+.. code:: python
+
+    def bessel_n(x, n):
+      return special.jn(n,x)
+
+.. code:: python
+
+    integrate.quad(bessel_n, 0, 10, args=(0,))
+
+
+
+
+.. parsed-literal::
+
+    (1.0670113039567362, 7.434789460651883e-14)
+
+
+
+.. code:: python
+
+    print('n    \int_0^10  J_n(x) dx')
+    for n in range(6):
+      print(n,': ', integrate.quad(bessel_n, 0, 10, args=(n,))[0])
+
+
+.. parsed-literal::
+
+    n    \int_0^10  J_n(x) dx
+    0 :  1.0670113039567362
+    1 :  1.2459357644513482
+    2 :  0.9800658116190144
+    3 :  0.7366751370811073
+    4 :  0.8633070530086401
+    5 :  1.1758805092851239
+
+
+Álgebra lineal
+--------------
+
+El módulo de álgebra lineal se solapa un poco con funciones similares en
+**Numpy**. Ambos usan finalmente una implementación de bibliotecas
+conocidas (LAPACK, BLAS). La diferencia es que **Scipy** asegura que
+utiliza las optimizaciones de la librería ATLAS y presenta algunos
+métodos y algoritmos que no están presentes en **Numpy**.
+
+Una de las aplicaciones más conocidas por nosotros es la rotación de
+vectores. Como bien sabemos rotar un vector es equivalente a
+multiplicarlo por la matriz de rotación correspondiente.
+Esquemáticamente:
+
+|image0|
+
+.. |image0| image:: https://imgs.xkcd.com/comics/matrix_transform.png
+
+.. code:: python
+
+    from scipy import linalg
+
+Este módulo tiene funciones para trabajar con matrices, descriptas como
+*arrays* bidimensionales.
+
+.. code:: python
+
+    arr = np.array([[3, 2,1],[6, 4,1],[12, 8, 13.3]])
+    print(arr)
+
+
+.. parsed-literal::
+
+    [[ 3.   2.   1. ]
+     [ 6.   4.   1. ]
+     [12.   8.  13.3]]
+
+
+.. code:: python
+
+    A = np.array([[1, -2,-3],[1, -1,-1],[-1, 3, 1]])
+    print(A)
+
+
+.. parsed-literal::
+
+    [[ 1 -2 -3]
+     [ 1 -1 -1]
+     [-1  3  1]]
+
+
+.. code:: python
+
+    # La matriz transpuesta
+    A.T
+
+
+
+
+.. parsed-literal::
+
+    array([[ 1,  1, -1],
+           [-2, -1,  3],
+           [-3, -1,  1]])
+
+
+
+Productos y normas
+~~~~~~~~~~~~~~~~~~
+
+Norma de un vector
+^^^^^^^^^^^^^^^^^^
+
+La norma está dada por
+
+.. math:: ||v|| = \sqrt{v_1^2+...+v_n^2}
+
+.. code:: python
+
+    v = np.array([2,1,3])
+    linalg.norm(v)                  # Norma
+
+
+
+
+.. parsed-literal::
+
+    3.7416573867739413
+
+
+
+.. code:: python
+
+    linalg.norm(v) == np.sqrt(np.sum(np.square(v)))
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Producto interno
+^^^^^^^^^^^^^^^^
+
+El producto entre una matriz y un vector está definido en **Numpy**
+mediante la función ``dot()``
+
+.. code:: python
+
+    w1 = np.dot(A, v)                # Multiplicación de matrices
+    w1
+
+
+
+
+.. parsed-literal::
+
+    array([-9, -2,  4])
+
+
+
+.. code:: python
+
+    w2 = np.dot(v,  A)
+    w2
+
+
+
+
+.. parsed-literal::
+
+    array([ 0,  4, -4])
+
+
+
+.. code:: python
+
+    np.dot(v.T,  A)
+
+
+
+
+
+.. parsed-literal::
+
+    array([ 0,  4, -4])
+
+
+
+.. code:: python
+
+    print(v.shape, A.shape)
+
+
+.. parsed-literal::
+
+    (3,) (3, 3)
+
+
+El producto interno entre vectores se calcula de la misma manera
+
+.. math::  \langle v, w \rangle
+
+.. code:: python
+
+    np.dot(v,w1)
+
+
+
+
+.. parsed-literal::
+
+    -8
+
+
+
+y está relacionado con la norma
+
+.. math:: ||v|| = \sqrt{ \langle v, v \rangle}
+
+.. code:: python
+
+    linalg.norm(v) == np.sqrt(np.dot(v,v))
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    np.dot(v,A)
+
+
+
+
+.. parsed-literal::
+
+    array([ 0,  4, -4])
+
+
+
+.. code:: python
+
+    v.shape
+
+
+
+
+.. parsed-literal::
+
+    (3,)
+
+
+
+.. code:: python
+
+    v2 = np.reshape(v, (3,1))
+
+.. code:: python
+
+    v2.shape
+
+
+
+
+.. parsed-literal::
+
+    (3, 1)
+
+
+
+.. code:: python
+
+    np.dot(A, v2)
+
+
+
+
+.. parsed-literal::
+
+    array([[-9],
+           [-2],
+           [ 4]])
+
+
+
+.. code:: python
+
+    np.dot(A, v2).shape
+
+
+
+
+.. parsed-literal::
+
+    (3, 1)
+
+
+
+Ahora las dimensiones de ``v2`` y ``A`` no coinciden para hacer el
+producto matricial
+
+.. code:: python
+
+   np.dot(v2, A)
+
+En versiones nuevas de Python la multiplicación de matrices puede
+realizarse con el operador ``@``
+
+.. code:: python
+
+    np.dot( v2,A)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    <ipython-input-60-c31ca8fbc4d7> in <module>
+    ----> 1 np.dot( v2,A)
+    
+
+    <__array_function__ internals> in dot(*args, **kwargs)
+
+
+    ValueError: shapes (3,1) and (3,3) not aligned: 1 (dim 1) != 3 (dim 0)
+
+
+.. code:: python
+
+    A @ v2
+
+
+
+
+.. parsed-literal::
+
+    array([[-9],
+           [-2],
+           [ 4]])
+
+
+
+.. code:: python
+
+    v3 = np.dot(v2.T, A)
+
+.. code:: python
+
+    print(v3)
+    v3.shape
+
+
+.. parsed-literal::
+
+    [[ 0  4 -4]]
+
+
+
+
+.. parsed-literal::
+
+    (1, 3)
+
+
+
+Notemos que el producto interno se puede pensar como un producto de
+matrices. En este caso, el producto de una matriz de 3x1, por otra de
+1x3:
+
+.. math::  v^{t} \, w = \begin{pmatrix} -9&-2&4 \end{pmatrix} \begin{pmatrix} 2\\1\\3 \end{pmatrix} 
+
+donde estamos pensando al vector como columna.
+
+Producto exterior
+^^^^^^^^^^^^^^^^^
+
+El producto exterior puede ponerse en términos de multiplicación de
+matrices como
+
+.. math:: v\otimes w = vw^{t} = \begin{pmatrix} -9\\-2\\4 \end{pmatrix} \begin{pmatrix} 2&1&3 \end{pmatrix}
+
+.. code:: python
+
+    oprod = np.outer(v,w1)
+    print(oprod)
+
+
+.. parsed-literal::
+
+    [[-18  -4   8]
+     [ -9  -2   4]
+     [-27  -6  12]]
+
+
+Aplicación a la resolución de sistemas de ecuaciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vamos a usar ``scipy.linalg`` permite obtener determinantes e inversas
+de matrices. Vamos a usarlo para resolver un sistema de ecuaciones
+lineales:
+
+.. math::
+
+
+   \left\{
+   \begin{array}{rl}
+   a_{11} x_1 + a_{12} x_2 + a_{13} x_3 &= b_1 \\
+   a_{21} x_1 + a_{22} x_2 + a_{23} x_3 &= b_2 \\
+   a_{31} x_1 + a_{32} x_2 + a_{33} x_3 &= b_3
+   \end{array}
+   \right.
+
+Esta ecuación se puede escribir en forma matricial como
+
+.. math::
+
+    \begin{pmatrix}a_{11}&a_{12} & a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{pmatrix}
+   \begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix} = \begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}
+
+Veamos un ejemplo concreto. Supongamos que tenemos el siguiente sistema
+
+.. math::
+
+
+   \left\{
+   \begin{array}{rl}
+    x_1 + 2 x_2 + 3 x_3 &= 1 \\
+   2 x_1 +  x_2 + 3 x_3 &= 2 \\
+   4 x_1 +  x_2 - x_3 &= 3
+   \end{array}
+   \right.
+
+por lo que, en forma matricial será:
+
+.. math::  A = \begin{pmatrix} 1 &2 &3 \\ 2& 1& 3 \\ 4& 1& -1 \end{pmatrix} 
+
+y
+
+.. math::  b =  \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} 
+
+.. code:: python
+
+    A = np.array([[1,2,3],[2,1,3],[4,1,-1]])
+    b = np.array([[1,2,3]]).T
+    print('A=', A,"\n")
+    print('b=', b,"\n")
+
+
+.. parsed-literal::
+
+    A= [[ 1  2  3]
+     [ 2  1  3]
+     [ 4  1 -1]] 
+    
+    b= [[1]
+     [2]
+     [3]] 
+    
+
+
+.. code:: python
+
+    x = np.dot(linalg.inv(A), b)
+    print('Resultado:\n', x)
+
+
+.. parsed-literal::
+
+    Resultado:
+     [[ 0.83333333]
+     [-0.16666667]
+     [ 0.16666667]]
+
+
+Descomposición de matrices
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si consideramos el mismo problema de resolución de ecuaciones
+
+.. math:: A x = b 
+
+pero donde debemos resolver el problema para un valor dado de los
+coeficientes (la matriz :math:`A`) y muchos valores distintos del vector
+:math:`b`, suele ser útil realizar lo que se llama la descompocición
+:math:`LU` de la matriz.
+
+Si escribimos a la matriz :math:`A` como el producto de tres matrices
+:math:`A = PLU` donde :math:`P` es una permutación de las filas,
+:math:`L` es una matriz triangular inferior (Los elementos por encima de
+la diagonal son nulos) y :math:`U` una triangular superior. En este caso
+los dos sistemas:
+
+.. math::  Ax = b \qquad  \mathrm{ y } \qquad P A x = Pb  
+
+tienen la misma solución. Entonces podemos resolver el sistema en dos
+pasos:
+
+.. math::  Ly=b 
+
+con
+
+.. math::  y = Ux. 
+
+En ese caso, resolvemos una sola vez la descompocición :math:`LU`, y
+luego ambas ecuaciones se pueden resolver eficientemente debido a la
+forma de las matrices.
+
+.. code:: python
+
+    A = np.array([[1,3,4],[2,1,3],[4,1,2]])
+    
+    print('A=', A,"\n")
+    
+    P, L, U = linalg.lu(A)
+    print("PLU=", np.dot(P, np.dot(L, U)))
+    print("\nLU=", np.dot(L, U))
+    print("\nL=",L)
+    print("\nU=", U)
+
+
+.. parsed-literal::
+
+    A= [[1 3 4]
+     [2 1 3]
+     [4 1 2]] 
+    
+    PLU= [[1. 3. 4.]
+     [2. 1. 3.]
+     [4. 1. 2.]]
+    
+    LU= [[4. 1. 2.]
+     [1. 3. 4.]
+     [2. 1. 3.]]
+    
+    L= [[1.         0.         0.        ]
+     [0.25       1.         0.        ]
+     [0.5        0.18181818 1.        ]]
+    
+    U= [[4.         1.         2.        ]
+     [0.         2.75       3.5       ]
+     [0.         0.         1.36363636]]
+
+
+Autovalores y autovectores
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La necesidad de encontrar los autovalores y autovectores de una matriz
+aparece en muchos problemas de física e ingeniería. Se trata de
+encontrar el escalar :math:`\lambda` y el vector (no nulo) :math:`v`
+tales que
+
+.. math::  A v = \lambda v
+
+.. code:: python
+
+    with np.printoptions(precision=3):
+      B = np.array([[0,1.,1],[2,1,0], [3,4,5]])
+      print(B,'\n')
+      u, v = linalg.eig(B)
+      c = np.dot(v,np.dot(np.diag(u), linalg.inv(v)))
+      print(c,'\n')
+      print(np.real_if_close(c),'\n')
+      print('')
+      print('Autovalores=', u,'\n')
+      print('Autovalores=', np.real_if_close(u))
+
+
+.. parsed-literal::
+
+    [[0. 1. 1.]
+     [2. 1. 0.]
+     [3. 4. 5.]] 
+    
+    [[-1.892e-16+0.j  1.000e+00+0.j  1.000e+00+0.j]
+     [ 2.000e+00+0.j  1.000e+00+0.j  3.053e-16+0.j]
+     [ 3.000e+00+0.j  4.000e+00+0.j  5.000e+00+0.j]] 
+    
+    [[-1.892e-16  1.000e+00  1.000e+00]
+     [ 2.000e+00  1.000e+00  3.053e-16]
+     [ 3.000e+00  4.000e+00  5.000e+00]] 
+    
+    
+    Autovalores= [ 5.854+0.j -0.854+0.j  1.   +0.j] 
+    
+    Autovalores= [ 5.854 -0.854  1.   ]
+
+
+.. code:: python
+
+    u
+
+
+
+
+.. parsed-literal::
+
+    array([ 5.85410197+0.j, -0.85410197+0.j,  1.        +0.j])
+
+
+
+.. code:: python
+
+    v
+
+
+
+
+.. parsed-literal::
+
+    array([[ 1.80228488e-01,  6.72063326e-01,  6.22075198e-17],
+           [ 7.42582208e-02, -7.24947536e-01, -7.07106781e-01],
+           [ 9.80817725e-01,  1.50936928e-01,  7.07106781e-01]])
+
+
+
+Veamos como funciona para la matriz definida anteriormente
+
+.. code:: python
+
+    print(A)
+    u, v = linalg.eig(A)
+    print(np.real_if_close(np.dot(v,np.dot(np.diag(u), linalg.inv(v)))))
+    print("Autovalores=" , np.real_if_close(u))
+    print("Autovectores=", np.real_if_close(v))
+
+
+.. parsed-literal::
+
+    [[1 3 4]
+     [2 1 3]
+     [4 1 2]]
+    [[1. 3. 4.]
+     [2. 1. 3.]
+     [4. 1. 2.]]
+    Autovalores= [ 7.10977223 -2.10977223 -1.        ]
+    Autovectores= [[-0.63273853 -0.66101705 -0.33333333]
+     [-0.49820655 -0.25550401 -0.66666667]
+     [-0.59281716  0.70553112  0.66666667]]
+
+
+.. code:: python
+
+    help(np.real_if_close)
+
+
+.. parsed-literal::
+
+    Help on function real_if_close in module numpy:
+    
+    real_if_close(a, tol=100)
+        If complex input returns a real array if complex parts are close to zero.
+        
+        "Close to zero" is defined as `tol` * (machine epsilon of the type for
+        `a`).
+        
+        Parameters
+        ----------
+        a : array_like
+            Input array.
+        tol : float
+            Tolerance in machine epsilons for the complex part of the elements
+            in the array.
+        
+        Returns
+        -------
+        out : ndarray
+            If `a` is real, the type of `a` is used for the output.  If `a`
+            has complex elements, the returned type is float.
+        
+        See Also
+        --------
+        real, imag, angle
+        
+        Notes
+        -----
+        Machine epsilon varies from machine to machine and between data types
+        but Python floats on most platforms have a machine epsilon equal to
+        2.2204460492503131e-16.  You can use 'np.finfo(float).eps' to print
+        out the machine epsilon for floats.
+        
+        Examples
+        --------
+        >>> np.finfo(float).eps
+        2.2204460492503131e-16 # may vary
+        
+        >>> np.real_if_close([2.1 + 4e-14j], tol=1000)
+        array([2.1])
+        >>> np.real_if_close([2.1 + 4e-13j], tol=1000)
+        array([2.1+4.e-13j])
+    
+
+
+.. code:: python
+
+    np.finfo(float).eps
+
+
+
+
+.. parsed-literal::
+
+    2.220446049250313e-16
+
+
+
+Rutinas de resolución de ecuaciones lineales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Scipy** tiene además de las rutinas de trabajo con matrices, rutinas
+de resolución de sistemas de ecuaciones. En particular la función
+``solve()``
+
+.. code:: python
+
+    solve(a, b, sym_pos=False, lower=False, overwrite_a=False, overwrite_b=False,
+          debug=False, check_finite=True)
+
+   Solve the equation ``a x = b`` for ``x``.
+
+   Parameters
+   ----------
+   a : (M, M) array_like
+       A square matrix.
+   b : (M,) or (M, N) array_like
+       Right-hand side matrix in ``a x = b``.
+   ...
+
+.. code:: python
+
+    a = np.array([[3, 2, 0], [1, -1, 0], [0, 5, 1]])
+    b = np.array([2, 4, -1])
+    x = linalg.solve(a, b)
+    x
+
+
+
+
+.. parsed-literal::
+
+    array([ 2., -2.,  9.])
+
+
+
+.. code:: python
+
+    np.allclose(np.dot(a, x) , b)
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    np.dot(a,x) == b
+
+
+
+
+.. parsed-literal::
+
+    array([ True,  True,  True])
+
+
+
+Para sistemas de ecuaciones grandes, la función ``solve()`` es más
+rápida que invertir la matriz
+
+.. code:: python
+
+    A1 = np.random.random((2000,2000))
+    b1 = np.random.random(2000)
+
+.. code:: python
+
+    %timeit linalg.solve(A1,b1)
+
+
+.. parsed-literal::
+
+    402 ms ± 11.7 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+
+.. code:: python
+
+    %timeit np.dot(linalg.inv(A1),b1)
+
+
+.. parsed-literal::
+
+    1.11 s ± 78.6 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+
+Entrada y salida de datos
+-------------------------
+
+Archivos comprimidos en Python
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Existen varias formas de reducir el tamaño de los archivos de datos.
+Varios factores, tales como el sistema operativo, nuestra familiaridad
+con cada uno de ellos, le da una cierta preferencia a algunos de los
+métodos disponibles. Veamos cómo hacer para leer y escribir algunos de
+los siguientes formatos: **zip, gzip, bz2**
+
+.. code:: python
+
+    import gzip
+
+.. code:: python
+
+    import bz2
+
+
+.. code:: python
+
+    fi= gzip.open('../data/palabras.words.gz')
+    a = fi.read()
+    fi.close()
+
+.. code:: python
+
+    l= a.splitlines()
+    print(l[:10])
+
+
+.. parsed-literal::
+
+    [b'\xc3\x81frica', b'\xc3\x81ngela', b'\xc3\xa1baco', b'\xc3\xa1bsida', b'\xc3\xa1bside', b'\xc3\xa1cana', b'\xc3\xa1caro', b'\xc3\xa1cates', b'\xc3\xa1cido', b'\xc3\xa1cigos']
+
+
+.. code:: python
+
+    print(l[0])
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica'
+
+
+Con todo esto podríamos escribir (si tuviéramos necesidad) una función
+que puede leer un archivo en cualquiera de estos formatos
+
+.. code:: python
+
+    import gzip
+    import bz2
+    from os.path import splitext
+    import zipfile
+    
+    def abrir(fname, mode='r'):
+      if fname.endswith('gz'):
+        fi= gzip.open(fname, mode=mode)
+      elif fname.endswith('bz2'):
+        fi= bz2.open(fname, mode=mode)    
+      elif fname.endswith('zip'):
+        fi= zipfile.ZipFile(fname, mode=mode)
+      else:
+        fi = open(fname, mode=mode)
+      return fi
+
+.. code:: python
+
+    ff= abrir('../data/palabras.words.gz')
+    a = ff.read()
+    ff.close()
+
+.. code:: python
+
+    l = a.splitlines()
+
+.. code:: python
+
+    for p in l[:10]:
+      print(p, p.decode())
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica' África
+    b'\xc3\x81ngela' Ángela
+    b'\xc3\xa1baco' ábaco
+    b'\xc3\xa1bsida' ábsida
+    b'\xc3\xa1bside' ábside
+    b'\xc3\xa1cana' ácana
+    b'\xc3\xa1caro' ácaro
+    b'\xc3\xa1cates' ácates
+    b'\xc3\xa1cido' ácido
+    b'\xc3\xa1cigos' ácigos
+
+
+.. code:: python
+
+    !ls ../data/palabras*
+
+
+.. parsed-literal::
+
+    ../data/palabras_en.words.gz  ../data/palabras.words.gz
+    ../data/palabras.tar.gz
+
+
+Entrada/salida con *Numpy*
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Datos en formato texto
+^^^^^^^^^^^^^^^^^^^^^^
+
+Veamos un ejemplo (apenas) más complicado, de un archivo en formato de
+texto, donde antes de la lista de números hay un encabezado
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+.. code:: python
+
+    !head ../data/tof_signal_5.dat
+
+
+.. parsed-literal::
+
+    # tiempo    cuentas
+    4.953125e-06 -7.940000e-05
+    4.963125e-06 -5.930000e-05
+    4.973125e-06 -8.945000e-05
+    4.983125e-06 -7.940000e-05
+    4.993125e-06 -6.935000e-05
+    5.003125e-06 -6.935000e-05
+    5.013125e-06 -9.950000e-05
+    5.023125e-06 -5.930000e-05
+    5.033125e-06 -5.930000e-05
+
+
+.. code:: python
+
+    X0 = np.loadtxt('../data/tof_signal_5.dat')
+
+.. code:: python
+
+    X0.shape, type(X0)
+
+
+
+
+.. parsed-literal::
+
+    ((1000, 2), numpy.ndarray)
+
+
+
+.. code:: python
+
+    X0[0].shape
+
+
+
+
+.. parsed-literal::
+
+    (2,)
+
+
+
+.. code:: python
+
+    X0[0]
+
+
+
+
+.. parsed-literal::
+
+    array([ 4.953125e-06, -7.940000e-05])
+
+
+
+.. code:: python
+
+    plt.plot(X0[:,0], X0[:,1])
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8f99c0efd0>]
+
+
+
+
+.. image:: figuras/11_intro_scipy_136_1.png
+
+
+La manera más simple de leer datos de un archivo es a través de
+``loadtxt()``.
+
+.. code:: python
+
+   np.info(np.loadtxt)
+    loadtxt(fname, dtype=<class 'float'>, comments='#', delimiter=None,
+            converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0,
+            encoding='bytes')
+   Load data from a text file.
+
+   Each row in the text file must have the same number of values.
+
+En su forma más simple sólo necesita como argumento el nombre del
+archivo. En este caso, había una primera línea que fue ignorada porque
+empieza con el caracter “#” que indica que la línea es un comentario.
+
+Veamos otro ejemplo, donde las líneas que son parte de un encabezado se
+saltean, utilizando el argumento ``skiprows``
+
+.. code:: python
+
+    fdatos= '../data/exper_col.dat'
+    !head ../data/exper_col.dat
+
+
+.. parsed-literal::
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+.. code:: python
+
+    X1 = np.loadtxt(fdatos, skiprows=5)
+    print(X1.shape)
+    print(X1[0])
+
+
+.. parsed-literal::
+
+    (76, 4)
+    [ 9.901      15.35198465 12.12121212 14.86049333]
+
+
+Como el archivo tiene cuatro columnas el array ``X`` tiene dimensiones
+``(74, 4)`` correspondiente a las 74 filas y las 4 columnas. Si sólo
+necesitamos un grupo de estos datos podemos utilizar el argumento
+``usecols = (c1, c2)`` que nos permite elegir cuáles son las columnas a
+leer:
+
+.. code:: python
+
+    x, y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2], unpack=True)
+    print (x.size, y.size)
+
+
+.. parsed-literal::
+
+    76 76
+
+
+.. code:: python
+
+    Y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2])
+    print (Y.shape, Y.size, Y[0])
+
+
+.. parsed-literal::
+
+    (76, 2) 152 [ 9.901      12.12121212]
+
+
+En este ejemplo, mediante el argumento ``unpack=True``, le indicamos a
+la función ``loadtxt``\ que desempaque lo que lee en variables
+diferentes (``x,y`` en este caso)
+
+.. code:: python
+
+    plt.plot(x,y, 'o-')
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8f99d92350>]
+
+
+
+
+.. image:: figuras/11_intro_scipy_145_1.png
+
+
+Como numpy se especializa en manejar números, tiene muchas funciones
+para crear arrays a partir de información numérica a partir de texto o
+archivos (como los CSV, por ejemplo). Ya vimos como leer datos con
+``loadtxt``. También se pueden generar desde un string:
+
+.. code:: python
+
+    np.fromstring(u"1.0 2.3   3.0 4.1   -3.1", sep=" ", dtype=float)
+
+
+
+
+.. parsed-literal::
+
+    array([ 1. ,  2.3,  3. ,  4.1, -3.1])
+
+
+
+Para guardar datos en formato texto podemos usar, de la misma manera,
+
+.. code:: python
+
+    Y = np.vstack((x,y)).T
+    print(Y.shape)
+
+
+.. parsed-literal::
+
+    (76, 2)
+
+
+.. code:: python
+
+    np.savetxt('tmp.dat', Y)
+
+.. code:: python
+
+    !head tmp.dat
+
+
+.. parsed-literal::
+
+    9.900999999999999801e+00 1.212121212121209979e+01
+    1.188100000000000023e+01 1.338496506439940070e+01
+    1.379299999999999926e+01 1.101369465980729956e+01
+    1.581300000000000061e+01 9.490067063140580572e+00
+    1.780199999999999960e+01 1.106306508676360068e+01
+    1.978399999999999892e+01 1.056836569579290064e+01
+    2.180600000000000094e+01 9.041259351048690718e+00
+    2.380199999999999960e+01 9.743805123897519849e+00
+    2.567999999999999972e+01 1.000583998442670008e+01
+    2.769900000000000162e+01 1.093034161826770045e+01
+
+
+La función ``savetxt()``\ tiene varios argumentos opcionales:
+
+.. code:: python
+
+   np.savetxt(fname, X, fmt='%.18e', delimiter=' ', newline='\n', header='', footer='', comments='# ', encoding=None)
+
+Por ejemplo, podemos darle un formato de salida con el argumento
+``fmt``, y darle un encabezado con ``header``
+
+.. code:: python
+
+    np.savetxt('tmp.dat', Y, fmt='%.6g', header="Energ Exper")
+    !head tmp.dat
+
+
+.. parsed-literal::
+
+    # Energ Exper
+    9.901 12.1212
+    11.881 13.385
+    13.793 11.0137
+    15.813 9.49007
+    17.802 11.0631
+    19.784 10.5684
+    21.806 9.04126
+    23.802 9.74381
+    25.68 10.0058
+
+
+Datos en formato binario
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    X1.shape
+
+
+
+
+.. parsed-literal::
+
+    (76, 4)
+
+
+
+.. code:: python
+
+    np.save('test.npy', X1)  # Grabamos el array a archivo 
+    X2 = np.load('test.npy')     # Y lo leemos
+
+.. code:: python
+
+    # Veamos si alguno de los elementos difiere
+    print('X1=', X1[:10])
+    print('X2=', X2[:10])
+
+
+.. parsed-literal::
+
+    X1= [[ 9.901      15.35198465 12.12121212 14.86049333]
+     [11.881      17.25443986 13.38496506 12.137559  ]
+     [13.793      17.54513159 11.01369466 12.33403468]
+     [15.813      14.67147284  9.49006706 10.68943707]
+     [17.802      15.05448826 11.06306509 11.11859838]
+     [19.784      12.99029519 10.5683657  10.77717061]
+     [21.806      12.19847748  9.04125935 10.50844347]
+     [23.802      13.57028821  9.74380512 10.46262448]
+     [25.68       13.16199377 10.00583998  9.76919784]
+     [27.699      14.91028557 10.93034162 11.29189365]]
+    X2= [[ 9.901      15.35198465 12.12121212 14.86049333]
+     [11.881      17.25443986 13.38496506 12.137559  ]
+     [13.793      17.54513159 11.01369466 12.33403468]
+     [15.813      14.67147284  9.49006706 10.68943707]
+     [17.802      15.05448826 11.06306509 11.11859838]
+     [19.784      12.99029519 10.5683657  10.77717061]
+     [21.806      12.19847748  9.04125935 10.50844347]
+     [23.802      13.57028821  9.74380512 10.46262448]
+     [25.68       13.16199377 10.00583998  9.76919784]
+     [27.699      14.91028557 10.93034162 11.29189365]]
+
+
+.. code:: python
+
+    print('¿Alguna differencia?', np.any(X1-X2))
+
+
+.. parsed-literal::
+
+    ¿Alguna differencia? False
+
+
+.. code:: python
+
+    np.all(X1==X2)
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Ejemplo de análisis de palabras
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    # %load scripts/10_palabras.py
+    #! /usr/bin/ipython
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import gzip
+    ifiname = '../data/palabras.words.gz'
+    
+    letras = [0] * 512
+    with gzip.open(ifiname, mode='r') as fi:
+      for l in fi.readlines():
+        c = ord(l.decode('utf-8')[0])
+        letras[c] += 1
+    
+    nmax = np.nonzero(letras)[0].max() + 1
+    z = np.array(letras[:nmax])
+    # nmin = z.nonzero()[0].min()     # Máximo valor diferente de cero
+    nmin = np.argwhere(z != 0).min()
+    #plt.ion()
+    with plt.style.context(['seaborn-talk', 'presentation']):
+      fig = plt.figure(figsize=(10, 8))
+      #plt.clf()
+      plt.bar(np.arange(nmin, nmax), z[nmin:nmax])
+      plt.xlabel('Letras con y sin acentos')
+      plt.ylabel('Frecuencia')
+    
+      labels = ['A', 'Z', 'a', 'o', 'z', 'á', 'ú']
+      ll = [r'$\mathrm{{{}}}$'.format(t) for t in labels]
+      ts = [ord(t) for t in labels]
+      plt.xticks(ts, ll, fontsize='xx-large')
+    
+      x0 = 0.5 * ord('á') + ord('z')
+      y0 = 0.2 * z.max()
+      umbral = 0.25
+      lista = (z > umbral * z.max()).nonzero()[0]
+    
+      dx = [10, 40, 70]
+      dy = [-550, -350, -100]
+    
+      for j, t in enumerate(reversed(lista)):
+        plt.annotate('{} ({})'.format(chr(t), z[t]), xy=(t, z[t]), xycoords='data',
+                     xytext=(t + dx[j % 3], z[t] + dy[j % 3]), 
+                     bbox=dict(boxstyle="round", fc="0.8"),
+                     arrowprops=dict(arrowstyle="simple", fc="0.5")
+                     )
+
+
+
+
+.. image:: figuras/11_intro_scipy_161_0.png
+
+
+Entrada y salida en Scipy
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El submódulo ``io`` tiene algunas utilidades de entrada y salida de
+datos que permite interactuar con otros paquetes/programas. Algunos de
+ellos son:
+
+-  Archivos IDL (`Interactive Data
+   Language <https://hesperia.gsfc.nasa.gov/hessi/solar_cd/FAQ/IDL_FAQ.htm>`__)
+
+   -  ``scipy.io.readsav()``
+
+-  Archivos de sonido wav, con ``scipy.io.wavfile``
+
+   -  ``scipy.io.wavfile.read()``
+   -  ``scipy.io.wavfile.write()``
+
+-  Archivos fortran sin formato, con ``scipy.io.FortranFile``
+
+-  Archivos Netcdf (para gran número de datos), con ``scipy.io.netcdf``
+
+-  Archivos de matrices de Matlab
+
+.. code:: python
+
+    from scipy import io as sio
+    a = np.ones((3, 3)) + np.eye(3,3)
+    print(a)
+    sio.savemat('datos.mat', {'a': a}) # savemat espera un diccionario
+    data = sio.loadmat('datos.mat', struct_as_record=True)
+    print(data['a'])
+
+
+.. parsed-literal::
+
+    [[2. 1. 1.]
+     [1. 2. 1.]
+     [1. 1. 2.]]
+    [[2. 1. 1.]
+     [1. 2. 1.]
+     [1. 1. 2.]]
+
+
+.. code:: python
+
+    data
+
+
+
+
+.. parsed-literal::
+
+    {'__header__': b'MATLAB 5.0 MAT-file Platform: posix, Created on: Wed Mar 11 10:35:50 2020',
+     '__version__': '1.0',
+     '__globals__': [],
+     'a': array([[2., 1., 1.],
+            [1., 2., 1.],
+            [1., 1., 2.]])}
+
+
+
+
