@@ -473,7 +473,7 @@ dominio de integración finito o infinito.
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x7f8f99ffb4d0>]
+    [<matplotlib.lines.Line2D at 0x7f9293d0c390>]
 
 
 
@@ -854,13 +854,13 @@ Ejemplo de función fuertemente oscilatoria
 
 .. parsed-literal::
 
-    /usr/lib/python3.7/site-packages/ipykernel_launcher.py:1: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
+    /usr/lib64/python3.7/site-packages/scipy/integrate/quadpack.py:385: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
       If increasing the limit yields no improvement it is advised to analyze 
       the integrand in order to determine the difficulties.  If the position of a 
       local difficulty can be determined (singularity, discontinuity) one will 
       probably gain from splitting up the interval and calling the integrator 
       on the subranges.  Perhaps a special-purpose integrator should be used.
-      """Entry point for launching an IPython kernel.
+      warnings.warn(msg, IntegrationWarning)
 
 
 .. code:: python
@@ -890,30 +890,12 @@ Grafiquemos sólo una pequeña parte
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x7f8f99fe96d0>]
+    [<matplotlib.lines.Line2D at 0x7f9293c91940>]
 
 
 
 
 .. image:: figuras/11_intro_scipy_46_1.png
-
-
-.. code:: python
-
-    x = np.linspace(0,L/10,1500)
-    plt.plot(x, f2(x))
-
-
-
-
-.. parsed-literal::
-
-    [<matplotlib.lines.Line2D at 0x7f8f99f64090>]
-
-
-
-
-.. image:: figuras/11_intro_scipy_47_1.png
 
 
 La rutina ``quad`` es versatil y tiene una opción específica para
@@ -958,18 +940,18 @@ magnitud menor. Comparemos los tiempos de ejecución:
 
 .. parsed-literal::
 
-    /usr/lib/python3.7/site-packages/ipykernel_launcher.py:1: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
+    /usr/lib64/python3.7/site-packages/scipy/integrate/quadpack.py:385: IntegrationWarning: The maximum number of subdivisions (50) has been achieved.
       If increasing the limit yields no improvement it is advised to analyze 
       the integrand in order to determine the difficulties.  If the position of a 
       local difficulty can be determined (singularity, discontinuity) one will 
       probably gain from splitting up the interval and calling the integrator 
       on the subranges.  Perhaps a special-purpose integrator should be used.
-      """Entry point for launching an IPython kernel.
+      warnings.warn(msg, IntegrationWarning)
 
 
 .. parsed-literal::
 
-    11.1 ms ± 50 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+    8.17 ms ± 85.2 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 
 
 .. code:: python
@@ -979,7 +961,7 @@ magnitud menor. Comparemos los tiempos de ejecución:
 
 .. parsed-literal::
 
-    82.1 µs ± 626 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+    61.1 µs ± 585 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
 
 
 Usar un integrador más específico para el integrando no sólo nos da un
@@ -1076,6 +1058,8 @@ multiplicarlo por la matriz de rotación correspondiente.
 Esquemáticamente:
 
 |image0|
+
+(Gentileza de `xkcd <https://www.xkcd.com/184/>`__)
 
 .. |image0| image:: https://imgs.xkcd.com/comics/matrix_transform.png
 
@@ -1350,12 +1334,9 @@ realizarse con el operador ``@``
 
     ValueError                                Traceback (most recent call last)
 
-    <ipython-input-60-c31ca8fbc4d7> in <module>
+    <ipython-input-60-c31ca8fbc4d7> in <module>()
     ----> 1 np.dot( v2,A)
     
-
-    <__array_function__ internals> in dot(*args, **kwargs)
-
 
     ValueError: shapes (3,1) and (3,3) not aligned: 1 (dim 1) != 3 (dim 0)
 
@@ -1461,7 +1442,7 @@ Veamos un ejemplo concreto. Supongamos que tenemos el siguiente sistema
    \begin{array}{rl}
     x_1 + 2 x_2 + 3 x_3 &= 1 \\
    2 x_1 +  x_2 + 3 x_3 &= 2 \\
-   4 x_1 +  x_2 - x_3 &= 3
+   4 x_1 +  x_2 - x_3 &= 1
    \end{array}
    \right.
 
@@ -1620,34 +1601,6 @@ tales que
     Autovalores= [ 5.854 -0.854  1.   ]
 
 
-.. code:: python
-
-    u
-
-
-
-
-.. parsed-literal::
-
-    array([ 5.85410197+0.j, -0.85410197+0.j,  1.        +0.j])
-
-
-
-.. code:: python
-
-    v
-
-
-
-
-.. parsed-literal::
-
-    array([[ 1.80228488e-01,  6.72063326e-01,  6.22075198e-17],
-           [ 7.42582208e-02, -7.24947536e-01, -7.07106781e-01],
-           [ 9.80817725e-01,  1.50936928e-01,  7.07106781e-01]])
-
-
-
 Veamos como funciona para la matriz definida anteriormente
 
 .. code:: python
@@ -1675,68 +1628,7 @@ Veamos como funciona para la matriz definida anteriormente
 
 .. code:: python
 
-    help(np.real_if_close)
-
-
-.. parsed-literal::
-
-    Help on function real_if_close in module numpy:
-    
-    real_if_close(a, tol=100)
-        If complex input returns a real array if complex parts are close to zero.
-        
-        "Close to zero" is defined as `tol` * (machine epsilon of the type for
-        `a`).
-        
-        Parameters
-        ----------
-        a : array_like
-            Input array.
-        tol : float
-            Tolerance in machine epsilons for the complex part of the elements
-            in the array.
-        
-        Returns
-        -------
-        out : ndarray
-            If `a` is real, the type of `a` is used for the output.  If `a`
-            has complex elements, the returned type is float.
-        
-        See Also
-        --------
-        real, imag, angle
-        
-        Notes
-        -----
-        Machine epsilon varies from machine to machine and between data types
-        but Python floats on most platforms have a machine epsilon equal to
-        2.2204460492503131e-16.  You can use 'np.finfo(float).eps' to print
-        out the machine epsilon for floats.
-        
-        Examples
-        --------
-        >>> np.finfo(float).eps
-        2.2204460492503131e-16 # may vary
-        
-        >>> np.real_if_close([2.1 + 4e-14j], tol=1000)
-        array([2.1])
-        >>> np.real_if_close([2.1 + 4e-13j], tol=1000)
-        array([2.1+4.e-13j])
-    
-
-
-.. code:: python
-
-    np.finfo(float).eps
-
-
-
-
-.. parsed-literal::
-
-    2.220446049250313e-16
-
-
+    np.real_if_close?
 
 Rutinas de resolución de ecuaciones lineales
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1817,7 +1709,7 @@ rápida que invertir la matriz
 
 .. parsed-literal::
 
-    402 ms ± 11.7 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+    451 ms ± 89.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 
 
 .. code:: python
@@ -1827,7 +1719,7 @@ rápida que invertir la matriz
 
 .. parsed-literal::
 
-    1.11 s ± 78.6 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+    962 ms ± 9.37 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 
 
 Entrada y salida de datos
@@ -1866,16 +1758,6 @@ los siguientes formatos: **zip, gzip, bz2**
 .. parsed-literal::
 
     [b'\xc3\x81frica', b'\xc3\x81ngela', b'\xc3\xa1baco', b'\xc3\xa1bsida', b'\xc3\xa1bside', b'\xc3\xa1cana', b'\xc3\xa1caro', b'\xc3\xa1cates', b'\xc3\xa1cido', b'\xc3\xa1cigos']
-
-
-.. code:: python
-
-    print(l[0])
-
-
-.. parsed-literal::
-
-    b'\xc3\x81frica'
 
 
 Con todo esto podríamos escribir (si tuviéramos necesidad) una función
@@ -1939,6 +1821,49 @@ que puede leer un archivo en cualquiera de estos formatos
     ../data/palabras_en.words.gz  ../data/palabras.words.gz
     ../data/palabras.tar.gz
 
+
+.. code:: python
+
+    f2 = abrir('../data/palabras.words.zip')
+    b= f2.read('palabras.words')
+    f2.close()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    FileNotFoundError                         Traceback (most recent call last)
+
+    <ipython-input-95-2d95de7e1ee6> in <module>()
+    ----> 1 f2 = abrir('../data/palabras.words.zip')
+          2 b= f2.read('palabras.words')
+          3 f2.close()
+
+
+    <ipython-input-90-7fea08c0a3b1> in abrir(fname, mode)
+         10     fi= bz2.open(fname, mode=mode)
+         11   elif fname.endswith('zip'):
+    ---> 12     fi= zipfile.ZipFile(fname, mode=mode)
+         13   else:
+         14     fi = open(fname, mode=mode)
+
+
+    /usr/lib64/python3.7/zipfile.py in __init__(self, file, mode, compression, allowZip64, compresslevel)
+       1202             while True:
+       1203                 try:
+    -> 1204                     self.fp = io.open(file, filemode)
+       1205                 except OSError:
+       1206                     if filemode in modeDict:
+
+
+    FileNotFoundError: [Errno 2] No such file or directory: '../data/palabras.words.zip'
+
+
+.. code:: python
+
+    b == a
 
 Entrada/salida con *Numpy*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2025,12 +1950,12 @@ texto, donde antes de la lista de números hay un encabezado
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x7f8f99c0efd0>]
+    [<matplotlib.lines.Line2D at 0x7f926044ab00>]
 
 
 
 
-.. image:: figuras/11_intro_scipy_136_1.png
+.. image:: figuras/11_intro_scipy_133_1.png
 
 
 La manera más simple de leer datos de un archivo es a través de
@@ -2106,12 +2031,12 @@ leer:
 .. code:: python
 
     Y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2])
-    print (Y.shape, Y.size, Y[0])
+    print (Y.size, Y[0])
 
 
 .. parsed-literal::
 
-    (76, 2) 152 [ 9.901      12.12121212]
+    152 [ 9.901      12.12121212]
 
 
 En este ejemplo, mediante el argumento ``unpack=True``, le indicamos a
@@ -2127,12 +2052,12 @@ diferentes (``x,y`` en este caso)
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x7f8f99d92350>]
+    [<matplotlib.lines.Line2D at 0x7f926062a0f0>]
 
 
 
 
-.. image:: figuras/11_intro_scipy_145_1.png
+.. image:: figuras/11_intro_scipy_142_1.png
 
 
 Como numpy se especializa en manejar números, tiene muchas funciones
@@ -2223,19 +2148,6 @@ Datos en formato binario
 
 .. code:: python
 
-    X1.shape
-
-
-
-
-.. parsed-literal::
-
-    (76, 4)
-
-
-
-.. code:: python
-
     np.save('test.npy', X1)  # Grabamos el array a archivo 
     X2 = np.load('test.npy')     # Y lo leemos
 
@@ -2278,19 +2190,6 @@ Datos en formato binario
 .. parsed-literal::
 
     ¿Alguna differencia? False
-
-
-.. code:: python
-
-    np.all(X1==X2)
-
-
-
-
-.. parsed-literal::
-
-    True
-
 
 
 Ejemplo de análisis de palabras
@@ -2338,15 +2237,14 @@ Ejemplo de análisis de palabras
     
       for j, t in enumerate(reversed(lista)):
         plt.annotate('{} ({})'.format(chr(t), z[t]), xy=(t, z[t]), xycoords='data',
-                     xytext=(t + dx[j % 3], z[t] + dy[j % 3]), 
-                     bbox=dict(boxstyle="round", fc="0.8"),
+                     xytext=(t + dx[j % 3], z[t] + dy[j % 3]), bbox=dict(boxstyle="round", fc="0.8"),
                      arrowprops=dict(arrowstyle="simple", fc="0.5")
                      )
 
 
 
 
-.. image:: figuras/11_intro_scipy_161_0.png
+.. image:: figuras/11_intro_scipy_156_0.png
 
 
 Entrada y salida en Scipy
@@ -2401,7 +2299,7 @@ ellos son:
 
 .. parsed-literal::
 
-    {'__header__': b'MATLAB 5.0 MAT-file Platform: posix, Created on: Wed Mar 11 10:35:50 2020',
+    {'__header__': b'MATLAB 5.0 MAT-file Platform: posix, Created on: Mon Mar 25 10:27:05 2019',
      '__version__': '1.0',
      '__globals__': [],
      'a': array([[2., 1., 1.],
