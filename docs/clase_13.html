@@ -1,0 +1,1476 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Clase 13: Interpolación y ajuste de curvas (fiteo) &mdash; documentación de Clases de Python - 2020.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios de Clase 1" href="ejercicios_01.html" />
+    <link rel="prev" title="Clase 12: Un poco de graficación 3D" href="clase_12.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Clases de Python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2020
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Tipos de datos y control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Control de flujo y tipos complejos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Técnicas de iteración y Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Programación Orientada a Objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Control de versiones y biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Introducción a Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Un poco de graficación 3D</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 13: Interpolación y ajuste de curvas (fiteo)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interpolacion">Interpolación</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interpolacion-con-polinomios">Interpolación con polinomios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#splines">Splines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#b-splines">B-Splines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lines-are-guides-to-the-eyes">Lines are guides to the eyes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cantidades-derivadas-de-splines">Cantidades derivadas de <em>splines</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#interpolacion-en-dos-dimensiones">Interpolación en dos dimensiones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interpolacion-sobre-datos-no-estructurados">Interpolación sobre datos no estructurados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fiteos-de-datos">Fiteos de datos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ajuste-con-polinomios">Ajuste con polinomios</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#fiteos-con-funciones-arbitrarias">Fiteos con funciones arbitrarias</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejemplo-fiteo-de-picos">Ejemplo: Fiteo de picos</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_01.html">Ejercicios de Clase 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_02.html">Ejercicios de Clase 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_03.html">Ejercicios de Clase 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_04.html">Ejercicios de Clase 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_05.html">Ejercicios de Clase 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_06.html">Ejercicios de Clase 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_08.html">Ejercicios de Clase 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_09.html">Ejercicios de Clase 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_10.html">Ejercicios de Clase 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_11.html">Ejercicios de Clase 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_13.html">Ejercicios de Clase 13</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Clase 13: Interpolación y ajuste de curvas (fiteo)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/clase_13.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="clase-13-interpolacion-y-ajuste-de-curvas-fiteo">
+<h1>Clase 13: Interpolación y ajuste de curvas (fiteo)<a class="headerlink" href="#clase-13-interpolacion-y-ajuste-de-curvas-fiteo" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;presentation&#39;</span><span class="p">)</span>
+<span class="n">fsize</span><span class="o">=</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="interpolacion">
+<h2>Interpolación<a class="headerlink" href="#interpolacion" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="line-block">
+<div class="line">Muchas veces tenemos mediciones de datos variando algún parámetro en
+las condiciones, y estos datos están medidos a intervalos mayores de
+los que deseamos. En estos casos es común tratar de inferir los
+valores que tendrían las mediciones para valores intermedios de
+nuestro parámetro. Una opción es interpolar los datos. Algunas
+facilidades para ello están en el subpaquete <strong>interpolate</strong> del
+paquete <strong>Scipy</strong>.</div>
+<div class="line">Generemos algunos “datos experimentales”</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">fmodel</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">/</span><span class="mf">3.5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="n">fmodel</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">fmodel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;--k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;función&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;puntos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba251dbd0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_6_1.png" src="_images/13_fiteos_6_1.png" />
+<div class="line-block">
+<div class="line">Acá hemos simulado datos con una función oscilante con un decaimiento
+exponencial.</div>
+<div class="line">Ahora, importamos el submódulo <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> del módulo <code class="docutils literal notranslate"><span class="pre">scipy</span></code>,
+adecuado para interpolar:</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">interpolate</span>
+</pre></div>
+</div>
+<p>La interpolación funciona en dos pasos. En el primer paso realizamos
+todos los cálculos y obtenemos la función interpolante, y en una segunda
+etapa utilizamos esa función para interpolar en los nuevos puntos sobre
+el eje x que necesitamos.</p>
+<p>Utilizamos los <em>arrays</em> <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code> como los pocos “datos
+experimentales” obtenidos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;x = {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span>         <span class="mf">0.8975979</span>  <span class="mf">1.7951958</span>  <span class="mf">2.6927937</span>  <span class="mf">3.5903916</span>  <span class="mf">4.48798951</span>
+ <span class="mf">5.38558741</span> <span class="mf">6.28318531</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>y creamos la función interpolante basada en estos puntos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interpol_lineal</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interpol_lineal</span> <span class="c1"># función</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">scipy</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span> <span class="n">at</span> <span class="mh">0x7faba291d350</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Ahora, creamos un conjunto de puntos <code class="docutils literal notranslate"><span class="pre">x1</span></code> donde queremos evaluar la
+función interpolando entre datos medidos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">33</span><span class="p">)</span>
+<span class="n">y1_l</span> <span class="o">=</span> <span class="n">interpol_lineal</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span> <span class="s1">&#39;-k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;función&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span>  <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1_l</span><span class="p">,</span><span class="s1">&#39;--s&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interp-1d&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba2458710</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_16_1.png" src="_images/13_fiteos_16_1.png" />
+<div class="line-block">
+<div class="line">Como vemos, la función que creamos consiste de tramos rectos entre los
+puntos “datos”.</div>
+<div class="line">Para realizar interpolaciones lineales (una recta entre pares de
+puntos) también se puede utilizar la rutina <code class="docutils literal notranslate"><span class="pre">interp()</span></code> del módulo
+<strong>Numpy</strong>, cuyos argumentos requeridos son: los nuevos puntos <code class="docutils literal notranslate"><span class="pre">x1</span></code>
+donde queremos interpolar, además de los valores originales de <code class="docutils literal notranslate"><span class="pre">x</span></code> y
+de <code class="docutils literal notranslate"><span class="pre">y</span></code> de la tabla a interpolar:</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y1_l2</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notar que <code class="docutils literal notranslate"><span class="pre">y1_l2</span></code> da exactamente los mismos valores que <code class="docutils literal notranslate"><span class="pre">y1_l</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">y1_l2</span> <span class="o">==</span> <span class="n">y1_l</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>Si bien el uso de <code class="docutils literal notranslate"><span class="pre">np.interp</span></code> es más directo, porque no se crea la
+función intermedia, cuando creamos la función con <code class="docutils literal notranslate"><span class="pre">interp1d</span></code> podemos
+aplicarla a diferentes conjuntos de valores de x:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interpol_lineal</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.00000000e+00</span><span class="p">,</span> <span class="mf">3.64223643e-01</span><span class="p">,</span> <span class="mf">6.15515285e-01</span><span class="p">,</span> <span class="mf">7.16230928e-01</span><span class="p">,</span>
+       <span class="mf">3.88910634e-01</span><span class="p">,</span> <span class="mf">9.71667086e-02</span><span class="p">,</span> <span class="mf">7.27120078e-02</span><span class="p">,</span> <span class="mf">1.19301459e-01</span><span class="p">,</span>
+       <span class="mf">1.72109481e-01</span><span class="p">,</span> <span class="mf">9.17229560e-02</span><span class="p">,</span> <span class="mf">3.64455561e-02</span><span class="p">,</span> <span class="mf">2.39038977e-33</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>La interface <code class="docutils literal notranslate"><span class="pre">interp1d()</span></code> tiene un argumento opcional, <code class="docutils literal notranslate"><span class="pre">kind</span></code>, que
+define el tipo de interpolación a utilizar. Cuando utilizamos el
+argumento ‘nearest’ utiliza para cada valor el más cercano</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interpol_near</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">y1_n</span> <span class="o">=</span> <span class="n">interpol_near</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span> <span class="s1">&#39;-k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;función&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1_l</span><span class="p">,</span><span class="s1">&#39;--s&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;interp-1d&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1_n</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">x1</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">33</span> <span class="mi">33</span> <span class="mi">8</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_25_1.png" src="_images/13_fiteos_25_1.png" />
+<div class="section" id="interpolacion-con-polinomios">
+<h3>Interpolación con polinomios<a class="headerlink" href="#interpolacion-con-polinomios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p><strong>Scipy</strong> tiene rutinas para interpolar los datos usando un único
+polinomio global con grado igual al número de puntos dados:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">lagrange</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y2</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Lagrange&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba1f57590</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_27_1.png" src="_images/13_fiteos_27_1.png" />
+<p>Los polinomios interpolantes pueden tener problemas, principalmente en
+las puntas, o cuando el grado del polinomio es muy alto. Consideremos
+por ejemplo el caso donde tenemos una tabla <code class="docutils literal notranslate"><span class="pre">x1</span>&#160; <span class="pre">f(x1)</span></code> con muchos
+datos y queremos interpolar sobre una nueva tabla de valores <code class="docutils literal notranslate"><span class="pre">x0</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;Número de datos:&#39;</span><span class="p">,</span> <span class="n">x1</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Número</span> <span class="n">de</span> <span class="n">datos</span><span class="p">:</span> <span class="mi">33</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">lagrange</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">fmodel</span><span class="p">(</span><span class="n">x1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">f1</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Lagrange ({})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">fmodel</span><span class="p">(</span><span class="n">x1</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C1&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">15</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba1f00e90</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_30_1.png" src="_images/13_fiteos_30_1.png" />
+<p>De todas maneras, para los casos en que es aplicable, existen dos
+implementaciones: <code class="docutils literal notranslate"><span class="pre">interpolate.lagrange()</span></code> y una segunda llamada
+<code class="docutils literal notranslate"><span class="pre">interpolate.barycentric_interpolate()</span></code> que está basada en un trabajo
+de 2004 y es numéricamente más estable.</p>
+</div>
+<div class="section" id="splines">
+<h3>Splines<a class="headerlink" href="#splines" title="Enlazar permanentemente con este título">¶</a></h3>
+<ul class="simple">
+<li><p>Las <em>Splines</em> son interpolaciones por polinomios de a trazos, que se
+eligen para que no sólo los valores sino también sus derivadas
+coincidan dando una curva suave.</p></li>
+<li><p>Para eso, si se pide que la aproximación coincida con los valores
+tabulados en los puntos dados, la aproximación es efectivamente una
+<strong>interpolación</strong>.</p></li>
+<li><p><em>Cubic Splines</em> se refiere a que utilizamos polinomios cúbicos en
+cada trozo.</p></li>
+</ul>
+<p>El argumento opcional <code class="docutils literal notranslate"><span class="pre">kind</span></code> de la interface <code class="docutils literal notranslate"><span class="pre">interp1d()</span></code>, que
+define el tipo de interpolación a utilizar, acepta valores del tipo
+<em>string</em> que pueden ser: ‘linear’, ‘nearest’, ‘zero’, ‘slinear’,
+‘quadratic’, ‘cubic’, o un número entero indicando el orden.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">interp</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="s1">&#39;slinear&#39;</span><span class="p">,</span> <span class="s1">&#39;quadratic&#39;</span><span class="p">,</span> <span class="s1">&#39;cubic&#39;</span><span class="p">]:</span>
+  <span class="n">interp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;-k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">interp</span><span class="p">[</span><span class="s1">&#39;cubic&#39;</span><span class="p">](</span><span class="n">x1</span><span class="p">),</span>  <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C2&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;cúbica&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">interp</span><span class="p">[</span><span class="s1">&#39;slinear&#39;</span><span class="p">](</span><span class="n">x1</span><span class="p">),</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;lineal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba1d14510</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_36_1.png" src="_images/13_fiteos_36_1.png" />
+<p>Tratamos de incluir todo en un sólo gráfico (y rogamos que se entienda
+algo)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">interp</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">v</span><span class="p">(</span><span class="n">x1</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;--k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ob&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba1b8e710</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_38_1.png" src="_images/13_fiteos_38_1.png" />
+<p>En resumen, los métodos disponibles en <code class="docutils literal notranslate"><span class="pre">interpolate.interp1d</span></code> son:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">linear</span></code>: Interpolación lineal, utilizando rectas (default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nearest</span></code> : Valor constante correspondiente al dato más cercano</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">zero</span></code> o <code class="docutils literal notranslate"><span class="pre">0</span></code> : Una spline de orden cero. Toma el valor a la
+izquierda</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">slinear</span></code> o <code class="docutils literal notranslate"><span class="pre">1</span></code> : Spline de orden 1. Igual a ‘linear’</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">quadratic</span></code> o <code class="docutils literal notranslate"><span class="pre">2</span></code> : Spline de segundo orden</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cubic</span></code> o <code class="docutils literal notranslate"><span class="pre">3</span></code> : Spline de tercer orden</p></li>
+</ul>
+<p>Como vemos de los argumentos <code class="docutils literal notranslate"><span class="pre">zero</span></code>, <code class="docutils literal notranslate"><span class="pre">slinear</span></code>, <code class="docutils literal notranslate"><span class="pre">quadratic</span></code>,
+<code class="docutils literal notranslate"><span class="pre">cubic</span></code> para especificar splines de cero, primer, segundo y tercer
+orden se puede pasar como argumento un número. En ese caso se utiliza
+siempre <strong>splines</strong> y el número indica el orden de las splines a
+utilizar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span><span class="s1">&#39;slinear&#39;</span><span class="p">,</span><span class="s1">&#39;quadratic&#39;</span><span class="p">,</span><span class="s1">&#39;cubic&#39;</span><span class="p">]):</span>
+  <span class="n">num</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+  <span class="n">tipo</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp1d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">s</span><span class="p">)</span>
+  <span class="k">print</span><span class="p">(</span><span class="s2">&quot;¿{} == {}? -&gt; {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">s</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">num</span><span class="p">(</span><span class="n">x1</span><span class="p">),</span> <span class="n">tipo</span><span class="p">(</span><span class="n">x1</span><span class="p">))))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>¿0 == zero? -&gt; True
+¿1 == slinear? -&gt; True
+¿2 == quadratic? -&gt; True
+¿3 == cubic? -&gt; True
+</pre></div>
+</div>
+<p>Además La interpolación lineal simple es, en la práctica, igual a la
+interpolación por splines de primer orden:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">interp</span><span class="p">[</span><span class="s1">&#39;slinear&#39;</span><span class="p">](</span><span class="n">x1</span><span class="p">),</span> <span class="n">interpol_lineal</span><span class="p">(</span><span class="n">x1</span><span class="p">))</span> <span class="c1"># También son iguales</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>Finalmente, veamos que la interpolación <code class="docutils literal notranslate"><span class="pre">nearest</span></code> toma para cada nuevo
+valor <code class="docutils literal notranslate"><span class="pre">x1</span></code> el valor <code class="docutils literal notranslate"><span class="pre">y1(x1)</span></code> igual a <code class="docutils literal notranslate"><span class="pre">y(x0)</span></code> donde <code class="docutils literal notranslate"><span class="pre">x0</span></code> es el
+valor más cercano a <code class="docutils literal notranslate"><span class="pre">x1</span></code> mientras que la spline de orden cero
+(<code class="docutils literal notranslate"><span class="pre">zero</span></code>) toma el valor más cercano a la izquierda:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">alfa</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1_n</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alfa</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">interp</span><span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">](</span><span class="n">x1</span><span class="p">),</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spline zero&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alfa</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;xk&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">Legend</span> <span class="n">at</span> <span class="mh">0x7faba07aaf10</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_44_1.png" src="_images/13_fiteos_44_1.png" />
+<p>El submódulo <code class="docutils literal notranslate"><span class="pre">signal</span></code> tiene rutinas adicionales para realizar
+<em>splines</em>, que permiten agregar un “alisado”, pero en este caso ya no
+interpolan estrictamente sino que puede ser que la aproximación no pase
+por los puntos dados.</p>
+</div>
+<div class="section" id="b-splines">
+<h3>B-Splines<a class="headerlink" href="#b-splines" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Hay otra opción para realizar interpolación con Splines en Scipy. Las
+llamadas <strong>B-Splines</strong> son funciones diseñadas para generalizar
+polinomios, con un alto grado de <strong>localidad</strong>.</p>
+<p>Para definir las <strong>B-Splines</strong> necesitamos dos cosas:</p>
+<ol class="arabic simple">
+<li><p>Elegir el grado de los polinomios (mayor o igual a 0)</p></li>
+<li><p>Dividir el intervalo en <span class="math notranslate nohighlight">\(n\)</span> “nodos”</p></li>
+</ol>
+<p>Las funciones se definen mediante la recursión:</p>
+<p>:raw-latex:<a href="#id1"><span class="problematic" id="id2">`</span></a>begin{align}begin{aligned}N_{i, 0}(x) &amp;= 1,qquad qquad textrm{si $t_i le x &lt; t_{i+1}, qquad qquad$ sino $0$,}\
+N_{i, k}(x) &amp;= frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)end{aligned}end{align}`</p></li>
+</ul>
+</div></blockquote>
+<p>Las más simples, cuando el orden es k=0, son funciones constantes a
+trozos <img alt="image0" src="_images/bsplines0.png" /> Para <span class="math notranslate nohighlight">\(k&gt;0\)</span> las funciones se calculan por
+recurrencia en término de dos funciones del orden anterior. Entonces,
+siempre serán diferentes de cero sólo en un intervalo finito. En ese
+intervalo presentan un único máximo y luego decaen suavemente. Las más
+usuales son las de orden <span class="math notranslate nohighlight">\(k=3\)</span>:</p>
+<p><img alt="image1" src="_images/bsplines.png" /></p>
+<p>(Figura de <a class="reference external" href="http://www.brnt.eu/phd">http://www.brnt.eu/phd</a>)</p>
+<p>La idea es encontrar una función <span class="math notranslate nohighlight">\(f(x)\)</span> que sea suave y pase por
+la tabla de puntos <span class="math notranslate nohighlight">\((x,y)\)</span> dados, o cerca de ellos con la
+condición que tanto la función como algunas de sus derivadas sea suave.
+La función <span class="math notranslate nohighlight">\(f(x)\)</span> se describe como una expansión en la base de
+Splines (y de ahí el nombre <em>B-Splines</em>)</p>
+<div class="math notranslate nohighlight">
+\[f(x) = \sum_{j=0} a_{i,j} B_{j}(x) \qquad \forall \quad x_{i} &lt; x \le x_{i+1}\]</div>
+<p>La aproximación se elige de tal manera de optimizar el número de
+elementos de la base a utilizar con la condición que el error cuadrático
+a los puntos sea menor a un cierto valor umbral <span class="math notranslate nohighlight">\(s\)</span></p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^{n} \left| f(x_{i}) - y_{i}\right|^2 \le s\]</div>
+<p>Veamos cómo usar la implementación de <strong>Scipy</strong> para interpolar datos.
+En primer lugar creamos la representación en B-Splines de nuestra tabla
+de datos <span class="math notranslate nohighlight">\((x,y)\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tck0</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Acá, otra vez estamos operando en dos pasos. En el primero creamos la
+representación de las splines para los datos dados. Como no pusimos
+explícitamente el orden, utiliza el valor por default <code class="docutils literal notranslate"><span class="pre">k=3</span></code>.</p>
+<p>En el segundo paso obtenemos los valores interpolados sobre la grilla
+<code class="docutils literal notranslate"><span class="pre">x2</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span> <span class="c1"># Nuevos puntos donde interpolar</span>
+<span class="n">y_s0</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">tck0</span><span class="p">)</span> <span class="c1"># Valores interpolados: y_s0[j] = f(x2[j])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span><span class="n">y_s0</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;B-Spline&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;--k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_54_0.png" src="_images/13_fiteos_54_0.png" />
+<p>Estas funciones interpolan los datos con curvas continuas y con
+derivadas segundas continuas.</p>
+</div>
+<div class="section" id="lines-are-guides-to-the-eyes">
+<h3>Lines are guides to the eyes<a class="headerlink" href="#lines-are-guides-to-the-eyes" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="line-block">
+<div class="line">Sin embargo, estas rutinas no necesariamente realizan <em>interpolación</em>
+en forma estricta, pasando por todos los puntos dados, sino que en
+realidad realiza una aproximación minimzando por cuadrados mínimos la
+distancia a la tabla de puntos dados.</div>
+<div class="line">Esto es particularmente importante cuando tenemos datos que tienen
+dispersión. En esos casos necesitamos curvas que no interpolen, es
+decir que <em>no necesariamente</em> pasen por todos los puntos.</div>
+</div>
+<div class="line-block">
+<div class="line">La rutina <code class="docutils literal notranslate"><span class="pre">splrep</span></code> tiene varios argumentos opcionales. Entre ellos
+un parámetro de suavizado <code class="docutils literal notranslate"><span class="pre">s</span></code> que corresponde a la condición de
+distancia entre la aproximación y los valores de la tabla mencionado
+anteriormente.</div>
+<div class="line">Para ver como funciona, creemos una tabla de valores <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y</span></code> con
+<span class="math notranslate nohighlight">\(x \in [0,2\pi]\)</span> <strong>no necesariamente equiespaciados</strong>,
+<span class="math notranslate nohighlight">\(y=\sin(x)/2\)</span>, donde le agregamos algo de ruido a <code class="docutils literal notranslate"><span class="pre">y</span></code></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos dos tablas de valores x, y</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">x4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="n">x3</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">5</span><span class="p">]</span> <span class="o">-=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="mf">0.5</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span> <span class="c1"># Le agregamos una separación al azar</span>
+<span class="n">x3</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>                       <span class="c1"># Los ordenamos</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="o">-</span><span class="n">x4</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="o">-</span><span class="n">x3</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;sin incerteza&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">0.3</span><span class="p">,</span><span class="mf">0.3</span><span class="p">));</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_59_0.png" src="_images/13_fiteos_59_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y4</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x4</span><span class="p">)</span>
+<span class="n">y3</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span> <span class="mf">0.6</span><span class="o">*</span><span class="p">(</span><span class="mf">0.5</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">x3</span><span class="o">.</span><span class="n">size</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Los puntos a interpolar tienen &quot;ruido&quot; en las dos direcciones x-y</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">x4</span><span class="p">,</span><span class="n">y4</span><span class="p">,</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span> <span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_61_0.png" src="_images/13_fiteos_61_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grilla donde evaluar la función interpolada</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">90</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tck0</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Interpolación con B-Splines</span>
+<span class="n">y_s0</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">tck0</span><span class="p">)</span>      <span class="c1"># Evaluamos en la nueva grilla</span>
+<span class="n">tck3</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span> <span class="c1"># Aproximación suavizada</span>
+<span class="n">y_s3</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">tck3</span><span class="p">)</span>      <span class="c1"># Evaluamos en la nueva grilla</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y_s0</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;interpolación&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y_s3</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;suavizado&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_64_0.png" src="_images/13_fiteos_64_0.png" />
+<p>El valor del parámetro <code class="docutils literal notranslate"><span class="pre">s</span></code> determina cuanto se suaviza la curva. El
+valor por default <code class="docutils literal notranslate"><span class="pre">s=0</span></code> obliga al algoritmo a obtener una solución que
+no difiere en los valores de la tabla, un valor de <code class="docutils literal notranslate"><span class="pre">s</span></code> mayor que cero
+da cierta libertad para obtener la aproximación que se acerque a todos
+los valores manteniendo una curva relativamente suave. El suavizado
+máximo corresponde a <code class="docutils literal notranslate"><span class="pre">s=1</span></code>. Veamos cómo cambia la aproximación con el
+factor <code class="docutils literal notranslate"><span class="pre">s</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tck1</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splrep</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>  <span class="c1"># Interpolación con suavizado</span>
+<span class="n">y_s1</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">tck1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y_s1</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;s=0.1&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y_s3</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;s=0.3&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span><span class="n">y3</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span> <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_66_0.png" src="_images/13_fiteos_66_0.png" />
+</div>
+<div class="section" id="cantidades-derivadas-de-splines">
+<h3>Cantidades derivadas de <em>splines</em><a class="headerlink" href="#cantidades-derivadas-de-splines" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>De la interpolación (suavizada) podemos calcular, por ejemplo, la
+derivada.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">yder</span><span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">splev</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">tck3</span><span class="p">,</span><span class="n">der</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#  Derivada</span>
+</pre></div>
+</div>
+<p>Si tenemos sólo los datos podríamos tratar de calcular la derivada como
+el coseno</p>
+<div class="math notranslate nohighlight">
+\[y' = 0.5 \sqrt{1 - (2y)^2}\]</div>
+<p>Comparemos los dos resultados:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cond</span> <span class="o">=</span> <span class="p">(</span><span class="n">x3</span> <span class="o">&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x3</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">yprima1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cond</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">y3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">yprima1</span><span class="p">,</span><span class="s2">&quot;sr&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;con $\sqrt{1-(2y)^2}/2$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">yder</span><span class="p">,</span><span class="s1">&#39;-k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;Splines&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_72_0.png" src="_images/13_fiteos_72_0.png" />
+<p>o podemos calcular la integral, o las raíces de la función</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">yt</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">interpolate</span><span class="o">.</span><span class="n">splint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">tck1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">x1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">yt</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_74_0.png" src="_images/13_fiteos_74_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span><span class="n">y_s3</span><span class="p">,</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span>  <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;s=0.3&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">interpolate</span><span class="o">.</span><span class="n">sproot</span><span class="p">(</span><span class="n">tck1</span><span class="p">),</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span><span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_75_0.png" src="_images/13_fiteos_75_0.png" />
+</div>
+</div>
+<div class="section" id="interpolacion-en-dos-dimensiones">
+<h2>Interpolación en dos dimensiones<a class="headerlink" href="#interpolacion-en-dos-dimensiones" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Un ejemplo del caso más simple de interpolación en dos dimensiones
+podría ser cuando tenemos los datos sobre una grilla, que puede no estar
+equiespaciada y necesitamos los valores sobre otra grilla (quizás para
+graficarlos). En ese caso podemos usar <code class="docutils literal notranslate"><span class="pre">scipy.interpolate.interp2d()</span></code>
+para interpolar los datos a una grilla equiespaciada. El método necesita
+conocer los datos sobre la grilla, y los valores de <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code> a los
+que corresponden.</p>
+<p>Definamos una tabla de valores con nuestros datos sobre una grilla
+<span class="math notranslate nohighlight">\(x-y\)</span>, no-equiespaciada en la dirección <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+  <span class="k">return</span> <span class="mi">5</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">y</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Nuestra tabla de valores</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">3.75</span><span class="p">,</span> <span class="mf">3.875</span><span class="p">,</span> <span class="mf">3.9375</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Grilla en la cual interpolar</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">65</span><span class="p">)</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">65</span><span class="p">)</span>
+<span class="c1"># Notar que le tenemos que pasar los arrays unidimensionales x e y</span>
+<span class="n">f1</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">Z1</span> <span class="o">=</span> <span class="n">f1</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+<span class="n">f3</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;cubic&#39;</span><span class="p">)</span>
+<span class="n">Z3</span> <span class="o">=</span> <span class="n">f3</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+<span class="n">f5</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">interp2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;quintic&#39;</span><span class="p">)</span>
+<span class="n">Z5</span> <span class="o">=</span> <span class="n">f5</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Ahora tenemos los valores de la función sobre la grilla determinada por
+todos los posibles pares <span class="math notranslate nohighlight">\((x,y)\)</span> de la tabla original. En el caso
+de <code class="docutils literal notranslate"><span class="pre">f1</span></code> utilizamos una interpolación lineal para cada punto, en <code class="docutils literal notranslate"><span class="pre">f3</span></code>
+una interpolación cúbica, y en <code class="docutils literal notranslate"><span class="pre">f5</span></code> una interpolación de orden 5.
+Grafiquemos los resultados</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Solo para graficar</span>
+<span class="n">X2</span><span class="p">,</span> <span class="n">Y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+
+<span class="c1"># Agregamos los puntos de la grilla original</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">),</span><span class="n">a</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+  <span class="n">ax</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="s1">&#39;.k&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Datos&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">Y2</span><span class="p">,</span> <span class="n">Z1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Lineal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">Y2</span><span class="p">,</span> <span class="n">Z3</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Cúbica&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X2</span><span class="p">,</span> <span class="n">Y2</span><span class="p">,</span> <span class="n">Z5</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Quíntica&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_82_0.png" src="_images/13_fiteos_82_0.png" />
+<p>Acá usamos <code class="docutils literal notranslate"><span class="pre">numpy.meshgrid()</span></code> que permite generar grillas
+bidimensionales a partir de dos vectores unidimensionales. Por ejemplo
+de</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Repitamos un ejemplo simple de uso de <code class="docutils literal notranslate"><span class="pre">meshgrid()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">A</span><span class="p">,</span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39; a=&#39;</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39;b=&#39;</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">b</span><span class="o">=</span> <span class="p">[</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="s1">&#39;A=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;B=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">A</span><span class="o">=</span>
+ <span class="p">[[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]]</span>
+
+<span class="n">B</span><span class="o">=</span>
+ <span class="p">[[</span><span class="mi">3</span> <span class="mi">3</span> <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">5</span> <span class="mi">5</span> <span class="mi">5</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">6</span> <span class="mi">6</span> <span class="mi">6</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interpolacion-sobre-datos-no-estructurados">
+<h2>Interpolación sobre datos no estructurados<a class="headerlink" href="#interpolacion-sobre-datos-no-estructurados" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Si tenemos datos, correspondientes a una función o una medición sólo
+sobre algunos valores <span class="math notranslate nohighlight">\((x,y)\)</span> que no se encuentran sobre una
+grilla, podemos interpolarlos a una grilla regular usando <code class="docutils literal notranslate"><span class="pre">griddat()</span></code>.
+Veamos un ejemplo de uso</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generamos los datos</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>          <span class="c1"># Calcula la hipotenusa</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>      <span class="c1"># Calcula el ángulo</span>
+    <span class="n">tau</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="n">s</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">s</span><span class="p">)</span><span class="o">/</span><span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">phi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">tau</span><span class="p">)</span> <span class="o">+</span> <span class="n">tau</span>
+<span class="c1"># Generamos los puntos x,y,z en una grilla para comparar con la interpolación</span>
+<span class="c1"># Notar que es una grilla de 100x100 = 10000 puntos</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span>  <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>Aquí `T` contiene la función sobre todos los puntos $(x,y)$ obtenidos de combinar cada punto en el vector `x` con cada punto en el vector `y`. Notar que la cantidad total de puntos de `T` es `T.size = 10000`
+</pre></div>
+</div>
+<p>Elegimos <code class="docutils literal notranslate"><span class="pre">npts=400</span></code> puntos al azar de la función que vamos a usar como
+tabla de datos a interpolar usando distintos métodos de interpolación</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">npts</span> <span class="o">=</span> <span class="mi">400</span>
+<span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">npts</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">npts</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Para poder mostrar todos los métodos juntos, vamos a interpolar dentro
+del loop <code class="docutils literal notranslate"><span class="pre">for</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Graficación:</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="c1"># Graficamos la función sobre la grilla estructurada a modo de ilustración</span>
+<span class="c1"># Graficamos los puntos seleccionados</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Puntos de f(X,Y)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;large&#39;</span><span class="p">)</span>
+
+<span class="c1"># Interpolamos usando los distintos métodos y graficamos</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">method</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="s1">&#39;nearest&#39;</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="s1">&#39;cubic&#39;</span><span class="p">)):</span>
+    <span class="n">Ti</span> <span class="o">=</span> <span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">),</span> <span class="n">Z</span><span class="p">,</span> <span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">),</span> <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">)</span>
+    <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Ti</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="n">r</span><span class="p">,</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;large&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_93_0.png" src="_images/13_fiteos_93_0.png" />
+<p>En la primera figura (arriba a la izquierda) graficamos la función
+evaluada en el total de puntos (10000 puntos) junto con los puntos
+utilizados para el ajuste. Los otros tres gráficos corresponden a la
+función evaluada siguiendo el ajuste correspondiente en cada caso.</p>
+</div>
+<div class="section" id="fiteos-de-datos">
+<h2>Fiteos de datos<a class="headerlink" href="#fiteos-de-datos" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="ajuste-con-polinomios">
+<h3>Ajuste con polinomios<a class="headerlink" href="#ajuste-con-polinomios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Habitualmente realizamos ajustes sobre datos que tienen incertezas o
+ruido. Generemos estos datos (con ruido normalmente distribuido)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="mf">2.5</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mf">1.2</span>
+<span class="n">ruido</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span> <span class="n">y0</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y0</span> <span class="o">+</span> <span class="n">ruido</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Eje x&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Eje y&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_97_0.png" src="_images/13_fiteos_97_0.png" />
+<p>Ahora vamos a ajustar con una recta</p>
+<div class="math notranslate nohighlight">
+\[y = m x + b    \qquad \equiv \qquad    f(x) = p[0] x + p[1]\]</div>
+<p>Es una regresión lineal (o una aproximación con polinomios de primer
+orden)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># np.info(np.polyfit) # para obtener más información</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">))</span>                  <span class="c1"># Qué tipo es?</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[2.49458444 1.44519004]
+&lt;class &#39;numpy.ndarray&#39;&gt;
+</pre></div>
+</div>
+<hr class="docutils" />
+<p><strong>NOTA:</strong> ¿Qué devuelve <code class="docutils literal notranslate"><span class="pre">polyfit()</span></code>?</p>
+<p>Un array correspondiente a los coeficientes del polinomio de fiteo. En
+este caso, como estamos haciendo un ajuste lineal, nos devuelve los
+coeficientes de un polinomio de primer orden (una recta)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ajuste&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_102_0.png" src="_images/13_fiteos_102_0.png" />
+<p>Ahora en vez de escribir la recta explícitamente le pedimos a <strong>numpy</strong>
+que lo hagausando los coeficientes que encontramos mediante el fiteo
+(utilizando la función <em>polyval</em>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ajuste&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_104_0.png" src="_images/13_fiteos_104_0.png" />
+<div class="line-block">
+<div class="line">Como vemos, arroja exactamente el mismo resultado.</div>
+<div class="line">Si los datos tienen mucho ruido lo que obtenemos es, por supuesto, una
+recta que pasa por la nube de puntos:</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="o">=</span> <span class="n">y0</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">ruido</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ajuste&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_106_0.png" src="_images/13_fiteos_106_0.png" />
+<p>Similarmente podemos usar polinomios de orden superior. Por ejemplo,
+para utilizar parábolas sólo tenemos que cambiar el orden <code class="docutils literal notranslate"><span class="pre">n</span></code> del
+polinoio en el argumento de <code class="docutils literal notranslate"><span class="pre">polyfit(x,</span> <span class="pre">y,</span> <span class="pre">n)</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generamos los datos</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mf">3.</span><span class="p">]</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y</span><span class="o">=</span> <span class="n">y0</span> <span class="o">+</span> <span class="mi">10</span><span class="o">*</span><span class="n">ruido</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ajustamos con un polinomio de segundo grado</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$f(x)={0:.2}x^2 + {1:.2} x + {2:.2}$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">a</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">polyval</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$P(x)={0:.2}x^2 + {1:.2} x + {2:.2}$&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Datos&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_110_0.png" src="_images/13_fiteos_110_0.png" />
+</div>
+</div>
+<div class="section" id="fiteos-con-funciones-arbitrarias">
+<h2>Fiteos con funciones arbitrarias<a class="headerlink" href="#fiteos-con-funciones-arbitrarias" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="line-block">
+<div class="line">Vamos ahora a fitear una función que no responde a la forma
+polinomial.</div>
+<div class="line">El submódulo <code class="docutils literal notranslate"><span class="pre">optimize</span></code> del paquete <code class="docutils literal notranslate"><span class="pre">scipy</span></code> tiene rutinas para
+realizar ajustes de datos utilizando funciones arbitrarias</div>
+</div>
+<p>Utilicemos una función “complicada”:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># string definido para la leyenda</span>
+<span class="n">sfuncion</span><span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;${0:.3}\, \sin ({1:.2}\, x {3:+.2f}) \, \exp(-{2:.2f} x)$&#39;</span>
+
+<span class="k">def</span> <span class="nf">fit_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+  <span class="n">y</span><span class="o">=</span> <span class="n">a</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="n">x</span><span class="o">-</span><span class="n">d</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+</div>
+<p>Generamos ahora “datos” con dispersión basados en la función</p>
+<div class="math notranslate nohighlight">
+\[f(x) = a \, \sin(b x - d) e^{-c x}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">y0</span><span class="o">=</span> <span class="n">fit_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y0</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">ruido</span>
+</pre></div>
+</div>
+<p>y los graficamos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$f(x)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Datos&#39;</span><span class="p">)</span> <span class="c1"># repeated from above</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Eje x&quot;</span><span class="p">)</span> <span class="c1"># labels again</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Eje y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_117_0.png" src="_images/13_fiteos_117_0.png" />
+<div class="line-block">
+<div class="line">Ahora vamos a interpolar los datos utilizando funciones del paquete
+<strong>Scipy</strong>.</div>
+<div class="line">En primer lugar vamos a utilizar la función <code class="docutils literal notranslate"><span class="pre">curve_fit</span></code>:</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">curve_fit</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ¿Qué hace esta función?</span>
+<span class="n">help</span><span class="p">(</span><span class="n">curve_fit</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block">Help on function curve_fit in module scipy.optimize.minpack:
+
+curve_fit(f, xdata, ydata, p0=None, sigma=None, absolute_sigma=False, check_finite=True, bounds=(-inf, inf), method=None, jac=None, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs)
+    Use non-linear least squares to fit a function, f, to data.
+
+    Assumes <code class="docutils literal notranslate"><span class="pre">ydata</span> <span class="pre">=</span> <span class="pre">f(xdata,</span> <span class="pre">*params)</span> <span class="pre">+</span> <span class="pre">eps</span></code>
+
+    Parameters
+    ----------
+    f : callable
+        The model function, f(x, ...).  It must take the independent
+        variable as the first argument and the parameters to fit as
+        separate remaining arguments.
+    xdata : An M-length sequence or an (k,M)-shaped array for functions with k predictors
+        The independent variable where the data is measured.
+    ydata : M-length sequence
+        The dependent data --- nominally f(xdata, ...)
+    p0 : None, scalar, or N-length sequence, optional
+        Initial guess for the parameters.  If None, then the initial
+        values will all be 1 (if the number of parameters for the function
+        can be determined using introspection, otherwise a ValueError
+        is raised).
+    sigma : None or M-length sequence or MxM array, optional
+        Determines the uncertainty in <cite>ydata</cite>. If we define residuals as
+        <code class="docutils literal notranslate"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">ydata</span> <span class="pre">-</span> <span class="pre">f(xdata,</span> <span class="pre">*popt)</span></code>, then the interpretation of <cite>sigma</cite>
+        depends on its number of dimensions:
+
+            - A 1-d <cite>sigma</cite> should contain values of standard deviations of
+              errors in <cite>ydata</cite>. In this case, the optimized function is
+              <code class="docutils literal notranslate"><span class="pre">chisq</span> <span class="pre">=</span> <span class="pre">sum((r</span> <span class="pre">/</span> <span class="pre">sigma)</span> <span class="pre">**</span> <span class="pre">2)</span></code>.
+
+            - A 2-d <cite>sigma</cite> should contain the covariance matrix of
+              errors in <cite>ydata</cite>. In this case, the optimized function is
+              <code class="docutils literal notranslate"><span class="pre">chisq</span> <span class="pre">=</span> <span class="pre">r.T</span> <span class="pre">&#64;</span> <span class="pre">inv(sigma)</span> <span class="pre">&#64;</span> <span class="pre">r</span></code>.
+
+              .. versionadded:: 0.19
+
+        None (default) is equivalent of 1-d <cite>sigma</cite> filled with ones.
+    absolute_sigma : bool, optional
+        If True, <cite>sigma</cite> is used in an absolute sense and the estimated parameter
+        covariance <cite>pcov</cite> reflects these absolute values.
+
+        If False, only the relative magnitudes of the <cite>sigma</cite> values matter.
+        The returned parameter covariance matrix <cite>pcov</cite> is based on scaling
+        <cite>sigma</cite> by a constant factor. This constant is set by demanding that the
+        reduced <cite>chisq</cite> for the optimal parameters <cite>popt</cite> when using the
+        <em>scaled</em> <cite>sigma</cite> equals unity. In other words, <cite>sigma</cite> is scaled to
+        match the sample variance of the residuals after the fit.
+        Mathematically,
+        <code class="docutils literal notranslate"><span class="pre">pcov(absolute_sigma=False)</span> <span class="pre">=</span> <span class="pre">pcov(absolute_sigma=True)</span> <span class="pre">*</span> <span class="pre">chisq(popt)/(M-N)</span></code>
+    check_finite : bool, optional
+        If True, check that the input arrays do not contain nans of infs,
+        and raise a ValueError if they do. Setting this parameter to
+        False may silently produce nonsensical results if the input arrays
+        do contain nans. Default is True.
+    bounds : 2-tuple of array_like, optional
+        Lower and upper bounds on parameters. Defaults to no bounds.
+        Each element of the tuple must be either an array with the length equal
+        to the number of parameters, or a scalar (in which case the bound is
+        taken to be the same for all parameters.) Use <code class="docutils literal notranslate"><span class="pre">np.inf</span></code> with an
+        appropriate sign to disable bounds on all or some parameters.
+
+        .. versionadded:: 0.17
+    method : {'lm', 'trf', 'dogbox'}, optional
+        Method to use for optimization.  See <cite>least_squares</cite> for more details.
+        Default is 'lm' for unconstrained problems and 'trf' if <cite>bounds</cite> are
+        provided. The method 'lm' won't work when the number of observations
+        is less than the number of variables, use 'trf' or 'dogbox' in this
+        case.
+
+        .. versionadded:: 0.17
+    jac : callable, string or None, optional
+        Function with signature <code class="docutils literal notranslate"><span class="pre">jac(x,</span> <span class="pre">...)</span></code> which computes the Jacobian
+        matrix of the model function with respect to parameters as a dense
+        array_like structure. It will be scaled according to provided <cite>sigma</cite>.
+        If None (default), the Jacobian will be estimated numerically.
+        String keywords for 'trf' and 'dogbox' methods can be used to select
+        a finite difference scheme, see <cite>least_squares</cite>.
+
+        .. versionadded:: 0.18
+    kwargs
+        Keyword arguments passed to <cite>leastsq</cite> for <code class="docutils literal notranslate"><span class="pre">method='lm'</span></code> or
+        <cite>least_squares</cite> otherwise.
+
+    Returns
+    -------
+    popt : array
+        Optimal values for the parameters so that the sum of the squared
+        residuals of <code class="docutils literal notranslate"><span class="pre">f(xdata,</span> <span class="pre">*popt)</span> <span class="pre">-</span> <span class="pre">ydata</span></code> is minimized
+    pcov : 2d array
+        The estimated covariance of popt. The diagonals provide the variance
+        of the parameter estimate. To compute one standard deviation errors
+        on the parameters use <code class="docutils literal notranslate"><span class="pre">perr</span> <span class="pre">=</span> <span class="pre">np.sqrt(np.diag(pcov))</span></code>.
+
+        How the <cite>sigma</cite> parameter affects the estimated covariance
+        depends on <cite>absolute_sigma</cite> argument, as described above.
+
+        If the Jacobian matrix at the solution doesn't have a full rank, then
+        'lm' method returns a matrix filled with <code class="docutils literal notranslate"><span class="pre">np.inf</span></code>, on the other hand
+        'trf'  and 'dogbox' methods use Moore-Penrose pseudoinverse to compute
+        the covariance matrix.
+
+    Raises
+    ------
+    ValueError
+        if either <cite>ydata</cite> or <cite>xdata</cite> contain NaNs, or if incompatible options
+        are used.
+
+    RuntimeError
+        if the least-squares minimization fails.
+
+    OptimizeWarning
+        if covariance of the parameters can not be estimated.
+
+    See Also
+    --------
+    least_squares : Minimize the sum of squares of nonlinear functions.
+    scipy.stats.linregress : Calculate a linear least squares regression for
+                             two sets of measurements.
+
+    Notes
+    -----
+    With <code class="docutils literal notranslate"><span class="pre">method='lm'</span></code>, the algorithm uses the Levenberg-Marquardt algorithm
+    through <cite>leastsq</cite>. Note that this algorithm can only deal with
+    unconstrained problems.
+
+    Box constraints can be handled by methods 'trf' and 'dogbox'. Refer to
+    the docstring of <cite>least_squares</cite> for more information.
+
+    Examples
+    --------
+    &gt;&gt;&gt; import numpy as np
+    &gt;&gt;&gt; import matplotlib.pyplot as plt
+    &gt;&gt;&gt; from scipy.optimize import curve_fit
+
+    &gt;&gt;&gt; def func(x, a, b, c):
+    ...     return a * np.exp(-b * x) + c
+
+    Define the data to be fit with some noise:
+
+    &gt;&gt;&gt; xdata = np.linspace(0, 4, 50)
+    &gt;&gt;&gt; y = func(xdata, 2.5, 1.3, 0.5)
+    &gt;&gt;&gt; np.random.seed(1729)
+    &gt;&gt;&gt; y_noise = 0.2 * np.random.normal(size=xdata.size)
+    &gt;&gt;&gt; ydata = y + y_noise
+    &gt;&gt;&gt; plt.plot(xdata, ydata, 'b-', label='data')
+
+    Fit for the parameters a, b, c of the function <cite>func</cite>:
+
+    &gt;&gt;&gt; popt, pcov = curve_fit(func, xdata, ydata)
+    &gt;&gt;&gt; popt
+    array([ 2.55423706,  1.35190947,  0.47450618])
+    &gt;&gt;&gt; plt.plot(xdata, func(xdata, <a href="#id5"><span class="problematic" id="id6">*</span></a>popt), 'r-',
+    ...          label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+
+    Constrain the optimization to the region of <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">3</span></code>,
+    <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">b</span> <span class="pre">&lt;=</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">c</span> <span class="pre">&lt;=</span> <span class="pre">0.5</span></code>:
+
+    &gt;&gt;&gt; popt, pcov = curve_fit(func, xdata, ydata, bounds=(0, [3., 1., 0.5]))
+    &gt;&gt;&gt; popt
+    array([ 2.43708906,  1.        ,  0.35015434])
+    &gt;&gt;&gt; plt.plot(xdata, func(xdata, <a href="#id7"><span class="problematic" id="id8">*</span></a>popt), 'g--',
+    ...          label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
+
+    &gt;&gt;&gt; plt.xlabel('x')
+    &gt;&gt;&gt; plt.ylabel('y')
+    &gt;&gt;&gt; plt.legend()
+    &gt;&gt;&gt; plt.show()</pre>
+<p>En su forma más simple toma los siguientes argumentos:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Parameters</span>
+<span class="o">----------</span>
+<span class="n">f</span> <span class="p">:</span> <span class="n">callable</span>
+    <span class="n">The</span> <span class="n">model</span> <span class="n">function</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span><span class="o">.</span>  <span class="n">It</span> <span class="n">must</span> <span class="n">take</span> <span class="n">the</span> <span class="n">independent</span>
+    <span class="n">variable</span> <span class="k">as</span> <span class="n">the</span> <span class="n">first</span> <span class="n">argument</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">parameters</span> <span class="n">to</span> <span class="n">fit</span> <span class="k">as</span>
+    <span class="n">separate</span> <span class="n">remaining</span> <span class="n">arguments</span><span class="o">.</span>
+<span class="n">xdata</span> <span class="p">:</span> <span class="n">An</span> <span class="n">M</span><span class="o">-</span><span class="n">length</span> <span class="n">sequence</span> <span class="ow">or</span> <span class="n">an</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">M</span><span class="p">)</span><span class="o">-</span><span class="n">shaped</span> <span class="n">array</span> <span class="k">for</span> <span class="n">functions</span> <span class="k">with</span> <span class="n">k</span> <span class="n">predictors</span>
+    <span class="n">The</span> <span class="n">independent</span> <span class="n">variable</span> <span class="n">where</span> <span class="n">the</span> <span class="n">data</span> <span class="ow">is</span> <span class="n">measured</span><span class="o">.</span>
+<span class="n">ydata</span> <span class="p">:</span> <span class="n">M</span><span class="o">-</span><span class="n">length</span> <span class="n">sequence</span>
+    <span class="n">The</span> <span class="n">dependent</span> <span class="n">data</span> <span class="o">---</span> <span class="n">nominally</span> <span class="n">f</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="n">p0</span> <span class="p">:</span> <span class="kc">None</span><span class="p">,</span> <span class="n">scalar</span><span class="p">,</span> <span class="ow">or</span> <span class="n">N</span><span class="o">-</span><span class="n">length</span> <span class="n">sequence</span><span class="p">,</span> <span class="n">optional</span>
+    <span class="n">Initial</span> <span class="n">guess</span> <span class="k">for</span> <span class="n">the</span> <span class="n">parameters</span><span class="o">.</span>  <span class="n">If</span> <span class="kc">None</span><span class="p">,</span> <span class="n">then</span> <span class="n">the</span> <span class="n">initial</span>
+    <span class="n">values</span> <span class="n">will</span> <span class="nb">all</span> <span class="n">be</span> <span class="mi">1</span> <span class="p">(</span><span class="k">if</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">parameters</span> <span class="k">for</span> <span class="n">the</span> <span class="n">function</span>
+    <span class="n">can</span> <span class="n">be</span> <span class="n">determined</span> <span class="n">using</span> <span class="n">introspection</span><span class="p">,</span> <span class="n">otherwise</span> <span class="n">a</span> <span class="ne">ValueError</span>
+    <span class="ow">is</span> <span class="n">raised</span><span class="p">)</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">El primero: <code class="docutils literal notranslate"><span class="pre">f</span></code> es la función que utilizamos para modelar los datos,
+y que dependerá de la variable independiente <code class="docutils literal notranslate"><span class="pre">x</span></code> y de los parámetros
+a ajustar.</div>
+<div class="line">También debemos darle los valores tabulados en las direcciones
+<span class="math notranslate nohighlight">\(x\)</span> (la variable independiente) e <span class="math notranslate nohighlight">\(y\)</span> (la variable
+dependiente).</div>
+<div class="line">Además, debido a las características del cálculo numérico que realiza
+suele ser muy importante darle valores iniciales a los parámetros que
+queremos ajustar.</div>
+</div>
+<p>Veamos lo que devuelve:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Returns
+-------
+popt : array
+    Optimal values for the parameters so that the sum of the squared error
+    of ``f(xdata, *popt) - ydata`` is minimized
+pcov : 2d array
+    The estimated covariance of popt.  The diagonals provide the variance
+    of the parameter estimate.
+</pre></div>
+</div>
+<p>El primer <em>array</em> tiene los parámetros para “best-fit”, y el segundo da
+la estimación del error: la matriz de covarianza</p>
+<p>Ya tenemos los valores a ajustar guardados en arrays <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#initial_guess= None</span>
+<span class="n">initial_guess</span><span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">p_covarianza</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">fit_func</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$f(x)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Datos&#39;</span><span class="p">)</span> <span class="c1"># repeated from above</span>
+<span class="n">label</span><span class="o">=</span><span class="n">sfuncion</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">fit_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Eje x&quot;</span><span class="p">)</span> <span class="c1"># labels again</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Eje y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+<span class="n">ylim</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mf">1.2</span><span class="o">*</span><span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_125_0.png" src="_images/13_fiteos_125_0.png" />
+<p>Veamos otro ejemplo similar, con muchos datos y dispersión</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Puntos &quot;experimentales&quot; con dispersión</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">5000</span><span class="p">)</span>
+<span class="n">y0</span><span class="o">=</span> <span class="n">fit_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y0</span> <span class="o">+</span> <span class="mf">0.2</span><span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span> <span class="n">y0</span><span class="o">.</span><span class="n">size</span><span class="p">);</span>
+<span class="c1"># Fiteo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">initial_guess</span><span class="o">=</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">3.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]</span>
+<span class="n">params</span><span class="p">,</span> <span class="n">p_covarianza</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">fit_func</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">initial_guess</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Graficación</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y0</span><span class="p">,</span><span class="s1">&#39;-b&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;$f(x)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;.k&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">)</span> <span class="c1"># repeated from above</span>
+<span class="n">label</span><span class="o">=</span><span class="n">sfuncion</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">params</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">fit_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">params</span><span class="p">),</span> <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Eje x&quot;</span><span class="p">)</span> <span class="c1"># labels again</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Eje y&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_129_0.png" src="_images/13_fiteos_129_0.png" />
+<p>La función <code class="docutils literal notranslate"><span class="pre">curve_fit()</span></code> que realiza el ajuste devuelve dos valores:
+El primero es un <em>array</em> con los valores de los parámetros obtenidos, y
+el segundo es un <em>array</em> con los valores correspondientes a la matriz de
+covarianza, cuyos elementos de la diagonal corresponden a la varianza
+para cada parámetro</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">p_covarianza</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">1.71310018e-04</span><span class="p">,</span> <span class="mf">4.19376481e-05</span><span class="p">,</span> <span class="mf">4.61186624e-05</span><span class="p">,</span> <span class="mf">1.50808631e-04</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Así, por ejemplo el primer parámetro (correspondiente a la amplitud
+<code class="docutils literal notranslate"><span class="pre">a</span></code>) toma en estos casos el valor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span> <span class="p">]):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{} = {:.5g} ± {:.3g}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">params</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_covarianza</span><span class="p">[</span><span class="n">j</span><span class="p">,</span><span class="n">j</span><span class="p">])))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>a = 1.0039 ± 0.0131
+b = 2.9996 ± 0.00644
+c = 0.33548 ± 0.00675
+d = 0.0047726 ± 0.0123
+</pre></div>
+</div>
+<div class="section" id="ejemplo-fiteo-de-picos">
+<h3>Ejemplo: Fiteo de picos<a class="headerlink" href="#ejemplo-fiteo-de-picos" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Vamos a suponer que los datos son obtenidos mediante la repetición de
+mediciones</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Realizamos 1000 mediciones, eso nos da una distribución de valores</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Veamos qué obtuvimos</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7faba0290650</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_137_1.png" src="_images/13_fiteos_137_1.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>        <span class="c1"># Calculamos los centros de los intervalos</span>
+</pre></div>
+</div>
+<p>Vamos a graficar el histograma junto con la función Gaussiana con el
+valor correspondiente de la “Función Densidad de Probabilidad” (pdf)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">u</span><span class="s1">&#39;Función&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;random&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_140_0.png" src="_images/13_fiteos_140_0.png" />
+<div class="line-block">
+<div class="line">Con esta idea supongamos que tenemos datos, correspondiente a dos
+picos, diferentes pero que no podemos distinguirlos completamente
+porque se superponen.</div>
+<div class="line">Generemos los datos:</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">npoints</span><span class="o">=</span> <span class="mi">2000</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">r_</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="n">npoints</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">scale</span><span class="o">=.</span><span class="mi">6</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">npoints</span><span class="p">)]</span>
+<span class="n">y</span><span class="p">,</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">r</span> <span class="p">,</span> <span class="n">bins</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span> <span class="nb">range</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">3.5</span><span class="p">,</span><span class="mf">4.5</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">+</span><span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o--k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;&quot;Medición&quot;&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_143_0.png" src="_images/13_fiteos_143_0.png" />
+<p>Ahora, por razones físicas (o porque no tenemos ninguna idea mejor)
+suponemos que esta curva corresponde a dos “picos” del tipo Gaussiano,
+sólo que no conocemos sus posiciones, ni sus anchos ni sus alturas
+relativas. Creamos entonces una función que describa esta situación: La
+suma de dos Gaussianas, cada una de ellas con su posición y ancho
+característico, y un factor de normalización diferente para cada una de
+ellas. En total tendremos seis parámetros a optimizar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">modelo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">coeffs</span><span class="p">):</span>
+  <span class="s2">&quot;Suma de dos Gaussianas, con pesos dados por coeffs[0] y coeffs[3], respectivamente&quot;</span>
+  <span class="k">return</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">+</span> \
+  <span class="n">coeffs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">coeffs</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">modelo</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">modelo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="o">*</span><span class="n">coeffs</span><span class="p">)</span>
+    <span class="n">Suma</span> <span class="n">de</span> <span class="n">dos</span> <span class="n">Gaussianas</span><span class="p">,</span> <span class="n">con</span> <span class="n">pesos</span> <span class="n">dados</span> <span class="n">por</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="n">y</span> <span class="n">coeffs</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">respectivamente</span>
+</pre></div>
+</div>
+<p>Ahora es muy fácil realizar el fiteo. Mirando el gráfico proponemos
+valores iniciales, donde los tres primeros valores corresponde a los
+parámetros de la primera Gaussiana y los tres últimos a los de la
+segunda:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.</span><span class="p">])</span>
+<span class="n">c</span><span class="p">,</span> <span class="n">cov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">modelo</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">p0</span> <span class="o">=</span> <span class="n">c0</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mf">0.45146109</span> <span class="o">-</span><span class="mf">0.10575116</span>  <span class="mf">0.92503718</span>  <span class="mf">0.54616588</span>  <span class="mf">1.94483535</span>  <span class="mf">0.63591132</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;random distrib&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">modelo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">*</span><span class="n">c0</span><span class="p">),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Curva inicial&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">modelo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="o">*</span><span class="n">c</span><span class="p">),</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;fiteo&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gaussiana 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">*</span><span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gaussiana 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span> <span class="n">loc</span> <span class="o">=</span> <span class="s1">&#39;best&#39;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_149_0.png" src="_images/13_fiteos_149_0.png" />
+<p>Veamos un ejemplo de ajuste de datos en el plano mediante la función</p>
+<div class="math notranslate nohighlight">
+\[f(x, y) = (a \sin{(2  x)} + b) \, \exp{(-c  (x + y - \pi)^2 / 4)}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">c</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># Límites de los datos. Usados también para los gráficos</span>
+<span class="n">limits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">]</span>  <span class="c1"># [x1_min, x1_max, x2_min, x2_max]</span>
+
+<span class="n">sx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">limits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">limits</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">sy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">limits</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">limits</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Creamos las grillas</span>
+<span class="n">X1</span><span class="p">,</span> <span class="n">X2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">)</span>
+<span class="n">forma</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">shape</span>
+
+<span class="c1"># Los pasamos a unidimensional</span>
+<span class="n">x1_1d</span> <span class="o">=</span> <span class="n">X1</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">forma</span><span class="p">)))</span>
+<span class="n">x2_1d</span> <span class="o">=</span> <span class="n">X2</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">forma</span><span class="p">)))</span>
+
+<span class="c1"># xdata[0] tiene los valores de x</span>
+<span class="c1"># xdata[1] tiene los valores de y</span>
+<span class="n">xdata</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x1_1d</span><span class="p">,</span> <span class="n">x2_1d</span><span class="p">))</span>
+
+<span class="c1"># La función original que vamos a ajustar.</span>
+<span class="c1"># Sólo la usamos para comparar el resultado final con el deseado</span>
+<span class="n">original</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="o">*</span><span class="n">original</span><span class="p">)</span>
+
+<span class="c1"># Le agregamos ruido. Estos van a ser los datos a ajustar</span>
+<span class="n">z_noise</span> <span class="o">=</span> <span class="n">z</span> <span class="o">+</span> <span class="o">.</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+
+<span class="c1"># Hacemos el fiteo</span>
+<span class="n">ydata</span> <span class="o">=</span> <span class="n">z_noise</span>
+<span class="n">p0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">,</span> <span class="n">p0</span><span class="o">=</span><span class="n">p0</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="mi">50</span><span class="o">*</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Valores de los parámetros&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;------- -- --- ----------&quot;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Real   : {}</span><span class="se">\n</span><span class="s2">Inicial: {}</span><span class="se">\n</span><span class="s2">Ajuste : {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">original</span><span class="p">,</span> <span class="n">p0</span><span class="p">,</span> <span class="n">popt</span><span class="p">))</span>
+
+<span class="n">z_0</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="o">*</span><span class="n">p0</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">forma</span><span class="p">)</span>
+<span class="n">Z_noise</span> <span class="o">=</span> <span class="n">z_noise</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">forma</span><span class="p">)</span>
+<span class="n">Z_0</span> <span class="o">=</span> <span class="n">z_0</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">forma</span><span class="p">)</span>
+
+<span class="n">z_fit</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="o">*</span><span class="n">popt</span><span class="p">)</span>
+<span class="n">Z_fit</span> <span class="o">=</span> <span class="n">z_fit</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">forma</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="n">titulos</span> <span class="o">=</span> <span class="p">[[</span><span class="s2">&quot;Función Real&quot;</span><span class="p">,</span> <span class="s2">&quot;Función inicial&quot;</span><span class="p">],</span>
+           <span class="p">[</span><span class="s2">&quot;Datos con ruido&quot;</span><span class="p">,</span> <span class="s2">&quot;Ajuste a los datos&quot;</span><span class="p">]]</span>
+
+<span class="n">datos</span> <span class="o">=</span> <span class="p">[[</span><span class="n">Z</span><span class="p">,</span> <span class="n">Z_0</span><span class="p">],</span> <span class="p">[</span><span class="n">Z_noise</span><span class="p">,</span> <span class="n">Z_fit</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">ndenumerate</span><span class="p">(</span><span class="n">titulos</span><span class="p">):</span>
+  <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+  <span class="n">im</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X1</span><span class="p">,</span> <span class="n">X2</span><span class="p">,</span> <span class="n">datos</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+  <span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span>
+  <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--------------------------------------------------</span>
+<span class="n">Valores</span> <span class="n">de</span> <span class="n">los</span> <span class="n">parámetros</span>
+<span class="o">-------</span> <span class="o">--</span> <span class="o">---</span> <span class="o">----------</span>
+<span class="n">Real</span>   <span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">Inicial</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">Ajuste</span> <span class="p">:</span> <span class="p">[</span><span class="mf">2.99645944</span> <span class="mf">1.00044713</span> <span class="mf">0.4988615</span> <span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/13_fiteos_151_1.png" src="_images/13_fiteos_151_1.png" />
+<p>En este gráfico tenemos:</p>
+<ul class="simple">
+<li><p>Arriba a la izquierda se encuentra para referencia la función real de
+la que derivamos los datos (que no se utiliza en los ajustes).</p></li>
+<li><p>Abajo a la izquierda se grafican los datos que se van a ajustar</p></li>
+<li><p>Arriba a la derecha se encuentra graficada la función con los
+parámetros iniciales, antes de realizar el ajuste. Como se ve, es muy
+diferente a los datos, y a la función deseada.</p></li>
+<li><p>Abajo a la derecha se grafica la función utilizando los parámetros
+que se obtienen con el ajuste</p></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ejercicios_01.html" class="btn btn-neutral float-right" title="Ejercicios de Clase 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clase_12.html" class="btn btn-neutral float-left" title="Clase 12: Un poco de graficación 3D" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Juan Fiol
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
