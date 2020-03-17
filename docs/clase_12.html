@@ -494,6 +494,39 @@ Para ello está la función <code class="docutils literal notranslate"><span cla
         <span class="o">-</span><span class="mf">3.7394701</span> <span class="p">,</span> <span class="o">-</span><span class="mf">3.53717055</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.33487099</span><span class="p">,</span> <span class="o">-</span><span class="mf">3.13257144</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.93027188</span><span class="p">]))</span>
 </pre></div>
 </div>
+<hr class="docutils" />
+<p><strong>Nota:</strong> ¿Qué hace <code class="docutils literal notranslate"><span class="pre">meshgrid</span></code> aquí?</p>
+<p>La función <code class="docutils literal notranslate"><span class="pre">meshgrid</span></code> crea matrices de coordenadas en n-dimensiones,
+basadas en n vectores unidimensionales de coordenadas</p>
+<p>Consideremos un caso con vectores más simples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="n">XX</span><span class="p">,</span> <span class="n">YY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">meshgrid</span></code> crea pares <span class="math notranslate nohighlight">\((x,y)\)</span> iterando sobre cada
+valor de <span class="math notranslate nohighlight">\(y\)</span> para cada valor de <span class="math notranslate nohighlight">\(x\)</span>. En este caso para los
+vectores:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>crea las matrices</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">XX</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+      <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]</span>
+      <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">YY</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span> <span class="mi">4</span><span class="p">]</span>
+      <span class="p">[</span><span class="mi">5</span> <span class="mi">5</span> <span class="mi">5</span> <span class="mi">5</span><span class="p">]</span>
+      <span class="p">[</span><span class="mi">6</span> <span class="mi">6</span> <span class="mi">6</span> <span class="mi">6</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>que contiene todos los pares posibles <span class="math notranslate nohighlight">\((x,y)\)</span>, como se ve en la
+siguiente figura:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="image0" src="_images/ej_meshgrid.png" /></p>
+<hr class="docutils" />
 <p>Vamos a usar los datos para hacer los gráficos de contornos</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig1</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">)</span>
@@ -504,14 +537,14 @@ Para ello está la función <code class="docutils literal notranslate"><span cla
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_50_1.png" src="_images/12_graficacion3d_50_1.png" />
+<img alt="_images/12_graficacion3d_51_1.png" src="_images/12_graficacion3d_51_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">CS</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span><span class="mi">15</span><span class="p">));</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_51_0.png" src="_images/12_graficacion3d_51_0.png" />
+<img alt="_images/12_graficacion3d_52_0.png" src="_images/12_graficacion3d_52_0.png" />
 <p>También podemos mostrar la imagen con los contornos superpuestos:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig1</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">im</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">Z</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;bilinear&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span>
@@ -523,7 +556,7 @@ Para ello está la función <code class="docutils literal notranslate"><span cla
 <span class="n">CB</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">CS</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_53_0.png" src="_images/12_graficacion3d_53_0.png" />
+<img alt="_images/12_graficacion3d_54_0.png" src="_images/12_graficacion3d_54_0.png" />
 </div>
 <div class="section" id="superficies-y-contornos">
 <h3>Superficies y contornos<a class="headerlink" href="#superficies-y-contornos" title="Enlazar permanentemente con este título">¶</a></h3>
@@ -542,7 +575,7 @@ Para ello está la función <code class="docutils literal notranslate"><span cla
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">mpl_toolkits</span><span class="o">.</span><span class="n">mplot3d</span><span class="o">.</span><span class="n">art3d</span><span class="o">.</span><span class="n">Poly3DCollection</span> <span class="n">at</span> <span class="mh">0x7ff77ca10c50</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_56_1.png" src="_images/12_graficacion3d_56_1.png" />
+<img alt="_images/12_graficacion3d_57_1.png" src="_images/12_graficacion3d_57_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 <span class="n">surf</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span> <span class="n">rstride</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span><span class="n">cstride</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
@@ -550,7 +583,7 @@ Para ello está la función <code class="docutils literal notranslate"><span cla
 <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">5</span><span class="p">);</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_57_0.png" src="_images/12_graficacion3d_57_0.png" />
+<img alt="_images/12_graficacion3d_58_0.png" src="_images/12_graficacion3d_58_0.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -621,13 +654,13 @@ plot_surface(X, Y, Z, <em>args, norm=None, vmin=None, vmax=None, lightsource=Non
 <span class="n">cset</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_60_0.png" src="_images/12_graficacion3d_60_0.png" />
+<img alt="_images/12_graficacion3d_61_0.png" src="_images/12_graficacion3d_61_0.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 <span class="n">cset</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">extend3d</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_61_0.png" src="_images/12_graficacion3d_61_0.png" />
+<img alt="_images/12_graficacion3d_62_0.png" src="_images/12_graficacion3d_62_0.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Blues</span><span class="p">)</span>
@@ -642,7 +675,7 @@ plot_surface(X, Y, Z, <em>args, norm=None, vmin=None, vmax=None, lightsource=Non
 <span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]);</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_62_0.png" src="_images/12_graficacion3d_62_0.png" />
+<img alt="_images/12_graficacion3d_63_0.png" src="_images/12_graficacion3d_63_0.png" />
 <p>Veamos otro ejemplo. Modifiquemos el gráfico anterior para llenar los
 contornos laterales, utilizando la función <code class="docutils literal notranslate"><span class="pre">contourf()</span></code> en lugar de
 <code class="docutils literal notranslate"><span class="pre">contour()</span></code></p>
@@ -660,7 +693,7 @@ contornos laterales, utilizando la función <code class="docutils literal notran
 <span class="n">ax</span><span class="o">.</span><span class="n">set_zticks</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]);</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_64_0.png" src="_images/12_graficacion3d_64_0.png" />
+<img alt="_images/12_graficacion3d_65_0.png" src="_images/12_graficacion3d_65_0.png" />
 </div>
 <div class="section" id="graficos-de-campos-vectoriales">
 <h4>Gráficos de campos vectoriales<a class="headerlink" href="#graficos-de-campos-vectoriales" title="Enlazar permanentemente con este título">¶</a></h4>
@@ -681,7 +714,7 @@ una dirección y longitud dada</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">arrow_length_ratio</span><span class="o">=</span><span class="mf">0.3</span><span class="p">);</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_66_0.png" src="_images/12_graficacion3d_66_0.png" />
+<img alt="_images/12_graficacion3d_67_0.png" src="_images/12_graficacion3d_67_0.png" />
 <p>Veamos un ejemplo de la documentación de <strong>Matplotlib</strong></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">gca</span><span class="p">(</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
@@ -700,7 +733,7 @@ una dirección y longitud dada</p>
 <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">arrow_length_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">);</span>
 </pre></div>
 </div>
-<img alt="_images/12_graficacion3d_68_0.png" src="_images/12_graficacion3d_68_0.png" />
+<img alt="_images/12_graficacion3d_69_0.png" src="_images/12_graficacion3d_69_0.png" />
 <p>Más información sobre este tipo de gráficos en
 <a class="reference external" href="http://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html">http://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html</a></p>
 </div>

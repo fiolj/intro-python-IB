@@ -493,6 +493,54 @@ Gráficos de contornos
 
 
 
+--------------
+
+**Nota:** ¿Qué hace ``meshgrid`` aquí?
+
+La función ``meshgrid`` crea matrices de coordenadas en n-dimensiones,
+basadas en n vectores unidimensionales de coordenadas
+
+Consideremos un caso con vectores más simples:
+
+.. code:: python
+
+     x = np.arange(4, dtype='int')
+     y = np.arange(4, 7, dtype='int')
+     XX, YY = np.meshgrid(x, y)
+
+La función ``meshgrid`` crea pares :math:`(x,y)` iterando sobre cada
+valor de :math:`y` para cada valor de :math:`x`. En este caso para los
+vectores:
+
+::
+
+     x = [0 1 2 3]
+     y = [4 5 6]
+
+crea las matrices
+
+::
+
+     XX = [[0 1 2 3]
+           [0 1 2 3]
+           [0 1 2 3]]
+     YY = [[4 4 4 4]
+           [5 5 5 5]
+           [6 6 6 6]]
+
+que contiene todos los pares posibles :math:`(x,y)`, como se ve en la
+siguiente figura:
+
+.. code:: python
+
+     plt.plot(XX, YY, 'x', color='C0')
+
+|image0|
+
+--------------
+
+.. |image0| image:: figuras/ej_meshgrid.png
+
 Vamos a usar los datos para hacer los gráficos de contornos
 
 .. code:: python
@@ -512,7 +560,7 @@ Vamos a usar los datos para hacer los gráficos de contornos
 
 
 
-.. image:: figuras/12_graficacion3d_50_1.png
+.. image:: figuras/12_graficacion3d_51_1.png
 
 
 .. code:: python
@@ -524,7 +572,7 @@ Vamos a usar los datos para hacer los gráficos de contornos
 
 
 
-.. image:: figuras/12_graficacion3d_51_0.png
+.. image:: figuras/12_graficacion3d_52_0.png
 
 
 También podemos mostrar la imagen con los contornos superpuestos:
@@ -542,7 +590,7 @@ También podemos mostrar la imagen con los contornos superpuestos:
 
 
 
-.. image:: figuras/12_graficacion3d_53_0.png
+.. image:: figuras/12_graficacion3d_54_0.png
 
 
 Superficies y contornos
@@ -574,7 +622,7 @@ Para realizar gráficos “realmente” en 3D debemos importar ``Axes3D``
 
 
 
-.. image:: figuras/12_graficacion3d_56_1.png
+.. image:: figuras/12_graficacion3d_57_1.png
 
 
 .. code:: python
@@ -587,7 +635,7 @@ Para realizar gráficos “realmente” en 3D debemos importar ``Axes3D``
 
 
 
-.. image:: figuras/12_graficacion3d_57_0.png
+.. image:: figuras/12_graficacion3d_58_0.png
 
 
 .. code:: python
@@ -670,7 +718,7 @@ Contornos en 3D
 
 
 
-.. image:: figuras/12_graficacion3d_60_0.png
+.. image:: figuras/12_graficacion3d_61_0.png
 
 
 .. code:: python
@@ -681,7 +729,7 @@ Contornos en 3D
 
 
 
-.. image:: figuras/12_graficacion3d_61_0.png
+.. image:: figuras/12_graficacion3d_62_0.png
 
 
 .. code:: python
@@ -703,7 +751,7 @@ Contornos en 3D
 
 
 
-.. image:: figuras/12_graficacion3d_62_0.png
+.. image:: figuras/12_graficacion3d_63_0.png
 
 
 Veamos otro ejemplo. Modifiquemos el gráfico anterior para llenar los
@@ -729,7 +777,7 @@ contornos laterales, utilizando la función ``contourf()`` en lugar de
 
 
 
-.. image:: figuras/12_graficacion3d_64_0.png
+.. image:: figuras/12_graficacion3d_65_0.png
 
 
 Gráficos de campos vectoriales
@@ -757,7 +805,7 @@ una dirección y longitud dada
 
 
 
-.. image:: figuras/12_graficacion3d_66_0.png
+.. image:: figuras/12_graficacion3d_67_0.png
 
 
 Veamos un ejemplo de la documentación de **Matplotlib**
@@ -783,7 +831,7 @@ Veamos un ejemplo de la documentación de **Matplotlib**
 
 
 
-.. image:: figuras/12_graficacion3d_68_0.png
+.. image:: figuras/12_graficacion3d_69_0.png
 
 
 Más información sobre este tipo de gráficos en
