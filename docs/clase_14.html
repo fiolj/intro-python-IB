@@ -1,0 +1,771 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="es" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="es" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Clase 14: Gráficos interactivos &mdash; documentación de Clases de Python - 2020.1</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios de Clase 1" href="ejercicios_01.html" />
+    <link rel="prev" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" href="clase_13.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Clases de Python
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2020
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Tipos de datos y control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Control de flujo y tipos complejos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Técnicas de iteración y Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Programación Orientada a Objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Control de versiones y biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Introducción a Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Un poco de graficación 3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Interpolación y ajuste de curvas (fiteo)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Gráficos interactivos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#trabajo-simple-con-imagenes">Trabajo simple con imágenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#analisis-de-la-imagen">Análisis de la imagen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#histograma-de-intensidades">Histograma de intensidades</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cortes-en-una-direccion">Cortes en una dirección</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-a">Ejercicios 14 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graficos-interactivos-widgets">Gráficos interactivos (“widgets”)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cursor">Cursor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manejo-de-eventos">Manejo de eventos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejemplos-integrados">Ejemplos integrados</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-b">Ejercicios 14 (b)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_01.html">Ejercicios de Clase 1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_02.html">Ejercicios de Clase 2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_03.html">Ejercicios de Clase 3</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_04.html">Ejercicios de Clase 4</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_05.html">Ejercicios de Clase 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_06.html">Ejercicios de Clase 6</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_08.html">Ejercicios de Clase 8</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_09.html">Ejercicios de Clase 9</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_10.html">Ejercicios de Clase 10</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_11.html">Ejercicios de Clase 11</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_13.html">Ejercicios de Clase 13</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios_14.html">Ejercicios de Clase 14</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Clase 14: Gráficos interactivos</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/clase_14.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="clase-14-graficos-interactivos">
+<h1>Clase 14: Gráficos interactivos<a class="headerlink" href="#clase-14-graficos-interactivos" title="Enlazar permanentemente con este título">¶</a></h1>
+<div class="section" id="trabajo-simple-con-imagenes">
+<h2>Trabajo simple con imágenes<a class="headerlink" href="#trabajo-simple-con-imagenes" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Vamos a empezar leyendo y mostrando algunas imágenes, para entender cómo
+es su representación. Para leer y escribir imágenes vamos a usar el
+paquete adicional <code class="docutils literal notranslate"><span class="pre">imageio</span></code>. <strong>Scipy</strong> tiene funciones (con el mismo
+nombre) para realizar este trabajo en el submódulo <code class="docutils literal notranslate"><span class="pre">misc</span></code> pero está
+planeado que desaparezcan en un futuro no muy lejano.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>El paquete <code class="docutils literal notranslate"><span class="pre">imageio</span></code> debe ser instalado separadamente. Si no está
+presente en el sistema, usa la función <code class="docutils literal notranslate"><span class="pre">imread()</span></code> de <code class="docutils literal notranslate"><span class="pre">scipy.misc</span></code>
+(que emite un mensaje avisando que pronto no va a estar disponible)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">imageio</span> <span class="kn">import</span> <span class="n">imread</span>
+<span class="k">except</span><span class="p">:</span>
+  <span class="kn">from</span> <span class="nn">scipy.misc</span> <span class="kn">import</span> <span class="n">imread</span>
+</pre></div>
+</div>
+<p>El siguiente ejemplo es una figura tomada de algunas pruebas que hicimos
+en el laboratorio hace unos años. Es el resultado de la medición de
+flujo en toberas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imag1</span><span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo.jpg&#39;</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;La imagen &quot;imag1&quot; es del tipo:&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">imag1</span><span class="p">),</span> <span class="s1">&#39;con &quot;shape&quot;&#39;</span><span class="p">,</span> <span class="n">imag1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag1</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>La imagen &quot;imag1&quot; es del tipo: &lt;class &#39;imageio.core.util.Array&#39;&gt; con &quot;shape&quot; (272, 652, 3)
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_5_1.png" src="_images/14_interactivo_5_1.png" />
+<p>La representación de la imagen es una matriz, donde cada elemento
+corresponde a un pixel, y cada pixel tiene tres valores. El elemento
+<code class="docutils literal notranslate"><span class="pre">[0,0]</span></code> corresponde al pixel ubicado en la esquina superior izquierda,
+el elemento <code class="docutils literal notranslate"><span class="pre">[-1,0]</span></code> al pixel ubicado en la esquina inferior
+izquierda, mientras que el <code class="docutils literal notranslate"><span class="pre">[0,-1]</span></code> a la esquina superior derecha:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag1</span><span class="p">)</span>
+<span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;[0,0]&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{},</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;[-1,0]&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">272</span><span class="p">),</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">240</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{},</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;[0,-1]&quot;</span><span class="p">,(</span><span class="mi">652</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">510</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{},</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_7_0.png" src="_images/14_interactivo_7_0.png" />
+<p>En consecuencia podemos ver qué valores toma cada pixel</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">imag1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>             <span class="c1"># El primer elemento</span>
+<span class="k">print</span><span class="p">(</span><span class="n">imag1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>             <span class="c1"># El segundo elemento</span>
+<span class="k">print</span><span class="p">(</span><span class="n">imag1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">imag1</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># y sus valores mínimo y máximo</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">65</span> <span class="mi">65</span> <span class="mi">65</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">66</span> <span class="mi">66</span> <span class="mi">66</span><span class="p">]</span>
+<span class="mi">0</span> <span class="mi">255</span>
+</pre></div>
+</div>
+<p>Como vemos en cada pixel el valor está dado por un array de tres números
+enteros</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imag1</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como originalmente teníamos una figura en escala de grises, podemos
+convertir los tres colores a una simple escala, por ejemplo promediando
+los tres valores. La función <code class="docutils literal notranslate"><span class="pre">imread()</span></code> puede interpretar la figura
+como una escala de grises con los argumentos adecuados:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imag2</span><span class="o">=</span> <span class="n">imread</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo.jpg&#39;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La variable <code class="docutils literal notranslate"><span class="pre">imag2</span></code> contiene ahora una matriz con las dimensiones de
+la imagen (272 x 652) pero con sólo un valor por cada pixel</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">imag2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">imag2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">272</span><span class="p">,</span> <span class="mi">652</span><span class="p">)</span>
+<span class="mf">65.0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_16_0.png" src="_images/14_interactivo_16_0.png" />
+<hr class="docutils" />
+<p><strong>Nota</strong> ¿Qué pasó acá?</p>
+<p>La función <code class="docutils literal notranslate"><span class="pre">imshow()</span></code> está interpretando el valor de cada pixel como
+una posición en una cierta escala de colores (<strong>colormap</strong>). Como no
+especificamos cuál queremos utilizar, se usó el cmap <em>default</em>.</p>
+<hr class="docutils" />
+<p>Especifiquemos el <strong>colormap</strong> a utilizar para la graficación:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_19_0.png" src="_images/14_interactivo_19_0.png" />
+<div class="line-block">
+<div class="line">Los <code class="docutils literal notranslate"><span class="pre">cmap</span></code> aparecen también en el contexto de graficación de
+gráficos de contorno (<code class="docutils literal notranslate"><span class="pre">contour()</span></code> y <code class="docutils literal notranslate"><span class="pre">contourf()</span></code>).</div>
+<div class="line">Al asociar un valor a un mapa de colores, la misma imagen puede
+mostrarse de diferente maneras. Veamos otros ejemplos de <em>colormap</em></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_21_0.png" src="_images/14_interactivo_21_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno_r&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_22_0.png" src="_images/14_interactivo_22_0.png" />
+<p>La referencia de ubicación de los <code class="docutils literal notranslate"><span class="pre">cmap</span></code> existentes está en:
+<a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">http://matplotlib.org/examples/color/colormaps_reference.html</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_24_0.png" src="_images/14_interactivo_24_0.png" />
+<div class="section" id="analisis-de-la-imagen">
+<h3>Análisis de la imagen<a class="headerlink" href="#analisis-de-la-imagen" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La imagen es una representación en mapa de colores de lo valores en la
+matriz. Esta es una representación que da muy buena información
+cualitativa sobre las características de los datos. Para analizar los
+datos a veces es más fácil hacer cortes o promediar en alguna dirección
+los datos.</p>
+<div class="section" id="histograma-de-intensidades">
+<h4>Histograma de intensidades<a class="headerlink" href="#histograma-de-intensidades" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Un ejemplo es el cálculo de un histograma de intensidades, analizando
+toda la imagen.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">bin_centers</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Intensidad&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">));</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_27_0.png" src="_images/14_interactivo_27_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos una figura con los dos gráficos</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># En el gráfico de la izquierda mostramos la imagen en escala de grises</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>   <span class="c1"># Eliminamos los dos ejes</span>
+<span class="c1">#</span>
+<span class="c1"># Graficamos a la derecha el histograma</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mf">0.85</span><span class="o">*</span><span class="n">hist</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="s1">&#39;Histograma&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>   <span class="c1"># Sólo valores en el eje x</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=-</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_28_0.png" src="_images/14_interactivo_28_0.png" />
+<p>Estos histogramas, son útiles pero no dan información sobre las
+variaciones de intensidad con la posición. De alguna manera estamos
+integrando demasiado. Cuando vemos la imagen, vemos un mapa de
+intensidad en dos dimensiones. Al hacer el histograma sobre toda la
+figura perdemos completamente la información sobre la posición.</p>
+</div>
+<div class="section" id="cortes-en-una-direccion">
+<h4>Cortes en una dirección<a class="headerlink" href="#cortes-en-una-direccion" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>Un análisis intermedio podemos hacerlo haciendo cortes a lo largo de
+alguna línea y analizando la intensidad. Por ejemplo, podemos elegir una
+línea vertical en un punto <span class="math notranslate nohighlight">\(x_0\)</span>, y analizar como varía la
+intensidad a lo largo de esa línea:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">imag2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span>      <span class="c1"># Elegimos un punto en el eje x</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">&#39;posición en eje x={} de un total de {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">imag2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">posición</span> <span class="n">en</span> <span class="n">eje</span> <span class="n">x</span><span class="o">=</span><span class="mi">507</span> <span class="n">de</span> <span class="n">un</span> <span class="n">total</span> <span class="n">de</span> <span class="mi">652</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos la figura con dos subplots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax2</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># graficamos la imagen en el subplot de la derecha</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span>
+<span class="c1"># y agregamos la línea vertical en el punto elegido</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.05</span><span class="o">*</span><span class="n">x0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;$x_{0}$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1"># Creamos linea como un array 1D con los datos a lo largo de la línea deseada</span>
+<span class="c1"># y la graficamos</span>
+<span class="n">linea</span> <span class="o">=</span> <span class="n">imag2</span><span class="p">[:,</span><span class="n">x0</span><span class="p">]</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">linea</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Corte&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;posición en eje $y$ (pixels)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensidad&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">linea</span><span class="p">)))</span>
+<span class="c1"># Ajustamos el margen izquierdo y la distancia entre los dos subplots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_32_0.png" src="_images/14_interactivo_32_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="ejercicios-14-a">
+<h2>Ejercicios 14 (a)<a class="headerlink" href="#ejercicios-14-a" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Modificar el ejemplo anterior para presentar en una figura tres
+gráficos, agregando a la izquierda un panel donde se muestre un corte
+horizontal. El corte debe estar en la mitad del gráfico
+(<span class="math notranslate nohighlight">\(y_{0}=136\)</span>). En la figura debe mostrar la posición del corte
+(similarmente a como se hizo con el corte en <span class="math notranslate nohighlight">\(x\)</span>) con una línea
+de otro color.</p></li>
+</ol>
+</div>
+<div class="section" id="graficos-interactivos-widgets">
+<h2>Gráficos interactivos (“widgets”)<a class="headerlink" href="#graficos-interactivos-widgets" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Veamos cómo se puede hacer este tipo de trabajo en forma interactiva.
+Para ello <strong>Matplotlib</strong> tiene un submódulo <code class="docutils literal notranslate"><span class="pre">widgets</span></code> con rutinas que
+están diseñadas para funcionar con cualquier <em>backend</em> interactivo. (más
+información en: <a class="reference external" href="http://matplotlib.org/api/widgets_api.html">http://matplotlib.org/api/widgets_api.html</a>)</p>
+<div class="section" id="cursor">
+<h3>Cursor<a class="headerlink" href="#cursor" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Empecemos estudiando como agregar un indicador de la posición del cursor
+a un gráfico.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Archivo: ejemplo_cursor.py</span>
+
+<span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">Cursor</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Usamos: useblit = True en el backed gtkagg</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">useblit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>En este caso, el programa está escrito separadamente y lo podemos
+ejecutar desde la notebook (como en este caso) o desde una terminal
+independientemente. Para ejecutar un script en forma interactiva desde
+la <em>notebook</em> de <em>Jupyter</em> debemos setear el <em>backend</em> a una opción
+interactiva (que no es el valor por default en las notebooks). En este
+caso vamos a usar el backend <em>tk</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="o">-</span> <span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_38_0.png" src="_images/14_interactivo_38_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">tk</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">run</span> <span class="n">scripts</span><span class="o">/</span><span class="n">ejemplo_cursor</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_39_0.png" src="_images/14_interactivo_39_0.png" />
+<p>En este ejemplo simple conocemos casi todas las líneas (creamos la
+figura y graficamos). Las líneas novedosas y relevantes son</p>
+<ol class="arabic simple">
+<li><p>La primera línea importando la función <code class="docutils literal notranslate"><span class="pre">Cursor()</span></code> para describir el
+<em>cursor</em> o <em>mouse</em>:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">Cursor</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>La línea en que usamos la función <code class="docutils literal notranslate"><span class="pre">Cursor</span></code></p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cursor</span> <span class="o">=</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">useblit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>que crea el objeto <code class="docutils literal notranslate"><span class="pre">Cursor</span></code>. La forma de esta función es:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Cursor</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">horizOn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">vertOn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">useblit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">lineprops</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>y toma como argumento el eje en el cuál agregamos el cursor. Como
+argumentos opcionales se puede controlar la visibilidad de la línea
+horizontal (<code class="docutils literal notranslate"><span class="pre">horizOn</span></code>) y vertical (<code class="docutils literal notranslate"><span class="pre">vertOn</span></code>) que pueden tomar
+valores lógicos <code class="docutils literal notranslate"><span class="pre">True</span></code> o <code class="docutils literal notranslate"><span class="pre">False</span></code>. Además tiene argumentos <em>keyword</em>
+para controlar la apariencia de las líneas. En este ejemplo pusimos
+explícitamente que queremos una línea roja con un grosor igual a <code class="docutils literal notranslate"><span class="pre">2</span></code>.</p>
+</div>
+<div class="section" id="manejo-de-eventos">
+<h3>Manejo de eventos<a class="headerlink" href="#manejo-de-eventos" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para que la interactividad sea útil es importante obtener datos de
+nuestra interacción con el gráfico. Esto se obtiene con lo que se llama
+“manejo de eventos” (“Event handling”).</p>
+<p>Para recibir <em>events</em> necesitamos <strong>escribir y conectar</strong> una función
+que se activa cuando ocurre el evento (<em>callback</em>). Veamos un ejemplo
+simple pero importante, donde imprimimos las coordenadas donde se
+presiona el <em>mouse</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mostramos la figura (sin interactividad)</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="n">run</span> <span class="n">scripts</span><span class="o">/</span><span class="n">ejemplo_callback</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_42_0.png" src="_images/14_interactivo_42_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Archivo: ejemplo_callback.py</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="s1">&#39;o-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">onclick</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+  <span class="k">print</span><span class="p">(</span><span class="s1">&#39;button=</span><span class="si">%d</span><span class="s1">, x=</span><span class="si">%d</span><span class="s1">, y=</span><span class="si">%d</span><span class="s1">, xdata=</span><span class="si">%f</span><span class="s1">, ydata=</span><span class="si">%f</span><span class="s1">&#39;</span> <span class="o">%</span>
+        <span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">button</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">xdata</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">ydata</span><span class="p">))</span>
+
+<span class="n">cid</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span><span class="s1">&#39;button_press_event&#39;</span><span class="p">,</span> <span class="n">onclick</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="image0" src="_images/uso_callbacks1.png" /></p>
+<p>En este ejemplo utilizamos el método <code class="docutils literal notranslate"><span class="pre">mpl_connect</span></code> del objeto
+<code class="docutils literal notranslate"><span class="pre">canvas</span></code>.</p>
+<ul class="simple">
+<li><p>El objeto <code class="docutils literal notranslate"><span class="pre">canvas</span></code> es el área donde se dibuja la figura.</p></li>
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">mpl_connect</span></code> realiza la conección de la función (que
+aquí llamamos <code class="docutils literal notranslate"><span class="pre">onclick</span></code>) con la figura. Esta función toma como
+argumento el <em>event</em> (que, para nosotros, es interpretado
+automaticamente por Matplotlib)</p></li>
+<li><p>El objeto <code class="docutils literal notranslate"><span class="pre">event</span></code> es de tipo <code class="docutils literal notranslate"><span class="pre">button_press_event</span></code>. Se dispara
+cuando apretamos un botón del <em>mouse</em> y <em>matplotlib</em> le pasa como
+argumento un objeto del tipo <code class="docutils literal notranslate"><span class="pre">event</span></code> que contiene información.
+Nosotros estamos imprimiendo la siguiente información que contiene
+<code class="docutils literal notranslate"><span class="pre">event</span></code> por pantalla:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">event.button</span></code>: indica que botón se presionó</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">event.x</span></code>, <code class="docutils literal notranslate"><span class="pre">event.y</span></code>: dan la información sobre el índice en
+los ejes horizontal y vertical</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">event.xdata,</span> <span class="pre">event.ydata</span></code>: dan los valores de los datos en los
+ejes.</p></li>
+</ul>
+</li>
+</ul>
+<p>Puede leer más información sobre el manejo de eventos en
+<a class="reference external" href="http://matplotlib.org/users/event_handling.html">http://matplotlib.org/users/event_handling.html</a>.</p>
+</div>
+<div class="section" id="ejemplos-integrados">
+<h3>Ejemplos integrados<a class="headerlink" href="#ejemplos-integrados" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Continuando con esta idea vamos a usar la capacidad de poder interactuar
+con el gráfico para elegir una zona del gráfico de la cuál obtenemos
+información sobre los datos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Archivo: scripts/analizar_figura_1.py</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">imageio</span>
+<span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">Cursor</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../figuras/imagen_flujo.png&#39;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ymax</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">seleccionar</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Secuencia:</span>
+<span class="sd">  1. Encuentro el punto donde el mouse hizo &#39;click&#39;</span>
+<span class="sd">  2. Le doy valores a la línea vertical</span>
+<span class="sd">  3. Le doy valores a la curva en el grafico de la derecha</span>
+<span class="sd">  4. y 5. Grafico los nuevos valores</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">x0</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">xdata</span>
+  <span class="n">n0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">set_data</span><span class="p">([[</span><span class="n">n0</span><span class="p">,</span> <span class="n">n0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">img</span><span class="p">[:,</span> <span class="n">n0</span><span class="p">])</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+
+<span class="c1"># Defino la figura</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Mostramos la imagen como un mapa de grises</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+
+<span class="c1"># Agrego la línea inicial en un valor inicial</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Grafico de la derecha</span>
+<span class="n">l2</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="n">x0</span><span class="p">],</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;corte&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="p">))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;posición en eje $y$ (pixels)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensidad&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Agrego el cursor y conecto la accion de presionar a la funcion click</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">horizOn</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">vertOn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">useblit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span><span class="s1">&#39;button_press_event&#39;</span><span class="p">,</span> <span class="n">seleccionar</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">tk</span>
+<span class="o">%</span><span class="n">run</span> <span class="n">scripts</span><span class="o">/</span><span class="n">analizar_figura_1</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_46_0.png" src="_images/14_interactivo_46_0.png" />
+<p>Este es un ejemplo un poco más largo (y un poquito más complejo).</p>
+<ol class="arabic simple">
+<li><p>Importamos los módulos y funciones necesarias.</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span> <span class="pre">as</span> <span class="pre">plt</span></code> para casi todo</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imageio</span></code> para leer la figura</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">matplotlib.widgets</span> <span class="pre">import</span> <span class="pre">Cursor</span></code> para importar el objeto
+<code class="docutils literal notranslate"><span class="pre">Cursor</span></code> que nos muestra la posición del mouse.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Leemos la imagen de archivo, creamos la figura y la mostramos.</p></li>
+<li><p>Elegimos un valor de <span class="math notranslate nohighlight">\(x\)</span> inicial (igual a 100) y agregamos una
+línea vertical en ese punto.</p></li>
+<li><p>Creamos la figura de la derecha con los datos tomados de la columna
+correspondiente de la matriz que representa la imagen.</p></li>
+<li><p>Agregamos <em>labels</em> y ajustamos las distancias</p></li>
+<li><p>Mostramos el cursor y le conectamos el evento (standard)
+<code class="docutils literal notranslate"><span class="pre">button_press_event</span></code> a nuestra función <code class="docutils literal notranslate"><span class="pre">seleccionar()</span></code>.</p></li>
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">seleccionar()</span></code> toma como argumento el evento que se
+dispara por interacción con el usuario.
+El argumento <code class="docutils literal notranslate"><span class="pre">event</span></code> lo pasa automáticamente <em>Matplotlib</em>. En este
+caso es un <em>click</em> del mouse en una zona del gráfico.</p></li>
+</ol>
+<p>La función <code class="docutils literal notranslate"><span class="pre">seleccionar(event)</span></code>: 1. Del argumento <code class="docutils literal notranslate"><span class="pre">event</span></code> extrae la
+posición en el eje horizontal y lo asigna a la variable <code class="docutils literal notranslate"><span class="pre">x0</span></code>. 2. El
+índice en el eje horizontal (<code class="docutils literal notranslate"><span class="pre">n0</span></code>). 2. Actualiza los datos de la línea
+<code class="docutils literal notranslate"><span class="pre">l1</span></code> con valores para la línea vertical en el panel izquierdo. 4.
+Actualiza la línea <code class="docutils literal notranslate"><span class="pre">l2</span></code> en la figura de la derecha con el corte en
+<code class="docutils literal notranslate"><span class="pre">x0</span></code>. 5. Actualiza el dibujo de las líneas sobre el <em>canvas</em>.</p>
+<p>El siguiente ejemplo es muy similar al anterior. Sólo estamos
+actualizando la leyenda, para tener información del punto seleccionado.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">scripts</span><span class="o">/</span><span class="n">analizar_figura_2</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<img alt="_images/14_interactivo_49_0.png" src="_images/14_interactivo_49_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Archivo:analizar_figura_2.py</span>
+<span class="kn">import</span> <span class="nn">imageio</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">misc</span>
+<span class="kn">from</span> <span class="nn">matplotlib.widgets</span> <span class="kn">import</span> <span class="n">Cursor</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="n">imageio</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;../figuras/imagen_flujo.png&#39;</span><span class="p">,</span> <span class="n">as_gray</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ymax</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">click</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Secuencia:</span>
+<span class="sd">  1. Encuentro el punto donde el mouse hizo &#39;click&#39;</span>
+<span class="sd">  2. Le doy valores a la línea vertical</span>
+<span class="sd">  3. Le doy valores a la curva en el grafico de la derecha</span>
+<span class="sd">  4. y 5. Grafico los nuevos valores</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">x0</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">xdata</span>
+  <span class="n">n0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">set_data</span><span class="p">([[</span><span class="n">n0</span><span class="p">,</span> <span class="n">n0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">img</span><span class="p">[:,</span> <span class="n">n0</span><span class="p">])</span>
+  <span class="n">leg2</span><span class="o">.</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;corte en {:.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span>
+  <span class="n">l1</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+  <span class="n">l2</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+
+<span class="c1"># Defino la figura</span>
+<span class="c1"># Defino la figura</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1"># Agrego la línea inicial en un valor inicial</span>
+<span class="n">x0</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Grafico de la derecha</span>
+<span class="n">l2</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">img</span><span class="p">[:,</span> <span class="n">x0</span><span class="p">],</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;corte en {:.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="p">))</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;posición en eje $y$ (pixels)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensidad&#39;</span><span class="p">)</span>
+<span class="n">leg2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Agrego el cursor y conecto la accion de presionar a la funcion click</span>
+<span class="n">cursor</span> <span class="o">=</span> <span class="n">Cursor</span><span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">horizOn</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">vertOn</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">useblit</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mpl_connect</span><span class="p">(</span><span class="s1">&#39;button_press_event&#39;</span><span class="p">,</span> <span class="n">click</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Las diferencias más notables con el ejemplo anterior son:</p>
+<ol class="arabic simple">
+<li><p>Al crear la leyenda, asignamos el objeto creado a la variable
+<code class="docutils literal notranslate"><span class="pre">leg2</span></code>, en la línea:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">leg2</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>En la función <code class="docutils literal notranslate"><span class="pre">click(event)</span></code> (equivalente a <code class="docutils literal notranslate"><span class="pre">seleccionar(evento)</span></code>
+en el ejemplo anterior) actualizamos el texto de la leyenda con el
+valor de <code class="docutils literal notranslate"><span class="pre">x0</span></code>:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">leg2</span><span class="o">.</span><span class="n">texts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_text</span><span class="p">(</span><span class="s1">&#39;corte en {:.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ejercicios-14-b">
+<h2>Ejercicios 14 (b)<a class="headerlink" href="#ejercicios-14-b" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic simple">
+<li><p>Modificar el ejemplo anterior (<strong>analizar_figura_2.py</strong>) para
+presentar tres gráficos, agregando a la izquierda un panel donde se
+muestre el corte horizontal de la misma manera que en el ejercicio
+anterior. Al seleccionar con el <em>mouse</em> debe mostrar los dos cortes
+(horizontal y vertical)</p></li>
+</ol>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ejercicios_01.html" class="btn btn-neutral float-right" title="Ejercicios de Clase 1" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="clase_13.html" class="btn btn-neutral float-left" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Juan Fiol
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
