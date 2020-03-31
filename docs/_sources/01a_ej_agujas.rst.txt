@@ -1,0 +1,99 @@
+Apéndice: Método de las agujas
+==============================
+
+Lineamiento del método
+----------------------
+
+En el problema de las agujas se describe un método para estimar el valor
+de :math:`\pi`.
+
+Se sabe que, si se tiran agujas al azar sobre una superficie con rayas,
+la probabilidad de que una aguja cruce una línea será:
+
+.. math::  P = \frac{2 \ell}{t \pi} 
+
+donde :math:`\ell` es la longitud de la aguja y :math:`t` es la
+separación entre líneas.
+
+Desde este resultado podemos estimar el valor de :math:`\pi` como:
+
+.. math::  \pi = \frac{2 \ell}{t P} 
+
+ya que conocemos :math:`t`, :math:`\ell`.
+
+Sólo necesitamos estimar :math:`P`. Para ello vamos a simular que
+tiramos un gran número de agujas sobre una superficie con líneas
+paralelas y vamos a calcular la probabilidad de que una aguja cruce
+alguna línea como
+
+.. math::
+
+
+    P = \frac{\text{Número de agujas que cruzan alguna línea}}{\text{Número total de agujas arrojadas}}
+    
+
+y reemplazando este resultado en la ecuación anterior obtenemos el valor
+estimado de :math:`\pi`.
+
+Para realizar el problema, vamos a modelar cada aguja con sólo la
+información necesaria. Por ejemplo, podemos usar un par de números
+:math:`(x,y)` especificando un punto en el plano como el centro de la
+aguja. Con este punto y el ángulo que forma la aguja con la recta
+horizontal tenemos todos los datos para describirla.
+
+Simplificación del problema
+---------------------------
+
+Consideremos ahora el problema en que arrojamos una aguja y cayó en
+algunos de los lugares marcados en la figura (la aguja está ilustrada
+como la línea en rojo, con sus dos extremos y el centro señalados como
+círculos). Es evidente que cualquiera de los lugares marcados es
+equivalente a cualquier otro.
+
+|image0|
+
+Consideremos la primera aguja desde arriba (en la tercera línea). Si
+estamos modelando la aguja como el punto del centro y el ángulo,
+entonces esta aguja cayó en el segundo espacio entre líneas. Si la aguja
+hubiera caído a cualquier distancia :math:`\Delta y = n t` de la
+posición actual, el resultado hubiera sido que en lugar de tocar la
+tercera línea, hubiera tocado otra. El cálculo de la probabilidad (y por
+consiguiente de :math:`\pi`) no depende de qué línea toca.
+
+Teniendo esto en cuenta podemos considerar sólo uno de los espacios
+entre líneas, y tirar todas las agujas entre un par de líneas como se
+muestra en la siguiente figura. Notar que el problema de muchas líneas,
+considerado en la figura anterior es simplemente la repetición de este
+problema muchas veces y no aporta nada nuevo.
+
+|image1|
+
+Entonces, el problema se ha reducido a elegir un par :math:`(x,y)` entre
+las dos líneas (inferior y superior) que señala la posición del centro
+de nuestra aguja, luego debemos elegir un ángulo, y con estos datos
+fijarnos si la aguja cruza una de las líneas.
+
+Como simplificación adicional notemos que el problema es simétrico
+respecto del centro del espacio (línea punteada en la figura) y
+cualquiera de las dos agujas de la zona superior es equivalente a su
+contraparte de la zona inferior. Entonces podemos simplificar el
+problema un paso más y considerar sólo la mitad del espacio entre
+líneas.
+
+Finalmente, notemos que la posición en el eje horizontal no cambia si la
+aguja cruza o no la línea y por lo tanto no juega ningún papel en el
+cálculo de la probabilidad.
+
+Método de resolución
+--------------------
+
+En resumen, una posible resolución requiere los siguientes pasos:
+
+1. Elegir al azar la posición del centro (sólo la coordenada y) entre
+   valores :math:`0` y :math:`t/2`.
+2. Elegir al azar el ángulo que forma la aguja con la recta horizontal.
+3. Calcular si la aguja atraviesa la línea localizada en :math:`y=0`.
+
+.. |image0| image:: figuras/explicacion_ejercicio_agujas_2_1.png
+.. |image1| image:: figuras/explicacion_ejercicio_agujas_3_1.png
+
