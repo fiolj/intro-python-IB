@@ -1,3 +1,5 @@
+.. _clase_13:
+
 Clase 13: Interpolación y ajuste de curvas (fiteo) 
 ====================================================
 
@@ -445,18 +447,20 @@ N_{i, k}(x) &= \frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)
          + \frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)\end{aligned}\end{align}`
 
 Las más simples, cuando el orden es k=0, son funciones constantes a
-trozos |image0| Para :math:`k>0` las funciones se calculan por
+trozos .. image:: figuras/bsplines0.png
+
+ Para :math:`k>0` las funciones se calculan por
 recurrencia en término de dos funciones del orden anterior. Entonces,
 siempre serán diferentes de cero sólo en un intervalo finito. En ese
 intervalo presentan un único máximo y luego decaen suavemente. Las más
 usuales son las de orden :math:`k=3`:
 
-|image1|
+.. image:: figuras/bsplines.png
+
+
 
 (Figura de http://www.brnt.eu/phd)
 
-.. |image0| image:: figuras/bsplines0.png
-.. |image1| image:: figuras/bsplines.png
 
 La idea es encontrar una función :math:`f(x)` que sea suave y pase por
 la tabla de puntos :math:`(x,y)` dados, o cerca de ellos con la
@@ -913,19 +917,17 @@ orden)
     <class 'numpy.ndarray'>
 
 
---------------
-
-**NOTA:** ¿Qué devuelve ``polyfit()``?
-
-Un array correspondiente a los coeficientes del polinomio de fiteo. En
-este caso, como estamos haciendo un ajuste lineal, nos devuelve los
-coeficientes de un polinomio de primer orden (una recta)
-
-.. code:: python
-
-   y = p[0]*x + p[1]
-
---------------
+.. note::  ¿Qué devuelve ``polyfit()``?
+  
+  Un array correspondiente a los coeficientes del polinomio de fiteo. En
+  este caso, como estamos haciendo un ajuste lineal, nos devuelve los
+  coeficientes de un polinomio de primer orden (una recta)
+  
+  .. code:: python
+  
+     y = p[0]*x + p[1]
+  
+  
 
 .. code:: python
 

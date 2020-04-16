@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Clase 13: Interpolación y ajuste de curvas (fiteo) &mdash; documentación de Clases de Python - 2020.1</title>
+  <title>Clase 13: Interpolación y ajuste de curvas (fiteo) &mdash; documentación de Clases de Python - </title>
   
 
   
@@ -36,7 +36,6 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
-    <link rel="index" title="Índice" href="genindex.html" />
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Clase 14: Gráficos interactivos" href="clase_14.html" />
     <link rel="prev" title="Clase 12: Un poco de graficación 3D" href="clase_12.html" /> 
@@ -57,13 +56,16 @@
           
 
           
+            
+            <img src="_static/logo.svg" class="logo" alt="Logo"/>
+          
           </a>
 
           
             
             
               <div class="version">
-                2020
+                IB - 2020
               </div>
             
           
@@ -124,18 +126,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="clase_14.html">Clase 14: Gráficos interactivos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_01.html">Ejercicios de Clase 1</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_02.html">Ejercicios de Clase 2</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_03.html">Ejercicios de Clase 3</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_04.html">Ejercicios de Clase 4</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_05.html">Ejercicios de Clase 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_06.html">Ejercicios de Clase 6</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_08.html">Ejercicios de Clase 8</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_09.html">Ejercicios de Clase 9</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_10.html">Ejercicios de Clase 10</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_11.html">Ejercicios de Clase 11</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_13.html">Ejercicios de Clase 13</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ejercicios_14.html">Ejercicios de Clase 14</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa detallado</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01a_ej_agujas.html">Apéndice: Método de las agujas</a></li>
 </ul>
 
             
@@ -201,7 +196,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="clase-13-interpolacion-y-ajuste-de-curvas-fiteo">
-<h1>Clase 13: Interpolación y ajuste de curvas (fiteo)<a class="headerlink" href="#clase-13-interpolacion-y-ajuste-de-curvas-fiteo" title="Enlazar permanentemente con este título">¶</a></h1>
+<span id="clase-13"></span><h1>Clase 13: Interpolación y ajuste de curvas (fiteo)<a class="headerlink" href="#clase-13-interpolacion-y-ajuste-de-curvas-fiteo" title="Enlazar permanentemente con este título">¶</a></h1>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
@@ -505,12 +500,15 @@ N_{i, k}(x) &amp;= frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)</p>
 </ul>
 </div></blockquote>
 <p>Las más simples, cuando el orden es k=0, son funciones constantes a
-trozos <img alt="image0" src="_images/bsplines0.png" /> Para <span class="math notranslate nohighlight">\(k&gt;0\)</span> las funciones se calculan por
-recurrencia en término de dos funciones del orden anterior. Entonces,
+trozos .. image:: figuras/bsplines0.png</p>
+<blockquote>
+<div><p>Para <span class="math notranslate nohighlight">\(k&gt;0\)</span> las funciones se calculan por</p>
+</div></blockquote>
+<p>recurrencia en término de dos funciones del orden anterior. Entonces,
 siempre serán diferentes de cero sólo en un intervalo finito. En ese
 intervalo presentan un único máximo y luego decaen suavemente. Las más
 usuales son las de orden <span class="math notranslate nohighlight">\(k=3\)</span>:</p>
-<p><img alt="image1" src="_images/bsplines.png" /></p>
+<img alt="_images/bsplines.png" src="_images/bsplines.png" />
 <p>(Figura de <a class="reference external" href="http://www.brnt.eu/phd">http://www.brnt.eu/phd</a>)</p>
 <p>La idea es encontrar una función <span class="math notranslate nohighlight">\(f(x)\)</span> que sea suave y pase por
 la tabla de puntos <span class="math notranslate nohighlight">\((x,y)\)</span> dados, o cerca de ellos con la
@@ -854,15 +852,16 @@ orden)</p>
 &lt;class &#39;numpy.ndarray&#39;&gt;
 </pre></div>
 </div>
-<hr class="docutils" />
-<p><strong>NOTA:</strong> ¿Qué devuelve <code class="docutils literal notranslate"><span class="pre">polyfit()</span></code>?</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>¿Qué devuelve <code class="docutils literal notranslate"><span class="pre">polyfit()</span></code>?</p>
 <p>Un array correspondiente a los coeficientes del polinomio de fiteo. En
 este caso, como estamos haciendo un ajuste lineal, nos devuelve los
 coeficientes de un polinomio de primer orden (una recta)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 </pre></div>
 </div>
-<hr class="docutils" />
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">fsize</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ajuste&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;ok&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;datos&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
@@ -1446,7 +1445,7 @@ que se obtienen con el ajuste</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Juan Fiol
+        &copy; Copyright IB - 2020, Juan Fiol
 
     </p>
   </div>

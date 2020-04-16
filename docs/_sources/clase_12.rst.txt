@@ -1,3 +1,5 @@
+.. _clase_12:
+
 Clase 12: Un poco de graficación 3D
 ====================================
 
@@ -493,53 +495,52 @@ Gráficos de contornos
 
 
 
---------------
+.. note::  ¿Qué hace ``meshgrid`` aquí?
+  
+  La función ``meshgrid`` crea matrices de coordenadas en n-dimensiones,
+  basadas en n vectores unidimensionales de coordenadas
+  
+  Consideremos un caso con vectores más simples:
+  
+  .. code:: python
+  
+       x = np.arange(4, dtype='int')
+       y = np.arange(4, 7, dtype='int')
+       XX, YY = np.meshgrid(x, y)
+  
+  La función ``meshgrid`` crea pares :math:`(x,y)` iterando sobre cada
+  valor de :math:`y` para cada valor de :math:`x`. En este caso para los
+  vectores:
+  
+  ::
+  
+       x = [0 1 2 3]
+       y = [4 5 6]
+  
+  crea las matrices
+  
+  ::
+  
+       XX = [[0 1 2 3]
+             [0 1 2 3]
+             [0 1 2 3]]
+       YY = [[4 4 4 4]
+             [5 5 5 5]
+             [6 6 6 6]]
+  
+  que contiene todos los pares posibles :math:`(x,y)`, como se ve en la
+  siguiente figura:
+  
+  .. code:: python
+  
+       plt.plot(XX, YY, 'x', color='C0')
+  
+  .. image:: figuras/ej_meshgrid.png
+  
+  
+  
+  
 
-**Nota:** ¿Qué hace ``meshgrid`` aquí?
-
-La función ``meshgrid`` crea matrices de coordenadas en n-dimensiones,
-basadas en n vectores unidimensionales de coordenadas
-
-Consideremos un caso con vectores más simples:
-
-.. code:: python
-
-     x = np.arange(4, dtype='int')
-     y = np.arange(4, 7, dtype='int')
-     XX, YY = np.meshgrid(x, y)
-
-La función ``meshgrid`` crea pares :math:`(x,y)` iterando sobre cada
-valor de :math:`y` para cada valor de :math:`x`. En este caso para los
-vectores:
-
-::
-
-     x = [0 1 2 3]
-     y = [4 5 6]
-
-crea las matrices
-
-::
-
-     XX = [[0 1 2 3]
-           [0 1 2 3]
-           [0 1 2 3]]
-     YY = [[4 4 4 4]
-           [5 5 5 5]
-           [6 6 6 6]]
-
-que contiene todos los pares posibles :math:`(x,y)`, como se ve en la
-siguiente figura:
-
-.. code:: python
-
-     plt.plot(XX, YY, 'x', color='C0')
-
-|image0|
-
---------------
-
-.. |image0| image:: figuras/ej_meshgrid.png
 
 Vamos a usar los datos para hacer los gráficos de contornos
 

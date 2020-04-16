@@ -1,3 +1,5 @@
+.. _clase_01:
+
 Clase 1: Introducción al lenguaje
 ==================================
 
@@ -109,7 +111,9 @@ Hay muchas maneras de usar el lenguaje Python. Es un lenguaje
 (``cmd.exe`` en windows) y luego ``python``, se abrirá la consola
 interactiva
 
-|image0|
+.. image:: figuras/console.png
+
+
 
 En la consola interactiva podemos escribir sentencias o pequeños bloques
 de código que son ejecutados inmediatamente. Pero *la consola
@@ -117,7 +121,9 @@ interactiva* estándar no tiene tantas características de conveniencia
 como otras, por ejemplo **IPython** que viene con “accesorios de
 *comfort*”.
 
-|image1|
+.. image:: figuras/ipython.png
+
+
 
 La consola IPython supera a la estándar en muchos sentidos. Podemos
 autocompletar (``<TAB>``), ver ayuda rápida de cualquier objeto (``?``),
@@ -152,12 +158,16 @@ recomendada es de **4** espacios (pero van a notar que yo uso **2**).
 Un buen editor es **Spyder** que tiene características de IDE (entorno
 integrado: editor + ayuda + consola interactiva).
 
-|image2|
+.. image:: figuras/spyder.png
+
+
 
 Otro entorno integrado, que funciona muy bien, viene instalado con
 **Canopy**.
 
-|image3|
+.. image:: figuras/canopy-cluster.png
+
+
 
 En ambos casos se puede ejecutar todo el módulo en la consola
 interactiva que incluye. Alternativamente, también se puede seleccionar
@@ -177,10 +187,6 @@ guardan con extensión *.ipynb*, que pueden exportarse en distintos
 formatos tales como html (estáticos), en formato PDF, LaTeX, o como
 código python puro. (.py)
 
-.. |image0| image:: figuras/console.png
-.. |image1| image:: figuras/ipython.png
-.. |image2| image:: figuras/spyder.png
-.. |image3| image:: figuras/canopy-cluster.png
 
 --------------
 
@@ -606,47 +612,50 @@ Esto es diferente en *Python 3* donde 1/2=0.5 y 3/4=0.75.
     6
 
 
-Nota: La función ``print``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. note::  La función ``print``
+  
+  Estuvimos usando, sin hacer ningún comentario, la función
+  ``print(arg1, arg2, arg3, ..., sep=' ', end='\n', file=sys.stdout, flush=False)``
+  acepta un número variable de argumentos. Imprime por pantalla todos los
+  argumentos que se le pasan separados por el string ``sep`` (cuyo valor
+  por defecto es un espacio), y termina con el string ``end`` (con valor
+  por defecto *newline*).
+  
+  .. code:: python
+  
+      help(print)
+  
+  .. code:: python
+  
+      print(3,2,'hola')
+      print(4,1,'chau')
+  
+  
+  .. parsed-literal::
+  
+      3 2 hola
+      4 1 chau
+  
+  
+  .. code:: python
+  
+      print(3,2,'hola',sep='++++',end=' -> ')
+      print(4,1,'chau',sep='++++')
+  
+  
+  .. parsed-literal::
+  
+      3++++2++++hola -> 4++++1++++chau
+  
+  
+  
 
-Estuvimos usando, sin hacer ningún comentario, la función
-``print(arg1, arg2, arg3, ..., sep=' ', end='\n', file=sys.stdout, flush=False)``
-acepta un número variable de argumentos. Imprime por pantalla todos los
-argumentos que se le pasan separados por el string ``sep`` (cuyo valor
-por defecto es un espacio), y termina con el string ``end`` (con valor
-por defecto *newline*).
-
-.. code:: python
-
-    print?
-
-.. code:: python
-
-    print(3,2,'hola')
-    print(4,1,'chau')
-
-
-.. parsed-literal::
-
-    3 2 hola
-    4 1 chau
-
-
-.. code:: python
-
-    print(3,2,'hola',sep='++++',end=' -> ')
-    print(4,1,'chau',sep='++++')
-
-
-.. parsed-literal::
-
-    3++++2++++hola -> 4++++1++++chau
-
-
-**Warning:** En *Python 2.x* no existe la función ``print()``.
-
-Se trata de un comando. Para escribir las sentencias anteriores en
-Python 2 sólo debemos omitir los paréntesis.
+.. warning::  En *Python 2.x* no existe la función ``print()``.
+  
+  Se trata de un comando. Para escribir las sentencias anteriores en
+  Python 2 sólo debemos omitir los paréntesis.
+  
+  
 
 Números complejos
 ^^^^^^^^^^^^^^^^^
