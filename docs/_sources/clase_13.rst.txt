@@ -442,18 +442,25 @@ Para definir las **B-Splines** necesitamos dos cosas:
 
 Las funciones se definen mediante la recursión:
 
-:raw-latex:`\begin{align}\begin{aligned}N_{i, 0}(x) &= 1,\qquad \qquad \textrm{si $t_i \le x < t_{i+1}, \qquad \qquad$ sino $0$,}\\
-N_{i, k}(x) &= \frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)
-         + \frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)\end{aligned}\end{align}`
+.. math::
+
+
+   N_{i, 0}(x) &= 1,\qquad \qquad \textrm{si $t_i \le x < t_{i+1}, \qquad \qquad$ sino $0$,}\\
+   N_{i, k}(x) &= \frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)
+            + \frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)
 
 Las más simples, cuando el orden es k=0, son funciones constantes a
-trozos .. image:: figuras/bsplines0.png
+trozos
 
- Para :math:`k>0` las funciones se calculan por
-recurrencia en término de dos funciones del orden anterior. Entonces,
-siempre serán diferentes de cero sólo en un intervalo finito. En ese
-intervalo presentan un único máximo y luego decaen suavemente. Las más
-usuales son las de orden :math:`k=3`:
+.. image:: figuras/bsplines0.png
+
+
+
+Para :math:`k>0` las funciones se calculan por recurrencia en término de
+dos funciones del orden anterior. Entonces, siempre serán diferentes de
+cero sólo en un intervalo finito. En ese intervalo presentan un único
+máximo y luego decaen suavemente. Las más usuales son las de orden
+:math:`k=3`:
 
 .. image:: figuras/bsplines.png
 
@@ -1619,5 +1626,32 @@ En este gráfico tenemos:
    diferente a los datos, y a la función deseada.
 -  Abajo a la derecha se grafica la función utilizando los parámetros
    que se obtienen con el ajuste
+
+--------------
+
+Ejercicios 13
+-------------
+
+1. En el archivo **co_nrg.dat** se encuentran los datos de la posición
+   de los máximos de un espectro de CO\ :math:`_{2}` como función del
+   número cuántico rotacional J (entero). Haga un programa que lea los
+   datos. Los ajuste con polinomios (elija el orden adecuado) y grafique
+   luego los datos (con símbolos) y el ajuste con una línea sólida roja.
+   Además, debe mostrar los parámetros obtenidos para el polinomio.
+
+2. Queremos hacer un programa que permita fitear una curva como suma de
+   ``N`` funciones gaussianas:
+
+   1. Haga una función, que debe tomar como argumento los arrays con los
+      datos: ``x``, ``y``, y valores iniciales para las Gaussianas:
+      ``fit_gaussianas(x, y, *params)`` donde params son los 3N
+      coeficientes (tres coeficientes para cada Gaussiana). Debe
+      devolver los parámetros óptimos obtenidos.
+   2. Realice un programita que grafique los datos dados y la función
+      que resulta de sumar las gaussianas en una misma figura.
+   3. *Si puede* agregue líneas o flechas indicando la posición del
+      máximo y el ancho de cada una de las Gaussianas obtenidas.
+
+--------------
 
 

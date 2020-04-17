@@ -424,28 +424,34 @@ nuevo objeto con otros atributos y métodos.
 Como vemos, aún no está implementado el cálculo de las distintas
 funciones, eso forma parte del siguiente …
 
+--------------
+
 Ejercicios 06 (a)
 -----------------
 
 1. Implemente los métodos ``suma``, ``producto`` y ``abs``
 
-::
+   -  ``suma()`` debe retornar un objeto del tipo ``Vector`` y contener
+      en cada componente la suma de las componentes de los dos vectores
+      que toma como argumento.
 
-   - `suma()` debe retornar un objeto del tipo `Vector` y contener en cada componente la suma de las componentes de los dos vectores que toma como argumento.
+   -  ``producto`` toma como argumentos dos vectores y retorna un número
+      real
 
-   - `producto` toma como argumentos dos vectores y retorna un número real
-
-   - `abs` toma como argumentos el propio objeto y retorna un número real
+   -  ``abs`` toma como argumentos el propio objeto y retorna un número
+      real
 
    Su uso será el siguiente:
 
-   ```python
-   v1 = Vector(1,2,3)
-   v2 = Vector(3,2,1)
-   v = v1.suma(v2)
-   pr = v1.producto(v2)
-   a = v1.abs()
-   ```
+   .. code:: python
+
+      v1 = Vector(1,2,3)
+      v2 = Vector(3,2,1)
+      v = v1.suma(v2)
+      pr = v1.producto(v2)
+      a = v1.abs()
+
+--------------
 
 
 Objetos y clases 
@@ -983,94 +989,98 @@ existe, es un error llamar al objeto:
 
 
 
+--------------
+
 Ejercicios 06 (b)
 -----------------
 
-1. Utilizando la definición de la clase ``Punto``:
+2. Utilizando la definición de la clase ``Punto``:
 
-.. code:: python
-
-
-   class Punto:
-     "Clase para describir un punto en el espacio"
-
-     num_puntos = 0
-     
-     def __init__(self, x=0, y=0, z=0):
-       "Inicializa un punto en el espacio"
-       self.x = x
-       self.y = y
-       self.z = z
-       Punto.num_puntos += 1
-       return None
-
-     def __del__(self):
-       "Borra el punto y actualiza el contador"
-       Punto.num_puntos -= 1
-
-     def __str__(self):
-       s = "(x = {}, y = {}, z = {})".format(self.x, self.y, self.z)
-       return s
-
-     def __repr__(self):
-       return "Punto(x={}, y={}, z={})".format(self.x, self.y, self.z)
-
-     def __call__(self):
-       return self.__str__()
-
-     @classmethod
-     def total(cls):
-       "Imprime el número total de puntos"
-       print("En total hay {} puntos definidos".format(cls.num_puntos))
-
-Complete la implementación de la clase ``Vector`` con los métodos
-pedidos
-
-.. code:: python
+   .. code:: python
 
 
-   class Vector(Punto):
-     "Representa un vector en el espacio"
+      class Punto:
+        "Clase para describir un punto en el espacio"
 
-     def suma(self, v2):
-       "Calcula un vector que contiene la suma de dos vectores"
-       print("Aún no implementada la suma de dos vectores") 
-       # código calculando v = suma de self + v2
-       # ...
+        num_puntos = 0
 
-     def producto(self, v2):
-       "Calcula el producto interno entre dos vectores"
-       print("Aún no implementado el producto interno de dos vectores") 
-       # código calculando el producto interno pr = v1 . v2
+        def __init__(self, x=0, y=0, z=0):
+          "Inicializa un punto en el espacio"
+          self.x = x
+          self.y = y
+          self.z = z
+          Punto.num_puntos += 1
+          return None
 
-     def abs(self):
-       "Devuelve la distancia del punto al origen"
-       print("Aún no implementado la norma del vector") 
-       # código calculando la magnitud del vector
+        def __del__(self):
+          "Borra el punto y actualiza el contador"
+          Punto.num_puntos -= 1
 
-     def angulo_entre_vectores(self, v2):
-       "Calcula el ángulo entre dos vectores"
-       print("Aún no implementado el ángulo entre dos vectores") 
-       angulo = 0
-       # código calculando angulo = arccos(v1 * v2 / (|v1||v2|))
-       return angulo
+        def __str__(self):
+          s = "(x = {}, y = {}, z = {})".format(self.x, self.y, self.z)
+          return s
 
-     def coordenadas_cilindricas(self):
-       "Devuelve las coordenadas cilindricas del vector como una tupla (r, theta, z)"
-       print("No implementada")
+        def __repr__(self):
+          return "Punto(x={}, y={}, z={})".format(self.x, self.y, self.z)
 
-     def coordenadas_esfericas(self):
-       "Devuelve las coordenadas esféricas del vector como una tupla (r, theta, phi)"
-       print("No implementada")
+        def __call__(self):
+          return self.__str__()
+
+        @classmethod
+        def total(cls):
+          "Imprime el número total de puntos"
+          print("En total hay {} puntos definidos".format(cls.num_puntos))
+
+   Complete la implementación de la clase ``Vector`` con los métodos
+   pedidos
+
+   .. code:: python
+
+
+      class Vector(Punto):
+        "Representa un vector en el espacio"
+
+        def suma(self, v2):
+          "Calcula un vector que contiene la suma de dos vectores"
+          print("Aún no implementada la suma de dos vectores") 
+          # código calculando v = suma de self + v2
+          # ...
+
+        def producto(self, v2):
+          "Calcula el producto interno entre dos vectores"
+          print("Aún no implementado el producto interno de dos vectores") 
+          # código calculando el producto interno pr = v1 . v2
+
+        def abs(self):
+          "Devuelve la distancia del punto al origen"
+          print("Aún no implementado la norma del vector") 
+          # código calculando la magnitud del vector
+
+        def angulo_entre_vectores(self, v2):
+          "Calcula el ángulo entre dos vectores"
+          print("Aún no implementado el ángulo entre dos vectores") 
+          angulo = 0
+          # código calculando angulo = arccos(v1 * v2 / (|v1||v2|))
+          return angulo
+
+        def coordenadas_cilindricas(self):
+          "Devuelve las coordenadas cilindricas del vector como una tupla (r, theta, z)"
+          print("No implementada")
+
+        def coordenadas_esfericas(self):
+          "Devuelve las coordenadas esféricas del vector como una tupla (r, theta, phi)"
+          print("No implementada")
 
 3. **PARA ENTREGAR:** Cree una clase ``Polinomio`` para representar
    polinomios. La clase debe guardar los datos representando todos los
    coeficientes. El grado del polinomio será *menor o igual a 9* (un
    dígito).
 
-   -  **NOTA:** Utilice el archivo **polinomio_06.py** en el directorio
-      **data**, que renombrará de la forma usual ``Apellido_06.py``. Se
-      le pide que programe:
+   .. note::  Utilice el archivo **polinomio_06.py** en el directorio
+     **data**, que renombrará de la forma usual ``Apellido_06.py``. Se le
+     pide que programe:
+  
+     
 
    -  Un método de inicialización ``__init__`` que acepte una lista de
       coeficientes. Por ejemplo para el polinomio
@@ -1201,3 +1211,5 @@ pedidos
       >>> p1 = Polinomio([1,2,3,4])
       >>> p2 = Polinomio([1,2,3,4])
       >>> p1 + p2
+
+--------------

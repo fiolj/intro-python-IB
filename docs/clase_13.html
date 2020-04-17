@@ -123,9 +123,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#ejemplo-fiteo-de-picos">Ejemplo: Fiteo de picos</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-13">Ejercicios 13</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="clase_14.html">Clase 14: Gráficos interactivos</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
 </ul>
 <ul>
@@ -492,22 +496,18 @@ polinomios, con un alto grado de <strong>localidad</strong>.</p>
 <li><p>Dividir el intervalo en <span class="math notranslate nohighlight">\(n\)</span> “nodos”</p></li>
 </ol>
 <p>Las funciones se definen mediante la recursión:</p>
-<p>:raw-latex:<a href="#id1"><span class="problematic" id="id2">`</span></a>begin{align}begin{aligned}N_{i, 0}(x) &amp;= 1,qquad qquad textrm{si $t_i le x &lt; t_{i+1}, qquad qquad$ sino $0$,}\
-N_{i, k}(x) &amp;= frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)end{aligned}end{align}`</p></li>
-</ul>
-</div></blockquote>
+<div class="math notranslate nohighlight">
+\[\begin{split}N_{i, 0}(x) &amp;= 1,\qquad \qquad \textrm{si $t_i \le x &lt; t_{i+1}, \qquad \qquad$ sino $0$,}\\
+N_{i, k}(x) &amp;= \frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)
+         + \frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)\end{split}\]</div>
 <p>Las más simples, cuando el orden es k=0, son funciones constantes a
-trozos .. image:: figuras/bsplines0.png</p>
-<blockquote>
-<div><p>Para <span class="math notranslate nohighlight">\(k&gt;0\)</span> las funciones se calculan por</p>
-</div></blockquote>
-<p>recurrencia en término de dos funciones del orden anterior. Entonces,
-siempre serán diferentes de cero sólo en un intervalo finito. En ese
-intervalo presentan un único máximo y luego decaen suavemente. Las más
-usuales son las de orden <span class="math notranslate nohighlight">\(k=3\)</span>:</p>
+trozos</p>
+<img alt="_images/bsplines0.png" src="_images/bsplines0.png" />
+<p>Para <span class="math notranslate nohighlight">\(k&gt;0\)</span> las funciones se calculan por recurrencia en término de
+dos funciones del orden anterior. Entonces, siempre serán diferentes de
+cero sólo en un intervalo finito. En ese intervalo presentan un único
+máximo y luego decaen suavemente. Las más usuales son las de orden
+<span class="math notranslate nohighlight">\(k=3\)</span>:</p>
 <img alt="_images/bsplines.png" src="_images/bsplines.png" />
 <p>(Figura de <a class="reference external" href="http://www.brnt.eu/phd">http://www.brnt.eu/phd</a>)</p>
 <p>La idea es encontrar una función <span class="math notranslate nohighlight">\(f(x)\)</span> que sea suave y pase por
@@ -968,7 +968,7 @@ realizar ajustes de datos utilizando funciones arbitrarias</div>
 </div>
 <pre class="literal-block">Help on function curve_fit in module scipy.optimize.minpack:
 
-curve_fit(f, xdata, ydata, p0=None, sigma=None, absolute_sigma=False, check_finite=True, bounds=(-inf, inf), method=None, jac=None, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs)
+curve_fit(f, xdata, ydata, p0=None, sigma=None, absolute_sigma=False, check_finite=True, bounds=(-inf, inf), method=None, jac=None, <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs)
     Use non-linear least squares to fit a function, f, to data.
 
     Assumes <code class="docutils literal notranslate"><span class="pre">ydata</span> <span class="pre">=</span> <span class="pre">f(xdata,</span> <span class="pre">*params)</span> <span class="pre">+</span> <span class="pre">eps</span></code>
@@ -1118,7 +1118,7 @@ curve_fit(f, xdata, ydata, p0=None, sigma=None, absolute_sigma=False, check_fini
     &gt;&gt;&gt; popt, pcov = curve_fit(func, xdata, ydata)
     &gt;&gt;&gt; popt
     array([ 2.55423706,  1.35190947,  0.47450618])
-    &gt;&gt;&gt; plt.plot(xdata, func(xdata, <a href="#id5"><span class="problematic" id="id6">*</span></a>popt), 'r-',
+    &gt;&gt;&gt; plt.plot(xdata, func(xdata, <a href="#id3"><span class="problematic" id="id4">*</span></a>popt), 'r-',
     ...          label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
 
     Constrain the optimization to the region of <code class="docutils literal notranslate"><span class="pre">0</span> <span class="pre">&lt;=</span> <span class="pre">a</span> <span class="pre">&lt;=</span> <span class="pre">3</span></code>,
@@ -1127,7 +1127,7 @@ curve_fit(f, xdata, ydata, p0=None, sigma=None, absolute_sigma=False, check_fini
     &gt;&gt;&gt; popt, pcov = curve_fit(func, xdata, ydata, bounds=(0, [3., 1., 0.5]))
     &gt;&gt;&gt; popt
     array([ 2.43708906,  1.        ,  0.35015434])
-    &gt;&gt;&gt; plt.plot(xdata, func(xdata, <a href="#id7"><span class="problematic" id="id8">*</span></a>popt), 'g--',
+    &gt;&gt;&gt; plt.plot(xdata, func(xdata, <a href="#id5"><span class="problematic" id="id6">*</span></a>popt), 'g--',
     ...          label='fit: a=%5.3f, b=%5.3f, c=%5.3f' % tuple(popt))
 
     &gt;&gt;&gt; plt.xlabel('x')
@@ -1422,6 +1422,33 @@ diferente a los datos, y a la función deseada.</p></li>
 que se obtienen con el ajuste</p></li>
 </ul>
 </div>
+</div>
+<hr class="docutils" />
+<div class="section" id="ejercicios-13">
+<h2>Ejercicios 13<a class="headerlink" href="#ejercicios-13" title="Enlazar permanentemente con este título">¶</a></h2>
+<ol class="arabic simple">
+<li><p>En el archivo <strong>co_nrg.dat</strong> se encuentran los datos de la posición
+de los máximos de un espectro de CO<span class="math notranslate nohighlight">\(_{2}\)</span> como función del
+número cuántico rotacional J (entero). Haga un programa que lea los
+datos. Los ajuste con polinomios (elija el orden adecuado) y grafique
+luego los datos (con símbolos) y el ajuste con una línea sólida roja.
+Además, debe mostrar los parámetros obtenidos para el polinomio.</p></li>
+<li><p>Queremos hacer un programa que permita fitear una curva como suma de
+<code class="docutils literal notranslate"><span class="pre">N</span></code> funciones gaussianas:</p>
+<ol class="arabic simple">
+<li><p>Haga una función, que debe tomar como argumento los arrays con los
+datos: <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, y valores iniciales para las Gaussianas:
+<code class="docutils literal notranslate"><span class="pre">fit_gaussianas(x,</span> <span class="pre">y,</span> <span class="pre">*params)</span></code> donde params son los 3N
+coeficientes (tres coeficientes para cada Gaussiana). Debe
+devolver los parámetros óptimos obtenidos.</p></li>
+<li><p>Realice un programita que grafique los datos dados y la función
+que resulta de sumar las gaussianas en una misma figura.</p></li>
+<li><p><em>Si puede</em> agregue líneas o flechas indicando la posición del
+máximo y el ancho de cada una de las Gaussianas obtenidas.</p></li>
+</ol>
+</li>
+</ol>
+<hr class="docutils" />
 </div>
 </div>
 
