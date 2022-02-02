@@ -5,7 +5,7 @@
 Material de clase para el Curso dictado, por primera vez en 2017, en el IB.
 
 
-- Una versión en formto HTML puede encontrarse `aquí <https://fiolj.github.io/intro-python-IB/>`_
+- Una versión en formato HTML puede encontrarse `aquí <https://fiolj.github.io/intro-python-IB/>`_
 
 - Aquí en `formato pdf <https://fiolj.github.io/data/ClasesdePython.pdf>`_
 
@@ -88,7 +88,7 @@ Blogs y otras publicaciones
 
 
 
-Programa detallado
+Programa tentativo
 ------------------
 
 :Autor: Juan Fiol
@@ -108,7 +108,6 @@ Clase 1: `Introducción, Instalación y ejemplos básicos de Python`
 *  Comandos de Ipython 
 *  Documentación interna y externa
 *  Ejemplos
-*  Ejercicios
 
 Clase 2: `Conceptos básicos: Tipos`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,7 +120,6 @@ Clase 2: `Conceptos básicos: Tipos`
    * Variables de texto: strings
 
 * Introducción a la entrada y salida de datos
-* Ejercicios 
 
 
 Clase 3: `Conceptos básicos: Tipos y Control de flujo`
@@ -135,7 +133,6 @@ Clase 3: `Conceptos básicos: Tipos y Control de flujo`
    * Conjuntos
 
 * Introducción a control de flujo
-* Ejercicios 
 
 Clase 4: `Control de flujo, funciones`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -149,7 +146,6 @@ Clase 4: `Control de flujo, funciones`
    * Funciones con argumentos mandatorios
    * Número variable de argumentos 
 
-* Ejercicios 
   
 
 Clase 5: `Módulos y funciones`
@@ -159,7 +155,6 @@ Clase 5: `Módulos y funciones`
 * Uso de módulos
 * Manejo de archivos y estructura de directorios
 * Entrada y salida de datos, archivos comprimidos
-* Ejercicios 
 
 
 Clase 6 `Breve introducción a la programación orientada a objetos en Python`
@@ -169,7 +164,6 @@ Clase 6 `Breve introducción a la programación orientada a objetos en Python`
 * Objetos y clases: diseños y encapsulamiento
 * Herencia
 * Desarrollo de un ejemplo
-* Ejercicios
 
 
 Clase 7: `Paquetes científicos: Introducción a Numpy y Matplotlib`
@@ -185,7 +179,6 @@ Clase 7: `Paquetes científicos: Introducción a Numpy y Matplotlib`
 * Cómo seleccionar partes de arreglos: *indexing* y *Slicing*
 * Algunas operaciones y métodos sobre arrays
 
-* Ejercicios 
 
 
 Clase 8: `Introducción a visualización: *Matplotlib*`
@@ -198,7 +191,6 @@ Clase 8: `Introducción a visualización: *Matplotlib*`
 * Otros tipos de gráficos
 * Documentación y ayuda
   
-* Ejercicios
 
 
 Clase 9: `Manipulación de vectores`
@@ -209,7 +201,6 @@ Clase 9: `Manipulación de vectores`
 * Métodos de arrays, funciones y manipulación de arrays
 * Cambio de forma de arrays multidimensionales
 
-* Ejercicios
 
 
 Clase 10: `Entrada y salida de vectores`
@@ -223,7 +214,6 @@ Clase 10: `Entrada y salida de vectores`
    * Datos en formatos numpy
    * Datos en otros formatos
 
-* Ejercicios
  
 
 Clase 11: `Introducción al paquete científico Scipy`
@@ -235,7 +225,6 @@ Clase 11: `Introducción al paquete científico Scipy`
    * Minimización y optimización
    * Álgebra lineal
 *  Documentación y ayuda
-*  Ejercicios
 
 
 Clase 12: `Interpolación y ajuste de curvas (fiteo)`
@@ -247,7 +236,6 @@ Clase 12: `Interpolación y ajuste de curvas (fiteo)`
 * Fiteos utilizando el paquete científico Scipy
 * Ejemplo: Fiteo de picos
 * Documentación y ayuda
-* Ejercicios
 
 
 Clase 13: `Ejemplo de aplicación a casos (cuasi) reales`
@@ -259,7 +247,6 @@ Clase 13: `Ejemplo de aplicación a casos (cuasi) reales`
    * Búsqueda de picos
    * Fiteo de picos
    * Cálculo de máximos y áreas
-* Ejercicios
 
 
 Clase 14: `Ejemplos en más dimensiones`
@@ -268,7 +255,6 @@ Clase 14: `Ejemplos en más dimensiones`
 * Integración numérica en 2D
 * Fiteos en el plano
 * Graficación en dos dimensiones
-* Ejercicios
 
 
 Clase 15: `Transformadas de Fourier`
@@ -277,7 +263,6 @@ Clase 15: `Transformadas de Fourier`
 * Introducción a transformadas de Fourier
 * Transformada rápida de Fourier (FFT)
 * Transformadas de Fourier en 2D, imágenes
-* Ejercicios
 
 
 Clase 16: `Introducción breve a otras librerías científicas`
