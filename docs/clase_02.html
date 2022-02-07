@@ -13,6 +13,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Ejercicios" href="ejercicios.html" />
@@ -56,6 +57,22 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#conversion-de-tipos">Conversión de tipos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-02-a">Ejercicios 02 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tipos-contenedores-listas">Tipos contenedores: Listas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#operaciones-sobre-listas">Operaciones sobre listas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tuplas">Tuplas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rangos">Rangos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comprension-de-listas">Comprensión de Listas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#modulos">Módulos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-math">Módulo math</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-cmath">Módulo <code class="docutils literal notranslate"><span class="pre">cmath</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-02-b">Ejercicios 02 (b)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#adicionales">Adicionales</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -779,7 +796,7 @@ también). Imprima por pantalla el nuevo string.</p></li>
 <code class="docutils literal notranslate"><span class="pre">s</span></code>. Imprima el resultado por pantalla.</p></li>
 <li><p>Debe entregar un programa llamado <code class="docutils literal notranslate"><span class="pre">02_SuApellido.py</span></code> (con su
 apellido, no la palabra “SuApellido”). El programa al correrlo con el
-comando <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">SuApellido_02.py</span></code> debe imprimir:</p></li>
+comando <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">02_SuApellido.py</span></code> debe imprimir:</p></li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Nombre</span> <span class="n">Apellido</span>
 <span class="n">Clase</span> <span class="mi">2</span>
@@ -797,7 +814,620 @@ comando <code class="docutils literal notranslate"><span class="pre">python3</sp
 <span class="n">Com</span> <span class="n">el</span> <span class="n">camtar</span> <span class="n">se</span> <span class="n">comsuela</span><span class="o">.</span>
 </pre></div>
 </div>
+</div>
 <hr class="docutils" />
+<div class="section" id="tipos-contenedores-listas">
+<h2>Tipos contenedores: Listas<a class="headerlink" href="#tipos-contenedores-listas" title="Enlazar permanentemente con este título"></a></h2>
+<p>Las listas son tipos compuestos (pueden contener más de un valor). Se
+definen separando los valores con comas, encerrados entre corchetes. En
+general las listas pueden contener diferentes tipos, y pueden no ser
+todos iguales, pero suelen utilizarse con ítems del mismo tipo.</p>
+<ul class="simple">
+<li><p>Los elementos no son necesariamente homogéneos en tipo</p></li>
+<li><p>Elementos ordenados</p></li>
+<li><p>Acceso mediante un índice</p></li>
+<li><p>Están definidas operaciones entre Listas, así como algunos métodos</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">L</span></code> (¿x es un elemento de L?)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">L</span></code> (¿x no es un elemento de L?)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L1</span> <span class="pre">+</span> <span class="pre">L2</span></code> (concatenar L1 y L2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n*L1</span></code> (n veces L1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L1*n</span></code> (n veces L1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L[i]</span></code> (Elemento i-ésimo)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L[i:j]</span></code> (Elementos i a j)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L[i:j:k]</span></code> (Elementos i a j, elegidos uno de cada k)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">len(L)</span></code> (longitud de L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min(L)</span></code> (Mínimo de L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max(L)</span></code> (Máximo de L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L.index(x,</span> <span class="pre">[i])</span></code> (Índice de x, iniciando en i)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L.count(x)</span></code> (Número de veces que aparece x en L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L.append(x)</span></code> (Agrega el elemento x al final)</p></li>
+</ul>
+</li>
+</ul>
+<p>Veamos algunos ejemplos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>En esta línea hemos declarado una variable llamada <code class="docutils literal notranslate"><span class="pre">cuadrados</span></code>, y le
+hemos asignado una lista de cuatro elementos. En algunos aspectos las
+listas son muy similares a los <em>strings</em>. Se pueden realizar muchas de
+las mismas operaciones en strings, listas y otros objetos sobre los que
+se pueden iterar (<em>iterables</em>).</p>
+<p>Las listas pueden accederse por posición y también pueden rebanarse
+(<em>slicing</em>)</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>La indexación de iteradores empieza desde cero (como en C)</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[:</span><span class="mi">3</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Los índices pueden ser positivos (empezando desde cero) o negativos
+empezando desde -1.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+<col style="width: 8%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>cuadrados:</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>9</p></th>
+<th class="head"><p>16</p></th>
+<th class="head"><p>25</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>índices:</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>índices negativos:</p></td>
+<td><p>-4</p></td>
+<td><p>-3</p></td>
+<td><p>-2</p></td>
+<td><p>-1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>La asignación entre listas <strong>no copia</strong></p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">cuadrados</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">cuadrados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="ow">is</span> <span class="n">cuadrados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">cuadrados</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>
+<span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="operaciones-sobre-listas">
+<h3>Operaciones sobre listas<a class="headerlink" href="#operaciones-sobre-listas" title="Enlazar permanentemente con este título"></a></h3>
+<p>Veamos algunas operaciones que se pueden realizar sobre listas. Por
+ejemplo, se puede fácilmente:</p>
+<ul class="simple">
+<li><p>concatenar dos listas,</p></li>
+<li><p>buscar un valor dado,</p></li>
+<li><p>agregar elementos,</p></li>
+<li><p>borrar elementos,</p></li>
+<li><p>calcular su longitud,</p></li>
+<li><p>invertirla</p></li>
+</ul>
+<p>Empecemos concatenando dos listas, usando el operador “suma”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">L1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">*</span><span class="n">L</span> <span class="o">==</span> <span class="n">L</span> <span class="o">+</span> <span class="n">L</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                      <span class="c1"># Índice del elemento de valor 3</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>                <span class="c1"># Índice del valor 3, empezando del cuarto</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">9</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                      <span class="c1"># Cuenta las veces que aparece el valor &quot;3&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Las listas tienen definidos métodos, que podemos ver con la ayuda
+incluida, por ejemplo haciendo <code class="docutils literal notranslate"><span class="pre">help(list)</span></code></p>
+<p>Si queremos agregar un elemento al final utilizamos el método
+<code class="docutils literal notranslate"><span class="pre">append</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Si queremos insertar un elemento en una posición que no es el final de
+la lista, usamos el método <code class="docutils literal notranslate"><span class="pre">insert()</span></code>. Por ejemplo para insertar el
+valor 6 en la primera posición:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>En las listas podemos sobreescribir uno o más elementos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">L</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                     <span class="c1"># Remueve la primera ocurrencia de 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tuplas">
+<h3>Tuplas<a class="headerlink" href="#tuplas" title="Enlazar permanentemente con este título"></a></h3>
+<p>Las tuplas son objetos similares a las listas, sobre las que se puede
+iterar y seleccionar partes según su índice. La principal diferencia es
+que son inmutables mientras que las listas pueden modificarse. Los
+ejemplos anteriores del tipo <code class="docutils literal notranslate"><span class="pre">L[0]</span> <span class="pre">=</span> <span class="pre">-9</span></code> resulta en un error si lo
+intentamos con tuplas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="c1"># Las listas se definen con corchetes</span>
+<span class="n">T1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Las tuplas se definen con paréntesis</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L1[0] = </span><span class="si">{</span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">T1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">T1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tuples son inmutables&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Tuples</span> <span class="n">son</span> <span class="n">inmutables</span>
+</pre></div>
+</div>
+<p>Las tuplas se usan cuando uno quiere crear una “variable” que no va a
+ser modificada. Además códigos similares con tuplas pueden ser un poco
+más rápidos que si usan listas.</p>
+<p>Un uso común de las tuplas es el de asignación simultánea a múltiples
+variables:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">3</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Los paréntesis son opcionales en este caso</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span>
+</pre></div>
+</div>
+<p>Un uso muy común es el de intercambiar el valor de dos variables</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>                     <span class="c1"># swap</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="mi">5</span>
+<span class="mi">5</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rangos">
+<h3>Rangos<a class="headerlink" href="#rangos" title="Enlazar permanentemente con este título"></a></h3>
+<p>Los objetos de tipo
+<a class="reference external" href="https://docs.python.org/es/3/library/stdtypes.html#ranges">range</a>
+representan una secuencia inmutable de números y se usan habitualmente
+para ejecutar un bucle
+<a class="reference external" href="https://docs.python.org/es/3/reference/compound_stmts.html#for">for</a>
+un número determinado de veces. El formato es:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span>
+<span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+<span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comprension-de-listas">
+<h3>Comprensión de Listas<a class="headerlink" href="#comprension-de-listas" title="Enlazar permanentemente con este título"></a></h3>
+<p>Una manera sencilla de definir una lista es utilizando algo que se llama
+<em>Comprensión de listas</em>. Como primer ejemplo veamos una lista de
+<em>números cuadrados</em> como la que escribimos anteriormente. En lenguaje
+matemático la defiríamos como
+<span class="math notranslate nohighlight">\(S = \{x^{2} : x \in \{0 \dots 9\}\}\)</span>. En python es muy parecido.</p>
+<p>Podemos crear la lista <code class="docutils literal notranslate"><span class="pre">cuadrados</span></code> utilizando compresiones de listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">cuadrados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Una lista con los cuadrados sólo de los números pares también puede
+crearse de esta manera, ya que puede incorporarse una condición:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">21</span><span class="p">)</span> <span class="k">if</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">L</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">324</span><span class="p">,</span> <span class="mi">400</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1540</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">324</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="modulos">
+<h2>Módulos<a class="headerlink" href="#modulos" title="Enlazar permanentemente con este título"></a></h2>
+<p>Los módulos son el mecanismo de Python para reusar código. Además, ya
+existen varios módulos que son parte de la biblioteca <em>standard</em>. Su uso
+es muy simple, para poder aprovecharlo necesitaremos saber dos cosas:</p>
+<ul class="simple">
+<li><p>Qué funciones están ya definidas y listas para usar</p></li>
+<li><p>Cómo acceder a ellas</p></li>
+</ul>
+<p>Empecemos con la segunda cuestión. Para utilizar las funciones debemos
+<em>importarlas</em> en la forma <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">modulo</span></code>, donde modulo es el nombre
+que queremos importar.</p>
+<p>Esto nos lleva a la primera cuestión: cómo saber ese nombre, y que
+funciones están disponibles. La respuesta es: <strong>la documentación</strong>.</p>
+<p>Una vez importado, podemos utilizar constantes y funciones definidas en
+el módulo con la notación “de punto”: <code class="docutils literal notranslate"><span class="pre">modulo.funcion()</span></code>.</p>
+<div class="section" id="modulo-math">
+<h3>Módulo math<a class="headerlink" href="#modulo-math" title="Enlazar permanentemente con este título"></a></h3>
+<p>El módulo <strong>math</strong> contiene las funciones más comunes (trigonométricas,
+exponenciales, logaritmos, etc) para operar sobre números de <em>punto
+flotante</em>, y algunas constantes importantes (pi, e, etc). En realidad es
+una interface a la biblioteca math en C.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="c1"># algunas constantes y funciones elementales</span>
+<span class="n">raiz5pi</span><span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">raiz5pi</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">raiz5pi</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">raiz5pi</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">))</span>
+<span class="c1"># otras funciones elementales</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">27</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span> <span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Combinatorio: C(6,2):&#39;</span><span class="p">,</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="mi">2</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">3.963327297606011</span> <span class="mi">3</span> <span class="mi">4</span>
+<span class="mf">2.718281828459045</span> <span class="mi">2</span> <span class="mi">3</span>
+<span class="mf">10.0</span> <span class="mf">3.0</span>
+<span class="mi">5040</span> <span class="mi">362880</span> <span class="mi">3628800</span>
+<span class="n">Combinatorio</span><span class="p">:</span> <span class="n">C</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span> <span class="mf">15.0</span>
+</pre></div>
+</div>
+<p>A veces, sólo necesitamos unas pocas funciones de un módulo. Entonces
+para abreviar la notación combiene importar sólo lo que vamos a usar,
+usando la notación:</p>
+<p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">xxx</span> <span class="pre">import</span> <span class="pre">yyy</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="n">raiz5pi</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">log</span><span class="p">(</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">raiz5pi</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">raiz5pi</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">10.0</span>
+<span class="mf">3.963327297606011</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span> <span class="k">as</span> <span class="nn">m</span>
+<span class="n">m</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">3.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.7888543819998317</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modulo-cmath">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">cmath</span></code><a class="headerlink" href="#modulo-cmath" title="Enlazar permanentemente con este título"></a></h3>
+<p>El módulo <code class="docutils literal notranslate"><span class="pre">math</span></code> no está diseñado para trabajar con números complejos,
+para ello existe el módulo <strong>cmath</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">cmath</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Usando cmath (-1)^0.5=&#39;</span><span class="p">,</span> <span class="n">cmath</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cmath</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">cmath</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="n">j</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usando</span> <span class="n">cmath</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">^</span><span class="mf">0.5</span><span class="o">=</span> <span class="mi">1</span><span class="n">j</span>
+<span class="p">(</span><span class="mf">1.8810978455418161</span><span class="o">-</span><span class="mf">3.1409532491755083</span><span class="n">j</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si queremos calcular la fase (el ángulo que forma con el eje x) podemos
+usar la función phase</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">0.5</span><span class="n">j</span>
+<span class="n">cmath</span><span class="o">.</span><span class="n">phase</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>                  <span class="c1"># Resultado en radianes</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">0.4636476090008061</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">cmath</span><span class="o">.</span><span class="n">phase</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>    <span class="c1"># Resultado en grados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">26.56505117707799</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="ejercicios-02-b">
+<h2>Ejercicios 02 (b)<a class="headerlink" href="#ejercicios-02-b" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic simple" start="3">
+<li><p>Manejos de listas:</p>
+<ul class="simple">
+<li><p>Cree la lista <strong>N</strong> de longitud 50, donde cada elemento es un
+número entero de 1 a 50 inclusive (Ayuda: vea la expresión
+<code class="docutils literal notranslate"><span class="pre">range</span></code>).</p></li>
+<li><p>Invierta la lista.</p></li>
+<li><p>Extraiga una lista <strong>N2</strong> que contenga sólo los elementos pares de
+<strong>N</strong>.</p></li>
+<li><p>Extraiga una lista <strong>N3</strong> que contenga sólo aquellos elementos que
+sean el cuadrado de algún número entero.</p></li>
+</ul>
+</li>
+<li><p>Cree una lista de la forma <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">[1,3,5,...,17,19,19,17,...,3,1]</span></code></p></li>
+<li><p>Operación “rara” sobre una lista:</p>
+<ul class="simple">
+<li><p>Defina la lista <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">[0,1]</span></code></p></li>
+<li><p>Realice la operación <code class="docutils literal notranslate"><span class="pre">L.append(L)</span></code></p></li>
+<li><p>Ahora imprima L, e imprima el último elemento de <code class="docutils literal notranslate"><span class="pre">L</span></code>.</p></li>
+<li><p>Haga que una nueva lista <code class="docutils literal notranslate"><span class="pre">L1</span></code> tenga el valor del último elemento
+de <code class="docutils literal notranslate"><span class="pre">L</span></code> y repita el inciso anterior.</p></li>
+</ul>
+</li>
+<li><p>Utilizando funciones y métodos de <em>strings</em> en la cadena de
+caracteres:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span><span class="o">=</span><span class="s1">&#39;En un lugar de la Mancha de cuyo nombre no quiero acordarme&#39;</span>
+</pre></div>
+</div>
+<ul>
+<li><p>Obtenga la cantidad de caracteres.</p></li>
+<li><p>Imprima la frase anterior pero con cada palabra empezando en
+mayúsculas.</p></li>
+<li><div class="line-block">
+<div class="line">Cuente cuantas letras ‘a’ tiene la frase, ¿cuántas vocales tiene?</div>
+</div>
+</li>
+<li><p>Imprima el string <code class="docutils literal notranslate"><span class="pre">s1</span></code> centrado en una línea de 80 caracteres,
+rodeado de guiones en la forma:</p>
+<p>———-En un lugar de la Mancha de cuyo nombre no quiero acordarme———–</p>
+</li>
+<li><p>Obtenga una lista <strong>L1</strong> donde cada elemento sea una palabra de la
+oración.</p></li>
+<li><p>Cuente la cantidad de palabras en <code class="docutils literal notranslate"><span class="pre">s1</span></code> (utilizando python).</p></li>
+<li><p>Ordene la lista <strong>L1</strong> en orden alfabético.</p></li>
+<li><p>Ordene la lista <strong>L1</strong> tal que las palabras más cortas estén primero.</p></li>
+<li><p>Ordene la lista <strong>L1</strong> tal que las palabras más largas estén primero.</p></li>
+<li><p>Construya un string <strong>s2</strong> con la lista del resultado del punto
+anterior.</p></li>
+<li><p>Encuentre la palabra más larga y la más corta de la frase.</p></li>
+</ul>
+<ol class="arabic" start="7">
+<li><p>Escriba un script que encuentre las raíces de la ecuación cuadrática
+<span class="math notranslate nohighlight">\(a x^{2} + bx +c = 0\)</span>. Los valores de los parámetros defínalos
+en el mismo script, un poco más arriba.</p></li>
+<li><p>Considere un polígono regular de <span class="math notranslate nohighlight">\(N\)</span> lados inscripto en un
+círculo de radio unidad:</p>
+<ul class="simple">
+<li><p>Calcule el ángulo interior del polígono regular de <span class="math notranslate nohighlight">\(N\)</span> lados
+(por ejemplo el de un triángulo es 60 grados, de un cuadrado es 90
+grados, y de un pentágono es 108 grados). Exprese el resultado en
+grados y en radianes para valores de
+<span class="math notranslate nohighlight">\(N= 3, 5, 6, 8, 9, 10, 12\)</span>.</p></li>
+<li><p>¿Puede calcular la longitud del lado de los polígonos regulares si
+se encuentran inscriptos en un círculo de radio unidad?</p></li>
+</ul>
+</li>
+<li><p>Escriba un <em>script</em> (llamado distancia1.py) que defina las variables
+velocidad y posición inicial <span class="math notranslate nohighlight">\(v_{0}\)</span>, <span class="math notranslate nohighlight">\(z_{0}\)</span>, la
+aceleración <span class="math notranslate nohighlight">\(g\)</span>, y la masa <span class="math notranslate nohighlight">\(m=1\)</span> kg a tiempo <span class="math notranslate nohighlight">\(t=0\)</span>,
+y calcule e imprima la posición y velocidad a un tiempo posterior
+<span class="math notranslate nohighlight">\(t\)</span>. Ejecute el programa para varios valores de posición y
+velocidad inicial para <span class="math notranslate nohighlight">\(t=2\)</span> segundos. Recuerde que las
+ecuaciones de movimiento con aceleración constante son:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}v = v_0 - g t  \\  z = z_0 + v_0 t - g t^2/2.\end{split}\]</div>
+</li>
+</ol>
+<div class="section" id="adicionales">
+<h3>Adicionales<a class="headerlink" href="#adicionales" title="Enlazar permanentemente con este título"></a></h3>
+<ol class="arabic" start="11">
+<li><p>Calcular la suma:</p>
+<div class="math notranslate nohighlight">
+\[s_{1} = \frac{1}{2} \left(\sum_{k=0}^{100}k \right)^{-1}\]</div>
+<p><em>Ayuda</em>: busque información sobre la función <code class="docutils literal notranslate"><span class="pre">sum()</span></code></p>
+</li>
+<li><p>Construir una lista <code class="docutils literal notranslate"><span class="pre">L2</span></code> con 2000 elementos, todos iguales a
+<code class="docutils literal notranslate"><span class="pre">0.0005</span></code>. Imprimir su suma utilizando la función <code class="docutils literal notranslate"><span class="pre">sum</span></code> y
+comparar con la función que existe en el módulo <code class="docutils literal notranslate"><span class="pre">math</span></code> para
+realizar suma de números de punto flotante.</p></li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
+</div>
 </div>
 </div>
 
