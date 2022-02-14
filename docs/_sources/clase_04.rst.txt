@@ -1,0 +1,924 @@
+.. _clase_04:
+
+Clase 4: Funciones
+===================
+
+
+Las funciones son objetos
+-------------------------
+
+Para utilizar una funcion en **Python**, como en la mayoría de los
+lenguajes, se usa una notación similar a la de las funciones
+matemáticas, con un nombre y uno o más argumentos entre paréntesis. Por
+ejemplo, ya usamos la función ``sum()``, cuyo argumento es una lista o
+una *tuple* de números (de cualquier tipo)
+
+.. code:: python
+
+    a = [1, 3.3, 5, 7.5, 2.2]
+    sum(a)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
+.. code:: python
+
+    b = tuple(a)
+    sum(b)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
+.. code:: python
+
+    sum
+
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
+.. code:: python
+
+    print
+
+
+
+
+.. parsed-literal::
+
+    <function print>
+
+
+
+En **Python** ``function`` es un objeto, con una única operación
+posible: podemos llamarla, en la forma: ``func(lista-de-argumentos)``
+
+Como con todos los objetos, podemos definir una variable y asignarle una
+función (algo así como lo que en C sería un puntero a funciones)
+
+.. code:: python
+
+    f = sum
+    help(f)
+
+
+.. parsed-literal::
+
+    Help on built-in function sum in module builtins:
+    
+    sum(iterable, /, start=0)
+        Return the sum of a 'start' value (default: 0) plus an iterable of numbers
+        
+        When the iterable is empty, return the start value.
+        This function is intended specifically for use with numeric values and may
+        reject non-numeric types.
+    
+
+
+.. code:: python
+
+    print('¿f is sum? ', f is sum)
+    print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+
+.. parsed-literal::
+
+    ¿f is sum?  True
+    f(a)= 19.0   sum(a)= 19.0
+
+
+También podemos crear un diccionario donde los valores sean funciones:
+
+.. code:: python
+
+    funciones = {'suma': sum, 'mínimo': min, 'máximo': max}
+
+.. code:: python
+
+    funciones['suma']
+
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
+.. code:: python
+
+    funciones['suma'](a)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
+.. code:: python
+
+    print('\n', 'a =', a,'\n')
+    for k, v in funciones.items():
+      print(k,"=", v(a))
+
+
+.. parsed-literal::
+
+    
+     a = [1, 3.3, 5, 7.5, 2.2] 
+    
+    suma = 19.0
+    mínimo = 1
+    máximo = 7.5
+
+
+Definición básica de funciones
+------------------------------
+
+Tomemos el ejemplo del tutorial de la documentación de Python. Vimos, al
+introducir el elemento de control **while** una forma de calcular la
+serie de Fibonacci. Usemos ese ejemplo para mostrar como se definen las
+funciones
+
+.. code:: python
+
+    def fib(n):
+      """Devuelve una lista con los términos
+      de la serie de Fibonacci hasta n."""
+      result = []
+      a, b = 0, 1
+      while a < n:
+        result.append(a)    
+        a, b = b, a+b
+      return result
+
+
+.. code:: python
+
+    fib(100)
+
+
+
+
+.. parsed-literal::
+
+    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+
+
+.. code:: python
+
+    fib
+
+
+
+
+.. parsed-literal::
+
+    <function __main__.fib(n)>
+
+
+
+.. code:: python
+
+    help(fib)
+
+
+.. parsed-literal::
+
+    Help on function fib in module __main__:
+    
+    fib(n)
+        Devuelve una lista con los términos
+        de la serie de Fibonacci hasta n.
+    
+
+
+**Puntos a notar:**
+
+-  Las funciones se definen utilizando la palabra ``def`` seguida por el
+   nombre,
+-  A continuación, entre paréntesis se escriben los argumentos, en este
+   caso el entero ``n``,
+-  La función devuelve (*retorna*) algo, en este caso una lista. Si una
+   función no devuelve algo explícitamente, entonces devuelve ``None``.
+-  Lo que devuelve la función se especifica mediante la palabra
+   reservada ``return``
+-  Al principio de la definición de la función se escribe el *string* de
+   documentación
+
+.. code:: python
+
+    fib.__doc__
+
+
+
+
+.. parsed-literal::
+
+    'Devuelve una lista con los términos\n  de la serie de Fibonacci hasta n.'
+
+
+
+Como segundo ejemplo, consideremos el ejercicio donde pedimos la
+velocidad y altura de una pelota en caída libre. Pero esta vez definimos
+una función para realizar los cálculos:
+
+.. code:: python
+
+    h_0 = 500                       # altura inicial en m
+    v_0 = 0                         # velocidad inicial en m/s
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida(t):
+      v = v_0 - g*t
+      h = h_0 - v_0*t - g*t**2/2.
+      return v,h
+
+.. code:: python
+
+    print(caida(1))
+
+
+.. parsed-literal::
+
+    (-9.8, 495.1)
+
+
+.. code:: python
+
+    v, h = caida(1.5)
+
+.. code:: python
+
+    print(f'Para t = {1.5}, la velocidad será v={v:.2f} m/s\
+     y estará a una altura {h:.2f} m')
+
+
+.. parsed-literal::
+
+    Para t = 1.5, la velocidad será v=-14.70 m/s y estará a una altura 488.98 m
+
+
+.. code:: python
+
+    v, h = caida(2.2)
+    print(f'Para t = {2.2}, la velocidad será v={v:.2f} m/s y estará a una altura {h:.2f} m')
+
+
+.. parsed-literal::
+
+    Para t = 2.2, la velocidad será v=-21.56 m/s y estará a una altura 476.28 m
+
+
+Podemos mejorar considerablemente la funcionalidad si le damos la
+posibilidad al usuario de dar la posición y la velocidad iniciales
+
+.. code:: python
+
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida2(t, h_0, v_0):
+      """Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+      h_0 es la altura inicial
+      v_0 es la velocidad inicial
+      Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+      """
+      v = v_0 - g*t
+      h = h_0 - v_0*t - g*t**2/2.
+      return v,h
+
+.. code:: python
+
+    v,h = caida2(2.2, 100, 12)
+    print('''Para caída desde {h0}m, con vel. inicial {v0}m/s, a t = {0}, 
+    la velocidad será v={1}, y estará a una altura {2}'''.
+          format(2.2, v, h, h0=100, v0=12))
+
+
+.. parsed-literal::
+
+    Para caída desde 100m, con vel. inicial 12m/s, a t = 2.2, 
+    la velocidad será v=-9.560000000000002, y estará a una altura 49.883999999999986
+
+
+Notemos que podemos llamar a esta función de varias maneras. Podemos
+llamarla con la constante, o con una variable indistintamente. En este
+caso, el argumento está definido por su posición: El primero es la
+altura inicial (h_0) y el segundo la velocidad inicial (v_0).
+
+.. code:: python
+
+    v0 = 12
+    caida2(2.2, 100, v0)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+Pero en Python podemos usar el nombre de la variable. Por ejemplo:
+
+.. code:: python
+
+    caida2(v_0=v0,t=2.2, h_0=100)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+Argumentos de las funciones
+---------------------------
+
+Ámbito de las variables en los argumentos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consideremos la siguiente función
+
+.. code:: python
+
+    def func1(x):
+      print('x entró a la función con el valor', x)
+      x = 2
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    x = 50
+    print('Fuera de la función: Originalmente x vale',x)
+    func1(x)
+    print('Fuera de la función: Ahora x vale',x)  
+
+
+
+.. parsed-literal::
+
+    Fuera de la función: Originalmente x vale 50
+    x entró a la función con el valor 50
+    El nuevo valor de x es 2
+    Fuera de la función: Ahora x vale 50
+
+
+Vemos que la variable ``x`` que utilizamos como argumento de la función
+debe ser diferente a la variable ``x`` que se define fuera de la
+función, ya que su valor no cambia al salir.
+
+Consideremos ahora la siguiente función:
+
+.. code:: python
+
+    def func2(x):
+      print('x entró a la función con el valor', x)
+      print('Id adentro:',id(x))
+      x = [2,7]
+      print('El nuevo valor de x es', x)
+      print('Id adentro:',id(x))
+
+La función es muy parecida, sólo que le estamos dando a la variable
+``x`` dentro de la función un nuevo valor del tipo ``lista``. Además
+usamos la función ``id()`` para obtener la identidad de la variable
+
+.. code:: python
+
+    x = 50
+    print('Fuera de la función: Originalmente x vale',x)
+    print('Fuera de la función: Id:', id(x))
+    func2(x)
+    print('Fuera de la función: Ahora x vale',x)
+    print('Fuera de la función: Id:', id(x))
+
+
+.. parsed-literal::
+
+    Fuera de la función: Originalmente x vale 50
+    Fuera de la función: Id: 139797659567888
+    x entró a la función con el valor 50
+    Id adentro: 139797659567888
+    El nuevo valor de x es [2, 7]
+    Id adentro: 139797568094976
+    Fuera de la función: Ahora x vale 50
+    Fuera de la función: Id: 139797659567888
+
+
+.. code:: python
+
+    x = [50]
+    print('Fuera de la función: Originalmente x vale',x)
+    func2(x)
+    print('Fuera de la función: Ahora x vale',x)
+    print('Fuera de la función: Id:', id(x))
+
+
+.. parsed-literal::
+
+    Fuera de la función: Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    Id adentro: 139797568104128
+    El nuevo valor de x es [2, 7]
+    Id adentro: 139797568135296
+    Fuera de la función: Ahora x vale [50]
+    Fuera de la función: Id: 139797568104128
+
+
+.. code:: python
+
+    x = [50]
+    print('Originalmente x vale',x)
+    func2(x)
+    print('Ahora x vale',x)
+    print('Id afuera:', id(x))
+
+
+.. parsed-literal::
+
+    Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    Id adentro: 139797619434112
+    El nuevo valor de x es [2, 7]
+    Id adentro: 139797568135296
+    Ahora x vale [50]
+    Id afuera: 139797619434112
+
+
+¿Qué está pasando acá?
+
+-  Cuando se realiza la llamada a la función, se le pasa una copia del
+   nombre ``x``.
+-  Cuando le damos un nuevo valor dentro de la función, como en el caso
+   ``x = [2]``, entonces se crea una nueva variable y el nombre ``x``
+   queda asociado a la nueva variable.
+-  La variable original –definida fuera de la función– no cambia.
+
+En el primer caso, como los escalares son inmutables (de la misma manera
+que los strings y tuplas) no puede ser modificada, y al reasignar el
+nombre siempre se crea una nueva variable (para cualquier tipo).
+
+Consideremos estas variantes:
+
+.. code:: python
+
+    def func3a(x):
+      print('x entró a la función con el valor', x)
+      x.append(2)
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    x = [50]
+    print('Originalmente x vale',x)
+    func3a(x)
+    print('Ahora x vale',x)  
+
+
+.. parsed-literal::
+
+    Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    El nuevo valor de x es [50, 2]
+    Ahora x vale [50, 2]
+
+
+Como no estamos redefiniendo la variable, sino que la estamos
+modificando, el nuevo valor se mantiene al terminar la ejecución de la
+función. Otra variante:
+
+.. code:: python
+
+    def func4(x):
+      print('x entró a la función con el valor', x)
+      x[0] = 2
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    x = [50]
+    print('Originalmente x vale',x)
+    func4(x)
+    print('Ahora x vale',x)  
+
+
+.. parsed-literal::
+
+    Originalmente x vale [50]
+    x entró a la función con el valor [50]
+    El nuevo valor de x es [2]
+    Ahora x vale [2]
+
+
+Por otro lado, cuando modificamos la variable (solo se puede para tipos
+mutables), asignando un valor a uno o más de sus elementos o
+agregando/removiendo elementos, la copia sigue apuntando a la variable
+original y el valor de la variable, definida originalmente afuera,
+cambia.
+
+Funciones con argumentos opcionales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Las funciones pueden tener muchos argumentos. En **Python** pueden tener
+un número variable de argumentos y pueden tener valores por *default*
+para algunos de ellos. En el caso de la función de caída libre, vamos a
+extenderlo de manera que podamos usarlo fuera de la tierra (o en otras
+latitudes) permitiendo cambiar el valor de la gravedad y asumiendo que,
+a menos que lo pidamos explícitamente se trata de una simple caída
+libre:
+
+.. code:: python
+
+    def caida_libre(t, h0, v0=0., g=9.8):
+      """Devuelve la velocidad y la posición de una partícula en
+      caída libre para condiciones iniciales dadas
+    
+      Parameters
+      ----------
+      t : float
+          el tiempo al que queremos realizar el cálculo
+      h0: float 
+          la altura inicial
+      v0: float (opcional)
+          la velocidad inicial (default = 0.0)
+       g: float (opcional)
+          valor de la aceleración de la gravedad (default = 9.8)
+    
+      Returns
+      -------
+      (v,h):  tuple of floats
+           v= v0 - g*t
+           h= h0 - v0*t -g*t^2/2
+      
+      """
+      v = v0 - g*t
+      h = h0 - v0*t - g*t**2/2.
+      return v,h
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero
+    print( caida_libre(2,1000))
+
+
+.. parsed-literal::
+
+    (-19.6, 980.4)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial hacia arriba
+    print(caida_libre(1, 1000, 10))
+
+
+.. parsed-literal::
+
+    (0.1999999999999993, 985.1)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero
+    print(caida_libre(h0= 1000, t=2))
+
+
+.. parsed-literal::
+
+    (-19.6, 980.4)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre( v0=0, h0=1000, t=14.2857137))
+
+
+.. parsed-literal::
+
+    (-139.99999426000002, 8.199999820135417e-05)
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre( v0=0, h0=1000, t=14.2857137, g=1.625))
+
+
+.. parsed-literal::
+
+    (-23.2142847625, 834.1836870663262)
+
+
+.. code:: python
+
+    help(caida_libre)
+
+
+.. parsed-literal::
+
+    Help on function caida_libre in module __main__:
+    
+    caida_libre(t, h0, v0=0.0, g=9.8)
+        Devuelve la velocidad y la posición de una partícula en
+        caída libre para condiciones iniciales dadas
+        
+        Parameters
+        ----------
+        t : float
+            el tiempo al que queremos realizar el cálculo
+        h0: float 
+            la altura inicial
+        v0: float (opcional)
+            la velocidad inicial (default = 0.0)
+         g: float (opcional)
+            valor de la aceleración de la gravedad (default = 9.8)
+        
+        Returns
+        -------
+        (v,h):  tuple of floats
+             v= v0 - g*t
+             h= h0 - v0*t -g*t^2/2
+    
+
+
+Tipos mutables en argumentos opcionales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hay que tener cuidado cuando usamos valores por defecto con tipos que
+pueden modificarse dentro de la función. Consideremos la siguiente
+función:
+
+.. code:: python
+
+    def func2b(x1, x=[]):
+      print('x entró a la función con el valor', x)
+      x.append(x1)
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    func2b(1)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor []
+    El nuevo valor de x es [1]
+
+
+.. code:: python
+
+    func2b(2)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor [1]
+    El nuevo valor de x es [1, 2]
+
+
+El argumento opcional ``x`` tiene como valor por defecto una lista
+vacía, entonces esperaríamos que el valor de ``x`` sea igual a ``x1``, y
+en este caso imprima “El nuevo valor de x es [2]”. Sin embargo, entre
+llamadas mantiene el valor de ``x`` anterior. El valor por defecto se
+fija en la definición y en el caso de tipos mutables puede modificarse.
+
+.. note::  No se pueden usar argumentos con *nombre* antes de los
+  argumentos requeridos (en este caso ``t``).
+  
+  Tampoco se pueden usar argumentos sin su *nombre* después de haber
+  incluido alguno con su nombre. Por ejemplo no son válidas las llamadas:
+  
+  .. code:: python
+  
+     caida_libre(t=2, 0.)
+     caida_libre(2, v0=0., 1000)
+  
+  
+
+Número variable de argumentos y argumentos *keywords*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se pueden definir funciones que toman un número variable de argumentos
+(como una lista), o que aceptan un diccionario como argumento. Este tipo
+de argumentos se llaman argumentos *keyword* (``kwargs``). Una buena
+explicación se encuentra en el `Tutorial de la
+documentación <https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments>`__.
+Ahora vamos a dar una explicación rápida. Consideremos la función ``f``,
+que imprime sus argumentos:
+
+.. code:: python
+
+    def f(p, *args, **kwargs):
+      print( f"p: {p}, tipo: {type(p)}")
+      print( f"args: {args}, tipo: {type(args)}")
+      print( f"kwargs: {kwargs}, tipo: {type(kwargs)}")
+
+.. code:: python
+
+    f(1,2,3)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (2, 3), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1,2,3,4,5,6)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (2, 3, 4, 5, 6), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+En este ejemplo, el primer valor se asigna al argumento requerido ``p``,
+y los siguientes a una variable que se llama ``args``, que es del tipo
+``tuple``
+
+.. code:: python
+
+    f(1.5,2, 3, 5, anteultimo= 9, ultimo = -1)
+
+
+.. parsed-literal::
+
+    p: 1.5, tipo: <class 'float'>
+    args: (2, 3, 5), tipo: <class 'tuple'>
+    kwargs: {'anteultimo': 9, 'ultimo': -1}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1, (1,2,3), 4, ultimo=-1)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: ((1, 2, 3), 4), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
+
+En estas otras llamadas a la función, todos los argumentos que se pasan
+indicando el nombre se asignan a un diccionario.
+
+Al definir una función, con la construcción ``*args`` se indica *“mapear
+todos los argumentos posicionales no explícitos a una tupla llamada
+``args``”*. Con ``**kwargs`` se indica “mapear todos los argumentos de
+palabra clave no explícitos a un diccionario llamado ``kwargs``”. Esta
+acción de convertir un conjunto de argumentos a una tuple o diccionario
+se conoce como *empacar* o *empaquetar* los datos.
+
+.. note::  Por supuesto, no es necesario utilizar los nombres “args” y
+  “kwargs”. Podemos llamarlas de cualquier otra manera! los simbolos que
+  indican cantidades arbitrarias de parametros son ``*`` y ``**``. Además
+  es posible poner parametros “comunes” antes de los parametros
+  arbitrarios, como se muestra en el ejemplo.
+  
+  
+
+Exploremos otras variantes de llamadas a la función:
+
+.. code:: python
+
+    f(1, ultimo=-1)
+
+
+.. parsed-literal::
+
+    p: 1, tipo: <class 'int'>
+    args: (), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1, ultimo=-1, 2)
+
+
+::
+
+
+      File "<ipython-input-105-acd06ccc380f>", line 1
+        f(1, ultimo=-1, 2)
+                         ^
+    SyntaxError: positional argument follows keyword argument
+
+
+
+.. code:: python
+
+    f(ultimo=-1, p=2)
+
+
+.. parsed-literal::
+
+    p: 2, tipo: <class 'int'>
+    args: (), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
+
+Un ejemplo de una función con número variable de argumentos puede ser la
+función ``multiplica``:
+
+.. code:: python
+
+    def multiplica(*args):
+      s = 1
+      for a in args:
+        s *= a
+      return s
+
+.. code:: python
+
+    multiplica(2,5)
+
+
+
+
+.. parsed-literal::
+
+    10
+
+
+
+.. code:: python
+
+    multiplica(2,3,5,9,12)
+
+
+
+
+.. parsed-literal::
+
+    3240
+
+
+
+--------------
+
+Ejercicios 4 (a)
+----------------
+
+1. Escriba funciones para analizar la divisibilidad de enteros:
+
+   -  La función ``es_divisible1(x)`` que retorna verdadero si x es
+      divisible por alguno de ``2,3,5,7`` o falso en caso contrario.
+   -  La función ``es_divisible_por_lista`` que cumple la misma función
+      que ``es_divisible1`` pero recibe dos argumentos: el entero ``x``
+      y una variable del tipo lista que contiene los valores para los
+      cuáles debemos examinar la divisibilidad. Las siguientes
+      expresiones deben retornar el mismo valor:
+
+   .. code:: python
+
+      es_divisible1(x) 
+      es_divisible_por_lista(x, [2,3,5,7])
+      es_divisible_por_lista(x)
+
+   -  La función ``es_divisible_por`` cuyo primer argumento (mandatorio)
+      es ``x``, y luego puede aceptar un número indeterminado de
+      argumentos:
+
+   .. code:: python
+
+      es_divisible_por(x)  # retorna verdadero siempre
+      es_divisible_por(x, 2) # verdadero si x es par
+      es_divisible_por(x, 2, 3, 5, 7) # igual resultado que es_divisible1(x) e igual a es_divisible_por_lista(x)
+      es_divisible_por(x, 2, 3, 5, 7, 9, 11, 13)  # o cualquier secuencia de argumentos debe funcionar
+
+--------------
+
+
