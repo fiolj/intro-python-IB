@@ -1,0 +1,994 @@
+.. _clase_05:
+
+Clase 5: Entrada y salida, decoradores, y errores
+==================================================
+
+
+Funciones que aceptan y devuelven funciones (Decoradores)
+---------------------------------------------------------
+
+Vimos que las funciones pueden tomar como argumento otra función, pueden
+devolver una función, y también pueden hacer las dos cosas
+simultáneamente.
+
+Consideremos la siguiente función ``mas_uno``, que toma como argumento
+una función y devuelve otra función.
+
+.. code:: python
+
+    def mas_uno(func):
+      "Devuelve una función"
+      def fun(args):
+        "Agrega 1 a cada uno de los elementos y luego aplica la función"
+        xx = [x+1 for x in args]
+        y= func(xx)
+        return y
+      return fun
+
+.. code:: python
+
+    ssum= mas_uno(sum)              # ssum es una función
+    mmin= mas_uno(min)              # mmin es una función
+    mmax= mas_uno(max)              # mmax es una función
+
+.. code:: python
+
+    a = [0, 1, 3.3, 5, 7.5, 2.2]
+    print(a)
+    print(sum(a), ssum(a))
+    print(min(a), mmin(a))
+    print(max(a), mmax(a))
+    
+
+
+
+.. parsed-literal::
+
+    [0, 1, 3.3, 5, 7.5, 2.2]
+    19.0 25.0
+    0 1
+    7.5 8.5
+
+
+Podemos aplicar la función tanto a funciones “intrínsecas” como a
+funciones definidas por nosotros
+
+.. code:: python
+
+    def parabola(v):
+      return [x**2 + 2*x for x in v]
+
+
+.. code:: python
+
+    mparabola = mas_uno(parabola)
+
+.. code:: python
+
+    print(parabola(a))
+    print(mparabola(a))
+
+
+.. parsed-literal::
+
+    [0, 3, 17.49, 35, 71.25, 9.240000000000002]
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
+Notemos que al decorar una función estamos creando una enteramente nueva
+
+.. code:: python
+
+    del parabola                    # Borramos el objeto
+
+.. code:: python
+
+    parabola(a)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Input In [8], in <module>
+    ----> 1 parabola(a)
+
+
+    NameError: name 'parabola' is not defined
+
+
+.. code:: python
+
+    mparabola(a)
+
+
+
+
+.. parsed-literal::
+
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
+
+Algunas veces queremos simplemente modificar la función original
+
+Notación para decoradores
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Al procedimiento de modificar una función original, para crear una nueva
+y renombrar la nueva con el nombre de la original se lo conoce como
+“decorar”, y tiene una notación especial
+
+.. code:: python
+
+    def parabola(v):
+      return [x**2 + 2*x for x in v]
+    mparabola = mas_uno(parabola)
+    del parabola
+    parabola = mparabola
+    del mparabola
+
+Son un montón de líneas, no todas necesarias, y podemos simplificarlo:
+
+.. code:: python
+
+    def parabola(v):
+      return [x**2 + 2*x for x in v]
+    parabola = mas_uno(parabola)
+
+Como esta es una situación que puede darse frecuentemente en algunas
+áreas se decidió simplificar la notación, introduciendo el uso de ``@``.
+Lo anterior puede escribirse como:
+
+.. code:: python
+
+    @mas_uno
+    def mi_parabola(v):
+      return [x**2 + 2*x for x in v]
+
+La única restricción para utilizar esta notación es que la línea con el
+decorador debe estar inmediatamente antes de la definición de la función
+a decorar
+
+.. code:: python
+
+    mi_parabola(a)
+
+
+
+
+.. parsed-literal::
+
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
+
+Algunos usos de decoradores
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Un uso común de los decoradores es agregar código de verificación de los
+argumentos de las funciones. Por ejemplo, la función que definimos
+anteriormente falla si le damos un punto ``x`` y queremos obtener el
+valor ``y`` de la parábola (más uno):
+
+.. code:: python
+
+    mi_parabola(3)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Input In [14], in <module>
+    ----> 1 mi_parabola(3)
+
+
+    Input In [1], in mas_uno.<locals>.fun(args)
+          3 def fun(args):
+          4   "Agrega 1 a cada uno de los elementos y luego aplica la función"
+    ----> 5   xx = [x+1 for x in args]
+          6   y= func(xx)
+          7   return y
+
+
+    TypeError: 'int' object is not iterable
+
+
+El problema aquí es que definimos la función para tomar como argumentos
+una lista (o al menos un iterable de números) y estamos tratando de
+aplicarla a un único valor. Podemos definir un decorador para
+asegurarnos que el tipo es correcto (aunque esta implementación podría
+ser mejor)
+
+.. code:: python
+
+    def test_argumento_list_num(f):
+      def check(v):
+        if (type(v) == list):
+          return f(v)
+        else:
+          print("Error: El argumento debe ser una lista")
+      return check
+
+.. code:: python
+
+    mi_parabola = test_argumento_list_num(mi_parabola)
+
+.. code:: python
+
+    mi_parabola(3)
+
+
+.. parsed-literal::
+
+    Error: El argumento debe ser una lista
+
+
+.. code:: python
+
+    mi_parabola(a)
+
+
+
+
+.. parsed-literal::
+
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
+
+Supongamos que queremos simplemente extender la función para que sea
+válida también con argumentos escalares. Definimos una nueva función que
+utilizaremos como decorador
+
+.. code:: python
+
+    def hace_argumento_list(f):
+      def check(v):
+        "Corrige el argumento si no es una lista"
+        if (type(v) == list):
+          return f(v)
+        else:
+          return f([v])
+      return check  
+
+.. code:: python
+
+    @hace_argumento_list
+    def parabola(v):
+      return [x**2 + 2*x for x in v]
+
+
+Esto es equivalente a:
+
+.. code:: python
+
+    def parabola(v):
+      return [x**2 + 2*x for x in v]
+    parabola = hace_argumento_list(parabola)
+
+.. code:: python
+
+    print(parabola(3))
+    print(parabola([3]))
+
+
+.. parsed-literal::
+
+    [15]
+    [15]
+
+
+
+Atrapar y administrar errores
+-----------------------------
+
+**Python** tiene incorporado un mecanismo para atrapar errores de
+distintos tipos, así como para generar errores que den información al
+usuario sobre usos incorrectos del código.
+
+En primer lugar consideremos lo que se llama un error de sintaxis. El
+siguiente comando es sintácticamente correcto y el intérprete sabe como
+leerlo
+
+.. code:: python
+
+    print("hola")
+
+
+.. parsed-literal::
+
+    hola
+
+
+mientras que, si escribimos algo que no está permitido en el lenguaje
+
+.. code:: python
+
+    print("hola"))
+
+
+::
+
+
+      Input In [2]
+        print("hola"))
+                     ^
+    SyntaxError: unmatched ')'
+
+
+
+El intérprete detecta el error y repite la línea donde lo identifica.
+Este tipo de errores debe corregirse para poder seguir con el programa.
+
+Consideremos ahora el código siguiente, que es sintácticamente correcto
+pero igualmente causa un error
+
+.. code:: python
+
+    a = 1
+    b = 0
+    z = a / b
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ZeroDivisionError                         Traceback (most recent call last)
+
+    Input In [3], in <module>
+          1 a = 1
+          2 b = 0
+    ----> 3 z = a / b
+
+
+    ZeroDivisionError: division by zero
+
+
+Cuando se encuentra un error, **Python** muestra el lugar en que ocurre
+y de qué tipo de error se trata.
+
+.. code:: python
+
+    print (hola)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Input In [4], in <module>
+    ----> 1 print (hola)
+
+
+    NameError: name 'hola' is not defined
+
+
+Este mensaje da un tipo de error diferente. Ambos: ``ZeroDivisionError``
+y ``NameError`` son tipos de errores (o excepciones). Hay una larga
+lista de tipos de errores que son parte del lenguaje y puede consultarse
+en la documentación de `Built-in
+Exceptions <https://docs.python.org/3/library/exceptions.html#bltin-exceptions>`__.
+
+Administración de excepciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cuando nuestro programa aumenta en complejidad, aumenta la posibilidad
+de encontrar errores. Esto se incrementa si se tiene que interactuar con
+otros usuarios o con datos externos. Consideremos el siguiente ejemplo
+simple:
+
+.. code:: python
+
+    %cat ../data/ej_clase5.dat
+
+
+.. parsed-literal::
+
+    1 2
+    2 6
+    3 9
+    4 12
+    5.5 30.25
+
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        print("t = {}".format(t))        # Línea sólo para inspección
+        m = int(t[0])
+        n = int(t[1])
+        print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+
+
+.. parsed-literal::
+
+    t = ['1', '2']
+    m = 1, n = 2, m x n = 2
+    t = ['2', '6']
+    m = 2, n = 6, m x n = 12
+    t = ['3', '9']
+    m = 3, n = 9, m x n = 27
+    t = ['4', '12']
+    m = 4, n = 12, m x n = 48
+    t = ['5.5', '30.25']
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Input In [6], in <module>
+          3 t = l.split()
+          4 print("t = {}".format(t))        # Línea sólo para inspección
+    ----> 5 m = int(t[0])
+          6 n = int(t[1])
+          7 print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+
+
+    ValueError: invalid literal for int() with base 10: '5.5'
+
+
+En este caso se “levanta” una excepción del tipo ``ValueError`` debido a
+que este valor (``5.5``) no se puede convertir a ``int``. Podemos
+modificar nuestro programa para manejar este error:
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+        except:
+          print("Error: t = {} no puede convertirse a entero".format(t))
+          
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+
+
+En este caso podríamos ser más precisos y especificar el tipo de
+excepción que estamos esperando
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+        except(ValueError):
+          print("Error: t = {} no puede convertirse a entero".format(t))
+          
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+        except(ValueError):
+          print("Error: t = {} no puede convertirse a entero".format(t))
+        except(IndexError):
+          print('Error: La línea "{}" no contiene un par'.format(l.strip()))
+          
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+
+
+La forma general
+
+La declaración ``try`` funciona de la siguiente manera:
+
+-  Primero, se ejecuta el *bloque try* (el código entre las declaración
+   ``try`` y ``except``).
+
+-  Si no ocurre ninguna excepción, el *bloque except* se saltea y
+   termina la ejecución de la declaración ``try``.
+
+-  Si ocurre una excepción durante la ejecución del *bloque try*, el
+   resto del bloque se saltea. Luego, si su tipo coincide con la
+   excepción nombrada luego de la palabra reservada ``except``, se
+   ejecuta el *bloque except*, y la ejecución continúa luego de la
+   declaración ``try``.
+
+-  Si ocurre una excepción que no coincide con la excepción nombrada en
+   el ``except``, esta se pasa a declaraciones ``try`` de más afuera; si
+   no se encuentra nada que la maneje, es una *excepción no manejada*, y
+   la ejecución se frena con un mensaje como los mostrados arriba.
+
+El mecanismo es un poco más complejo, y permite un control más fino que
+lo descripto aquí.
+
+“Crear” excepciones
+~~~~~~~~~~~~~~~~~~~
+
+Podemos forzar a que nuestro código cree una excepción usando ``raise``.
+Por ejemplo:
+
+.. code:: python
+
+    x = 1
+    if x > 0:
+      raise Exception(f"x = {x}, no debería ser positivo")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    Exception                                 Traceback (most recent call last)
+
+    Input In [9], in <module>
+          1 x = 1
+          2 if x > 0:
+    ----> 3   raise Exception(f"x = {x}, no debería ser positivo")
+
+
+    Exception: x = 1, no debería ser positivo
+
+
+O podemos ser más específicos, y dar el tipo de error adecuado
+
+.. code:: python
+
+    x = 1
+    if x > 0:
+      raise ValueError(f"x = {x}, no debería ser positivo")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Input In [10], in <module>
+          1 x = 1
+          2 if x > 0:
+    ----> 3   raise ValueError(f"x = {x}, no debería ser positivo")
+
+
+    ValueError: x = 1, no debería ser positivo
+
+Escritura y lectura a archivos
+------------------------------
+
+Nuestros programas necesitan interactuar con el mundo exterior. Hasta
+ahora utilizamos la función ``print()`` para imprimir por pantalla
+mensajes y resultados. Para leer o escribir un archivo primero debemos
+abrirlo, utilizando la función ``open()``
+
+.. code:: python
+
+    f = open('../data/names.txt')   # Abrimos el archivo (para leer)
+
+.. code:: python
+
+    f
+
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
+.. code:: python
+
+    s = f.read()                    # Leemos el archivo
+
+.. code:: python
+
+    f.close()                       # Cerramos el archivo
+
+.. code:: python
+
+    print(s[:100])
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+    Agatha
+    Agnetha
+    Ahmed
+    Ahmet
+    Aimee
+    Al
+    Ala
+    Alain
+
+
+Básicamente esta secuencia de trabajo es la que uno utilizará siempre.
+Sin embargo, hay un potencial problema, que ocurrirá si hay algún error
+entre la apertura y el cierre del archivo. Para ello existe una sintaxis
+alternativa
+
+.. code:: python
+
+    with open('../data/names.txt') as fi:
+      s = fi.read()
+    print(s[:50])
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adri
+
+
+.. code:: python
+
+    # fi todavía existe pero está cerrado
+    fi
+
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
+La palabra ``with`` es una palabra reservada del lenguaje y la
+construcción se conoce como *contexto*. Básicamente dice que todo lo que
+está dentro del bloque se realizará en el contexto en que ``f`` es el
+objeto de archivo abierto para lectura.
+
+Ejemplos
+~~~~~~~~
+
+Vamos a repasar algunos de los conceptos discutidos las clases
+anteriores e introducir algunas nuevas funcionalidades con ejemplos
+
+Ejemplo 03-1
+^^^^^^^^^^^^
+
+.. code:: python
+
+    !head ../data/names.txt # Muestro el contenido del archivo
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+
+
+.. code:: python
+
+    # %load scripts/03_ejemplo_1.py
+    #!/usr/bin/env python3
+    
+    fname = '../data/names.txt'
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 3                      # longitud máxima
+    
+    with  open(fname, 'r') as fi:
+      lines = fi.readlines()        # El resultado es una lista
+    
+    for line in lines:
+      if minlen <= len(line.strip()) <= maxlen:
+        n += 1
+        print(line.strip(), end=', ')  # No Newline
+    
+    print('\n')
+    if minlen == maxlen:
+      mensaje = 'Encontramos {} palabras que tienen {} letras'.format(n, minlen)
+    else:
+      mensaje = 'Encontramos {0} palabras que tienen entre {1} y {2} letras'\
+          .format(n, minlen, maxlen)
+    
+    print(mensaje)
+
+
+
+.. parsed-literal::
+
+    Aaa, Aba, Ada, Ada, Ala, Alf, Ama, Ami, Amy, Ana, Ann, Art, Bea, Ben, Bib, Bob, Bob, Bub, Bud, Cdc, Dad, Dan, Deb, Del, Did, Dod, Don, Dud, Eke, Eli, Ere, Eva, Eve, Eve, Ewe, Eye, Fay, Gag, Gay, Gig, Gil, Gog, Guy, Hal, Hon, Hsi, Huh, Hui, Hwa, Ian, Iii, Ima, Ira, Jan, Jay, Jef, Jem, Jen, Jim, Jin, Job, Joe, Jon, Jos, Jun, Kaj, Kay, Kee, Ken, Kim, Kit, Kyu, Lar, Lea, Lee, Len, Leo, Les, Lex, Lin, Liz, Lou, Luc, Lui, Lum, Mac, Mah, Mat, Max, May, Meg, Moe, Mum, Mwa, Nan, Ned, Non, Nou, Nun, Old, Ole, Pam, Pap, Pat, Pdp, Pep, Per, Pia, Pim, Pip, Pop, Pup, Raj, Ram, Ray, Reg, Rex, Ric, Rik, Rob, Rod, Ron, Roy, S's, Sal, Sam, Sho, Sid, Sir, Sis, Son, Spy, Sri, Ssi, Stu, Sue, Sus, Suu, Syd, Tad, Tai, Tal, Tao, Tat, Ted, Tex, The, Tim, Tip, Tit, Tnt, Tom, Tor, Tot, Uma, Una, Uri, Urs, Val, Van, Vic, Wes, Win, Wow, Zoe, Zon, 
+    
+    Encontramos 166 palabras que tienen 3 letras
+
+
+Hemos utilizado aquí:
+
+-  Apertura, lectura, y cerrado de archivos
+-  Iteración en un loop ``for``
+-  Bloques condicionesles (if/else)
+-  Formato de cadenas de caracteres con reemplazo
+-  Impresión por pantalla
+
+La apertura de archivos se realiza utilizando la función ``open`` (este
+es un buen momento para mirar su documentación) con dos argumentos: el
+primero es el nombre del archivo y el segundo el modo en que queremos
+abrilo (en este caso la ``r`` indica lectura).
+
+Con el archivo abierto, en la línea 9 leemos línea por línea todo el
+archivo. El resultado es una lista, donde cada elemento es una línea.
+
+Recorremos la lista, y en cada elemento comparamos la longitud de la
+línea con ciertos valores. Imprimimos las líneas seleccionadas
+
+Finalmente, escribimos el número total de líneas.
+
+Veamos una leve modificación de este programa
+
+Ejemplo 03-2
+^^^^^^^^^^^^
+
+.. code:: python
+
+    # %load scripts/03_ejemplo_2.py
+    #!/usr/bin/env python3
+    
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    
+    fname = '../data/names.txt'
+    
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 3                      # longitud máxima
+    
+    with  open(fname, 'r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          print('({:02d}): {}'.format(n, p), end=', ')  # Vamos numerando las coincidencias
+    print('\n')
+    if minlen == maxlen:
+      mensaje = ('Encontramos un total de {} palabras capicúa que tienen {} letras'.
+                 format(n, minlen))
+    else:
+      mensaje = 'Encontramos un total de {} palabras que tienen\
+     entre {} y {} letras'.format(n, minlen, maxlen)
+    
+    print(mensaje)
+
+
+
+.. parsed-literal::
+
+    (01): aaa, (02): aba, (03): ada, (04): ada, (05): ala, (06): ama, (07): ana, (08): bib, (09): bob, (10): bob, (11): bub, (12): cdc, (13): dad, (14): did, (15): dod, (16): dud, (17): eke, (18): ere, (19): eve, (20): eve, (21): ewe, (22): eye, (23): gag, (24): gig, (25): gog, (26): huh, (27): iii, (28): mum, (29): nan, (30): non, (31): nun, (32): pap, (33): pdp, (34): pep, (35): pip, (36): pop, (37): pup, (38): s's, (39): sis, (40): sus, (41): tat, (42): tit, (43): tnt, (44): tot, (45): wow, 
+    
+    Encontramos un total de 45 palabras capicúa que tienen 3 letras
+
+
+Aquí en lugar de leer todas las líneas e iterar sobre las líneas
+resultantes, iteramos directamente sobre el archivo abierto.
+
+Además incluimos un string al principio del archivo, que servirá de
+documentación, y puede accederse mediante los mecanismos usuales de
+ayuda de Python.
+
+Imprimimos el número de palabra junto con la palabra, usamos ``02d``,
+indicando que es un entero (``d``), que queremos que el campo sea de un
+mínimo número de caracteres de ancho (en este caso 2). Al escribirlo
+como ``02`` le pedimos que complete los vacíos con ceros.
+
+.. code:: python
+
+    s = "Hola\n y chau"
+    with open('tmp.txt','w') as fo:
+        fo.write(s)
+        
+
+.. code:: python
+
+    !cat tmp.txt
+
+
+.. parsed-literal::
+
+    Hola
+     y chau
+
+Archivos comprimidos
+--------------------
+
+Existen varias formas de reducir el tamaño de los archivos de datos.
+Varios factores, tales como el sistema operativo, nuestra familiaridad
+con cada uno de ellos, le da una cierta preferencia a algunos de los
+métodos disponibles. Veamos cómo hacer para leer y escribir algunos de
+los siguientes formatos: **zip, gzip, bz2**
+
+.. code:: python
+
+    import gzip
+    import bz2
+
+.. code:: python
+
+    fi= gzip.open('../data/palabras.words.gz')
+    a = fi.read()
+    fi.close()
+
+.. code:: python
+
+    l= a.splitlines()
+    print(l[:10])
+
+
+.. parsed-literal::
+
+    [b'\xc3\x81frica', b'\xc3\x81ngela', b'\xc3\xa1baco', b'\xc3\xa1bsida', b'\xc3\xa1bside', b'\xc3\xa1cana', b'\xc3\xa1caro', b'\xc3\xa1cates', b'\xc3\xa1cido', b'\xc3\xa1cigos']
+
+
+Con todo esto podríamos escribir (si tuviéramos necesidad) una función
+que puede leer un archivo en cualquiera de estos formatos
+
+.. code:: python
+
+    import gzip
+    import bz2
+    from os.path import splitext
+    import zipfile
+    
+    def abrir(fname, mode='r'):
+      if fname.endswith('gz'):
+        fi= gzip.open(fname, mode=mode)
+      elif fname.endswith('bz2'):
+        fi= bz2.open(fname, mode=mode)    
+      elif fname.endswith('zip'):
+        fi= zipfile.ZipFile(fname, mode=mode)
+      else:
+        fi = open(fname, mode=mode)
+      return fi
+
+.. code:: python
+
+    ff= abrir('../data/palabras.words.gz')
+    a = ff.read()
+    ff.close()
+
+.. code:: python
+
+    l = a.splitlines()
+
+.. code:: python
+
+    print(l[0])
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica'
+
+
+--------------
+
+Ejercicios 05 (a)
+-----------------
+
+1. Realice un programa que:
+
+-  Lea el archivo names.txt
+-  Guarde en un nuevo archivo (llamado pares.txt) palabra por medio del
+   archivo original (la primera, tercera, …) una por línea, pero en el
+   orden inverso al leído
+-  Agregue al final de dicho archivo, las palabras pares pero separadas
+   por un punto y coma (;)
+-  En un archivo llamado longitudes.txt guarde las palabras ordenadas
+   por su longitud, y para cada longitud ordenadas alfabéticamente.
+-  En un archivo llamado letras.txt guarde sólo aquellas palabras que
+   contienen las letras ``w,x,y,z``, con el formato:
+
+   -  w: Walter, ….
+   -  x: Xilofón, …
+   -  y: ….
+   -  z: ….
+
+-  Cree un diccionario, donde cada *key* es la primera letra y cada
+   valor es una lista, cuyo elemento es una tuple (palabra, longitud).
+   Por ejemplo:
+
+.. code:: python
+
+   d['a'] = [('Aaa',3),('Anna', 4), ...]
+
+2. Realice un programa para:
+
+   -  Leer los datos del archivo **aluminio.dat** y poner los datos del
+      elemento en un diccionario de la forma:
+
+   .. code:: python
+
+       d = {'S': 'Al', 'Z':13, 'A':27, 'M': '26.98153863(12)', 'P': 1.0000, 'MS':26.9815386(8)'}
+
+   -  Modifique el programa anterior para que las masas sean números
+      (``float``) y descarte el valor de la incerteza (el número entre
+      paréntesis)
+   -  Agregue el código necesario para obtener una impresión de la
+      forma:
+
+   ::
+
+       Elemento: Al
+       Número Atómico: 13
+       Número de Masa: 27
+       Masa: 26.98154
+
+   Note que la masa sólo debe contener 5 números decimales
+
+--------------
+
