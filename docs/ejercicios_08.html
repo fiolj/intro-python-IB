@@ -13,6 +13,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" /> 
 </head>
@@ -84,7 +85,7 @@
 <h1>Ejercicios de Clase 08<a class="headerlink" href="#ejercicios-de-clase-08" title="Enlazar permanentemente con este título"></a></h1>
 <ol class="arabic simple">
 <li><p>Genere arrays en 2d, cada uno de tamaño 10x10 con:</p>
-<ol class="loweralpha simple">
+<ol class="arabic simple">
 <li><p>Un array con valores 1 en la “diagonal principal” y 0 en el resto
 (Matriz identidad).</p></li>
 <li><p>Un array con valores 0 en la “diagonal principal” y 1 en el resto.</p></li>
@@ -101,6 +102,89 @@ bordes y 0 en el interior.</p></li>
 <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 </div>
+<ol class="arabic" start="3">
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">suma_potencias(p,</span> <span class="pre">n)</span></code> (utilizando arrays y
+<strong>Numpy</strong>) que calcule la operación</p>
+<div class="math notranslate nohighlight">
+\[s_{2} = \sum_{k=0}^{n}k^{p}\]</div>
+<p>.</p>
+</li>
+<li><p>Usando las funciones de numpy <code class="docutils literal notranslate"><span class="pre">sign</span></code> y <code class="docutils literal notranslate"><span class="pre">maximum</span></code> definir las
+siguientes funciones, que acepten como argumento un array y devuelvan
+un array con el mismo <em>shape</em>:</p></li>
+</ol>
+<ul class="simple">
+<li><p>función de Heaviside, que vale 1 para valores positivos de su
+argumento y 0 para valores negativos.</p></li>
+<li><p>La función escalón, que vale 0 para valores del argumento fuera del
+intervalo <span class="math notranslate nohighlight">\((-1,1)\)</span> y 1 para argumentos en el intervalo.</p></li>
+<li><p>La función rampa, que vale 0 para valores negativos de <span class="math notranslate nohighlight">\(x\)</span> y
+<span class="math notranslate nohighlight">\(x\)</span> para valores positivos.</p></li>
+</ul>
+<ol class="arabic simple" start="5">
+<li><p><strong>PARA ENTREGAR. Caída libre</strong> Cree un programa que calcule la
+posición y velocidad de una partícula en caída libre para condiciones
+iniciales dadas (<span class="math notranslate nohighlight">\(h_{0}\)</span>, <span class="math notranslate nohighlight">\(v_{0}\)</span>), y un valor de
+gravedad dados. Se utilizará la convención de que alturas y
+velocidades positivas corresponden a vectores apuntando hacia arriba
+(una velocidad positiva significa que la partícula se aleja de la
+tierra).</p></li>
+</ol>
+<p>El programa debe realizar el cálculo de la velocidad y altura para un
+conjunto de tiempos equiespaciados. El usuario debe poder decidir o
+modificar el comportamiento del programa mediante opciones por línea de
+comandos.</p>
+<p>El programa debe aceptar las siguientes opciones por líneas de comando:
+- <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">vel</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--velocidad=vel</span></code>, donde <code class="docutils literal notranslate"><span class="pre">vel</span></code> es
+el número dando la velocidad inicial en m/s. El valor por defecto será
+<code class="docutils literal notranslate"><span class="pre">0</span></code>. - <code class="docutils literal notranslate"><span class="pre">-a</span> <span class="pre">alt</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--altura=alt</span></code>, donde <code class="docutils literal notranslate"><span class="pre">alt</span></code>
+es un número dando la altura inicial en metros. El valor por defecto
+será <code class="docutils literal notranslate"><span class="pre">1000</span></code>. La altura inicial debe ser un número positivo. -
+<code class="docutils literal notranslate"><span class="pre">-g</span> <span class="pre">grav</span></code>, donde <code class="docutils literal notranslate"><span class="pre">grav</span></code> es el módulo del valor de la aceleración de
+la gravedad en <span class="math notranslate nohighlight">\(m/s^2\)</span>. El valor por defecto será <code class="docutils literal notranslate"><span class="pre">9.8</span></code>. -
+<code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">nombre</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--output=nombre</span></code>, donde <code class="docutils literal notranslate"><span class="pre">nombre</span></code>
+será el nombre de un archivo donde se escribirán los resultados. Si el
+usuario no usa esta opción, debe imprimir por pantalla (<code class="docutils literal notranslate"><span class="pre">sys.stdout</span></code>).
+- <code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">N</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--Ndatos=N</span></code>, donde <code class="docutils literal notranslate"><span class="pre">N</span></code> es un número
+entero indicando la cantidad de datos que deben calcularse. Valor por
+defecto: <code class="docutils literal notranslate"><span class="pre">100</span></code> - <code class="docutils literal notranslate"><span class="pre">--ti=instante_inicial</span></code> indica el tiempo inicial de
+cálculo. Valor por defecto: <code class="docutils literal notranslate"><span class="pre">0</span></code>. No puede ser mayor que el tiempo de
+llegada a la posición <span class="math notranslate nohighlight">\(h=0\)</span> - <code class="docutils literal notranslate"><span class="pre">--tf=tiempo_final</span></code> indica el
+tiempo inicial de cálculo. Valor por defecto será el correspondiente al
+tiempo de llegada a la posición <span class="math notranslate nohighlight">\(h=0\)</span>.</p>
+<p><strong>NOTA:</strong> Envíe el programa llamado <strong>08_Suapellido.py</strong> en un adjunto
+por correo electrónico, con asunto: <strong>08_Suapellido</strong>, antes del día
+miércoles 9 de Marzo.</p>
+<ol class="arabic" start="6">
+<li><p>Queremos realizar numéricamente la integral</p>
+<div class="math notranslate nohighlight">
+\[\int_{a}^{b}f(x)dx\]</div>
+<p>utilizando el método de los trapecios. Para eso partimos el intervalo
+<span class="math notranslate nohighlight">\([a,b]\)</span> en <span class="math notranslate nohighlight">\(N\)</span> subintervalos y aproximamos la curva en
+cada subintervalo por una recta</p>
+</li>
+</ol>
+<img alt="_images/trapez_rule_wiki.png" src="_images/trapez_rule_wiki.png" />
+<p>La línea azul representa la función <span class="math notranslate nohighlight">\(f(x)\)</span> y la línea roja la
+interpolación por una recta (figura de
+<a class="reference external" href="https://en.wikipedia.org/wiki/Trapezoidal_rule">https://en.wikipedia.org/wiki/Trapezoidal_rule</a>)</p>
+<p>Si llamamos <span class="math notranslate nohighlight">\(x_{i}\)</span> (<span class="math notranslate nohighlight">\(i=0,\ldots,n,\)</span> con <span class="math notranslate nohighlight">\(x_{0}=a\)</span> y
+<span class="math notranslate nohighlight">\(x_{n}=b\)</span>) los puntos equiespaciados, entonces queda</p>
+<div class="math notranslate nohighlight">
+\[\int_{a}^{b}f(x)dx\approx\frac{h}{2}\sum_{i=1}^{n}\left(f(x_{i})+f(x_{i-1})\right).\]</div>
+<ul>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">trapz(x,</span> <span class="pre">y)</span></code> que reciba dos arrays
+unidimensionales <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code> y aplique la fórmula de los trapecios.</p></li>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">trapzf(f,</span> <span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">npts=100)</span></code> que recibe una
+función <code class="docutils literal notranslate"><span class="pre">f</span></code>, los límites <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> y el número de puntos a
+utilizar <code class="docutils literal notranslate"><span class="pre">npts</span></code>, y devuelve el valor de la integral por trapecios.</p></li>
+<li><p>Calcule la integral logarítmica de Euler:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{Li}(t) = \int_2^t \frac{1}{\ln x} dx\]</div>
+<p>usando la función ´trapzf´ para valores de
+<code class="docutils literal notranslate"><span class="pre">npts=10,</span> <span class="pre">20,</span> <span class="pre">30,</span> <span class="pre">40,</span> <span class="pre">50,</span> <span class="pre">60</span></code></p>
+</li>
+</ul>
 </div>
 
 
