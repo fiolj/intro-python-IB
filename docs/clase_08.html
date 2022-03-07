@@ -16,7 +16,7 @@
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="next" title="Clase 9: Visualización" href="clase_09.html" />
     <link rel="prev" title="Clase 7: Control de versiones y biblioteca standard" href="clase_07.html" /> 
 </head>
 
@@ -90,6 +90,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-08-c">Ejercicios 08 (c)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Visualización</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul>
@@ -397,20 +398,22 @@ analicemos el tamaño de distintos casos:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista vacía ocupa: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([])))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista con un elem: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([</span><span class="mi">24</span><span class="p">])))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista con 2 elems: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista con 3 elems: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">57</span><span class="p">])))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un entero en Python  : </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">24</span><span class="p">)))</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Una</span> <span class="n">lista</span> <span class="n">vacía</span> <span class="n">ocupa</span><span class="p">:</span> <span class="mi">56</span> <span class="nb">bytes</span>
 <span class="n">Una</span> <span class="n">lista</span> <span class="n">con</span> <span class="n">un</span> <span class="n">elem</span><span class="p">:</span> <span class="mi">64</span> <span class="nb">bytes</span>
 <span class="n">Una</span> <span class="n">lista</span> <span class="n">con</span> <span class="mi">2</span> <span class="n">elems</span><span class="p">:</span> <span class="mi">72</span> <span class="nb">bytes</span>
+<span class="n">Una</span> <span class="n">lista</span> <span class="n">con</span> <span class="mi">3</span> <span class="n">elems</span><span class="p">:</span> <span class="mi">120</span> <span class="nb">bytes</span>
 <span class="n">Un</span> <span class="n">entero</span> <span class="n">en</span> <span class="n">Python</span>  <span class="p">:</span> <span class="mi">28</span> <span class="nb">bytes</span>
 </pre></div>
 </div>
 <p>Vemos que la “Información general de listas” ocupa <strong>56 bytes</strong>, y la
-referencia a cada elemento entero ocupa adicionalmente <strong>8 bytes</strong>.
-Además, cada elemento, un entero de Python, en este caso ocupa <strong>28
-bytes</strong>, por lo que el tamaño total de una <strong>lista</strong> de <span class="math notranslate nohighlight">\(n\)</span>
-números enteros será:</p>
+referencia a cada elemento entero ocupa adicionalmente <strong>8 bytes</strong>, por
+lo que la lista ocupa <strong>120 bytes</strong> Además, cada elemento, un entero de
+Python, en este caso ocupa <strong>28 bytes</strong>, por lo que el tamaño total de
+una <strong>lista</strong> de <span class="math notranslate nohighlight">\(n\)</span> números enteros será:</p>
 <div class="math notranslate nohighlight">
 \[M_{L}(n) = 56 + n \times 8 + n \times 28\]</div>
 <p>En contraste, los <em>arrays</em> deben ser todos del mismo tipo por lo que su
@@ -434,12 +437,14 @@ listas:</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un array con un elem: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">24</span><span class="p">]))))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un array con 2 elems: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">]))))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un entero de Numpy es: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un entero de Numpy usa: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Un array vacío ocupa: 104 bytes
 Un array con un elem: 112 bytes
 Un array con 2 elems: 120 bytes
-Un entero de Numpy es: &lt;class &#39;numpy.int64&#39;&gt;
+Un entero de Numpy es: &lt;class &#39;numpy.float64&#39;&gt;
+Un entero de Numpy es: 32
 </pre></div>
 </div>
 <p>Vemos que la información general sobre arrays ocupa <strong>96 bytes</strong> (en
@@ -1306,7 +1311,7 @@ utilizar <code class="docutils literal notranslate"><span class="pre">npts</span
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="clase_07.html" class="btn btn-neutral float-left" title="Clase 7: Control de versiones y biblioteca standard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clase_09.html" class="btn btn-neutral float-right" title="Clase 9: Visualización" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

@@ -424,6 +424,7 @@ analicemos el tamaño de distintos casos:
     print('Una lista vacía ocupa: {} bytes'.format(getsizeof([])))
     print('Una lista con un elem: {} bytes'.format(getsizeof([24])))
     print('Una lista con 2 elems: {} bytes'.format(getsizeof([24,12])))
+    print('Una lista con 3 elems: {} bytes'.format(getsizeof([24,12,57])))
     print('Un entero en Python  : {} bytes'.format(getsizeof(24)))
 
 
@@ -432,14 +433,15 @@ analicemos el tamaño de distintos casos:
     Una lista vacía ocupa: 56 bytes
     Una lista con un elem: 64 bytes
     Una lista con 2 elems: 72 bytes
+    Una lista con 3 elems: 120 bytes
     Un entero en Python  : 28 bytes
 
 
 Vemos que la “Información general de listas” ocupa **56 bytes**, y la
-referencia a cada elemento entero ocupa adicionalmente **8 bytes**.
-Además, cada elemento, un entero de Python, en este caso ocupa **28
-bytes**, por lo que el tamaño total de una **lista** de :math:`n`
-números enteros será:
+referencia a cada elemento entero ocupa adicionalmente **8 bytes**, por
+lo que la lista ocupa **120 bytes** Además, cada elemento, un entero de
+Python, en este caso ocupa **28 bytes**, por lo que el tamaño total de
+una **lista** de :math:`n` números enteros será:
 
 .. math::   M_{L}(n) = 56 + n \times 8 + n \times 28 
 
@@ -473,6 +475,7 @@ listas:
     print('Un array con un elem: {} bytes'.format(getsizeof(np.array([24]))))
     print('Un array con 2 elems: {} bytes'.format(getsizeof(np.array([24,12]))))
     print('Un entero de Numpy es: {}'.format(type(a[0])))
+    print('Un entero de Numpy usa: {}'.format(getsizeof(a[0])))
 
 
 .. parsed-literal::
@@ -480,7 +483,8 @@ listas:
     Un array vacío ocupa: 104 bytes
     Un array con un elem: 112 bytes
     Un array con 2 elems: 120 bytes
-    Un entero de Numpy es: <class 'numpy.int64'>
+    Un entero de Numpy es: <class 'numpy.float64'>
+    Un entero de Numpy es: 32
 
 
 Vemos que la información general sobre arrays ocupa **96 bytes** (en
