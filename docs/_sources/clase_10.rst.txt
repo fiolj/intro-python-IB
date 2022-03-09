@@ -1,0 +1,1274 @@
+.. _clase_10:
+
+Clase 10: Más información sobre **Numpy** 
+===========================================
+
+
+Creación y operación sobre **Numpy** arrays
+-------------------------------------------
+
+Vamos a ver algunas características de los ``arrays`` de Numpy en un
+poco más de detalle
+
+Funciones para crear arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vimos varios métodos que permiten crear e inicializar arrays
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+.. code:: python
+
+    a= {}
+    a['empty unid'] = np.empty(10)    #  Creación de un array de 10 elementos
+    a['zeros unid'] = np.zeros(10)    #  Creación de un array de 10 elementos inicializados en cero
+    a['zeros bidi'] = np.zeros((5,2)) #  Array bidimensional 10 elementos con *shape* 5x2
+    a['ones bidi'] = np.ones((5,2)) #  Array bidimensional 10 elementos con *shape* 5x2, inicializado en 1
+    a['arange'] = np.arange(10)  # Array inicializado con una secuencia
+    a['lineal'] = np.linspace(0,10,5)  # Array inicializado con una secuencia equiespaciada
+    a['log'] = np.logspace(0,2,10)  # Array inicializado con una secuencia con espaciado logarítmico
+    a['diag'] = np.diag(np.arange(5)) # Matriz diagonal a partir de un vector
+    
+    for k,v in a.items():
+      print('Array {}:\n {}\n'.format(k,v), 80*"*")
+
+
+.. parsed-literal::
+
+    Array empty unid:
+     [ 38.06704666  62.77821128  87.4893759  112.20054053 136.91170515
+     161.62286977 186.33403439 211.04519901 235.75636364 241.64      ]
+     ********************************************************************************
+    Array zeros unid:
+     [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
+     ********************************************************************************
+    Array zeros bidi:
+     [[0. 0.]
+     [0. 0.]
+     [0. 0.]
+     [0. 0.]
+     [0. 0.]]
+     ********************************************************************************
+    Array ones bidi:
+     [[1. 1.]
+     [1. 1.]
+     [1. 1.]
+     [1. 1.]
+     [1. 1.]]
+     ********************************************************************************
+    Array arange:
+     [0 1 2 3 4 5 6 7 8 9]
+     ********************************************************************************
+    Array lineal:
+     [ 0.   2.5  5.   7.5 10. ]
+     ********************************************************************************
+    Array log:
+     [  1.           1.66810054   2.7825594    4.64158883   7.74263683
+      12.91549665  21.5443469   35.93813664  59.94842503 100.        ]
+     ********************************************************************************
+    Array diag:
+     [[0 0 0 0 0]
+     [0 1 0 0 0]
+     [0 0 2 0 0]
+     [0 0 0 3 0]
+     [0 0 0 0 4]]
+     ********************************************************************************
+
+
+La función ``np.tile(A, reps)`` permite crear un array repitiendo el
+patrón ``A`` las veces indicada por ``reps`` a lo largo de cada eje
+
+.. code:: python
+
+    a = np.arange(1,6,2)
+    a
+
+
+
+
+.. parsed-literal::
+
+    array([1, 3, 5])
+
+
+
+.. code:: python
+
+    np.tile(a, 2)
+
+
+
+
+.. parsed-literal::
+
+    array([1, 3, 5, 1, 3, 5])
+
+
+
+.. code:: python
+
+    a1=np.tile(a, (1,2))
+
+.. code:: python
+
+    a1.shape
+
+
+
+
+.. parsed-literal::
+
+    (1, 6)
+
+
+
+.. code:: python
+
+    a1
+
+
+
+
+.. parsed-literal::
+
+    array([[1, 3, 5, 1, 3, 5]])
+
+
+
+.. code:: python
+
+    b = [[1,2],[3,4]]
+
+.. code:: python
+
+    print(b)
+
+
+.. parsed-literal::
+
+    [[1, 2], [3, 4]]
+
+
+.. code:: python
+
+    np.tile(b,(1,2))
+
+
+
+
+.. parsed-literal::
+
+    array([[1, 2, 1, 2],
+           [3, 4, 3, 4]])
+
+
+
+.. code:: python
+
+    np.tile(b, (2,1))
+
+
+
+
+.. parsed-literal::
+
+    array([[1, 2],
+           [3, 4],
+           [1, 2],
+           [3, 4]])
+
+
+
+En general, el argumento ``reps = (nrows, ncols)`` indica el número de
+repeticiones en filas (hacia abajo) y columnas (hacia la derecha),
+creando nuevas dimensiones si es necesario
+
+.. code:: python
+
+    a
+
+
+
+
+.. parsed-literal::
+
+    array([1, 3, 5])
+
+
+
+.. code:: python
+
+    np.tile(a, (3,2))
+
+
+
+
+.. parsed-literal::
+
+    array([[1, 3, 5, 1, 3, 5],
+           [1, 3, 5, 1, 3, 5],
+           [1, 3, 5, 1, 3, 5]])
+
+
+
+Funciones que actúan sobre arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Numpy incluye muchas funciones matemáticas que actúan sobre arrays
+completos (de una o más dimensiones). La lista completa se encuentra en
+la
+`documentación <http://docs.scipy.org/doc/numpy/reference/ufuncs.html#available-ufuncs>`__
+e incluye:
+
+.. code:: python
+
+    x = np.linspace(np.pi/180, np.pi,7)
+    y = np.geomspace(10,100,7)
+
+.. code:: python
+
+    print(x)
+    print(y)
+    print(x+y)                      # Suma elemento a elemento
+    print(x*y)                      # Multiplicación elemento a elemento
+    print(y/x)                      # División elemento a elemento
+    print(x//2)                     # División entera elemento a elemento
+
+
+.. parsed-literal::
+
+    [0.01745329 0.53814319 1.05883308 1.57952297 2.10021287 2.62090276
+     3.14159265]
+    [ 10.          14.67799268  21.5443469   31.6227766   46.41588834
+      68.12920691 100.        ]
+    [ 10.01745329  15.21613586  22.60317998  33.20229957  48.5161012
+      70.75010967 103.14159265]
+    [1.74532925e-01 7.89886174e+00 2.28118672e+01 4.99489021e+01
+     9.74832459e+01 1.78560026e+02 3.14159265e+02]
+    [572.95779513  27.27525509  20.34725522  20.02046006  22.10056375
+      25.99455727  31.83098862]
+    [0. 0. 0. 0. 1. 1. 1.]
+
+
+.. code:: python
+
+    print('x =', x)
+    print('square\n', x**2)              # potencias
+    print('sin\n',np.sin(x))             # Seno (np.cos, np.tan)
+    print("tanh\n",np.tanh(x))           # tang hiperb (np.sinh, np.cosh)
+    print('exp\n', np.exp(-x))           # exponenciales
+    print('log\n', np.log(x))            # logaritmo en base e (np.log10)
+    print('abs\n',np.absolute(x))        # Valor absoluto
+    print('resto\n', np.remainder(x,2))  # Resto
+
+
+.. parsed-literal::
+
+    x = [0.01745329 0.53814319 1.05883308 1.57952297 2.10021287 2.62090276
+     3.14159265]
+    square
+     [3.04617420e-04 2.89598089e-01 1.12112749e+00 2.49489282e+00
+     4.41089408e+00 6.86913128e+00 9.86960440e+00]
+    sin
+     [1.74524064e-02 5.12542501e-01 8.71784414e-01 9.99961923e-01
+     8.63101882e-01 4.97478722e-01 1.22464680e-16]
+    tanh
+     [0.01745152 0.49158114 0.78521683 0.91852736 0.97046433 0.9894743
+     0.99627208]
+    exp
+     [0.98269813 0.58383131 0.34686033 0.20607338 0.12243036 0.07273717
+     0.04321392]
+    log
+     [-4.04822697 -0.61963061  0.05716743  0.45712289  0.7420387   0.96351882
+      1.14472989]
+    abs
+     [0.01745329 0.53814319 1.05883308 1.57952297 2.10021287 2.62090276
+     3.14159265]
+    resto
+     [0.01745329 0.53814319 1.05883308 1.57952297 0.10021287 0.62090276
+     1.14159265]
+
+
+Productos entre arrays y productos vectoriales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    # Creamos arrays unidimensionales (vectores) y bidimensionales (matrices)
+    v1 = np.array([2, 3, 4])
+    v2 = np.array([1, 1, 1])
+    A = np.arange(1,13,2).reshape(2, 3)
+    B = np.linspace(0.5,11.5,12).reshape(3, 4)
+
+.. code:: python
+
+    print(A)
+
+
+.. parsed-literal::
+
+    [[ 1  3  5]
+     [ 7  9 11]]
+
+
+.. code:: python
+
+    print(B)
+
+
+.. parsed-literal::
+
+    [[ 0.5  1.5  2.5  3.5]
+     [ 4.5  5.5  6.5  7.5]
+     [ 8.5  9.5 10.5 11.5]]
+
+
+.. code:: python
+
+    print(v1*v2)
+
+
+.. parsed-literal::
+
+    [2 3 4]
+
+
+.. code:: python
+
+    print(A*v1)
+
+
+.. parsed-literal::
+
+    [[ 2  9 20]
+     [14 27 44]]
+
+
+Los productos se realizan “elemento a elemento”, si queremos obtener
+“productos internos” o productos entre matrices (o matrices y vectores)
+
+.. code:: python
+
+    print(v1, '.', v2, '=', np.dot(v1, v2))
+
+
+.. parsed-literal::
+
+    [2 3 4] . [1 1 1] = 9
+
+
+.. code:: python
+
+    print( A, 'x', v1, '=', np.dot(A, v1))
+
+
+
+.. parsed-literal::
+
+    [[ 1  3  5]
+     [ 7  9 11]] x [2 3 4] = [31 85]
+
+
+.. code:: python
+
+    print(A.shape, B.shape)
+
+
+.. parsed-literal::
+
+    (2, 3) (3, 4)
+
+
+.. code:: python
+
+    print( 'A x B = \n',np.dot(A, B) )
+
+
+.. parsed-literal::
+
+    A x B = 
+     [[ 56.5  65.5  74.5  83.5]
+     [137.5 164.5 191.5 218.5]]
+
+
+.. code:: python
+
+    print( 'B^t x A^t =\n ',np.dot(B.T, A.T))
+
+
+.. parsed-literal::
+
+    B^t x A^t =
+      [[ 56.5 137.5]
+     [ 65.5 164.5]
+     [ 74.5 191.5]
+     [ 83.5 218.5]]
+
+
+Además, el módulo numpy.linalg incluye otras funcionalidades como
+determinantes, normas, determinación de autovalores y autovectores,
+descomposiciones, etc.
+
+Comparaciones entre arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La comparación, como las operaciones y aplicación de funciones se
+realiza “elemento a elemento”.
+
+=============================================== ==========
+Funciones                                       Operadores
+=============================================== ==========
+greater(x1, x2, /[, out, where, casting, …])    (x1 > x2)
+greater_equal(x1, x2, /[, out, where, …])       (x1 >= x2)
+less(x1, x2, /[, out, where, casting, …])       (x1 < x2)
+less_equal(x1, x2, /[, out, where, casting, …]) (x1 =< x2)
+not_equal(x1, x2, /[, out, where, casting, …])  (x1 != x2)
+equal(x1, x2, /[, out, where, casting, …])      (x1 == x2)
+=============================================== ==========
+
+.. code:: python
+
+    z = np.array((-1,3,4,0.5,2,9,0.7))
+
+.. code:: python
+
+    print(x)
+    print(y)
+    print(z)
+
+
+.. parsed-literal::
+
+    [0.01745329 0.53814319 1.05883308 1.57952297 2.10021287 2.62090276
+     3.14159265]
+    [ 10.          14.67799268  21.5443469   31.6227766   46.41588834
+      68.12920691 100.        ]
+    [-1.   3.   4.   0.5  2.   9.   0.7]
+
+
+.. code:: python
+
+    c1 = x <= z
+    c2 = np.less_equal(z,y)
+    c3 = np.less_equal(x,y)
+    print(c1)
+    print(c2)
+    print(c3)
+
+
+
+.. parsed-literal::
+
+    [False  True  True False False  True False]
+    [ True  True  True  True  True  True  True]
+    [ True  True  True  True  True  True  True]
+
+
+.. code:: python
+
+    c1                              # Veamos que tipo de array es:
+
+
+
+
+.. parsed-literal::
+
+    array([False,  True,  True, False, False,  True, False])
+
+
+
+.. code:: python
+
+    np.sum(c1), np.sum(c2), c3.sum()
+
+
+
+
+.. parsed-literal::
+
+    (3, 7, 7)
+
+
+
+Como vemos, las comparaciones nos dan un vector de variables lógicas.
+Cuando queremos combinar condiciones no funciona usar las palabras
+``and`` y ``or`` de *Python* porque estaríamos comparando los dos
+elementos (arrays completos).
+
+.. code:: python
+
+    print(np.logical_and(c1, c2))
+    print(c1 & c2)
+    print(np.logical_and(c2, c3))
+    print(c2 & c3)
+
+
+.. parsed-literal::
+
+    [False  True  True False False  True False]
+    [False  True  True False False  True False]
+    [ True  True  True  True  True  True  True]
+    [ True  True  True  True  True  True  True]
+
+
+.. code:: python
+
+    print(np.logical_or(c1, c2))
+    print(c1 | c2)
+    print(np.logical_or(c2, c3))
+    print(c2 | c3)
+
+
+.. parsed-literal::
+
+    [ True  True  True  True  True  True  True]
+    [ True  True  True  True  True  True  True]
+    [ True  True  True  True  True  True  True]
+    [ True  True  True  True  True  True  True]
+
+
+.. code:: python
+
+    print(np.logical_xor(c1, c2))
+    print(np.logical_xor(c2, c3))
+
+
+.. parsed-literal::
+
+    [ True False False  True  True False  True]
+    [False False False False False False False]
+
+
+Atributos de *arrays*
+---------------------
+
+Los array tienen otras propiedades, que pueden explorarse apretando
+``<TAB>`` en una terminal o notebook de **IPython** o leyendo la
+documentación de `Numpy <http://docs.scipy.org/doc/numpy/user>`__, o
+utilizando la función ``dir(arr)`` (donde ``arr`` es una variable del
+tipo array) o ``dir(np.ndarray)``.
+
+En la tabla se muestra una lista de los atributos de los numpy array
+
+.. image:: figuras/array_atr.png
+
+Exploremos algunas de ellas
+
+reshape
+~~~~~~~
+
+.. code:: python
+
+    arr= np.arange(12)                         # Vector
+    print("Vector original:\n", arr)
+    arr2= arr.reshape((3,4))                   # Le cambiamos la forma a matriz de 3x4
+    print("Cambiando la forma a 3x4:\n", arr2)
+    arr3= np.reshape(arr,(4,3))                # Le cambiamos la forma a matriz de 4x3
+    print("Cambiando la forma a 4x3:\n", arr3)
+
+
+.. parsed-literal::
+
+    Vector original:
+     [ 0  1  2  3  4  5  6  7  8  9 10 11]
+    Cambiando la forma a 3x4:
+     [[ 0  1  2  3]
+     [ 4  5  6  7]
+     [ 8  9 10 11]]
+    Cambiando la forma a 4x3:
+     [[ 0  1  2]
+     [ 3  4  5]
+     [ 6  7  8]
+     [ 9 10 11]]
+
+
+.. code:: python
+
+    arr2[0,0] = 5
+    arr2[2,1] = -9
+
+.. code:: python
+
+    print(arr2)
+
+
+.. parsed-literal::
+
+    [[ 5  1  2  3]
+     [ 4  5  6  7]
+     [ 8 -9 10 11]]
+
+
+.. code:: python
+
+    print(arr)
+
+
+.. parsed-literal::
+
+    [ 5  1  2  3  4  5  6  7  8 -9 10 11]
+
+
+.. code:: python
+
+    print(arr3)
+
+
+.. parsed-literal::
+
+    [[ 5  1  2]
+     [ 3  4  5]
+     [ 6  7  8]
+     [-9 10 11]]
+
+
+.. code:: python
+
+    try:
+        arr.reshape((3,3))   # Si la nueva forma no es adecuada, falla
+    except ValueError as e:
+        print("Error: la nueva forma es incompatible:", e)
+
+
+.. parsed-literal::
+
+    Error: la nueva forma es incompatible: cannot reshape array of size 12 into shape (3,3)
+
+
+transpose
+~~~~~~~~~
+
+.. code:: python
+
+    print('Transpose:\n', arr2.T)
+    print('Transpose:\n', np.transpose(arr2))
+
+
+.. parsed-literal::
+
+    Transpose:
+     [[ 5  4  8]
+     [ 1  5 -9]
+     [ 2  6 10]
+     [ 3  7 11]]
+    Transpose:
+     [[ 5  4  8]
+     [ 1  5 -9]
+     [ 2  6 10]
+     [ 3  7 11]]
+
+
+min, max
+~~~~~~~~
+
+Las funciones para encontrar mínimo y máximo pueden aplicarse tanto a
+vectores como a arrays\` con más dimensiones. En este último caso puede
+elegirse si se trabaja sobre uno de los ejes:
+
+.. code:: python
+
+    print(arr2)
+    print(np.max(arr2))
+    print(np.max(arr2,axis=0))
+    print(np.max(arr2,axis=1))
+
+
+
+.. parsed-literal::
+
+    [[ 5  1  2  3]
+     [ 4  5  6  7]
+     [ 8 -9 10 11]]
+    11
+    [ 8  5 10 11]
+    [ 5  7 11]
+
+
+.. code:: python
+
+    np.max(arr2[1,:])
+
+
+
+
+.. parsed-literal::
+
+    7
+
+
+
+El primer eje ``(axis=0)`` corresponde a las columnas (convención del
+lenguaje ``C``), y por lo tanto dará un valor por cada columna.
+
+Si no damos el argumento opcional ``axis`` ambas funciones nos darán el
+mínimo o máximo de todos los elementos. Si le damos un eje nos devolverá
+el mínimo a lo largo de ese eje.
+
+argmin, argmax
+~~~~~~~~~~~~~~
+
+Estas funciones trabajan de la misma manera que ``min`` y ``max`` pero
+devuelve los índices en lugar de los valores.
+
+.. code:: python
+
+    print(np.argmax(arr2))
+    print(np.argmax(arr2,axis=0))
+    print(np.argmax(arr2,axis=1))
+
+
+
+.. parsed-literal::
+
+    11
+    [2 1 2 2]
+    [0 3 3]
+
+
+sum, prod, mean, std
+~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    print(arr2)
+    print('sum', np.sum(arr2))
+    print('sum, 0', np.sum(arr2,axis=0))
+    print('sum, 1', np.sum(arr2,axis=1))
+
+
+
+.. parsed-literal::
+
+    [[ 5  1  2  3]
+     [ 4  5  6  7]
+     [ 8 -9 10 11]]
+    sum 53
+    sum, 0 [17 -3 18 21]
+    sum, 1 [11 22 20]
+
+
+.. code:: python
+
+    print(np.prod(arr2))
+    print(np.prod(arr2,axis=0))
+    print(np.prod(arr2,axis=1))
+
+
+.. parsed-literal::
+
+    -199584000
+    [160 -45 120 231]
+    [   30   840 -7920]
+
+
+.. code:: python
+
+    print(arr2.mean(), '=', arr2.sum()/arr2.size)
+    print(np.mean(arr2,axis=0))
+    print(np.mean(arr2,axis=1))
+    print(np.std(arr2))
+    print(np.std(arr2,axis=1))
+
+
+
+.. parsed-literal::
+
+    4.416666666666667 = 4.416666666666667
+    [ 5.66666667 -1.          6.          7.        ]
+    [2.75 5.5  5.  ]
+    4.9742391936411305
+    [1.47901995 1.11803399 8.15475322]
+
+
+cumsum, cumprod, trapz
+~~~~~~~~~~~~~~~~~~~~~~
+
+Las funciones ``cumsum`` y ``cumprod`` devuelven la suma y producto
+acumulativo recorriendo el array, opcionalmente a lo largo de un eje
+
+.. code:: python
+
+    print(arr2)
+
+
+.. parsed-literal::
+
+    [[ 5  1  2  3]
+     [ 4  5  6  7]
+     [ 8 -9 10 11]]
+
+
+.. code:: python
+
+    # Suma todos los elementos anteriores y devuelve el array unidimensional
+    print(arr2.cumsum())
+
+
+.. parsed-literal::
+
+    [ 5  6  8 11 15 20 26 33 41 32 42 53]
+
+
+.. code:: python
+
+    # Para cada columna, en cada posición suma los elementos anteriores
+    print(arr2.cumsum(axis=0))
+
+
+.. parsed-literal::
+
+    [[ 5  1  2  3]
+     [ 9  6  8 10]
+     [17 -3 18 21]]
+
+
+.. code:: python
+
+    # En cada fila, el valor es la suma de todos los elementos anteriores de la fila
+    print(arr2.cumsum(axis=1))
+
+
+.. parsed-literal::
+
+    [[ 5  6  8 11]
+     [ 4  9 15 22]
+     [ 8 -1  9 20]]
+
+
+.. code:: python
+
+    # Igual que antes pero con el producto
+    print(arr2.cumprod(axis=0))
+
+
+.. parsed-literal::
+
+    [[  5   1   2   3]
+     [ 20   5  12  21]
+     [160 -45 120 231]]
+
+
+La función trapz evalúa la integral a lo largo de un eje, usando la
+regla de los trapecios (la misma que nosotros programamos en un
+ejercicio)
+
+.. code:: python
+
+    print(np.trapz(arr2,axis=0))
+    print(np.trapz(arr2,axis=1))
+
+
+.. parsed-literal::
+
+    [10.5  1.  12.  14. ]
+    [ 7.  16.5 10.5]
+
+
+.. code:: python
+
+    # el valor por default de axis es -1
+    print(np.trapz(arr2))
+
+
+.. parsed-literal::
+
+    [ 7.  16.5 10.5]
+
+
+nonzero
+~~~~~~~
+
+Devuelve una *tupla* de arrays, una por dimensión, que contiene los
+índices de los elementos no nulos
+
+.. code:: python
+
+    # El método copy() crea un nuevo array con los mismos valores que el original
+    arr4 = arr2.copy()
+    arr4[1,:2] = arr4[2,2:] = 0
+    arr4
+
+
+
+
+.. parsed-literal::
+
+    array([[ 5,  1,  2,  3],
+           [ 0,  0,  6,  7],
+           [ 8, -9,  0,  0]])
+
+
+
+.. code:: python
+
+    # Vemos que arr2 no se modifica al modificar arr4.
+    arr2
+
+
+
+
+.. parsed-literal::
+
+    array([[ 5,  1,  2,  3],
+           [ 4,  5,  6,  7],
+           [ 8, -9, 10, 11]])
+
+
+
+.. code:: python
+
+    np.nonzero(arr4)
+
+
+
+
+.. parsed-literal::
+
+    (array([0, 0, 0, 0, 1, 1, 2, 2]), array([0, 1, 2, 3, 2, 3, 0, 1]))
+
+
+
+.. code:: python
+
+    np.transpose(arr4.nonzero())
+
+
+
+
+.. parsed-literal::
+
+    array([[0, 0],
+           [0, 1],
+           [0, 2],
+           [0, 3],
+           [1, 2],
+           [1, 3],
+           [2, 0],
+           [2, 1]])
+
+
+
+.. code:: python
+
+    arr4[arr4.nonzero()]
+
+
+
+
+.. parsed-literal::
+
+    array([ 5,  1,  2,  3,  6,  7,  8, -9])
+
+
+
+Conveniencias con arrays
+------------------------
+
+Convertir un array a unidimensional (ravel)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    a = np.array([[1,2],[3,4]])
+
+.. code:: python
+
+    print(a)
+
+
+.. parsed-literal::
+
+    [[1 2]
+     [3 4]]
+
+
+.. code:: python
+
+    b= np.ravel(a)
+
+.. code:: python
+
+    print(a.shape, b.shape)
+    print(b)
+
+
+.. parsed-literal::
+
+    (2, 2) (4,)
+    [1 2 3 4]
+
+
+.. code:: python
+
+    b.base  is a
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+``ravel`` tiene un argumento opcional ‘order’
+
+.. code:: python
+
+    np.ravel(a, order='C')          # order='C' es el default 
+
+
+
+
+.. parsed-literal::
+
+    array([1, 2, 3, 4])
+
+
+
+.. code:: python
+
+    np.ravel(a, order='F')
+
+
+
+
+.. parsed-literal::
+
+    array([1, 3, 2, 4])
+
+
+
+El método ``flatten`` hace algo muy parecido a ``ravel``, la diferencia
+es que ``flatten`` siempre crea una nueva copia del array, mientras que
+``ravel`` puede devolver una nueva vista del mismo array.
+
+.. code:: python
+
+    a.flatten()
+
+
+
+
+.. parsed-literal::
+
+    array([1, 2, 3, 4])
+
+
+
+Enumerate para ``ndarrays``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Para iterables en **Python** existe la función enumerate que devuelve
+una tupla con el índice y el valor. En **Numpy** existe un iterador
+multidimensional llamado ``ndenumerate()``
+
+.. code:: python
+
+    print(arr2)
+
+
+.. parsed-literal::
+
+    [[ 5  1  2  3]
+     [ 4  5  6  7]
+     [ 8 -9 10 11]]
+
+
+.. code:: python
+
+    for (i,j), x in np.ndenumerate(arr2):
+      print(f'x[{i},{j}]-> {x}')
+
+
+.. parsed-literal::
+
+    x[0,0]-> 5
+    x[0,1]-> 1
+    x[0,2]-> 2
+    x[0,3]-> 3
+    x[1,0]-> 4
+    x[1,1]-> 5
+    x[1,2]-> 6
+    x[1,3]-> 7
+    x[2,0]-> 8
+    x[2,1]-> -9
+    x[2,2]-> 10
+    x[2,3]-> 11
+
+
+Vectorización de funciones escalares
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si bien en **Numpy** las funciones están vectorizadas, hay ocasiones en
+que las funciones son el resultado de una simulación, optimización,
+integración u otro cálculo complejo, y si bien la paralelización puede
+ser trivial, el cálculo debe ser realizado para cada valor de algún
+parámetro y no puede ser realizado directamente con un vector. Para ello
+existe la función ``vectorize()``. Veamos un ejemplo, calculando la
+función *coseno()* como la integral del *seno()*
+
+.. code:: python
+
+    def my_trapz(f, a, b):
+      x = np.linspace(a,b,100)
+      y = f(x)
+      return ((y[1:]+y[:-1])*(x[1:]-x[:-1])).sum()/2
+
+.. code:: python
+
+    def mi_cos(t):
+      return 1-my_trapz(np.sin, 0, t)
+
+.. code:: python
+
+    mi_cos(np.pi/4)
+
+
+
+
+.. parsed-literal::
+
+    0.7071083173516677
+
+
+
+que se compara bastante bien con el valor esperado del coseno:
+
+.. code:: python
+
+    np.cos(np.pi/4)
+
+
+
+
+.. parsed-literal::
+
+    0.7071067811865476
+
+
+
+Para calcular sobre un conjunto de datos:
+
+.. code:: python
+
+    x = np.linspace(0,np.pi,30)
+
+.. code:: python
+
+    print(mi_cos(x))
+
+
+.. parsed-literal::
+
+    -28.998610761224644
+
+
+Obtuvimos un valor único que claramente no puede ser el coseno de ningún
+ángulo. Si calculamos el coseno con el mismo argumento (vectorial)
+obtenemos un vector de valores como se espera:
+
+.. code:: python
+
+    print(np.cos(x))
+
+
+.. parsed-literal::
+
+    [ 1.          0.99413796  0.97662056  0.94765317  0.90757542  0.85685718
+      0.79609307  0.72599549  0.64738628  0.56118707  0.46840844  0.37013816
+      0.26752834  0.161782    0.05413891 -0.05413891 -0.161782   -0.26752834
+     -0.37013816 -0.46840844 -0.56118707 -0.64738628 -0.72599549 -0.79609307
+     -0.85685718 -0.90757542 -0.94765317 -0.97662056 -0.99413796 -1.        ]
+
+
+Si el cálculo fuera más complejo y no tuviéramos la posibilidad de
+realizarlo en forma vectorial, debemos realizar una iteración llamando a
+esta función en cada paso:
+
+.. code:: python
+
+    y = []
+    for xx in x:
+      y.append(mi_cos(xx))
+    print(np.array(y))
+
+
+.. parsed-literal::
+
+    [ 1.          0.99413796  0.97662057  0.94765322  0.90757557  0.85685753
+      0.7960938   0.72599683  0.64738854  0.56119061  0.46841375  0.37014576
+      0.26753886  0.16179613  0.05415741 -0.05411524 -0.16175232 -0.26749179
+     -0.37009386 -0.46835555 -0.56112475 -0.64731379 -0.72591214 -0.79599826
+     -0.85675045 -0.90745645 -0.9475218  -0.97647677 -0.99398196 -0.99983216]
+
+
+.. code:: python
+
+    y = np.zeros(x.size)
+    for i,xx in enumerate(x):
+      y[i] = mi_cos(xx)
+
+.. code:: python
+
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f7b6aef8130>]
+
+
+
+
+.. image:: figuras/10_1_mas_arrays_106_1.png
+
+
+Como conveniencia, para evitar tener que hacer explícitamente el bucle
+``for`` existe la función ``vectorize``, que toma como argumento a una
+función que toma y devuelve escalares, y retorna una función equivalente
+que acepta arrays:
+
+.. code:: python
+
+    coseno = np.vectorize(mi_cos)
+
+.. code:: python
+
+    plt.plot(x, coseno(x), '-')
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f7b6ad588b0>]
+
+
+
+
+.. image:: figuras/10_1_mas_arrays_109_1.png
+
+
+--------------
+
+Ejercicios 10 (a)
+-----------------
+
+1. Dado un array ``a`` de números, creado por ejemplo usando:
+
+   .. code:: python
+
+      a = np.random.uniform(size=100)
+
+   Encontrar el número más cercano a un número escalar dado (por ejemplo
+   x=0.5). Utilice los métodos discutidos.
+
+--------------
+
+
