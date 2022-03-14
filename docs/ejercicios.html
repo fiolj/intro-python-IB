@@ -17,7 +17,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Programa Detallado" href="programa_detalle.html" />
-    <link rel="prev" title="Clase 10: Más información sobre Numpy" href="clase_10.html" /> 
+    <link rel="prev" title="Clase 11: Introducción al paquete Scipy" href="clase_11.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,6 +52,7 @@
 <li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Introducción a Numpy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Visualización</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul class="current">
@@ -68,6 +69,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-08">Ejercicios de Clase 08</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-09">Ejercicios de Clase 09</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-10">Ejercicios de Clase 10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-11">Ejercicios de Clase 11</a></li>
 </ul>
 </li>
 </ul>
@@ -1000,13 +1002,75 @@ x=0.5). Utilice los métodos discutidos.</p>
 </li>
 </ol>
 </div>
+<div class="section" id="ejercicios-de-clase-11">
+<h2>Ejercicios de Clase 11<a class="headerlink" href="#ejercicios-de-clase-11" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic simple" start="2">
+<li><p>En el archivo <code class="docutils literal notranslate"><span class="pre">palabras.words.gz</span></code> hay una larga lista de palabras,
+en formato comprimido. Siguiendo la idea del ejemplo dado en clases
+realizar un histograma de las longitudes de las palabras.</p></li>
+<li><p>Modificar el programa del ejemplo de la clase para calcular el
+histograma de frecuencia de letras en las palabras (no sólo la
+primera). Considere el caso insensible a la capitalización: las
+mayúsculas y minúsculas corresponden a la misma letra (‘á’ es lo
+mismo que ‘Á’ y ambas corresponden a ‘a’).</p></li>
+<li><p>Utilizando el mismo archivo de palabras, Guardar todas las palabras
+en un array y obtener los índices de las palabras que tienen una dada
+letra (por ejemplo la letra ‘j’), los índices de las palabras con un
+número dado de letras (por ejemplo 5 letras), y los índices de las
+palabras cuya tercera letra es una vocal. En cada caso, dar luego las
+palabras que cumplen dichas condiciones.</p></li>
+<li><p>En el archivo <code class="docutils literal notranslate"><span class="pre">colision.npy</span></code> hay una gran cantidad de datos que
+corresponden al resultado de una simulación. Los datos están
+organizados en trece columnas. La primera corresponde a un parámetro,
+mientras que las 12 restantes corresponde a cada una de las tres
+componentes de la velocidad de cuatro partículas. Calcular y
+graficar:</p></li>
+<li><p>la distribución de ocurrencias del primer parámetro.</p></li>
+<li><p>la distribución de ocurrencias de energías de la tercera partícula.</p></li>
+<li><p>la distribución de ocurrencias de ángulos de la cuarta partícula,
+medido respecto al tercer eje.</p></li>
+<li><p>la distribución de energías de la tercera partícula cuando la cuarta
+partícula tiene un ángulo menor a 90 grados con el tercer eje.</p></li>
+</ol>
+<p>Realizar los cuatro gráficos utilizando un formato adecuado para
+presentación (charla o poster).</p>
+<ol class="arabic" start="5">
+<li><p>Leer el archivo <code class="docutils literal notranslate"><span class="pre">colision.npy</span></code> y guardar los datos en formato texto
+con un encabezado adecuado. Usando el comando mágico <code class="docutils literal notranslate"><span class="pre">%timeit</span></code> o el
+módulo timeit, comparar el tiempo que tarda en leer los datos e
+imprimir el último valor utilizando el formato de texto y el formato
+original <code class="docutils literal notranslate"><span class="pre">npy</span></code>. Comparar el tamaño de los dos archivos.</p></li>
+<li><p>El submódulo <strong>scipy.constants</strong> tiene valores de constantes físicas
+de interés. Usando este módulo compute la constante de
+Stefan-Boltzmann <span class="math notranslate nohighlight">\(\sigma\)</span> utilizando la relación:</p>
+<div class="math notranslate nohighlight">
+\[\sigma = \frac{2 \pi^5 k_B^4}{15 h^3 c^2}\]</div>
+<p>Confirme que el valor obtenido es correcto comparando con la
+constante para esta cantidad en <code class="docutils literal notranslate"><span class="pre">scipy.constants</span></code></p>
+</li>
+<li><p>Usando <strong>Scipy</strong> y <strong>Matplotlib</strong> grafique las funciones de onda del
+oscilador armónico unidimensional para las cuatro energías más bajas
+(<span class="math notranslate nohighlight">\(n=1,2,3,4\)</span>), en el intervalo <span class="math notranslate nohighlight">\([-5,5]\)</span>. Asegúrese de que
+están correctamente normalizados.</p></li>
+</ol>
+<p>Las funciones están dadas por:</p>
+<div class="math notranslate nohighlight">
+\[\psi _{n}(x)={\frac {1}{\sqrt {2^{n}\,n!}}}\cdot \left({\frac {\omega }{\pi}}\right)^{1/4}\cdot e^{-{\frac {\omega x^{2}}{2 }}}\cdot H_{n}\left({\sqrt{\omega}}\, x\right),\qquad n=0,1,2,\ldots .\]</div>
+<p>donde <span class="math notranslate nohighlight">\(H_{n}\)</span> son los polinomios de Hermite, y usando
+<span class="math notranslate nohighlight">\(\omega = 2\)</span>.</p>
+<p>Trate de obtener un gráfico similar al siguiente (tomado de
+<a class="reference external" href="https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator">wikipedia</a>.
+Realizado por By AllenMcC. - <a class="reference external" href="File:HarmOsziFunktionen.jpg">File:HarmOsziFunktionen.jpg</a>, <a class="reference external" href="https://commons.wikimedia.org/w/index.php?curid=11623546">CC BY-SA
+3.0</a>)</p>
+<img alt="_images/HarmOsziFunktionen.png" src="_images/HarmOsziFunktionen.png" />
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="clase_10.html" class="btn btn-neutral float-left" title="Clase 10: Más información sobre Numpy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="clase_11.html" class="btn btn-neutral float-left" title="Clase 11: Introducción al paquete Scipy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
         <a href="programa_detalle.html" class="btn btn-neutral float-right" title="Programa Detallado" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
