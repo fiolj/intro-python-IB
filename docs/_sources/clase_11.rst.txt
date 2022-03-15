@@ -1115,6 +1115,8 @@ que creamos una función con el orden correcto de argumentos:
   
   
 
+--------------
+
 Ejercicios 11 (a)
 -----------------
 
@@ -1124,6 +1126,10 @@ Ejercicios 11 (a)
 .. math::  I(k,L) = \int_{0}^{L} x^{k} e^{-k x / 2} \sin{(k x)} dx 
 
 con rango de variación de :math:`L` entre :math:`0` y :math:`2 \pi`.
+
+--------------
+
+.
 
 
 Álgebra lineal
@@ -1144,56 +1150,27 @@ Esquemáticamente:
 
 (Gentileza de `xkcd <https://www.xkcd.com/184/>`__)
 
-.. code:: python
+.. code:: 
 
-    import numpy as np
-    import matplotlib.pyplot as plt
     from scipy import linalg
 
 Este módulo tiene funciones para trabajar con matrices, descriptas como
 *arrays* bidimensionales.
 
-.. code:: python
+.. code:: 
 
     arr = np.array([[3, 2,1],[6, 4,1],[12, 8, 13.3]])
     print(arr)
 
-
-.. parsed-literal::
-
-    [[ 3.   2.   1. ]
-     [ 6.   4.   1. ]
-     [12.   8.  13.3]]
-
-
-.. code:: python
+.. code:: 
 
     A = np.array([[1, -2,-3],[1, -1,-1],[-1, 3, 1]])
     print(A)
 
-
-.. parsed-literal::
-
-    [[ 1 -2 -3]
-     [ 1 -1 -1]
-     [-1  3  1]]
-
-
-.. code:: python
+.. code:: 
 
     # La matriz transpuesta
     A.T
-
-
-
-
-.. parsed-literal::
-
-    array([[ 1,  1, -1],
-           [-2, -1,  3],
-           [-3, -1,  1]])
-
-
 
 Productos y normas
 ~~~~~~~~~~~~~~~~~~
@@ -1205,32 +1182,14 @@ La norma está dada por
 
 .. math:: ||v|| = \sqrt{v_1^2+...+v_n^2}
 
-.. code:: python
+.. code:: 
 
     v = np.array([2,1,3])
     linalg.norm(v)                  # Norma
 
-
-
-
-.. parsed-literal::
-
-    3.7416573867739413
-
-
-
-.. code:: python
+.. code:: 
 
     linalg.norm(v) == np.sqrt(np.sum(np.square(v)))
-
-
-
-
-.. parsed-literal::
-
-    True
-
-
 
 Producto interno
 ^^^^^^^^^^^^^^^^
@@ -1239,203 +1198,72 @@ El producto entre una matriz y un vector está definido en **Numpy**
 mediante las funciones ``dot()``, o ``matmul()``, o mediante el operador
 ``@``:
 
-.. code:: python
+.. code:: 
 
     w1 = np.dot(A, v)                # Multiplicación de matrices
     w1
 
-
-
-
-.. parsed-literal::
-
-    array([-9, -2,  4])
-
-
-
-.. code:: python
+.. code:: 
 
     np.allclose(np.dot(A,v), np.matmul(A,v))  # dot y matmul son equivalentes
 
-
-
-
-.. parsed-literal::
-
-    True
-
-
-
-.. code:: python
+.. code:: 
 
     np.allclose(A @ v, np.matmul(A,v))  # También son equivalentes al operador @
 
-
-
-
-.. parsed-literal::
-
-    True
-
-
-
-.. code:: python
+.. code:: 
 
     w2 = np.dot(v,  A)
     w2
 
-
-
-
-.. parsed-literal::
-
-    array([ 0,  4, -4])
-
-
-
-.. code:: python
+.. code:: 
 
     np.dot(v.T,  A) == np.dot(v,  A)  # Si es unidimensional, el vector se transpone automáticamente
 
 
-
-
-
-.. parsed-literal::
-
-    array([ True,  True,  True])
-
-
-
-.. code:: python
+.. code:: 
 
     print(v.shape, A.shape)
-
-
-.. parsed-literal::
-
-    (3,) (3, 3)
-
 
 El producto interno entre vectores se calcula de la misma manera
 
 .. math::  \langle v, w \rangle
 
-.. code:: python
+.. code:: 
 
     np.dot(v,w1)
-
-
-
-
-.. parsed-literal::
-
-    -8
-
-
 
 y está relacionado con la norma
 
 .. math:: ||v|| = \sqrt{ \langle v, v \rangle}
 
-.. code:: python
+.. code:: 
 
     linalg.norm(v) == np.sqrt(np.dot(v,v))
 
-
-
-
-.. parsed-literal::
-
-    True
-
-
-
-.. code:: python
+.. code:: 
 
     np.dot(v,A)
 
-
-
-
-.. parsed-literal::
-
-    array([ 0,  4, -4])
-
-
-
-.. code:: python
+.. code:: 
 
     v.shape
 
-
-
-
-.. parsed-literal::
-
-    (3,)
-
-
-
-.. code:: python
+.. code:: 
 
     v2 = np.reshape(v, (3,1))
 
-.. code:: python
+.. code:: 
 
     v2.shape
 
-
-
-
-.. parsed-literal::
-
-    (3, 1)
-
-
-
-.. code:: python
-
-    v2
-
-
-
-
-.. parsed-literal::
-
-    array([[2],
-           [1],
-           [3]])
-
-
-
-.. code:: python
+.. code:: 
 
     np.dot(A, v2)
 
-
-
-
-.. parsed-literal::
-
-    array([[-9],
-           [-2],
-           [ 4]])
-
-
-
-.. code:: python
+.. code:: 
 
     np.dot(A, v2).shape
-
-
-
-
-.. parsed-literal::
-
-    (3, 1)
-
-
 
 Ahora las dimensiones de ``v2`` y ``A`` no coinciden para hacer el
 producto matricial
@@ -1444,40 +1272,9 @@ producto matricial
 
    np.dot(v2, A)
 
-.. code:: python
+.. code:: 
 
     np.dot( v2,A)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    ValueError                                Traceback (most recent call last)
-
-    <ipython-input-24-c31ca8fbc4d7> in <module>
-    ----> 1 np.dot( v2,A)
-    
-
-    <__array_function__ internals> in dot(*args, **kwargs)
-
-
-    ValueError: shapes (3,1) and (3,3) not aligned: 1 (dim 1) != 3 (dim 0)
-
-
-.. code:: python
-
-    np.dot(v2.T, A)
-
-
-
-
-.. parsed-literal::
-
-    array([[ 0,  4, -4]])
-
-
 
 Notemos que el producto interno se puede pensar como un producto de
 matrices. En este caso, el producto de una matriz de 3x1, por otra de
@@ -1495,18 +1292,10 @@ matrices como
 
 .. math:: v\otimes w = vw^{t} = \begin{pmatrix} -9\\-2\\4 \end{pmatrix} \begin{pmatrix} 2&1&3 \end{pmatrix}
 
-.. code:: python
+.. code:: 
 
-    oprod = np.outer(w1,v)
+    oprod = np.outer(v,w1)
     print(oprod)
-
-
-.. parsed-literal::
-
-    [[-18  -9 -27]
-     [ -4  -2  -6]
-     [  8   4  12]]
-
 
 Aplicación a la resolución de sistemas de ecuaciones
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1541,7 +1330,7 @@ Veamos un ejemplo concreto. Supongamos que tenemos el siguiente sistema
    \begin{array}{rl}
     x_1 + 2 x_2 + 3 x_3 &= 1 \\
    2 x_1 +  x_2 + 3 x_3 &= 2 \\
-   4 x_1 +  x_2 - x_3 &= 3
+   4 x_1 +  x_2 - x_3 &= 1
    \end{array}
    \right.
 
@@ -1553,39 +1342,17 @@ y
 
 .. math::  b =  \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} 
 
-.. code:: python
+.. code:: 
 
     A = np.array([[1,2,3],[2,1,3],[4,1,-1]])
     b = np.array([[1,2,3]]).T
     print('A=', A,"\n")
     print('b=', b,"\n")
 
-
-.. parsed-literal::
-
-    A= [[ 1  2  3]
-     [ 2  1  3]
-     [ 4  1 -1]] 
-    
-    b= [[1]
-     [2]
-     [3]] 
-    
-
-
-.. code:: python
+.. code:: 
 
     x = np.dot(linalg.inv(A), b)
     print('Resultado:\n', x)
-
-
-.. parsed-literal::
-
-    Resultado:
-     [[ 0.83333333]
-     [-0.16666667]
-     [ 0.16666667]]
-
 
 Descomposición de matrices
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1620,7 +1387,7 @@ En ese caso, resolvemos una sola vez la descompocición :math:`LU`, y
 luego ambas ecuaciones se pueden resolver eficientemente debido a la
 forma de las matrices.
 
-.. code:: python
+.. code:: 
 
     A = np.array([[1,3,4],[2,1,3],[4,1,2]])
     
@@ -1632,30 +1399,6 @@ forma de las matrices.
     print("\nL=",L)
     print("\nU=", U)
 
-
-.. parsed-literal::
-
-    A= [[1 3 4]
-     [2 1 3]
-     [4 1 2]] 
-    
-    PLU= [[1. 3. 4.]
-     [2. 1. 3.]
-     [4. 1. 2.]]
-    
-    LU= [[4. 1. 2.]
-     [1. 3. 4.]
-     [2. 1. 3.]]
-    
-    L= [[1.         0.         0.        ]
-     [0.25       1.         0.        ]
-     [0.5        0.18181818 1.        ]]
-    
-    U= [[4.         1.         2.        ]
-     [0.         2.75       3.5       ]
-     [0.         0.         1.36363636]]
-
-
 Autovalores y autovectores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1666,7 +1409,7 @@ tales que
 
 .. math::  A v = \lambda v
 
-.. code:: python
+.. code:: 
 
     with np.printoptions(precision=3):
       B = np.array([[0,1.,1],[2,1,0], [3,4,5]])
@@ -1679,30 +1422,9 @@ tales que
       print('Autovalores=', u,'\n')
       print('Autovalores=', np.real_if_close(u))
 
-
-.. parsed-literal::
-
-    [[0. 1. 1.]
-     [2. 1. 0.]
-     [3. 4. 5.]] 
-    
-    [[ 6.572e-16+0.j  1.000e+00+0.j  1.000e+00+0.j]
-     [ 2.000e+00+0.j  1.000e+00+0.j -1.260e-16+0.j]
-     [ 3.000e+00+0.j  4.000e+00+0.j  5.000e+00+0.j]] 
-    
-    [[ 6.572e-16  1.000e+00  1.000e+00]
-     [ 2.000e+00  1.000e+00 -1.260e-16]
-     [ 3.000e+00  4.000e+00  5.000e+00]] 
-    
-    
-    Autovalores= [ 5.854+0.j -0.854+0.j  1.   +0.j] 
-    
-    Autovalores= [ 5.854 -0.854  1.   ]
-
-
 Veamos como funciona para la matriz definida anteriormente
 
-.. code:: python
+.. code:: 
 
     print(A)
     u, v = linalg.eig(A)
@@ -1710,33 +1432,9 @@ Veamos como funciona para la matriz definida anteriormente
     print("Autovalores=" , np.real_if_close(u))
     print("Autovectores=", np.real_if_close(v))
 
+.. code:: 
 
-.. parsed-literal::
-
-    [[1 3 4]
-     [2 1 3]
-     [4 1 2]]
-    [[1. 3. 4.]
-     [2. 1. 3.]
-     [4. 1. 2.]]
-    Autovalores= [ 7.10977223 -2.10977223 -1.        ]
-    Autovectores= [[-0.63273853 -0.66101705 -0.33333333]
-     [-0.49820655 -0.25550401 -0.66666667]
-     [-0.59281716  0.70553112  0.66666667]]
-
-
-.. code:: python
-
-    v[0] @ v[1], np.dot(v[1],v[2])  # Autovectores no ortogonales
-
-
-
-
-.. parsed-literal::
-
-    (0.7063492063492062, -0.32936507936507925)
-
-
+    np.real_if_close?
 
 Rutinas de resolución de ecuaciones lineales
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1760,75 +1458,36 @@ de resolución de sistemas de ecuaciones. En particular la función
        Right-hand side matrix in ``a x = b``.
    ...
 
-.. code:: python
+.. code:: 
 
     a = np.array([[3, 2, 0], [1, -1, 0], [0, 5, 1]])
     b = np.array([2, 4, -1])
     x = linalg.solve(a, b)
     x
 
+.. code:: 
 
+    np.allclose(np.dot(a, x) , b)
 
-
-.. parsed-literal::
-
-    array([ 2., -2.,  9.])
-
-
-
-.. code:: python
-
-    np.allclose(a @ x , b)
-
-
-
-
-.. parsed-literal::
-
-    True
-
-
-
-.. code:: python
+.. code:: 
 
     np.dot(a,x) == b
-
-
-
-
-.. parsed-literal::
-
-    array([ True,  True,  True])
-
-
 
 Para sistemas de ecuaciones grandes, la función ``solve()`` es más
 rápida que invertir la matriz
 
-.. code:: python
+.. code:: 
 
-    A1 = np.random.random((3000,3000))
-    b1 = np.random.random(3000)
+    A1 = np.random.random((2000,2000))
+    b1 = np.random.random(2000)
 
-.. code:: python
+.. code:: 
 
     %timeit linalg.solve(A1,b1)
 
-
-.. parsed-literal::
-
-    546 ms ± 76.9 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-
-
-.. code:: python
+.. code:: 
 
     %timeit np.dot(linalg.inv(A1),b1)
-
-
-.. parsed-literal::
-
-    1.18 s ± 100 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-
 
 Entrada y salida de datos
 -------------------------
@@ -1842,89 +1501,34 @@ Datos en formato texto
 Veamos un ejemplo (apenas) más complicado, de un archivo en formato de
 texto, donde antes de la lista de números hay un encabezado
 
-.. code:: python
+.. code:: 
 
     import numpy as np
     import matplotlib.pyplot as plt
 
-.. code:: python
+.. code:: 
 
     !head ../data/tof_signal_5.dat
 
-
-.. parsed-literal::
-
-    # tiempo    cuentas
-    4.953125e-06 -7.940000e-05
-    4.963125e-06 -5.930000e-05
-    4.973125e-06 -8.945000e-05
-    4.983125e-06 -7.940000e-05
-    4.993125e-06 -6.935000e-05
-    5.003125e-06 -6.935000e-05
-    5.013125e-06 -9.950000e-05
-    5.023125e-06 -5.930000e-05
-    5.033125e-06 -5.930000e-05
-
-
-.. code:: python
+.. code:: 
 
     X0 = np.loadtxt('../data/tof_signal_5.dat')
 
-.. code:: python
+.. code:: 
 
     X0.shape, type(X0)
 
-
-
-
-.. parsed-literal::
-
-    ((1000, 2), numpy.ndarray)
-
-
-
-.. code:: python
+.. code:: 
 
     X0[0].shape
 
-
-
-
-.. parsed-literal::
-
-    (2,)
-
-
-
-.. code:: python
+.. code:: 
 
     X0[0]
 
-
-
-
-.. parsed-literal::
-
-    array([ 4.953125e-06, -7.940000e-05])
-
-
-
-.. code:: python
+.. code:: 
 
     plt.plot(X0[:,0], X0[:,1])
-
-
-
-
-.. parsed-literal::
-
-    [<matplotlib.lines.Line2D at 0x7fbe76130880>]
-
-
-
-
-.. image:: figuras/11_2_scipy_al_60_1.png
-
 
 La manera más simple de leer datos de un archivo es a través de
 ``loadtxt()``.
@@ -1946,38 +1550,16 @@ empieza con el caracter “#” que indica que la línea es un comentario.
 Veamos otro ejemplo, donde las líneas que son parte de un encabezado se
 saltean, utilizando el argumento ``skiprows``
 
-.. code:: python
+.. code:: 
 
     fdatos= '../data/exper_col.dat'
     !head ../data/exper_col.dat
 
-
-.. parsed-literal::
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
-
-.. code:: python
+.. code:: 
 
     X1 = np.loadtxt(fdatos, skiprows=5)
     print(X1.shape)
     print(X1[0])
-
-
-.. parsed-literal::
-
-    (76, 4)
-    [ 9.901      15.35198465 12.12121212 14.86049333]
-
 
 Como el archivo tiene cuatro columnas el array ``X`` tiene dimensiones
 ``(74, 4)`` correspondiente a las 74 filas y las 4 columnas. Si sólo
@@ -1985,102 +1567,47 @@ necesitamos un grupo de estos datos podemos utilizar el argumento
 ``usecols = (c1, c2)`` que nos permite elegir cuáles son las columnas a
 leer:
 
-.. code:: python
+.. code:: 
 
     x, y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2], unpack=True)
     print (x.size, y.size)
 
-
-.. parsed-literal::
-
-    76 76
-
-
-.. code:: python
+.. code:: 
 
     Y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2])
-    print (Y.size, Y[0], Y.shape)
-
-
-.. parsed-literal::
-
-    152 [ 9.901      12.12121212] (76, 2)
-
+    print (Y.size, Y[0])
 
 En este ejemplo, mediante el argumento ``unpack=True``, le indicamos a
 la función ``loadtxt``\ que desempaque lo que lee en variables
 diferentes (``x,y`` en este caso)
 
-.. code:: python
+.. code:: 
 
     plt.plot(x,y, 'o-')
-
-
-
-
-.. parsed-literal::
-
-    [<matplotlib.lines.Line2D at 0x7fbe76a9b160>]
-
-
-
-
-.. image:: figuras/11_2_scipy_al_69_1.png
-
 
 Como numpy se especializa en manejar números, tiene muchas funciones
 para crear arrays a partir de información numérica a partir de texto o
 archivos (como los CSV, por ejemplo). Ya vimos como leer datos con
 ``loadtxt``. También se pueden generar desde un string:
 
-.. code:: python
+.. code:: 
 
     np.fromstring(u"1.0 2.3   3.0 4.1   -3.1", sep=" ", dtype=float)
 
-
-
-
-.. parsed-literal::
-
-    array([ 1. ,  2.3,  3. ,  4.1, -3.1])
-
-
-
 Para guardar datos en formato texto podemos usar, de la misma manera,
 
-.. code:: python
+.. code:: 
 
     Y = np.vstack((x,y)).T
     print(Y.shape)
 
-
-.. parsed-literal::
-
-    (76, 2)
-
-
-.. code:: python
+.. code:: 
 
     np.savetxt('tmp.dat', Y)
 
-.. code:: python
+.. code:: 
 
     !head tmp.dat
-
-
-.. parsed-literal::
-
-    9.900999999999999801e+00 1.212121212121209979e+01
-    1.188100000000000023e+01 1.338496506439940070e+01
-    1.379299999999999926e+01 1.101369465980729956e+01
-    1.581300000000000061e+01 9.490067063140580572e+00
-    1.780199999999999960e+01 1.106306508676360068e+01
-    1.978399999999999892e+01 1.056836569579290064e+01
-    2.180600000000000094e+01 9.041259351048690718e+00
-    2.380199999999999960e+01 9.743805123897519849e+00
-    2.567999999999999972e+01 1.000583998442670008e+01
-    2.769900000000000162e+01 1.093034161826770045e+01
-
 
 La función ``savetxt()``\ tiene varios argumentos opcionales:
 
@@ -2091,7 +1618,7 @@ La función ``savetxt()``\ tiene varios argumentos opcionales:
 Por ejemplo, podemos darle un formato de salida con el argumento
 ``fmt``, y darle un encabezado con ``header``
 
-.. code:: python
+.. code:: 
 
     np.savetxt('tmp.dat', Y, fmt='%.6g', header="Energ Exper")
     !head tmp.dat
@@ -2099,106 +1626,25 @@ Por ejemplo, podemos darle un formato de salida con el argumento
 Datos en formato binario
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: python
-
-    z = np.random.random(100) + 1j* np.random.random(100)
-    np.savetxt('complejos.dat', z)
-
-.. code:: python
-
-    zz = np.loadtxt('complejos.dat', converters=complex)
-
-
-::
-
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-74-cb992e9a3089> in <module>
-    ----> 1 zz = np.loadtxt('complejos.dat', converters=complex)
-    
-
-    /usr/lib64/python3.10/site-packages/numpy/lib/npyio.py in loadtxt(fname, dtype, comments, delimiter, converters, skiprows, usecols, unpack, ndmin, encoding, max_rows, like)
-       1119 
-       1120         # By preference, use the converters specified by the user
-    -> 1121         for i, conv in (user_converters or {}).items():
-       1122             if usecols:
-       1123                 try:
-
-
-    AttributeError: type object 'complex' has no attribute 'items'
-
-
-.. code:: python
-
-    np.save('complejos.npy',z)
-    zz = np.load('complejos.npy')
-
-.. code:: python
-
-    np.allclose(zz, z)
-
-
-
-
-.. parsed-literal::
-
-    True
-
-
-
-.. code:: python
+.. code:: 
 
     np.save('test.npy', X1)  # Grabamos el array a archivo 
     X2 = np.load('test.npy')     # Y lo leemos
 
-.. code:: python
+.. code:: 
 
     # Veamos si alguno de los elementos difiere
     print('X1=', X1[:10])
     print('X2=', X2[:10])
 
-
-.. parsed-literal::
-
-    X1= [[ 9.901      15.35198465 12.12121212 14.86049333]
-     [11.881      17.25443986 13.38496506 12.137559  ]
-     [13.793      17.54513159 11.01369466 12.33403468]
-     [15.813      14.67147284  9.49006706 10.68943707]
-     [17.802      15.05448826 11.06306509 11.11859838]
-     [19.784      12.99029519 10.5683657  10.77717061]
-     [21.806      12.19847748  9.04125935 10.50844347]
-     [23.802      13.57028821  9.74380512 10.46262448]
-     [25.68       13.16199377 10.00583998  9.76919784]
-     [27.699      14.91028557 10.93034162 11.29189365]]
-    X2= [[ 9.901      15.35198465 12.12121212 14.86049333]
-     [11.881      17.25443986 13.38496506 12.137559  ]
-     [13.793      17.54513159 11.01369466 12.33403468]
-     [15.813      14.67147284  9.49006706 10.68943707]
-     [17.802      15.05448826 11.06306509 11.11859838]
-     [19.784      12.99029519 10.5683657  10.77717061]
-     [21.806      12.19847748  9.04125935 10.50844347]
-     [23.802      13.57028821  9.74380512 10.46262448]
-     [25.68       13.16199377 10.00583998  9.76919784]
-     [27.699      14.91028557 10.93034162 11.29189365]]
-
-
-.. code:: python
+.. code:: 
 
     print('¿Alguna differencia?', np.any(X1-X2))
-
-
-.. parsed-literal::
-
-    ¿Alguna differencia? False
-
 
 Ejemplo de análisis de palabras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code:: python
+.. code:: 
 
     # %load scripts/10_palabras.py
     #! /usr/bin/ipython
@@ -2245,11 +1691,6 @@ Ejemplo de análisis de palabras
                      )
 
 
-
-
-.. image:: figuras/11_2_scipy_al_87_0.png
-
-
 Entrada y salida en Scipy
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2273,7 +1714,7 @@ ellos son:
 
 -  Archivos de matrices de Matlab
 
-.. code:: python
+.. code:: 
 
     from scipy import io as sio
     a = np.ones((3, 3)) + np.eye(3,3)
@@ -2282,34 +1723,9 @@ ellos son:
     data = sio.loadmat('datos.mat', struct_as_record=True)
     print(data['a'])
 
-
-.. parsed-literal::
-
-    [[2. 1. 1.]
-     [1. 2. 1.]
-     [1. 1. 2.]]
-    [[2. 1. 1.]
-     [1. 2. 1.]
-     [1. 1. 2.]]
-
-
-.. code:: python
+.. code:: 
 
     data
-
-
-
-
-.. parsed-literal::
-
-    {'__header__': b'MATLAB 5.0 MAT-file Platform: posix, Created on: Mon Mar 14 17:04:56 2022',
-     '__version__': '1.0',
-     '__globals__': [],
-     'a': array([[2., 1., 1.],
-            [1., 2., 1.],
-            [1., 1., 2.]])}
-
-
 
 --------------
 
@@ -2388,3 +1804,5 @@ Realizado por By AllenMcC. - File:HarmOsziFunktionen.jpg, `CC BY-SA
 .. image:: figuras/HarmOsziFunktionen.png
 
 --------------
+
+.

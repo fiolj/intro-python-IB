@@ -10,3 +10,103 @@ Ejercicios de Clase 10
 
    Encontrar el número más cercano a un número escalar dado (por ejemplo
    x=0.5). Utilice los métodos discutidos.
+
+2. Vamos a estudiar la frecuencia de aparición de cada dígito en la
+   serie de Fibonacci, generada siguiendo las reglas:
+
+   .. math:: a_{1} = a_{2} = 1, \quad a_{i} = a_{i-1} + a_{i-2}.
+
+Se pide:
+
+1. Crear una función que acepta como argumento un número entero
+   :math:`N` y retorna una secuencia (lista, tupla, diccionario o
+   *array*) con los elementos de la serie de Fibonacci.
+
+2. Crear una función que devuelva un histograma de ocurrencia de cada
+   uno de los dígitos en el primer lugar del número. Por ejemplo para
+   los primeros 8 valores (:math:`N=8`): :math:`1,1,2,3,5,8,13,21`
+   tendremos que el :math:`1` aparece 3 veces, el :math:`2` aparece
+   :math:`2` veces, :math:`3, 5, 8` una vez. Normalizar los datos
+   dividiendo por el número de valores :math:`N`.
+
+3. Utilizando las dos funciones anteriores graficar el histograma para
+   un número :math:`N` grande y comparar los resultados con la ley de
+   Benford
+
+   .. math:: P(n) = \log_{10}\left(1+ \frac{1}{d} \right). 
+
+4. **PARA ENTREGAR:** Estimar el valor de π usando diferentes métodos
+   basados en el método de Monte Carlo:
+
+   1. Crear una función para calcular el valor de :math:`\pi` usando el
+      “método de cociente de áreas”. Para ello:
+
+   -  Generar puntos en el plano dentro del cuadrado de lado unidad cuyo
+      lado inferior va de :math:`x=0` a :math:`x=1`
+   -  Contar cuantos puntos caen dentro del (cuarto de) círculo unidad.
+      Este número tiende a ser proporcional al área del círculo
+   -  La estimación de :math:`\pi` será igual a cuatro veces el cociente
+      de números dentro del círculo dividido por el número total de
+      puntos.
+
+   2. Crear una función para calcular el valor de :math:`\pi` usando el
+      “método del valor medio”: Este método se basa en la idea de que el
+      valor medio de una función se puede calcular de la siguiente
+      manera:
+
+   .. math::  \langle f \rangle = \frac{1}{b-a} \int_{a}^{b} f(x)\, dx 
+
+   Tomando la función particular :math:`f(x)= \sqrt{1- x^{2}}` entre
+   :math:`x=0` y :math:`x=1`, obtenemos:
+
+   .. math::  \langle f \rangle = \int_{0}^{1} \sqrt{1- x^{2}}\, dx = \frac{\pi}{4} 
+
+   Entonces, tenemos que estimar el valor medio de la función :math:`f`
+   y, mediante la relación anterior obtener
+   :math:`\pi = 4 \langle f(x) \rangle`. Para obtener el valor medio de
+   la función notamos que si tomamos :math:`X` es una variable aleatoria
+   entre 0 y 1, entonces el valor medio de :math:`f(X)` es justamente
+   :math:`\langle f \rangle`. Su función debe entonces
+
+   -  Generar puntos aleatoriamente en el intervalo :math:`[0,1]`
+   -  Calcular el valor medio de :math:`f(x)` para los puntos aleatorios
+      :math:`x`.
+   -  El resultado va a ser igual al valor de la integral, y por lo
+      tanto a :math:`\pi/4`.
+
+   3. Utilizar las funciones anteriores con diferentes valores para el
+      número total de puntos :math:`N`. En particular, hacerlo para 20
+      valores de :math:`N` equiespaciados logarítmicamente entre 100 y
+      10000. Para cada valor de :math:`N` calcular la estimación de
+      :math:`\pi`. Realizar un gráfico con el valor estimado como
+      función del número :math:`N` con los dos métodos (dos curvas en un
+      solo gráfico)
+
+   4. Para :math:`N=15000` repetir el “experimento” muchas veces (al
+      menos 1000) y realizar un histograma de los valores obtenidos para
+      :math:`\pi` con cada método. Graficar el histograma y calcular la
+      desviación standard. Superponer una función Gaussiana con el mismo
+      ancho. El gráfico debe ser similar al siguiente (*el estilo de
+      graficación no tiene que ser el mismo*)
+
+   .. image:: figuras/ejercicio_09_1.png
+
+   5. El método de la aguja del bufón se puede utilizar para estimar el
+      valor de :math:`\pi`, y consiste en tirar agujas (o palitos,
+      fósforos, etc) al azar sobre una superficie rayada
+
+   .. image:: figuras/Streicholz-Pi-wiki.jpg
+
+   Por simplicidad vamos a considerar que la distancia entre rayas
+   :math:`t` es mayor que la longitud de las agujas :math:`\ell`
+
+   .. image:: figuras/Buffon_needle_wiki.png
+
+   La probabilidad de que una aguja cruce una línea será:
+
+   .. math::  P = \frac{2 \ell}{t\, \pi} 
+
+   por lo que podemos calcular el valor de :math:`\pi` si estimamos la
+   probabilidad :math:`P`. Realizar una función que estime :math:`\pi`
+   utilizando este método y repetir las comparaciones de los dos puntos
+   anteriores pero ahora utilizando este método y el de las áreas.
