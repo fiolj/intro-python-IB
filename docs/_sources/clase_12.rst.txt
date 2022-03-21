@@ -1,0 +1,407 @@
+.. _clase_12:
+
+Clase 12: Un poco de graficación 3D
+====================================
+
+
+.. code:: python
+
+    import numpy as np
+    import plotly.graph_objects as go
+
+
+Gráficos y procesamiento sencillo en 2D
+---------------------------------------
+
+Histogramas en 2D
+~~~~~~~~~~~~~~~~~
+
+Así como trabajamos con histogramas de arrays unidimensionales en forma
+sencilla usando ``plt.hist()`` o ``np.histogram()``, podemos hacerlo de
+una manera similar trabajando en el plano. Empecemos creando algunos
+datos
+
+.. code:: python
+
+    np.random.seed(0)
+    n = 10000
+    x = np.r_[np.random.normal(size=n), np.random.normal(loc=3, size=n)]
+    y = 2.0 + 4.0 * x - x**2 / 5 + 2.0 * \
+        np.r_[np.random.normal(size=n), np.random.normal(loc=-3, size=n)]
+
+Acá la notación ``r_[]`` hace concatenación por filas. Veamos que forma
+tienen ``x`` e ``y``
+
+.. code:: python
+
+    x.shape
+
+Para crear el histograma usamos simplemente la función ``Histogram2d``.
+
+.. code:: python
+
+    H= go.Figure(go.Histogram2d(
+         x = x
+        ,y = y))
+    H.show()
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,nbinsx = 60
+        ,y = y
+        ,nbinsy = 60))
+    H.show()
+
+Aquí pusimos igual número de “cajas” en cada dimensión. También podemos
+pasarle un array con distinto número de cajas
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,nbinsx = 60    
+        ,y = y
+        ,nbinsy = 150))
+    H.show()
+
+Por supuesto podemos cambiar el esquema de colores utilizado. Para ello
+le damos explícitamente el argumento ``cmap`` especificando el
+“colormap” deseado:
+
+Se puede definir el número de bins de esta otra forma:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,autobinx=False
+        ,xbins=dict(start=-5, end=7.5, size=0.5)
+        ,y = y
+        ,nbinsy = 60))
+    H.show()
+
+Por supuesto podemos cambiar el esquema de colores utilizado. Para ello
+le damos explícitamente el argumento ``cmap`` especificando el
+“colormap” deseado:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,autobinx=False
+        ,xbins=dict(start=-5, end=7.5, size=0.5)
+        ,y = y
+        ,nbinsy = 60
+        ,    colorscale='YlGnBu'
+        ))
+    H.show()
+
+Se puede elegir el valor máximo de Z:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,autobinx=False
+        ,xbins=dict(start=-5, end=7.5, size=0.5)
+        ,y = y
+        ,nbinsy = 60
+        ,zmax = 200
+        ,zauto = False
+        ,    colorscale='YlGnBu'
+        ))
+    H.show()
+
+O por ejemplo, se puede agregar el valor de cada bin:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,nbinsx = 30
+        ,y = y
+        ,nbinsy = 30
+        ,colorscale='YlGnBu'
+        ,texttemplate= "%{z}"
+        ))
+    H.show()
+
+Gráficos de contornos
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    Z,xedges,yedges = np.histogram2d(x,y,bins=20)
+
+.. code:: python
+
+    X, Y = np.meshgrid(xedges, yedges)
+
+.. code:: python
+
+    X.shape, Y.shape, Z.shape
+
+.. code:: python
+
+    np.all(X[0] == X[1])
+
+.. code:: python
+
+    np.all(Y[0] == Y[1])
+
+.. code:: python
+
+    np.all(Y[:,0] == Y[:,2])
+
+.. code:: python
+
+    X[0,:10], X[1,:10]
+
+.. note::  ¿Qué hace ``meshgrid`` aquí?
+  
+  La función ``meshgrid`` crea matrices de coordenadas en n-dimensiones,
+  basadas en n vectores unidimensionales de coordenadas
+  
+  Consideremos un caso con vectores más simples:
+  
+  .. code:: python
+  
+       x = np.arange(4, dtype='int')
+       y = np.arange(4, 7, dtype='int')
+       XX, YY = np.meshgrid(x, y)
+  
+  La función ``meshgrid`` crea pares :math:`(x,y)` iterando sobre cada
+  valor de :math:`y` para cada valor de :math:`x`. En este caso para los
+  vectores:
+  
+  ::
+  
+       x = [0 1 2 3]
+       y = [4 5 6]
+  
+  crea las matrices
+  
+  ::
+  
+       XX = [[0 1 2 3]
+             [0 1 2 3]
+             [0 1 2 3]]
+       YY = [[4 4 4 4]
+             [5 5 5 5]
+             [6 6 6 6]]
+  
+  que contiene todos los pares posibles :math:`(x,y)`, como se ve en la
+  siguiente figura:
+  
+  .. code:: python
+  
+       plt.plot(XX, YY, 'x', color='C0')
+  
+  .. image:: figuras/ej_meshgrid.png
+  
+  
+
+Vamos a usar los datos para hacer los gráficos de contornos
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Contour(
+             x = xedges
+            ,y = yedges
+            ,z = Z))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Contour(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,colorscale='rainbow'))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Contour(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,contours = dict(
+                coloring='lines'
+                ,showlabels=True
+                ,labelfont = dict( 
+                    size = 11,
+    #                 color = 'white',
+                ))
+    #          ,line_smoothing=0.5
+            ,contours_coloring='heatmap' # can also be 'lines', or 'none'
+    
+             ))
+    fig1.show()
+
+También podemos mostrar la imagen con los contornos superpuestos:
+
+Superficies y contornos
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Superficies
+^^^^^^^^^^^
+
+Realizar gráficos “realmente” en 3D es tan simple como cambiar
+``Contour`` por ``Surface``
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(
+             x = xedges
+            ,y = yedges
+            ,z = Z))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,opacity=0.7))
+    fig1.show()
+
+.. code:: python
+
+    fig1.write_html('3dplot.html')
+
+Contornos en 3D
+^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,contours = {
+                "z": {"show": True}
+               ,"x": {"show": True, "color": "white"}
+             }))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(         
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,contours = {
+                "z": {"show": True, "start": 0, "end": 600, "size":50}
+               ,"x": {"show": True, "color": "white"}
+             }))
+    fig1.update_traces(contours_z=dict(show=True, usecolormap=True,
+                                      highlightcolor="limegreen", project_z=True))
+    fig1.show()
+
+Gráficos de campos vectoriales
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Para realizar gráficos de campos (de velocidades, fuerzas, etc) podemos
+utilizar la función ``quiver()``, que grafica flechas en cada punto, con
+una dirección y longitud dada
+
+Veamos un ejemplo de la documentación de **Matplotlib**
+
+.. code:: python
+
+    import pandas as pd
+    
+    df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/vortex.csv")
+    
+    fig = go.Figure(data = go.Cone(
+        x=df['x'],
+        y=df['y'],
+        z=df['z'],
+        u=df['u'],
+        v=df['v'],
+        w=df['w'],
+        colorscale='Blues',
+        sizemode="absolute",
+        sizeref=40))
+    
+    fig.update_layout(scene=dict(aspectratio=dict(x=1, y=1, z=0.8),
+                                 camera_eye=dict(x=1.2, y=1.2, z=0.6)))
+    
+    fig.show()
+
+.. code:: python
+
+    
+    # Make the grid
+    x = np.arange(0, 1, 0.2)
+    y = np.arange(0, 1, 0.2)
+    z = np.arange(0, 1, 0.2)
+    
+    # Make the direction data for the arrows
+    u = np.sin(np.pi * x) #* np.cos(np.pi * y) * np.cos(np.pi * z)
+    v = -np.cos(np.pi * y) # * np.sin(np.pi * y) * np.cos(np.pi * z)
+    w = (np.sqrt(2.0 / 3.0)* np.sin(np.pi * z)) # * np.cos(np.pi * x) * np.cos(np.pi * y) *
+         
+    
+    fig = go.Figure(
+            go.Cone(
+            x = x
+            ,y = y
+            ,z = z
+            ,u = u
+            ,v = v
+            ,w = w
+            ,sizemode="absolute"
+            ,sizeref=2
+            ,anchor="tip"
+            ))
+    fig.show()
+
+`Streamtubes of the ABC Flow: Flowing from
+Y-Plane <https://blog.plotly.com/post/178123311802/streamtubes-in-plotly-with-python>`__
+
+.. code:: python
+
+    def vector_field(x, y, z, A=1, B=np.sqrt(2./3), C=np.sqrt(1./3)):
+        return A*np.sin(z) + C*np.cos(y), B*np.sin(x) + A*np.cos(z), C*np.sin(y) + B*np.cos(x)
+
+.. code:: python
+
+    x, y, z=np.mgrid[0: 2*np.pi:30j, 0:2*np.pi:30j, 0:2*np.pi:30j]
+    u, v, w=vector_field(x, y, z)
+
+.. code:: python
+
+    x.shape
+    u.shape
+
+.. code:: python
+
+    fig = go.Figure(
+            go.Streamtube(
+            x=x.flatten(),
+            y=y.flatten(), 
+            z=z.flatten(), 
+            u=u.flatten(), 
+            v=v.flatten(), 
+            w=w.flatten(),
+                     maxdisplayed=3500,
+                     sizeref=0.3,
+                     reversescale=True, 
+                     showscale=True,
+                
+            ))
+    fig.show()
+
+
