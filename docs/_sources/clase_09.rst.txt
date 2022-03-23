@@ -854,3 +854,490 @@ Ejercicios 09 (b)
 .
 
 
+Personalizando el modo de visualización
+---------------------------------------
+
+**Matplotlib** da la posibilidad de modificar el estilo de la
+graficación en distintas “etapas”.
+
+Archivo de configuración
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cuando uno carga el módulo busca un archivo de configuración llamado
+``matplotlibrc``
+
+1. Primero busca un archivo de configuración en el directorio de trabajo
+   también lo lee. En cada caso sobreescribe las variables.
+2. Si la variable ``MATPLOTLIBRC`` existe (para el usuario), busca el
+   archivo ``$MATPLOTLIBRC/matplotlibrc``
+3. Luego lee un archivo de configuración global del usuario, que
+   dependiendo del sistema operativo puede ser: \* En Linux,
+   ``.config/matplotlib/matplotlibrc`` (o en
+   ``$XDG_CONFIG_HOME/matplotlib/matplotlibrc`` si la variable
+   ``XDG_CONFIG_HOME`` existe) \* En otras plataformas puede estar en
+   algún lugar como: ``C:\Documents and Settings\USUARIO\.matplotlib``
+4. Finalmente lee el archivo global de la instalación,
+   ``INSTALL/matplotlib/mpl-data/matplotlibrc``, donde INSTALL se
+   refiere al lugar de instalación
+
+En cualquier caso, podemos obtener el directorio y archivo de
+configuración con las funciones:
+
+.. code:: python
+
+    import matplotlib
+
+.. code:: python
+
+    matplotlib.get_configdir()
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/.config/matplotlib'
+
+
+
+.. code:: python
+
+    matplotlib.matplotlib_fname()
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/.config/matplotlib/matplotlibrc'
+
+
+
+.. code:: python
+
+    !head -n 40 '/home/fiol/.config/matplotlib/matplotlibrc'
+
+
+.. parsed-literal::
+
+    # -*- mode: Conf[Colon]; -*-
+    ### MATPLOTLIBRC FORMAT
+    # This is a sample matplotlib configuration file - you can find a copy
+    # of it on your system in
+    # site-packages/matplotlib/mpl-data/matplotlibrc.  If you edit it
+    # there, please note that it will be overwritten in your next install.
+    # If you want to keep a permanent local copy that will not be
+    # overwritten, place it in HOME/.matplotlib/matplotlibrc (unix/linux
+    # like systems) and C:\Documents and Settings\yourname\.matplotlib
+    # (win32 systems).
+    #
+    # This file is best viewed in a editor which supports python mode
+    # syntax highlighting. Blank lines, or lines starting with a comment
+    # symbol, are ignored, as are trailing comments.  Other lines must
+    # have the format
+    #    key : val # optional comment
+    #
+    # Colors: for the color values below, you can either use - a
+    # matplotlib color string, such as r, k, or b - an rgb tuple, such as
+    # (1.0, 0.5, 0.0) - a hex string, such as ff00ff or #ff00ff - a scalar
+    # grayscale intensity such as 0.75 - a legal html color name, eg red,
+    # blue, darkslategray
+    
+    #### CONFIGURATION BEGINS HERE
+    
+    # the default backend; one of GTK GTKAgg GTKCairo GTK3Agg GTK3Cairo
+    # CocoaAgg MacOSX Qt4Agg TkAgg WX WXAgg Agg Cairo GDK PS PDF SVG
+    # Template
+    # You can also deploy your own backend outside of matplotlib by
+    # referring to the module name (which must be in the PYTHONPATH) as
+    # 'module://my_backend'
+    # backend      : Qt5Agg
+    # backend      : GTK3Cairo
+    backend : TkAgg
+    
+    # If you are using the Qt4Agg backend, you can choose here
+    # to use the PyQt4 bindings or the newer PySide bindings to
+    # the underlying Qt4 toolkit.
+    #backend.qt4 : PyQt4        # PyQt4 | PySide
+    
+
+
+Hojas de estilo
+~~~~~~~~~~~~~~~
+
+Matplotlib ha incorporado en los últimos años un paquete que permite
+cambiar estilos fácilmente utilizando los mismos nombres para los
+parámetros que hay en el archivo de configuración ``matplotlibrc``.
+
+Este paquete tiene pre-definidos unos pocos estilos, entre ellos varios
+que emulan otros paquetes o programas. Veamos un ejemplo:
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+.. code:: python
+
+    fdatos = '../data/ej_oscil_aten_err.dat'
+    x, y, yexp = np.loadtxt(fdatos, unpack=True)
+
+.. code:: python
+
+    plt.plot(x,y, x, 0.9*y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fa45ee06920>,
+     <matplotlib.lines.Line2D at 0x7fa45ee06950>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_8_1.png
+
+
+.. code:: python
+
+    with plt.style.context('ggplot'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_9_0.png
+
+
+.. code:: python
+
+    with plt.style.context('grayscale'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_10_0.png
+
+
+.. code:: python
+
+    with plt.style.context('fivethirtyeight'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_11_0.png
+
+
+.. code:: python
+
+    with plt.style.context('seaborn-dark'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_12_0.png
+
+
+Los estilos disponibles están guardados en la variable ``available``
+(una lista)
+
+.. code:: python
+
+    plt.style.available
+
+
+
+
+.. parsed-literal::
+
+    ['Solarize_Light2',
+     '_classic_test_patch',
+     '_mpl-gallery',
+     '_mpl-gallery-nogrid',
+     'bmh',
+     'classic',
+     'dark_background',
+     'darker',
+     'fast',
+     'fivethirtyeight',
+     'ggplot',
+     'grayscale',
+     'latex',
+     'paper',
+     'presentation',
+     'seaborn',
+     'seaborn-bright',
+     'seaborn-colorblind',
+     'seaborn-dark',
+     'seaborn-dark-palette',
+     'seaborn-darkgrid',
+     'seaborn-deep',
+     'seaborn-muted',
+     'seaborn-notebook',
+     'seaborn-paper',
+     'seaborn-pastel',
+     'seaborn-poster',
+     'seaborn-talk',
+     'seaborn-ticks',
+     'seaborn-white',
+     'seaborn-whitegrid',
+     'tableau-colorblind10']
+
+
+
+Combinando estilos
+^^^^^^^^^^^^^^^^^^
+
+Los estilos pueden combinarse. En este caso, debe pasarse una lista de
+*strings* con los nombres de los estilos a aplicar. Se aplican en forma
+secuencial. Si dos estilos definen diferentes valores para una variable,
+el posterior sobreescribe los valores previos.
+
+.. code:: python
+
+    with plt.style.context(['fivethirtyeight','grayscale']):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_16_0.png
+
+
+.. code:: python
+
+    with plt.style.context(['grayscale','fivethirtyeight']):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_17_0.png
+
+
+Creación de estilos propios
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Podemos crear estilos propios, modificando los defaults con una sintaxis
+similar a la del archivo de configuración. Por ejemplo creemos un
+archivo ‘estilo_test’ con algunos parámetros
+
+.. code:: python
+
+    !echo "lines.linewidth : 5" > estilo_test
+    !echo "xtick.labelsize: 24" >> estilo_test
+
+.. code:: python
+
+    !cat estilo_test
+
+
+.. parsed-literal::
+
+    lines.linewidth : 5
+    xtick.labelsize: 24
+
+
+.. code:: python
+
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fa415857460>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_21_1.png
+
+
+.. code:: python
+
+    with plt.style.context('./estilo_test'):
+      plt.plot(x,y)
+
+
+
+.. image:: figuras/09_2_personal_plot_22_0.png
+
+
+.. code:: python
+
+    with plt.style.context('darker'):
+      plt.plot(x,y,'g')
+
+
+
+.. image:: figuras/09_2_personal_plot_23_0.png
+
+
+Para encontrar el lugar donde guardar las hojas de estilo podemos
+utilizar las funciones de *matplotib*:
+
+.. code:: python
+
+    matplotlib.get_configdir()
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/.config/matplotlib'
+
+
+
+.. code:: python
+
+    ls -1 /home/fiol/.config/matplotlib/stylelib/
+
+
+.. parsed-literal::
+
+    darker.mplstyle
+    latex.mplstyle
+    paper.mplstyle
+    presentation.mplstyle
+
+
+.. code:: python
+
+    !cat /home/fiol/.config/matplotlib/stylelib/darker.mplstyle
+
+
+.. parsed-literal::
+
+    # -*- mode: conf -*-
+    font.size   : 14
+    lines.color : white
+    lines.linewidth   : 2     # line width in points
+    lines.markersize  : 8
+    patch.edgecolor : white
+    
+    text.color : white
+    
+    axes.facecolor : black
+    axes.edgecolor : white
+    axes.labelcolor : white
+    # Seaborn dark palette
+    axes.prop_cycle: cycler('color', ['001C7F', '017517', '8C0900', '7600A1', 'B8860B', '006374'])
+    
+    xtick.color : white
+    ytick.color : white
+    
+    grid.color : white
+    
+    figure.facecolor : black
+    figure.edgecolor : black
+    
+    savefig.facecolor : black
+    savefig.edgecolor : black
+    
+
+
+Modificación de parámetros dentro de programas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Podemos cambiar directamente los parámetros dentro de nuestros programas
+modificando el diccionario ``matplotlib.rcParams``
+
+.. code:: python
+
+    import matplotlib as mpl
+    mpl.rcParams
+
+.. code:: python
+
+    # Plot con valores default
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fa4155b6d10>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_30_1.png
+
+
+.. code:: python
+
+    # Modificamos el valor default de ancho de línea 
+    mpl.rcParams['lines.linewidth'] = 7
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fa4158150f0>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_31_1.png
+
+
+.. code:: python
+
+    # El nuevo valor default podemos sobreescribirlo para este plot particular 
+    plt.plot(x,y, lw=3)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fa41592f0d0>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_32_1.png
+
+
+.. code:: python
+
+    # Sin embargo, el nuevo valor default no es modificado
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fa415a718a0>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_33_1.png
+
+
+--------------
+
+Ejercicios 09 (c)
+-----------------
+
+4. Notando que la curva en color negro corresponde a la suma de las dos
+   curvas en rojo, rehacer la siguiente figura:
+
+   .. image:: figuras/ejercicio_08_3.png
+
+5. Crear una hoja de estilo que permita hacer gráficos adecuados para
+   posters y presentaciones. Debe modificar los tamaños para hacerlos
+   legibles a mayores distancias (sugerencia 16pt). El tamaño de la
+   letra de los nombres de ejes y en las leyendas debe ser mayor
+   también. Las líneas deben ser más gruesas (sugerencia: ~4), los
+   símbolos de mayor tamaño (sugerencia ~10).
+
+--------------

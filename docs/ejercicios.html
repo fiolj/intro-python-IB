@@ -17,7 +17,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Programa Detallado" href="programa_detalle.html" />
-    <link rel="prev" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" href="clase_13.html" /> 
+    <link rel="prev" title="Clase 14: Animaciones" href="clase_14.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,7 +29,7 @@
             <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
           </a>
               <div class="version">
-                IB - 2022
+                IB - 2020
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -55,6 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Un poco de graficación 3D</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Interpolación y ajuste de curvas (fiteo)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_14.html">Clase 14: Animaciones</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul class="current">
@@ -73,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-10">Ejercicios de Clase 10</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-11">Ejercicios de Clase 11</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-13">Ejercicios de Clase 13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-14">Ejercicios de Clase 14</a></li>
 </ul>
 </li>
 </ul>
@@ -911,24 +913,30 @@ tierra).</p></li>
 conjunto de tiempos equiespaciados. El usuario debe poder decidir o
 modificar el comportamiento del programa mediante opciones por línea de
 comandos.</p>
-<p>El programa debe aceptar las siguientes opciones por líneas de comando:
-- <code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">vel</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--velocidad=vel</span></code>, donde <code class="docutils literal notranslate"><span class="pre">vel</span></code> es
-el número dando la velocidad inicial en m/s. El valor por defecto será
-<code class="docutils literal notranslate"><span class="pre">0</span></code>. - <code class="docutils literal notranslate"><span class="pre">-a</span> <span class="pre">alt</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--altura=alt</span></code>, donde <code class="docutils literal notranslate"><span class="pre">alt</span></code>
-es un número dando la altura inicial en metros. El valor por defecto
-será <code class="docutils literal notranslate"><span class="pre">1000</span></code>. La altura inicial debe ser un número positivo. -
-<code class="docutils literal notranslate"><span class="pre">-g</span> <span class="pre">grav</span></code>, donde <code class="docutils literal notranslate"><span class="pre">grav</span></code> es el módulo del valor de la aceleración de
-la gravedad en <span class="math notranslate nohighlight">\(m/s^2\)</span>. El valor por defecto será <code class="docutils literal notranslate"><span class="pre">9.8</span></code>. -
-<code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">nombre</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--output=nombre</span></code>, donde <code class="docutils literal notranslate"><span class="pre">nombre</span></code>
-será el nombre de un archivo donde se escribirán los resultados. Si el
-usuario no usa esta opción, debe imprimir por pantalla (<code class="docutils literal notranslate"><span class="pre">sys.stdout</span></code>).
-- <code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">N</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--Ndatos=N</span></code>, donde <code class="docutils literal notranslate"><span class="pre">N</span></code> es un número
+<p>El programa debe aceptar las siguientes opciones por líneas de comando:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-v</span> <span class="pre">vel</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--velocidad=vel</span></code>, donde <code class="docutils literal notranslate"><span class="pre">vel</span></code> es
+el número dando la velocidad inicial en m/s. El valor por defecto
+será <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-a</span> <span class="pre">alt</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--altura=alt</span></code>, donde <code class="docutils literal notranslate"><span class="pre">alt</span></code> es un
+número dando la altura inicial en metros. El valor por defecto será
+<code class="docutils literal notranslate"><span class="pre">1000</span></code>. La altura inicial debe ser un número positivo.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span> <span class="pre">grav</span></code>, donde <code class="docutils literal notranslate"><span class="pre">grav</span></code> es el módulo del valor de la aceleración
+de la gravedad en <span class="math notranslate nohighlight">\(m/s^2\)</span>. El valor por defecto será <code class="docutils literal notranslate"><span class="pre">9.8</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">nombre</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--output=nombre</span></code>, donde
+<code class="docutils literal notranslate"><span class="pre">nombre</span></code> será el nombre de un archivo donde se escribirán los
+resultados. Si el usuario no usa esta opción, debe imprimir por
+pantalla (<code class="docutils literal notranslate"><span class="pre">sys.stdout</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-n</span> <span class="pre">N</span></code> o, equivalentemente <code class="docutils literal notranslate"><span class="pre">--Ndatos=N</span></code>, donde <code class="docutils literal notranslate"><span class="pre">N</span></code> es un número
 entero indicando la cantidad de datos que deben calcularse. Valor por
-defecto: <code class="docutils literal notranslate"><span class="pre">100</span></code> - <code class="docutils literal notranslate"><span class="pre">--ti=instante_inicial</span></code> indica el tiempo inicial de
-cálculo. Valor por defecto: <code class="docutils literal notranslate"><span class="pre">0</span></code>. No puede ser mayor que el tiempo de
-llegada a la posición <span class="math notranslate nohighlight">\(h=0\)</span> - <code class="docutils literal notranslate"><span class="pre">--tf=tiempo_final</span></code> indica el
-tiempo inicial de cálculo. Valor por defecto será el correspondiente al
-tiempo de llegada a la posición <span class="math notranslate nohighlight">\(h=0\)</span>.</p>
+defecto: <code class="docutils literal notranslate"><span class="pre">100</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--ti=instante_inicial</span></code> indica el tiempo inicial de cálculo. Valor
+por defecto: <code class="docutils literal notranslate"><span class="pre">0</span></code>. No puede ser mayor que el tiempo de llegada a la
+posición <span class="math notranslate nohighlight">\(h=0\)</span></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">--tf=tiempo_final</span></code> indica el tiempo inicial de cálculo. Valor por
+defecto será el correspondiente al tiempo de llegada a la posición
+<span class="math notranslate nohighlight">\(h=0\)</span>.</p></li>
+</ul>
 <p><strong>NOTA:</strong> Envíe el programa llamado <strong>08_Suapellido.py</strong> en un adjunto
 por correo electrónico, con asunto: <strong>08_Suapellido</strong>, antes del día
 miércoles 9 de Marzo.</p>
@@ -991,6 +999,16 @@ siguiente figura</p>
 <li><p>Rehacer la siguiente figura:</p>
 <img alt="_images/ejercicio_08_2.png" src="_images/ejercicio_08_2.png" />
 </li>
+<li><p>Notando que la curva en color negro corresponde a la suma de las dos
+curvas en rojo, rehacer la siguiente figura:</p>
+<img alt="_images/ejercicio_08_3.png" src="_images/ejercicio_08_3.png" />
+</li>
+<li><p>Crear una hoja de estilo que permita hacer gráficos adecuados para
+posters y presentaciones. Debe modificar los tamaños para hacerlos
+legibles a mayores distancias (sugerencia 16pt). El tamaño de la
+letra de los nombres de ejes y en las leyendas debe ser mayor
+también. Las líneas deben ser más gruesas (sugerencia: ~4), los
+símbolos de mayor tamaño (sugerencia ~10).</p></li>
 </ol>
 </div>
 <div class="section" id="ejercicios-de-clase-10">
@@ -1195,20 +1213,50 @@ máximo y el ancho de cada una de las Gaussianas obtenidas.</p></li>
 </li>
 </ol>
 </div>
+<div class="section" id="ejercicios-de-clase-14">
+<h2>Ejercicios de Clase 14<a class="headerlink" href="#ejercicios-de-clase-14" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic">
+<li><p>Utilizando <strong>Matplotlib</strong>:</p>
+<ul class="simple">
+<li><p>Hacer un gráfico donde dibuje una parábola <span class="math notranslate nohighlight">\(y = x^{2}\)</span> en el
+rango <span class="math notranslate nohighlight">\([-5,5]\)</span>.</p></li>
+<li><p>En el mismo gráfico, agregar un círculo en <span class="math notranslate nohighlight">\(x=-5\)</span>.</p></li>
+<li><p>El círculo debe moverse siguiendo la curva, como se muestra en la
+figura</p></li>
+</ul>
+<img alt="_images/pelota.gif" src="_images/pelota.gif" />
+</li>
+<li><p><strong>PARA ENTREGAR. Caída libre 2:</strong> Modificar el ejercicio de la clase
+8 de caída libre que entregó, para aceptar dos nuevas opciones:</p>
+<ul class="simple">
+<li><p>La opción <code class="docutils literal notranslate"><span class="pre">--vx</span></code> permite dar una velocidad inicial en la
+dirección horizontal.</p></li>
+<li><p>La opción <code class="docutils literal notranslate"><span class="pre">--animate</span></code>, tal que cuando se utilice, el programa
+muestre una animación de la trayectoria.</p></li>
+<li><p>La animación tiene que tener un cartel indicando el tiempo, y la
+velocidad y altura correspondiente a ese tiempo.</p></li>
+<li><p>Agregue una “cola fantasma” a la partícula, que muestre posiciones
+anteriores.</p></li>
+</ul>
+<p>Envíe el programa llamado <strong>14_Suapellido.py</strong> en un adjunto por
+correo electrónico, con asunto: <strong>14_Suapellido</strong></p>
+</li>
+</ol>
+</div>
 </div>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="clase_13.html" class="btn btn-neutral float-left" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="clase_14.html" class="btn btn-neutral float-left" title="Clase 14: Animaciones" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
         <a href="programa_detalle.html" class="btn btn-neutral float-right" title="Programa Detallado" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Derechos de autor IB - 2022, Juan Fiol.</p>
+    <p>&#169; Derechos de autor IB - 2020, Juan Fiol.</p>
   </div>
 
   Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un

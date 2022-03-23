@@ -16,7 +16,7 @@
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="next" title="Clase 10: Más información sobre Numpy" href="clase_10.html" />
     <link rel="prev" title="Clase 8: Introducción a Numpy" href="clase_08.html" /> 
 </head>
 
@@ -29,7 +29,7 @@
             <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
           </a>
               <div class="version">
-                IB - 2022
+                IB - 2020
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -67,8 +67,23 @@
 <li class="toctree-l2"><a class="reference internal" href="#exportar-las-figuras">Exportar las figuras</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#dos-graficos-en-la-misma-figura">Dos gráficos en la misma figura</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-09-b">Ejercicios 09 (b)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#personalizando-el-modo-de-visualizacion">Personalizando el modo de visualización</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#archivo-de-configuracion">Archivo de configuración</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hojas-de-estilo">Hojas de estilo</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#combinando-estilos">Combinando estilos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creacion-de-estilos-propios">Creación de estilos propios</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#modificacion-de-parametros-dentro-de-programas">Modificación de parámetros dentro de programas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-09-c">Ejercicios 09 (c)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Un poco de graficación 3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Interpolación y ajuste de curvas (fiteo)</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul>
@@ -840,6 +855,328 @@ del módulo <code class="docutils literal notranslate"><span class="pre">pyplot<
 <hr class="docutils" />
 <p>.</p>
 </div>
+<div class="section" id="personalizando-el-modo-de-visualizacion">
+<h2>Personalizando el modo de visualización<a class="headerlink" href="#personalizando-el-modo-de-visualizacion" title="Enlazar permanentemente con este título"></a></h2>
+<p><strong>Matplotlib</strong> da la posibilidad de modificar el estilo de la
+graficación en distintas “etapas”.</p>
+<div class="section" id="archivo-de-configuracion">
+<h3>Archivo de configuración<a class="headerlink" href="#archivo-de-configuracion" title="Enlazar permanentemente con este título"></a></h3>
+<p>Cuando uno carga el módulo busca un archivo de configuración llamado
+<code class="docutils literal notranslate"><span class="pre">matplotlibrc</span></code></p>
+<ol class="arabic simple">
+<li><p>Primero busca un archivo de configuración en el directorio de trabajo
+también lo lee. En cada caso sobreescribe las variables.</p></li>
+<li><p>Si la variable <code class="docutils literal notranslate"><span class="pre">MATPLOTLIBRC</span></code> existe (para el usuario), busca el
+archivo <code class="docutils literal notranslate"><span class="pre">$MATPLOTLIBRC/matplotlibrc</span></code></p></li>
+<li><p>Luego lee un archivo de configuración global del usuario, que
+dependiendo del sistema operativo puede ser: * En Linux,
+<code class="docutils literal notranslate"><span class="pre">.config/matplotlib/matplotlibrc</span></code> (o en
+<code class="docutils literal notranslate"><span class="pre">$XDG_CONFIG_HOME/matplotlib/matplotlibrc</span></code> si la variable
+<code class="docutils literal notranslate"><span class="pre">XDG_CONFIG_HOME</span></code> existe) * En otras plataformas puede estar en
+algún lugar como: <code class="docutils literal notranslate"><span class="pre">C:\Documents</span> <span class="pre">and</span> <span class="pre">Settings\USUARIO\.matplotlib</span></code></p></li>
+<li><p>Finalmente lee el archivo global de la instalación,
+<code class="docutils literal notranslate"><span class="pre">INSTALL/matplotlib/mpl-data/matplotlibrc</span></code>, donde INSTALL se
+refiere al lugar de instalación</p></li>
+</ol>
+<p>En cualquier caso, podemos obtener el directorio y archivo de
+configuración con las funciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">matplotlib</span><span class="o">.</span><span class="n">get_configdir</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;/home/fiol/.config/matplotlib&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">matplotlib</span><span class="o">.</span><span class="n">matplotlib_fname</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;/home/fiol/.config/matplotlib/matplotlibrc&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!head -n 40 &#39;/home/fiol/.config/matplotlib/matplotlibrc&#39;
+</pre></div>
+</div>
+<pre class="literal-block"># -<em>- mode: Conf[Colon]; -</em>-
+### MATPLOTLIBRC FORMAT
+# This is a sample matplotlib configuration file - you can find a copy
+# of it on your system in
+# site-packages/matplotlib/mpl-data/matplotlibrc.  If you edit it
+# there, please note that it will be overwritten in your next install.
+# If you want to keep a permanent local copy that will not be
+# overwritten, place it in HOME/.matplotlib/matplotlibrc (unix/linux
+# like systems) and C:Documents and Settingsyourname.matplotlib
+# (win32 systems).
+#
+# This file is best viewed in a editor which supports python mode
+# syntax highlighting. Blank lines, or lines starting with a comment
+# symbol, are ignored, as are trailing comments.  Other lines must
+# have the format
+#    key : val # optional comment
+#
+# Colors: for the color values below, you can either use - a
+# matplotlib color string, such as r, k, or b - an rgb tuple, such as
+# (1.0, 0.5, 0.0) - a hex string, such as ff00ff or #ff00ff - a scalar
+# grayscale intensity such as 0.75 - a legal html color name, eg red,
+# blue, darkslategray
+
+#### CONFIGURATION BEGINS HERE
+
+# the default backend; one of GTK GTKAgg GTKCairo GTK3Agg GTK3Cairo
+# CocoaAgg MacOSX Qt4Agg TkAgg WX WXAgg Agg Cairo GDK PS PDF SVG
+# Template
+# You can also deploy your own backend outside of matplotlib by
+# referring to the module name (which must be in the PYTHONPATH) as
+# 'module://my_backend'
+# backend      : Qt5Agg
+# backend      : GTK3Cairo
+backend : TkAgg
+
+# If you are using the Qt4Agg backend, you can choose here
+# to use the PyQt4 bindings or the newer PySide bindings to
+# the underlying Qt4 toolkit.
+#backend.qt4 : PyQt4        # PyQt4 | PySide</pre>
+</div>
+<div class="section" id="hojas-de-estilo">
+<h3>Hojas de estilo<a class="headerlink" href="#hojas-de-estilo" title="Enlazar permanentemente con este título"></a></h3>
+<p>Matplotlib ha incorporado en los últimos años un paquete que permite
+cambiar estilos fácilmente utilizando los mismos nombres para los
+parámetros que hay en el archivo de configuración <code class="docutils literal notranslate"><span class="pre">matplotlibrc</span></code>.</p>
+<p>Este paquete tiene pre-definidos unos pocos estilos, entre ellos varios
+que emulan otros paquetes o programas. Veamos un ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fdatos</span> <span class="o">=</span> <span class="s1">&#39;../data/ej_oscil_aten_err.dat&#39;</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yexp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">fdatos</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa45ee06920</span><span class="o">&gt;</span><span class="p">,</span>
+ <span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa45ee06950</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_8_1.png" src="_images/09_2_personal_plot_8_1.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_9_0.png" src="_images/09_2_personal_plot_9_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="s1">&#39;grayscale&#39;</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_10_0.png" src="_images/09_2_personal_plot_10_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_11_0.png" src="_images/09_2_personal_plot_11_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="s1">&#39;seaborn-dark&#39;</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_12_0.png" src="_images/09_2_personal_plot_12_0.png" />
+<p>Los estilos disponibles están guardados en la variable <code class="docutils literal notranslate"><span class="pre">available</span></code>
+(una lista)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">available</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;Solarize_Light2&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_classic_test_patch&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_mpl-gallery&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_mpl-gallery-nogrid&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;bmh&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;classic&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;dark_background&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;darker&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;fast&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;ggplot&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;grayscale&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;latex&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;paper&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;presentation&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-bright&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-colorblind&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-dark&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-dark-palette&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-darkgrid&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-deep&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-muted&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-notebook&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-paper&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-pastel&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-poster&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-talk&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-ticks&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-white&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seaborn-whitegrid&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;tableau-colorblind10&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="section" id="combinando-estilos">
+<h4>Combinando estilos<a class="headerlink" href="#combinando-estilos" title="Enlazar permanentemente con este título"></a></h4>
+<p>Los estilos pueden combinarse. En este caso, debe pasarse una lista de
+<em>strings</em> con los nombres de los estilos a aplicar. Se aplican en forma
+secuencial. Si dos estilos definen diferentes valores para una variable,
+el posterior sobreescribe los valores previos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">([</span><span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">,</span><span class="s1">&#39;grayscale&#39;</span><span class="p">]):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_16_0.png" src="_images/09_2_personal_plot_16_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">([</span><span class="s1">&#39;grayscale&#39;</span><span class="p">,</span><span class="s1">&#39;fivethirtyeight&#39;</span><span class="p">]):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span><span class="mf">0.9</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_17_0.png" src="_images/09_2_personal_plot_17_0.png" />
+</div>
+<div class="section" id="creacion-de-estilos-propios">
+<h4>Creación de estilos propios<a class="headerlink" href="#creacion-de-estilos-propios" title="Enlazar permanentemente con este título"></a></h4>
+<p>Podemos crear estilos propios, modificando los defaults con una sintaxis
+similar a la del archivo de configuración. Por ejemplo creemos un
+archivo ‘estilo_test’ con algunos parámetros</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!echo &quot;lines.linewidth : 5&quot; &gt; estilo_test
+!echo &quot;xtick.labelsize: 24&quot; &gt;&gt; estilo_test
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!cat estilo_test
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lines</span><span class="o">.</span><span class="n">linewidth</span> <span class="p">:</span> <span class="mi">5</span>
+<span class="n">xtick</span><span class="o">.</span><span class="n">labelsize</span><span class="p">:</span> <span class="mi">24</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa415857460</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_21_1.png" src="_images/09_2_personal_plot_21_1.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="s1">&#39;./estilo_test&#39;</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_22_0.png" src="_images/09_2_personal_plot_22_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">context</span><span class="p">(</span><span class="s1">&#39;darker&#39;</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_23_0.png" src="_images/09_2_personal_plot_23_0.png" />
+<p>Para encontrar el lugar donde guardar las hojas de estilo podemos
+utilizar las funciones de <em>matplotib</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">matplotlib</span><span class="o">.</span><span class="n">get_configdir</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;/home/fiol/.config/matplotlib&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ls</span> <span class="o">-</span><span class="mi">1</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fiol</span><span class="o">/.</span><span class="n">config</span><span class="o">/</span><span class="n">matplotlib</span><span class="o">/</span><span class="n">stylelib</span><span class="o">/</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">darker</span><span class="o">.</span><span class="n">mplstyle</span>
+<span class="n">latex</span><span class="o">.</span><span class="n">mplstyle</span>
+<span class="n">paper</span><span class="o">.</span><span class="n">mplstyle</span>
+<span class="n">presentation</span><span class="o">.</span><span class="n">mplstyle</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>!cat /home/fiol/.config/matplotlib/stylelib/darker.mplstyle
+</pre></div>
+</div>
+<pre class="literal-block"># -<em>- mode: conf -</em>-
+font.size   : 14
+lines.color : white
+lines.linewidth   : 2     # line width in points
+lines.markersize  : 8
+patch.edgecolor : white
+
+text.color : white
+
+axes.facecolor : black
+axes.edgecolor : white
+axes.labelcolor : white
+# Seaborn dark palette
+axes.prop_cycle: cycler('color', ['001C7F', '017517', '8C0900', '7600A1', 'B8860B', '006374'])
+
+xtick.color : white
+ytick.color : white
+
+grid.color : white
+
+figure.facecolor : black
+figure.edgecolor : black
+
+savefig.facecolor : black
+savefig.edgecolor : black</pre>
+</div>
+</div>
+<div class="section" id="modificacion-de-parametros-dentro-de-programas">
+<h3>Modificación de parámetros dentro de programas<a class="headerlink" href="#modificacion-de-parametros-dentro-de-programas" title="Enlazar permanentemente con este título"></a></h3>
+<p>Podemos cambiar directamente los parámetros dentro de nuestros programas
+modificando el diccionario <code class="docutils literal notranslate"><span class="pre">matplotlib.rcParams</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot con valores default</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa4155b6d10</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_30_1.png" src="_images/09_2_personal_plot_30_1.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Modificamos el valor default de ancho de línea</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;lines.linewidth&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa4158150f0</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_31_1.png" src="_images/09_2_personal_plot_31_1.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># El nuevo valor default podemos sobreescribirlo para este plot particular</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa41592f0d0</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_32_1.png" src="_images/09_2_personal_plot_32_1.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sin embargo, el nuevo valor default no es modificado</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7fa415a718a0</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/09_2_personal_plot_33_1.png" src="_images/09_2_personal_plot_33_1.png" />
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="ejercicios-09-c">
+<h2>Ejercicios 09 (c)<a class="headerlink" href="#ejercicios-09-c" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic" start="4">
+<li><p>Notando que la curva en color negro corresponde a la suma de las dos
+curvas en rojo, rehacer la siguiente figura:</p>
+<img alt="_images/ejercicio_08_3.png" src="_images/ejercicio_08_3.png" />
+</li>
+<li><p>Crear una hoja de estilo que permita hacer gráficos adecuados para
+posters y presentaciones. Debe modificar los tamaños para hacerlos
+legibles a mayores distancias (sugerencia 16pt). El tamaño de la
+letra de los nombres de ejes y en las leyendas debe ser mayor
+también. Las líneas deben ser más gruesas (sugerencia: ~4), los
+símbolos de mayor tamaño (sugerencia ~10).</p></li>
+</ol>
+<hr class="docutils" />
+</div>
 </div>
 
 
@@ -847,13 +1184,13 @@ del módulo <code class="docutils literal notranslate"><span class="pre">pyplot<
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="clase_08.html" class="btn btn-neutral float-left" title="Clase 8: Introducción a Numpy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clase_10.html" class="btn btn-neutral float-right" title="Clase 10: Más información sobre Numpy" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Derechos de autor IB - 2022, Juan Fiol.</p>
+    <p>&#169; Derechos de autor IB - 2020, Juan Fiol.</p>
   </div>
 
   Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un

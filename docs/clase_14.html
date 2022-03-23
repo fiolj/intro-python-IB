@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 14: Animaciones &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" href="clase_13.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Clases de Python
+            <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2020
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Tipos de datos y control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Entrada y salida, decoradores, y errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Programación Orientada a Objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Control de versiones y biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Introducción a Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Un poco de graficación 3D</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Interpolación y ajuste de curvas (fiteo)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Animaciones</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#animaciones-con-matploblib">Animaciones con <strong>Matploblib</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#una-animacion-simple-en-pocos-pasos">Una animación simple en pocos pasos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#preparacion-general">Preparación general</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#creamos-los-datos-para-graficar">Creamos los datos para graficar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#preparacion-de-la-figura">Preparación de la figura</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#funcion-para-actualizar-la-linea">Función para actualizar la línea</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#animacion-de-la-figura">Animación de la figura</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#opcional-grabar-la-animacion-a-un-archivo">Opcional: grabar la animación a un archivo</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#segundo-ejemplo-simple-quiver">Segundo ejemplo simple: Quiver</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#comentarios">Comentarios:</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tercer-ejemplo">Tercer ejemplo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-a">Ejercicios 14 (a)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Clase 14: Animaciones</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_14.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="section" id="clase-14-animaciones">
+<span id="clase-14"></span><h1>Clase 14: Animaciones<a class="headerlink" href="#clase-14-animaciones" title="Enlazar permanentemente con este título"></a></h1>
+<div class="section" id="animaciones-con-matploblib">
+<h2>Animaciones con <strong>Matploblib</strong><a class="headerlink" href="#animaciones-con-matploblib" title="Enlazar permanentemente con este título"></a></h2>
+<p><strong>Matplotlib</strong> tiene funciones para hacer animaciones de una manera
+conveniente. Hay excelente información sobre el tema en:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://matplotlib.org/api/animation_api.html">La documentación (con
+ejemplos)</a></p></li>
+<li><p><a class="reference external" href="http://jakevdp.github.io/blog/2012/08/18/matplotlib-animation-tutorial/">Tutorial en Pythonic
+Perambulations</a></p></li>
+</ul>
+<p>Vamos a ver brevemente cómo hacer animaciones, en pocos Pasos</p>
+<div class="section" id="una-animacion-simple-en-pocos-pasos">
+<h3>Una animación simple en pocos pasos<a class="headerlink" href="#una-animacion-simple-en-pocos-pasos" title="Enlazar permanentemente con este título"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">scripts</span><span class="o">/</span><span class="n">animaciones</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fiol</span><span class="o">/</span><span class="n">Clases</span><span class="o">/</span><span class="n">IntPython</span><span class="o">/</span><span class="n">clases</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">clases</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">animaciones</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">tk</span>
+<span class="o">%</span><span class="n">run</span> <span class="n">ejemplo_animation_1</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+<span class="c1"># Creamos los datos</span>
+<span class="n">xmax</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">Npts</span><span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">Npts</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+
+<span class="k">def</span> <span class="nf">update_line</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">num</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+<span class="c1"># Creamos la figura e inicializamos</span>
+<span class="c1"># Graficamos una línea sin ningún punto</span>
+<span class="c1"># Fijamos las condiciones de graficación</span>
+<span class="n">fig1</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">L</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="s1">&#39;-o&#39;</span><span class="p">)</span> <span class="c1"># equivalente a la siguiente</span>
+<span class="c1"># L = plt.plot([],[] , &#39;-o&#39;)[0]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Animación de una oscilación&#39;</span><span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="n">line_ani</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig1</span><span class="p">,</span> <span class="n">update_line</span><span class="p">,</span> <span class="n">Npts</span><span class="p">,</span> <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Este código da como resultado una función oscilante que se va creando.
+Este es un ejemplo simple que puede ser útil para graficar datos de una
+medición o de un cálculo más o menos largo.</p>
+<img alt="_images/line.gif" src="_images/line.gif" />
+<div class="section" id="preparacion-general">
+<h4>Preparación general<a class="headerlink" href="#preparacion-general" title="Enlazar permanentemente con este título"></a></h4>
+<p>Como vemos, después de importar el submódulo <code class="docutils literal notranslate"><span class="pre">animation</span></code> (además de lo
+usual):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>nos aseguramos que estamos trabajando en modo <strong>no</strong> interactivo (con
+<code class="docutils literal notranslate"><span class="pre">plt.ioff()</span></code>).</p>
+</div>
+<div class="section" id="creamos-los-datos-para-graficar">
+<h4>Creamos los datos para graficar<a class="headerlink" href="#creamos-los-datos-para-graficar" title="Enlazar permanentemente con este título"></a></h4>
+<p>Creación de datos para graficar</p>
+<p>Creamos los datos para mostrar en la animación.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xmax</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">Npts</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">Npts</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Acá <code class="docutils literal notranslate"><span class="pre">data</span></code> es un array 2D, con los datos <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>.</p>
+</div>
+<div class="section" id="preparacion-de-la-figura">
+<h4>Preparación de la figura<a class="headerlink" href="#preparacion-de-la-figura" title="Enlazar permanentemente con este título"></a></h4>
+<p>A continuación preparamos la zona de graficación:</p>
+<ol class="arabic simple">
+<li><p>Creamos la figura y eje</p></li>
+<li><p>Creamos las líneas de graficación (una en este caso)</p></li>
+<li><p>Fijamos los límites de graficación</p></li>
+<li><p>Agregamos el texto, que va a ser invariante durante la animación</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig1</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">L</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Animación de una oscilación&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como sabemos, el llamado a <code class="docutils literal notranslate"><span class="pre">plot()</span></code> devuelve una lista de líneas (de
+un solo elemento). A este elemento lo llamamos <code class="docutils literal notranslate"><span class="pre">L</span></code>, y ya le damos las
+características que queremos que tenga. En este caso, fijamos el símbolo
+(círculos), con líneas de ancho 3. Vamos a modificar esta línea <code class="docutils literal notranslate"><span class="pre">L</span></code> en
+cada cuadro de la animación.</p>
+</div>
+<div class="section" id="funcion-para-actualizar-la-linea">
+<h4>Función para actualizar la línea<a class="headerlink" href="#funcion-para-actualizar-la-linea" title="Enlazar permanentemente con este título"></a></h4>
+<p>Debemos crear una función que modifique las curvas en cada cuadro.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_line</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">num</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Esta función debe recibir como argumento el número de cuadro, que acá
+llamamos <code class="docutils literal notranslate"><span class="pre">num</span></code>. Además, en este caso recibe los datos a graficar, y la
+línea a modificar.</p>
+<p>Esta función devuelve una línea <code class="docutils literal notranslate"><span class="pre">L</span></code>, que es la parte del gráfico que
+queremos que se actualice en cada frame.</p>
+<p>Notemos acá que no es necesario que tome como argumento los datos
+guardados en <code class="docutils literal notranslate"><span class="pre">data</span></code> y la línea <code class="docutils literal notranslate"><span class="pre">line</span></code>, ya que son variables globales
+a las que hay acceso dentro del <em>script</em>. De la misma manera no es
+necesario que devuelva la línea, por la misma razón.</p>
+</div>
+<div class="section" id="animacion-de-la-figura">
+<h4>Animación de la figura<a class="headerlink" href="#animacion-de-la-figura" title="Enlazar permanentemente con este título"></a></h4>
+<p>Finalmente llamamos a la función que hace la animación:
+<code class="docutils literal notranslate"><span class="pre">animation.FuncAnimation()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">np</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block"> FuncAnimation(fig, func, frames=None, init_func=None, fargs=None,
+               save_count=None, <em>, cache_frame_data=True, **kwargs)
+
+Makes an animation by repeatedly calling a function *func</em>.
+
+.. note::
+
+    You must store the created Animation in a variable that lives as long
+    as the animation should run. Otherwise, the Animation object will be
+    garbage-collected and the animation stops.
+
+Parameters
+----------
+fig : <cite>~matplotlib.figure.Figure</cite>
+    The figure object used to get needed events, such as draw or resize.
+
+func : callable
+    The function to call at each frame.  The first argument will
+    be the next value in <em>frames</em>.   Any additional positional
+    arguments can be supplied via the <em>fargs</em> parameter.
+
+    The required signature is::
+
+        def func(frame, <em>fargs) -&gt; iterable_of_artists
+
+    If ``blit == True``, *func</em> must return an iterable of all artists
+    that were modified or created. This information is used by the blitting
+    algorithm to determine which parts of the figure have to be updated.
+    The return value is unused if <code class="docutils literal notranslate"><span class="pre">blit</span> <span class="pre">==</span> <span class="pre">False</span></code> and may be omitted in
+    that case.
+
+frames : iterable, int, generator function, or None, optional
+    Source of data to pass <em>func</em> and each frame of the animation
+
+    - If an iterable, then simply use the values provided.  If the
+      iterable has a length, it will override the <em>save_count</em> kwarg.
+
+    - If an integer, then equivalent to passing <code class="docutils literal notranslate"><span class="pre">range(frames)</span></code>
+
+    - If a generator function, then must have the signature::
+
+         def gen_function() -&gt; obj
+
+    - If <em>None</em>, then equivalent to passing <code class="docutils literal notranslate"><span class="pre">itertools.count</span></code>.
+
+    In all of these cases, the values in <em>frames</em> is simply passed through
+    to the user-supplied <em>func</em> and thus can be of any type.
+
+init_func : callable, optional
+    A function used to draw a clear frame. If not given, the results of
+    drawing from the first item in the frames sequence will be used. This
+    function will be called once before the first frame.
+
+    The required signature is::
+
+        def init_func() -&gt; iterable_of_artists
+
+    If <code class="docutils literal notranslate"><span class="pre">blit</span> <span class="pre">==</span> <span class="pre">True</span></code>, <em>init_func</em> must return an iterable of artists
+    to be re-drawn. This information is used by the blitting algorithm to
+    determine which parts of the figure have to be updated.  The return
+    value is unused if <code class="docutils literal notranslate"><span class="pre">blit</span> <span class="pre">==</span> <span class="pre">False</span></code> and may be omitted in that case.
+
+fargs : tuple or None, optional
+    Additional arguments to pass to each call to <em>func</em>.
+
+save_count : int, default: 100
+    Fallback for the number of values from <em>frames</em> to cache. This is
+    only used if the number of frames cannot be inferred from <em>frames</em>,
+    i.e. when it's an iterator without length or a generator.
+
+interval : int, default: 200
+    Delay between frames in milliseconds.
+
+repeat_delay : int, default: 0
+    The delay in milliseconds between consecutive animation runs, if
+    <em>repeat</em> is True.
+
+repeat : bool, default: True
+    Whether the animation repeats when the sequence of frames is completed.
+
+blit : bool, default: False
+    Whether blitting is used to optimize drawing.  Note: when using
+    blitting, any animated artists will be drawn according to their zorder;
+    however, they will be drawn on top of any previous artists, regardless
+    of their zorder.
+
+cache_frame_data : bool, default: True
+    Whether frame data is cached.  Disabling cache might be helpful when
+    frames contain large objects.
+
+
+Methods:
+
+  new_frame_seq  --  Return a new sequence of frame information.
+  new_saved_frame_seq  --  Return a new sequence of saved/cached frame information.
+  pause  --  Pause the animation.
+  resume  --  Resume the animation.
+  save  --  Save the animation as a movie file by drawing every frame.
+  to_html5_video  --  Convert the animation to an HTML5 <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code> tag.
+  to_jshtml  --  Generate HTML representation of the animation.</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">line_anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig1</span><span class="p">,</span> <span class="n">update_line</span><span class="p">,</span> <span class="n">Npts</span><span class="p">,</span>
+                   <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">FuncAnimation()</span></code> toma como argumentos:</p>
+<ul class="simple">
+<li><p>la figura (<code class="docutils literal notranslate"><span class="pre">fig1</span></code>) donde se realiza el gráfico.</p></li>
+<li><p>Una función a la que llama antes de dibujar cada <em>frame</em>
+(<code class="docutils literal notranslate"><span class="pre">update_line</span></code>),</p></li>
+<li><p>El argumento <code class="docutils literal notranslate"><span class="pre">interval</span></code> da el tiempo entre cuadros, en
+milisegundos.</p></li>
+<li><p>El argumento <code class="docutils literal notranslate"><span class="pre">fargs</span></code> es una tuple con los argumentos que necesita
+la función <code class="docutils literal notranslate"><span class="pre">update_line()</span></code>. En este caso <code class="docutils literal notranslate"><span class="pre">(data,</span> <span class="pre">L)</span></code>.</p></li>
+<li><p>El argumento <code class="docutils literal notranslate"><span class="pre">blit=True</span></code> hace que sólo se actualicen las partes que
+cambian en la animación, mientras que las partes estáticas no se
+dibujan en cada cuadro.</p></li>
+</ul>
+<p>Es importante que el objeto creado por <code class="docutils literal notranslate"><span class="pre">FuncAnimation()</span></code> no se
+destruya. Esto lo podemos asegurar asignando el objeto resultante a una
+variable, en este caso line_anim.</p>
+</div>
+<div class="section" id="opcional-grabar-la-animacion-a-un-archivo">
+<h4>Opcional: grabar la animación a un archivo<a class="headerlink" href="#opcional-grabar-la-animacion-a-un-archivo" title="Enlazar permanentemente con este título"></a></h4>
+<p>Podemos grabar la animación a un archivo usando el método <code class="docutils literal notranslate"><span class="pre">save()</span></code> o
+el método <code class="docutils literal notranslate"><span class="pre">to_html5_video()</span></code> del objeto (<code class="docutils literal notranslate"><span class="pre">anim</span></code>) que devuelve la
+función <code class="docutils literal notranslate"><span class="pre">FuncAnimation()</span></code>.</p>
+<p>Para poder grabar a archivo las animaciones se necesita tener instalados
+programas externos (alguno de <em>ffmpeg</em>, <em>avconv</em>, <em>imagemagick</em>). Ver
+<a class="reference external" href="https://matplotlib.org/api/animation_api.html">https://matplotlib.org/api/animation_api.html</a> para más información.</p>
+</div>
+</div>
+<div class="section" id="segundo-ejemplo-simple-quiver">
+<h3>Segundo ejemplo simple: Quiver<a class="headerlink" href="#segundo-ejemplo-simple-quiver" title="Enlazar permanentemente con este título"></a></h3>
+<p>Para hacer una animación de un campo de fuerzas o velocidades
+necesitamos datos en tres dimensiones. El siguiente ejemplo sigue los
+pasos de la animación anterior, excepto en la creación de datos y la
+graficación, que en lugar de usar <code class="docutils literal notranslate"><span class="pre">plot()</span></code> usa <code class="docutils literal notranslate"><span class="pre">quiver()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+
+<span class="c1"># ############################################################</span>
+<span class="c1"># Creación de datos</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">91</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">91</span><span class="p">)</span>
+<span class="n">X3</span><span class="p">,</span> <span class="n">Y3</span><span class="p">,</span> <span class="n">T3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">sinT3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">T3</span> <span class="o">/</span>
+               <span class="n">T3</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="p">(</span><span class="n">X3</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y3</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sinT3</span>
+<span class="c1"># Graficar una flecha cada step puntos</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x_q</span><span class="p">,</span> <span class="n">y_q</span> <span class="o">=</span> <span class="n">x</span><span class="p">[::</span><span class="n">step</span><span class="p">],</span> <span class="n">y</span><span class="p">[::</span><span class="n">step</span><span class="p">]</span>
+
+<span class="c1"># Create U and V vectors to plot</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">G</span><span class="p">[::</span><span class="n">step</span><span class="p">,</span> <span class="p">::</span><span class="n">step</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># ############################################################</span>
+<span class="c1"># Figura y ejes.</span>
+<span class="n">fig1</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+
+<span class="n">qax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x_q</span><span class="p">,</span> <span class="n">y_q</span><span class="p">,</span> <span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">V</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">scale</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+  <span class="n">qax</span><span class="o">.</span><span class="n">set_UVC</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">V</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+
+<span class="n">anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig1</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># anim.save(&#39;quiver.gif&#39;, writer=&#39;imagemagick&#39;)</span>
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;quiver.mp4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">ejemplo_quiver</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="section" id="comentarios">
+<h4>Comentarios:<a class="headerlink" href="#comentarios" title="Enlazar permanentemente con este título"></a></h4>
+<ul>
+<li><p>Se utilizó la función <code class="docutils literal notranslate"><span class="pre">quiver()</span></code> para generar un campo vectorial.
+La forma de esta función es:</p>
+<p>quiver([X, Y], U, V, [C], **kw)</p>
+<p><em>X</em>, <em>Y</em> define the arrow locations, <em>U</em>, <em>V</em> define the arrow
+directions, and <em>C</em> optionally sets the color.</p>
+</li>
+<li><p>Se utilizaron <em>Ellipsis</em>, por ejemplo en casos como:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Las elipsis (tres puntos o la palabra <code class="docutils literal notranslate"><span class="pre">Ellipsis</span></code>) indican todo el
+rango para todas las dimensiones que no se dan explícitamente. En
+este ejemplo el <em>array</em> <code class="docutils literal notranslate"><span class="pre">U</span></code> tiene tres dimensiones, por lo que
+tendremos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>En general, las elipses reemplazan a los dos puntos en todas las
+dimensiones no dadas explícitamente</p>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">a4</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a2</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mi">0</span>  <span class="mi">6</span> <span class="mi">12</span> <span class="mi">18</span> <span class="mi">24</span> <span class="mi">30</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">6</span> <span class="mi">12</span> <span class="mi">18</span> <span class="mi">24</span> <span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a4</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a4</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mi">0</span>  <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">6</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">12</span> <span class="mi">15</span><span class="p">]]</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">6</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">12</span> <span class="mi">15</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">a4</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">a4</span><span class="p">[:,:,:,</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Uso de <code class="docutils literal notranslate"><span class="pre">np.roll(a,</span> <span class="pre">shift,</span> <span class="pre">axis=None)</span></code> que mueve elementos una
+distancia <code class="docutils literal notranslate"><span class="pre">shift</span></code> a lo largo del eje <code class="docutils literal notranslate"><span class="pre">axis</span></code>, y cuando pasan la
+última posición los reintroduce al principio. Por ejemplo, en una
+dimensión:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tercer-ejemplo">
+<h3>Tercer ejemplo<a class="headerlink" href="#tercer-ejemplo" title="Enlazar permanentemente con este título"></a></h3>
+<p>Veamos un ejemplo similar al primero, pero donde vamos cambiando los
+límites de los ejes en forma manual, a medida que los datos lo requieren</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+
+<span class="c1"># Calcula los datos en tiempo real.</span>
+<span class="k">def</span> <span class="nf">data_gen</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+  <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">t</span> <span class="o">+=</span> <span class="mf">0.1</span>
+    <span class="k">yield</span> <span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span> <span class="o">/</span> <span class="mf">10.</span><span class="p">)</span>
+
+
+<span class="c1"># Necesitamos que se puede acceder a estas variables</span>
+<span class="c1"># desde varias funciones -&gt; globales</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="k">del</span> <span class="n">xdata</span><span class="p">[:]</span>
+  <span class="k">del</span> <span class="n">ydata</span><span class="p">[:]</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+  <span class="c1"># update the data</span>
+  <span class="n">t</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span>
+  <span class="n">xdata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+  <span class="n">ydata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+
+  <span class="c1"># Si los datos salen del eje, agrandamos el eje</span>
+  <span class="c1"># Después tenemos que redibujar el canvas manualmente</span>
+  <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">xmax</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xmax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+<span class="n">ani</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">data_gen</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                              <span class="n">interval</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init_func</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">animate_decay</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">reload_library</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="ejercicios-14-a">
+<h2>Ejercicios 14 (a)<a class="headerlink" href="#ejercicios-14-a" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic">
+<li><p>Utilizando <strong>Matplotlib</strong>:</p>
+<ul class="simple">
+<li><p>Hacer un gráfico donde dibuje una parábola <span class="math notranslate nohighlight">\(y = x^{2}\)</span> en el
+rango <span class="math notranslate nohighlight">\([-5,5]\)</span>.</p></li>
+<li><p>En el mismo gráfico, agregar un círculo en <span class="math notranslate nohighlight">\(x=-5\)</span>.</p></li>
+<li><p>El círculo debe moverse siguiendo la curva, como se muestra en la
+figura</p></li>
+</ul>
+<img alt="_images/pelota.gif" src="_images/pelota.gif" />
+</li>
+<li><p><strong>PARA ENTREGAR. Caída libre 2:</strong> Modificar el ejercicio de la clase
+8 de caída libre que entregó, para aceptar dos nuevas opciones:</p>
+<ul class="simple">
+<li><p>La opción <code class="docutils literal notranslate"><span class="pre">--vx</span></code> permite dar una velocidad inicial en la
+dirección horizontal.</p></li>
+<li><p>La opción <code class="docutils literal notranslate"><span class="pre">--animate</span></code>, tal que cuando se utilice, el programa
+muestre una animación de la trayectoria.</p></li>
+<li><p>La animación tiene que tener un cartel indicando el tiempo, y la
+velocidad y altura correspondiente a ese tiempo.</p></li>
+<li><p>Agregue una “cola fantasma” a la partícula, que muestre posiciones
+anteriores.</p></li>
+</ul>
+<p>Envíe el programa llamado <strong>14_Suapellido.py</strong> en un adjunto por
+correo electrónico, con asunto: <strong>14_Suapellido</strong></p>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_13.html" class="btn btn-neutral float-left" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2020, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
