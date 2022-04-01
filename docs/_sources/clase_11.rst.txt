@@ -1148,26 +1148,30 @@ Esquemáticamente:
 
 .. image:: https://imgs.xkcd.com/comics/matrix_transform.png
 
+
+
 (Gentileza de `xkcd <https://www.xkcd.com/184/>`__)
 
-.. code:: 
+
+
+.. code:: python
 
     from scipy import linalg
 
 Este módulo tiene funciones para trabajar con matrices, descriptas como
 *arrays* bidimensionales.
 
-.. code:: 
+.. code:: python
 
     arr = np.array([[3, 2,1],[6, 4,1],[12, 8, 13.3]])
     print(arr)
 
-.. code:: 
+.. code:: python
 
     A = np.array([[1, -2,-3],[1, -1,-1],[-1, 3, 1]])
     print(A)
 
-.. code:: 
+.. code:: python
 
     # La matriz transpuesta
     A.T
@@ -1182,12 +1186,12 @@ La norma está dada por
 
 .. math:: ||v|| = \sqrt{v_1^2+...+v_n^2}
 
-.. code:: 
+.. code:: python
 
     v = np.array([2,1,3])
     linalg.norm(v)                  # Norma
 
-.. code:: 
+.. code:: python
 
     linalg.norm(v) == np.sqrt(np.sum(np.square(v)))
 
@@ -1198,30 +1202,30 @@ El producto entre una matriz y un vector está definido en **Numpy**
 mediante las funciones ``dot()``, o ``matmul()``, o mediante el operador
 ``@``:
 
-.. code:: 
+.. code:: python
 
     w1 = np.dot(A, v)                # Multiplicación de matrices
     w1
 
-.. code:: 
+.. code:: python
 
     np.allclose(np.dot(A,v), np.matmul(A,v))  # dot y matmul son equivalentes
 
-.. code:: 
+.. code:: python
 
     np.allclose(A @ v, np.matmul(A,v))  # También son equivalentes al operador @
 
-.. code:: 
+.. code:: python
 
     w2 = np.dot(v,  A)
     w2
 
-.. code:: 
+.. code:: python
 
     np.dot(v.T,  A) == np.dot(v,  A)  # Si es unidimensional, el vector se transpone automáticamente
 
 
-.. code:: 
+.. code:: python
 
     print(v.shape, A.shape)
 
@@ -1229,7 +1233,7 @@ El producto interno entre vectores se calcula de la misma manera
 
 .. math::  \langle v, w \rangle
 
-.. code:: 
+.. code:: python
 
     np.dot(v,w1)
 
@@ -1237,31 +1241,31 @@ y está relacionado con la norma
 
 .. math:: ||v|| = \sqrt{ \langle v, v \rangle}
 
-.. code:: 
+.. code:: python
 
     linalg.norm(v) == np.sqrt(np.dot(v,v))
 
-.. code:: 
+.. code:: python
 
     np.dot(v,A)
 
-.. code:: 
+.. code:: python
 
     v.shape
 
-.. code:: 
+.. code:: python
 
     v2 = np.reshape(v, (3,1))
 
-.. code:: 
+.. code:: python
 
     v2.shape
 
-.. code:: 
+.. code:: python
 
     np.dot(A, v2)
 
-.. code:: 
+.. code:: python
 
     np.dot(A, v2).shape
 
@@ -1272,7 +1276,7 @@ producto matricial
 
    np.dot(v2, A)
 
-.. code:: 
+.. code:: python
 
     np.dot( v2,A)
 
@@ -1292,7 +1296,7 @@ matrices como
 
 .. math:: v\otimes w = vw^{t} = \begin{pmatrix} -9\\-2\\4 \end{pmatrix} \begin{pmatrix} 2&1&3 \end{pmatrix}
 
-.. code:: 
+.. code:: python
 
     oprod = np.outer(v,w1)
     print(oprod)
@@ -1342,14 +1346,14 @@ y
 
 .. math::  b =  \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} 
 
-.. code:: 
+.. code:: python
 
     A = np.array([[1,2,3],[2,1,3],[4,1,-1]])
     b = np.array([[1,2,3]]).T
     print('A=', A,"\n")
     print('b=', b,"\n")
 
-.. code:: 
+.. code:: python
 
     x = np.dot(linalg.inv(A), b)
     print('Resultado:\n', x)
@@ -1387,7 +1391,7 @@ En ese caso, resolvemos una sola vez la descompocición :math:`LU`, y
 luego ambas ecuaciones se pueden resolver eficientemente debido a la
 forma de las matrices.
 
-.. code:: 
+.. code:: python
 
     A = np.array([[1,3,4],[2,1,3],[4,1,2]])
     
@@ -1409,7 +1413,7 @@ tales que
 
 .. math::  A v = \lambda v
 
-.. code:: 
+.. code:: python
 
     with np.printoptions(precision=3):
       B = np.array([[0,1.,1],[2,1,0], [3,4,5]])
@@ -1424,7 +1428,7 @@ tales que
 
 Veamos como funciona para la matriz definida anteriormente
 
-.. code:: 
+.. code:: python
 
     print(A)
     u, v = linalg.eig(A)
@@ -1432,7 +1436,7 @@ Veamos como funciona para la matriz definida anteriormente
     print("Autovalores=" , np.real_if_close(u))
     print("Autovectores=", np.real_if_close(v))
 
-.. code:: 
+.. code:: python
 
     np.real_if_close?
 
@@ -1458,34 +1462,34 @@ de resolución de sistemas de ecuaciones. En particular la función
        Right-hand side matrix in ``a x = b``.
    ...
 
-.. code:: 
+.. code:: python
 
     a = np.array([[3, 2, 0], [1, -1, 0], [0, 5, 1]])
     b = np.array([2, 4, -1])
     x = linalg.solve(a, b)
     x
 
-.. code:: 
+.. code:: python
 
     np.allclose(np.dot(a, x) , b)
 
-.. code:: 
+.. code:: python
 
     np.dot(a,x) == b
 
 Para sistemas de ecuaciones grandes, la función ``solve()`` es más
 rápida que invertir la matriz
 
-.. code:: 
+.. code:: python
 
     A1 = np.random.random((2000,2000))
     b1 = np.random.random(2000)
 
-.. code:: 
+.. code:: python
 
     %timeit linalg.solve(A1,b1)
 
-.. code:: 
+.. code:: python
 
     %timeit np.dot(linalg.inv(A1),b1)
 
@@ -1501,32 +1505,32 @@ Datos en formato texto
 Veamos un ejemplo (apenas) más complicado, de un archivo en formato de
 texto, donde antes de la lista de números hay un encabezado
 
-.. code:: 
+.. code:: python
 
     import numpy as np
     import matplotlib.pyplot as plt
 
-.. code:: 
+.. code:: python
 
     !head ../data/tof_signal_5.dat
 
-.. code:: 
+.. code:: python
 
     X0 = np.loadtxt('../data/tof_signal_5.dat')
 
-.. code:: 
+.. code:: python
 
     X0.shape, type(X0)
 
-.. code:: 
+.. code:: python
 
     X0[0].shape
 
-.. code:: 
+.. code:: python
 
     X0[0]
 
-.. code:: 
+.. code:: python
 
     plt.plot(X0[:,0], X0[:,1])
 
@@ -1550,12 +1554,12 @@ empieza con el caracter “#” que indica que la línea es un comentario.
 Veamos otro ejemplo, donde las líneas que son parte de un encabezado se
 saltean, utilizando el argumento ``skiprows``
 
-.. code:: 
+.. code:: python
 
     fdatos= '../data/exper_col.dat'
     !head ../data/exper_col.dat
 
-.. code:: 
+.. code:: python
 
     X1 = np.loadtxt(fdatos, skiprows=5)
     print(X1.shape)
@@ -1567,12 +1571,12 @@ necesitamos un grupo de estos datos podemos utilizar el argumento
 ``usecols = (c1, c2)`` que nos permite elegir cuáles son las columnas a
 leer:
 
-.. code:: 
+.. code:: python
 
     x, y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2], unpack=True)
     print (x.size, y.size)
 
-.. code:: 
+.. code:: python
 
     Y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2])
     print (Y.size, Y[0])
@@ -1581,7 +1585,7 @@ En este ejemplo, mediante el argumento ``unpack=True``, le indicamos a
 la función ``loadtxt``\ que desempaque lo que lee en variables
 diferentes (``x,y`` en este caso)
 
-.. code:: 
+.. code:: python
 
     plt.plot(x,y, 'o-')
 
@@ -1590,22 +1594,22 @@ para crear arrays a partir de información numérica a partir de texto o
 archivos (como los CSV, por ejemplo). Ya vimos como leer datos con
 ``loadtxt``. También se pueden generar desde un string:
 
-.. code:: 
+.. code:: python
 
     np.fromstring(u"1.0 2.3   3.0 4.1   -3.1", sep=" ", dtype=float)
 
 Para guardar datos en formato texto podemos usar, de la misma manera,
 
-.. code:: 
+.. code:: python
 
     Y = np.vstack((x,y)).T
     print(Y.shape)
 
-.. code:: 
+.. code:: python
 
     np.savetxt('tmp.dat', Y)
 
-.. code:: 
+.. code:: python
 
     !head tmp.dat
 
@@ -1618,7 +1622,7 @@ La función ``savetxt()``\ tiene varios argumentos opcionales:
 Por ejemplo, podemos darle un formato de salida con el argumento
 ``fmt``, y darle un encabezado con ``header``
 
-.. code:: 
+.. code:: python
 
     np.savetxt('tmp.dat', Y, fmt='%.6g', header="Energ Exper")
     !head tmp.dat
@@ -1626,25 +1630,25 @@ Por ejemplo, podemos darle un formato de salida con el argumento
 Datos en formato binario
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. code:: 
+.. code:: python
 
     np.save('test.npy', X1)  # Grabamos el array a archivo 
     X2 = np.load('test.npy')     # Y lo leemos
 
-.. code:: 
+.. code:: python
 
     # Veamos si alguno de los elementos difiere
     print('X1=', X1[:10])
     print('X2=', X2[:10])
 
-.. code:: 
+.. code:: python
 
     print('¿Alguna differencia?', np.any(X1-X2))
 
 Ejemplo de análisis de palabras
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. code:: 
+.. code:: python
 
     # %load scripts/10_palabras.py
     #! /usr/bin/ipython
@@ -1714,7 +1718,7 @@ ellos son:
 
 -  Archivos de matrices de Matlab
 
-.. code:: 
+.. code:: python
 
     from scipy import io as sio
     a = np.ones((3, 3)) + np.eye(3,3)
@@ -1723,7 +1727,7 @@ ellos son:
     data = sio.loadmat('datos.mat', struct_as_record=True)
     print(data['a'])
 
-.. code:: 
+.. code:: python
 
     data
 
@@ -1803,6 +1807,10 @@ Realizado por By AllenMcC. - File:HarmOsziFunktionen.jpg, `CC BY-SA
 
 .. image:: figuras/HarmOsziFunktionen.png
 
+
+
 --------------
 
 .
+
+
