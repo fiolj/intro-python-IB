@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clase 14: Animaciones &mdash; documentación de Clases de Python - </title>
+  <title>Clase 14: Animaciones e interactividad &mdash; documentación de Clases de Python - </title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
@@ -16,7 +16,7 @@
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="next" title="Clase 15: Interfaces con otros lenguajes" href="clase_15.html" />
     <link rel="prev" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" href="clase_13.html" /> 
 </head>
 
@@ -29,7 +29,7 @@
             <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
           </a>
               <div class="version">
-                IB - 2020
+                IB - 2022
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -55,7 +55,7 @@
 <li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Introducción al paquete Scipy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Un poco de graficación 3D</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Interpolación y ajuste de curvas (fiteo)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Animaciones</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Animaciones e interactividad</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#animaciones-con-matploblib">Animaciones con <strong>Matploblib</strong></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#una-animacion-simple-en-pocos-pasos">Una animación simple en pocos pasos</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#preparacion-general">Preparación general</a></li>
@@ -74,9 +74,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-a">Ejercicios 14 (a)</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="#graficos-interactivos">Gráficos interactivos</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#trabajo-simple-con-imagenes">Trabajo simple con imágenes</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#analisis-de-la-imagen">Análisis de la imagen</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#histograma-de-intensidades">Histograma de intensidades</a></li>
@@ -85,16 +82,17 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id1">Ejercicios 14 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-b">Ejercicios 14 (b)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#graficos-interactivos-widgets">Gráficos interactivos (“widgets”)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cursor">Cursor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#manejo-de-eventos">Manejo de eventos</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ejemplos-integrados">Ejemplos integrados</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-b">Ejercicios 14 (b)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-c">Ejercicios 14 (c)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="clase_15.html">Clase 15: Interfaces con otros lenguajes</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul>
@@ -118,7 +116,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Clase 14: Animaciones</li>
+      <li>Clase 14: Animaciones e interactividad</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/clase_14.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -128,8 +126,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="clase-14-animaciones">
-<span id="clase-14"></span><h1>Clase 14: Animaciones<a class="headerlink" href="#clase-14-animaciones" title="Enlazar permanentemente con este título"></a></h1>
+  <div class="section" id="clase-14-animaciones-e-interactividad">
+<span id="clase-14"></span><h1>Clase 14: Animaciones e interactividad<a class="headerlink" href="#clase-14-animaciones-e-interactividad" title="Enlazar permanentemente con este título"></a></h1>
 <div class="section" id="animaciones-con-matploblib">
 <h2>Animaciones con <strong>Matploblib</strong><a class="headerlink" href="#animaciones-con-matploblib" title="Enlazar permanentemente con este título"></a></h2>
 <p><strong>Matplotlib</strong> tiene funciones para hacer animaciones de una manera
@@ -451,6 +449,7 @@ graficación, que en lugar de usar <code class="docutils literal notranslate"><s
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">ejemplo_quiver</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
+<img alt="_images/quiver.gif" src="_images/quiver.gif" />
 <div class="section" id="comentarios">
 <h4>Comentarios:<a class="headerlink" href="#comentarios" title="Enlazar permanentemente con este título"></a></h4>
 <ul>
@@ -620,9 +619,6 @@ correo electrónico, con asunto: <strong>14_Suapellido</strong></p>
 <hr class="docutils" />
 <p>.</p>
 </div>
-</div>
-<div class="section" id="graficos-interactivos">
-<h1>Gráficos interactivos<a class="headerlink" href="#graficos-interactivos" title="Enlazar permanentemente con este título"></a></h1>
 <div class="section" id="trabajo-simple-con-imagenes">
 <h2>Trabajo simple con imágenes<a class="headerlink" href="#trabajo-simple-con-imagenes" title="Enlazar permanentemente con este título"></a></h2>
 <p>Vamos a empezar leyendo y mostrando algunas imágenes, para entender cómo
@@ -809,9 +805,9 @@ intensidad a lo largo de esa línea:</p>
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="id1">
-<h2>Ejercicios 14 (a)<a class="headerlink" href="#id1" title="Enlazar permanentemente con este título"></a></h2>
-<ol class="arabic simple">
+<div class="section" id="ejercicios-14-b">
+<h2>Ejercicios 14 (b)<a class="headerlink" href="#ejercicios-14-b" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic simple" start="3">
 <li><p>Modificar el ejemplo anterior para presentar en una figura tres
 gráficos, agregando a la izquierda un panel donde se muestre un corte
 horizontal. El corte debe estar en la mitad del gráfico
@@ -1121,9 +1117,9 @@ valor de <code class="docutils literal notranslate"><span class="pre">x0</span><
 </div>
 </div>
 <hr class="docutils" />
-<div class="section" id="ejercicios-14-b">
-<h2>Ejercicios 14 (b)<a class="headerlink" href="#ejercicios-14-b" title="Enlazar permanentemente con este título"></a></h2>
-<ol class="arabic simple" start="2">
+<div class="section" id="ejercicios-14-c">
+<h2>Ejercicios 14 (c)<a class="headerlink" href="#ejercicios-14-c" title="Enlazar permanentemente con este título"></a></h2>
+<ol class="arabic simple" start="4">
 <li><p>Modificar el ejemplo anterior (<strong>analizar_figura_2.py</strong>) para
 presentar tres gráficos, agregando a la izquierda un panel donde se
 muestre el corte horizontal de la misma manera que en el ejercicio
@@ -1131,6 +1127,7 @@ anterior. Al seleccionar con el <em>mouse</em> debe mostrar los dos cortes
 (horizontal y vertical).</p></li>
 </ol>
 <hr class="docutils" />
+<p>.</p>
 </div>
 </div>
 
@@ -1139,13 +1136,13 @@ anterior. Al seleccionar con el <em>mouse</em> debe mostrar los dos cortes
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="clase_13.html" class="btn btn-neutral float-left" title="Clase 13: Interpolación y ajuste de curvas (fiteo)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clase_15.html" class="btn btn-neutral float-right" title="Clase 15: Interfaces con otros lenguajes" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Derechos de autor IB - 2020, Juan Fiol.</p>
+    <p>&#169; Derechos de autor IB - 2022, Juan Fiol.</p>
   </div>
 
   Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
