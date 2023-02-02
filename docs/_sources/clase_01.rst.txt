@@ -165,9 +165,13 @@ Otro entorno integrado, que funciona muy bien, viene instalado con
 
 .. image:: figuras/canopy-cluster.png
 
-En ambos casos se puede ejecutar todo el módulo en la consola
-interactiva que incluye. Alternativamente, también se puede seleccionar
-**sólo** una porción del código para ejecutar.
+También Pycharm funciona muy bien
+
+.. image:: figuras/pycharm.jpg
+
+En todos los casos se puede ejecutar todo el código del archivo en la
+consola interactiva que incluye. Alternativamente, también se puede
+seleccionar **sólo** una porción del código para ejecutar.
 
 Notebooks de Jupyter
 ~~~~~~~~~~~~~~~~~~~~
@@ -284,7 +288,7 @@ En windows, el comando ``pwd`` va a dar algo así como:
 
 ::
 
-   In [3]: pwd
+   In [3]: %pwd
    Out[3]: C:\\Users\\usuario
 
 Vamos a crear un directorio donde guardar ahora los programas de ejemplo
@@ -327,7 +331,7 @@ Ahora voy a escribir una línea de **Python** en un archivo llamado
 
 .. parsed-literal::
 
-    print("programa 1")
+    print("hola")
 
 
 .. code:: python
@@ -337,27 +341,12 @@ Ahora voy a escribir una línea de **Python** en un archivo llamado
 
 .. parsed-literal::
 
-    programa 1
+    hola
 
 
 .. code:: python
 
     %hist
-
-
-.. parsed-literal::
-
-    %lsmagic
-    %pwd
-    %cd ~
-    %pwd
-    %cd
-    %mkdir scripts
-    %cd scripts
-    %cat prog1.py
-    %run prog1.py
-    %hist
-
 
 Hay varios otros comandos mágicos en IPython. Para leer información
 sobre el sistema de comandos mágicos utilice:
@@ -398,7 +387,7 @@ comandos
 
 .. parsed-literal::
 
-    print("programa 1")
+    print("hola")
     1+2
     print('hola otra vez')
 
@@ -410,7 +399,7 @@ comandos
 
 .. parsed-literal::
 
-    programa 1
+    hola
     hola otra vez
 
 
@@ -421,7 +410,7 @@ comandos
 
 .. parsed-literal::
 
-    mié 02 feb 2022 15:35:57 -03
+    jue 02 feb 2023 16:31:38 -03
 
 
 --------------
@@ -532,14 +521,6 @@ y asignamos valor a distintas variables:
     print(b, type(b))
     print(c, type(c))
 
-
-.. parsed-literal::
-
-    13 <class 'int'>
-    1.23 <class 'float'>
-    14.23 <class 'float'>
-
-
 Acá usamos la función ``type()`` que retorna el tipo de su argumento.
 Acá ilustramos una de las características salientes de Python: El tipo
 de variable se define en forma dinámica, al asignarle un valor.
@@ -554,13 +535,6 @@ convertirse su valor a otra de tipo ``float``.
     print (a, type(a))
     a = 1.5 * a
     print (a, type(a))
-
-
-.. parsed-literal::
-
-    13 <class 'int'>
-    19.5 <class 'float'>
-
 
 Ahora, la variable ``a`` es del tipo ``float``.
 
@@ -577,14 +551,6 @@ número de punto flotante
     print(20/5)
     print(type(20/5))
     print(20/3)
-
-
-.. parsed-literal::
-
-    4.0
-    <class 'float'>
-    6.666666666666667
-
 
 .. warning::  En *Python 2.x* la división entre números enteros es
   entera
@@ -607,45 +573,15 @@ Esto es diferente en *Python 3* donde 1/2=0.5 y 3/4=0.75.
   
       help(print)
   
-  
-  .. parsed-literal::
-  
-      Help on built-in function print in module builtins:
-      
-      print(...)
-          print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
-          
-          Prints the values to a stream, or to sys.stdout by default.
-          Optional keyword arguments:
-          file:  a file-like object (stream); defaults to the current sys.stdout.
-          sep:   string inserted between values, default a space.
-          end:   string appended after the last value, default a newline.
-          flush: whether to forcibly flush the stream.
-      
-  
-  
   .. code:: python
   
       print(3,2,'hola')
       print(4,1,'chau')
   
-  
-  .. parsed-literal::
-  
-      3 2 hola
-      4 1 chau
-  
-  
   .. code:: python
   
       print(3,2,'hola',sep='++++',end=' -> ')
       print(4,1,'chau',sep='++++')
-  
-  
-  .. parsed-literal::
-  
-      3++++2++++hola -> 4++++1++++chau
-  
   
   
 
@@ -656,6 +592,28 @@ Esto es diferente en *Python 3* donde 1/2=0.5 y 3/4=0.75.
   ``print`` de sus argumentos con un espacio.
   
   
+
+.. note::  Disgresión: Objetos
+  
+  En python, la forma de tratar datos es mediante *objetos*. Todos los
+  objetos tienen, al menos:
+  
+  -  un tipo,
+  -  un valor,
+  -  una identidad.
+  
+  Además, pueden tener:
+  
+  -  componentes
+  -  métodos
+  
+  Los *métodos* son funciones que pertenecen a un objeto y cuyo primer
+  argumento es el objeto que la posee.
+  
+  
+
+Todos los números, al igual que otros tipos, son objetos y tienen
+definidos algunos métodos que pueden ser útiles.
 
 Números complejos
 ^^^^^^^^^^^^^^^^^
@@ -670,39 +628,17 @@ normalmente
     z2 = 2 + 2.124j
     print ('z1 =', z1, ', z2 =', z2)
 
-
-.. parsed-literal::
-
-    z1 = (3+1j) , z2 = (2+2.124j)
-
-
 .. code:: python
 
     print('1.5j * z2 + z1 = ', 1.5j * z2 + z1)  # sumas, multiplicaciones de números complejos
     print('z2² = ', z2**2)  # potencia de números complejos
     print('conj(z1) = ', z1.conjugate())
 
-
-.. parsed-literal::
-
-    1.5j * z2 + z1 =  (-0.18599999999999994+4j)
-    z2² =  (-0.5113760000000003+8.496j)
-    conj(z1) =  (3-1j)
-
-
 .. code:: python
 
     print ('Im(z1) = ', z1.imag)
     print ('Re(z1) = ', z1.real)
     print ('abs(z1) = ', abs(z1))
-
-
-.. parsed-literal::
-
-    Im(z1) =  1.0
-    Re(z1) =  3.0
-    abs(z1) =  3.1622776601683795
-
 
 Operaciones
 ^^^^^^^^^^^
@@ -736,15 +672,6 @@ porque las proveen módulos. Lo veremos pronto.
     print('fracción restante de 20/3:', 20/3 - 20//3)
     print('Resto de 20/3:            ', 20%3)
 
-
-.. parsed-literal::
-
-    división de 20/3:          6.666666666666667
-    parte entera de 20/3:      6
-    fracción restante de 20/3: 0.666666666666667
-    Resto de 20/3:             2
-
-
 Tipos simples: Booleanos
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -757,25 +684,11 @@ Los tipos lógicos o *booleanos*, pueden tomar los valores *Verdadero* o
     print('¿t is True?', t == True)
     print('¿t is False?', t == False)
 
-
-.. parsed-literal::
-
-    ¿t is True? False
-    ¿t is False? True
-
-
 .. code:: python
 
     c = (t == True)
     print('¿t is True?', c)
     print (type(c))
-
-
-.. parsed-literal::
-
-    ¿t is True? False
-    <class 'bool'>
-
 
 Hay un tipo *especial*, el elemento ``None``.
 
@@ -787,15 +700,6 @@ Hay un tipo *especial*, el elemento ``None``.
     print ('type(a): ',type(a))
     print (bool(None))
 
-
-.. parsed-literal::
-
-    True == None:  False
-    False == None:  False
-    type(a):  <class 'NoneType'>
-    False
-
-
 Aquí hemos estado preguntando si dos cosas eran iguales o no (igualdad).
 También podemos preguntar si una **es** la otra (identidad):
 
@@ -805,12 +709,6 @@ También podemos preguntar si una **es** la otra (identidad):
     b = 1280
     print ('b is a: ', b is a)
 
-
-.. parsed-literal::
-
-    b is a:  False
-
-
 .. code:: python
 
     a = None
@@ -819,14 +717,6 @@ También podemos preguntar si una **es** la otra (identidad):
     print ('b is True: ', b is True)
     print ('a is None: ', a is None)
     print ('c is a: ', c is a)
-
-
-
-.. parsed-literal::
-
-    b is True:  True
-    a is None:  True
-    c is a:  True
 
 
 Acá vemos que ``None`` es “único”, en el sentido de que si dos variables
@@ -858,15 +748,6 @@ Veamos algunos ejemplos
     print ('¿20//3 >= 6?', 20//3 >= 6)
     print ('¿20//3 > 6?', 20//3 > 6)
 
-
-.. parsed-literal::
-
-    ¿20/3 == 6? False
-    ¿20//3 == 6? True
-    ¿20//3 >= 6? True
-    ¿20//3 > 6? False
-
-
 .. code:: python
 
     a = 1001
@@ -874,14 +755,6 @@ Veamos algunos ejemplos
     print ('a == b:', a == b)
     print ('a is b:',a is b)
     print ('a is not b:',a is not b)
-
-
-.. parsed-literal::
-
-    a == b: True
-    a is b: False
-    a is not b: True
-
 
 Note que en las últimas dos líneas estamos fijándonos si las dos
 variables son la misma (identidad), y no ocurre aunque vemos que sus
@@ -900,12 +773,6 @@ cuando este es pequeño.
     b = 11
     print (a, ': a is b:', a is b)
 
-
-.. parsed-literal::
-
-    11 : a is b: True
-
-
 Este es un detalle de implementación y nuestros programas no deberían
 depender de este comportamiento.
 
@@ -913,12 +780,6 @@ depender de este comportamiento.
 
     b = 2*b
     print(a, b, a is b)
-
-
-.. parsed-literal::
-
-    11 22 False
-
 
 Acá utilizó otro lugar de memoria para guardar el nuevo valor de ``b``
 (22).
@@ -931,23 +792,11 @@ Esto sigue valiendo para otros números:
     b = 256
     print (a, ': a is b:', a is b)
 
-
-.. parsed-literal::
-
-    256 : a is b: True
-
-
 .. code:: python
 
     a = 257
     b = 257
     print (a, ': a is b:', a is b)
-
-
-.. parsed-literal::
-
-    257 : a is b: False
-
 
 En la implementación que estamos usando, se utiliza el mismo lugar de
 memoria para dos números enteros iguales si son menores o iguales a 256.
@@ -964,26 +813,12 @@ memoria. Tampoco lo hace para números de punto flotante.
     print (a, ': a is b:', a is b)
     print(type(a))
 
-
-.. parsed-literal::
-
-    -256 : a is b: False
-    <class 'int'>
-
-
 .. code:: python
 
     a = 1.5
     b = 1.5
     print (a, ': a is b:', a is b)
     print(type(a))
-
-
-.. parsed-literal::
-
-    1.5 : a is b: False
-    <class 'float'>
-
 
 --------------
 
