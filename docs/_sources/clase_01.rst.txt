@@ -521,6 +521,14 @@ y asignamos valor a distintas variables:
     print(b, type(b))
     print(c, type(c))
 
+
+.. parsed-literal::
+
+    13 <class 'int'>
+    1.23 <class 'float'>
+    14.23 <class 'float'>
+
+
 Acá usamos la función ``type()`` que retorna el tipo de su argumento.
 Acá ilustramos una de las características salientes de Python: El tipo
 de variable se define en forma dinámica, al asignarle un valor.
@@ -535,6 +543,13 @@ convertirse su valor a otra de tipo ``float``.
     print (a, type(a))
     a = 1.5 * a
     print (a, type(a))
+
+
+.. parsed-literal::
+
+    13 <class 'int'>
+    19.5 <class 'float'>
+
 
 Ahora, la variable ``a`` es del tipo ``float``.
 
@@ -551,6 +566,14 @@ número de punto flotante
     print(20/5)
     print(type(20/5))
     print(20/3)
+
+
+.. parsed-literal::
+
+    4.0
+    <class 'float'>
+    6.666666666666667
+
 
 .. warning::  En *Python 2.x* la división entre números enteros es
   entera
@@ -578,10 +601,23 @@ Esto es diferente en *Python 3* donde 1/2=0.5 y 3/4=0.75.
       print(3,2,'hola')
       print(4,1,'chau')
   
+  
+  .. parsed-literal::
+  
+      3 2 hola
+      4 1 chau
+  
+  
   .. code:: python
   
       print(3,2,'hola',sep='++++',end=' -> ')
       print(4,1,'chau',sep='++++')
+  
+  
+  .. parsed-literal::
+  
+      3++++2++++hola -> 4++++1++++chau
+  
   
   
 
@@ -628,17 +664,167 @@ normalmente
     z2 = 2 + 2.124j
     print ('z1 =', z1, ', z2 =', z2)
 
+
+.. parsed-literal::
+
+    z1 = (3+1j) , z2 = (2+2.124j)
+
+
 .. code:: python
 
     print('1.5j * z2 + z1 = ', 1.5j * z2 + z1)  # sumas, multiplicaciones de números complejos
     print('z2² = ', z2**2)  # potencia de números complejos
     print('conj(z1) = ', z1.conjugate())
 
+
+.. parsed-literal::
+
+    1.5j * z2 + z1 =  (-0.18599999999999994+4j)
+    z2² =  (-0.5113760000000003+8.496j)
+    conj(z1) =  (3-1j)
+
+
 .. code:: python
 
     print ('Im(z1) = ', z1.imag)
     print ('Re(z1) = ', z1.real)
     print ('abs(z1) = ', abs(z1))
+
+
+.. parsed-literal::
+
+    Im(z1) =  1.0
+    Re(z1) =  3.0
+    abs(z1) =  3.1622776601683795
+
+
+.. code:: python
+
+    type(z1)
+
+
+
+
+.. parsed-literal::
+
+    complex
+
+
+
+.. code:: python
+
+    help(z1)
+
+
+.. parsed-literal::
+
+    Help on complex object:
+    
+    class complex(object)
+     |  complex(real=0, imag=0)
+     |  
+     |  Create a complex number from a real part and an optional imaginary part.
+     |  
+     |  This is equivalent to (real + imag*1j) where imag defaults to 0.
+     |  
+     |  Methods defined here:
+     |  
+     |  __abs__(self, /)
+     |      abs(self)
+     |  
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |  
+     |  __bool__(self, /)
+     |      True if self else False
+     |  
+     |  __complex__(self, /)
+     |      Convert this value to exact type complex.
+     |  
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |  
+     |  __format__(self, format_spec, /)
+     |      Convert to a string according to format_spec.
+     |  
+     |  __ge__(self, value, /)
+     |      Return self>=value.
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __getnewargs__(self, /)
+     |  
+     |  __gt__(self, value, /)
+     |      Return self>value.
+     |  
+     |  __hash__(self, /)
+     |      Return hash(self).
+     |  
+     |  __le__(self, value, /)
+     |      Return self<=value.
+     |  
+     |  __lt__(self, value, /)
+     |      Return self<value.
+     |  
+     |  __mul__(self, value, /)
+     |      Return self*value.
+     |  
+     |  __ne__(self, value, /)
+     |      Return self!=value.
+     |  
+     |  __neg__(self, /)
+     |      -self
+     |  
+     |  __pos__(self, /)
+     |      +self
+     |  
+     |  __pow__(self, value, mod=None, /)
+     |      Return pow(self, value, mod).
+     |  
+     |  __radd__(self, value, /)
+     |      Return value+self.
+     |  
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |  
+     |  __rmul__(self, value, /)
+     |      Return value*self.
+     |  
+     |  __rpow__(self, value, mod=None, /)
+     |      Return pow(value, self, mod).
+     |  
+     |  __rsub__(self, value, /)
+     |      Return value-self.
+     |  
+     |  __rtruediv__(self, value, /)
+     |      Return value/self.
+     |  
+     |  __sub__(self, value, /)
+     |      Return self-value.
+     |  
+     |  __truediv__(self, value, /)
+     |      Return self/value.
+     |  
+     |  conjugate(self, /)
+     |      Return the complex conjugate of its argument. (3-4j).conjugate() == 3+4j.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  imag
+     |      the imaginary part of a complex number
+     |  
+     |  real
+     |      the real part of a complex number
+    
+
 
 Operaciones
 ^^^^^^^^^^^
@@ -672,6 +858,15 @@ porque las proveen módulos. Lo veremos pronto.
     print('fracción restante de 20/3:', 20/3 - 20//3)
     print('Resto de 20/3:            ', 20%3)
 
+
+.. parsed-literal::
+
+    división de 20/3:          6.666666666666667
+    parte entera de 20/3:      6
+    fracción restante de 20/3: 0.666666666666667
+    Resto de 20/3:             2
+
+
 Tipos simples: Booleanos
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -684,11 +879,25 @@ Los tipos lógicos o *booleanos*, pueden tomar los valores *Verdadero* o
     print('¿t is True?', t == True)
     print('¿t is False?', t == False)
 
+
+.. parsed-literal::
+
+    ¿t is True? False
+    ¿t is False? True
+
+
 .. code:: python
 
     c = (t == True)
     print('¿t is True?', c)
     print (type(c))
+
+
+.. parsed-literal::
+
+    ¿t is True? False
+    <class 'bool'>
+
 
 Hay un tipo *especial*, el elemento ``None``.
 
@@ -700,6 +909,15 @@ Hay un tipo *especial*, el elemento ``None``.
     print ('type(a): ',type(a))
     print (bool(None))
 
+
+.. parsed-literal::
+
+    True == None:  False
+    False == None:  False
+    type(a):  <class 'NoneType'>
+    False
+
+
 Aquí hemos estado preguntando si dos cosas eran iguales o no (igualdad).
 También podemos preguntar si una **es** la otra (identidad):
 
@@ -709,6 +927,12 @@ También podemos preguntar si una **es** la otra (identidad):
     b = 1280
     print ('b is a: ', b is a)
 
+
+.. parsed-literal::
+
+    b is a:  False
+
+
 .. code:: python
 
     a = None
@@ -717,6 +941,14 @@ También podemos preguntar si una **es** la otra (identidad):
     print ('b is True: ', b is True)
     print ('a is None: ', a is None)
     print ('c is a: ', c is a)
+
+
+
+.. parsed-literal::
+
+    b is True:  True
+    a is None:  True
+    c is a:  True
 
 
 Acá vemos que ``None`` es “único”, en el sentido de que si dos variables
@@ -748,6 +980,15 @@ Veamos algunos ejemplos
     print ('¿20//3 >= 6?', 20//3 >= 6)
     print ('¿20//3 > 6?', 20//3 > 6)
 
+
+.. parsed-literal::
+
+    ¿20/3 == 6? False
+    ¿20//3 == 6? True
+    ¿20//3 >= 6? True
+    ¿20//3 > 6? False
+
+
 .. code:: python
 
     a = 1001
@@ -755,6 +996,14 @@ Veamos algunos ejemplos
     print ('a == b:', a == b)
     print ('a is b:',a is b)
     print ('a is not b:',a is not b)
+
+
+.. parsed-literal::
+
+    a == b: True
+    a is b: False
+    a is not b: True
+
 
 Note que en las últimas dos líneas estamos fijándonos si las dos
 variables son la misma (identidad), y no ocurre aunque vemos que sus
@@ -773,6 +1022,12 @@ cuando este es pequeño.
     b = 11
     print (a, ': a is b:', a is b)
 
+
+.. parsed-literal::
+
+    11 : a is b: True
+
+
 Este es un detalle de implementación y nuestros programas no deberían
 depender de este comportamiento.
 
@@ -780,6 +1035,12 @@ depender de este comportamiento.
 
     b = 2*b
     print(a, b, a is b)
+
+
+.. parsed-literal::
+
+    11 22 False
+
 
 Acá utilizó otro lugar de memoria para guardar el nuevo valor de ``b``
 (22).
@@ -792,11 +1053,23 @@ Esto sigue valiendo para otros números:
     b = 256
     print (a, ': a is b:', a is b)
 
+
+.. parsed-literal::
+
+    256 : a is b: True
+
+
 .. code:: python
 
     a = 257
     b = 257
     print (a, ': a is b:', a is b)
+
+
+.. parsed-literal::
+
+    257 : a is b: False
+
 
 En la implementación que estamos usando, se utiliza el mismo lugar de
 memoria para dos números enteros iguales si son menores o iguales a 256.
@@ -813,12 +1086,26 @@ memoria. Tampoco lo hace para números de punto flotante.
     print (a, ': a is b:', a is b)
     print(type(a))
 
+
+.. parsed-literal::
+
+    -256 : a is b: False
+    <class 'int'>
+
+
 .. code:: python
 
     a = 1.5
     b = 1.5
     print (a, ': a is b:', a is b)
     print(type(a))
+
+
+.. parsed-literal::
+
+    1.5 : a is b: False
+    <class 'float'>
+
 
 --------------
 

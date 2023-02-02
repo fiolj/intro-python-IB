@@ -18,7 +18,7 @@
         <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="next" title="Clase 2: Tipos de datos y control" href="clase_02.html" />
     <link rel="prev" title="Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física" href="clase_00.html" /> 
 </head>
 
@@ -81,6 +81,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-01-b">Ejercicios 01 (b)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Tipos de datos y control</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul>
@@ -568,6 +569,11 @@ y asignamos valor a distintas variables:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>13 &lt;class &#39;int&#39;&gt;
+1.23 &lt;class &#39;float&#39;&gt;
+14.23 &lt;class &#39;float&#39;&gt;
+</pre></div>
+</div>
 <p>Acá usamos la función <code class="docutils literal notranslate"><span class="pre">type()</span></code> que retorna el tipo de su argumento.
 Acá ilustramos una de las características salientes de Python: El tipo
 de variable se define en forma dinámica, al asignarle un valor.</p>
@@ -580,6 +586,10 @@ convertirse su valor a otra de tipo <code class="docutils literal notranslate"><
 <span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>13 &lt;class &#39;int&#39;&gt;
+19.5 &lt;class &#39;float&#39;&gt;
+</pre></div>
+</div>
 <p>Ahora, la variable <code class="docutils literal notranslate"><span class="pre">a</span></code> es del tipo <code class="docutils literal notranslate"><span class="pre">float</span></code>.</p>
 <p>Lo que está pasando acá en realidad es que la variable <code class="docutils literal notranslate"><span class="pre">a</span></code> del tipo
 entero en la primera, en la segunda línea se destruye (después de ser
@@ -590,6 +600,11 @@ número de punto flotante</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">20</span><span class="o">/</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="mi">20</span><span class="o">/</span><span class="mi">5</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="mi">20</span><span class="o">/</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4.0
+&lt;class &#39;float&#39;&gt;
+6.666666666666667
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -615,8 +630,15 @@ pantalla todos los argumentos que se le pasan separados por el string
 <span class="nb">print</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;chau&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span> <span class="mi">2</span> <span class="n">hola</span>
+<span class="mi">4</span> <span class="mi">1</span> <span class="n">chau</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;hola&#39;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;++++&#39;</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="s1">&#39; -&gt; &#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;chau&#39;</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s1">&#39;++++&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span><span class="o">++++</span><span class="mi">2</span><span class="o">++++</span><span class="n">hola</span> <span class="o">-&gt;</span> <span class="mi">4</span><span class="o">++++</span><span class="mi">1</span><span class="o">++++</span><span class="n">chau</span>
 </pre></div>
 </div>
 </div>
@@ -658,14 +680,143 @@ normalmente</p>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;z1 =&#39;</span><span class="p">,</span> <span class="n">z1</span><span class="p">,</span> <span class="s1">&#39;, z2 =&#39;</span><span class="p">,</span> <span class="n">z2</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">z1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="p">,</span> <span class="n">z2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">+</span><span class="mf">2.124</span><span class="n">j</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;1.5j * z2 + z1 = &#39;</span><span class="p">,</span> <span class="mf">1.5</span><span class="n">j</span> <span class="o">*</span> <span class="n">z2</span> <span class="o">+</span> <span class="n">z1</span><span class="p">)</span>  <span class="c1"># sumas, multiplicaciones de números complejos</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;z2² = &#39;</span><span class="p">,</span> <span class="n">z2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># potencia de números complejos</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;conj(z1) = &#39;</span><span class="p">,</span> <span class="n">z1</span><span class="o">.</span><span class="n">conjugate</span><span class="p">())</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.5j * z2 + z1 =  (-0.18599999999999994+4j)
+z2² =  (-0.5113760000000003+8.496j)
+conj(z1) =  (3-1j)
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Im(z1) = &#39;</span><span class="p">,</span> <span class="n">z1</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Re(z1) = &#39;</span><span class="p">,</span> <span class="n">z1</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;abs(z1) = &#39;</span><span class="p">,</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Im</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span> <span class="o">=</span>  <span class="mf">1.0</span>
+<span class="n">Re</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span> <span class="o">=</span>  <span class="mf">3.0</span>
+<span class="nb">abs</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span> <span class="o">=</span>  <span class="mf">3.1622776601683795</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">complex</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="nb">complex</span> <span class="nb">object</span><span class="p">:</span>
+
+<span class="k">class</span> <span class="nc">complex</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+ <span class="o">|</span>  <span class="nb">complex</span><span class="p">(</span><span class="n">real</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">imag</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">Create</span> <span class="n">a</span> <span class="nb">complex</span> <span class="n">number</span> <span class="kn">from</span> <span class="nn">a</span> <span class="n">real</span> <span class="n">part</span> <span class="ow">and</span> <span class="n">an</span> <span class="n">optional</span> <span class="n">imaginary</span> <span class="n">part</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">This</span> <span class="ow">is</span> <span class="n">equivalent</span> <span class="n">to</span> <span class="p">(</span><span class="n">real</span> <span class="o">+</span> <span class="n">imag</span><span class="o">*</span><span class="mi">1</span><span class="n">j</span><span class="p">)</span> <span class="n">where</span> <span class="n">imag</span> <span class="n">defaults</span> <span class="n">to</span> <span class="mf">0.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">Methods</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__abs__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">+</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__bool__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="kc">True</span> <span class="k">if</span> <span class="bp">self</span> <span class="k">else</span> <span class="kc">False</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__complex__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Convert</span> <span class="n">this</span> <span class="n">value</span> <span class="n">to</span> <span class="n">exact</span> <span class="nb">type</span> <span class="nb">complex</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">==</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__format__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_spec</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Convert</span> <span class="n">to</span> <span class="n">a</span> <span class="n">string</span> <span class="n">according</span> <span class="n">to</span> <span class="n">format_spec</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">&gt;=</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__getattribute__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">__getnewargs__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">&gt;</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">&lt;=</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">&lt;</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">*</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">!=</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="o">-</span><span class="bp">self</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__pos__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="o">+</span><span class="bp">self</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mod</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="nb">pow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mod</span><span class="p">)</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="n">value</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="n">value</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__rpow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">mod</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="nb">pow</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="p">,</span> <span class="n">mod</span><span class="p">)</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="n">value</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__rtruediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="n">value</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">-</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="bp">self</span><span class="o">/</span><span class="n">value</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">conjugate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">/</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Return</span> <span class="n">the</span> <span class="nb">complex</span> <span class="n">conjugate</span> <span class="n">of</span> <span class="n">its</span> <span class="n">argument</span><span class="o">.</span> <span class="p">(</span><span class="mi">3</span><span class="o">-</span><span class="mi">4</span><span class="n">j</span><span class="p">)</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span> <span class="o">==</span> <span class="mi">3</span><span class="o">+</span><span class="mi">4</span><span class="n">j</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="o">----------------------------------------------------------------------</span>
+ <span class="o">|</span>  <span class="n">Static</span> <span class="n">methods</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__new__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">builtins.type</span>
+ <span class="o">|</span>      <span class="n">Create</span> <span class="ow">and</span> <span class="k">return</span> <span class="n">a</span> <span class="n">new</span> <span class="nb">object</span><span class="o">.</span>  <span class="n">See</span> <span class="n">help</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span> <span class="k">for</span> <span class="n">accurate</span> <span class="n">signature</span><span class="o">.</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="o">----------------------------------------------------------------------</span>
+ <span class="o">|</span>  <span class="n">Data</span> <span class="n">descriptors</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">imag</span>
+ <span class="o">|</span>      <span class="n">the</span> <span class="n">imaginary</span> <span class="n">part</span> <span class="n">of</span> <span class="n">a</span> <span class="nb">complex</span> <span class="n">number</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">real</span>
+ <span class="o">|</span>      <span class="n">the</span> <span class="n">real</span> <span class="n">part</span> <span class="n">of</span> <span class="n">a</span> <span class="nb">complex</span> <span class="n">number</span>
 </pre></div>
 </div>
 </section>
@@ -695,6 +846,12 @@ porque las proveen módulos. Lo veremos pronto.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Resto de 20/3:            &#39;</span><span class="p">,</span> <span class="mi">20</span><span class="o">%</span><span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">división</span> <span class="n">de</span> <span class="mi">20</span><span class="o">/</span><span class="mi">3</span><span class="p">:</span>          <span class="mf">6.666666666666667</span>
+<span class="n">parte</span> <span class="n">entera</span> <span class="n">de</span> <span class="mi">20</span><span class="o">/</span><span class="mi">3</span><span class="p">:</span>      <span class="mi">6</span>
+<span class="n">fracción</span> <span class="n">restante</span> <span class="n">de</span> <span class="mi">20</span><span class="o">/</span><span class="mi">3</span><span class="p">:</span> <span class="mf">0.666666666666667</span>
+<span class="n">Resto</span> <span class="n">de</span> <span class="mi">20</span><span class="o">/</span><span class="mi">3</span><span class="p">:</span>             <span class="mi">2</span>
+</pre></div>
+</div>
 </section>
 <section id="tipos-simples-booleanos">
 <h4>Tipos simples: Booleanos<a class="headerlink" href="#tipos-simples-booleanos" title="Permalink to this heading"></a></h4>
@@ -705,9 +862,17 @@ porque las proveen módulos. Lo veremos pronto.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;¿t is False?&#39;</span><span class="p">,</span> <span class="n">t</span> <span class="o">==</span> <span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>¿t is True? False
+¿t is False? True
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;¿t is True?&#39;</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>¿t is True? False
+&lt;class &#39;bool&#39;&gt;
 </pre></div>
 </div>
 <p>Hay un tipo <em>especial</em>, el elemento <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
@@ -718,11 +883,20 @@ porque las proveen módulos. Lo veremos pronto.</p>
 <span class="nb">print</span> <span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>True == None:  False
+False == None:  False
+type(a):  &lt;class &#39;NoneType&#39;&gt;
+False
+</pre></div>
+</div>
 <p>Aquí hemos estado preguntando si dos cosas eran iguales o no (igualdad).
 También podemos preguntar si una <strong>es</strong> la otra (identidad):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1280</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mi">1280</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;b is a: &#39;</span><span class="p">,</span> <span class="n">b</span> <span class="ow">is</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="ow">is</span> <span class="n">a</span><span class="p">:</span>  <span class="kc">False</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="kc">None</span>
@@ -731,6 +905,11 @@ También podemos preguntar si una <strong>es</strong> la otra (identidad):</p>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;b is True: &#39;</span><span class="p">,</span> <span class="n">b</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;a is None: &#39;</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;c is a: &#39;</span><span class="p">,</span> <span class="n">c</span> <span class="ow">is</span> <span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>  <span class="kc">True</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="kc">True</span>
+<span class="n">c</span> <span class="ow">is</span> <span class="n">a</span><span class="p">:</span>  <span class="kc">True</span>
 </pre></div>
 </div>
 <p>Acá vemos que <code class="docutils literal notranslate"><span class="pre">None</span></code> es “único”, en el sentido de que si dos variables
@@ -757,11 +936,22 @@ Veamos algunos ejemplos</p>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;¿20//3 &gt; 6?&#39;</span><span class="p">,</span> <span class="mi">20</span><span class="o">//</span><span class="mi">3</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>¿20/3 == 6? False
+¿20//3 == 6? True
+¿20//3 &gt;= 6? True
+¿20//3 &gt; 6? False
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1001</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mi">1001</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;a == b:&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;a is b:&#39;</span><span class="p">,</span><span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;a is not b:&#39;</span><span class="p">,</span><span class="n">a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">:</span> <span class="kc">True</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">:</span> <span class="kc">False</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">b</span><span class="p">:</span> <span class="kc">True</span>
 </pre></div>
 </div>
 <p>Note que en las últimas dos líneas estamos fijándonos si las dos
@@ -777,10 +967,16 @@ cuando este es pequeño.</p>
 <span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;: a is b:&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span> <span class="p">:</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <p>Este es un detalle de implementación y nuestros programas no deberían
 depender de este comportamiento.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">b</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span> <span class="mi">22</span> <span class="kc">False</span>
 </pre></div>
 </div>
 <p>Acá utilizó otro lugar de memoria para guardar el nuevo valor de <code class="docutils literal notranslate"><span class="pre">b</span></code>
@@ -791,9 +987,15 @@ depender de este comportamiento.</p>
 <span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;: a is b:&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">256</span> <span class="p">:</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">257</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mi">257</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;: a is b:&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">257</span> <span class="p">:</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">:</span> <span class="kc">False</span>
 </pre></div>
 </div>
 <p>En la implementación que estamos usando, se utiliza el mismo lugar de
@@ -808,10 +1010,18 @@ memoria. Tampoco lo hace para números de punto flotante.</p>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-256 : a is b: False
+&lt;class &#39;int&#39;&gt;
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.5</span>
 <span class="n">b</span> <span class="o">=</span> <span class="mf">1.5</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s1">&#39;: a is b:&#39;</span><span class="p">,</span> <span class="n">a</span> <span class="ow">is</span> <span class="n">b</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.5 : a is b: False
+&lt;class &#39;float&#39;&gt;
 </pre></div>
 </div>
 </section>
@@ -847,7 +1057,7 @@ correspondiente)</p></li>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="clase_00.html" class="btn btn-neutral float-left" title="Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clase_02.html" class="btn btn-neutral float-right" title="Clase 2: Tipos de datos y control" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
