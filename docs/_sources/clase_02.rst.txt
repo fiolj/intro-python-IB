@@ -987,3 +987,946 @@ Ejercicios 02 (a)
 --------------
 
 
+Tipos contenedores: Listas
+--------------------------
+
+Las listas son tipos compuestos (pueden contener más de un valor). Se
+definen separando los valores con comas, encerrados entre corchetes. En
+general las listas pueden contener diferentes tipos, y pueden no ser
+todos iguales, pero suelen utilizarse con ítems del mismo tipo.
+
+-  Los elementos no son necesariamente homogéneos en tipo
+
+-  Elementos ordenados
+
+-  Acceso mediante un índice
+
+-  Están definidas operaciones entre Listas, así como algunos métodos
+
+   -  ``x in L`` (¿x es un elemento de L?)
+   -  ``x not in L`` (¿x no es un elemento de L?)
+   -  ``L1 + L2`` (concatenar L1 y L2)
+   -  ``n*L1`` (n veces L1)
+   -  ``L1*n`` (n veces L1)
+   -  ``L[i]`` (Elemento i-ésimo)
+   -  ``L[i:j]`` (Elementos i a j)
+   -  ``L[i:j:k]`` (Elementos i a j, elegidos uno de cada k)
+   -  ``len(L)`` (longitud de L)
+   -  ``min(L)`` (Mínimo de L)
+   -  ``max(L)`` (Máximo de L)
+   -  ``L.index(x, [i])`` (Índice de x, iniciando en i)
+   -  ``L.count(x)`` (Número de veces que aparece x en L)
+   -  ``L.append(x)`` (Agrega el elemento x al final)
+
+Veamos algunos ejemplos:
+
+.. code:: python
+
+    cuadrados = [1, 9, 16, 25]
+
+En esta línea hemos declarado una variable llamada ``cuadrados``, y le
+hemos asignado una lista de cuatro elementos. En algunos aspectos las
+listas son muy similares a los *strings*. Se pueden realizar muchas de
+las mismas operaciones en strings, listas y otros objetos sobre los que
+se pueden iterar (*iterables*).
+
+Las listas pueden accederse por posición y también pueden rebanarse
+(*slicing*)
+
+.. note::  La indexación de iteradores empieza desde cero (como en C)
+  
+  
+
+.. code:: python
+
+    cuadrados[0]
+
+
+
+
+.. parsed-literal::
+
+    1
+
+
+
+.. code:: python
+
+    cuadrados[3]
+
+
+
+
+.. parsed-literal::
+
+    25
+
+
+
+.. code:: python
+
+    cuadrados[-1]
+
+
+
+
+.. parsed-literal::
+
+    25
+
+
+
+.. code:: python
+
+    cuadrados[:3:2]
+
+
+
+
+.. parsed-literal::
+
+    [1, 16]
+
+
+
+.. code:: python
+
+    cuadrados[-2:]
+
+
+
+
+.. parsed-literal::
+
+    [16, 25]
+
+
+
+Los índices pueden ser positivos (empezando desde cero) o negativos
+empezando desde -1.
+
+================== == == == ==
+cuadrados:         1  9  16 25
+================== == == == ==
+índices:           0  1  2  3
+índices negativos: -4 -3 -2 -1
+================== == == == ==
+
+.. note::  La asignación entre listas **no copia** todos los datos
+  
+  
+
+.. code:: python
+
+    a = cuadrados
+    a is cuadrados
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    print(a)
+    cuadrados[0]= -1
+    print(a)
+    print(cuadrados)
+
+
+.. parsed-literal::
+
+    [1, 9, 16, 25]
+    [-1, 9, 16, 25]
+    [-1, 9, 16, 25]
+
+
+.. code:: python
+
+    a is cuadrados
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    b = cuadrados.copy()
+    print(b)
+    print(cuadrados)
+    cuadrados[0]=-2
+    print(b)
+    print(cuadrados)
+
+
+.. parsed-literal::
+
+    [-1, 9, 16, 25]
+    [-1, 9, 16, 25]
+    [-1, 9, 16, 25]
+    [-2, 9, 16, 25]
+
+
+Operaciones sobre listas
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Veamos algunas operaciones que se pueden realizar sobre listas. Por
+ejemplo, se puede fácilmente:
+
+-  concatenar dos listas,
+-  buscar un valor dado,
+-  agregar elementos,
+-  borrar elementos,
+-  calcular su longitud,
+-  invertirla
+
+Empecemos concatenando dos listas, usando el operador “suma”
+
+.. code:: python
+
+    L1 = [0,1,2,3,4,5]
+
+.. code:: python
+
+    L = 2*L1
+
+.. code:: python
+
+    L
+
+
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
+
+
+
+.. code:: python
+
+    2*L == L + L
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    L.index(3)                      # Índice del elemento de valor 3
+
+
+
+
+.. parsed-literal::
+
+    3
+
+
+
+.. code:: python
+
+    L.index(3,4)                    # Índice del valor 3, empezando del cuarto
+
+
+
+
+.. parsed-literal::
+
+    9
+
+
+
+.. code:: python
+
+    L.count(3)                      # Cuenta las veces que aparece el valor "3"
+
+
+
+
+.. parsed-literal::
+
+    2
+
+
+
+Las listas tienen definidos métodos, que podemos ver con la ayuda
+incluida, por ejemplo haciendo ``help(list)``
+
+Si queremos agregar un elemento al final utilizamos el método
+``append``:
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
+
+
+.. code:: python
+
+    L.append(8)
+
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 8]
+
+
+.. code:: python
+
+    L.append([9, 8, 7])
+    print(L)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 8, [9, 8, 7]]
+
+
+Si queremos insertar un elemento en una posición que no es el final de
+la lista, usamos el método ``insert()``. Por ejemplo para insertar el
+valor 6 en la primera posición:
+
+.. code:: python
+
+    L.insert(0,6)
+    print(L)
+
+
+.. parsed-literal::
+
+    [6, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 8, [9, 8, 7]]
+
+
+.. code:: python
+
+    L.insert(7,6)
+    print(L)
+
+
+.. parsed-literal::
+
+    [6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 8, [9, 8, 7]]
+
+
+.. code:: python
+
+    L.insert(-2,6)
+    print(L)
+
+
+.. parsed-literal::
+
+    [6, 0, 1, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 8, [9, 8, 7]]
+
+
+En las listas podemos sobreescribir uno o más elementos
+
+.. code:: python
+
+    L[0:3] = [2,3,4]
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 8, [9, 8, 7]]
+
+
+.. code:: python
+
+    L[-2:]=[0,1]
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 0, 1]
+
+
+.. code:: python
+
+    L[-2:] = [7,"fin2"]
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 4, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 7, 'fin2']
+
+
+.. code:: python
+
+    print(L)
+    L.remove(3)                     # Remueve la primera aparición del valor 3
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 4, 2, 3, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 7, 'fin2']
+    [2, 4, 2, 4, 5, 6, 0, 1, 2, 3, 4, 5, 6, 7, 'fin2']
+
+
+Tuplas
+~~~~~~
+
+Las tuplas son objetos similares a las listas, sobre las que se puede
+iterar y seleccionar partes según su índice. La principal diferencia es
+que son inmutables mientras que las listas pueden modificarse. Los
+ejemplos anteriores del tipo ``L[0] = -9`` resulta en un error si lo
+intentamos con tuplas
+
+.. code:: python
+
+    L1 = [0,1,2,3,4,5] # Las listas se definen con corchetes
+    T1 = (0,1,2,3,4,5) # Las tuplas se definen con paréntesis
+
+.. code:: python
+
+    L1[0] = -1
+    print(f"L1[0] = {L1[0]}")
+
+
+.. parsed-literal::
+
+    L1[0] = -1
+
+
+.. code:: python
+
+    try:
+        T1[0] = -1
+        print(f"{T1[0] = }")
+    except:
+        print('Tuples son inmutables')
+
+
+.. parsed-literal::
+
+    Tuples son inmutables
+
+
+Las tuplas se usan cuando uno quiere crear una “variable” que no va a
+ser modificada. Además códigos similares con tuplas pueden ser un poco
+más rápidos que si usan listas.
+
+Un uso común de las tuplas es el de asignación simultánea a múltiples
+variables:
+
+.. code:: python
+
+    a, b, c = (1, 3, 5)
+
+.. code:: python
+
+    print(a, b, c)
+
+
+.. parsed-literal::
+
+    1 3 5
+
+
+.. code:: python
+
+    # Los paréntesis son opcionales en este caso
+    a, b, c = 4, 5, 6
+    print(a,b,c)
+
+
+.. parsed-literal::
+
+    4 5 6
+
+
+Un uso muy común es el de intercambiar el valor de dos variables
+
+.. code:: python
+
+    print(a,b)
+    a, b = b, a                     # swap 
+    print(a,b)
+
+
+.. parsed-literal::
+
+    4 5
+    5 4
+
+
+Rangos
+~~~~~~
+
+Los objetos de tipo
+`range <https://docs.python.org/es/3/library/stdtypes.html#ranges>`__
+representan una secuencia inmutable de números y se usan habitualmente
+para ejecutar un bucle
+`for <https://docs.python.org/es/3/reference/compound_stmts.html#for>`__
+un número determinado de veces. El formato es:
+
+::
+
+   range(stop)
+   range(start, stop)
+   range(start, stop, step)
+
+.. code:: python
+
+    range(2)
+
+
+
+
+.. parsed-literal::
+
+    range(0, 2)
+
+
+
+.. code:: python
+
+    type(range(2))
+
+
+
+
+.. parsed-literal::
+
+    range
+
+
+
+.. code:: python
+
+    range(2,9)
+
+
+
+
+.. parsed-literal::
+
+    range(2, 9)
+
+
+
+.. code:: python
+
+    list(range(2,9))
+
+
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 5, 6, 7, 8]
+
+
+
+.. code:: python
+
+    list(range(2,9,2))
+
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6, 8]
+
+
+
+Comprensión de Listas
+~~~~~~~~~~~~~~~~~~~~~
+
+Una manera sencilla de definir una lista es utilizando algo que se llama
+*Comprensión de listas*. Como primer ejemplo veamos una lista de
+*números cuadrados* como la que escribimos anteriormente. En lenguaje
+matemático la defiríamos como
+:math:`S = \{x^{2} : x \in \{0 \dots 9\}\}`. En python es muy parecido.
+
+Podemos crear la lista ``cuadrados`` utilizando compresiones de listas
+
+.. code:: python
+
+    cuadrados = [i**2 for i in range(10)]
+    cuadrados
+
+
+
+
+.. parsed-literal::
+
+    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+
+
+Una lista con los cuadrados sólo de los números pares también puede
+crearse de esta manera, ya que puede incorporarse una condición:
+
+.. code:: python
+
+    L = [a**2 for a in range(2,21) if a % 2 == 0]
+    L
+
+
+
+
+.. parsed-literal::
+
+    [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+
+.. code:: python
+
+    sum(L)
+
+
+
+
+.. parsed-literal::
+
+    1540
+
+
+
+.. code:: python
+
+    list(reversed(L))
+
+
+
+
+.. parsed-literal::
+
+    [400, 324, 256, 196, 144, 100, 64, 36, 16, 4]
+
+
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+.. code:: python
+
+    L1 = list(reversed(L))
+    print(L1)
+    print(L)
+
+
+.. parsed-literal::
+
+    [400, 324, 256, 196, 144, 100, 64, 36, 16, 4]
+    [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+.. code:: python
+
+    L1.reverse()
+
+.. code:: python
+
+    print(L1)
+
+
+.. parsed-literal::
+
+    [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+Puede encontrarse más información en `la Biblioteca de
+Python <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`__.
+
+Módulos
+-------
+
+Los módulos son el mecanismo de Python para reusar código. Además, ya
+existen varios módulos que son parte de la biblioteca *standard*. Su uso
+es muy simple, para poder aprovecharlo necesitaremos saber dos cosas:
+
+-  Qué funciones están ya definidas y listas para usar
+-  Cómo acceder a ellas
+
+Empecemos con la segunda cuestión. Para utilizar las funciones debemos
+*importarlas* en la forma ``import modulo``, donde modulo es el nombre
+que queremos importar.
+
+Esto nos lleva a la primera cuestión: cómo saber ese nombre, y que
+funciones están disponibles. La respuesta es: **la documentación**.
+
+Una vez importado, podemos utilizar constantes y funciones definidas en
+el módulo con la notación “de punto”: ``modulo.funcion()``.
+
+Módulo math
+~~~~~~~~~~~
+
+El módulo **math** contiene las funciones más comunes (trigonométricas,
+exponenciales, logaritmos, etc) para operar sobre números de *punto
+flotante*, y algunas constantes importantes (pi, e, etc). En realidad es
+una interface a la biblioteca math en C.
+
+.. code:: python
+
+    import math
+    # algunas constantes y funciones elementales
+    raiz5pi= math.sqrt(5*math.pi)
+    print (raiz5pi, math.floor(raiz5pi), math.ceil(raiz5pi))
+    print (math.e, math.floor(math.e), math.ceil(math.e))
+    # otras funciones elementales
+    print (math.log(1024,2), math.log(27,3))
+    print (math.factorial(7), math.factorial(9), math.factorial(10))
+    print ('Combinatorio: C(6,2):',math.factorial(6)/(math.factorial(4)*math.factorial(2)))
+
+
+
+.. parsed-literal::
+
+    3.963327297606011 3 4
+    2.718281828459045 2 3
+    10.0 3.0
+    5040 362880 3628800
+    Combinatorio: C(6,2): 15.0
+
+
+A veces, sólo necesitamos unas pocas funciones de un módulo. Entonces
+para abreviar la notación combiene importar sólo lo que vamos a usar,
+usando la notación:
+
+``from xxx import yyy``
+
+.. code:: python
+
+    from math import sqrt, pi, log
+    import math
+    raiz5pi = sqrt(5*pi)
+    print (log(1024, 2))
+    print (raiz5pi, math.floor(raiz5pi))
+
+
+.. parsed-literal::
+
+    10.0
+    3.963327297606011 3
+
+
+.. code:: python
+
+    import math as m
+    m.sqrt(3.2)
+
+
+
+
+.. parsed-literal::
+
+    1.7888543819998317
+
+
+
+.. code:: python
+
+    import math
+    print(math.sqrt(-1))
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Input In [62], in <module>
+          1 import math
+    ----> 2 print(math.sqrt(-1))
+
+
+    ValueError: math domain error
+
+
+Módulo ``cmath``
+~~~~~~~~~~~~~~~~
+
+El módulo ``math`` no está diseñado para trabajar con números complejos,
+para ello existe el módulo **cmath**
+
+.. code:: python
+
+    import cmath
+    print('Usando cmath (-1)^0.5=', cmath.sqrt(-1))
+    print(cmath.cos(cmath.pi/3 + 2j))
+
+
+
+.. parsed-literal::
+
+    Usando cmath (-1)^0.5= 1j
+    (1.8810978455418161-3.1409532491755083j)
+
+
+Si queremos calcular la fase (el ángulo que forma con el eje x) podemos
+usar la función phase
+
+.. code:: python
+
+    z = 1 + 0.5j
+    cmath.phase(z)                  # Resultado en radianes
+
+
+
+
+.. parsed-literal::
+
+    0.4636476090008061
+
+
+
+.. code:: python
+
+    math.degrees(cmath.phase(z))    # Resultado en grados
+
+
+
+
+.. parsed-literal::
+
+    26.56505117707799
+
+
+
+--------------
+
+Ejercicios 02 (b)
+-----------------
+
+3. Manejos de listas:
+
+   -  Cree la lista **N** de longitud 50, donde cada elemento es un
+      número entero de 1 a 50 inclusive (Ayuda: vea la expresión
+      ``range``).
+   -  Invierta la lista.
+   -  Extraiga una lista **N2** que contenga sólo los elementos pares de
+      **N**.
+   -  Extraiga una lista **N3** que contenga sólo aquellos elementos que
+      sean el cuadrado de algún número entero.
+
+4. Cree una lista de la forma ``L = [1,3,5,...,17,19,19,17,...,3,1]``
+
+5. Operación “rara” sobre una lista:
+
+   -  Defina la lista ``L = [0,1]``
+   -  Realice la operación ``L.append(L)``
+   -  Ahora imprima L, e imprima el último elemento de ``L``.
+   -  Haga que una nueva lista ``L1`` tenga el valor del último elemento
+      de ``L`` y repita el inciso anterior.
+
+6. Utilizando funciones y métodos de *strings* en la cadena de
+   caracteres:
+
+.. code:: python
+
+   s1='En un lugar de la Mancha de cuyo nombre no quiero acordarme'
+
+-  Obtenga la cantidad de caracteres.
+
+-  Imprima la frase anterior pero con cada palabra empezando en
+   mayúsculas.
+
+-  | Cuente cuantas letras ‘a’ tiene la frase, ¿cuántas vocales tiene?
+
+-  Imprima el string ``s1`` centrado en una línea de 80 caracteres,
+   rodeado de guiones en la forma:
+
+   ———-En un lugar de la Mancha de cuyo nombre no quiero acordarme———–
+
+-  Obtenga una lista **L1** donde cada elemento sea una palabra de la
+   oración.
+
+-  Cuente la cantidad de palabras en ``s1`` (utilizando python).
+
+-  Ordene la lista **L1** en orden alfabético.
+
+-  Ordene la lista **L1** tal que las palabras más cortas estén primero.
+
+-  Ordene la lista **L1** tal que las palabras más largas estén primero.
+
+-  Construya un string **s2** con la lista del resultado del punto
+   anterior.
+
+-  Encuentre la palabra más larga y la más corta de la frase.
+
+7. Escriba un script que encuentre las raíces de la ecuación cuadrática
+   :math:`a x^{2} + bx +c = 0`. Los valores de los parámetros defínalos
+   en el mismo script, un poco más arriba.
+
+8. Considere un polígono regular de :math:`N` lados inscripto en un
+   círculo de radio unidad:
+
+   -  Calcule el ángulo interior del polígono regular de :math:`N` lados
+      (por ejemplo el de un triángulo es 60 grados, de un cuadrado es 90
+      grados, y de un pentágono es 108 grados). Exprese el resultado en
+      grados y en radianes para valores de
+      :math:`N= 3, 5, 6, 8, 9, 10, 12`.
+   -  ¿Puede calcular la longitud del lado de los polígonos regulares si
+      se encuentran inscriptos en un círculo de radio unidad?
+
+9. Escriba un *script* (llamado distancia1.py) que defina las variables
+   velocidad y posición inicial :math:`v_{0}`, :math:`z_{0}`, la
+   aceleración :math:`g`, y la masa :math:`m=1` kg a tiempo :math:`t=0`,
+   y calcule e imprima la posición y velocidad a un tiempo posterior
+   :math:`t`. Ejecute el programa para varios valores de posición y
+   velocidad inicial para :math:`t=2` segundos. Recuerde que las
+   ecuaciones de movimiento con aceleración constante son:
+
+   .. math:: v = v_0 - g t  \\  z = z_0 + v_0 t - g t^2/2.
+
+Adicionales
+~~~~~~~~~~~
+
+9.  Calcular la suma:
+
+    .. math:: s_{1} = \frac{1}{2} \left(\sum_{k=0}^{100}k \right)^{-1}
+
+    *Ayuda*: busque información sobre la función ``sum()``
+
+10. Construir una lista ``L2`` con 2000 elementos, todos iguales a
+    ``0.0005``. Imprimir su suma utilizando la función ``sum`` y
+    comparar con el resultado que arroja la función que existe en el
+    módulo ``math`` para realizar suma de números de punto flotante.
+
+--------------
+
+.
