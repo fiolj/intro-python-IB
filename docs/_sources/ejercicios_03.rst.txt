@@ -2,51 +2,108 @@ Ejercicios de Clase 03
 ----------------------
 
 
-1. De los primeros 100 números naturales imprimir aquellos que no son
-   divisibles por alguno de 2, 3, 5 o 7.
+5. Un método para calcular el área de un polígono (no necesariamente
+   regular) que se conoce como fórmula del área de Gauss o fórmula de la
+   Lazada (*shoelace formula*) consiste en describir al polígono por sus
+   puntos en un sistema de coordenadas. Cada punto se describe como un
+   par :math:`(x,y)` y la fórmula del área está dada mediante la suma de
+   la multiplicación de los valores en una diagonal a los que se le
+   resta los valores en la otra diagonal, como muestra la figura
 
-2. Usando estructuras de control, calcule la suma:
+.. image:: figuras/shoelace.png
 
-   .. math::  s_{1} = \frac{1}{2} \left(\sum_{k=1}^{100}k^{-1} \right)
+.. math::  2 A = (x_{1} y_{2} + x_{2} y_{3} + x_{3} y_{4} + \dots) - (x_{2} y_{1} + x_{3} y_{2} + x_{4} y_{3} + \dots) 
 
-   1. Incluyendo todos los valores de ``k``
-   2. Incluyendo únicamente los valores pares de ``k``.
+.. image:: figuras/ejemplo_shoelace.png
 
-3. Calcule la suma
+-  Utilizando una descripción adecuada del polígono, implementar la
+   fórmula de Gauss para calcular su área y aplicarla al ejemplo de la
+   figura.
+-  Verificar que el resultado no depende del punto de inicio.
 
-   .. math:: s_{2} = \sum_{k=1}^{\infty} \frac{(-1)^{k} (k+1)}{2 k^{3} + k^{2}}
+6. Las funciones de Bessel de orden :math:`n` cumplen las relaciones de
+   recurrencia
 
-   con un error relativo estimado menor a :math:`\epsilon=10^{-5}`.
-   Imprima por pantalla el resultado, el valor máximo de :math:`k`
-   computado y el error relativo estimado.
-
-4. Imprima por pantalla una tabla con valores equiespaciados de x entre
-   0 y 180, con valores de las funciones trigonométricas de la forma:
-
-.. code:: python
+   .. math::
 
 
-   """
-     |=================================|
-     | x  | sen(x) | cos(x) | tan(-x/4)|
-     |=================================|
-     |  0 |  0.000 |  1.000 |  -0.000  |
-     | 10 |  0.174 |  0.985 |  -0.044  |
-     | 20 |  0.342 |  0.940 |  -0.087  |
-     | 30 |  0.500 |  0.866 |  -0.132  |
-     | 40 |  0.643 |  0.766 |  -0.176  |
-     | 50 |  0.766 |  0.643 |  -0.222  |
-     | 60 |  0.866 |  0.500 |  -0.268  |
-     | 70 |  0.940 |  0.342 |  -0.315  |
-     | 80 |  0.985 |  0.174 |  -0.364  |
-     | 90 |  1.000 |  0.000 |  -0.414  |
-     |100 |  0.985 | -0.174 |  -0.466  |
-     |110 |  0.940 | -0.342 |  -0.521  |
-     |120 |  0.866 | -0.500 |  -0.577  |
-     |130 |  0.766 | -0.643 |  -0.637  |
-     |140 |  0.643 | -0.766 |  -0.700  |
-     |150 |  0.500 | -0.866 |  -0.767  |
-     |160 |  0.342 | -0.940 |  -0.839  |
-     |170 |  0.174 | -0.985 |  -0.916  |
-     |=================================|
-   """
+      J_{n -1}(x)- \frac{2n }{x}\, J_{n }(x) + J_{n +1}(x) = 0 \\
+      J^{2}_{0}(x) + \sum_{n=1}^{\infty} 2 J^{2}_{n}(x) = 1
+        
+
+Para calcular la función de Bessel de orden :math:`N`, se empieza con un
+valor de :math:`M \gg N`, y utilizando los valores iniciales
+:math:`J_{M}=1`, :math:`J_{M+1}=0` se utiliza la primera relación para
+calcular todos los valores de :math:`n < M`. Luego, utilizando la
+segunda relación se normalizan todos los valores.
+
+.. note::  Estas relaciones son válidas si :math:`M \gg x` (use algún
+  valor estimado, como por ejemplo :math:`M=N+20`).
+  
+  
+
+Utilice estas relaciones para calcular :math:`J_{N}(x)` para
+:math:`N=3,4,7` y :math:`x=2.5, 5.7, 10`. Para referencia se dan los
+valores esperados
+
+.. math::
+
+
+     J_3( 2.5) =  0.21660\\
+     J_4( 2.5) =  0.07378\\
+     J_7( 2.5) =  0.00078\\
+     J_3( 5.7) =  0.20228\\
+     J_4( 5.7) =  0.38659\\
+     J_7( 5.7) =  0.10270\\
+     J_3(10.0) =  0.05838\\
+     J_4(10.0) = -0.21960\\
+     J_7(10.0) =  0.21671\\
+     
+
+7. Dada una lista de números, vamos a calcular valores relacionados a su
+   estadística.
+
+   -  Calcular los valores de la media aritmética, la media geométrica y
+      la media armónica, dados por:
+
+      .. math::
+
+
+          A(x_1, \ldots, x_n) = \bar{x} = \frac{x_1 + \cdots + x_n}{n} \\
+          G(x_1, \ldots, x_n) = \sqrt[n]{x_1 \cdots x_n} \\
+          H(x_1, \ldots, x_n) = \frac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}
+          
+
+   -  Calcular la desviación estándard:
+
+      .. math::  \sigma\equiv\sqrt{\frac{1}{n}\sum_i \left(x_{i} - \bar{x} \right)^2} 
+
+   -  Calcular la mediana, que se define como el valor para el cual la
+      mitad de los valores de la lista es menor que ella. Si el número
+      de elementos es par, se toma el promedio entre los dos adyacentes.
+
+   Realizar los cálculos para las listas de números:
+
+   .. code:: python
+
+      L1 = [6.41, 1.28, 11.54, 5.13, 8.97, 3.84, 10.26, 14.1, 12.82, 16.67, 2.56, 17.95, 7.69, 15.39]
+      L2 = [4.79, 1.59, 2.13, 4.26, 3.72, 1.06, 6.92, 3.19, 5.32, 2.66, 5.85, 6.39, 0.53]
+
+   -  La *moda* se define como el valor que ocurre más frecuentemente en
+      una colección. Note que la moda puede no ser única. En ese caso
+      debe obtener todos los valores. Calcule la moda de la siguiente
+      lista de números enteros:
+
+   .. code:: python
+
+      L = [8, 9, 10, 11, 10, 6, 10, 17, 8, 8, 5, 10, 14, 7, 9, 12, 8, 17, 10, 12, 9, 11, 9, 12, 11, 11, 6, 9, 12, 5, 12, 9, 10, 16, 8, 4, 5, 8, 11, 12]
+
+8. Dada una lista de direcciones en el plano, expresadas por los ángulos
+   en grados a partir de un cierto eje, calcular la dirección promedio,
+   expresada en ángulos. Pruebe su algoritmo con las listas:
+
+   .. code:: python
+
+      t1 = [0, 180, 370, 10]
+      t2 = [30, 0, 80, 180]
+      t3 = [80, 180, 540, 280]

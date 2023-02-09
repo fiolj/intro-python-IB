@@ -68,6 +68,12 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-03-a">Ejercicios 03 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tecnicas-de-iteracion">Técnicas de iteración</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#iteracion-sobre-elementos-de-dos-listas">Iteración sobre elementos de dos listas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteraciones-sobre-diccionarios">Iteraciones sobre diccionarios</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-03-b">Ejercicios 03 (b)</a></li>
 </ul>
 </li>
 </ul>
@@ -1073,7 +1079,237 @@ computado y el error relativo estimado.</p>
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
 </div>
+</section>
 <hr class="docutils" />
+<section id="tecnicas-de-iteracion">
+<h2>Técnicas de iteración<a class="headerlink" href="#tecnicas-de-iteracion" title="Permalink to this heading"></a></h2>
+<p>Introdujimos tipos complejos: strings, listas, tuples, diccionarios
+(<code class="docutils literal notranslate"><span class="pre">dict</span></code>), conjuntos (<code class="docutils literal notranslate"><span class="pre">set</span></code>). Veamos algunas técnicas usuales de
+iteración sobre estos objetos.</p>
+<section id="iteracion-sobre-elementos-de-dos-listas">
+<h3>Iteración sobre elementos de dos listas<a class="headerlink" href="#iteracion-sobre-elementos-de-dos-listas" title="Permalink to this heading"></a></h3>
+<p>Consideremos las listas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_min</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">temp_max</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Queremos imprimir una lista que combine los dos datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La temperatura mínima fue </span><span class="si">{}</span><span class="s1"> y la máxima fue </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Como vemos, la función <code class="docutils literal notranslate"><span class="pre">zip</span></code> combina los elementos, tomando uno de
+cada lista</p>
+<p>Podemos mejorar la salida anterior por pantalla si volvemos a utilizar
+la función <code class="docutils literal notranslate"><span class="pre">enumerate</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">)):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El día </span><span class="si">{}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{}</span><span class="s1"> y la máxima fue </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>¿qué retorna zip?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">),</span><span class="mi">1</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El día </span><span class="si">{}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{}</span><span class="s1"> y la máxima fue </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span>
+        <span class="nb">format</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ¿Qué pasa cuńdo una se consume antes que la otra?</span>
+<span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Podemos utilizar la función <code class="docutils literal notranslate"><span class="pre">zip</span></code> para sumar dos listas término a
+término. <code class="docutils literal notranslate"><span class="pre">zip</span></code> funciona también con más de dos listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_min</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El día </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{</span><span class="n">t1</span><span class="si">}</span><span class="s1"> y la máxima fue </span><span class="si">{</span><span class="n">t2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmedia</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="n">tmedia</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="o">+</span><span class="n">t2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tmedia</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>También podemos escribirlo en forma más compacta usando comprensiones de
+listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tm</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t1</span><span class="o">+</span><span class="n">t2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">t1</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span><span class="n">temp_max</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tm</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="iteraciones-sobre-diccionarios">
+<h3>Iteraciones sobre diccionarios<a class="headerlink" href="#iteraciones-sobre-diccionarios" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:{</span><span class="s2">&quot;Tmin&quot;</span><span class="p">:</span> <span class="n">temp_min</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="s2">&quot;Tmax&quot;</span><span class="p">:</span><span class="n">temp_max</span><span class="p">[</span><span class="n">j</span><span class="p">]}</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_min</span><span class="p">))}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;La temperatura máxima del día </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> fue </span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;Tmax&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> y la mínima </span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;Tmin&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span>
+</pre></div>
+</div>
+<p>Cómo comentamos anteriormente, cuando iteramos sobre un diccionario
+estamos moviéndonos sobre las <code class="docutils literal notranslate"><span class="pre">(k)eys</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span> <span class="ow">in</span> <span class="n">temps</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span> <span class="ow">in</span> <span class="n">temps</span>
+</pre></div>
+</div>
+<p>Para referirnos al valor tenemos que hacerlo en la forma <code class="docutils literal notranslate"><span class="pre">temps[k]</span></code>, y
+no siempre es una manera muy clara de escribir las cosas. Otra manera
+similar, pero más limpia en este caso sería:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;La temperatura máxima del día </span><span class="si">{}</span><span class="s1"> fue </span><span class="si">{}</span><span class="s1"> y la mínima </span><span class="si">{}</span><span class="s1">&#39;</span>
+        <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;Tmin&#39;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s1">&#39;Tmax&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>Si queremos iterar sobre los valores podemos utilizar simplemente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Remarquemos que los diccionarios no tienen definidos un orden por lo que
+no hay garantías que la próxima vez que ejecutemos cualquiera de estas
+líneas de código el resultado sea exactamente el mismo. Además, si
+queremos imprimirlos en un orden predecible debemos escribirlo
+explícitamente. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>La secuencia anterior puede escribirse en forma más compacta como</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="p">),</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-03-b">
+<h2>Ejercicios 03 (b)<a class="headerlink" href="#ejercicios-03-b" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple" start="5">
+<li><p>Un método para calcular el área de un polígono (no necesariamente
+regular) que se conoce como fórmula del área de Gauss o fórmula de la
+Lazada (<em>shoelace formula</em>) consiste en describir al polígono por sus
+puntos en un sistema de coordenadas. Cada punto se describe como un
+par <span class="math notranslate nohighlight">\((x,y)\)</span> y la fórmula del área está dada mediante la suma de
+la multiplicación de los valores en una diagonal a los que se le
+resta los valores en la otra diagonal, como muestra la figura</p></li>
+</ol>
+<img alt="_images/shoelace.png" src="_images/shoelace.png" />
+<div class="math notranslate nohighlight">
+\[2 A = (x_{1} y_{2} + x_{2} y_{3} + x_{3} y_{4} + \dots) - (x_{2} y_{1} + x_{3} y_{2} + x_{4} y_{3} + \dots)\]</div>
+<img alt="_images/ejemplo_shoelace.png" src="_images/ejemplo_shoelace.png" />
+<ul class="simple">
+<li><p>Utilizando una descripción adecuada del polígono, implementar la
+fórmula de Gauss para calcular su área y aplicarla al ejemplo de la
+figura.</p></li>
+<li><p>Verificar que el resultado no depende del punto de inicio.</p></li>
+</ul>
+<ol class="arabic" start="6">
+<li><p>Las funciones de Bessel de orden <span class="math notranslate nohighlight">\(n\)</span> cumplen las relaciones de
+recurrencia</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}J_{n -1}(x)- \frac{2n }{x}\, J_{n }(x) + J_{n +1}(x) = 0 \\
+J^{2}_{0}(x) + \sum_{n=1}^{\infty} 2 J^{2}_{n}(x) = 1\end{split}\]</div>
+</li>
+</ol>
+<p>Para calcular la función de Bessel de orden <span class="math notranslate nohighlight">\(N\)</span>, se empieza con un
+valor de <span class="math notranslate nohighlight">\(M \gg N\)</span>, y utilizando los valores iniciales
+<span class="math notranslate nohighlight">\(J_{M}=1\)</span>, <span class="math notranslate nohighlight">\(J_{M+1}=0\)</span> se utiliza la primera relación para
+calcular todos los valores de <span class="math notranslate nohighlight">\(n &lt; M\)</span>. Luego, utilizando la
+segunda relación se normalizan todos los valores.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Estas relaciones son válidas si <span class="math notranslate nohighlight">\(M \gg x\)</span> (use algún
+valor estimado, como por ejemplo <span class="math notranslate nohighlight">\(M=N+20\)</span>).</p>
+</div>
+<p>Utilice estas relaciones para calcular <span class="math notranslate nohighlight">\(J_{N}(x)\)</span> para
+<span class="math notranslate nohighlight">\(N=3,4,7\)</span> y <span class="math notranslate nohighlight">\(x=2.5, 5.7, 10\)</span>. Para referencia se dan los
+valores esperados</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}J_3( 2.5) =  0.21660\\
+J_4( 2.5) =  0.07378\\
+J_7( 2.5) =  0.00078\\
+J_3( 5.7) =  0.20228\\
+J_4( 5.7) =  0.38659\\
+J_7( 5.7) =  0.10270\\
+J_3(10.0) =  0.05838\\
+J_4(10.0) = -0.21960\\
+J_7(10.0) =  0.21671\\\end{split}\]</div>
+<ol class="arabic" start="7">
+<li><p>Dada una lista de números, vamos a calcular valores relacionados a su
+estadística.</p>
+<ul>
+<li><p>Calcular los valores de la media aritmética, la media geométrica y
+la media armónica, dados por:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}A(x_1, \ldots, x_n) = \bar{x} = \frac{x_1 + \cdots + x_n}{n} \\
+G(x_1, \ldots, x_n) = \sqrt[n]{x_1 \cdots x_n} \\
+H(x_1, \ldots, x_n) = \frac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}\end{split}\]</div>
+</li>
+<li><p>Calcular la desviación estándard:</p>
+<div class="math notranslate nohighlight">
+\[\sigma\equiv\sqrt{\frac{1}{n}\sum_i \left(x_{i} - \bar{x} \right)^2}\]</div>
+</li>
+<li><p>Calcular la mediana, que se define como el valor para el cual la
+mitad de los valores de la lista es menor que ella. Si el número
+de elementos es par, se toma el promedio entre los dos adyacentes.</p></li>
+</ul>
+<p>Realizar los cálculos para las listas de números:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.41</span><span class="p">,</span> <span class="mf">1.28</span><span class="p">,</span> <span class="mf">11.54</span><span class="p">,</span> <span class="mf">5.13</span><span class="p">,</span> <span class="mf">8.97</span><span class="p">,</span> <span class="mf">3.84</span><span class="p">,</span> <span class="mf">10.26</span><span class="p">,</span> <span class="mf">14.1</span><span class="p">,</span> <span class="mf">12.82</span><span class="p">,</span> <span class="mf">16.67</span><span class="p">,</span> <span class="mf">2.56</span><span class="p">,</span> <span class="mf">17.95</span><span class="p">,</span> <span class="mf">7.69</span><span class="p">,</span> <span class="mf">15.39</span><span class="p">]</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.79</span><span class="p">,</span> <span class="mf">1.59</span><span class="p">,</span> <span class="mf">2.13</span><span class="p">,</span> <span class="mf">4.26</span><span class="p">,</span> <span class="mf">3.72</span><span class="p">,</span> <span class="mf">1.06</span><span class="p">,</span> <span class="mf">6.92</span><span class="p">,</span> <span class="mf">3.19</span><span class="p">,</span> <span class="mf">5.32</span><span class="p">,</span> <span class="mf">2.66</span><span class="p">,</span> <span class="mf">5.85</span><span class="p">,</span> <span class="mf">6.39</span><span class="p">,</span> <span class="mf">0.53</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>La <em>moda</em> se define como el valor que ocurre más frecuentemente en
+una colección. Note que la moda puede no ser única. En ese caso
+debe obtener todos los valores. Calcule la moda de la siguiente
+lista de números enteros:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p>Dada una lista de direcciones en el plano, expresadas por los ángulos
+en grados a partir de un cierto eje, calcular la dirección promedio,
+expresada en ángulos. Pruebe su algoritmo con las listas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">180</span><span class="p">]</span>
+<span class="n">t3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">80</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">280</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
 </section>
 </section>
 
