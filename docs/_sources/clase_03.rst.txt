@@ -114,14 +114,14 @@ diccionario a otro, no se crea un nuevo objeto
 
 .. code:: python
 
-    d1 is d2
+    d5 is d2
 
 
 
 
 .. parsed-literal::
 
-    False
+    True
 
 
 
@@ -148,19 +148,6 @@ Selección de elementos
 
 Para seleccionar un elemento de un diccionario, se lo llama por su clave
 (``key``)
-
-.. code:: python
-
-    d1
-
-
-
-
-.. parsed-literal::
-
-    {'S': 'Al', 'Z': 13, 'A': 27, 'M': 26.98153863}
-
-
 
 .. code:: python
 
@@ -274,21 +261,6 @@ como en valores
 
     entrada
 
-
-
-
-.. parsed-literal::
-
-    {'nombre': 'Juan',
-     'apellido': 'García',
-     'edad': 109,
-     'dirección': 'Av Bustillo 9500,',
-     'cod': 8400,
-     'ciudad': 'Bariloche',
-     1: [2, 3]}
-
-
-
 Acceso a claves y valores
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -310,28 +282,15 @@ todas las claves (*keys*), valores, o pares (clave, valor) usamos:
     
     
     Keys:
-    ['nombre', 'apellido', 'edad', 'dirección', 'cod', 'ciudad', 1]
+    ['nombre', 'apellido', 'edad', 'dirección', 'cod', 'ciudad']
     
     
     Values:
-    ['Juan', 'García', 109, 'Av Bustillo 9500,', 8400, 'Bariloche', [2, 3]]
+    ['Juan', 'García', 109, 'Av Bustillo 9500,', 8400, 'Bariloche']
     
     
     Items:
-    [('nombre', 'Juan'), ('apellido', 'García'), ('edad', 109), ('dirección', 'Av Bustillo 9500,'), ('cod', 8400), ('ciudad', 'Bariloche'), (1, [2, 3])]
-
-
-.. code:: python
-
-    entrada.items()
-
-
-
-
-.. parsed-literal::
-
-    dict_items([('nombre', 'Juan'), ('apellido', 'García'), ('edad', 109), ('dirección', 'Av Bustillo 9500,'), ('cod', 8400), ('ciudad', 'Bariloche'), (1, [2, 3])])
-
+    [('nombre', 'Juan'), ('apellido', 'García'), ('edad', 109), ('dirección', 'Av Bustillo 9500,'), ('cod', 8400), ('ciudad', 'Bariloche')]
 
 
 .. code:: python
@@ -349,8 +308,7 @@ todas las claves (*keys*), valores, o pares (clave, valor) usamos:
      ('edad', 109),
      ('dirección', 'Av Bustillo 9500,'),
      ('cod', 8400),
-     ('ciudad', 'Bariloche'),
-     (1, [2, 3])]
+     ('ciudad', 'Bariloche')]
 
 
 
@@ -368,8 +326,7 @@ todas las claves (*keys*), valores, o pares (clave, valor) usamos:
      'edad': 109,
      'dirección': 'Av Bustillo 9500,',
      'cod': 8400,
-     'ciudad': 'Bariloche',
-     1: [2, 3]}
+     'ciudad': 'Bariloche'}
 
 
 
@@ -398,7 +355,6 @@ un nuevo valor como lo haríamos para una variable.
      'dirección': 'Av Bustillo 9500,',
      'cod': 8400,
      'ciudad': 'Bariloche',
-     1: [2, 3],
      'tel': {'cel': 1213, 'fijo': 23848}}
 
 
@@ -426,7 +382,7 @@ modificamos el valor de la ciudad:
     # imprimimos
     print ('\n\nDatos:\n')
     print (entrada['nombre'] + ' ' + entrada['apellido'])
-    print (entrada['dirección'])
+    print (entrada[u'dirección'])
     print (entrada['ciudad'])
     print (entrada['pais'])
 
@@ -464,27 +420,7 @@ completar utilizando otro diccionario, usando el método ``update()``
 
 .. code:: python
 
-    entrada
-
-
-
-
-.. parsed-literal::
-
-    {'nombre': 'Juan',
-     'apellido': 'García',
-     'edad': 109,
-     'dirección': 'Av Bustillo 9500,',
-     'cod': 8400,
-     'ciudad': 'San Carlos de Bariloche',
-     1: [2, 3],
-     'tel': {'cel': 1213, 'fijo': 23848},
-     'pais': 'Argentina'}
-
-
-
-.. code:: python
-
+    print (f'{entrada = }')
     entrada.update(d2)  # Corregimos valores o agregamos nuevos si no existen
     print ("\nNuevo valor:\n")
     print (f'{entrada = }')
@@ -492,16 +428,17 @@ completar utilizando otro diccionario, usando el método ``update()``
 
 .. parsed-literal::
 
+    entrada = {'nombre': 'José', 'apellido': 'García', 'edad': 109, 'dirección': 'Av Bustillo 9500,', 'cod': 8400, 'ciudad': 'San Carlos de Bariloche', 'tel': {'cel': 1213, 'fijo': 23848}, 'pais': 'Argentina'}
     
     Nuevo valor:
     
-    entrada = {'nombre': 'José', 'apellido': 'García', 'edad': 109, 'dirección': 'Av Bustillo 9500,', 'cod': 8400, 'ciudad': 'San Carlos de Bariloche', 1: [2, 3], 'tel': {'cel': 1213, 'fijo': 23848}, 'pais': 'Argentina', 'provincia': 'Río Negro'}
+    entrada = {'nombre': 'José', 'apellido': 'García', 'edad': 109, 'dirección': 'Av Bustillo 9500,', 'cod': 8400, 'ciudad': 'San Carlos de Bariloche', 'tel': {'cel': 1213, 'fijo': 23848}, 'pais': 'Argentina', 'provincia': 'Río Negro'}
 
 
 .. code:: python
 
     # Para borrar un campo de un diccionario usamos `del`
-    print ("'provincia' in entrada =", f"{'provincia' in entrada}")
+    print (f"{'provincia' in entrada = }")
     del entrada['provincia']
     print (f"{'provincia' in entrada = }")
 
@@ -510,17 +447,6 @@ completar utilizando otro diccionario, usando el método ``update()``
 
     'provincia' in entrada = True
     'provincia' in entrada = False
-
-
-.. code:: python
-
-    a = 1
-    print(f"{a=}", "es lo mismo que", f"a={a}")
-
-
-.. parsed-literal::
-
-    a=1 es lo mismo que a=1
 
 
 El método ``pop`` nos devuelve un valor y lo borra del diccionario.
@@ -540,9 +466,9 @@ El método ``pop`` nos devuelve un valor y lo borra del diccionario.
      'dirección': 'Av Bustillo 9500,',
      'cod': 8400,
      'ciudad': 'San Carlos de Bariloche',
-     1: [2, 3],
      'tel': {'cel': 1213, 'fijo': 23848},
-     'pais': 'Argentina'}
+     'pais': 'Argentina',
+     1: [2, 3]}
 
 
 
@@ -550,34 +476,9 @@ El método ``pop`` nos devuelve un valor y lo borra del diccionario.
 
     entrada.pop(1)
 
-
-
-
-.. parsed-literal::
-
-    [2, 3]
-
-
-
 .. code:: python
 
     entrada
-
-
-
-
-.. parsed-literal::
-
-    {'nombre': 'José',
-     'apellido': 'García',
-     'edad': 109,
-     'dirección': 'Av Bustillo 9500,',
-     'cod': 8400,
-     'ciudad': 'San Carlos de Bariloche',
-     'tel': {'cel': 1213, 'fijo': 23848},
-     'pais': 'Argentina'}
-
-
 
 Conjuntos
 ---------
@@ -589,20 +490,6 @@ Los conjuntos (``set()``) son grupos de claves únicas e inmutables.
     mamiferos = {'perro', 'gato', 'león', 'perro'}
     domesticos = {'perro', 'gato', 'gallina', 'ganso'}
     aves = {"chimango", "bandurria", 'gallina', 'cóndor', 'ganso'}
-    otros = {'casa', 3}
-
-.. code:: python
-
-    otros
-
-
-
-
-.. parsed-literal::
-
-    {3, 'casa'}
-
-
 
 .. code:: python
 
@@ -827,7 +714,7 @@ Para remover un elemento que pertenece al conjunto usamos ``remove()``
 
     KeyError                                  Traceback (most recent call last)
 
-    Input In [157], in <module>
+    Input In [58], in <module>
     ----> 1 c.remove(2)
 
 
@@ -1032,329 +919,283 @@ fuera del loop y se ejecuta al terminar todas las iteraciones del
   elementos. En este caso, a cada palabra se le calcula la longitud y esto
   es lo que se compara.
   
-  Otro ejemplo:
   
-  .. code:: python
-  
-      suma = 0
-      for elemento in range(11):
-        suma += elemento
-        print("x={},  suma parcial={}".format(elemento, suma))
-      print ('Suma total =', suma)
-  
-  
-  .. parsed-literal::
-  
-      x=0,  suma parcial=0
-      x=1,  suma parcial=1
-      x=2,  suma parcial=3
-      x=3,  suma parcial=6
-      x=4,  suma parcial=10
-      x=5,  suma parcial=15
-      x=6,  suma parcial=21
-      x=7,  suma parcial=28
-      x=8,  suma parcial=36
-      x=9,  suma parcial=45
-      x=10,  suma parcial=55
-      Suma total = 55
-  
-  
-  Notar que utilizamos el operador asignación de suma: ``+=``.
-  
-  .. code:: python
-  
-     suma += elemento
-  
-  es equivalente a:
-  
-  .. code:: python
-  
-     suma = suma + elemento
-  
-  que corresponde a realizar la suma de la derecha, y el resultado
-  asignarlo a la variable de la izquierda.
-  
-  Por supuesto, para obtener la suma anterior podemos simplemente usar las
-  funciones de python:
-  
-  .. code:: python
-  
-      print (sum(range(11))) # El ejemplo anterior puede escribirse usando sum y range
-  
-  
-  .. parsed-literal::
-  
-      55
-  
-  
-  Loops ``for``: ``enumerate``, ``continue``, ``break``, ``else``
-  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  
-  Veamos otras características del bloque ``for``.
-  
-  .. code:: python
-  
-      suma = 0
-      cuadrados = []
-      for i,elem in enumerate(range(3,30)):
-        if elem % 2:       # Si resto (%) es diferente de cero -> Impares
-          continue
-        suma += elem**2
-        cuadrados.append(elem**2)
-        print (i, elem, elem**2, suma)   # Imprimimos el índice y el elem al cuadrado
-      print ("sumatoria de números pares al cuadrado entre 3 y 20:", suma)
-      print ('cuadrados= ', cuadrados)
-  
-  
-  .. parsed-literal::
-  
-      1 4 16 16
-      3 6 36 52
-      5 8 64 116
-      7 10 100 216
-      9 12 144 360
-      11 14 196 556
-      13 16 256 812
-      15 18 324 1136
-      17 20 400 1536
-      19 22 484 2020
-      21 24 576 2596
-      23 26 676 3272
-      25 28 784 4056
-      sumatoria de números pares al cuadrado entre 3 y 20: 4056
-      cuadrados=  [16, 36, 64, 100, 144, 196, 256, 324, 400, 484, 576, 676, 784]
-  
-  
-  **Puntos a notar:**
-  
-  -  Inicializamos una variable entera en cero y una lista vacía
-  -  ``range(3,30)`` nos da consecutivamente los números entre 3 y 29 en
-     cada iteración.
-  -  ``enumerate`` nos permite iterar sobre algo, agregando un contador
-     automático.
-  -  La línea condicional ``if elem % 2:`` es equivalente a
-     ``if (elem % 2) != 0:`` y es verdadero si ``elem`` no es divisible
-     por 2 (número impar)
-  -  La sentencia ``continue`` hace que se omita la ejecución del resto
-     del bloque por esta iteración
-  -  El método ``append`` agrega el elemento a la lista
-  
-  Antes de seguir veamos otro ejemplo de uso de ``enumerate``.
-  Consideremos una iteración sobre una lista como haríamos normalmente en
-  otros lenguajes:
-  
-  .. code:: python
-  
-      L = "I've had a perfectly wonderful evening.  But this wasn't it.".split()
-  
-  .. code:: python
-  
-      L
-  
-  
-  
-  
-  .. parsed-literal::
-  
-      ["I've",
-       'had',
-       'a',
-       'perfectly',
-       'wonderful',
-       'evening.',
-       'But',
-       'this',
-       "wasn't",
-       'it.']
-  
-  
-  
-  .. code:: python
-  
-      # En otros lenguajes...
-      for j in range(len(L)):
-        print(f'Índice: {j} -> {L[j]} ({len(L[j])} caracteres)')
-  
-  
-  .. parsed-literal::
-  
-      Índice: 0 -> I've (4 caracteres)
-      Índice: 1 -> had (3 caracteres)
-      Índice: 2 -> a (1 caracteres)
-      Índice: 3 -> perfectly (9 caracteres)
-      Índice: 4 -> wonderful (9 caracteres)
-      Índice: 5 -> evening. (8 caracteres)
-      Índice: 6 -> But (3 caracteres)
-      Índice: 7 -> this (4 caracteres)
-      Índice: 8 -> wasn't (6 caracteres)
-      Índice: 9 -> it. (3 caracteres)
-  
-  
-  .. code:: python
-  
-      for j in range(len(L)):
-        print(f'La palabra "{L[j]}" tiene {len(L[j])} caracteres')
-  
-  
-  
-  .. parsed-literal::
-  
-      La palabra "I've" tiene 4 caracteres
-      La palabra "had" tiene 3 caracteres
-      La palabra "a" tiene 1 caracteres
-      La palabra "perfectly" tiene 9 caracteres
-      La palabra "wonderful" tiene 9 caracteres
-      La palabra "evening." tiene 8 caracteres
-      La palabra "But" tiene 3 caracteres
-      La palabra "this" tiene 4 caracteres
-      La palabra "wasn't" tiene 6 caracteres
-      La palabra "it." tiene 3 caracteres
-  
-  
-  En python:
-  
-  .. code:: python
-  
-      for j in L:
-        print(f'La palabra "{j}" tiene {len(j)} caracteres')
-  
-  
-  
-  .. parsed-literal::
-  
-      La palabra "I've" tiene 4 caracteres
-      La palabra "had" tiene 3 caracteres
-      La palabra "a" tiene 1 caracteres
-      La palabra "perfectly" tiene 9 caracteres
-      La palabra "wonderful" tiene 9 caracteres
-      La palabra "evening." tiene 8 caracteres
-      La palabra "But" tiene 3 caracteres
-      La palabra "this" tiene 4 caracteres
-      La palabra "wasn't" tiene 6 caracteres
-      La palabra "it." tiene 3 caracteres
-  
-  
-  Hay ocasiones en que necesitamos conocer el índice. La solución de otros
-  lenguajes nos lo provee (nos obliga a proveerlo). Python ofrece la
-  función ``enumerate()`` que agrega un contador automático
-  
-  .. code:: python
-  
-      for j, elem in enumerate(L):
-        print(f'Índice: {j} -> {elem} ({len(elem)} caracteres)')
-  
-  
-  .. parsed-literal::
-  
-      Índice: 0 -> I've (4 caracteres)
-      Índice: 1 -> had (3 caracteres)
-      Índice: 2 -> a (1 caracteres)
-      Índice: 3 -> perfectly (9 caracteres)
-      Índice: 4 -> wonderful (9 caracteres)
-      Índice: 5 -> evening. (8 caracteres)
-      Índice: 6 -> But (3 caracteres)
-      Índice: 7 -> this (4 caracteres)
-      Índice: 8 -> wasn't (6 caracteres)
-      Índice: 9 -> it. (3 caracteres)
-  
-  
-  Veamos otro ejemplo, que puede encontrarse en la `documentación
-  oficial <https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops>`__:
-  
-  .. code:: python
-  
-      for n in range(2, 20):
-        for x in range(2, n):
-          if n % x == 0:
-            print( f'{n:2d} = {x} x {n//x}')
-            break
-        else:
-           # Salió sin encontrar un factor, entonces ...
-           print('{:2d} es un número primo'.format(n))
-  
-  
-  
-  .. parsed-literal::
-  
-       2 es un número primo
-       3 es un número primo
-       4 = 2 x 2
-       5 es un número primo
-       6 = 2 x 3
-       7 es un número primo
-       8 = 2 x 4
-       9 = 3 x 3
-      10 = 2 x 5
-      11 es un número primo
-      12 = 2 x 6
-      13 es un número primo
-      14 = 2 x 7
-      15 = 3 x 5
-      16 = 2 x 8
-      17 es un número primo
-      18 = 2 x 9
-      19 es un número primo
-  
-  
-  **Puntos a notar:**
-  
-  -  Acá estamos usando dos *loops* anidados. Uno recorre ``n`` entre 2 y
-     9, y el otro ``x`` entre 2 y ``n``.
-  -  La comparación ``if n % x == 0:`` chequea si ``x`` es un divisor de
-     ``n``
-  -  La sentencia ``break`` interrumpe el *loop* interior (sobre ``x``)
-  -  Notar la alineación de la sentencia ``else``. No está referida a
-     ``if`` sino a ``for``. Es opcional y se ejecuta cuando el loop se
-     termina normalmente (sin ``break``)
-  
-  .. code:: python
-  
-      list(range(2,2)), list(range(2,3))
-  
-  
-  
-  
-  .. parsed-literal::
-  
-      ([], [2])
-  
-  
-  
-  While
-  ^^^^^
-  
-  Otra sentencia de control es *while*: que permite iterar mientras se
-  cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
-  (en la cuál cada término es la suma de los dos anteriores)
-  
-  .. code:: python
-  
-      a, b = 0, 1
-      while b < 5000:
-        print (b, end=' ')
-        a, b = b, a+b
-  
-  
-  .. parsed-literal::
-  
-      1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
-  
-  .. code:: python
-  
-      a, b = 0, 1
-      while b < 5000:
-        a, b = b, a+b
-        if b == 8:
-          continue
-        print (b, end=' ')
-  
-  
-  
-  .. parsed-literal::
-  
-      1 2 3 5 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 
-  
-  
+
+Otro ejemplo:
+
+.. code:: python
+
+    suma = 0
+    for elemento in range(11):
+      suma += elemento
+      print("x={},  suma parcial={}".format(elemento, suma))
+    print ('Suma total =', suma)
+
+
+.. parsed-literal::
+
+    x=0,  suma parcial=0
+    x=1,  suma parcial=1
+    x=2,  suma parcial=3
+    x=3,  suma parcial=6
+    x=4,  suma parcial=10
+    x=5,  suma parcial=15
+    x=6,  suma parcial=21
+    x=7,  suma parcial=28
+    x=8,  suma parcial=36
+    x=9,  suma parcial=45
+    x=10,  suma parcial=55
+    Suma total = 55
+
+
+Notar que utilizamos el operador asignación de suma: ``+=``.
+
+.. code:: python
+
+   suma += elemento
+
+es equivalente a:
+
+.. code:: python
+
+   suma = suma + elemento
+
+que corresponde a realizar la suma de la derecha, y el resultado
+asignarlo a la variable de la izquierda.
+
+Por supuesto, para obtener la suma anterior podemos simplemente usar las
+funciones de python:
+
+.. code:: python
+
+    print (sum(range(11))) # El ejemplo anterior puede escribirse usando sum y range
+
+
+.. parsed-literal::
+
+    55
+
+
+Loops: ``enumerate``, ``continue``, ``break``, ``else``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Veamos otras características del bloque ``for``.
+
+.. code:: python
+
+    suma = 0
+    cuadrados = []
+    for i,elem in enumerate(range(3,30)):
+      if elem % 2:       # Si resto (%) es diferente de cero -> Impares
+        continue
+      suma += elem**2
+      cuadrados.append(elem**2)
+      print (i, elem, elem**2, suma)   # Imprimimos el índice y el elem al cuadrado
+    print ("sumatoria de números pares al cuadrado entre 3 y 20:", suma)
+    print ('cuadrados= ', cuadrados)
+
+**Puntos a notar:**
+
+-  Inicializamos una variable entera en cero y una lista vacía
+-  ``range(3,30)`` nos da consecutivamente los números entre 3 y 29 en
+   cada iteración.
+-  ``enumerate`` nos permite iterar sobre algo, agregando un contador
+   automático.
+-  La línea condicional ``if elem % 2:`` es equivalente a
+   ``if (elem % 2) != 0:`` y es verdadero si ``elem`` no es divisible
+   por 2 (número impar)
+-  La sentencia ``continue`` hace que se omita la ejecución del resto
+   del bloque por esta iteración
+-  El método ``append`` agrega el elemento a la lista
+
+Antes de seguir veamos otro ejemplo de uso de ``enumerate``.
+Consideremos una iteración sobre una lista como haríamos normalmente en
+otros lenguajes:
+
+.. code:: python
+
+    L = "I've had a perfectly wonderful evening.  But this wasn't it.".split()
+
+.. code:: python
+
+    L
+
+
+
+
+.. parsed-literal::
+
+    ["I've",
+     'had',
+     'a',
+     'perfectly',
+     'wonderful',
+     'evening.',
+     'But',
+     'this',
+     "wasn't",
+     'it.']
+
+
+
+.. code:: python
+
+    # En otros lenguajes...
+    for j in range(len(L)):
+      print(f'Índice: {j} -> {L[j]} ({len(L[j])} caracteres)')
+
+.. code:: python
+
+    for j in range(len(L)):
+      print(f'La palabra "{L[j]}" tiene {len(L[j])} caracteres')
+
+
+
+.. parsed-literal::
+
+    La palabra "I've" tiene 4 caracteres
+    La palabra "had" tiene 3 caracteres
+    La palabra "a" tiene 1 caracteres
+    La palabra "perfectly" tiene 9 caracteres
+    La palabra "wonderful" tiene 9 caracteres
+    La palabra "evening." tiene 8 caracteres
+    La palabra "But" tiene 3 caracteres
+    La palabra "this" tiene 4 caracteres
+    La palabra "wasn't" tiene 6 caracteres
+    La palabra "it." tiene 3 caracteres
+
+
+En python:
+
+.. code:: python
+
+    for pal in L:
+      print(f'La palabra "{pal}" tiene {len(pal)} caracteres')
+
+
+
+.. parsed-literal::
+
+    La palabra "I've" tiene 4 caracteres
+    La palabra "had" tiene 3 caracteres
+    La palabra "a" tiene 1 caracteres
+    La palabra "perfectly" tiene 9 caracteres
+    La palabra "wonderful" tiene 9 caracteres
+    La palabra "evening." tiene 8 caracteres
+    La palabra "But" tiene 3 caracteres
+    La palabra "this" tiene 4 caracteres
+    La palabra "wasn't" tiene 6 caracteres
+    La palabra "it." tiene 3 caracteres
+
+
+Hay ocasiones en que necesitamos conocer el índice. La solución de otros
+lenguajes nos lo provee (nos obliga a proveerlo). Python ofrece la
+función ``enumerate()`` que agrega un contador automático
+
+.. code:: python
+
+    for j, elem in enumerate(L):
+      print(f'Índice: {j} -> {elem} ({len(elem)} caracteres)')
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
+
+Veamos otro ejemplo, que puede encontrarse en la `documentación
+oficial <https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops>`__:
+
+.. code:: python
+
+    for n in range(2, 20):
+      for x in range(2, n):
+        if n % x == 0:
+          print( f'{n:2d} = {x} x {n//x}')
+          break
+      else:
+         # Salió sin encontrar un factor, entonces ...
+         print('{:2d} es un número primo'.format(n))
+
+
+
+.. parsed-literal::
+
+     2 es un número primo
+     3 es un número primo
+     4 = 2 x 2
+     5 es un número primo
+     6 = 2 x 3
+     7 es un número primo
+     8 = 2 x 4
+     9 = 3 x 3
+    10 = 2 x 5
+    11 es un número primo
+    12 = 2 x 6
+    13 es un número primo
+    14 = 2 x 7
+    15 = 3 x 5
+    16 = 2 x 8
+    17 es un número primo
+    18 = 2 x 9
+    19 es un número primo
+
+
+**Puntos a notar:**
+
+-  Acá estamos usando dos *loops* anidados. Uno recorre ``n`` entre 2 y
+   9, y el otro ``x`` entre 2 y ``n``.
+-  La comparación ``if n % x == 0:`` chequea si ``x`` es un divisor de
+   ``n``
+-  La sentencia ``break`` interrumpe el *loop* interior (sobre ``x``)
+-  Notar la alineación de la sentencia ``else``. No está referida a
+   ``if`` sino a ``for``. Es opcional y se ejecuta cuando el loop se
+   termina normalmente (sin ``break``)
+
+While
+^^^^^
+
+Otra sentencia de control es *while*: que permite iterar mientras se
+cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
+(en la cuál cada término es la suma de los dos anteriores)
+
+.. code:: python
+
+    a, b = 0, 1
+    while b < 5000:
+      print (b, end=' ')
+      a, b = b, a+b
+
+
+.. parsed-literal::
+
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
+
+.. code:: python
+
+    a, b = 0, 1
+    while b < 5000:
+      a, b = b, a+b
+      if b == 8:
+        continue
+      print (b, end=' ')
+
+
+
+.. parsed-literal::
+
+    1 2 3 5 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 
+
+--------------
 
 Ejercicios 03 (a)
 -----------------
@@ -1409,6 +1250,8 @@ Ejercicios 03 (a)
    """
 
 --------------
+
+.
 
 
 Técnicas de iteración
