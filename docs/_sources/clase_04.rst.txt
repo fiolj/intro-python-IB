@@ -15,10 +15,28 @@ una *tuple* de números (de cualquier tipo)
     a = [1, 3.3, 5, 7.5, 2.2]
     sum(a)
 
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
+
 .. code:: python
 
     b = tuple(a)
     sum(b)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
 
 Para usar una función necesitamos saber: - Qué hace - Que argumentos
 podemos darle - Qué devuelve
@@ -35,9 +53,27 @@ Veamos en Python qué es una función:
 
     sum
 
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
 .. code:: python
 
     print
+
+
+
+
+.. parsed-literal::
+
+    <function print(*args, sep=' ', end='\n', file=None, flush=False)>
+
+
 
 En **Python** ``function`` es un objeto, con una operación importante:
 podemos llamarla (ejecutarla), en la forma:
@@ -51,10 +87,33 @@ función (algo así como lo que en C sería un puntero a funciones)
     f = sum
     help(f)
 
+
+.. parsed-literal::
+
+    Help on built-in function sum in module builtins:
+    
+    sum(iterable, /, start=0)
+        Return the sum of a 'start' value (default: 0) plus an iterable of numbers
+        
+        When the iterable is empty, return the start value.
+        This function is intended specifically for use with numeric values and may
+        reject non-numeric types.
+    
+
+
 .. code:: python
 
     print('¿f is sum? ', f is sum)
+    print('f == sum? ', f== sum)
     print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+
+.. parsed-literal::
+
+    ¿f is sum?  True
+    f == sum?  True
+    f(a)= 19.0   sum(a)= 19.0
+
 
 También podemos crear un diccionario donde los valores sean funciones:
 
@@ -66,15 +125,44 @@ También podemos crear un diccionario donde los valores sean funciones:
 
     funciones['suma']
 
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
 .. code:: python
 
     funciones['suma'](a)
+
+
+
+
+.. parsed-literal::
+
+    19.0
+
+
 
 .. code:: python
 
     print('\n', 'a =', a,'\n')
     for k, v in funciones.items():
       print(k,"=", v(a))
+
+
+.. parsed-literal::
+
+    
+     a = [1, 3.3, 5, 7.5, 2.2] 
+    
+    suma = 19.0
+    mínimo = 1
+    máximo = 7.5
+
 
 Definición básica de funciones
 ------------------------------
@@ -101,13 +189,42 @@ funciones
 
     fib(100)
 
+
+
+
+.. parsed-literal::
+
+    [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+
+
+
 .. code:: python
 
     fib
 
+
+
+
+.. parsed-literal::
+
+    <function __main__.fib(n)>
+
+
+
 .. code:: python
 
     help(fib)
+
+
+.. parsed-literal::
+
+    Help on function fib in module __main__:
+    
+    fib(n)
+        Devuelve una lista con los términos
+        de la serie de Fibonacci hasta n.
+    
+
 
 **Puntos a notar:**
 
@@ -125,6 +242,15 @@ funciones
 .. code:: python
 
     fib.__doc__
+
+
+
+
+.. parsed-literal::
+
+    'Devuelve una lista con los términos\n  de la serie de Fibonacci hasta n.'
+
+
 
 Como segundo ejemplo, consideremos el ejercicio donde pedimos la
 velocidad y altura de una pelota en caída libre. Pero esta vez definimos
@@ -144,6 +270,12 @@ una función para realizar los cálculos:
 
     print(caida(1))
 
+
+.. parsed-literal::
+
+    (-9.8, 495.1)
+
+
 .. code:: python
 
     v, h = caida(1.5)
@@ -153,10 +285,22 @@ una función para realizar los cálculos:
     print(f'Para t = {1.5}, la velocidad será v={v:.2f} m/s\
      y estará a una altura {h:.2f} m')
 
+
+.. parsed-literal::
+
+    Para t = 1.5, la velocidad será v=-14.70 m/s y estará a una altura 488.98 m
+
+
 .. code:: python
 
     v, h = caida(2.2)
     print(f'Para t = {2.2}, la velocidad será v={v:.2f} m/s y estará a una altura {h:.2f} m')
+
+
+.. parsed-literal::
+
+    Para t = 2.2, la velocidad será v=-21.56 m/s y estará a una altura 476.28 m
+
 
 Podemos mejorar considerablemente la funcionalidad si le damos la
 posibilidad al usuario de dar la posición y la velocidad iniciales
@@ -183,6 +327,13 @@ posibilidad al usuario de dar la posición y la velocidad iniciales
     print(f'''Para caída desde {alt}m, con vel. inicial {v0}m/s, a t = {t}, 
     la velocidad será v={v}, y estará a una altura {h}''')
 
+
+.. parsed-literal::
+
+    Para caída desde 100m, con vel. inicial 12m/s, a t = 2.2, 
+    la velocidad será v=-9.560000000000002, y estará a una altura 49.883999999999986
+
+
 Notemos que podemos llamar a esta función de varias maneras. Podemos
 llamarla con la constante, o con una variable indistintamente. En este
 caso, el argumento está definido por su posición: El primero es la
@@ -193,12 +344,45 @@ altura inicial (h_0) y el segundo la velocidad inicial (v_0).
     v0 = 12
     caida2(2.2, 100, v0)
 
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
 Pero en Python podemos usar el nombre de la variable en el llamado a la
 función. Por ejemplo:
 
 .. code:: python
 
     caida2(v_0=v0,t=2.2, h_0=100)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+.. code:: python
+
+    caida2(t=2.2, h_0=100, 12)
+
+
+::
+
+
+      Input In [27]
+        caida2(t=2.2, h_0=100, 12)
+                                 ^
+    SyntaxError: positional argument follows keyword argument
+
+
 
 --------------
 
