@@ -1,0 +1,220 @@
+.. _clase_04:
+
+Clase 4: Funciones
+===================
+
+
+Para utilizar una funcion en **Python**, como en la mayoría de los
+lenguajes, se usa una notación similar a la de las funciones
+matemáticas, con un nombre y uno o más argumentos entre paréntesis. Por
+ejemplo, ya usamos la función ``sum()``, cuyo argumento es una lista o
+una *tuple* de números (de cualquier tipo)
+
+.. code:: python
+
+    a = [1, 3.3, 5, 7.5, 2.2]
+    sum(a)
+
+.. code:: python
+
+    b = tuple(a)
+    sum(b)
+
+Para usar una función necesitamos saber: - Qué hace - Que argumentos
+podemos darle - Qué devuelve
+
+pero no necesitamos saber cómo lo hace (al menos si no tenemos duda de
+que la función es correcta).
+
+Las funciones son objetos
+-------------------------
+
+Veamos en Python qué es una función:
+
+.. code:: python
+
+    sum
+
+.. code:: python
+
+    print
+
+En **Python** ``function`` es un objeto, con una operación importante:
+podemos llamarla (ejecutarla), en la forma:
+``func(lista-de-argumentos)``
+
+Como con todos los objetos, podemos definir una variable y asignarle una
+función (algo así como lo que en C sería un puntero a funciones)
+
+.. code:: python
+
+    f = sum
+    help(f)
+
+.. code:: python
+
+    print('¿f is sum? ', f is sum)
+    print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+También podemos crear un diccionario donde los valores sean funciones:
+
+.. code:: python
+
+    funciones = {'suma': sum, 'mínimo': min, 'máximo': max}
+
+.. code:: python
+
+    funciones['suma']
+
+.. code:: python
+
+    funciones['suma'](a)
+
+.. code:: python
+
+    print('\n', 'a =', a,'\n')
+    for k, v in funciones.items():
+      print(k,"=", v(a))
+
+Definición básica de funciones
+------------------------------
+
+Tomemos el ejemplo del tutorial de la documentación de Python. Vimos, al
+introducir el elemento de control **while** una forma de calcular la
+serie de Fibonacci. Usemos ese ejemplo para mostrar como se definen las
+funciones
+
+.. code:: python
+
+    def fib(n):
+      """Devuelve una lista con los términos
+      de la serie de Fibonacci hasta n."""
+      result = []
+      a, b = 0, 1
+      while a < n:
+        result.append(a)    
+        a, b = b, a+b
+      return result
+
+
+.. code:: python
+
+    fib(100)
+
+.. code:: python
+
+    fib
+
+.. code:: python
+
+    help(fib)
+
+**Puntos a notar:**
+
+-  Las funciones se definen utilizando la palabra ``def`` seguida por el
+   nombre,
+-  A continuación, entre paréntesis se escriben los argumentos, en este
+   caso el entero ``n``,
+-  La función devuelve (*retorna*) algo, en este caso una lista. Si una
+   función no devuelve algo explícitamente, entonces devuelve ``None``.
+-  Lo que devuelve la función se especifica mediante la palabra
+   reservada ``return``
+-  Al principio de la definición de la función se escribe el *string* de
+   documentación
+
+.. code:: python
+
+    fib.__doc__
+
+Como segundo ejemplo, consideremos el ejercicio donde pedimos la
+velocidad y altura de una pelota en caída libre. Pero esta vez definimos
+una función para realizar los cálculos:
+
+.. code:: python
+
+    h_0 = 500                       # altura inicial en m
+    v_0 = 0                         # velocidad inicial en m/s
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida(t):
+      v = v_0 - g*t
+      h = h_0 - v_0*t - g*t**2/2.
+      return v,h
+
+.. code:: python
+
+    print(caida(1))
+
+.. code:: python
+
+    v, h = caida(1.5)
+
+.. code:: python
+
+    print(f'Para t = {1.5}, la velocidad será v={v:.2f} m/s\
+     y estará a una altura {h:.2f} m')
+
+.. code:: python
+
+    v, h = caida(2.2)
+    print(f'Para t = {2.2}, la velocidad será v={v:.2f} m/s y estará a una altura {h:.2f} m')
+
+Podemos mejorar considerablemente la funcionalidad si le damos la
+posibilidad al usuario de dar la posición y la velocidad iniciales
+
+.. code:: python
+
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida2(t, h_0, v_0):
+      """Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+      h_0 es la altura inicial
+      v_0 es la velocidad inicial
+      Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+      """
+      v = v_0 - g*t
+      h = h_0 - v_0*t - g*t**2/2.
+      return v,h
+
+.. code:: python
+
+    t = 2.2
+    v0 = 12
+    alt = 100
+    v,h = caida2(t, alt, v0)
+    print(f'''Para caída desde {alt}m, con vel. inicial {v0}m/s, a t = {t}, 
+    la velocidad será v={v}, y estará a una altura {h}''')
+
+Notemos que podemos llamar a esta función de varias maneras. Podemos
+llamarla con la constante, o con una variable indistintamente. En este
+caso, el argumento está definido por su posición: El primero es la
+altura inicial (h_0) y el segundo la velocidad inicial (v_0).
+
+.. code:: python
+
+    v0 = 12
+    caida2(2.2, 100, v0)
+
+Pero en Python podemos usar el nombre de la variable en el llamado a la
+función. Por ejemplo:
+
+.. code:: python
+
+    caida2(v_0=v0,t=2.2, h_0=100)
+
+--------------
+
+Ejercicios 4 (a)
+----------------
+
+1. Escriba una función que tome como un argumento una cadena de
+   caracteres (*string*) y lo devuelva centrado con un ancho ``w``. Si
+   la longitud del string es mayor que el ancho ``w`` debe retornar el
+   *string* original. Los argumentos que toma la función son el *string*
+   y el ancho.
+
+2. Utilizando conjuntos (``set``), escriba una función que compruebe si
+   un string contiene todas las vocales. La función debe devolver
+   ``True`` o ``False``.
+
+--------------
+
+
