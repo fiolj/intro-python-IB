@@ -15,6 +15,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" /> 
 </head>
@@ -115,6 +116,81 @@ argumentos:</p></li>
 <span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>  <span class="c1"># o cualquier secuencia de argumentos debe funcionar</span>
 </pre></div>
 </div>
+</li>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">crear_sen(A,</span> <span class="pre">w)</span></code> que acepte dos números reales
+<span class="math notranslate nohighlight">\(A, w\)</span> como argumentos y devuelva la función <code class="docutils literal notranslate"><span class="pre">f(x)</span></code>.</p></li>
+</ol>
+<p>Al evaluar la función <code class="docutils literal notranslate"><span class="pre">f</span></code> en un dado valor <span class="math notranslate nohighlight">\(x\)</span> debe dar el
+resultado: <span class="math notranslate nohighlight">\(f(x) = A \sin(w x)\)</span> tal que se pueda utilizar de la
+siguiente manera:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">crear_sen</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>          <span class="c1"># Debería imprimir el resultado de 3*sin(1.5*2)=0.4233600241796016</span>
+</pre></div>
+</div>
+<ol class="arabic" start="5">
+<li><p>Escriba una serie de funciones que permitan trabajar con polinomios.
+Vamos a representar a un polinomio como una lista de números reales,
+donde cada elemento corresponde a un coeficiente que acompaña una
+potencia</p>
+<ul class="simple">
+<li><p>Una función que devuelva el orden del polinomio (un número entero)</p></li>
+<li><p>Una función que sume dos polinomios y devuelva un polinomio
+(objeto del mismo tipo)</p></li>
+<li><p>Una función que multiplique dos polinomios y devuelva el resultado
+en otro polinomio</p></li>
+<li><p>Una función devuelva la derivada del polinomio (otro polinomio).</p></li>
+<li><p>Una función que acepte el polinomio y devuelva la función
+correspondiente.</p></li>
+</ul>
+</li>
+<li><p><strong>PARA ENTREGAR.</strong> Describimos una grilla de <strong>sudoku</strong> como un
+string de nueve líneas, cada una con 9 números, con números entre 1 y
+9. Escribir un conjunto de funciones que permitan chequear si una
+grilla de sudoku es correcta. Para que una grilla sea correcta deben
+cumplirse las siguientes condiciones</p>
+<ul class="simple">
+<li><p>Los números están entre 1 y 9</p></li>
+<li><p>En cada fila no deben repetirse</p></li>
+<li><p>En cada columna no deben repetirse</p></li>
+<li><p>En todas las regiones de 3x3 que no se solapan, empezando de
+cualquier esquina, no deben repetirse</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Escribir una función que convierta un string con formato a una
+lista bidimensional. El string estará dado con nueve números por
+línea, de la siguiente manera (los espacios en blanco en cada
+línea pueden variar):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudoku</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;145327698</span>
+<span class="s2">        839654127</span>
+<span class="s2">        672918543</span>
+<span class="s2">        496185372</span>
+<span class="s2">        218473956</span>
+<span class="s2">        753296481</span>
+<span class="s2">        367542819</span>
+<span class="s2">        984761235</span>
+<span class="s2">        521839764&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Escribir una función <code class="docutils literal notranslate"><span class="pre">check_repetidos()</span></code> que tome por argumento
+una lista (unidimensional) y devuelva verdadero si la lista tiene
+elementos repetidos y falso en caso contrario (puede ser
+conveniente explorar el uso de <code class="docutils literal notranslate"><span class="pre">set</span></code>).</p></li>
+<li><p>Escribir la función <code class="docutils literal notranslate"><span class="pre">check_sudoku()</span></code> que toma como argumento una
+grilla (como una lista bidimensional de <code class="docutils literal notranslate"><span class="pre">9x9</span></code>) y devuelva
+verdadero si los números corresponden a la resolución correcta del
+Sudoku y falso en caso contrario. Note que debe verificar que los
+números no se repiten en filas, ni en columnas ni en recuadros de
+<code class="docutils literal notranslate"><span class="pre">3x3</span></code>. Para obtener la posición de los recuadros, puede
+investigar que hacen las líneas de código:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>suponiendo que <code class="docutils literal notranslate"><span class="pre">grid</span></code> es el nombre de nuestra lista bidimensional,
+cuando <code class="docutils literal notranslate"><span class="pre">i</span></code> toma valores entre <code class="docutils literal notranslate"><span class="pre">0</span></code> y <code class="docutils literal notranslate"><span class="pre">8</span></code>.</p>
 </li>
 </ol>
 </section>

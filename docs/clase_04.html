@@ -15,6 +15,7 @@
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Ejercicios" href="ejercicios.html" />
@@ -58,6 +59,18 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-4-b">Ejercicios 4 (b)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#empacar-y-desempacar-argumentos">Empacar y desempacar argumentos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funciones-que-devuelven-funciones">Funciones que devuelven funciones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejemplo-polinomio-interpolador">Ejemplo: Polinomio interpolador</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-04-c">Ejercicios 04 (c)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funciones-que-toman-como-argumento-una-funcion">Funciones que toman como argumento una función</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aplicacion-1-ordenamiento-de-listas">Aplicacion 1: Ordenamiento de listas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funciones-anonimas">Funciones anónimas</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejemplo-integracion-numerica">Ejemplo: Integración numérica</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#uso-de-funciones-anonimas">Uso de funciones anónimas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-04-d">Ejercicios 04 (d)</a></li>
 </ul>
 </li>
 </ul>
@@ -803,7 +816,608 @@ argumentos:</p></li>
 </div>
 </li>
 </ol>
+</section>
 <hr class="docutils" />
+<section id="empacar-y-desempacar-argumentos">
+<h2>Empacar y desempacar argumentos<a class="headerlink" href="#empacar-y-desempacar-argumentos" title="Permalink to this heading"></a></h2>
+<p>Cuando en <strong>Python</strong> creamos una función que acepta un número arbitrario
+de argumentos estamos utilizando una habilidad del lenguaje que es el
+“empaquetamiento” y “desempaquetamiento” automático de variables.</p>
+<p>Al definir un número variable de argumentos de la forma:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="o">*</span><span class="n">v</span><span class="p">):</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>y luego utilizarla en alguna de las formas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;hola&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span> <span class="s1">&#39;hola&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Python</strong> automáticamente convierte los argumentos en una única tupla:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                 <span class="o">--&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;hola&#39;</span><span class="p">)</span>          <span class="o">--&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;hola&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span> <span class="s1">&#39;hola&#39;</span><span class="p">)</span>   <span class="o">--&gt;</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span><span class="s1">&#39;hola&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Análogamente, cuando utilizamos funciones podemos desempacar múltiples
+valores en los argumentos de llamada a las funciones.</p>
+<p>Si definimos una función que recibe un número determinado de argumentos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>y definimos una lista (o tupla)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t1</span> <span class="o">=</span> <span class="p">[</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">c1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>podemos realizar la llamada a la función utilizando la notación
+“asterisco” o “estrella”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g</span><span class="p">(</span><span class="o">*</span><span class="n">t1</span><span class="p">)</span>             <span class="o">--&gt;</span>  <span class="n">g</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">c1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Esta notación no se puede utilizar en cualquier contexto. Por ejemplo,
+es un error tratar de hacer</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t2</span> <span class="o">=</span> <span class="o">*</span><span class="n">t1</span>
+</pre></div>
+</div>
+<p>pero en el contexto de funciones podemos “desempacarlos” para
+convertirlos en varios argumentos que acepta la función usando la
+expresión con asterisco. Veamos lo que esto quiere decir con la función
+<code class="docutils literal notranslate"><span class="pre">caida_libre()</span></code> definida anteriormente</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h0</span><span class="p">,</span> <span class="n">v0</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Devuelve la velocidad y la posición de una partícula en</span>
+<span class="sd">  caída libre para condiciones iniciales dadas</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  t : float</span>
+<span class="sd">      el tiempo al que queremos realizar el cálculo</span>
+<span class="sd">  h0: float</span>
+<span class="sd">      la altura inicial</span>
+<span class="sd">  v0: float (opcional)</span>
+<span class="sd">      la velocidad inicial (default = 0.0)</span>
+<span class="sd">   g: float (opcional)</span>
+<span class="sd">      valor de la aceleración de la gravedad (default = 9.8)</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  (v,h):  tuple of floats</span>
+<span class="sd">       v= v0 - g*t</span>
+<span class="sd">       h= h0 - v0*t -g*t^2/2</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">h0</span> <span class="o">-</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">2.</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">,</span><span class="n">h</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">datos</span> <span class="o">=</span> <span class="p">(</span><span class="mf">5.4</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>        <span class="c1"># Una lista (tuple en realidad)</span>
+<span class="c1"># print (caida_libre(datos[0], datos[1], datos[2]))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">caida_libre</span><span class="p">(</span><span class="o">*</span><span class="n">datos</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">52.92000000000001</span><span class="p">,</span> <span class="mf">857.116</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En la llamada a la función, la expresión <code class="docutils literal notranslate"><span class="pre">*datos</span></code> le indica al
+intérprete Python que la secuencia (tuple) debe convertirse en una
+sucesión de argumentos, que es lo que acepta la función.</p>
+<p>Similarmente, para desempacar un diccionario usamos la notación
+<code class="docutils literal notranslate"><span class="pre">**diccionario</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># diccionario, caída libre en la luna</span>
+<span class="n">otros_datos</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;t&#39;</span><span class="p">:</span><span class="mf">5.4</span><span class="p">,</span> <span class="s1">&#39;h0&#39;</span><span class="p">:</span> <span class="mf">1000.</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span> <span class="p">:</span> <span class="mf">1.625</span><span class="p">}</span>
+<span class="n">v</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">caida_libre</span><span class="p">(</span><span class="o">**</span><span class="n">otros_datos</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;v=</span><span class="si">{}</span><span class="s1">, h=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">h</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">=-</span><span class="mf">8.775</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">976.3075</span>
+</pre></div>
+</div>
+<p>En resumen:</p>
+<ul class="simple">
+<li><p>la notación <code class="docutils literal notranslate"><span class="pre">(*datos)</span></code> convierte la tuple (o lista) en los tres
+argumentos que acepta la función caída libre. Los siguientes llamados
+son equivalentes:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">caida_libre</span><span class="p">(</span><span class="o">*</span><span class="n">datos</span><span class="p">)</span>
+<span class="n">caida_libre</span><span class="p">(</span><span class="n">datos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">datos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">datos</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">caida_libre</span><span class="p">(</span><span class="mf">5.4</span><span class="p">,</span> <span class="mf">1000.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>la notación <code class="docutils literal notranslate"><span class="pre">(**otros_datos)</span></code> desempaca el diccionario en pares
+<code class="docutils literal notranslate"><span class="pre">clave=valor</span></code>, siendo equivalentes los dos llamados:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">caida_libre</span><span class="p">(</span><span class="o">**</span><span class="n">otros_datos</span><span class="p">)</span>
+<span class="n">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mf">5.4</span><span class="p">,</span> <span class="n">h0</span><span class="o">=</span><span class="mf">1000.</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="funciones-que-devuelven-funciones">
+<h2>Funciones que devuelven funciones<a class="headerlink" href="#funciones-que-devuelven-funciones" title="Permalink to this heading"></a></h2>
+<p>Las funciones pueden ser pasadas como argumento y pueden ser retornadas
+por una función, como cualquier otro objeto (números, listas, tuples,
+cadenas de caracteres, diccionarios, etc). Veamos un ejemplo simple de
+funciones que devuelven una función:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">crear_potencia</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="s2">&quot;Devuelve la función x^n&quot;</span>
+  <span class="k">def</span> <span class="nf">potencia</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="s2">&quot;potencia </span><span class="si">{}</span><span class="s2">-esima de x&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="n">n</span>
+  <span class="k">return</span> <span class="n">potencia</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">crear_potencia</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+<span class="n">cubos</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">function</span> <span class="n">crear_potencia</span><span class="o">.&lt;</span><span class="nb">locals</span><span class="o">&gt;.</span><span class="n">potencia</span> <span class="n">at</span> <span class="mh">0x7f12bc236520</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cubos</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">potencia</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">potencia</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">crear_potencia</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">crear_potencia</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">crear_potencia</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">Devuelve</span> <span class="n">la</span> <span class="n">función</span> <span class="n">x</span><span class="o">^</span><span class="n">n</span>
+</pre></div>
+</div>
+</section>
+<section id="ejemplo-polinomio-interpolador">
+<h2>Ejemplo: Polinomio interpolador<a class="headerlink" href="#ejemplo-polinomio-interpolador" title="Permalink to this heading"></a></h2>
+<p>Veamos ahora una función que retorna una función. Supongamos que tenemos
+una tabla de puntos <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> por los que pasan nuestros datos y
+queremos interpolar los datos con un polinomio.</p>
+<p>Sabemos que dados <code class="docutils literal notranslate"><span class="pre">N</span></code> puntos, hay un único polinomio de grado <code class="docutils literal notranslate"><span class="pre">N</span></code>
+que pasa por todos los puntos. En este ejemplo utilizamos la fórmula de
+Lagrange para obtenerlo.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load scripts/ejemplo_05_2.py</span>
+<span class="k">def</span> <span class="nf">polinomio_interp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Devuelve el polinomio interpolador que pasa por los puntos (x_i, y_i)</span>
+
+<span class="sd">    Warning: La implementación es numéricamente inestable. Funciona para algunos puntos (menor a 20)</span>
+
+<span class="sd">  Keyword Arguments:</span>
+<span class="sd">  x -- Lista con los valores de x</span>
+<span class="sd">  y -- Lista con los valores de y</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+
+  <span class="n">M</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">polin</span><span class="p">(</span><span class="n">xx</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Evalúa el polinomio interpolador de Lagrange&quot;&quot;&quot;</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+      <span class="n">pt</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+      <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span>
+          <span class="k">continue</span>
+        <span class="n">fac</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">pt</span> <span class="o">*=</span> <span class="p">(</span><span class="n">xx</span> <span class="o">-</span> <span class="n">x</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">fac</span>
+      <span class="n">P</span> <span class="o">+=</span> <span class="n">pt</span>
+    <span class="k">return</span> <span class="n">P</span>
+
+  <span class="k">return</span> <span class="n">polin</span>
+</pre></div>
+</div>
+<p>Lo que obtenemos al llamar a esta función es una función</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">polinomio_interp</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">function</span> <span class="n">__main__</span><span class="o">.</span><span class="n">polinomio_interp</span><span class="o">.&lt;</span><span class="nb">locals</span><span class="o">&gt;.</span><span class="n">polin</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">polin</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">polin</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+    <span class="n">Evalúa</span> <span class="n">el</span> <span class="n">polinomio</span> <span class="n">interpolador</span> <span class="n">de</span> <span class="n">Lagrange</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mf">3.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">6.8</span>
+</pre></div>
+</div>
+<p>Este es el resultado esperado porque queremos el polinomio que pasa por
+dos puntos (una recta), y en este caso es la recta <span class="math notranslate nohighlight">\(y = 2x\)</span>.
+Veamos cómo usarlo, en forma más general:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load scripts/ejemplo_05_3</span>
+<span class="kn">from</span> <span class="nn">ejemplo_05_2</span> <span class="kn">import</span> <span class="n">polinomio_interp</span>
+
+<span class="n">xmax</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mf">0.2</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">5</span> <span class="o">/</span> <span class="n">step</span><span class="p">)</span>
+
+<span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>   <span class="c1"># x^2</span>
+<span class="n">f2</span> <span class="o">=</span> <span class="n">polinomio_interp</span><span class="p">(</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">)</span>
+
+<span class="n">x3</span><span class="p">,</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">54</span><span class="p">]</span>  <span class="c1"># 2 x^3</span>
+<span class="n">f3</span> <span class="o">=</span> <span class="n">polinomio_interp</span><span class="p">(</span><span class="n">x3</span><span class="p">,</span> <span class="n">y3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> x   f2(x)   f3(x)</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="mi">18</span> <span class="o">*</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="n">step</span> <span class="o">*</span> <span class="n">j</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">  </span><span class="si">{</span><span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">:</span><span class="s1">5.2f</span><span class="si">}</span><span class="s1">  </span><span class="si">{</span><span class="n">f3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">:</span><span class="s1">6.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">x</span>   <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>   <span class="n">f3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="o">------------------</span>
+<span class="mf">0.0</span>   <span class="mf">0.00</span>    <span class="mf">0.00</span>
+<span class="mf">0.2</span>   <span class="mf">0.04</span>    <span class="mf">0.02</span>
+<span class="mf">0.4</span>   <span class="mf">0.16</span>    <span class="mf">0.13</span>
+<span class="mf">0.6</span>   <span class="mf">0.36</span>    <span class="mf">0.43</span>
+<span class="mf">0.8</span>   <span class="mf">0.64</span>    <span class="mf">1.02</span>
+<span class="mf">1.0</span>   <span class="mf">1.00</span>    <span class="mf">2.00</span>
+<span class="mf">1.2</span>   <span class="mf">1.44</span>    <span class="mf">3.46</span>
+<span class="mf">1.4</span>   <span class="mf">1.96</span>    <span class="mf">5.49</span>
+<span class="mf">1.6</span>   <span class="mf">2.56</span>    <span class="mf">8.19</span>
+<span class="mf">1.8</span>   <span class="mf">3.24</span>   <span class="mf">11.66</span>
+<span class="mf">2.0</span>   <span class="mf">4.00</span>   <span class="mf">16.00</span>
+<span class="mf">2.2</span>   <span class="mf">4.84</span>   <span class="mf">21.30</span>
+<span class="mf">2.4</span>   <span class="mf">5.76</span>   <span class="mf">27.65</span>
+<span class="mf">2.6</span>   <span class="mf">6.76</span>   <span class="mf">35.15</span>
+<span class="mf">2.8</span>   <span class="mf">7.84</span>   <span class="mf">43.90</span>
+<span class="mf">3.0</span>   <span class="mf">9.00</span>   <span class="mf">54.00</span>
+<span class="mf">3.2</span>  <span class="mf">10.24</span>   <span class="mf">65.54</span>
+<span class="mf">3.4</span>  <span class="mf">11.56</span>   <span class="mf">78.61</span>
+<span class="mf">3.6</span>  <span class="mf">12.96</span>   <span class="mf">93.31</span>
+<span class="mf">3.8</span>  <span class="mf">14.44</span>  <span class="mf">109.74</span>
+<span class="mf">4.0</span>  <span class="mf">16.00</span>  <span class="mf">128.00</span>
+<span class="mf">4.2</span>  <span class="mf">17.64</span>  <span class="mf">148.18</span>
+<span class="mf">4.4</span>  <span class="mf">19.36</span>  <span class="mf">170.37</span>
+<span class="mf">4.6</span>  <span class="mf">21.16</span>  <span class="mf">194.67</span>
+<span class="mf">4.8</span>  <span class="mf">23.04</span>  <span class="mf">221.18</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-04-c">
+<h2>Ejercicios 04 (c)<a class="headerlink" href="#ejercicios-04-c" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple" start="4">
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">crear_sen(A,</span> <span class="pre">w)</span></code> que acepte dos números reales
+<span class="math notranslate nohighlight">\(A, w\)</span> como argumentos y devuelva la función <code class="docutils literal notranslate"><span class="pre">f(x)</span></code>.</p></li>
+</ol>
+<p>Al evaluar la función <code class="docutils literal notranslate"><span class="pre">f</span></code> en un dado valor <span class="math notranslate nohighlight">\(x\)</span> debe dar el
+resultado: <span class="math notranslate nohighlight">\(f(x) = A \sin(w x)\)</span> tal que se pueda utilizar de la
+siguiente manera:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">crear_sen</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>          <span class="c1"># Debería imprimir el resultado de 3*sin(1.5*2)=0.4233600241796016</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="funciones-que-toman-como-argumento-una-funcion">
+<h2>Funciones que toman como argumento una función<a class="headerlink" href="#funciones-que-toman-como-argumento-una-funcion" title="Permalink to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">aplicar_fun</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Aplica la función f a cada elemento del iterable L</span>
+<span class="sd">  devuelve una lista con los resultados.</span>
+
+<span class="sd">  IMPORTANTE: Notar que no se realiza ninguna comprobación de validez</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">L</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span> <span class="k">as</span> <span class="nn">m</span>
+<span class="n">Lista</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">aplicar_fun</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">sin</span><span class="p">,</span> <span class="n">Lista</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.8414709848078965</span><span class="p">,</span>
+ <span class="mf">0.9092974268256817</span><span class="p">,</span>
+ <span class="mf">0.1411200080598672</span><span class="p">,</span>
+ <span class="o">-</span><span class="mf">0.7568024953079282</span><span class="p">,</span>
+ <span class="o">-</span><span class="mf">0.9589242746631385</span><span class="p">,</span>
+ <span class="o">-</span><span class="mf">0.27941549819892586</span><span class="p">,</span>
+ <span class="mf">0.6569865987187891</span><span class="p">,</span>
+ <span class="mf">0.9893582466233818</span><span class="p">,</span>
+ <span class="mf">0.4121184852417566</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>El ejemplo anterior se podría escribir</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Lista</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">aplicar_fun</span><span class="p">(</span><span class="n">crear_potencia</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">Lista</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Notar que definimos la función <code class="docutils literal notranslate"><span class="pre">aplicar_fun()</span></code> que recibe una función
+y una secuencia, pero no necesariamente una lista, por lo que podemos
+aplicarla directamente a <code class="docutils literal notranslate"><span class="pre">range</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">aplicar_fun</span><span class="p">(</span><span class="n">crear_potencia</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">64</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Además, debido a su definición, el primer argumento de la función
+<code class="docutils literal notranslate"><span class="pre">aplicar_fun()</span></code> no está restringida a funciones numéricas pero al
+usarla tenemos que asegurar que la función y el iterable (lista) que
+pasamos como argumentos son compatibles.</p>
+<p>Veamos otro ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hola&#39;</span><span class="p">,</span> <span class="s1">&#39;chau&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">aplicar_fun</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">upper</span><span class="p">,</span> <span class="n">s</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;HOLA&#39;</span><span class="p">,</span> <span class="s1">&#39;CHAU&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>donde <code class="docutils literal notranslate"><span class="pre">str.upper</span></code> es una función definida en <strong>Python</strong>, que convierte
+a mayúsculas el string dado <code class="docutils literal notranslate"><span class="pre">str.upper('hola')</span> <span class="pre">=</span> <span class="pre">'HOLA'</span></code>.</p>
+</section>
+<section id="aplicacion-1-ordenamiento-de-listas">
+<h2>Aplicacion 1: Ordenamiento de listas<a class="headerlink" href="#aplicacion-1-ordenamiento-de-listas" title="Permalink to this heading"></a></h2>
+<p>Consideremos el problema del ordenamiento de una lista de strings. Como
+vemos el resultado usual no es necesariamente el deseado</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Acá <code class="docutils literal notranslate"><span class="pre">sorted</span></code> es una función, similar al método <code class="docutils literal notranslate"><span class="pre">str.sort()</span></code> que
+mencionamos anteriormente, con la diferencia que devuelve una nueva
+lista con los elementos ordenados. Como los elementos son <em>strings</em>, la
+comparación se hace respecto a su posición en el abecedario. En este
+caso no es lo mismo mayúsculas o minúsculas.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s2</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">s1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">s2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;curso&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;curso&#39;</span><span class="p">,</span> <span class="s1">&#39;estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;python&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Posiblemente queremos el orden que obtuvimos en segundo lugar pero con
+los elementos dados originalmente (con sus mayúsculas y minúsculas
+originales). Para poder modificar el modo en que se ordenan los
+elementos, la función <code class="docutils literal notranslate"><span class="pre">sorted</span></code> (y el método <code class="docutils literal notranslate"><span class="pre">sort</span></code>) tienen el
+argumento opcional <code class="docutils literal notranslate"><span class="pre">key</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">function</span> <span class="nb">sorted</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">builtins</span><span class="p">:</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">Return</span> <span class="n">a</span> <span class="n">new</span> <span class="nb">list</span> <span class="n">containing</span> <span class="nb">all</span> <span class="n">items</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">iterable</span> <span class="ow">in</span> <span class="n">ascending</span> <span class="n">order</span><span class="o">.</span>
+
+    <span class="n">A</span> <span class="n">custom</span> <span class="n">key</span> <span class="n">function</span> <span class="n">can</span> <span class="n">be</span> <span class="n">supplied</span> <span class="n">to</span> <span class="n">customize</span> <span class="n">the</span> <span class="n">sort</span> <span class="n">order</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span>
+    <span class="n">reverse</span> <span class="n">flag</span> <span class="n">can</span> <span class="n">be</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">request</span> <span class="n">the</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">descending</span> <span class="n">order</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Como vemos tiene un argumento opcional <code class="docutils literal notranslate"><span class="pre">key</span></code> que es una función.
+Veamos algunos ejemplos de su uso</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Como vemos, los strings están ordenados adecuadamente. Si queremos
+ordenarlos por longitud de la palabra</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;Estudiantes&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Supongamos que queremos ordenarla alfabéticamente por la segunda letra</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">segunda</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">segunda</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="funciones-anonimas">
+<h2>Funciones anónimas<a class="headerlink" href="#funciones-anonimas" title="Permalink to this heading"></a></h2>
+<p>En ocasiones como esta suele ser más rápido (o conveniente) definir la
+función, que se va a utilizar una única vez, sin darle un nombre. Estas
+se llaman funciones <em>lambda</em>, y el ejemplo anterior se escribiría</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;caballeros&#39;</span><span class="p">,</span> <span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Si queremos ordenarla alfabéticamente empezando desde la última letra:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sorted</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">(</span><span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;pc&#39;</span><span class="p">,</span> <span class="s1">&#39;Python&#39;</span><span class="p">,</span> <span class="s1">&#39;aereo&#39;</span><span class="p">,</span> <span class="s1">&#39;Curso&#39;</span><span class="p">,</span> <span class="s1">&#39;Estudiantes&#39;</span><span class="p">,</span> <span class="s1">&#39;caballeros&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Este es un ejemplo de uso de las funciones anónimas <code class="docutils literal notranslate"><span class="pre">lambda</span></code>. La forma
+general de las funciones <code class="docutils literal notranslate"><span class="pre">lambda</span></code> es:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">:</span> <span class="n">expresión_de</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>por ejemplo en el ejemplo anterior, para calcular <span class="math notranslate nohighlight">\((n+1) x^n\)</span>,
+hicimos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="n">n</span>
+</pre></div>
+</div>
+</section>
+<section id="ejemplo-integracion-numerica">
+<h2>Ejemplo: Integración numérica<a class="headerlink" href="#ejemplo-integracion-numerica" title="Permalink to this heading"></a></h2>
+<p>Veamos en más detalle el caso de funciones que reciben como argumento
+otra función, estudiando un caso usual: una función de integración debe
+recibir como argumento al menos una función a integrar y los límites de
+integración:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load scripts/05_ejemplo_1.py</span>
+<span class="k">def</span> <span class="nf">integrate_simps</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;Calcula numéricamente la integral de la función en el intervalo dado</span>
+<span class="sd">  utilizando la regla de Simpson</span>
+
+<span class="sd">  Keyword Arguments:</span>
+<span class="sd">  f -- Función a integrar</span>
+<span class="sd">  a -- Límite inferior</span>
+<span class="sd">  b -- Límite superior</span>
+<span class="sd">  N -- El intervalo se separa en 2*N intervalos</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">a</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">N</span><span class="p">)</span>
+  <span class="n">I</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+  <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">x2j</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">*</span> <span class="n">h</span>
+    <span class="n">x2jm1</span> <span class="o">=</span> <span class="n">a</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">h</span>
+    <span class="n">I</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">x2j</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">f</span><span class="p">(</span><span class="n">x2jm1</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">I</span> <span class="o">*</span> <span class="n">h</span> <span class="o">/</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>En este ejemplo programamos la fórmula de integración de Simpson para
+obtener la integral de una función <code class="docutils literal notranslate"><span class="pre">f(x)</span></code> provista por el usuario, en
+un dado intervalo:</p>
+<div class="math notranslate nohighlight">
+\[\int _{a}^{b}f(x)\,dx\approx \frac{h}{3} \bigg[ f(x_{0}) + 2 \sum_{j=1}^{n/2} f(x_{2j}) + 4 \sum_{j=1}^{n/2} f(x_{2j-1}) - f(x_{n})\bigg]\]</div>
+<p>¿Cómo usamos la función de integración?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">potencia2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">integrate_simps</span><span class="p">(</span><span class="n">potencia2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">9.0</span>
+</pre></div>
+</div>
+<p>Acá definimos una función, y se la pasamos como argumento a la función
+de integración.</p>
+<section id="uso-de-funciones-anonimas">
+<h3>Uso de funciones anónimas<a class="headerlink" href="#uso-de-funciones-anonimas" title="Permalink to this heading"></a></h3>
+<p>Veamos como sería el uso de funciones anónimas en este contexto</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">integrate_simps</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">9.0</span>
+</pre></div>
+</div>
+<p>La notación es un poco más corta, que es cómodo pero no muy relevante
+para un caso. Si queremos, por ejemplo, aplicar el integrador a una
+familia de funciones la notación se simplifica notablemente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Integrales:&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+  <span class="n">I</span> <span class="o">=</span> <span class="n">integrate_simps</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="n">n</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;I ( </span><span class="si">{</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> x^</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1"> ) = </span><span class="si">{</span><span class="n">I</span><span class="si">:</span><span class="s1">.5f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Integrales</span><span class="p">:</span>
+<span class="n">I</span> <span class="p">(</span> <span class="mi">1</span> <span class="n">x</span><span class="o">^</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">3.00000</span>
+<span class="n">I</span> <span class="p">(</span> <span class="mi">2</span> <span class="n">x</span><span class="o">^</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">9.00000</span>
+<span class="n">I</span> <span class="p">(</span> <span class="mi">3</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">27.00000</span>
+<span class="n">I</span> <span class="p">(</span> <span class="mi">4</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">81.00000</span>
+<span class="n">I</span> <span class="p">(</span> <span class="mi">5</span> <span class="n">x</span><span class="o">^</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">243.00101</span>
+<span class="n">I</span> <span class="p">(</span> <span class="mi">6</span> <span class="n">x</span><span class="o">^</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">=</span> <span class="mf">729.00911</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-04-d">
+<h2>Ejercicios 04 (d)<a class="headerlink" href="#ejercicios-04-d" title="Permalink to this heading"></a></h2>
+<ol class="arabic" start="5">
+<li><p>Escriba una serie de funciones que permitan trabajar con polinomios.
+Vamos a representar a un polinomio como una lista de números reales,
+donde cada elemento corresponde a un coeficiente que acompaña una
+potencia</p>
+<ul class="simple">
+<li><p>Una función que devuelva el orden del polinomio (un número entero)</p></li>
+<li><p>Una función que sume dos polinomios y devuelva un polinomio
+(objeto del mismo tipo)</p></li>
+<li><p>Una función que multiplique dos polinomios y devuelva el resultado
+en otro polinomio</p></li>
+<li><p>Una función devuelva la derivada del polinomio (otro polinomio).</p></li>
+<li><p>Una función que acepte el polinomio y devuelva la función
+correspondiente.</p></li>
+</ul>
+</li>
+<li><p><strong>PARA ENTREGAR.</strong> Describimos una grilla de <strong>sudoku</strong> como un
+string de nueve líneas, cada una con 9 números, con números entre 1 y
+9. Escribir un conjunto de funciones que permitan chequear si una
+grilla de sudoku es correcta. Para que una grilla sea correcta deben
+cumplirse las siguientes condiciones</p>
+<ul class="simple">
+<li><p>Los números están entre 1 y 9</p></li>
+<li><p>En cada fila no deben repetirse</p></li>
+<li><p>En cada columna no deben repetirse</p></li>
+<li><p>En todas las regiones de 3x3 que no se solapan, empezando de
+cualquier esquina, no deben repetirse</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Escribir una función que convierta un string con formato a una
+lista bidimensional. El string estará dado con nueve números por
+línea, de la siguiente manera (los espacios en blanco en cada
+línea pueden variar):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudoku</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;145327698</span>
+<span class="s2">        839654127</span>
+<span class="s2">        672918543</span>
+<span class="s2">        496185372</span>
+<span class="s2">        218473956</span>
+<span class="s2">        753296481</span>
+<span class="s2">        367542819</span>
+<span class="s2">        984761235</span>
+<span class="s2">        521839764&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Escribir una función <code class="docutils literal notranslate"><span class="pre">check_repetidos()</span></code> que tome por argumento
+una lista (unidimensional) y devuelva verdadero si la lista tiene
+elementos repetidos y falso en caso contrario (puede ser
+conveniente explorar el uso de <code class="docutils literal notranslate"><span class="pre">set</span></code>).</p></li>
+<li><p>Escribir la función <code class="docutils literal notranslate"><span class="pre">check_sudoku()</span></code> que toma como argumento una
+grilla (como una lista bidimensional de <code class="docutils literal notranslate"><span class="pre">9x9</span></code>) y devuelva
+verdadero si los números corresponden a la resolución correcta del
+Sudoku y falso en caso contrario. Note que debe verificar que los
+números no se repiten en filas, ni en columnas ni en recuadros de
+<code class="docutils literal notranslate"><span class="pre">3x3</span></code>. Para obtener la posición de los recuadros, puede
+investigar que hacen las líneas de código:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>suponiendo que <code class="docutils literal notranslate"><span class="pre">grid</span></code> es el nombre de nuestra lista bidimensional,
+cuando <code class="docutils literal notranslate"><span class="pre">i</span></code> toma valores entre <code class="docutils literal notranslate"><span class="pre">0</span></code> y <code class="docutils literal notranslate"><span class="pre">8</span></code>.</p>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
 </section>
 </section>
 
