@@ -41,6 +41,15 @@ una función y devuelve otra función.
     
 
 
+
+.. parsed-literal::
+
+    [0, 1, 3.3, 5, 7.5, 2.2]
+    19.0 25.0
+    0 1
+    7.5 8.5
+
+
 Podemos aplicar la función tanto a funciones “intrínsecas” como a
 funciones definidas por nosotros
 
@@ -59,6 +68,13 @@ funciones definidas por nosotros
     print(parabola(a))
     print(mparabola(a))
 
+
+.. parsed-literal::
+
+    [0, 3, 17.49, 35, 71.25, 9.240000000000002]
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
 Notemos que al decorar una función estamos creando una enteramente nueva
 
 .. code:: python
@@ -69,9 +85,33 @@ Notemos que al decorar una función estamos creando una enteramente nueva
 
     parabola(a)
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Input In [8], in <module>
+    ----> 1 parabola(a)
+
+
+    NameError: name 'parabola' is not defined
+
+
 .. code:: python
 
     mparabola(a)
+
+
+
+
+.. parsed-literal::
+
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
 
 Algunas veces queremos simplemente modificar la función original
 
@@ -117,6 +157,15 @@ a decorar
 
     mi_parabola(a)
 
+
+
+
+.. parsed-literal::
+
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
+
 Algunos usos de decoradores
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -128,6 +177,29 @@ valor ``y`` de la parábola (más uno):
 .. code:: python
 
     mi_parabola(3)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Input In [14], in <module>
+    ----> 1 mi_parabola(3)
+
+
+    Input In [1], in mas_uno.<locals>.fun(args)
+          3 def fun(args):
+          4   "Agrega 1 a cada uno de los elementos y luego aplica la función"
+    ----> 5   xx = [x+1 for x in args]
+          6   y= func(xx)
+          7   return y
+
+
+    TypeError: 'int' object is not iterable
+
 
 El problema aquí es que definimos la función para tomar como argumentos
 una lista (o al menos un iterable de números) y estamos tratando de
@@ -153,9 +225,24 @@ ser mejor)
 
     mi_parabola(3)
 
+
+.. parsed-literal::
+
+    Error: El argumento debe ser una lista
+
+
 .. code:: python
 
     mi_parabola(a)
+
+
+
+
+.. parsed-literal::
+
+    [3, 8, 27.089999999999996, 48, 89.25, 16.64]
+
+
 
 Supongamos que queremos simplemente extender la función para que sea
 válida también con argumentos escalares. Definimos una nueva función que
@@ -193,6 +280,13 @@ Esto es equivalente a:
     print(parabola([3]))
 
 
+.. parsed-literal::
+
+    [15]
+    [15]
+
+
+
 Escritura y lectura a archivos
 ------------------------------
 
@@ -209,6 +303,15 @@ abrirlo, utilizando la función ``open()``
 
     f
 
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
 .. code:: python
 
     s = f.read()                    # Leemos el archivo
@@ -221,6 +324,29 @@ abrirlo, utilizando la función ``open()``
 
     print(s[:100])
 
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+    Agatha
+    Agnetha
+    Ahmed
+    Ahmet
+    Aimee
+    Al
+    Ala
+    Alain
+
+
 Esta secuencia básica de trabajo en adecuada y muy común en el trabajo
 con archivos. Sin embargo, hay un potencial problema, que ocurrirá si
 hay algún error entre la apertura y el cierre del archivo. Para ello
@@ -232,10 +358,34 @@ existe una sintaxis alternativa
       s = fi.read()
     print(s[:50])
 
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adri
+
+
 .. code:: python
 
     # fi todavía existe pero está cerrado
     fi
+
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
 
 La palabra ``with`` es una palabra reservada del lenguaje y la
 construcción se conoce como *contexto*. Básicamente dice que todo lo que
@@ -254,6 +404,21 @@ Ejemplo 05-1
 .. code:: python
 
     !head ../data/names.txt # Muestro el contenido del archivo
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+
 
 .. code:: python
 
@@ -278,6 +443,14 @@ Ejemplo 05-1
           .format(n, minlen, maxlen)
     
     print(mensaje)
+
+
+
+.. parsed-literal::
+
+    Aaa, Aba, Ada, Ada, Ala, Alf, Ama, Ami, Amy, Ana, Ann, Art, Bea, Ben, Bib, Bob, Bob, Bub, Bud, Cdc, Dad, Dan, Deb, Del, Did, Dod, Don, Dud, Eke, Eli, Ere, Eva, Eve, Eve, Ewe, Eye, Fay, Gag, Gay, Gig, Gil, Gog, Guy, Hal, Hon, Hsi, Huh, Hui, Hwa, Ian, Iii, Ima, Ira, Jan, Jay, Jef, Jem, Jen, Jim, Jin, Job, Joe, Jon, Jos, Jun, Kaj, Kay, Kee, Ken, Kim, Kit, Kyu, Lar, Lea, Lee, Len, Leo, Les, Lex, Lin, Liz, Lou, Luc, Lui, Lum, Mac, Mah, Mat, Max, May, Meg, Moe, Mum, Mwa, Nan, Ned, Non, Nou, Nun, Old, Ole, Pam, Pap, Pat, Pdp, Pep, Per, Pia, Pim, Pip, Pop, Pup, Raj, Ram, Ray, Reg, Rex, Ric, Rik, Rob, Rod, Ron, Roy, S's, Sal, Sam, Sho, Sid, Sir, Sis, Son, Spy, Sri, Ssi, Stu, Sue, Sus, Suu, Syd, Tad, Tai, Tal, Tao, Tat, Ted, Tex, The, Tim, Tip, Tit, Tnt, Tom, Tor, Tot, Uma, Una, Uri, Urs, Val, Van, Vic, Wes, Win, Wow, Zoe, Zon, 
+    
+    Encontramos 166 palabras que tienen 3 letras
 
 
 Hemos utilizado aquí:
@@ -308,6 +481,19 @@ Ejemplo 05-2
 
 .. code:: python
 
+    lines[0]
+
+
+
+
+.. parsed-literal::
+
+    'Aaa\n'
+
+
+
+.. code:: python
+
     """Programa para contar e imprimir las palabras de una longitud dada"""
     
     fname = '../data/names.txt'
@@ -333,6 +519,14 @@ Ejemplo 05-2
     print(mensaje)
 
 
+
+.. parsed-literal::
+
+    (01): aaa, (02): aba, (03): ada, (04): ada, (05): ala, (06): ama, (07): ana, (08): bib, (09): bob, (10): bob, (11): bub, (12): cdc, (13): dad, (14): did, (15): dod, (16): dud, (17): eke, (18): ere, (19): eve, (20): eve, (21): ewe, (22): eye, (23): gag, (24): gig, (25): gog, (26): huh, (27): iii, (28): mum, (29): nan, (30): non, (31): nun, (32): pap, (33): pdp, (34): pep, (35): pip, (36): pop, (37): pup, (38): s's, (39): sis, (40): sus, (41): tat, (42): tit, (43): tnt, (44): tot, (45): wow, 
+    
+    Encontramos un total de 45 palabras capicúa que tienen 3 letras
+
+
 Aquí en lugar de leer todas las líneas e iterar sobre las líneas
 resultantes, iteramos directamente sobre el archivo abierto.
 
@@ -347,6 +541,16 @@ como ``02`` le pedimos que complete los vacíos con ceros.
 
 .. code:: python
 
+    %ls tm*
+
+
+.. parsed-literal::
+
+    ls: cannot access 'tm*': No such file or directory
+
+
+.. code:: python
+
     s = "Hola\n y chau"
     with open('tmp.txt','w') as fo:
         fo.write(s)
@@ -355,6 +559,29 @@ como ``02`` le pedimos que complete los vacíos con ceros.
 .. code:: python
 
     !cat tmp.txt
+
+
+.. parsed-literal::
+
+    Hola
+     y chau
+
+.. code:: python
+
+    s = "Adiós\n y adiós"
+    with open('tmp.txt','w') as fo:
+        fo.write(s)
+        
+
+.. code:: python
+
+    !cat tmp.txt
+
+
+.. parsed-literal::
+
+    Adiós
+     y adiós
 
 Archivos comprimidos
 --------------------
@@ -381,13 +608,37 @@ los siguientes formatos: **zip, gzip, bz2**
     l= a.splitlines()
     print(l[:10])
 
+
+.. parsed-literal::
+
+    [b'\xc3\x81frica', b'\xc3\x81ngela', b'\xc3\xa1baco', b'\xc3\xa1bsida', b'\xc3\xa1bside', b'\xc3\xa1cana', b'\xc3\xa1caro', b'\xc3\xa1cates', b'\xc3\xa1cido', b'\xc3\xa1cigos']
+
+
 .. code:: python
 
     l[0]
 
+
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica'
+
+
+
 .. code:: python
 
     str(l[0])
+
+
+
+
+.. parsed-literal::
+
+    "b'\\xc3\\x81frica'"
+
+
 
 .. note::  Vemos que el archivo tiene algunos caracteres que no podemos
   interpretar. Por ejemplo:
@@ -413,6 +664,15 @@ los siguientes formatos: **zip, gzip, bz2**
 
     str(l[0], encoding='utf-8')
 
+
+
+
+.. parsed-literal::
+
+    'África'
+
+
+
 Con todo esto podríamos escribir (si tuviéramos necesidad) una función
 que puede leer un archivo en cualquiera de estos formatos
 
@@ -423,15 +683,15 @@ que puede leer un archivo en cualquiera de estos formatos
     from os.path import splitext
     import zipfile
     
-    def abrir(fname, mode='r'):
+    def abrir(fname, modo='r'):
       if fname.endswith('gz'):
-        fi= gzip.open(fname, mode=mode)
+        fi= gzip.open(fname, mode=modo)
       elif fname.endswith('bz2'):
-        fi= bz2.open(fname, mode=mode)    
+        fi= bz2.open(fname, mode=modo)    
       elif fname.endswith('zip'):
-        fi= zipfile.ZipFile(fname, mode=mode)
+        fi= zipfile.ZipFile(fname, mode=modo)
       else:
-        fi = open(fname, mode=mode)
+        fi = open(fname, mode=modo)
       return fi
 
 .. code:: python
@@ -447,6 +707,12 @@ que puede leer un archivo en cualquiera de estos formatos
 .. code:: python
 
     print(str(l[0], encoding='utf-8'))
+
+
+.. parsed-literal::
+
+    África
+
 
 --------------
 
@@ -505,11 +771,12 @@ Ejercicios 05 (a)
 
 --------------
 
-.. note::  Los archivos de texto “names.txt” y “Aluminio.txt” (así como
+.. note::  Los archivos de texto “names.txt” y “aluminio.txt” (así como
   otros archivos usados en las clases) pueden encontrarse en la carpeta
   `intro-python <https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing>`__
   
   
+
 Atrapar y administrar errores
 -----------------------------
 
@@ -525,11 +792,28 @@ leerlo
 
     print("hola")
 
+
+.. parsed-literal::
+
+    hola
+
+
 mientras que, si escribimos algo que no está permitido en el lenguaje
 
 .. code:: python
 
     print("hola"))
+
+
+::
+
+
+      Input In [2]
+        print("hola"))
+                     ^
+    SyntaxError: unmatched ')'
+
+
 
 El intérprete detecta el error y repite la línea donde lo identifica.
 Este tipo de errores debe corregirse para poder seguir con el programa.
@@ -543,12 +827,44 @@ pero igualmente causa un error
     b = 0
     z = a / b
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ZeroDivisionError                         Traceback (most recent call last)
+
+    Input In [3], in <module>
+          1 a = 1
+          2 b = 0
+    ----> 3 z = a / b
+
+
+    ZeroDivisionError: division by zero
+
+
 Cuando se encuentra un error, **Python** muestra el lugar en que ocurre
 y de qué tipo de error se trata.
 
 .. code:: python
 
     print (hola)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Input In [4], in <module>
+    ----> 1 print (hola)
+
+
+    NameError: name 'hola' is not defined
+
 
 Este mensaje da un tipo de error diferente. Ambos: ``ZeroDivisionError``
 y ``NameError`` son tipos de errores (o excepciones). Hay una larga
@@ -568,6 +884,16 @@ simple:
 
     %cat ../data/ej_clase5.dat
 
+
+.. parsed-literal::
+
+    1 2
+    2 6
+    3 9
+    4 12
+    5.5 30.25
+
+
 .. code:: python
 
     with open("../data/ej_clase5.dat") as fi:
@@ -577,6 +903,39 @@ simple:
         m = int(t[0])
         n = int(t[1])
         print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+    print("Seguimos")
+
+
+.. parsed-literal::
+
+    t = ['1', '2']
+    m = 1, n = 2, m x n = 2
+    t = ['2', '6']
+    m = 2, n = 6, m x n = 12
+    t = ['3', '9']
+    m = 3, n = 9, m x n = 27
+    t = ['4', '12']
+    m = 4, n = 12, m x n = 48
+    t = ['5.5', '30.25']
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Input In [12], in <module>
+          3 t = l.split()
+          4 print("t = {}".format(t))        # Línea sólo para inspección
+    ----> 5 m = int(t[0])
+          6 n = int(t[1])
+          7 print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+
+
+    ValueError: invalid literal for int() with base 10: '5.5'
+
 
 En este caso se “levanta” una excepción del tipo ``ValueError`` debido a
 que este valor (``5.5``) no se puede convertir a ``int``. Podemos
@@ -595,6 +954,16 @@ modificar nuestro programa para manejar este error:
           print("Error: t = {} no puede convertirse a entero".format(t))
           
 
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+
+
 En este caso podríamos ser más precisos y especificar el tipo de
 excepción que estamos esperando
 
@@ -611,6 +980,16 @@ excepción que estamos esperando
           print("Error: t = {} no puede convertirse a entero".format(t))
           
 
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+
+
 .. code:: python
 
     with open("../data/ej_clase5.dat") as fi:
@@ -624,7 +1003,47 @@ excepción que estamos esperando
           print("Error: t = {} no puede convertirse a entero".format(t))
         except(IndexError):
           print('Error: La línea "{}" no contiene un par'.format(l.strip()))
+    print("Seguimos...")
           
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+    Seguimos...
+
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          p = t[2]
+          print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+        except(ValueError):
+          print("Error: t = {} no puede convertirse a entero".format(t))
+        except(IndexError):
+          print('Error: La línea "{}" no contiene un par'.format(l.strip()))
+    print("Seguimos...")
+          
+
+
+.. parsed-literal::
+
+    Error: La línea "1 2" no contiene un par
+    Error: La línea "2 6" no contiene un par
+    Error: La línea "3 9" no contiene un par
+    Error: La línea "4 12" no contiene un par
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+    Seguimos...
+
 
 La forma general
 
@@ -658,14 +1077,48 @@ Por ejemplo:
 
 .. code:: python
 
-    x = 1
-    if x > 0:
-      raise Exception(f"x = {x}, no debería ser positivo")
+    x = -1
+    if x < 0:
+      raise Exception(f"x = {x}, debería ser positivo")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    Exception                                 Traceback (most recent call last)
+
+    Input In [15], in <module>
+          1 x = -1
+          2 if x < 0:
+    ----> 3   raise Exception(f"x = {x}, debería ser positivo")
+
+
+    Exception: x = -1, debería ser positivo
+
 
 O podemos ser más específicos, y dar el tipo de error adecuado
 
 .. code:: python
 
-    x = 1
-    if x > 0:
-      raise ValueError(f"x = {x}, no debería ser positivo")
+    x = -1
+    if x < 0:
+      raise ValueError(f"x = {x}, debería ser positivo")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Input In [16], in <module>
+          1 x = -1
+          2 if x < 0:
+    ----> 3   raise ValueError(f"x = {x}, debería ser positivo")
+
+
+    ValueError: x = -1, debería ser positivo
+
