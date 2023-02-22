@@ -36,13 +36,6 @@ class Polinomio("Objeto padre"):
     """
     pass
 
-  def eval(self, x):
-    """Evalúa el polinomio en el valor `x` y devuelve el resultado
-    Keyword Arguments:
-    Agregar Documentación
-    """
-    pass
-
   def derivada(agregue los argumentos):
     """Devuelve la derivada (n-ésima) del polinomio (un nuevo polinomio)
     Keyword Arguments:
