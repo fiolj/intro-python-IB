@@ -142,6 +142,19 @@ objetos se realizan a través de funciones internas, que se llaman
 métodos.</p>
 <p>Las clases se definen con la palabra reservada <code class="docutils literal notranslate"><span class="pre">class</span></code>, veamos un
 ejemplo simple:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Clase</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c1</span> <span class="o">=</span> <span class="n">Clase</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Clase</span> <span class="n">at</span> <span class="mh">0x7f63a60297d0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
   <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
 
@@ -157,10 +170,16 @@ ejemplo simple:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="n">at</span> <span class="mh">0x7f63a6035f10</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 <p>Vemos que <code class="docutils literal notranslate"><span class="pre">P1</span></code> es un objeto del tipo <code class="docutils literal notranslate"><span class="pre">Punto</span></code> que está alojado en una
 dada dirección de memoria (dada por ese número largo hexadecimal). Para
 referirnos a los <em>atributos</em> de <code class="docutils literal notranslate"><span class="pre">P1</span></code> se utiliza notación “de punto”:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">z</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Como vemos, acabamos de definir una clase de tipo Punto. A continuación
@@ -186,6 +205,17 @@ cambiarse por cualquier otro <strong>pero, por convención, no se hace</strong>.
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">()</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">Punto</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span> <span class="n">missing</span> <span class="mi">3</span> <span class="n">required</span> <span class="n">positional</span> <span class="n">arguments</span><span class="p">:</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="ow">and</span> <span class="s1">&#39;z&#39;</span>
+</pre></div>
+</div>
 <p>Por supuesto la creación del objeto falla si no le damos ningún
 argumento porque los argumentos de <code class="docutils literal notranslate"><span class="pre">__init__</span></code> no son opcionales.
 Modifiquemos eso y aprovechamos para definir algunos otros métodos que
@@ -200,13 +230,8 @@ pueden ser útiles:</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
-    <span class="k">return</span> <span class="kc">None</span>
 
   <span class="k">def</span> <span class="nf">angulo_azimuthal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-    <span class="s2">&quot;Devuelve el ángulo que forma con el eje x, en radianes&quot;</span>
-    <span class="k">return</span> <span class="n">atan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
-
-  <span class="k">def</span> <span class="nf">angulo_d_azimuthal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="s2">&quot;Devuelve el ángulo que forma con el eje x, en grados&quot;</span>
     <span class="k">return</span> <span class="mi">180</span><span class="o">/</span><span class="n">pi</span><span class="o">*</span><span class="p">(</span><span class="n">atan2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
@@ -217,7 +242,7 @@ pueden ser útiles:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">angulo_azimuthal</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">angulo_d_azimuthal</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">45.0</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">()</span>
@@ -226,16 +251,47 @@ pueden ser útiles:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P2</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">Punto</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span> <span class="nb">object</span><span class="p">:</span>
+
+<span class="k">class</span> <span class="nc">Punto</span><span class="p">(</span><span class="n">builtins</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+ <span class="o">|</span>  <span class="n">Punto</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">Clase</span> <span class="n">para</span> <span class="n">describir</span> <span class="n">un</span> <span class="n">punto</span> <span class="n">en</span> <span class="n">el</span> <span class="n">espacio</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">Methods</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Inicializa</span> <span class="n">un</span> <span class="n">punto</span> <span class="n">en</span> <span class="n">el</span> <span class="n">espacio</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="n">angulo_azimuthal</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+ <span class="o">|</span>      <span class="n">Devuelve</span> <span class="n">el</span> <span class="n">ángulo</span> <span class="n">que</span> <span class="n">forma</span> <span class="n">con</span> <span class="n">el</span> <span class="n">eje</span> <span class="n">x</span><span class="p">,</span> <span class="n">en</span> <span class="n">grados</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="o">----------------------------------------------------------------------</span>
+ <span class="o">|</span>  <span class="n">Data</span> <span class="n">descriptors</span> <span class="n">defined</span> <span class="n">here</span><span class="p">:</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="vm">__dict__</span>
+ <span class="o">|</span>      <span class="n">dictionary</span> <span class="k">for</span> <span class="n">instance</span> <span class="n">variables</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+ <span class="o">|</span>
+ <span class="o">|</span>  <span class="vm">__weakref__</span>
+ <span class="o">|</span>      <span class="nb">list</span> <span class="n">of</span> <span class="n">weak</span> <span class="n">references</span> <span class="n">to</span> <span class="n">the</span> <span class="nb">object</span> <span class="p">(</span><span class="k">if</span> <span class="n">defined</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
 </pre></div>
 </div>
 <p>El objeto <code class="docutils literal notranslate"><span class="pre">P1</span></code> es del tipo <code class="docutils literal notranslate"><span class="pre">Punto</span></code> y tiene definidos los métodos
 <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> (el constructor) y el método <code class="docutils literal notranslate"><span class="pre">angulo_azimuthal()</span></code> que
 programamos para obtener el ángulo. Además tiene el método <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>
 que provee un diccionario con los datos del objeto:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
-</pre></div>
-</div>
 <p>Cuando ejecutamos uno de los métodos de un objeto, es equivalente a
 hacer la llamada al método de la clase, dando como primer argumento el
 objeto en cuestión:</p>
@@ -245,8 +301,15 @@ objeto en cuestión:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pp</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="n">at</span> <span class="mh">0x7f63c56abed0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">angulo_azimuthal</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Punto</span><span class="o">.</span><span class="n">angulo_azimuthal</span><span class="p">(</span><span class="n">P1</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">45.0</span>
+<span class="mf">45.0</span>
 </pre></div>
 </div>
 <p>Al hacer la llamada a un método de una “instancia de la Clase” (o un
@@ -302,22 +365,43 @@ deriva de la clase <code class="docutils literal notranslate"><span class="pre">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Vector</span> <span class="n">at</span> <span class="mh">0x7f63a6037a10</span><span class="o">&gt;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span><span class="o">.</span><span class="n">angulo_azimuthal</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">57.171458208587474</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v1</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">v1</span><span class="o">.</span><span class="n">z</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v2</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v2</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">v2</span><span class="o">.</span><span class="n">z</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">v1</span><span class="o">.</span><span class="n">suma</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aún</span> <span class="n">no</span> <span class="n">implementada</span> <span class="n">la</span> <span class="n">suma</span> <span class="n">de</span> <span class="n">dos</span> <span class="n">vectores</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">None</span>
 </pre></div>
 </div>
 <p>Volviendo a la definición de un objeto, vimos que <code class="docutils literal notranslate"><span class="pre">__init__()</span></code> es un
@@ -348,6 +432,9 @@ definir la operación suma entre objetos:</p>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aún</span> <span class="n">no</span> <span class="n">implementada</span> <span class="n">la</span> <span class="n">suma</span> <span class="n">de</span> <span class="n">dos</span> <span class="n">vectores</span>
 </pre></div>
 </div>
 <p>Los métodos que habíamos definido para los puntos del espacio, son
@@ -410,6 +497,9 @@ atributo llamado <code class="docutils literal notranslate"><span class="pre">x<
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">p2</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="mi">4</span>
+</pre></div>
+</div>
 <p>De la misma manera, en la definición de la clase nos referimos a estas
 variables como <code class="docutils literal notranslate"><span class="pre">self.x</span></code>, indicando que pertenecen a una instancia de
 una clase (o, lo que es lo mismo: un objeto específico).</p>
@@ -441,6 +531,11 @@ aumentamos el valor de la variable en uno.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número de puntos:&#39;</span><span class="p">,</span> <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Número</span> <span class="n">de</span> <span class="n">puntos</span><span class="p">:</span> <span class="mi">0</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f325cb03510</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f325cb2cd90</span><span class="o">&gt;</span>
+<span class="n">Número</span> <span class="n">de</span> <span class="n">puntos</span><span class="p">:</span> <span class="mi">2</span>
+</pre></div>
+</div>
 <p>Si estamos contando el número de puntos que tenemos, podemos crear
 métodos para acceder a ellos y/o manipularlos. Estos métodos no se
 refieren a una instancia en particular (<code class="docutils literal notranslate"><span class="pre">p1</span></code> o <code class="docutils literal notranslate"><span class="pre">p2</span></code> en este ejemplo)
@@ -450,6 +545,9 @@ sino al tipo de objeto <code class="docutils literal notranslate"><span class="p
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
 </pre></div>
 </div>
 <p>Nuestra implementación tiene una falla, al borrar los objetos no
@@ -494,15 +592,29 @@ en lugar de llamar a la función intrínseca <code class="docutils literal notra
 <span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Número</span> <span class="n">de</span> <span class="n">puntos</span><span class="p">:</span> <span class="mi">0</span>
+<span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">0</span> <span class="n">puntos</span> <span class="n">definidos</span>
+<span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f3258653250</span><span class="o">&gt;</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f325cb15190</span><span class="o">&gt;</span>
+<span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">2</span> <span class="n">puntos</span> <span class="n">definidos</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
 <span class="n">p1</span><span class="o">.</span><span class="n">borrar</span><span class="p">()</span>
 <span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">2</span> <span class="n">puntos</span> <span class="n">definidos</span>
+<span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">1</span> <span class="n">puntos</span> <span class="n">definidos</span>
 </pre></div>
 </div>
 <p>Sin embargo, en esta implementación no estamos realmente removiendo
 <code class="docutils literal notranslate"><span class="pre">p1</span></code>, sólo estamos actualizando el contador:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p1</span> <span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">p1</span><span class="o">.</span><span class="n">x</span> <span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f3258653250</span><span class="o">&gt;</span>
+<span class="n">p1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </section>
@@ -551,13 +663,34 @@ puntos</p>
 <span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">2</span> <span class="n">puntos</span> <span class="n">definidos</span>
+<span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">1</span> <span class="n">puntos</span> <span class="n">definidos</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="n">at</span> <span class="mh">0x7f32586571d0</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">NameError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">p2</span>
+
+
+<span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;p2&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f32586571d0</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Como vemos, al borrar el objeto, automáticamente se actualiza el
@@ -575,6 +708,9 @@ para los usuarios.</p>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f32582e39d0</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Rehagamos la clase para definir puntos</p>
@@ -611,11 +747,20 @@ para los usuarios.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span> <span class="n">en</span> <span class="n">el</span> <span class="n">espacio</span> <span class="n">con</span> <span class="n">coordenadas</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;p1 = </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">p1</span><span class="p">)</span>
 <span class="n">ss</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;p1 = Punto en el espacio con coordenadas: x = 1, y = 1, z = 0&#39;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">__main__</span><span class="o">.</span><span class="n">Punto</span> <span class="n">at</span> <span class="mh">0x7f3241488990</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>Como vemos, si no usamos la función <code class="docutils literal notranslate"><span class="pre">print()</span></code> o <code class="docutils literal notranslate"><span class="pre">format()</span></code> sigue
@@ -658,8 +803,14 @@ método es que de información sin ambigüedades.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">p2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Como vemos ahora tenemos una representación del objeto, que nos da
@@ -670,6 +821,17 @@ información precisa.</p>
 <p>Este método, si existe es ejecutado cuando llamamos al objeto. Si no
 existe, es un error llamar al objeto:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p2</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span> <span class="p">[</span><span class="mi">30</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">p2</span><span class="p">()</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="s1">&#39;Punto&#39;</span> <span class="nb">object</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">callable</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
@@ -710,7 +872,13 @@ existe, es un error llamar al objeto:</p>
 <span class="n">p3</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p3</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Ejecuté el objeto: Punto en el espacio con coordenadas: x = 1, y = 3, z = 4&#39;</span>
 </pre></div>
 </div>
 </section>
