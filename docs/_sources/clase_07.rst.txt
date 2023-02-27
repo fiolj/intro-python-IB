@@ -293,3 +293,896 @@ Puntos importantes
 +--------------------------+---------------------------------------------+
 
 
+Algunos módulos (biblioteca standard) 
+-------------------------------------
+
+Los módulos pueden pensarse como bibliotecas de objetos (funciones,
+datos, etc) que pueden usarse según la necesidad. Hay una biblioteca
+standard con rutinas para muchas operaciones comunes, y además existen
+muchos paquetes específicos para distintas tareas. Veamos algunos
+ejemplos:
+
+Módulo sys
+~~~~~~~~~~
+
+Este módulo da acceso a variables que usa o mantiene el intérprete
+Python
+
+.. code:: python
+
+    import sys
+
+.. code:: python
+
+    sys.path
+
+
+
+
+.. parsed-literal::
+
+    ['/home/fiol/Clases/IntPython/clases-python/clases',
+     '/usr/lib64/python311.zip',
+     '/usr/lib64/python3.11',
+     '/usr/lib64/python3.11/lib-dynload',
+     '',
+     '/home/fiol/.local/lib/python3.11/site-packages',
+     '/usr/lib64/python3.11/site-packages',
+     '/usr/lib/python3.11/site-packages']
+
+
+
+.. code:: python
+
+    sys.getfilesystemencoding()
+
+
+
+
+.. parsed-literal::
+
+    'utf-8'
+
+
+
+.. code:: python
+
+    sys.getsizeof(1)
+
+
+
+
+.. parsed-literal::
+
+    28
+
+
+
+.. code:: python
+
+    help(sys.getsizeof)
+
+
+.. parsed-literal::
+
+    Help on built-in function getsizeof in module sys:
+    
+    getsizeof(...)
+        getsizeof(object [, default]) -> int
+        
+        Return the size of object in bytes.
+    
+
+
+Vemos que para utilizar las variables (path) o funciones (getsizeof)
+debemos referirlo anteponiendo el módulo en el cuál está definido (sys)
+y separado por un punto.
+
+Cuando hacemos un programa, con definición de variables y funciones.
+Podemos utilizarlo como un módulo, de la misma manera que los que ya
+vienen definidos en la biblioteca standard o en los paquetes que
+instalamos.
+
+Módulo ``os``
+~~~~~~~~~~~~~
+
+El módulo ``os`` tiene utilidades para operar sobre nombres de archivos
+y directorios de manera segura y portable, de manera que pueda
+utilizarse en distintos sistemas operativos. Vamos a ver ejemplos de uso
+de algunas facilidades que brinda:
+
+.. code:: python
+
+    import os
+    
+    print(os.curdir)
+    print(os.pardir)
+    print (os.getcwd())
+
+
+.. parsed-literal::
+
+    .
+    ..
+    /home/fiol/Clases/IntPython/clases-python/clases
+
+
+.. code:: python
+
+    cur = os.getcwd()
+    par = os.path.abspath("..")
+    print(cur)
+    print(par)
+
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases
+    /home/fiol/Clases/IntPython/clases-python
+
+
+.. code:: python
+
+    print(os.path.abspath(os.curdir))
+    print(os.getcwd())
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases
+    /home/fiol/Clases/IntPython/clases-python/clases
+
+
+.. code:: python
+
+    print(os.path.basename(cur))
+    print(os.path.splitdrive(cur))
+
+
+.. parsed-literal::
+
+    clases
+    ('', '/home/fiol/Clases/IntPython/clases-python/clases')
+
+
+.. code:: python
+
+    print(os.path.commonprefix((cur, par)))
+    archivo = os.path.join(par,'este' , 'otro.dat')
+    print (archivo)
+    print (os.path.split(archivo))
+    print (os.path.splitext(archivo))
+    print (os.path.exists(archivo))
+    print (os.path.exists(cur))
+
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python
+    /home/fiol/Clases/IntPython/clases-python/este/otro.dat
+    ('/home/fiol/Clases/IntPython/clases-python/este', 'otro.dat')
+    ('/home/fiol/Clases/IntPython/clases-python/este/otro', '.dat')
+    False
+    True
+
+
+Como es aparente de estos ejemplos, se puede acceder a todos los objetos
+(funciones, variables) de un módulo utilizando simplemente la línea
+``import <modulo>`` pero puede ser tedioso escribir todo con prefijos
+(como ``os.path.abspath``) por lo que existen dos alternativas que
+pueden ser más convenientes. La primera corresponde a importar todas las
+definiciones de un módulo en forma implícita:
+
+.. code:: python
+
+    from os import *
+
+Después de esta declaración usamos los objetos de la misma manera que
+antes pero obviando la parte de ``os.``
+
+.. code:: python
+
+    path.abspath(curdir)
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/Clases/IntPython/clases-python/clases'
+
+
+
+Esto es conveniente en algunos casos pero no suele ser una buena idea en
+programas largos ya que distintos módulos pueden definir el mismo
+nombre, y se pierde información sobre su origen. Una alternativa que es
+conveniente y permite mantener mejor control es importar explícitamente
+lo que vamos a usar:
+
+.. code:: python
+
+    from os import curdir, pardir, getcwd
+    from os.path import abspath
+    print(abspath(pardir))
+    print(abspath(curdir))
+    print(abspath(getcwd()))
+
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python
+    /home/fiol/Clases/IntPython/clases-python/clases
+    /home/fiol/Clases/IntPython/clases-python/clases
+
+
+Además podemos darle un nombre diferente al importar módulos u objetos
+
+.. code:: python
+
+    import os.path as path
+    from os import getenv as ge
+
+
+.. code:: python
+
+    help(ge)
+
+
+.. parsed-literal::
+
+    Help on function getenv in module os:
+    
+    getenv(key, default=None)
+        Get an environment variable, return None if it doesn't exist.
+        The optional second argument can specify an alternate default.
+        key, default and the result are str.
+    
+
+
+.. code:: python
+
+    ge('HOME')
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol'
+
+
+
+.. code:: python
+
+    path.realpath(curdir)
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/Clases/IntPython/clases-python/clases'
+
+
+
+Acá hemos importado el módulo ``os.path`` (es un sub-módulo) como
+``path`` y la función ``getenv`` del módulo ``os`` y la hemos renombrado
+``ge``.
+
+.. code:: python
+
+    help(os.walk)
+
+
+.. parsed-literal::
+
+    Help on function walk in module os:
+    
+    walk(top, topdown=True, onerror=None, followlinks=False)
+        Directory tree generator.
+        
+        For each directory in the directory tree rooted at top (including top
+        itself, but excluding '.' and '..'), yields a 3-tuple
+        
+            dirpath, dirnames, filenames
+        
+        dirpath is a string, the path to the directory.  dirnames is a list of
+        the names of the subdirectories in dirpath (including symlinks to directories,
+        and excluding '.' and '..').
+        filenames is a list of the names of the non-directory files in dirpath.
+        Note that the names in the lists are just names, with no path components.
+        To get a full path (which begins with top) to a file or directory in
+        dirpath, do os.path.join(dirpath, name).
+        
+        If optional arg 'topdown' is true or not specified, the triple for a
+        directory is generated before the triples for any of its subdirectories
+        (directories are generated top down).  If topdown is false, the triple
+        for a directory is generated after the triples for all of its
+        subdirectories (directories are generated bottom up).
+        
+        When topdown is true, the caller can modify the dirnames list in-place
+        (e.g., via del or slice assignment), and walk will only recurse into the
+        subdirectories whose names remain in dirnames; this can be used to prune the
+        search, or to impose a specific order of visiting.  Modifying dirnames when
+        topdown is false has no effect on the behavior of os.walk(), since the
+        directories in dirnames have already been generated by the time dirnames
+        itself is generated. No matter the value of topdown, the list of
+        subdirectories is retrieved before the tuples for the directory and its
+        subdirectories are generated.
+        
+        By default errors from the os.scandir() call are ignored.  If
+        optional arg 'onerror' is specified, it should be a function; it
+        will be called with one argument, an OSError instance.  It can
+        report the error to continue with the walk, or raise the exception
+        to abort the walk.  Note that the filename is available as the
+        filename attribute of the exception object.
+        
+        By default, os.walk does not follow symbolic links to subdirectories on
+        systems that support them.  In order to get this functionality, set the
+        optional argument 'followlinks' to true.
+        
+        Caution:  if you pass a relative pathname for top, don't change the
+        current working directory between resumptions of walk.  walk never
+        changes the current directory, and assumes that the client doesn't
+        either.
+        
+        Example:
+        
+        import os
+        from os.path import join, getsize
+        for root, dirs, files in os.walk('python/Lib/email'):
+            print(root, "consumes ")
+            print(sum(getsize(join(root, name)) for name in files), end=" ")
+            print("bytes in", len(files), "non-directory files")
+            if 'CVS' in dirs:
+                dirs.remove('CVS')  # don't visit CVS directories
+    
+
+
+.. code:: python
+
+    import os
+    from os.path import join, getsize
+    for root, dirs, files in os.walk('./'):
+        print(root, "consume ", end="")
+        print(sum([getsize(join(root, name)) for name in files])/1024, end="")
+        print(" kbytes en ", len(files), "non-directory files")
+        if '.ipynb_checkpoints' in dirs:
+            dirs.remove('.ipynb_checkpoints')  # don't visit CVS directories
+
+
+.. parsed-literal::
+
+    ./ consume 19249.0361328125 kbytes en  121 non-directory files
+    ./explicacion_ejercicio_agujas_files consume 8.73828125 kbytes en  2 non-directory files
+    ./scripts consume 3240.986328125 kbytes en  56 non-directory files
+    ./scripts/animaciones consume 3015.03515625 kbytes en  15 non-directory files
+    ./scripts/interfacing consume 1062.0107421875 kbytes en  22 non-directory files
+    ./scripts/interfacing/__pycache__ consume 1.69140625 kbytes en  2 non-directory files
+    ./scripts/__pycache__ consume 0.556640625 kbytes en  1 non-directory files
+    ./version-control consume 55.796875 kbytes en  10 non-directory files
+    ./version-control/_images consume 200.9833984375 kbytes en  4 non-directory files
+    ./version-control/_sources consume 15.384765625 kbytes en  4 non-directory files
+    ./version-control/_static consume 827.212890625 kbytes en  25 non-directory files
+    ./version-control/_static/css consume 116.8828125 kbytes en  2 non-directory files
+    ./version-control/_static/fonts consume 4132.6220703125 kbytes en  13 non-directory files
+    ./version-control/_static/fonts/Lato consume 5672.4013671875 kbytes en  16 non-directory files
+    ./version-control/_static/fonts/RobotoSlab consume 786.3271484375 kbytes en  8 non-directory files
+    ./version-control/_static/js consume 19.341796875 kbytes en  2 non-directory files
+    ./__pycache__ consume 1.181640625 kbytes en  1 non-directory files
+
+
+Módulo ``glob``
+~~~~~~~~~~~~~~~
+
+El módulo ``glob`` encuentra nombres de archivos (o directorios)
+utilizando patrones similares a los de la consola. La función más
+utilizada es ``glob.glob()`` Veamos algunos ejemplos de uso:
+
+.. code:: python
+
+    import glob
+
+.. code:: python
+
+    nb_clase4= glob.glob('04*.ipynb')
+
+.. code:: python
+
+    nb_clase4
+
+
+
+
+.. parsed-literal::
+
+    ['04_1_funciones.ipynb', '04_3_func_func.ipynb', '04_2_func_args.ipynb']
+
+
+
+.. code:: python
+
+    nb_clase4.sort()
+
+.. code:: python
+
+    nb_clase4
+
+
+
+
+.. parsed-literal::
+
+    ['04_1_funciones.ipynb', '04_2_func_args.ipynb', '04_3_func_func.ipynb']
+
+
+
+.. code:: python
+
+    nb_clases1a4 = glob.glob('0[0-4]*.ipynb')
+
+.. code:: python
+
+    nb_clases1a4
+
+
+
+
+.. parsed-literal::
+
+    ['00_introd_y_excursion.ipynb',
+     '01_1_instala_y_uso.ipynb',
+     '01_2_introd_python.ipynb',
+     '02_1_tipos_y_control.ipynb',
+     '02_2_listas.ipynb',
+     '03_1_tipos_control.ipynb',
+     '03_2_iteraciones_tipos.ipynb',
+     '04_1_funciones.ipynb',
+     '04_3_func_func.ipynb',
+     '04_2_func_args.ipynb']
+
+
+
+.. code:: python
+
+    for f in sorted(nb_clases1a4):
+      print('Clase en archivo {}'.format(f))
+
+
+.. parsed-literal::
+
+    Clase en archivo 00_introd_y_excursion.ipynb
+    Clase en archivo 01_1_instala_y_uso.ipynb
+    Clase en archivo 01_2_introd_python.ipynb
+    Clase en archivo 02_1_tipos_y_control.ipynb
+    Clase en archivo 02_2_listas.ipynb
+    Clase en archivo 03_1_tipos_control.ipynb
+    Clase en archivo 03_2_iteraciones_tipos.ipynb
+    Clase en archivo 04_1_funciones.ipynb
+    Clase en archivo 04_2_func_args.ipynb
+    Clase en archivo 04_3_func_func.ipynb
+
+
+Módulo ``re``
+~~~~~~~~~~~~~
+
+Este módulo provee la infraestructura para trabajar con *regular
+expressions*, es decir para encontrar expresiones que verifican “cierta
+forma general”. Veamos algunos conceptos básicos y casos más comunes de
+uso.
+
+Búsqueda de un patrón en un texto
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Empecemos con un ejemplo bastante común. Para encontrar un patrón en un
+texto podemos utilizar el método ``search()``
+
+.. code:: python
+
+    import re
+
+.. code:: python
+
+    busca = 'un'
+    texto = 'Otra vez vamos a usar "Hola Mundo"'
+    
+    match = re.search(busca, texto)
+    
+    print('Encontré "{}"\nen:\n  "{}"'.format(match.re.pattern, match.string))
+    print('En las posiciones {} a {}'.format(match.start(), match.end()))
+
+
+.. parsed-literal::
+
+    Encontré "un"
+    en:
+      "Otra vez vamos a usar "Hola Mundo""
+    En las posiciones 29 a 31
+
+
+Acá buscamos una expresión (el substring “un”). Esto es útil pero no muy
+diferente a utilizar los métodos de strings. Veamos como se definen los
+patrones.
+
+Definición de expresiones
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vamos a buscar un patrón en un texto. Veamos cómo se definen los
+patrones a buscar.
+
+-  La mayoría de los caracteres se identifican consigo mismo (si quiero
+   encontrar “gato”, uso como patrón “gato”)
+
+-  Hay unos pocos caracteres especiales (metacaracteres) que tienen un
+   significado especial, estos son:
+
+   ::
+
+      . ^ $ * + ? { } [ ] \ | ( )
+
+-  Si queremos encontrar uno de los metacaracteres, tenemos que
+   precederlos de ``\``. Por ejemplo si queremos encontrar un corchete
+   usamos ``\[``
+
+-  Los corchetes “[” y ”]” se usan para definir una clase de caracteres,
+   que es un conjunto de caracteres que uno quiere encontrar.
+
+   -  Los caracteres a encontrar se pueden dar individualmente. Por
+      ejemplo ``[gato]`` encontrará cualquiera de ``g``, ``a``, ``t``,
+      ``o``.
+   -  Un rango de caracteres se puede dar dando dos caracteres separados
+      por un guión. Por ejemplo ``[a-z]`` dará cualquier letra entre “a”
+      y “z”. Similarmente ``[0-5][0-9]`` dará cualquier número entre
+      “00” y “59”.
+   -  Los metacaracteres pierden su significado especial dentro de los
+      corchetes. Por ejemplo ``[.*)]`` encontrará cualquiera de “.”,
+      “\*“,”)“.
+
+-  El punto ``.`` indica *cualquier caracter*
+
+-  Los símbolos ``*``, ``+``, ``?`` indican repetición:
+
+   -  ``?``: Indica 0 o 1 aparición de lo anterior
+   -  ``*``: Indica 0 o más apariciones de lo anterior
+   -  ``+``: Indica 1 o más apariciones de lo anterior
+
+-  Para encontrar una cantidad determinada de caracteres, se puede
+   agregar dicha cantidad entre llaves ``{}``. Por ejemplo, ``[a-z]{3}``
+   resultará en cualquier string de exactamente tres letras minúsculas.
+
+.. code:: python
+
+    busca = "[a-z]+@[a-z]+\.[a-z]+" # Un patrón para buscar direcciones de email
+    texto = "nombre@server.com, apellido@server1.com, nombre1995@server.com, UnNombreyApellido, nombre.apellido82@servidor.com.ar, Nombre.Apellido82@servidor.com.ar".split(',')
+    print(texto,'\n')
+    
+    for direc in texto:
+      m= re.search(busca, direc)
+      print('Para la línea:', direc)
+      if m is None:
+        print('   No encontré dirección de correo!')
+      else:
+        print('   Encontré la dirección de correo:', m.string)
+    
+
+
+
+.. parsed-literal::
+
+    ['nombre@server.com', ' apellido@server1.com', ' nombre1995@server.com', ' UnNombreyApellido', ' nombre.apellido82@servidor.com.ar', ' Nombre.Apellido82@servidor.com.ar'] 
+    
+    Para la línea: nombre@server.com
+       Encontré la dirección de correo: nombre@server.com
+    Para la línea:  apellido@server1.com
+       No encontré dirección de correo!
+    Para la línea:  nombre1995@server.com
+       No encontré dirección de correo!
+    Para la línea:  UnNombreyApellido
+       No encontré dirección de correo!
+    Para la línea:  nombre.apellido82@servidor.com.ar
+       No encontré dirección de correo!
+    Para la línea:  Nombre.Apellido82@servidor.com.ar
+       No encontré dirección de correo!
+
+
+-  Acá la expresión ``[a-z]`` significa todos los caracteres en el rango
+   “a” hasta “z”.
+
+-  ``[a-z]+`` significa cualquier secuencia de una letra o más.
+
+-  Los corchetes también se pueden usar en la forma ``[abc]`` y entonces
+   encuentra *cualquiera* de ``a``, ``b``, o ``c``.
+
+Vemos que no encontró todas las direcciones posibles. Porque el patrón
+no está bien diseñado. Un poco mejor sería:
+
+.. code:: python
+
+    busca = "[a-zA-Z0-9.]+@[a-z.]+" # Un patrón para buscar direcciones de email
+    
+    print(texto,'\n')
+    
+    for direc in texto:
+      m= re.search(busca, direc)
+      print('Para la línea:', direc)
+      if m is None:
+        print('   No encontré dirección de correo:')
+      else:
+        print('   Encontré la dirección de correo:', m.group())
+    
+
+
+
+.. parsed-literal::
+
+    ['nombre@server.com', ' apellido@server1.com', ' nombre1995@server.com', ' UnNombreyApellido', ' nombre.apellido82@servidor.com.ar', ' Nombre.Apellido82@servidor.com.ar'] 
+    
+    Para la línea: nombre@server.com
+       Encontré la dirección de correo: nombre@server.com
+    Para la línea:  apellido@server1.com
+       Encontré la dirección de correo: apellido@server
+    Para la línea:  nombre1995@server.com
+       Encontré la dirección de correo: nombre1995@server.com
+    Para la línea:  UnNombreyApellido
+       No encontré dirección de correo:
+    Para la línea:  nombre.apellido82@servidor.com.ar
+       Encontré la dirección de correo: nombre.apellido82@servidor.com.ar
+    Para la línea:  Nombre.Apellido82@servidor.com.ar
+       Encontré la dirección de correo: Nombre.Apellido82@servidor.com.ar
+
+
+Los metacaracteres no se activan dentro de clases (adentro de
+corchetes). En el ejemplo anterior el punto ``.`` actúa como un punto y
+no como un metacaracter. En este caso, la primera parte:
+``[a-zA-Z0-9.]+`` significa: “Encontrar cualquier letra minúscula,
+mayúscula, número o punto, una o más veces cualquiera de ellos”
+
+Repetición de un patrón
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Si queremos encontrar strings que presentan la secuencia una o más veces
+podemos usar ``findall()`` que devuelve todas las ocurrencias del patrón
+que no se superponen. Por ejemplo:
+
+.. code:: python
+
+    texto = 'abbaaabbbbaaaaa'
+    
+    busca = 'ab'
+    
+    mm =  re.findall(busca, texto)
+    print(mm)    
+    print(type(mm[0]))
+    for m in mm:
+        print('Encontré {}'.format(m))
+
+
+
+.. parsed-literal::
+
+    ['ab', 'ab']
+    <class 'str'>
+    Encontré ab
+    Encontré ab
+
+
+.. code:: python
+
+    p = re.compile('abc*')
+    m= p.findall('acholaboy')
+    print(m)
+    m= p.findall('acholabcoynd sabcccs slabc labdc abc')
+    print(m)
+
+
+.. parsed-literal::
+
+    ['ab']
+    ['abc', 'abccc', 'abc', 'ab', 'abc']
+
+
+Si va a utilizar expresiones regulares es recomendable que lea más
+información en la `biblioteca
+standard <https://docs.python.org/3.6/library/re.html>`__, en `el
+HOWTO <https://docs.python.org/3.6/howto/regex.html>`__, en `Python
+Module of the week <https://pymotw.com/3/re/index.html>`__ o
+`acá <https://pynative.com/python/regex/>`__.
+
+Para practicar RegEx, `ésta es una buena
+página <https://regexone.com/>`__.
+
+Si efectivamente tiene que diseñar una expresión regular, `esta página
+puede ser útil <https://regex101.com/>`__.
+
+Módulo ``Argparse``
+~~~~~~~~~~~~~~~~~~~
+
+Este módulo tiene lo necesario para hacer rápidamente un programa para
+utilizar por línea de comandos, aceptando todo tipo de argumentos y
+dando información sobre su uso.
+
+.. code:: python
+
+   import argparse
+   VERSION = 1.0
+
+   parser = argparse.ArgumentParser(
+         description='"Mi programa que acepta argumentos por línea de comandos"')
+
+   parser.add_argument('-V', '--version', action='version',
+                         version='%(prog)s version {}'.format(VERSION))
+     
+   parser.add_argument('-n', '--entero', action=store, dest='n', default=1)
+
+   args = parser.parse_args()
+
+Más información en la `biblioteca
+standard <https://docs.python.org/3.6/library/argparse.html>`__ y en
+`Argparse en Python Module of the
+week <https://pymotw.com/3/argparse/index.html>`__
+
+Módulo pathlib
+~~~~~~~~~~~~~~
+
+El módulo pathlib es “relativamente nuevo” y tiene funcionalidades para
+trabajar con rutas de archivos y directorios con una tratamiento de
+programación orientada a objetos. Este módulo define un objeto ``Path``
+que contiene mucha de la funcionalidad que usualmente se obtenía sólo de
+los módulos ``os`` y ``glob``. Veamos algunos ejemplos simples de su uso
+
+.. code:: python
+
+    from pathlib import Path
+
+
+.. code:: python
+
+    direct = Path('.')
+    print(direct)
+
+
+.. parsed-literal::
+
+    .
+
+
+El objeto tiene un iterador que nos permite recorrer todo el directorio.
+Por ejemplo si queremos listar todos los subdirectorios:
+
+.. code:: python
+
+    [x for x in direct.iterdir() if x.is_dir()]
+
+
+
+
+.. parsed-literal::
+
+    [PosixPath('.ipynb_checkpoints'),
+     PosixPath('explicacion_ejercicio_agujas_files'),
+     PosixPath('scripts'),
+     PosixPath('figuras'),
+     PosixPath('version-control'),
+     PosixPath('__pycache__')]
+
+
+
+Trabajo con rutas de archivos
+
+.. code:: python
+
+    print(direct.absolute())
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases
+
+
+.. code:: python
+
+    p = direct / ".."
+    print(p)
+    print(p.resolve())
+
+
+.. parsed-literal::
+
+    ..
+    /home/fiol/Clases/IntPython/clases-python
+
+
+Podemos reemplazar el módulo ``glob`` utilizando este objeto:
+
+.. code:: python
+
+    for fi in sorted(direct.glob("0[1-7]*.ipynb") ):
+        print(fi)
+
+
+.. parsed-literal::
+
+    01_1_instala_y_uso.ipynb
+    01_2_introd_python.ipynb
+    02_1_tipos_y_control.ipynb
+    02_2_listas.ipynb
+    03_1_tipos_control.ipynb
+    03_2_iteraciones_tipos.ipynb
+    04_1_funciones.ipynb
+    04_2_func_args.ipynb
+    04_3_func_func.ipynb
+    05_1_decoradores.ipynb
+    05_2_inout.ipynb
+    05_3_excepciones.ipynb
+    06_1_objetos.ipynb
+    06_2_objetos.ipynb
+    07_ejemplo_oop.ipynb
+    07_modulos_biblioteca.ipynb
+
+
+.. code:: python
+
+    fi = direct / "programa_detalle.rst"
+    if fi.exists():
+        s= fi.read_text()
+        print(s)
+
+--------------
+
+Ejercicios 07
+-------------
+
+Git
+~~~
+
+1. Además de la clase, puede también que se hayan perdido algunos
+   cuentos de Borges en el directorio. Sus objetivos son
+
+-  Encontrar alguno de esos cuentos.
+-  Leerlo, si no tuvo la chance alguna vez de hacerlo.
+-  Reportar en el repositorio de GitHub que el nombre del cuento, el
+   personaje principal, y cuál es su opinión sobre el mismo, a través de
+   un *issue*. Para ello tendría que crearse una cuenta en GitHub, ir al
+   buscar el repositorio ``fcolavecchia/standard_library_python.git``,
+   seleccionar **Issues** y luego crear un nuevo issue con el botón
+   ``New issue``.
+
+RegEx
+~~~~~
+
+2. Una manera de representar un sudoku es a través de un ``string`` de
+   exactamente 81 caracteres. Si el sudoku ha sido resuelto, ese string
+   contendrá sólo los números que resuelven el sudoku. Sin embargo, si
+   el sudoku no está resuelto, se representan los casilleros vacíos por
+   el caracter ``.``. Por ejemplo:
+
+.. code:: python
+
+   sudoku_facil = "....71............1346.......3.17....27.8..4.5..24.........3.7..4..2...1.61.58.3."
+
+sería una representación válida de un sudoku.
+
+Usando expresiones regulares, encuentre los sudokus perdidos en el
+directorio de archivos corruptos usado antes.
+
+Más RegEx
+~~~~~~~~~
+
+3. Si todavía tiene ganas de seguir practicando regex, un ejercicio
+   interesante es encontrar los coeficientes y las potencias de un
+   polinomio que viene descripto como un string:
+
+.. code:: python
+
+   polinomio = "5x^4 + 3x^2 - 2x + 7"
+
+Este no es un ejercicio fácil, y además, para extraer la información
+requerida, es necesario poder capturar `grupos de expresiones
+regulares <https://regexone.com/lesson/capturing_groups>`__.
+
+--------------
+
+.
