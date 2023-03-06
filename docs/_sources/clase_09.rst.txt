@@ -132,6 +132,19 @@ esto no ocurre automáticamente, se puede obtener con la siguiente línea:
     import matplotlib.pyplot as plt
     plt.plot([1,2,3,4,5,6],[0,1,4,9,16,25])
 
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb810d05d10>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_10_1.png
+
+
 En la práctica vamos a usar siempre **Matplotlib** junto con **Numpy**.
 
 .. code:: python
@@ -154,6 +167,19 @@ con unas pocas líneas
     x, y, yexp = np.loadtxt(fdatos, unpack=True)
     plt.plot(x, y)
 
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb810d4d410>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_16_1.png
+
+
 Como vemos, es la curva que graficamos la clase anterior.
 
 Si miramos el archivo vamos a ver que tiene una columna más que
@@ -164,10 +190,39 @@ tercera columna a una variable adicional ``yexp`` al leerlo.
 
     !head ../data/ej_oscil_aten_err.dat
 
+
+.. parsed-literal::
+
+    #   x           teo           exp
+    0.0000000e+00 0.0000000e+00 0.0000000e+00
+    1.0507000e-02 1.1576170e-05 1.4544540e-05
+    2.1014000e-02 9.2052870e-05 7.5934893e-05
+    3.1521000e-02 3.0756500e-04 1.8990066e-04
+    4.2028000e-02 7.1879320e-04 6.1217896e-04
+    5.2534990e-02 1.3784280e-03 1.2133173e-03
+    6.3041990e-02 2.3288570e-03 9.5734774e-04
+    7.3548990e-02 3.6001450e-03 3.5780825e-03
+    8.4055990e-02 5.2083560e-03 4.4485492e-03
+
+
 .. code:: python
 
     # Graficamos las segunda y tercera columnas como función de la primera
     plt.plot(x,yexp, x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb805432ad0>,
+     <matplotlib.lines.Line2D at 0x7fb8054496d0>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_19_1.png
+
 
 Formato de las curvas
 ---------------------
@@ -215,6 +270,20 @@ Con esta idea modificamos el gráfico anterior
 
     plt.plot(x,y,'-', x,yexp, 'ro')
 
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb80548f350>,
+     <matplotlib.lines.Line2D at 0x7fb80548e1d0>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_22_1.png
+
+
 Para graficar más de una curva, en este formato simple, podemos ponerlo
 todo en la misma función ``plot()`` en la forma
 ``plot(x1, y1, [formato], x2, y2, [formato2])`` pero muchas veces es más
@@ -224,6 +293,19 @@ legible separar los llamados a la función, una para cada curva.
 
     plt.plot(x,y, '-')
     plt.plot(x,yexp, 'or')
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb810dc3850>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_24_1.png
+
 
 Al separar los llamados a la función ``plot()`` obtenemos un código más
 claro, principalmente cuando agregamos opciones de formato.
@@ -326,15 +408,54 @@ markevery       número entero
     plt.plot(x,y,linewidth=1)
     plt.plot(x,yexp, 'o', color='red', markersize=2)
 
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb8053bcbd0>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_28_1.png
+
+
 .. code:: python
 
     plt.plot(x,y,linewidth=5)
     plt.plot(x,yexp, 'o', color='green', markersize=8)
 
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb8052061d0>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_29_1.png
+
+
 .. code:: python
 
     plt.plot(x,y,linewidth=5, linestyle='dashed')
     plt.plot(x,yexp, 'o', color='red', markersize=8, markeredgecolor='black',markevery=6)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb80539cdd0>]
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_30_1.png
+
 
 Nombres de ejes y leyendas
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -352,6 +473,19 @@ este caso en el mismo comando ``plot()``, y luego mostrarlo con
     #plt.legend()
     plt.legend(loc="lower right", title="Mis datos")
 
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7fb8110c7190>
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_32_1.png
+
+
 Para agregar nombres a los ejes usamos ``xlabel`` y ``ylabel``:
 
 .. code:: python
@@ -361,6 +495,11 @@ Para agregar nombres a los ejes usamos ``xlabel`` y ``ylabel``:
     plt.legend(loc="lower right", title="Mis datos")
     plt.xlabel('Tiempo (micro-segundos)')
     plt.ylabel("Voltaje (mV)");
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_34_0.png
+
 
 Los títulos a la figura se pueden agregar con ``title``
 
@@ -374,6 +513,19 @@ Los títulos a la figura se pueden agregar con ``title``
     plt.title("Medición de ayer")
     plt.axvline(x=1, color='gray')
     plt.axhline(color='gray')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.lines.Line2D at 0x7fb80500abd0>
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_36_1.png
+
 
 Acá además agregamos una línea vertical y una horizontal.
 
