@@ -565,6 +565,19 @@ Para cambiar los límites de graficación se puede usar las funciones
     plt.xlim((0,2.5))
     plt.ylim((-0.4, 0.32))
 
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_40_1.png
+
+
 Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
 
 .. code:: python
@@ -581,6 +594,19 @@ Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
     plt.xscale('log')
     plt.ylim((-0.4, 0.32))
 
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_42_1.png
+
+
 .. code:: python
 
     plt.plot(x,1+y, '-b', label="teoría")
@@ -595,6 +621,19 @@ Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
     plt.xscale('log')
     plt.yscale('log')
     plt.ylim((0.6, 1.4))
+
+
+
+
+.. parsed-literal::
+
+    (0.6, 1.4)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_43_1.png
+
 
 Exportar las figuras
 --------------------
@@ -617,12 +656,115 @@ utilizamos la función ``savefig()``.
     plt.ylim((-0.4, 0.32))
     plt.grid()
     #plt.grid(color='green', linestyle='dashed', linewidth=1)
-    plt.savefig('{}.png'.format(foname), dpi=200)
-    plt.savefig('{}.pdf'.format(foname))
+    plt.savefig(f'{foname}.png')
+    plt.savefig(f'{foname}.pdf')
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_45_0.png
+
+
+.. code:: python
+
+    %pwd
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/Clases/IntPython/clases-python/clases'
+
+
 
 .. code:: python
 
     help(plt.grid)
+
+
+.. parsed-literal::
+
+    Help on function grid in module matplotlib.pyplot:
+    
+    grid(visible=None, which='major', axis='both', **kwargs)
+        Configure the grid lines.
+        
+        Parameters
+        ----------
+        visible : bool or None, optional
+            Whether to show the grid lines.  If any *kwargs* are supplied, it
+            is assumed you want the grid on and *visible* will be set to True.
+        
+            If *visible* is *None* and there are no *kwargs*, this toggles the
+            visibility of the lines.
+        
+        which : {'major', 'minor', 'both'}, optional
+            The grid lines to apply the changes on.
+        
+        axis : {'both', 'x', 'y'}, optional
+            The axis to apply the changes on.
+        
+        **kwargs : `.Line2D` properties
+            Define the line properties of the grid, e.g.::
+        
+                grid(color='r', linestyle='-', linewidth=2)
+        
+            Valid keyword arguments are:
+        
+            Properties:
+            agg_filter: a filter function, which takes a (m, n, 3) float array and a dpi value, and returns a (m, n, 3) array and two offsets from the bottom left corner of the image
+            alpha: scalar or None
+            animated: bool
+            antialiased or aa: bool
+            clip_box: `.Bbox`
+            clip_on: bool
+            clip_path: Patch or (Path, Transform) or None
+            color or c: color
+            dash_capstyle: `.CapStyle` or {'butt', 'projecting', 'round'}
+            dash_joinstyle: `.JoinStyle` or {'miter', 'round', 'bevel'}
+            dashes: sequence of floats (on/off ink in points) or (None, None)
+            data: (2, N) array or two 1D arrays
+            drawstyle or ds: {'default', 'steps', 'steps-pre', 'steps-mid', 'steps-post'}, default: 'default'
+            figure: `.Figure`
+            fillstyle: {'full', 'left', 'right', 'bottom', 'top', 'none'}
+            gapcolor: color or None
+            gid: str
+            in_layout: bool
+            label: object
+            linestyle or ls: {'-', '--', '-.', ':', '', (offset, on-off-seq), ...}
+            linewidth or lw: float
+            marker: marker style string, `~.path.Path` or `~.markers.MarkerStyle`
+            markeredgecolor or mec: color
+            markeredgewidth or mew: float
+            markerfacecolor or mfc: color
+            markerfacecoloralt or mfcalt: color
+            markersize or ms: float
+            markevery: None or int or (int, int) or slice or list[int] or float or (float, float) or list[bool]
+            mouseover: bool
+            path_effects: `.AbstractPathEffect`
+            picker: float or callable[[Artist, Event], tuple[bool, dict]]
+            pickradius: unknown
+            rasterized: bool
+            sketch_params: (scale: float, length: float, randomness: float)
+            snap: bool or None
+            solid_capstyle: `.CapStyle` or {'butt', 'projecting', 'round'}
+            solid_joinstyle: `.JoinStyle` or {'miter', 'round', 'bevel'}
+            transform: unknown
+            url: str
+            visible: bool
+            xdata: 1D array
+            ydata: 1D array
+            zorder: float
+        
+        Notes
+        -----
+        The axis is drawn as a unit, so the effective zorder for drawing the
+        grid is determined by the zorder of each axis, not by the zorder of the
+        `.Line2D` objects comprising the grid.  Therefore, to set grid zorder,
+        use `.set_axisbelow` or, for more control, call the
+        `~.Artist.set_zorder` method of each axis.
+    
+
 
 Acá también hemos utilizado formato tipo LaTeX para parte del texto. Si
 utilizamos una expresión encerrada entre los símbolos ``$``, matplotlib
@@ -644,7 +786,7 @@ figura. Veamos un ejemplo utilizando la función ``subplots()``
     #! /usr/bin/ipython3
     
     """ Script realizado durante la clase 9. Dos figuras """
-    from os.path import join
+    from pathlib import Path
     
     import numpy as np
     import matplotlib.pyplot as plt
@@ -652,8 +794,8 @@ figura. Veamos un ejemplo utilizando la función ``subplots()``
     
     fname = 'ej_oscil_aten_err'
     # Levantamos los datos
-    pardir = '..'
-    datfile = join(pardir, 'data/{}.dat'.format(fname))
+    pardir = Path("..")
+    datfile = pardir / f'data/{fname}.dat'
     
     x1, y1, y2 = np.loadtxt(datfile, unpack=True)
     # Vamos a graficar sólo algunos valores (uno de cada 5)
@@ -662,7 +804,7 @@ figura. Veamos un ejemplo utilizando la función ``subplots()``
     yexp = y2[3:-10:5]
     
     # Ejemplo de barras de error que dependen del eje x
-    error = 0.05 + 0.3 * y
+    error = 0.05 + 0.3 * np.abs(y)
     
     fig, (ax0, ax1) = plt.subplots(num='subplots', nrows=2, sharex=True)
     ax0.errorbar(x, yexp, yerr=error, fmt='-o')
@@ -678,7 +820,60 @@ figura. Veamos un ejemplo utilizando la función ``subplots()``
     ax1.set_xlim((0, 3))
     
     # Guardamos el resultado
-    plt.savefig('{}.png'.format(fname), dpi=72)
+    plt.savefig(f'{fname}.png', dpi=150)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_50_0.png
+
+
+.. code:: python
+
+    # %load scripts/ejemplo_08_5.py
+    #! /usr/bin/ipython3
+    
+    """ Script realizado durante la clase 9. Dos figuras """
+    from pathlib import Path
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    plt.ion()
+    
+    fname = 'ej_oscil_aten_err'
+    # Levantamos los datos
+    pardir = Path("..")
+    datfile = pardir / f'data/{fname}.dat'
+    
+    x1, y1, y2 = np.loadtxt(datfile, unpack=True)
+    # Vamos a graficar sólo algunos valores (uno de cada 5)
+    x = x1[3:-10:5]
+    y = y1[3:-10:5]
+    yexp = y2[3:-10:5]
+    
+    # Ejemplo de barras de error que dependen del eje x
+    error = 0.05 + 0.3 * np.abs(y)
+    
+    fig, (ax0, ax1) = plt.subplots(num='subplots', figsize=(10,4), nrows=1, ncols=2)
+    ax0.errorbar(x, yexp, yerr=error, fmt='-o')
+    ax1.plot(x, 2 * (yexp - y) / (yexp + y), 'or', markersize=8)
+    
+    
+    # Límites de graficación y títulos
+    ax0.set_title('Datos con error variable')
+    ax1.set_title('Error relativo')
+    ax0.set_ylabel('Voltaje (mV)', fontsize='x-large')
+    ax1.set_xlabel(r'Tiempo ($\mu$-seg)', fontsize='x-large')
+    ax1.set_ylabel('Error relativo', fontsize='x-large')
+    ax1.set_xlim((0, 3))
+    
+    # Guardamos el resultado
+    plt.savefig(f'{fname}_B.png', dpi=150)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_51_0.png
 
 
 En este ejemplo utilizamos un enfoque diferente al utilizado
@@ -710,8 +905,8 @@ Ejercicios 09 (b)
 
    .. image:: figuras/ejercicio_08_1.png
 
-   **Pistas:** Buscar información sobre ``plt.fill_between()`` y sobre
-   ``plt.xticks`` y ``plt.yticks``.
+   **Pistas:** Buscar información sobre ``plt.text()``,
+   ``plt.fill_between()`` y sobre ``plt.xticks`` y ``plt.yticks``.
 
 3. Rehacer la siguiente figura:
 
@@ -722,3 +917,963 @@ Ejercicios 09 (b)
 .
 
 
+
+Personalizando el modo de visualización
+---------------------------------------
+
+**Matplotlib** da la posibilidad de modificar el estilo de la
+graficación en distintas “etapas”.
+
+Archivo de configuración
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cuando uno carga el módulo busca un archivo de configuración llamado
+``matplotlibrc``
+
+1. Primero busca un archivo de configuración en el directorio de trabajo
+   también lo lee. En cada caso sobreescribe las variables.
+2. Si la variable ``MATPLOTLIBRC`` existe (para el usuario), busca el
+   archivo ``$MATPLOTLIBRC/matplotlibrc``
+3. Luego lee un archivo de configuración global del usuario, que
+   dependiendo del sistema operativo puede ser: \* En Linux,
+   ``.config/matplotlib/matplotlibrc`` (o en
+   ``$XDG_CONFIG_HOME/matplotlib/matplotlibrc`` si la variable
+   ``XDG_CONFIG_HOME`` existe) \* En otras plataformas puede estar en
+   algún lugar como: ``C:\Documents and Settings\USUARIO\.matplotlib``
+4. Finalmente lee el archivo global de la instalación,
+   ``INSTALL/matplotlib/mpl-data/matplotlibrc``, donde INSTALL se
+   refiere al lugar de instalación
+
+En cualquier caso, podemos obtener el directorio y archivo de
+configuración con las funciones:
+
+.. code:: python
+
+    import matplotlib
+
+.. code:: python
+
+    matplotlib.get_configdir()
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/.config/matplotlib'
+
+
+
+.. code:: python
+
+    matplotlib.matplotlib_fname()
+
+
+
+
+.. parsed-literal::
+
+    '/usr/share/matplotlib/mpl-data/matplotlibrc'
+
+
+
+.. code:: python
+
+    !head -n 140 '/usr/share/matplotlib/mpl-data/matplotlibrc'
+
+
+.. parsed-literal::
+
+    #### MATPLOTLIBRC FORMAT
+    
+    ## NOTE FOR END USERS: DO NOT EDIT THIS FILE!
+    ##
+    ## This is a sample Matplotlib configuration file - you can find a copy
+    ## of it on your system in site-packages/matplotlib/mpl-data/matplotlibrc
+    ## (relative to your Python installation location).
+    ## DO NOT EDIT IT!
+    ##
+    ## If you wish to change your default style, copy this file to one of the
+    ## following locations:
+    ##     Unix/Linux:
+    ##         $HOME/.config/matplotlib/matplotlibrc OR
+    ##         $XDG_CONFIG_HOME/matplotlib/matplotlibrc (if $XDG_CONFIG_HOME is set)
+    ##     Other platforms:
+    ##         $HOME/.matplotlib/matplotlibrc
+    ## and edit that copy.
+    ##
+    ## See https://matplotlib.org/stable/tutorials/introductory/customizing.html#customizing-with-matplotlibrc-files
+    ## for more details on the paths which are checked for the configuration file.
+    ##
+    ## Blank lines, or lines starting with a comment symbol, are ignored, as are
+    ## trailing comments.  Other lines must have the format:
+    ##     key: val  # optional comment
+    ##
+    ## Formatting: Use PEP8-like style (as enforced in the rest of the codebase).
+    ## All lines start with an additional '#', so that removing all leading '#'s
+    ## yields a valid style file.
+    ##
+    ## Colors: for the color values below, you can either use
+    ##     - a Matplotlib color string, such as r, k, or b
+    ##     - an RGB tuple, such as (1.0, 0.5, 0.0)
+    ##     - a double-quoted hex string, such as "#ff00ff".
+    ##       The unquoted string ff00ff is also supported for backward
+    ##       compatibility, but is discouraged.
+    ##     - a scalar grayscale intensity such as 0.75
+    ##     - a legal html color name, e.g., red, blue, darkslategray
+    ##
+    ## String values may optionally be enclosed in double quotes, which allows
+    ## using the comment character # in the string.
+    ##
+    ## This file (and other style files) must be encoded as utf-8.
+    ##
+    ## Matplotlib configuration are currently divided into following parts:
+    ##     - BACKENDS
+    ##     - LINES
+    ##     - PATCHES
+    ##     - HATCHES
+    ##     - BOXPLOT
+    ##     - FONT
+    ##     - TEXT
+    ##     - LaTeX
+    ##     - AXES
+    ##     - DATES
+    ##     - TICKS
+    ##     - GRIDS
+    ##     - LEGEND
+    ##     - FIGURE
+    ##     - IMAGES
+    ##     - CONTOUR PLOTS
+    ##     - ERRORBAR PLOTS
+    ##     - HISTOGRAM PLOTS
+    ##     - SCATTER PLOTS
+    ##     - AGG RENDERING
+    ##     - PATHS
+    ##     - SAVING FIGURES
+    ##     - INTERACTIVE KEYMAPS
+    ##     - ANIMATION
+    
+    ##### CONFIGURATION BEGINS HERE
+    
+    
+    ## ***************************************************************************
+    ## * BACKENDS                                                                *
+    ## ***************************************************************************
+    ## The default backend.  If you omit this parameter, the first working
+    ## backend from the following list is used:
+    ##     MacOSX QtAgg Gtk4Agg Gtk3Agg TkAgg WxAgg Agg
+    ## Other choices include:
+    ##     QtCairo GTK4Cairo GTK3Cairo TkCairo WxCairo Cairo
+    ##     Qt5Agg Qt5Cairo Wx  # deprecated.
+    ##     PS PDF SVG Template
+    ## You can also deploy your own backend outside of Matplotlib by referring to
+    ## the module name (which must be in the PYTHONPATH) as 'module://my_backend'.
+    ##backend: Agg
+    
+    ## The port to use for the web server in the WebAgg backend.
+    #webagg.port: 8988
+    
+    ## The address on which the WebAgg web server should be reachable
+    #webagg.address: 127.0.0.1
+    
+    ## If webagg.port is unavailable, a number of other random ports will
+    ## be tried until one that is available is found.
+    #webagg.port_retries: 50
+    
+    ## When True, open the web browser to the plot that is shown
+    #webagg.open_in_browser: True
+    
+    ## If you are running pyplot inside a GUI and your backend choice
+    ## conflicts, we will automatically try to find a compatible one for
+    ## you if backend_fallback is True
+    #backend_fallback: True
+    
+    #interactive: False
+    #toolbar:     toolbar2  # {None, toolbar2, toolmanager}
+    #timezone:    UTC       # a pytz timezone string, e.g., US/Central or Europe/Paris
+    
+    
+    ## ***************************************************************************
+    ## * LINES                                                                   *
+    ## ***************************************************************************
+    ## See https://matplotlib.org/api/artist_api.html#module-matplotlib.lines
+    ## for more information on line properties.
+    #lines.linewidth: 1.5               # line width in points
+    #lines.linestyle: -                 # solid line
+    #lines.color:     C0                # has no affect on plot(); see axes.prop_cycle
+    #lines.marker:          None        # the default marker
+    #lines.markerfacecolor: auto        # the default marker face color
+    #lines.markeredgecolor: auto        # the default marker edge color
+    #lines.markeredgewidth: 1.0         # the line width around the marker symbol
+    #lines.markersize:      6           # marker size, in points
+    #lines.dash_joinstyle:  round       # {miter, round, bevel}
+    #lines.dash_capstyle:   butt        # {butt, round, projecting}
+    #lines.solid_joinstyle: round       # {miter, round, bevel}
+    #lines.solid_capstyle:  projecting  # {butt, round, projecting}
+    #lines.antialiased: True            # render lines in antialiased (no jaggies)
+    
+    ## The three standard dash patterns.  These are scaled by the linewidth.
+    #lines.dashed_pattern: 3.7, 1.6
+    #lines.dashdot_pattern: 6.4, 1.6, 1, 1.6
+    #lines.dotted_pattern: 1, 1.65
+    #lines.scale_dashes: True
+    
+    #markers.fillstyle: full  # {full, left, right, bottom, top, none}
+    
+    #pcolor.shading: auto
+    #pcolormesh.snap: True  # Whether to snap the mesh to pixel boundaries. This is
+                            # provided solely to allow old test images to remain
+                            # unchanged. Set to False to obtain the previous behavior.
+
+
+Hojas de estilo
+~~~~~~~~~~~~~~~
+
+Matplotlib ha incorporado en los últimos años un paquete que permite
+cambiar estilos fácilmente utilizando los mismos nombres para los
+parámetros que hay en el archivo de configuración ``matplotlibrc``.
+
+Este paquete tiene pre-definidos unos pocos estilos, entre ellos varios
+que emulan otros paquetes o programas. Veamos un ejemplo:
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+.. code:: python
+
+    fdatos = '../data/ej_oscil_aten_err.dat'
+    x, y, yexp = np.loadtxt(fdatos, unpack=True)
+
+.. code:: python
+
+    plt.plot(x,y, x, 0.9*y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb8800534d0>,
+     <matplotlib.lines.Line2D at 0x7fb87ff83c10>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_8_1.png
+
+
+.. code:: python
+
+    with plt.style.context('ggplot'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_9_0.png
+
+
+.. code:: python
+
+    with plt.style.context('grayscale'):
+      plt.plot(x,y,'--', x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_10_0.png
+
+
+.. code:: python
+
+    with plt.style.context('fivethirtyeight'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_11_0.png
+
+
+.. code:: python
+
+    with plt.style.context('seaborn-dark'):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_12_0.png
+
+
+Los estilos disponibles están guardados en la variable ``available``
+(una lista)
+
+.. code:: python
+
+    plt.style.available
+
+
+
+
+.. parsed-literal::
+
+    ['Solarize_Light2',
+     '_classic_test_patch',
+     '_mpl-gallery',
+     '_mpl-gallery-nogrid',
+     'bmh',
+     'classic',
+     'dark_background',
+     'darker',
+     'fast',
+     'fivethirtyeight',
+     'ggplot',
+     'grayscale',
+     'latex',
+     'paper',
+     'presentation',
+     'seaborn-v0_8',
+     'seaborn-v0_8-bright',
+     'seaborn-v0_8-colorblind',
+     'seaborn-v0_8-dark',
+     'seaborn-v0_8-dark-palette',
+     'seaborn-v0_8-darkgrid',
+     'seaborn-v0_8-deep',
+     'seaborn-v0_8-muted',
+     'seaborn-v0_8-notebook',
+     'seaborn-v0_8-paper',
+     'seaborn-v0_8-pastel',
+     'seaborn-v0_8-poster',
+     'seaborn-v0_8-talk',
+     'seaborn-v0_8-ticks',
+     'seaborn-v0_8-white',
+     'seaborn-v0_8-whitegrid',
+     'tableau-colorblind10']
+
+
+
+Combinando estilos
+^^^^^^^^^^^^^^^^^^
+
+Los estilos pueden combinarse. En este caso, debe pasarse una lista de
+*strings* con los nombres de los estilos a aplicar. Se aplican en forma
+secuencial. Si dos estilos definen diferentes valores para una variable,
+el posterior sobreescribe los valores previos.
+
+.. code:: python
+
+    with plt.style.context(['fivethirtyeight','grayscale']):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_16_0.png
+
+
+.. code:: python
+
+    with plt.style.context(['grayscale','fivethirtyeight']):
+      plt.plot(x,y, x,0.9*y)
+
+
+
+.. image:: figuras/09_2_personal_plot_17_0.png
+
+
+Creación de estilos propios
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Podemos crear estilos propios, modificando los defaults con una sintaxis
+similar a la del archivo de configuración. Por ejemplo creemos un
+archivo ‘estilo_test’ con algunos parámetros
+
+.. code:: python
+
+    !echo "lines.linewidth : 5" > estilo_test
+    !echo "xtick.labelsize: 24" >> estilo_test
+
+.. code:: python
+
+    !cat estilo_test
+
+
+.. parsed-literal::
+
+    lines.linewidth : 5
+    xtick.labelsize: 24
+
+
+.. code:: python
+
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb8744c2e50>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_21_1.png
+
+
+.. code:: python
+
+    with plt.style.context('./estilo_test'):
+      plt.plot(x,y)
+
+
+
+.. image:: figuras/09_2_personal_plot_22_0.png
+
+
+.. code:: python
+
+    with plt.style.context('darker'):
+      plt.plot(x,y,'g')
+
+
+
+.. image:: figuras/09_2_personal_plot_23_0.png
+
+
+.. code:: python
+
+    with plt.style.context('presentation'):
+      plt.plot(x,y,'g')
+
+
+
+.. image:: figuras/09_2_personal_plot_24_0.png
+
+
+Para encontrar el lugar donde guardar las hojas de estilo podemos
+utilizar las funciones de *matplotib*:
+
+.. code:: python
+
+    matplotlib.get_configdir()
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/.config/matplotlib'
+
+
+
+.. code:: python
+
+    ls -1 /home/fiol/.config/matplotlib/stylelib/
+
+
+.. parsed-literal::
+
+    darker.mplstyle
+    latex.mplstyle
+    paper.mplstyle
+    presentation.mplstyle
+
+
+.. code:: python
+
+    !cat /home/fiol/.config/matplotlib/stylelib/darker.mplstyle
+
+
+.. parsed-literal::
+
+    # -*- mode: conf -*-
+    font.size   : 14
+    lines.color : white
+    lines.linewidth   : 2     # line width in points
+    lines.markersize  : 8
+    patch.edgecolor : white
+    
+    text.color : white
+    
+    axes.facecolor : black
+    axes.edgecolor : white
+    axes.labelcolor : white
+    # Seaborn dark palette
+    axes.prop_cycle: cycler('color', ['001C7F', '017517', '8C0900', '7600A1', 'B8860B', '006374'])
+    
+    xtick.color : white
+    ytick.color : white
+    
+    grid.color : white
+    
+    figure.facecolor : black
+    figure.edgecolor : black
+    
+    savefig.facecolor : black
+    savefig.edgecolor : black
+    
+
+
+Modificación de parámetros dentro de programas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Podemos cambiar directamente los parámetros dentro de nuestros programas
+modificando el diccionario ``matplotlib.rcParams``
+
+.. code:: python
+
+    import matplotlib as mpl
+    mpl.rcParams
+
+
+
+
+.. parsed-literal::
+
+    RcParams({'_internal.classic_mode': False,
+              'agg.path.chunksize': 0,
+              'animation.bitrate': -1,
+              'animation.codec': 'h264',
+              'animation.convert_args': ['-layers', 'OptimizePlus'],
+              'animation.convert_path': 'convert',
+              'animation.embed_limit': 20.0,
+              'animation.ffmpeg_args': [],
+              'animation.ffmpeg_path': 'ffmpeg',
+              'animation.frame_format': 'png',
+              'animation.html': 'none',
+              'animation.writer': 'ffmpeg',
+              'axes.autolimit_mode': 'data',
+              'axes.axisbelow': 'line',
+              'axes.edgecolor': 'black',
+              'axes.facecolor': 'white',
+              'axes.formatter.limits': [-5, 6],
+              'axes.formatter.min_exponent': 0,
+              'axes.formatter.offset_threshold': 4,
+              'axes.formatter.use_locale': False,
+              'axes.formatter.use_mathtext': False,
+              'axes.formatter.useoffset': True,
+              'axes.grid': False,
+              'axes.grid.axis': 'both',
+              'axes.grid.which': 'major',
+              'axes.labelcolor': 'black',
+              'axes.labelpad': 4.0,
+              'axes.labelsize': 'medium',
+              'axes.labelweight': 'normal',
+              'axes.linewidth': 0.8,
+              'axes.prop_cycle': cycler('color', ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf']),
+              'axes.spines.bottom': True,
+              'axes.spines.left': True,
+              'axes.spines.right': True,
+              'axes.spines.top': True,
+              'axes.titlecolor': 'auto',
+              'axes.titlelocation': 'center',
+              'axes.titlepad': 6.0,
+              'axes.titlesize': 'large',
+              'axes.titleweight': 'normal',
+              'axes.titley': None,
+              'axes.unicode_minus': True,
+              'axes.xmargin': 0.05,
+              'axes.ymargin': 0.05,
+              'axes.zmargin': 0.05,
+              'axes3d.grid': True,
+              'backend': 'module://matplotlib_inline.backend_inline',
+              'backend_fallback': True,
+              'boxplot.bootstrap': None,
+              'boxplot.boxprops.color': 'black',
+              'boxplot.boxprops.linestyle': '-',
+              'boxplot.boxprops.linewidth': 1.0,
+              'boxplot.capprops.color': 'black',
+              'boxplot.capprops.linestyle': '-',
+              'boxplot.capprops.linewidth': 1.0,
+              'boxplot.flierprops.color': 'black',
+              'boxplot.flierprops.linestyle': 'none',
+              'boxplot.flierprops.linewidth': 1.0,
+              'boxplot.flierprops.marker': 'o',
+              'boxplot.flierprops.markeredgecolor': 'black',
+              'boxplot.flierprops.markeredgewidth': 1.0,
+              'boxplot.flierprops.markerfacecolor': 'none',
+              'boxplot.flierprops.markersize': 6.0,
+              'boxplot.meanline': False,
+              'boxplot.meanprops.color': 'C2',
+              'boxplot.meanprops.linestyle': '--',
+              'boxplot.meanprops.linewidth': 1.0,
+              'boxplot.meanprops.marker': '^',
+              'boxplot.meanprops.markeredgecolor': 'C2',
+              'boxplot.meanprops.markerfacecolor': 'C2',
+              'boxplot.meanprops.markersize': 6.0,
+              'boxplot.medianprops.color': 'C1',
+              'boxplot.medianprops.linestyle': '-',
+              'boxplot.medianprops.linewidth': 1.0,
+              'boxplot.notch': False,
+              'boxplot.patchartist': False,
+              'boxplot.showbox': True,
+              'boxplot.showcaps': True,
+              'boxplot.showfliers': True,
+              'boxplot.showmeans': False,
+              'boxplot.vertical': True,
+              'boxplot.whiskerprops.color': 'black',
+              'boxplot.whiskerprops.linestyle': '-',
+              'boxplot.whiskerprops.linewidth': 1.0,
+              'boxplot.whiskers': 1.5,
+              'contour.algorithm': 'mpl2014',
+              'contour.corner_mask': True,
+              'contour.linewidth': None,
+              'contour.negative_linestyle': 'dashed',
+              'date.autoformatter.day': '%Y-%m-%d',
+              'date.autoformatter.hour': '%m-%d %H',
+              'date.autoformatter.microsecond': '%M:%S.%f',
+              'date.autoformatter.minute': '%d %H:%M',
+              'date.autoformatter.month': '%Y-%m',
+              'date.autoformatter.second': '%H:%M:%S',
+              'date.autoformatter.year': '%Y',
+              'date.converter': 'auto',
+              'date.epoch': '1970-01-01T00:00:00',
+              'date.interval_multiples': True,
+              'docstring.hardcopy': False,
+              'errorbar.capsize': 0.0,
+              'figure.autolayout': False,
+              'figure.constrained_layout.h_pad': 0.04167,
+              'figure.constrained_layout.hspace': 0.02,
+              'figure.constrained_layout.use': False,
+              'figure.constrained_layout.w_pad': 0.04167,
+              'figure.constrained_layout.wspace': 0.02,
+              'figure.dpi': 72.0,
+              'figure.edgecolor': (1, 1, 1, 0),
+              'figure.facecolor': (1, 1, 1, 0),
+              'figure.figsize': [6.0, 4.0],
+              'figure.frameon': True,
+              'figure.labelsize': 'large',
+              'figure.labelweight': 'normal',
+              'figure.max_open_warning': 20,
+              'figure.raise_window': True,
+              'figure.subplot.bottom': 0.125,
+              'figure.subplot.hspace': 0.2,
+              'figure.subplot.left': 0.125,
+              'figure.subplot.right': 0.9,
+              'figure.subplot.top': 0.88,
+              'figure.subplot.wspace': 0.2,
+              'figure.titlesize': 'large',
+              'figure.titleweight': 'normal',
+              'font.cursive': ['Apple Chancery',
+                               'Textile',
+                               'Zapf Chancery',
+                               'Sand',
+                               'Script MT',
+                               'Felipa',
+                               'Comic Neue',
+                               'Comic Sans MS',
+                               'cursive'],
+              'font.family': ['sans-serif'],
+              'font.fantasy': ['Chicago',
+                               'Charcoal',
+                               'Impact',
+                               'Western',
+                               'Humor Sans',
+                               'xkcd',
+                               'fantasy'],
+              'font.monospace': ['DejaVu Sans Mono',
+                                 'Bitstream Vera Sans Mono',
+                                 'Computer Modern Typewriter',
+                                 'Andale Mono',
+                                 'Nimbus Mono L',
+                                 'Courier New',
+                                 'Courier',
+                                 'Fixed',
+                                 'Terminal',
+                                 'monospace'],
+              'font.sans-serif': ['DejaVu Sans',
+                                  'Bitstream Vera Sans',
+                                  'Computer Modern Sans Serif',
+                                  'Lucida Grande',
+                                  'Verdana',
+                                  'Geneva',
+                                  'Lucid',
+                                  'Arial',
+                                  'Helvetica',
+                                  'Avant Garde',
+                                  'sans-serif'],
+              'font.serif': ['DejaVu Serif',
+                             'Bitstream Vera Serif',
+                             'Computer Modern Roman',
+                             'New Century Schoolbook',
+                             'Century Schoolbook L',
+                             'Utopia',
+                             'ITC Bookman',
+                             'Bookman',
+                             'Nimbus Roman No9 L',
+                             'Times New Roman',
+                             'Times',
+                             'Palatino',
+                             'Charter',
+                             'serif'],
+              'font.size': 10.0,
+              'font.stretch': 'normal',
+              'font.style': 'normal',
+              'font.variant': 'normal',
+              'font.weight': 'normal',
+              'grid.alpha': 1.0,
+              'grid.color': '#b0b0b0',
+              'grid.linestyle': '-',
+              'grid.linewidth': 0.8,
+              'hatch.color': 'black',
+              'hatch.linewidth': 1.0,
+              'hist.bins': 10,
+              'image.aspect': 'equal',
+              'image.cmap': 'viridis',
+              'image.composite_image': True,
+              'image.interpolation': 'antialiased',
+              'image.lut': 256,
+              'image.origin': 'upper',
+              'image.resample': True,
+              'interactive': True,
+              'keymap.back': ['left', 'c', 'backspace', 'MouseButton.BACK'],
+              'keymap.copy': ['ctrl+c', 'cmd+c'],
+              'keymap.forward': ['right', 'v', 'MouseButton.FORWARD'],
+              'keymap.fullscreen': ['f', 'ctrl+f'],
+              'keymap.grid': ['g'],
+              'keymap.grid_minor': ['G'],
+              'keymap.help': ['f1'],
+              'keymap.home': ['h', 'r', 'home'],
+              'keymap.pan': ['p'],
+              'keymap.quit': ['ctrl+w', 'cmd+w', 'q'],
+              'keymap.quit_all': [],
+              'keymap.save': ['s', 'ctrl+s'],
+              'keymap.xscale': ['k', 'L'],
+              'keymap.yscale': ['l'],
+              'keymap.zoom': ['o'],
+              'legend.borderaxespad': 0.5,
+              'legend.borderpad': 0.4,
+              'legend.columnspacing': 2.0,
+              'legend.edgecolor': '0.8',
+              'legend.facecolor': 'inherit',
+              'legend.fancybox': True,
+              'legend.fontsize': 'medium',
+              'legend.framealpha': 0.8,
+              'legend.frameon': True,
+              'legend.handleheight': 0.7,
+              'legend.handlelength': 2.0,
+              'legend.handletextpad': 0.8,
+              'legend.labelcolor': 'None',
+              'legend.labelspacing': 0.5,
+              'legend.loc': 'best',
+              'legend.markerscale': 1.0,
+              'legend.numpoints': 1,
+              'legend.scatterpoints': 1,
+              'legend.shadow': False,
+              'legend.title_fontsize': None,
+              'lines.antialiased': True,
+              'lines.color': 'C0',
+              'lines.dash_capstyle': <CapStyle.butt: 'butt'>,
+              'lines.dash_joinstyle': <JoinStyle.round: 'round'>,
+              'lines.dashdot_pattern': [6.4, 1.6, 1.0, 1.6],
+              'lines.dashed_pattern': [3.7, 1.6],
+              'lines.dotted_pattern': [1.0, 1.65],
+              'lines.linestyle': '-',
+              'lines.linewidth': 1.5,
+              'lines.marker': 'None',
+              'lines.markeredgecolor': 'auto',
+              'lines.markeredgewidth': 1.0,
+              'lines.markerfacecolor': 'auto',
+              'lines.markersize': 6.0,
+              'lines.scale_dashes': True,
+              'lines.solid_capstyle': <CapStyle.projecting: 'projecting'>,
+              'lines.solid_joinstyle': <JoinStyle.round: 'round'>,
+              'markers.fillstyle': 'full',
+              'mathtext.bf': 'sans:bold',
+              'mathtext.cal': 'cursive',
+              'mathtext.default': 'it',
+              'mathtext.fallback': 'cm',
+              'mathtext.fontset': 'dejavusans',
+              'mathtext.it': 'sans:italic',
+              'mathtext.rm': 'sans',
+              'mathtext.sf': 'sans',
+              'mathtext.tt': 'monospace',
+              'patch.antialiased': True,
+              'patch.edgecolor': 'black',
+              'patch.facecolor': 'C0',
+              'patch.force_edgecolor': False,
+              'patch.linewidth': 1.0,
+              'path.effects': [],
+              'path.simplify': True,
+              'path.simplify_threshold': 0.111111111111,
+              'path.sketch': None,
+              'path.snap': True,
+              'pcolor.shading': 'auto',
+              'pcolormesh.snap': True,
+              'pdf.compression': 6,
+              'pdf.fonttype': 3,
+              'pdf.inheritcolor': False,
+              'pdf.use14corefonts': False,
+              'pgf.preamble': '',
+              'pgf.rcfonts': True,
+              'pgf.texsystem': 'xelatex',
+              'polaraxes.grid': True,
+              'ps.distiller.res': 6000,
+              'ps.fonttype': 3,
+              'ps.papersize': 'letter',
+              'ps.useafm': False,
+              'ps.usedistiller': None,
+              'savefig.bbox': None,
+              'savefig.directory': '~',
+              'savefig.dpi': 'figure',
+              'savefig.edgecolor': 'auto',
+              'savefig.facecolor': 'auto',
+              'savefig.format': 'png',
+              'savefig.orientation': 'portrait',
+              'savefig.pad_inches': 0.1,
+              'savefig.transparent': False,
+              'scatter.edgecolors': 'face',
+              'scatter.marker': 'o',
+              'svg.fonttype': 'path',
+              'svg.hashsalt': None,
+              'svg.image_inline': True,
+              'text.antialiased': True,
+              'text.color': 'black',
+              'text.hinting': 'force_autohint',
+              'text.hinting_factor': 8,
+              'text.kerning_factor': 0,
+              'text.latex.preamble': '',
+              'text.parse_math': True,
+              'text.usetex': False,
+              'timezone': 'UTC',
+              'tk.window_focus': False,
+              'toolbar': 'toolbar2',
+              'webagg.address': '127.0.0.1',
+              'webagg.open_in_browser': True,
+              'webagg.port': 8988,
+              'webagg.port_retries': 50,
+              'xaxis.labellocation': 'center',
+              'xtick.alignment': 'center',
+              'xtick.bottom': True,
+              'xtick.color': 'black',
+              'xtick.direction': 'out',
+              'xtick.labelbottom': True,
+              'xtick.labelcolor': 'inherit',
+              'xtick.labelsize': 'medium',
+              'xtick.labeltop': False,
+              'xtick.major.bottom': True,
+              'xtick.major.pad': 3.5,
+              'xtick.major.size': 3.5,
+              'xtick.major.top': True,
+              'xtick.major.width': 0.8,
+              'xtick.minor.bottom': True,
+              'xtick.minor.pad': 3.4,
+              'xtick.minor.size': 2.0,
+              'xtick.minor.top': True,
+              'xtick.minor.visible': False,
+              'xtick.minor.width': 0.6,
+              'xtick.top': False,
+              'yaxis.labellocation': 'center',
+              'ytick.alignment': 'center_baseline',
+              'ytick.color': 'black',
+              'ytick.direction': 'out',
+              'ytick.labelcolor': 'inherit',
+              'ytick.labelleft': True,
+              'ytick.labelright': False,
+              'ytick.labelsize': 'medium',
+              'ytick.left': True,
+              'ytick.major.left': True,
+              'ytick.major.pad': 3.5,
+              'ytick.major.right': True,
+              'ytick.major.size': 3.5,
+              'ytick.major.width': 0.8,
+              'ytick.minor.left': True,
+              'ytick.minor.pad': 3.4,
+              'ytick.minor.right': True,
+              'ytick.minor.size': 2.0,
+              'ytick.minor.visible': False,
+              'ytick.minor.width': 0.6,
+              'ytick.right': False})
+
+
+
+.. code:: python
+
+    # Plot con valores default
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb8741c0dd0>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_31_1.png
+
+
+.. code:: python
+
+    # Modificamos el valor default de ancho de línea 
+    mpl.rcParams['lines.linewidth'] = 7
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb874223c50>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_32_1.png
+
+
+.. code:: python
+
+    # El nuevo valor default podemos sobreescribirlo para este plot particular 
+    plt.plot(x,y, lw=3)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb874091010>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_33_1.png
+
+
+.. code:: python
+
+    # Sin embargo, el nuevo valor default no es modificado
+    plt.plot(x,y)
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7fb874102690>]
+
+
+
+
+.. image:: figuras/09_2_personal_plot_34_1.png
+
+
+--------------
+
+Ejercicios 09 (c)
+-----------------
+
+4. Notando que la curva en color negro corresponde a la suma de las dos
+   curvas en rojo, rehacer la siguiente figura:
+
+   .. image:: figuras/ejercicio_08_3.png
+
+5. Crear una hoja de estilo que permita hacer gráficos adecuados para
+   posters y presentaciones. Debe modificar los tamaños para hacerlos
+   legibles a mayores distancias (sugerencia 16pt). El tamaño de la
+   letra de los nombres de ejes y en las leyendas debe ser mayor
+   también. Las líneas deben ser más gruesas (sugerencia: ~4), los
+   símbolos de mayor tamaño (sugerencia ~10).
+
+--------------
