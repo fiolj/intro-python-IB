@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 11: Introducción al paquete Scipy &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 10: Más información sobre Numpy" href="clase_10.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Clases de Python
+            <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2023
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Tipos de datos y control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Entrada y salida, decoradores, y errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Programación Orientada a Objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Control de versiones y biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Introducción a Numpy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 11: Introducción al paquete Scipy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#una-mirada-rapida-a-scipy">Una mirada rápida a Scipy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#funciones-especiales">Funciones especiales</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#funciones-de-bessel">Funciones de Bessel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#funcion-error">Función Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluacion-de-polinomios-ortogonales">Evaluación de polinomios ortogonales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#factorial-permutaciones-y-combinaciones">Factorial, permutaciones y combinaciones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#integracion-numerica">Integración numérica</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejemplo-de-funcion-fuertemente-oscilatoria">Ejemplo de función fuertemente oscilatoria</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#funciones-de-mas-de-una-variable">Funciones de más de una variable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-11-a">Ejercicios 11 (a)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Clase 11: Introducción al paquete Scipy</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_11.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-11-introduccion-al-paquete-scipy">
+<span id="clase-11"></span><h1>Clase 11: Introducción al paquete Scipy<a class="headerlink" href="#clase-11-introduccion-al-paquete-scipy" title="Permalink to this heading"></a></h1>
+<p>El paquete <strong>Scipy</strong> es una colección de algoritmos y funciones
+construida sobre <strong>Numpy</strong> para facilitar cálculos y actividades
+relacionadas con el trabajo técnico/científico.</p>
+<section id="una-mirada-rapida-a-scipy">
+<h2>Una mirada rápida a Scipy<a class="headerlink" href="#una-mirada-rapida-a-scipy" title="Permalink to this heading"></a></h2>
+<p>La ayuda de scipy contiene (con <code class="docutils literal notranslate"><span class="pre">help(scipy)</span></code> entre otras cosas)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Contents
+--------
+SciPy imports all the functions from the NumPy namespace, and in
+addition provides:
+
+Subpackages
+-----------
+Using any of these subpackages requires an explicit import.  For example,
+``import scipy.cluster``.
+
+::
+
+ cluster                      --- Vector Quantization / Kmeans
+ fftpack                      --- Discrete Fourier Transform algorithms
+ integrate                    --- Integration routines
+ interpolate                  --- Interpolation Tools
+ io                           --- Data input and output
+ linalg                       --- Linear algebra routines
+ linalg.blas                  --- Wrappers to BLAS library
+ linalg.lapack                --- Wrappers to LAPACK library
+ misc                         --- Various utilities that don&#39;t have
+                                  another home.
+ ndimage                      --- n-dimensional image package
+ odr                          --- Orthogonal Distance Regression
+ optimize                     --- Optimization Tools
+ signal                       --- Signal Processing Tools
+ sparse                       --- Sparse Matrices
+ sparse.linalg                --- Sparse Linear Algebra
+ sparse.linalg.dsolve         --- Linear Solvers
+ sparse.linalg.dsolve.umfpack --- :Interface to the UMFPACK library:
+                                  Conjugate Gradient Method (LOBPCG)
+ sparse.linalg.eigen          --- Sparse Eigenvalue Solvers
+ sparse.linalg.eigen.lobpcg   --- Locally Optimal Block Preconditioned
+                                  Conjugate Gradient Method (LOBPCG)
+ spatial                      --- Spatial data structures and algorithms
+ special                      --- Special functions
+ stats                        --- Statistical Functions
+</pre></div>
+</div>
+<p>Más información puede encontrarse en la <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference">documentación oficial de
+Scipy</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</section>
+<section id="funciones-especiales">
+<h2>Funciones especiales<a class="headerlink" href="#funciones-especiales" title="Permalink to this heading"></a></h2>
+<p>En el submódulo <code class="docutils literal notranslate"><span class="pre">scipy.special</span></code> están definidas un número de funciones
+especiales. Una lista general de las funciones definidas (De cada tipo
+hay varias funciones) es:</p>
+<ul class="simple">
+<li><p>Airy functions</p></li>
+<li><p>Elliptic Functions and Integrals</p></li>
+<li><p>Bessel Functions</p></li>
+<li><p>Struve Functions</p></li>
+<li><p>Raw Statistical Functions</p></li>
+<li><p>Information Theory Functions</p></li>
+<li><p>Gamma and Related Functions</p></li>
+<li><p>Error Function and Fresnel Integrals</p></li>
+<li><p>Legendre Functions</p></li>
+<li><p>Ellipsoidal Harmonics</p></li>
+<li><p>Orthogonal polynomials</p></li>
+<li><p>Hypergeometric Functions</p></li>
+<li><p>Parabolic Cylinder Functions</p></li>
+<li><p>Mathieu and Related Functions</p></li>
+<li><p>Spheroidal Wave Functions</p></li>
+<li><p>Kelvin Functions</p></li>
+<li><p>Combinatorics</p></li>
+<li><p>Other Special Functions</p></li>
+<li><p>Convenience Functions</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">special</span>
+</pre></div>
+</div>
+<section id="funciones-de-bessel">
+<h3>Funciones de Bessel<a class="headerlink" href="#funciones-de-bessel" title="Permalink to this heading"></a></h3>
+<p>Las funciones de Bessel son soluciones de la ecuación diferencial:</p>
+<div class="math notranslate nohighlight">
+\[x^2 \frac{d^2 y}{dx^2} + x \frac{dy}{dx} + (x^2 - \nu^2)y = 0 .\]</div>
+<p>Para valores enteros de <span class="math notranslate nohighlight">\(\nu\)</span> se trata de una familia de funciones
+que aparecen como soluciones de problemas de propagación de ondas en
+problemas con simetría cilíndrica.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">jv</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">jn_zeros</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ceros de la función de Bessel</span>
+<span class="c1"># Los tres primeros valores de x en los cuales se anula la función de Bessel de orden 4.</span>
+<span class="n">special</span><span class="o">.</span><span class="n">jn_zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+  <span class="n">p</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">special</span><span class="o">.</span><span class="n">jn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$J_</span><span class="si">{}</span><span class="s1">(x)$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+  <span class="n">z</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">jn_zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+  <span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">[</span><span class="n">z</span> <span class="o">&lt;</span> <span class="mi">15</span><span class="p">]</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">z</span><span class="o">.</span><span class="n">size</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_color</span><span class="p">())</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Funciones $J_n$ de Bessel&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># jn es otro nombre para jv</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">jn</span> <span class="o">==</span> <span class="n">special</span><span class="o">.</span><span class="n">jv</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">special</span><span class="o">.</span><span class="n">jn</span> <span class="ow">is</span> <span class="n">special</span><span class="o">.</span><span class="n">jv</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como vemos, hay funciones para calcular funciones de Bessel. Aquí
+mostramos los órdenes enteros pero también se pueden utilizar órdenes
+<span class="math notranslate nohighlight">\(\nu\)</span> reales. La lista de funciones de Bessel (puede obtenerse de
+la ayuda sobre <code class="docutils literal notranslate"><span class="pre">scipy.special</span></code>) es:</p>
+<ul class="simple">
+<li><p>Bessel Functions</p></li>
+<li><p>Zeros of Bessel Functions</p></li>
+<li><p>Faster versions of common Bessel Functions</p></li>
+<li><p>Integrals of Bessel Functions</p></li>
+<li><p>Derivatives of Bessel Functions</p></li>
+<li><p>Spherical Bessel Functions</p></li>
+<li><p>Riccati-Bessel Functions</p></li>
+</ul>
+<p>Por ejemplo, podemos calcular las funciones esféricas de Bessel, que
+aparecen en problemas con simetría esférica:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">):</span>
+  <span class="n">p</span><span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">special</span><span class="o">.</span><span class="n">spherical_jn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;$j_</span><span class="si">{}</span><span class="s1">(x)$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Funciones esféricas de Bessel $j_n$&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="funcion-error">
+<h3>Función Error<a class="headerlink" href="#funcion-error" title="Permalink to this heading"></a></h3>
+<p>La función error es el resultado de integrar una función Gaussiana</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{erf}z=\frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^{2}}\mathrm{d}t,\]</div>
+<p>mientras que las integrales seno y coseno de Fresnel están definidas
+por:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\operatorname{ssa}= \int_{0}^{z} \sin(\pi/2  t^2) \mathrm{d} t \\
+\operatorname{csa}= \int_{0}^{z} \cos(\pi/2  t^2) \mathrm{d} t\end{split}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">special</span><span class="o">.</span><span class="n">fresnel</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">special</span><span class="o">.</span><span class="n">erf</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathrm</span><span class="si">{erf}</span><span class="s1">(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathrm</span><span class="si">{ssa}</span><span class="s1">(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$\mathrm</span><span class="si">{csa}</span><span class="s1">(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="evaluacion-de-polinomios-ortogonales">
+<h3>Evaluación de polinomios ortogonales<a class="headerlink" href="#evaluacion-de-polinomios-ortogonales" title="Permalink to this heading"></a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">Scipy.special</span></code> tiene funciones para evaluar eficientemente polinomios
+ortogonales</p>
+<p>Por ejemplo si queremos, evaluar los polinomios de Laguerre, solución de
+la ecuación diferencial:</p>
+<div class="math notranslate nohighlight">
+\[x\frac{d^2}{dx^2}L_n + (1 - x)\frac{d}{dx}L_n + nL_n = 0\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">special</span><span class="o">.</span><span class="n">eval_laguerre</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;$n=</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Los polinomios de Chebyshev son solución de</p>
+<div class="math notranslate nohighlight">
+\[(1 - x^2)\frac{d^2}{dx^2}T_n - x\frac{d}{dx}T_n + n^2T_n = 0\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">):</span>
+  <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">special</span><span class="o">.</span><span class="n">eval_chebyt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;$n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;$f(x)$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">((</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="factorial-permutaciones-y-combinaciones">
+<h3>Factorial, permutaciones y combinaciones<a class="headerlink" href="#factorial-permutaciones-y-combinaciones" title="Permalink to this heading"></a></h3>
+<p>Hay funciones para calcular varias funciones relacionadas con
+combinatoria</p>
+<p>La función <code class="docutils literal notranslate"><span class="pre">comb()</span></code> da el número de maneras de elegir <code class="docutils literal notranslate"><span class="pre">k</span></code> de un
+total de <code class="docutils literal notranslate"><span class="pre">N</span></code> elementos. Sin repeticiones está dada por:</p>
+<div class="math notranslate nohighlight">
+\[\frac{N!}{k! (N-k)!}\]</div>
+<p>mientras que si cada elemento puede repetirse, la fórmula es:</p>
+<div class="math notranslate nohighlight">
+\[\frac{(N+k-1)!}{k! (N-1)!}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">special</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Si usamos exact=True, k no puede ser un array</span>
+<span class="n">special</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">exact</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">special</span><span class="o">.</span><span class="n">comb</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="n">repetition</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>El número de permutaciones se obtiene con la función <code class="docutils literal notranslate"><span class="pre">perm()</span></code>, y está
+dado por:</p>
+<div class="math notranslate nohighlight">
+\[\frac{N!}{(N-k)!}\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">special</span><span class="o">.</span><span class="n">perm</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>que corresponde a:</p>
+<div class="math notranslate nohighlight">
+\[\frac{10!}{(10-3)!} = 10 \cdot 9 \cdot 8\]</div>
+<p>Los números factorial (N!) y doble factorial (N!!) son:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">! = </span><span class="si">{</span><span class="n">special</span><span class="o">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">N</span><span class="si">}</span><span class="s2">!! = </span><span class="si">{</span><span class="n">special</span><span class="o">.</span><span class="n">factorial2</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="integracion-numerica">
+<h2>Integración numérica<a class="headerlink" href="#integracion-numerica" title="Permalink to this heading"></a></h2>
+<p>Scipy tiene rutinas para integrar numéricamente funciones o tablas de
+datos. Por ejemplo para integrar funciones en la forma:</p>
+<div class="math notranslate nohighlight">
+\[I= \int_{a}^{b} f(x)\, dx\]</div>
+<p>la función más utilizada es <code class="docutils literal notranslate"><span class="pre">quad</span></code>, que llama a distintas rutinas del
+paquete <strong>QUADPACK</strong> dependiendo de los argumentos que toma. Entre los
+aspectos más notables está la posibilidad de elegir una función de peso
+entre un conjunto definido de funciones, y la posibilidad de elegir un
+dominio de integración finito o infinito.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[((</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">),</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">xmax</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">xmax</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>La rutina devuelve dos valores. El primero es la estimación del valor de
+la integral y el segundo una estimación del <strong>error absoluto</strong> . Además,
+la función acepta límites de integración infinitos (<span class="math notranslate nohighlight">\(\pm \infty\)</span>,
+definidos en <strong>Numpy</strong>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="ejemplo-de-funcion-fuertemente-oscilatoria">
+<h3>Ejemplo de función fuertemente oscilatoria<a class="headerlink" href="#ejemplo-de-funcion-fuertemente-oscilatoria" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Valor exacto de la integral</span>
+<span class="n">I</span><span class="o">=</span><span class="n">k</span><span class="o">/</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">L</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">k</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">I</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Iq</span><span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">I_err</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span><span class="o">-</span><span class="n">Iq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">I</span>             <span class="c1"># Error relativo con el valor exacto</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I= </span><span class="si">{:.5g}</span><span class="s2"> ± </span><span class="si">{:.5g}</span><span class="se">\n</span><span class="s2">Error relativo= </span><span class="si">{:.6g}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">Iq</span><span class="p">,</span> <span class="n">I_err</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>El error relativo entre el valor obtenido numéricamente y el valor
+exacto <code class="docutils literal notranslate"><span class="pre">I</span></code> es grande. Esto se debe a la naturaleza del integrando.
+Grafiquemos sólo una pequeña parte</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span><span class="mi">1500</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>La rutina <code class="docutils literal notranslate"><span class="pre">quad</span></code> es versatil y tiene una opción específica para
+integrandos oscilatorios, que permite calcular las integrales de una
+función <span class="math notranslate nohighlight">\(f\)</span> multiplicadas por una función oscilatoria</p>
+<div class="math notranslate nohighlight">
+\[I= \int_{a}^{b} f(x)\,weight( w x)\, dx\]</div>
+<p>Para ello debemos usar el argumento <code class="docutils literal notranslate"><span class="pre">weight</span></code> y <code class="docutils literal notranslate"><span class="pre">wvar</span></code>. En este caso
+usaremos <code class="docutils literal notranslate"><span class="pre">weight='sin'</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># La función sin el factor oscilatorio:</span>
+<span class="k">def</span> <span class="nf">f3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">a</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Is</span><span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;sin&#39;</span><span class="p">,</span> <span class="n">wvar</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">I_err</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span><span class="o">-</span><span class="n">Is</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">I</span>             <span class="c1"># Error relativo con el valor exacto</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;I= </span><span class="si">{:.5g}</span><span class="s2"> ± </span><span class="si">{:.5g}</span><span class="se">\n</span><span class="s2">Error relativo= </span><span class="si">{:.6g}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">Is</span><span class="p">,</span> <span class="n">I_err</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Esto es así, porque una vez que separamos el comportamiento oscilatorio,
+la función es suave y fácilmente integrable</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f3</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>El error relativo obtenido respecto al valor exacto es varios órdenes de
+magnitud menor. Comparemos los tiempos de ejecución:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">f3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">L</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="s1">&#39;sin&#39;</span><span class="p">,</span> <span class="n">wvar</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Usar un integrador más específico para el integrando no sólo nos da un
+mejor resultado sino que el tiempo de ejecución es más de 100 veces más
+corto.</p>
+</section>
+<section id="funciones-de-mas-de-una-variable">
+<h3>Funciones de más de una variable<a class="headerlink" href="#funciones-de-mas-de-una-variable" title="Permalink to this heading"></a></h3>
+<p>Consideremos el caso en que queremos integrar alguna función especial.
+Podemos usar Scipy para realizar la integración y para evaluar el
+integrando. Como <code class="docutils literal notranslate"><span class="pre">special.jn</span></code> depende de dos variables, tenemos que
+crear una función intermedia que dependa sólo de la variable de
+integración</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">special</span><span class="o">.</span><span class="n">jn</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">x</span><span class="p">),</span> <span class="mi">0</span> <span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En realidad, la función <code class="docutils literal notranslate"><span class="pre">quad</span></code> permite el uso de argumentos que se le
+pasan a la función a integrar. La forma de llamar al integrador será en
+general:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">quad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(),</span> <span class="n">full_output</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">epsabs</span><span class="o">=</span><span class="mf">1.49e-08</span><span class="p">,</span> <span class="n">epsrel</span><span class="o">=</span><span class="mf">1.49e-08</span><span class="p">,</span>
+    <span class="n">limit</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wvar</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">wopts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">maxp1</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">limlst</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>El argumento <code class="docutils literal notranslate"><span class="pre">args</span></code> debe ser una tupla, y contiene los argumentos
+extra que acepta la función a integrar, esta función debe llamarse en la
+forma <code class="docutils literal notranslate"><span class="pre">func(x,</span> <span class="pre">*args)</span></code>. O sea que siempre la integramos respecto a su
+primer argumento. Apliquemos esto a la función de Bessel. En este caso,
+la variable a integrar es el segundo argumento de <code class="docutils literal notranslate"><span class="pre">special.jn</span></code>, por lo
+que creamos una función con el orden correcto de argumentos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">bessel_n</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">special</span><span class="o">.</span><span class="n">jn</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">bessel_n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;n    \int_0^10  J_n(x) dx&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="s1">&#39;: &#39;</span><span class="p">,</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">bessel_n</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">n</span><span class="p">,))[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Para calcular integrales múltiples existen rutinas que hacen llamados
+sucesivos a la rutina <code class="docutils literal notranslate"><span class="pre">quad()</span></code>. Esto incluye rutinas para integrales
+dobles (rutina <code class="docutils literal notranslate"><span class="pre">dblquad()</span></code>), triples (rutina <code class="docutils literal notranslate"><span class="pre">tplquad()</span></code>) y en
+general n-dimensionales (rutina <code class="docutils literal notranslate"><span class="pre">nquad()</span></code>)</p>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-11-a">
+<h2>Ejercicios 11 (a)<a class="headerlink" href="#ejercicios-11-a" title="Permalink to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Graficar para valores de <span class="math notranslate nohighlight">\(k=1,2,5,10\)</span> y como función del límite
+superior <span class="math notranslate nohighlight">\(L\)</span>, el valor de la integral:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[I(k,L) = \int_{0}^{L} x^{k} e^{-k x / 2} \sin{(k x)} dx\]</div>
+<p>con rango de variación de <span class="math notranslate nohighlight">\(L\)</span> entre <span class="math notranslate nohighlight">\(0\)</span> y <span class="math notranslate nohighlight">\(2 \pi\)</span>.</p>
+<hr class="docutils" />
+<p>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_10.html" class="btn btn-neutral float-left" title="Clase 10: Más información sobre Numpy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2023, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

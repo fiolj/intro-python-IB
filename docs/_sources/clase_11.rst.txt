@@ -1,0 +1,487 @@
+.. _clase_11:
+
+Clase 11: Introducción al paquete Scipy 
+=========================================
+
+
+El paquete **Scipy** es una colección de algoritmos y funciones
+construida sobre **Numpy** para facilitar cálculos y actividades
+relacionadas con el trabajo técnico/científico.
+
+Una mirada rápida a Scipy
+-------------------------
+
+La ayuda de scipy contiene (con ``help(scipy)`` entre otras cosas)
+
+::
+
+   Contents
+   --------
+   SciPy imports all the functions from the NumPy namespace, and in
+   addition provides:
+
+   Subpackages
+   -----------
+   Using any of these subpackages requires an explicit import.  For example,
+   ``import scipy.cluster``.
+
+   ::
+
+    cluster                      --- Vector Quantization / Kmeans
+    fftpack                      --- Discrete Fourier Transform algorithms
+    integrate                    --- Integration routines
+    interpolate                  --- Interpolation Tools
+    io                           --- Data input and output
+    linalg                       --- Linear algebra routines
+    linalg.blas                  --- Wrappers to BLAS library
+    linalg.lapack                --- Wrappers to LAPACK library
+    misc                         --- Various utilities that don't have
+                                     another home.
+    ndimage                      --- n-dimensional image package
+    odr                          --- Orthogonal Distance Regression
+    optimize                     --- Optimization Tools
+    signal                       --- Signal Processing Tools
+    sparse                       --- Sparse Matrices
+    sparse.linalg                --- Sparse Linear Algebra
+    sparse.linalg.dsolve         --- Linear Solvers
+    sparse.linalg.dsolve.umfpack --- :Interface to the UMFPACK library:
+                                     Conjugate Gradient Method (LOBPCG)
+    sparse.linalg.eigen          --- Sparse Eigenvalue Solvers
+    sparse.linalg.eigen.lobpcg   --- Locally Optimal Block Preconditioned
+                                     Conjugate Gradient Method (LOBPCG)
+    spatial                      --- Spatial data structures and algorithms
+    special                      --- Special functions
+    stats                        --- Statistical Functions
+    
+
+Más información puede encontrarse en la `documentación oficial de
+Scipy <https://docs.scipy.org/doc/scipy/reference>`__
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+Funciones especiales
+--------------------
+
+En el submódulo ``scipy.special`` están definidas un número de funciones
+especiales. Una lista general de las funciones definidas (De cada tipo
+hay varias funciones) es:
+
+-  Airy functions
+-  Elliptic Functions and Integrals
+-  Bessel Functions
+-  Struve Functions
+-  Raw Statistical Functions
+-  Information Theory Functions
+-  Gamma and Related Functions
+-  Error Function and Fresnel Integrals
+-  Legendre Functions
+-  Ellipsoidal Harmonics
+-  Orthogonal polynomials
+-  Hypergeometric Functions
+-  Parabolic Cylinder Functions
+-  Mathieu and Related Functions
+-  Spheroidal Wave Functions
+-  Kelvin Functions
+-  Combinatorics
+-  Other Special Functions
+-  Convenience Functions
+
+.. code:: python
+
+    from scipy import special
+
+Funciones de Bessel
+~~~~~~~~~~~~~~~~~~~
+
+Las funciones de Bessel son soluciones de la ecuación diferencial:
+
+.. math::  x^2 \frac{d^2 y}{dx^2} + x \frac{dy}{dx} + (x^2 - \nu^2)y = 0 . 
+
+Para valores enteros de :math:`\nu` se trata de una familia de funciones
+que aparecen como soluciones de problemas de propagación de ondas en
+problemas con simetría cilíndrica.
+
+.. code:: python
+
+    np.info(special.jv)
+
+.. code:: python
+
+    np.info(special.jn_zeros)
+
+.. code:: python
+
+    # Ceros de la función de Bessel
+    # Los tres primeros valores de x en los cuales se anula la función de Bessel de orden 4.
+    special.jn_zeros(4,3)
+
+.. code:: python
+
+    x = np.linspace(0, 16, 50)
+    for n in range(0,8,2):
+      p= plt.plot(x, special.jn(n, x), label='$J_{}(x)$'.format(n))
+      z = special.jn_zeros(n, 6)
+      z = z[z < 15]
+      plt.plot(z, np.zeros(z.size), 'o', color= p[0].get_color())
+    
+    plt.legend(title='Funciones $J_n$ de Bessel', ncol=2);
+    plt.grid(True)
+
+.. code:: python
+
+    # jn es otro nombre para jv
+    print(special.jn == special.jv)
+    print(special.jn is special.jv)
+
+Como vemos, hay funciones para calcular funciones de Bessel. Aquí
+mostramos los órdenes enteros pero también se pueden utilizar órdenes
+:math:`\nu` reales. La lista de funciones de Bessel (puede obtenerse de
+la ayuda sobre ``scipy.special``) es:
+
+-  Bessel Functions
+-  Zeros of Bessel Functions
+-  Faster versions of common Bessel Functions
+-  Integrals of Bessel Functions
+-  Derivatives of Bessel Functions
+-  Spherical Bessel Functions
+-  Riccati-Bessel Functions
+
+Por ejemplo, podemos calcular las funciones esféricas de Bessel, que
+aparecen en problemas con simetría esférica:
+
+.. code:: python
+
+    x = np.linspace(0, 16, 50)
+    for n in range(0,7,2):
+      p= plt.plot(x, special.spherical_jn(n, x), label='$j_{}(x)$'.format(n))
+    plt.legend(title='Funciones esféricas de Bessel $j_n$', ncol=2);
+    plt.grid(True)
+
+Función Error
+~~~~~~~~~~~~~
+
+La función error es el resultado de integrar una función Gaussiana
+
+.. math::  \operatorname{erf}z=\frac{2}{\sqrt{\pi}}\int_{0}^{z}e^{-t^{2}}\mathrm{d}t, 
+
+mientras que las integrales seno y coseno de Fresnel están definidas
+por:
+
+.. math::
+
+
+   \operatorname{ssa}= \int_{0}^{z} \sin(\pi/2  t^2) \mathrm{d} t \\
+   \operatorname{csa}= \int_{0}^{z} \cos(\pi/2  t^2) \mathrm{d} t 
+
+.. code:: python
+
+    x = np.linspace(-3, 3,100)
+    f = special.fresnel(x)
+    plt.plot(x, special.erf(x),'-', label=r'$\mathrm{erf}(x)$')
+    plt.plot(x, f[0],'-', label=r'$\mathrm{ssa}(x)$')
+    plt.plot(x, f[1],'-', label=r'$\mathrm{csa}(x)$')
+    plt.xlabel('$x$')
+    plt.ylabel('$f(x)$')
+    plt.legend(loc='best')
+    plt.grid(True)
+
+Evaluación de polinomios ortogonales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+``Scipy.special`` tiene funciones para evaluar eficientemente polinomios
+ortogonales
+
+Por ejemplo si queremos, evaluar los polinomios de Laguerre, solución de
+la ecuación diferencial:
+
+.. math::
+
+
+   x\frac{d^2}{dx^2}L_n + (1 - x)\frac{d}{dx}L_n + nL_n = 0
+
+.. code:: python
+
+    x = np.linspace(-1, 1,100)
+    for n in range(2,6):
+      plt.plot(x, special.eval_laguerre(n, x),'-', label=r'$n={}$'.format(n))
+    plt.xlabel('$x$')
+    plt.ylabel('$f(x)$')
+    plt.legend(loc='best', ncol=2)
+    plt.grid(True)
+
+Los polinomios de Chebyshev son solución de
+
+.. math::  (1 - x^2)\frac{d^2}{dx^2}T_n - x\frac{d}{dx}T_n + n^2T_n = 0
+
+.. code:: python
+
+    x = np.linspace(-1, 1,100)
+    for n in range(2,6):
+      plt.plot(x, special.eval_chebyt(n, x),'-', label=f'$n={n}$')
+    plt.xlabel('$x$')
+    plt.ylabel('$f(x)$')
+    plt.legend(loc='best', ncol=2)
+    plt.ylim((-1.1,2))
+    plt.grid(True)
+
+Factorial, permutaciones y combinaciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hay funciones para calcular varias funciones relacionadas con
+combinatoria
+
+La función ``comb()`` da el número de maneras de elegir ``k`` de un
+total de ``N`` elementos. Sin repeticiones está dada por:
+
+.. math::  \frac{N!}{k! (N-k)!}
+
+mientras que si cada elemento puede repetirse, la fórmula es:
+
+.. math::  \frac{(N+k-1)!}{k! (N-1)!}
+
+.. code:: python
+
+    N = 10
+    k = np.arange(2,4)
+
+.. code:: python
+
+    special.comb(N, k)
+
+.. code:: python
+
+    # Si usamos exact=True, k no puede ser un array
+    special.comb(N,3,exact=True)
+
+.. code:: python
+
+    special.comb(N,k, repetition=True)
+
+El número de permutaciones se obtiene con la función ``perm()``, y está
+dado por:
+
+.. math::  \frac{N!}{(N-k)!}
+
+.. code:: python
+
+    special.perm(N,k)
+
+que corresponde a:
+
+.. math::  \frac{10!}{(10-3)!} = 10 \cdot 9 \cdot 8 
+
+Los números factorial (N!) y doble factorial (N!!) son:
+
+.. code:: python
+
+    N = np.array([3,6,8])
+    print(f"{N}! = {special.factorial(N)}")
+    print(f"{N}!! = {special.factorial2(N)}")
+
+Integración numérica
+--------------------
+
+Scipy tiene rutinas para integrar numéricamente funciones o tablas de
+datos. Por ejemplo para integrar funciones en la forma:
+
+.. math:: I= \int_{a}^{b} f(x)\, dx 
+
+la función más utilizada es ``quad``, que llama a distintas rutinas del
+paquete **QUADPACK** dependiendo de los argumentos que toma. Entre los
+aspectos más notables está la posibilidad de elegir una función de peso
+entre un conjunto definido de funciones, y la posibilidad de elegir un
+dominio de integración finito o infinito.
+
+.. code:: python
+
+    from scipy import integrate
+
+.. code:: python
+
+    x = np.linspace(0., 10, 100)
+
+.. code:: python
+
+    def f1(x):
+      return np.sin(x)*np.exp(-np.square(x+1)/10)
+
+.. code:: python
+
+    plt.plot(x,f1(x))
+
+.. code:: python
+
+    integrate.quad(f1,0,1)
+
+.. code:: python
+
+    np.info(integrate.quad)
+
+.. code:: python
+
+    [((0, xmax), integrate.quad(f1,0,xmax)[0]) for xmax in np.arange(1,5)]
+
+La rutina devuelve dos valores. El primero es la estimación del valor de
+la integral y el segundo una estimación del **error absoluto** . Además,
+la función acepta límites de integración infinitos (:math:`\pm \infty`,
+definidos en **Numpy**)
+
+.. code:: python
+
+    integrate.quad(f1,-np.inf,np.inf)
+
+Ejemplo de función fuertemente oscilatoria
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    k = 200
+    L = 2*np.pi
+    a = 0.1
+    def f2(x):
+      return np.sin(k*x)*np.exp(-a*x)
+
+.. code:: python
+
+    # Valor exacto de la integral
+    I=k/a**2*(np.exp(-a*L)-1)/(1-k**2/a**2)
+    print(I)
+
+.. code:: python
+
+    Iq= integrate.quad(f2,0,L)
+
+.. code:: python
+
+    I_err = (I-Iq[0])/I             # Error relativo con el valor exacto
+    print("I= {:.5g} ± {:.5g}\nError relativo= {:.6g}\n".format(*Iq, I_err))
+
+El error relativo entre el valor obtenido numéricamente y el valor
+exacto ``I`` es grande. Esto se debe a la naturaleza del integrando.
+Grafiquemos sólo una pequeña parte
+
+.. code:: python
+
+    x = np.linspace(0,L,1500)
+    plt.plot(x, f2(x))
+
+La rutina ``quad`` es versatil y tiene una opción específica para
+integrandos oscilatorios, que permite calcular las integrales de una
+función :math:`f` multiplicadas por una función oscilatoria
+
+.. math:: I= \int_{a}^{b} f(x)\,weight( w x)\, dx 
+
+Para ello debemos usar el argumento ``weight`` y ``wvar``. En este caso
+usaremos ``weight='sin'``
+
+.. code:: python
+
+    # La función sin el factor oscilatorio:
+    def f3(x):
+      return np.exp(-a*x)
+
+.. code:: python
+
+    Is= integrate.quad(f3,0,L, weight='sin', wvar=k)
+
+.. code:: python
+
+    I_err = (I-Is[0])/I             # Error relativo con el valor exacto 
+    print("I= {:.5g} ± {:.5g}\nError relativo= {:.6g}\n".format(*Is, I_err))
+
+Esto es así, porque una vez que separamos el comportamiento oscilatorio,
+la función es suave y fácilmente integrable
+
+.. code:: python
+
+    plt.plot(x, f3(x))
+
+El error relativo obtenido respecto al valor exacto es varios órdenes de
+magnitud menor. Comparemos los tiempos de ejecución:
+
+.. code:: python
+
+    %timeit integrate.quad(f2,0,L)
+
+.. code:: python
+
+    %timeit integrate.quad(f3,0,L, weight='sin', wvar=k)
+
+Usar un integrador más específico para el integrando no sólo nos da un
+mejor resultado sino que el tiempo de ejecución es más de 100 veces más
+corto.
+
+Funciones de más de una variable
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consideremos el caso en que queremos integrar alguna función especial.
+Podemos usar Scipy para realizar la integración y para evaluar el
+integrando. Como ``special.jn`` depende de dos variables, tenemos que
+crear una función intermedia que dependa sólo de la variable de
+integración
+
+.. code:: python
+
+    integrate.quad(lambda x: special.jn(0,x), 0 , 10)
+
+En realidad, la función ``quad`` permite el uso de argumentos que se le
+pasan a la función a integrar. La forma de llamar al integrador será en
+general:
+
+.. code:: python
+
+     quad(func, a, b, args=(), full_output=0, epsabs=1.49e-08, epsrel=1.49e-08,
+         limit=50, points=None, weight=None, wvar=None, wopts=None, maxp1=50,
+         limlst=50)
+
+El argumento ``args`` debe ser una tupla, y contiene los argumentos
+extra que acepta la función a integrar, esta función debe llamarse en la
+forma ``func(x, *args)``. O sea que siempre la integramos respecto a su
+primer argumento. Apliquemos esto a la función de Bessel. En este caso,
+la variable a integrar es el segundo argumento de ``special.jn``, por lo
+que creamos una función con el orden correcto de argumentos:
+
+.. code:: python
+
+    def bessel_n(x, n):
+      return special.jn(n,x)
+
+.. code:: python
+
+    integrate.quad(bessel_n, 0, 10, args=(0,))
+
+.. code:: python
+
+    print('n    \int_0^10  J_n(x) dx')
+    for n in range(6):
+      print(n,': ', integrate.quad(bessel_n, 0, 10, args=(n,))[0])
+
+.. note:: 
+  
+  Para calcular integrales múltiples existen rutinas que hacen llamados
+  sucesivos a la rutina ``quad()``. Esto incluye rutinas para integrales
+  dobles (rutina ``dblquad()``), triples (rutina ``tplquad()``) y en
+  general n-dimensionales (rutina ``nquad()``)
+  
+  
+
+--------------
+
+Ejercicios 11 (a)
+-----------------
+
+1. Graficar para valores de :math:`k=1,2,5,10` y como función del límite
+   superior :math:`L`, el valor de la integral:
+
+.. math::  I(k,L) = \int_{0}^{L} x^{k} e^{-k x / 2} \sin{(k x)} dx 
+
+con rango de variación de :math:`L` entre :math:`0` y :math:`2 \pi`.
+
+--------------
+
+.
+
+
