@@ -1,0 +1,1933 @@
+.. _clase_14:
+
+Clase 14: Animaciones e interactividad 
+========================================
+
+
+Animaciones con **Matploblib**
+------------------------------
+
+**Matplotlib** tiene funciones para hacer animaciones de una manera
+conveniente. Hay excelente información sobre el tema en:
+
+-  `La documentación (con
+   ejemplos) <http://matplotlib.org/api/animation_api.html>`__
+-  `Tutorial en Pythonic
+   Perambulations <http://jakevdp.github.io/blog/2012/08/18/matplotlib-animation-tutorial/>`__
+
+Vamos a ver brevemente cómo hacer animaciones, en pocos Pasos
+
+Una animación simple en pocos pasos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    %cd "../scripts/animaciones"
+
+.. code:: python
+
+    %matplotlib tk
+    %run ejemplo_animation_1.py
+
+.. code:: python
+
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import matplotlib.animation as animation
+   plt.ioff()
+   # Creamos los datos
+   xmax = 2*np.pi
+   Npts= 50
+
+   x = np.linspace(0, xmax, Npts)
+   data = np.vstack([x, np.sin(x)])
+
+   def update_line(num, data, line):
+     line.set_data(data[:, :num])
+     return line,
+
+   # Creamos la figura e inicializamos
+   # Graficamos una línea sin ningún punto
+   # Fijamos las condiciones de graficación
+   fig1, ax = plt.subplots(figsize=(12,8))
+   L, = plt.plot([], [], '-o') # equivalente a la siguiente
+   # L = plt.plot([],[] , '-o')[0]
+   ax.set_xlim(0, xmax)
+   ax.set_ylim(-1.1, 1.1)
+   ax.set_xlabel('x')
+   ax.set_title('Animación de una oscilación')
+
+
+   # 
+   line_ani = animation.FuncAnimation(fig1, update_line, Npts, fargs=(data, L), interval=100, blit=True)
+
+   plt.show()
+
+Este código da como resultado una función oscilante que se va creando.
+Este es un ejemplo simple que puede ser útil para graficar datos de una
+medición o de un cálculo más o menos largo.
+
+.. image:: figuras/line.gif
+
+Preparación general
+^^^^^^^^^^^^^^^^^^^
+
+Como vemos, después de importar el submódulo ``animation`` (además de lo
+usual):
+
+.. code:: python
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import matplotlib.animation as animation
+   plt.ioff()
+
+nos aseguramos que estamos trabajando en modo **no** interactivo (con
+``plt.ioff()``).
+
+Creamos los datos para graficar
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Creación de datos para graficar
+
+Creamos los datos para mostrar en la animación.
+
+.. code:: python
+
+   xmax = 2*np.pi
+   Npts = 50
+   x = np.linspace(0, xmax, Npts)
+   data = np.vstack([x, np.sin(x)])
+
+Acá ``data`` es un array 2D, con los datos :math:`x`, :math:`y`.
+
+Preparación de la figura
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+A continuación preparamos la zona de graficación:
+
+1. Creamos la figura y eje
+2. Creamos las líneas de graficación (una en este caso)
+3. Fijamos los límites de graficación
+4. Agregamos el texto, que va a ser invariante durante la animación
+
+.. code:: python
+
+   fig1, ax = plt.subplots(figsize=(12,8))
+   L, = plt.plot([0], [0], '-o', lw=3)
+   ax.set_xlim(0, xmax)
+   ax.set_ylim(-1.1, 1.1)
+   ax.set_xlabel('x')
+   ax.set_title('Animación de una oscilación')
+
+Como sabemos, el llamado a ``plot()`` devuelve una lista de líneas (de
+un solo elemento). A este elemento lo llamamos ``L``, y ya le damos las
+características que queremos que tenga. En este caso, fijamos el símbolo
+(círculos), con líneas de ancho 3. Vamos a modificar esta línea ``L`` en
+cada cuadro de la animación.
+
+Función para actualizar la línea
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Debemos crear una función que modifique las curvas en cada cuadro.
+
+.. code:: python
+
+   def update_line(num, data, line):
+     line.set_data(data[:, :num])
+     return line,
+
+Esta función debe recibir como argumento el número de cuadro, que acá
+llamamos ``num``. Además, en este caso recibe los datos a graficar, y la
+línea a modificar.
+
+Esta función devuelve una línea ``L``, que es la parte del gráfico que
+queremos que se actualice en cada frame.
+
+Notemos acá que no es necesario que tome como argumento los datos
+guardados en ``data`` y la línea ``line``, ya que son variables globales
+a las que hay acceso dentro del *script*. De la misma manera no es
+necesario que devuelva la línea, por la misma razón.
+
+Animación de la figura
+^^^^^^^^^^^^^^^^^^^^^^
+
+Finalmente llamamos a la función que hace la animación:
+``animation.FuncAnimation()``
+
+.. code:: python
+
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+    np.info(animation.FuncAnimation)
+
+
+.. parsed-literal::
+
+     FuncAnimation(fig, func, frames=None, init_func=None, fargs=None,
+                   save_count=None, *, cache_frame_data=True, **kwargs)
+    
+    Makes an animation by repeatedly calling a function *func*.
+    
+    .. note::
+    
+        You must store the created Animation in a variable that lives as long
+        as the animation should run. Otherwise, the Animation object will be
+        garbage-collected and the animation stops.
+    
+    Parameters
+    ----------
+    fig : `~matplotlib.figure.Figure`
+        The figure object used to get needed events, such as draw or resize.
+    
+    func : callable
+        The function to call at each frame.  The first argument will
+        be the next value in *frames*.   Any additional positional
+        arguments can be supplied via the *fargs* parameter.
+    
+        The required signature is::
+    
+            def func(frame, *fargs) -> iterable_of_artists
+    
+        If ``blit == True``, *func* must return an iterable of all artists
+        that were modified or created. This information is used by the blitting
+        algorithm to determine which parts of the figure have to be updated.
+        The return value is unused if ``blit == False`` and may be omitted in
+        that case.
+    
+    frames : iterable, int, generator function, or None, optional
+        Source of data to pass *func* and each frame of the animation
+    
+        - If an iterable, then simply use the values provided.  If the
+          iterable has a length, it will override the *save_count* kwarg.
+    
+        - If an integer, then equivalent to passing ``range(frames)``
+    
+        - If a generator function, then must have the signature::
+    
+             def gen_function() -> obj
+    
+        - If *None*, then equivalent to passing ``itertools.count``.
+    
+        In all of these cases, the values in *frames* is simply passed through
+        to the user-supplied *func* and thus can be of any type.
+    
+    init_func : callable, optional
+        A function used to draw a clear frame. If not given, the results of
+        drawing from the first item in the frames sequence will be used. This
+        function will be called once before the first frame.
+    
+        The required signature is::
+    
+            def init_func() -> iterable_of_artists
+    
+        If ``blit == True``, *init_func* must return an iterable of artists
+        to be re-drawn. This information is used by the blitting algorithm to
+        determine which parts of the figure have to be updated.  The return
+        value is unused if ``blit == False`` and may be omitted in that case.
+    
+    fargs : tuple or None, optional
+        Additional arguments to pass to each call to *func*.
+    
+    save_count : int, default: 100
+        Fallback for the number of values from *frames* to cache. This is
+        only used if the number of frames cannot be inferred from *frames*,
+        i.e. when it's an iterator without length or a generator.
+    
+    interval : int, default: 200
+        Delay between frames in milliseconds.
+    
+    repeat_delay : int, default: 0
+        The delay in milliseconds between consecutive animation runs, if
+        *repeat* is True.
+    
+    repeat : bool, default: True
+        Whether the animation repeats when the sequence of frames is completed.
+    
+    blit : bool, default: False
+        Whether blitting is used to optimize drawing.  Note: when using
+        blitting, any animated artists will be drawn according to their zorder;
+        however, they will be drawn on top of any previous artists, regardless
+        of their zorder.
+    
+    cache_frame_data : bool, default: True
+        Whether frame data is cached.  Disabling cache might be helpful when
+        frames contain large objects.
+    
+    
+    Methods:
+    
+      new_frame_seq  --  Return a new sequence of frame information.
+      new_saved_frame_seq  --  Return a new sequence of saved/cached frame information.
+      pause  --  Pause the animation.
+      resume  --  Resume the animation.
+      save  --  Save the animation as a movie file by drawing every frame.
+      to_html5_video  --  Convert the animation to an HTML5 ``<video>`` tag.
+      to_jshtml  --  Generate HTML representation of the animation.
+
+
+.. code:: python
+
+   line_anim = animation.FuncAnimation(fig1, update_line, Npts, 
+                      fargs=(data, L), interval=100, blit=True)
+
+La función ``FuncAnimation()`` toma como argumentos:
+
+-  la figura (``fig1``) donde se realiza el gráfico.
+
+-  Una función a la que llama antes de dibujar cada *frame*
+   (``update_line``),
+
+-  El argumento ``interval`` da el tiempo entre cuadros, en
+   milisegundos.
+
+-  El argumento ``fargs`` es una tuple con los argumentos que necesita
+   la función ``update_line()``. En este caso ``(data, L)``.
+
+-  El argumento ``blit=True`` hace que sólo se actualicen las partes que
+   cambian en la animación, mientras que las partes estáticas no se
+   dibujan en cada cuadro.
+
+Es importante que el objeto creado por ``FuncAnimation()`` no se
+destruya. Esto lo podemos asegurar asignando el objeto resultante a una
+variable, en este caso line_anim.
+
+Opcional: grabar la animación a un archivo
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Podemos grabar la animación a un archivo usando el método ``save()`` o
+el método ``to_html5_video()`` del objeto (``anim``) que devuelve la
+función ``FuncAnimation()``.
+
+Para poder grabar a archivo las animaciones se necesita tener instalados
+programas externos (alguno de *ffmpeg*, *avconv*, *imagemagick*). Ver
+https://matplotlib.org/api/animation_api.html para más información.
+
+Segundo ejemplo
+~~~~~~~~~~~~~~~
+
+Veamos un ejemplo similar al primero, pero donde vamos cambiando los
+límites de los ejes en forma manual, a medida que los datos lo requieren
+
+.. code:: python
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import matplotlib.animation as animation
+
+   # Calcula los datos en tiempo real. 
+   def data_gen(t=0):
+     cnt = 0
+     while cnt < 1000:
+       cnt += 1
+       t += 0.1
+       yield t, np.sin(2 * np.pi * t) * np.exp(-t / 10.)
+
+
+   # Necesitamos que se puede acceder a estas variables
+   # desde varias funciones -> globales
+   fig, ax = plt.subplots()
+   line, = ax.plot([], [], lw=2)
+   xdata, ydata = [], []
+
+   def init():
+     ax.grid()
+     ax.set_ylim(-1.1, 1.1)
+     ax.set_xlim(0, 10)
+     del xdata[:]
+     del ydata[:]
+     line.set_data(xdata, ydata)
+     return line,
+
+
+   def run(data):
+     # update the data
+     t, y = data
+     xdata.append(t)
+     ydata.append(y)
+     xmin, xmax = ax.get_xlim()
+
+     # Si los datos salen del eje, agrandamos el eje
+     # Después tenemos que redibujar el canvas manualmente
+     if t >= xmax:
+       ax.set_xlim(xmin, 2 * xmax)
+       ax.figure.canvas.draw()
+     line.set_data(xdata, ydata)
+
+     return line,
+
+   ani = animation.FuncAnimation(fig, run, data_gen, blit=False,
+                                 interval=30,repeat=False, init_func=init)
+
+   plt.show()
+
+.. code:: python
+
+    %run animate_decay.py
+
+.. code:: python
+
+    plt.style.reload_library()
+    plt.style.use('default')
+
+Tercer ejemplo: Quiver
+~~~~~~~~~~~~~~~~~~~~~~
+
+Para hacer una animación de un campo de fuerzas o velocidades
+necesitamos datos en tres dimensiones. El siguiente ejemplo sigue los
+pasos de la animación anterior, excepto en la creación de datos y la
+graficación, que en lugar de usar ``plot()`` usa ``quiver()``:
+
+.. code:: python
+
+
+   import numpy as np
+   import matplotlib.pyplot as plt
+   import matplotlib.animation as animation
+   plt.style.use('ggplot')
+
+   plt.ioff()
+
+   # ############################################################
+   # Creación de datos
+   x = np.linspace(-3, 3, 91)
+   t = np.linspace(0, 25, 30)
+   y = np.linspace(-3, 3, 91)
+   X3, Y3, T3 = np.meshgrid(x, y, t)
+   sinT3 = np.sin(2*np.pi*T3 /
+                  T3.max(axis=2)[..., np.newaxis])
+
+   G = (X3**2 + Y3**2)*sinT3
+   # Graficar una flecha cada step puntos
+   step = 10
+   x_q, y_q = x[::step], y[::step]
+    
+   # Create U and V vectors to plot
+   U = G[::step, ::step, :-1].copy()
+   V = np.roll(U, shift=3, axis=2)
+
+   # ############################################################
+   # Figura y ejes. 
+   fig1, ax = plt.subplots(figsize=(12,8))
+
+   ax.set_aspect('equal')
+    
+   ax.set(xlim=(-4, 4), ylim=(-4, 4))
+
+    
+   qax = ax.quiver(x_q, y_q, U[..., 0], V[..., 0],
+                   scale=100)
+    
+   def animate(i):
+     qax.set_UVC(U[..., i], V[..., i])
+
+   anim = animation.FuncAnimation(fig1, animate, interval=100, frames=len(t)-1, repeat=True)
+
+   # anim.save('quiver.gif', writer='imagemagick')
+   anim.save('quiver.mp4')
+   plt.show()
+
+.. code:: python
+
+    %run ejemplo_quiver.py
+
+.. image:: figuras/quiver.gif
+
+Comentarios:
+^^^^^^^^^^^^
+
+-  Se utilizó la función ``quiver()`` para generar un campo vectorial.
+   La forma de esta función es:
+
+   quiver([X, Y], U, V, [C], \**kw)
+
+   *X*, *Y* define the arrow locations, *U*, *V* define the arrow
+   directions, and *C* optionally sets the color.
+
+-  Se utilizaron *Ellipsis*, por ejemplo en casos como:
+
+   .. code:: python
+
+      U[..., 0]
+
+   Las elipsis (tres puntos o la palabra ``Ellipsis``) indican todo el
+   rango para todas las dimensiones que no se dan explícitamente. En
+   este ejemplo el *array* ``U`` tiene tres dimensiones, por lo que
+   tendremos:
+
+   .. code:: python
+
+      U[..., 0] = U[:, :, 0]
+
+   En general, las elipses reemplazan a los dos puntos en todas las
+   dimensiones no dadas explícitamente
+
+.. code:: python
+
+    a = np.arange(36)
+    a2 = a.reshape((6,-1))
+    a4 = a.reshape((2,3,2,3))
+
+
+.. code:: python
+
+    print(a2[:,0])
+    print(a2[..., 0])
+
+.. code:: python
+
+    print(a4[0,:,:,0])
+    print(a4[0,...,0])
+
+.. code:: python
+
+    (a4[...,0] == a4[:,:,:,0]).all()
+
+-  Uso de ``np.roll(a, shift, axis=None)`` que mueve elementos una
+   distancia ``shift`` a lo largo del eje ``axis``, y cuando pasan la
+   última posición los reintroduce al principio. Por ejemplo, en una
+   dimensión:
+
+.. code:: python
+
+    x = np.arange(10)
+    print(x)
+    print(np.roll(x, 2))
+
+--------------
+
+Ejercicios 14 (a)
+-----------------
+
+1. Utilizando **Matplotlib**:
+
+   -  Hacer un gráfico donde dibuje una parábola :math:`y = x^{2}` en el
+      rango :math:`[-5,5]`.
+   -  En el mismo gráfico, agregar un círculo en :math:`x=-5`.
+   -  El círculo debe moverse siguiendo la curva, como se muestra en la
+      figura
+
+   .. image:: figuras/pelota.gif
+
+2. **PARA ENTREGAR. Caída libre 2:** Realizar animaciones del ejercicio
+   de caída libre de la clase 8, de forma tal que:
+
+   -  La animación tenga un cartel indicando el tiempo, y la velocidad y
+      altura correspondiente a ese tiempo.
+   -  Agregar una “cola fantasma” a la partícula, que muestre posiciones
+      anteriores.
+
+   Envíe el programa llamado **14_Suapellido.py** en un adjunto por
+   correo electrónico, con asunto: **14_Suapellido**
+
+--------------
+
+.
+
+
+.. code:: python
+
+    # Enable interactive plot
+    # %matplotlib notebook
+    # Enable interactive plot (Visual Studio Code)
+    %matplotlib ipympl
+    
+    # Enable animation in Spyder 
+    # %matplotlib qt
+    # %matplotlib gt5
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+    plt.ioff()
+    # Creamos los datos
+    xmax = 2*np.pi
+    Npts= 50
+    
+    x = np.linspace(0, xmax, Npts)
+    data = np.vstack([x, np.sin(x)])
+    
+    def update_line(num, data, line):
+      line.set_data(data[:, :num])
+      return line,
+    
+    # Creamos la figura e inicializamos
+    # Graficamos una línea sin ningún punto
+    # Fijamos las condiciones de graficación
+    fig1, ax = plt.subplots(figsize=(12,8))
+    L, = plt.plot([], [], '-o') # equivalente a la siguiente
+    # L = plt.plot([],[] , '-o')[0]
+    ax.set_xlim(0, xmax)
+    ax.set_ylim(-1.1, 1.1)
+    ax.set_xlabel('x')
+    ax.set_title('Animación de una oscilación')
+    
+    
+    # 
+    line_ani = animation.FuncAnimation(fig1, update_line, Npts, fargs=(data, L), interval=100, blit=True)
+    
+    plt.show()
+
+
+
+.. raw:: html
+
+    
+    <div style="display: inline-block;">
+        <div class="jupyter-widgets widget-label" style="text-align: center;">
+            Figure
+        </div>
+        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLAAAAMgCAYAAAAz4JsCAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjUuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/YYfK9AAAACXBIWXMAAA9hAAAPYQGoP6dpAABHQ0lEQVR4nO3de5jVZaH3/8/IYfA04wE5JQmWIooHBOXg9kAanjAPJZBKWkqPO83Y5LMNO2jUI2qHrWZaFoWaIRWibgUT8/wAKiZW5ibbaaDOiJLMoNtAcf3+8Oc8jQOIhM49+Hpd1/e69rrXvb7r/jLr8mq9973WqqpUKpUAAAAAQKE2ae0FAAAAAMDaCFgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgA2OvPnz0+nTp3yk5/8pLWXwkbE6woAWo+ABQAbgcsuuyxVVVXp16/fP32u888/P1VVVRtgVe+Op556KlVVVZkyZcpq71+2bFlGjhyZCRMm5DOf+cx7sqZTTjklvXr1ek+e6/2iqqoq559/ftPtu+++O1VVVbn77rvflecr8XUFAPw/7Vt7AQDAP+/NHSGPPfZYHnjggQwaNGi9z3XaaaflsMMO21BL2+C6d++euXPn5kMf+lCL+yqVSk4++eQMGzYs5513Xiusjg1l7ty52X777d+z5/O6AoCyCVgA0MbNnz8/jz76aI488sjceuutmTx58j8VsLbffvv3NBy8U9XV1Rk8ePBq76uqqspNN930Hq+Id8Oa/sbvFq8rACibjxACQBs3efLkJMmFF16YoUOH5vrrr8///M//NJvz5sejvv3tb+e73/1uevfunS222CJDhgzJvHnzms1d3UcIe/XqlREjRuSWW25J//79s+mmm6Zv37655ZZbkiRTpkxJ3759s/nmm2fffffN/Pnzmz1+/vz5GT16dHr16pVNN900vXr1yic/+cn89a9/bXE9zzzzTD772c+mZ8+e6dixY3r06JFPfOITee6555pdy1s/6nX//ffn4IMPzpZbbpnNNtssQ4cOza233tpszpQpU1JVVZW77ror//qv/5rOnTtn2223zXHHHZdnn312nf69p0yZkj59+qS6ujp9+/bNNddcs9p5K1euzDe/+c3ssssuqa6uznbbbZdPf/rTef7559/2OQ466KAcdNBBLcbf+lHFd/J3fSd/g9X529/+ls997nP5wAc+kI4dO2bHHXfMl7/85axYsaLZvF/+8pcZNGhQamtrs9lmm2XHHXds8ZG7ZcuW5Ytf/GJ23HHHVFdXp0uXLjniiCPyX//1X01z3voRwtXZmF5XAMDaCVgA0Ia98sormTp1avbZZ5/069cvn/nMZ7J8+fL88pe/XO3873//+5k9e3YuueSSXHfddXn55ZdzxBFHpKGh4W2f69FHH82ECRNyzjnn5IYbbkhtbW2OO+64nHfeefnxj3+cCy64INddd10aGhoyYsSIvPLKK02Pfeqpp9KnT59ccskl+fWvf52LLroodXV12WefffLCCy80zXvmmWeyzz77ZMaMGRk/fnxmzZqVSy65JLW1tXnxxRfXuLZ77rknH/nIR9LQ0JDJkydn6tSp2XLLLXPUUUdl2rRpLeafdtpp6dChQ37+85/n4osvzt13352TTjrpbf8NpkyZkk9/+tPp27dvpk+fnq985Sv5xje+kTvvvLPZvNdffz1HH310Lrzwwpxwwgm59dZbc+GFF2b27Nk56KCDmv3bbAjr8ndd17/B6vz973/PsGHDcs0112T8+PG59dZbc9JJJ+Xiiy/Occcd1zRv7ty5GTVqVHbcccdcf/31ufXWW/O1r30tr732WtOc5cuX51/+5V/ywx/+MJ/+9Kfzn//5n/nBD36QnXfeOXV1de/oujeW1xUAsA4qAECbdc0111SSVH7wgx9UKpVKZfny5ZUtttiisv/++zeb9+STT1aSVHbffffKa6+91jT+4IMPVpJUpk6d2jR23nnnVd76PxF22GGHyqabblp5+umnm8YWLFhQSVLp3r175eWXX24av/HGGytJKjfffPMa1/3aa69VXnrppcrmm29eufTSS5vGP/OZz1Q6dOhQ+eMf/7jGx755LT/96U+bxgYPHlzp0qVLZfny5c2eo1+/fpXtt9++8vrrr1cqlUrlpz/9aSVJ5XOf+1yzc1588cWVJJW6uro1Pu+qVasqPXr0qOy9995N56tUKpWnnnqq0qFDh8oOO+zQNDZ16tRKksr06dObneOhhx6qJKlcccUVa3yeSqVSOfDAAysHHnhgi/GTTz652fO8k7/rW63pb7A6P/jBDypJKr/4xS+ajV900UWVJJXbb7+9UqlUKt/+9rcrSSrLli1b47kmTpxYSVKZPXv2Wp8zSeW8885run3XXXdVklTuuuuud3xNJb+uAIB1YwcWALRhkydPzqabbprRo0cnSbbYYoscf/zxue+++/LEE0+0mH/kkUemXbt2Tbf32GOPJFmnj5Httdde+cAHPtB0u2/fvkne+LjbZptt1mL8H8/50ksv5ZxzzsmHP/zhtG/fPu3bt88WW2yRl19+OY8//njTvFmzZmXYsGFN51gXL7/8ch544IF84hOfyBZbbNE03q5du4wZMyZPP/10Fi5c2OwxH/vYx5rdXpd/h4ULF+bZZ5/NCSec0OwjljvssEOGDh3abO4tt9ySrbbaKkcddVRee+21pmOvvfZKt27dNvgv6a3L33Vd/warc+edd2bzzTfPJz7xiWbjp5xySpLkN7/5TZJkn332SZKMHDkyv/jFL/LMM8+0ONesWbOy884755BDDnnnF/oWG8PrCgBYNwIWALRRf/7zn3PvvffmyCOPTKVSybJly7Js2bKmyPDmLxP+o2233bbZ7erq6iRZp4+0bbPNNs1ud+zYca3jf//735vGTjjhhFx++eU57bTT8utf/zoPPvhgHnrooWy33XbNnvv5559/x18g/+KLL6ZSqaR79+4t7uvRo0eSZOnSpc3G1+ff4c1zdOvWrcV9bx177rnnsmzZsnTs2DEdOnRodtTX17/tR/beqXW5nnX9G6zO0qVL061btxbfjdalS5e0b9++6d/mgAMOyI033pjXXnstn/rUp7L99tunX79+mTp1atNj1udvvCYbw+sKAFg3foUQANqon/zkJ6lUKvnVr36VX/3qVy3uv/rqq/PNb36z2c6c1tDQ0JBbbrkl5513Xr70pS81ja9YsSJ/+9vfms3dbrvt8vTTT7+j82+99dbZZJNNVvv9SW9+gXbnzp3XY+XNvRkn6uvrW9z31rE3v8T7tttuW+25ttxyy7U+V6dOnVb7vWTrG77eyd9gdbbddts88MADqVQqzSLWkiVL8tprrzX79z366KNz9NFHZ8WKFZk3b14mTZqUE044Ib169cqQIUPW62/8z15Tya8rAGDd2IEFAG3QqlWrcvXVV+dDH/pQ7rrrrhbHF7/4xdTV1WXWrFmtvdRUVVWlUqk07UZ5049//OOsWrWq2djhhx+eu+66q8VHs9Zm8803z6BBg3LDDTc02+ny+uuv52c/+1m233777Lzzzv/cRSTp06dPunfvnqlTp6ZSqTSN//Wvf82cOXOazR0xYkSWLl2aVatWZeDAgS2OPn36rPW5evXqlT/96U/NfuFv6dKlLZ5nXb2Tv8HqHHzwwXnppZdy4403Nht/8xcYDz744BaPqa6uzoEHHpiLLrooSfLII48keeNv/Kc//anFF9+/UxvL6woAWDd2YAFAGzRr1qw8++yzueiii3LQQQe1uL9fv365/PLLM3ny5IwYMeK9X+A/qKmpyQEHHJBvfetb6dy5c3r16pV77rknkydPzlZbbdVs7sSJEzNr1qwccMABOffcc7P77rtn2bJlue222zJ+/Pjssssuq32OSZMm5aMf/WiGDRuWs88+Ox07dswVV1yRP/zhD5k6dWqLj76tj0022STf+MY3ctppp+XYY4/N2LFjs2zZspx//vktPkI4evToXHfddTniiCPyhS98Ifvuu286dOiQp59+OnfddVeOPvroHHvssWt8rjFjxuSHP/xhTjrppIwdOzZLly7NxRdfnJqamvVa+zv5G6zOpz71qXz/+9/PySefnKeeeiq777577r///lxwwQU54ogjmr7P6mtf+1qefvrpHHzwwdl+++2zbNmyXHrppenQoUMOPPDAJMm4ceMybdq0HH300fnSl76UfffdN6+88kruueeejBgxIsOGDdvg11Ty6woAWDd2YAFAGzR58uR07Ngxn/70p1d7f+fOnXPsscfmlltuyXPPPfcer66ln//85xk2bFj+/d//Pccdd1zmz5+f2bNnp7a2ttm8D3zgA3nwwQczYsSIXHjhhTnssMPy+c9/Pg0NDS2+a+sfHXjggU1fNH7KKadk9OjRaWhoyM0335xRo0ZtsOs49dRT8+Mf/zh//OMfc9xxx2XixIk599xz85GPfKTZvHbt2uXmm2/OueeemxtuuCHHHntsjjnmmFx44YXp1KlTdt9997U+z3777Zerr746jz32WI4++uh885vfzIQJE1YbK9fVuv4NVqdTp0656667cuKJJ+Zb3/pWDj/88EyZMiVnn312brjhhqZ5gwYNSn19fc4555wMHz48n/3sZ7PpppvmzjvvzG677ZbkjY9P3n///Tn11FNz1VVX5cgjj8zYsWOzcOHCpu+W2tDXVPrrCgB4e1WVf9wDDwAAAACFsQMLAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDR2rf2Atj4vP7663n22Wez5ZZbpqqqqrWXAwAAwEauUqlk+fLl6dGjRzbZxF6djZGAxQb37LPPpmfPnq29DAAAAN5nFi9enO233761l8G7QMBig9tyyy2TvPEfjpqamlZeDQAAABu7xsbG9OzZs+n9KBsfAYsN7s2PDdbU1AhYAAAAvGd8jc3GywdDAQAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVht2L333pujjjoqPXr0SFVVVW688ca3fcw999yTAQMGpFOnTtlxxx3zgx/8oMWc6dOnZ9ddd011dXV23XXXzJgx411YPQAAAMC6EbDasJdffjl77rlnLr/88nWa/+STT+aII47I/vvvn0ceeSTnnntuzjrrrEyfPr1pzty5czNq1KiMGTMmjz76aMaMGZORI0fmgQceeLcuAwAAAGCtqiqVSqW1F8E/r6qqKjNmzMgxxxyzxjnnnHNObr755jz++ONNY6effnoeffTRzJ07N0kyatSoNDY2ZtasWU1zDjvssGy99daZOnXqOq2lsbExtbW1aWhoSE1NzfpdEAAAAKwj70M3fnZgvY/MnTs3w4cPbzZ26KGHZv78+Xn11VfXOmfOnDlrPO+KFSvS2NjY7AAAAADYUASs95H6+vp07dq12VjXrl3z2muv5YUXXljrnPr6+jWed9KkSamtrW06evbsueEXDwAAALxvCVjvM1VVVc1uv/kJ0n8cX92ct479owkTJqShoaHpWLx48QZcMQAAAPB+1761F8B7p1u3bi12Ui1ZsiTt27fPtttuu9Y5b92V9Y+qq6tTXV294RcMAAAAEDuw3leGDBmS2bNnNxu7/fbbM3DgwHTo0GGtc4YOHfqerRMAAADgH9mB1Ya99NJL+fOf/9x0+8knn8yCBQuyzTbb5IMf/GAmTJiQZ555Jtdcc02SN35x8PLLL8/48eMzduzYzJ07N5MnT27264Jf+MIXcsABB+Siiy7K0UcfnZtuuil33HFH7r///vf8+gAAAAASO7DatPnz56d///7p379/kmT8+PHp379/vva1ryVJ6urqsmjRoqb5vXv3zsyZM3P33Xdnr732yje+8Y1cdtll+fjHP940Z+jQobn++uvz05/+NHvssUemTJmSadOmZdCgQe/txQEAAAD8/6oqb36LN2wgjY2Nqa2tTUNDQ2pqalp7OQAAAGzkvA/d+NmBBQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBq4274oor0rt373Tq1CkDBgzIfffdt8a5p5xySqqqqlocu+22W9OcKVOmrHbO3//+9/ficgAAAABaELDasGnTpmXcuHH58pe/nEceeST7779/Dj/88CxatGi18y+99NLU1dU1HYsXL84222yT448/vtm8mpqaZvPq6urSqVOn9+KSAAAAAFoQsNqw7373uzn11FNz2mmnpW/fvrnkkkvSs2fPXHnllaudX1tbm27dujUd8+fPz4svvphPf/rTzeZVVVU1m9etW7f34nIAAAAAVkvAaqNWrlyZhx9+OMOHD282Pnz48MyZM2edzjF58uQccsgh2WGHHZqNv/TSS9lhhx2y/fbbZ8SIEXnkkUfWep4VK1aksbGx2QEAAACwoQhYbdQLL7yQVatWpWvXrs3Gu3btmvr6+rd9fF1dXWbNmpXTTjut2fguu+ySKVOm5Oabb87UqVPTqVOn7LfffnniiSfWeK5Jkyaltra26ejZs+f6XRQAAADAaghYbVxVVVWz25VKpcXY6kyZMiVbbbVVjjnmmGbjgwcPzkknnZQ999wz+++/f37xi19k5513zve+9701nmvChAlpaGhoOhYvXrxe1wIAAACwOu1bewGsn86dO6ddu3YtdlstWbKkxa6st6pUKvnJT36SMWPGpGPHjmudu8kmm2SfffZZ6w6s6urqVFdXr/viAQAAAN4BO7DaqI4dO2bAgAGZPXt2s/HZs2dn6NCha33sPffckz//+c859dRT3/Z5KpVKFixYkO7du/9T6wUAAABYX3ZgtWHjx4/PmDFjMnDgwAwZMiRXXXVVFi1alNNPPz3JGx/te+aZZ3LNNdc0e9zkyZMzaNCg9OvXr8U5v/71r2fw4MHZaaed0tjYmMsuuywLFizI97///ffkmgAAAADeSsBqw0aNGpWlS5dm4sSJqaurS79+/TJz5symXxWsq6vLokWLmj2moaEh06dPz6WX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AQMG5L777lvj3BtuuCEf/ehHs91226WmpiZDhgzJr3/962ZzpkyZkqqqqhbH3//+93f7UgAAAABWS8Bqw6ZNm5Zx48bly1/+ch555JHsv//+Ofzww7No0aLVzr/33nvz0Y9+NDNnzszDDz+cYcOG5aijjsojjzzSbF5NTU3q6uqaHZ06dXovLgkAAACghapKpVJp7UWwfgYNGpS99947V155ZdNY3759c8wxx2TSpEnrdI7ddtsto0aNyte+9rUkb+zAGjduXJYtW7be62psbExtbW0aGhpSU1Oz3ucBAACAdeF96MbPDqw2auXKlXn44YczfPjwZuPDhw/PnDlz1ukcr7/+epYvX55tttmm2fhLL72UHXbYIdtvv31GjBjRYofWW61YsSKNjY3NDgAAAIANRcBqo1544YWsWrUqXbt2bTbetWvX1NfXr9M5vvOd7+Tll1/OyJEjm8Z22WWXTJkyJTfffHOmTp2aTp06Zb/99ssTTzyxxvNMmjQptbW1TUfPnj3X76IAAAAAVkPAauOqqqqa3a5UKi3GVmfq1Kk5//zzM23atHTp0qVpfPDgwTnppJOy5557Zv/9988vfvGL7Lzzzvne9763xnNNmDAhDQ0NTcfixYvX/4IAAAAA3qJ9ay+A9dO5c+e0a9euxW6rJUuWtNiV9VbTpk3Lqaeeml/+8pc55JBD1jp3k002yT777LPWHVjV1dWprq5e98UDAAAAvAN2YLVRHTt2zIABAzJ79uxm47Nnz87QoUPX+LipU6fmlFNOyc9//vMceeSRb/s8lUolCxYsSPfu3f/pNQMAAACsDzuw2rDx48dnzJgxGThwYIYMGZKrrroqixYtyumnn57kjY/2PfPMM7nmmmuSvBGvPvWpT+XSSy/N4MGDm3ZvbbrppqmtrU2SfP3rX8/gwYOz0047pbGxMZdddlkWLFiQ73//+61zkQAAAMD7noDVho0aNSpLly7NxIkTU1dXl379+mXmzJnZYYcdkiR1dXVZtGhR0/wf/vCHee2113LGGWfkjDPOaBo/+eSTM2XKlCTJsmXL8tnPfjb19fWpra1N//79c++992bfffd9T68NAAAA4E1VlUql0tqLYOPS2NiY2traNDQ0pKamprWXAwAAwEbO+9CNn+/AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIom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1mLu2LFjU1dX13T88Ic/fDcvBQAAAGCt2rf2AnjnHn/88dx2222ZN29eBg0alCT50Y9+lCFDhmThwoXp06dPi8fU1tZm9uzZzca+973vZd99982iRYvywQ9+sGl8s802S7du3d7diwAAAABYR3ZgtUFz585NbW1tU7xKksGDB6e2tjZz5sxZ5/M0NDSkqqoqW221VbPx6667Lp07d85uu+2Ws88+O8uXL1/reVasWJHGxsZmBwAAAMCGYgdWG1RfX58uXbq0GO/SpUvq6+vX6Rx///vf86UvfSknnHBCampqmsZPPPHE9O7dO926dcsf/vCHTJgwIY8++miL3Vv/aNKkSfn617/+zi8EAAAAYB3YgVWQ888/v8UXqL/1mD9/fpKkqqqqxeMrlcpqx9/q1VdfzejRo/P666/niiuuaHbf2LFjc8ghh6Rfv34ZPXp0fvWrX+WOO+7Ib3/72zWeb8KECWloaGg6Fi9e/A6vHAAAAGDN7MAqyJlnnvm2v/jXq1ev/O53v8tzzz3X4r7nn38+Xbt2XevjX3311YwcOTJPPvlk7rzzzma7r1Zn7733TocOHfLEE09k7733Xu2c6urqVFdXr/U8AAAAAOtLwCpI586d07lz57edN2TIkDQ0NOTBBx/MvvvumyR54IEH0tDQkKFDh67xcW/GqyeeeCJ33XVXtt1227d9rsceeyyvvvpqunfvvu4XAgAAALAB+QhhG9S3b98cdthhGTt2bObNm5d58+Zl7NixGTFiRLNfINxll10yY8aMJMlrr72WT3ziE5k/f36uu+66rFq1KvX19amvr8/KlSuTJP/93/+diRMnZv78+Xnqqacyc+bMHH/88enfv3/222+/VrlWAAAAAAGrjbruuuuy++67Z/jw4Rk+fHj22GOPXHvttc3mLFy4MA0NDUmSp59+OjfffHOefvrp7LXXXunevXvT8eYvF3bs2DG/+c1vcuihh6ZPnz4566yzMnz48Nxxxx1p167de36NAAAAAElSValUKq29CDYujY2Nqa2tTUNDw9t+xxYAAAD8s7wP3fjZgQUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AauNevHFFzNmzJjU1tamtrY2Y8aMybJly9b6mFNOOSVVVVXNjsGDBzebs2LFinz+859P586ds/nmm+djH/tYnn766XfxSgAAAADWTsBqo0444YQsWLAgt912W2677bYsWLAgY8aMedvHHXbYYamrq2s6Zs6c2ez+cePGZcaMGbn++utz//3356WXXsqIESOyatWqd+tSAAAAANaqfWsvgHfu8ccfz2233ZZ58+Zl0KBBSZIf/ehHGTJkSBYuXJg+ffqs8bHV1dXp1q3bau9raGjI5MmTc+211+aQQw5JkvzsZz9Lz549c8cdd+TQQw/d8BcDAAAA8DbswGqD5s6dm9ra2qZ4lSSDBw9ObW1t5syZs9bH3n333enSpUt23nnnjB07NkuWLGm67+GHH86rr76a4cOHN4316NEj/fr1W+t5V6xYkcbGxmYHAAAAwIYiYLVB9fX16dKlS4vxLl26pL6+fo2PO/zww3PdddflzjvvzHe+85089NBD+chHPpIVK1Y0nbdjx47Zeuutmz2ua9euaz3vpEmTmr6Lq7a2Nj179lzPKwMAAABoScAqyPnnn9/iS9bfesyfPz9JUlVV1eLxlUplteNvGjVqVI488sj069cvRx11VGbNmpU//elPufXWW9e6rrc774QJE9LQ0NB0LF68eB2vGAAAAODt+Q6sgpx55pkZPXr0Wuf06tUrv/vd7/Lcc8+1uO/5559P165d1/n5unfvnh122CFPPPFEkqRbt25ZuXJl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AKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAJWG/V//s//ydChQ7PZZptlq622WqfHVCqVnH/++enRo0c23XTTHHTQQXnssceazVmxYkU+//nPp3Pnztl8883zsY99LE8//fS7cAUAAAAA60bAaqNWrlyZ448/Pv/6r/+6zo+5+OKL893vfjeXX355HnrooXTr1i0f/ehHs3z58qY548aNy4wZM3L99dfn/vvvz0svvZQRI0Zk1apV78ZlAAAAALytqkqlUmntRbD+pkyZknHjxmXZsmVrnVepVNKjR4+MGzcu55xzTpI3dlt17do1F110Uf7X//pfaWhoyHbbbZdrr702o0aNSpI8++yz6dmzZ2bOnJlDDz10ndbU2NiY2traNDQ0pKam5p+6PgAAAHg73odu/OzAep948sknU19fn+HDhzeNVVdX58ADD8ycOXOSJA8//HBeffXVZnN69OiRfv36Nc1ZnRUrVqSxsbHZAQAAALChCFjvE/X19UmSrl27Nhvv2rVr03319fXp2LFjtt566zXOWZ1Jkyaltra26ejZs+cGXj0AAADwfiZgFeT8889PVVXVWo/58+f/U89RVVXV7HalUmkx9lZvN2fChAlpaGhoOhYvXvxPrREAAADgH7Vv7QXw/5x55pkZPXr0Wuf06tVrvc7drVu3JG/ssurevXvT+JIlS5p2ZXXr1i0rV67Miy++2GwX1pIlSzJ06NA1nru6ujrV1dXrtS4AAACAtyNgFaRz587p3Lnzu3Lu3r17p1u3bpk9e3b69++f5I1fMrznnnty0UUXJUkGDBiQDh06ZPbs2Rk5cmSSpK6uLn/4wx9y8cUXvyvrAgAAAHg7AlYbtWjRovztb3/LokWLsmrVqixYsCBJ8uEPfzhbbLFFkmSXXXbJpEmTcuyxx6aqqirjxo3LBRdckJ122ik77bRTLrjggmy22WY54YQTkiS1tbU59dRT88UvfjHbbrttttlmm5x99tnZfffdc8ghh7TWpQIAAADvcwJWG/W1r30tV199ddPtN3dV3XXXXTnooIOSJAsXLkxDQ0PTnH//93/PK6+8ks997nN58cUXM2jQoNx+++3Zcsstm+b8x3/8R9q3b5+RI0fmlVdeycEHH5wpU6akXbt2782FAQAAALxFVaVSqbT2Iti4NDY2pra2Ng0NDampqWnt5QAAALCR8z504+dXCAEAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFC09q29ADY+lUolSdLY2NjKKwEAAOD94M33n2++H2XjI2CxwS1dujRJ0rNnz1ZeCQAAAO8ny5cvT21tbWsvg3eBgMUGt8022yRJFi1a5D8c/NMaGxvTs2fPLF68ODU1Na29HNo4ryc2JK8nNiSvJzYkryc2pLbyeqpUKlm+fHl69OjR2kvhXSJgscFtsskbX61WW1tb9H/gaFtqamq8nthgvJ7YkLye2JC8ntiQvJ7YkNrC68kGio2bL3EHAAAAoGgCFgAAAABFE7DY4Kqrq3Peeeelurq6tZfCRsDriQ3J64kNyeuJDcnriQ3J64kNyeuJUlRV/MYkAAAAAAWzAwsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsNigrrjiivTu3TudOnXKgAEDct9997X2kmij7r333hx11FHp0aNHqqqqcuONN7b2kmjDJk2alH322SdbbrllunTpkmOOOSYLFy5s7WXRRl155ZXZY489UlNTk5qamgwZMiSzZs1q7WWxEZg0aVKqqqoybty41l4KbdT555+fqqqqZke3bt1ae1m0Yc8880xOOumkbLvtttlss82y11575eGHH27tZfE+JWCxwUybNi3jxo3Ll7/85TzyyCPZf//9c/jhh2fRokWtvTTaoJdffjl77rlnLr/88tZeChuBe+65J2eccUbmzZuX2bNn57XXXsvw4cPz8ssvt/bSaIO23377XHjhhZk/f37mz5+fj3zkIzn66KPz2GOPtfbSaMMeeuihXHXVVdljjz1aeym0cbvttlvq6uqajt///vetvSTaqBdffDH77bdfOnTokFmzZuWPf/xjvvOd72SrrbZq7aXxPlVVqVQqrb0INg6DBg3K3nvvnSuvvLJprG/fvjnmmGMyadKkVlwZbV1VVVVmzJiRY445prWXwkbi+eefT5cuXXLPPffkgAMOaO3lsBHYZptt8q1vfSunnnpqay+FNuill17K3nvvnSuuuCLf/OY3s9dee+WSSy5p7WXRBp1//vm58cYbs2DBgtZeChuBL33pS/m///f/+lQNxbADiw1i5cqVefjhhzN8+PBm48OHD8+cOXNaaVUAq9fQ0JDkjegA/4xVq1bl+uuvz8svv5whQ4a09nJoo84444wceeSROeSQQ1p7KWwEnnjiifTo0SO9e/fO6NGj85e//KW1l0QbdfPNN2fgwIE5/vjj06VLl/Tv3z8/+tGPWntZvI8JWGwQL7zwQlatWpWuXbs2G+/atWvq6+tbaVUALVUqlYwfPz7/8i//kn79+rX2cmijfv/732eLLbZIdXV1Tj/99MyYMSO77rpray+LNuj666/Pb3/7W7vV2SAGDRqUa665Jr/+9a/zox/9KPX19Rk6dGiWLl3a2kujDfrLX/6SK6+8MjvttFN+/etf5/TTT89ZZ52Va665prWXxvtU+9ZeABuXqqqqZrcrlUqLMYDWdOaZZ+Z3v/td7r///tZeCm1Ynz59smDBgixbtizTp0/PySefnHvuuUfE4h1ZvHhxvvCFL+T2229Pp06dWns5bAQOP/zwpv979913z5AhQ/KhD30oV199dcaPH9+KK6Mtev311zNw4MBccMEFSZL+/fvnsccey5VXXplPfepTrbw63o/swGKD6Ny5c9q1a9dit9WSJUta7MoCaC2f//znc/PNN+euu+7K9ttv39rLoQ3r2LFjPvzhD2fgwIGZNGlS9txzz1x66aWtvSzamIcffjhLlizJgAED0r59+7Rv3z733HNPLrvssrRv3z6rVq1q7SXSxm2++ebZfffd88QTT7T2UmiDunfv3uL/MdO3b18/0kWrEbDYIDp27JgBAwZk9uzZzcZnz56doUOHttKqAN5QqVRy5pln5oYbbsidd96Z3r17t/aS2MhUKpWsWLGitZdBG3PwwQfn97//fRYsWNB0DBw4MCeeeGIWLFiQdu3atfYSaeNWrFiRxx9/PN27d2/tpdAG7bffflm4cGGzsT/96U/ZYYcdWmlFvN/5CCEbzPjx4zNmzJgMHDgwQ4YMyVVXXZVFixbl9NNPb+2l0Qa99NJL+fOf/9x0+8knn8yCBQuyzTbb5IMf/GArroy26IwzzsjPf/7z3HTTTdlyyy2bdovW1tZm0003beXV0dace+65Ofzww9OzZ88sX748119/fe6+++7cdtttrb002pgtt9yyxXfxbb755tl22219Rx/r5eyzz85RRx2VD37wg1myZEm++c1vprGxMSeffHJrL4026N/+7d8ydOjQXHDBBRk5cmQefPDBXHXVVbnqqqtae2m8TwlYbDCjRo3K0qVLM3HixNTV1aVfv36ZOXOmQs96mT9/foYNG9Z0+83vbTj55JMzZcqUVloVbdWVV16ZJDnooIOajf/0pz/NKaec8t4viDbtueeey5gxY1JXV5fa2trsscceue222/LRj360tZcGvM89/fTT+eQnP5kXXngh2223XQYPHpx58+b53+Osl3322SczZszIhAkTMnHixPTu3TuXXHJJTjzxxNZeGu9TVZVKpdLaiwAAAACANfEdWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAEArev7559OtW7dccMEFTWMPPPBAOnbsmNtvv70VVwYAUI6qSqVSae1FAAC8n82cOTPHHHNM5syZk1122SX9+/fPkUcemUsuuaS1lwYAUAQBCwCgAGeccUbuuOOO7LPPPnn00Ufz0EMPpVOnTq29LACAIghYAAAFeOWVV9KvX78sXrw48+fPzx577NHaSwIAKIbvwAIAKMBf/vKXPPvss3n99dfz17/+tbWXAwBQFDuwAABa2cqVK7Pvvvtmr732yi677JLvfve7+f3vf5+uXbu29tIAAIogYAEAtLL//b//d371q1/l0UcfzRZbbJFhw4Zlyy23zC233NLaSwMAKIKPEAIAtKK77747l1xySa699trU1NRkk002ybXXXpv7778/V155ZWsvDwCgCHZgAQAAAFA0O7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGgCFgAAAABFE7AAAAAAKJqABQAAAEDRBCwAAAAAiiZgAQAAAFA0AQsAAACAoglYAAAAABRNwAIAAACgaAIWAAAAAEUTsAAAAAAomoAFAAAAQNEELAAAAACKJmABAAAAUDQBCwAAAICiCVgAAAAAFE3AAgAAAKBoAhYAAAAARROwAAAAACiagAUAAABA0QQsAAAAAIomYAEAAABQNAELAAAAgKIJWAAAAAAUTcACAAAAoGj/H6ReyK5POZwOAAAAAElFTkSuQmCC' width=1200.0/>
+    </div>
+
+
+
+.. code:: python
+
+    x
+
+
+
+
+.. parsed-literal::
+
+    array([0.        , 0.12822827, 0.25645654, 0.38468481, 0.51291309,
+           0.64114136, 0.76936963, 0.8975979 , 1.02582617, 1.15405444,
+           1.28228272, 1.41051099, 1.53873926, 1.66696753, 1.7951958 ,
+           1.92342407, 2.05165235, 2.17988062, 2.30810889, 2.43633716,
+           2.56456543, 2.6927937 , 2.82102197, 2.94925025, 3.07747852,
+           3.20570679, 3.33393506, 3.46216333, 3.5903916 , 3.71861988,
+           3.84684815, 3.97507642, 4.10330469, 4.23153296, 4.35976123,
+           4.48798951, 4.61621778, 4.74444605, 4.87267432, 5.00090259,
+           5.12913086, 5.25735913, 5.38558741, 5.51381568, 5.64204395,
+           5.77027222, 5.89850049, 6.02672876, 6.15495704, 6.28318531])
+
+
+
+.. code:: python
+
+    data.shape
+
+
+
+
+.. parsed-literal::
+
+    (2, 50)
+
+
+.. code:: python
+
+    # Enable interactive plot
+    # %matplotlib notebook
+    # Enable interactive plot (Visual Studio Code)
+    %matplotlib ipympl
+    
+    # Enable animation in Spyder 
+    # %matplotlib qt
+    # %matplotlib gt5
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+
+.. code:: python
+
+    # Calcula los datos en tiempo real. 
+    def data_gen(t=0):
+      cnt = 0
+      while cnt < 1000:
+        cnt += 1
+        t += 0.1
+        yield t, np.sin(2 * np.pi * t) * np.exp(-t / 10.)
+    
+    
+    # Necesitamos que se puede acceder a estas variables
+    # desde varias funciones -> globales
+    fig, ax = plt.subplots()
+    line, = ax.plot([], [], lw=2)
+    xdata, ydata = [], []
+    
+    def init():
+      ax.grid()
+      ax.set_ylim(-1.1, 1.1)
+      ax.set_xlim(0, 10)
+      del xdata[:]
+      del ydata[:]
+      line.set_data(xdata, ydata)
+      return line,
+    
+    
+    def run(data):
+      # update the data
+      t, y = data
+      xdata.append(t)
+      ydata.append(y)
+      xmin, xmax = ax.get_xlim()
+    
+      # Si los datos salen del eje, agrandamos el eje
+      # Después tenemos que redibujar el canvas manualmente
+      if t >= xmax:
+        ax.set_xlim(xmin, 2 * xmax)
+        ax.figure.canvas.draw()
+      line.set_data(xdata, ydata)
+    
+      return line,
+    
+    ani = animation.FuncAnimation(fig, run, data_gen, blit=False,
+                                  interval=30,repeat=False, init_func=init)
+    
+    plt.show()
+
+
+
+.. raw:: html
+
+    
+    <div style="display: inline-block;">
+        <div class="jupyter-widgets widget-label" style="text-align: center;">
+            Figure
+        </div>
+        <img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAoAAAAHgCAYAAAA10dzkAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjUuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/YYfK9AAAACXBIWXMAAA9hAAAPYQGoP6dpAAAh+0lEQVR4nO3df4yV1Z348c/IwIy0cKVOmRFFGF0DEjTRIeKwmWITO4D115ZNUetst3FdSWMRSKOo3UA0AbTGGgPIlmK3TbrqtojLHywB10pcGVQIIAvUpF0UVrgiFOfO1i4/n/3DL/frOMOAyszc8bxeyf1jnjnncs7JxHn3uXNvy7IsywIAgGSc1dMLAACgewlAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDElPf0Anqz48ePx549e2LAgAFRVlbW08sBAE5DlmXR2toaQ4YMibPOSvNemAD8HPbs2RNDhw7t6WUAAJ/B7t2744ILLujpZfQIAfg5DBgwICI++gEaOHBgD68GADgdhUIhhg4dWvw9niIB+DmceNl34MCBAhAAepmU/3wrzRe+AQASJgABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQAS02sCcNGiRVFbWxuVlZVRV1cXr7zySqfj165dG3V1dVFZWRkXXXRRLF68+KRjn3322SgrK4ubb775DK8aAKD09IoAfO6552L69Onx4IMPxqZNm6KhoSEmTZoUu3bt6nD8zp0747rrrouGhobYtGlTPPDAAzFt2rRYtmxZu7HvvPNO/PCHP4yGhoau3gYAQEkoy7Is6+lFnMrYsWPjyiuvjKeeeqp47dJLL42bb7455s2b1278fffdFytWrIgdO3YUr02dOjW2bNkSzc3NxWvHjh2L8ePHx/e+97145ZVX4oMPPogXXnjhtNdVKBQil8tFS0tLDBw48LNtDgDoVn5/94I7gIcPH46NGzdGY2Njm+uNjY2xbt26Duc0Nze3Gz9hwoTYsGFDHDlypHjtoYceiq9+9atxxx13nNZaDh06FIVCoc0DAKC3KfkA3L9/fxw7diyqq6vbXK+uro58Pt/hnHw+3+H4o0ePxv79+yMi4tVXX42lS5fGkiVLTnst8+bNi1wuV3wMHTr0U+4GAKDnlXwAnlBWVtbm6yzL2l071fgT11tbW+P222+PJUuWRFVV1Wmv4f7774+WlpbiY/fu3Z9iBwAApaG8pxdwKlVVVdGnT592d/v27dvX7i7fCTU1NR2OLy8vj3PPPTe2bdsWb7/9dtxwww3F7x8/fjwiIsrLy+Ott96Kiy++uN3zVlRUREVFxefdEgBAjyr5O4D9+vWLurq6WLNmTZvra9asiXHjxnU4p76+vt341atXx5gxY6Jv374xcuTI2Lp1a2zevLn4uPHGG+PrX/96bN682Uu7AMAXWsnfAYyImDlzZjQ1NcWYMWOivr4+fvrTn8auXbti6tSpEfHRS7Pvvvtu/PKXv4yIj97xu2DBgpg5c2bceeed0dzcHEuXLo1nnnkmIiIqKytj9OjRbf6Nc845JyKi3XUAgC+aXhGAU6ZMiQMHDsRDDz0Ue/fujdGjR8fKlStj2LBhERGxd+/eNp8JWFtbGytXrowZM2bEwoULY8iQIfHkk0/G5MmTe2oLAAAlo1d8DmCp8jlCAND7+P3dC/4GEACAM0sAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkRgACACRGAAIAJEYAAgAkptcE4KJFi6K2tjYqKyujrq4uXnnllU7Hr127Nurq6qKysjIuuuiiWLx4cZvvL1myJBoaGmLQoEExaNCguPbaa+P111/vyi0AAJSEXhGAzz33XEyfPj0efPDB2LRpUzQ0NMSkSZNi165dHY7fuXNnXHfdddHQ0BCbNm2KBx54IKZNmxbLli0rjnn55Zfj1ltvjd/+9rfR3NwcF154YTQ2Nsa7777bXdsCAOgRZVmWZT29iFMZO3ZsXHnllfHUU08Vr1166aVx8803x7x589qNv++++2LFihWxY8eO4rWpU6fGli1borm5ucN/49ixYzFo0KBYsGBB/M3f/M1pratQKEQul4uWlpYYOHDgp9wVANAT/P7uBXcADx8+HBs3bozGxsY21xsbG2PdunUdzmlubm43fsKECbFhw4Y4cuRIh3M+/PDDOHLkSHzlK1856VoOHToUhUKhzQMAoLcp+QDcv39/HDt2LKqrq9tcr66ujnw+3+GcfD7f4fijR4/G/v37O5wza9asOP/88+Paa6896VrmzZsXuVyu+Bg6dOin3A0AQM8r+QA8oaysrM3XWZa1u3aq8R1dj4h49NFH45lnnonnn38+KisrT/qc999/f7S0tBQfu3fv/jRbAAAoCeU9vYBTqaqqij59+rS727dv3752d/lOqKmp6XB8eXl5nHvuuW2uP/bYYzF37tx48cUX4/LLL+90LRUVFVFRUfEZdgEAUDpK/g5gv379oq6uLtasWdPm+po1a2LcuHEdzqmvr283fvXq1TFmzJjo27dv8dqPf/zjePjhh2PVqlUxZsyYM794AIASVPIBGBExc+bM+NnPfhZPP/107NixI2bMmBG7du2KqVOnRsRHL81+/J27U6dOjXfeeSdmzpwZO3bsiKeffjqWLl0aP/zhD4tjHn300fjRj34UTz/9dAwfPjzy+Xzk8/n4n//5n27fHwBAdyr5l4AjIqZMmRIHDhyIhx56KPbu3RujR4+OlStXxrBhwyIiYu/evW0+E7C2tjZWrlwZM2bMiIULF8aQIUPiySefjMmTJxfHLFq0KA4fPhx//dd/3ebfmj17dsyZM6db9gUA0BN6xecAliqfIwQAvY/f373kJWAAAM4cAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkBgBCACQGAEIAJAYAQgAkJheE4CLFi2K2traqKysjLq6unjllVc6Hb927dqoq6uLysrKuOiii2Lx4sXtxixbtixGjRoVFRUVMWrUqFi+fHlXLR8AoGT0igB87rnnYvr06fHggw/Gpk2boqGhISZNmhS7du3qcPzOnTvjuuuui4aGhti0aVM88MADMW3atFi2bFlxTHNzc0yZMiWamppiy5Yt0dTUFN/+9rfjtdde665tAQD0iLIsy7KeXsSpjB07Nq688sp46qmnitcuvfTSuPnmm2PevHntxt93332xYsWK2LFjR/Ha1KlTY8uWLdHc3BwREVOmTIlCoRD/9m//VhwzceLEGDRoUDzzzDOnta5CoRC5XC5aWlpi4MCBn3V7AEA38vu7F9wBPHz4cGzcuDEaGxvbXG9sbIx169Z1OKe5ubnd+AkTJsSGDRviyJEjnY452XNGRBw6dCgKhUKbBwBAb1PyAbh///44duxYVFdXt7leXV0d+Xy+wzn5fL7D8UePHo39+/d3OuZkzxkRMW/evMjlcsXH0KFDP8uWAAB6VMkH4AllZWVtvs6yrN21U43/5PVP+5z3339/tLS0FB+7d+8+7fUDAJSK8p5ewKlUVVVFnz592t2Z27dvX7s7eCfU1NR0OL68vDzOPffcTsec7DkjIioqKqKiouKzbAMAoGSU/B3Afv36RV1dXaxZs6bN9TVr1sS4ceM6nFNfX99u/OrVq2PMmDHRt2/fTsec7DkBAL4oSv4OYETEzJkzo6mpKcaMGRP19fXx05/+NHbt2hVTp06NiI9emn333Xfjl7/8ZUR89I7fBQsWxMyZM+POO++M5ubmWLp0aZt3995zzz3xta99LR555JG46aab4l//9V/jxRdfjP/4j//okT0CAHSXXhGAU6ZMiQMHDsRDDz0Ue/fujdGjR8fKlStj2LBhERGxd+/eNp8JWFtbGytXrowZM2bEwoULY8iQIfHkk0/G5MmTi2PGjRsXzz77bPzoRz+Kf/iHf4iLL744nnvuuRg7dmy37w8AoDv1is8BLFU+RwgAeh+/v3vB3wACAHBmCUAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMSUfAAePHgwmpqaIpfLRS6Xi6ampvjggw86nZNlWcyZMyeGDBkSZ599dlxzzTWxbdu24vf/+Mc/xg9+8IMYMWJE9O/fPy688MKYNm1atLS0dPFuAAB6XskH4G233RabN2+OVatWxapVq2Lz5s3R1NTU6ZxHH300Hn/88ViwYEG88cYbUVNTE9/4xjeitbU1IiL27NkTe/bsicceeyy2bt0a//RP/xSrVq2KO+64ozu2BADQo8qyLMt6ehEns2PHjhg1alSsX78+xo4dGxER69evj/r6+vjd734XI0aMaDcny7IYMmRITJ8+Pe67776IiDh06FBUV1fHI488EnfddVeH/9avf/3ruP322+NPf/pTlJeXn9b6CoVC5HK5aGlpiYEDB37GXQIA3cnv7xK/A9jc3By5XK4YfxERV199deRyuVi3bl2Hc3bu3Bn5fD4aGxuL1yoqKmL8+PEnnRMRxR+C040/AIDeqqRrJ5/Px+DBg9tdHzx4cOTz+ZPOiYiorq5uc726ujreeeedDuccOHAgHn744ZPeHTzh0KFDcejQoeLXhUKh0/EAAKWoR+4AzpkzJ8rKyjp9bNiwISIiysrK2s3PsqzD6x/3ye+fbE6hUIhvfvObMWrUqJg9e3anzzlv3rzim1FyuVwMHTr0VFsFACg5PXIH8O67745bbrml0zHDhw+PN998M957771233v//ffb3eE7oaamJiI+uhN43nnnFa/v27ev3ZzW1taYOHFifPnLX47ly5dH3759O13T/fffHzNnzix+XSgURCAA0Ov0SABWVVVFVVXVKcfV19dHS0tLvP7663HVVVdFRMRrr70WLS0tMW7cuA7n1NbWRk1NTaxZsyauuOKKiIg4fPhwrF27Nh555JHiuEKhEBMmTIiKiopYsWJFVFZWnnI9FRUVUVFRcTpbBAAoWSX9JpBLL700Jk6cGHfeeWesX78+1q9fH3feeWdcf/31bd4BPHLkyFi+fHlEfPTS7/Tp02Pu3LmxfPny+M///M/427/92+jfv3/cdtttEfHRnb/Gxsb405/+FEuXLo1CoRD5fD7y+XwcO3asR/YKANBdSvpNIBERv/rVr2LatGnFd/XeeOONsWDBgjZj3nrrrTYf4nzvvffGn//85/j+978fBw8ejLFjx8bq1atjwIABERGxcePGeO211yIi4i/+4i/aPNfOnTtj+PDhXbgjAICeVdKfA1jqfI4QAPQ+fn+X+EvAAACceQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxAhAAIDECEAAgMQIQACAxJR+ABw8ejKampsjlcpHL5aKpqSk++OCDTudkWRZz5syJIUOGxNlnnx3XXHNNbNu2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U5PNnz+/eO1///d/s1wuly1evLjN2M2bN2cXXHBBtnfv3qQDsKvP+eP+5V/+JevXr1925MiRM7eBEnXVVVdlU6dObXNt5MiR2axZszocf++992YjR45sc+2uu+7Krr766uLX3/72t7OJEye2GTNhwoTslltuOUOr7p264qw/6ejRo9mAAQOyX/ziF59/wb1UV53z0aNHs7/8y7/Mfvazn2Xf/e53BeAXmJeAOS3Nzc2Ry+Vi7NixxWtXX3115HK5WLduXYdzdu7cGfl8PhobG4vXKioqYvz48W3mfPjhh3HrrbfGggULoqampus20Qt05Tl/UktLSwwcODDKy7/Y/5fghw8fjo0bN7Y5n4iIxsbGk55Pc3Nzu/ETJkyIDRs2xJEjRzod09mZf9F11Vl/0ocffhhHjhyJr3zlK2dm4b1MV57zQw89FF/96lfjjjvuOPMLp6QIQE5LPp+PwYMHt7s+ePDgyOfzJ50TEVFdXd3menV1dZs5M2bMiHHjxsVNN910BlfcO3XlOX/cgQMH4uGHH4677rrrc6649O3fvz+OHTv2qc4nn893OP7o0aOxf//+Tsec7DlT0FVn/UmzZs2K888/P6699tozs/BepqvO+dVXX42lS5fGkiVLumbhlBQBmLg5c+ZEWVlZp48NGzZERERZWVm7+VmWdXj94z75/Y/PWbFiRbz00kvxxBNPnJkNlaiePuePKxQK8c1vfjNGjRoVs2fP/hy76l1O93w6G//J65/2OVPRFWd9wqOPPhrPPPNMPP/881FZWXkGVtt7nclzbm1tjdtvvz2WLFkSVVVVZ36xlJwv9ms/nNLdd98dt9xyS6djhg8fHm+++Wa899577b73/vvvt/tflSeceDk3n8/HeeedV7y+b9++4pyXXnop/vCHP8Q555zTZu7kyZOjoaEhXn755U+xm9LV0+d8Qmtra0ycODG+/OUvx/Lly6Nv376fdiu9TlVVVfTp06fdnZGOzueEmpqaDseXl5fHueee2+mYkz1nCrrqrE947LHHYu7cufHiiy/G5ZdffmYX34t0xTlv27Yt3n777bjhhhuK3z9+/HhERJSXl8dbb70VF1988RneCT3JHcDEVVVVxciRIzt9VFZWRn19fbS0tLT56IXXXnstWlpaYty4cR0+d21tbdTU1MSaNWuK1w4fPhxr164tzpk1a1a8+eabsXnz5uIjIuInP/lJ/PznP++6jXeznj7niI/u/DU2Nka/fv1ixYoVydw96devX9TV1bU5n4iINWvWnPRM6+vr241fvXp1jBkzphjNJxtzsudMQVeddUTEj3/843j44Ydj1apVMWbMmDO/+F6kK8555MiRsXXr1jb/Lb7xxhvj61//emzevDmGDh3aZfuhh/TQm0/ohSZOnJhdfvnlWXNzc9bc3Jxddtll7T6eZMSIEdnzzz9f/Hr+/PlZLpfLnn/++Wzr1q3ZrbfeetKPgTkhEn4XcJZ1zTkXCoVs7Nix2WWXXZb9/ve/z/bu3Vt8HD16tFv31xNOfGTG0qVLs+3bt2fTp0/PvvSlL2Vvv/12lmVZNmvWrKypqak4/sRHZsyYMSPbvn17tnTp0nYfmfHqq69mffr0yebPn5/t2LEjmz9/vo+BybrmrB955JGsX79+2W9+85s2P7utra3dvr9S0RXn/EneBfzFJgA5bQcOHMi+853vZAMGDMgGDBiQfec738kOHjzYZkxEZD//+c+LXx8/fjybPXt2VlNTk1VUVGRf+9rXsq1bt3b676QegF1xzr/97W+ziOjwsXPnzu7ZWA9buHBhNmzYsKxfv37ZlVdema1du7b4ve9+97vZ+PHj24x/+eWXsyuuuCLr169fNnz48Oypp55q95y//vWvsxEjRmR9+/bNRo4cmS1btqyrt9ErnOmzHjZsWIc/u7Nnz+6G3ZSurviZ/jgB+MVWlmX/769AAQBIgr8BBABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIjAAEAEiMAAQASIwABABIzP8Bo6Ul2HAvKmQAAAAASUVORK5CYII=' width=640.0/>
+    </div>
+
+
+.. code:: python
+
+    # Enable interactive plot
+    # %matplotlib notebook
+    # Enable interactive plot (Visual Studio Code)
+    %matplotlib ipympl
+    
+    # Enable animation in Spyder 
+    # %matplotlib qt
+    # %matplotlib gt5
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import matplotlib.animation as animation
+    plt.style.use('ggplot')
+    
+    plt.ioff()
+
+
+.. code:: python
+
+    
+    # ############################################################
+    # Creación de datos
+    x = np.linspace(-3, 3, 91)
+    y = np.linspace(-3, 3, 91)
+    
+    t = np.linspace(0, 25, 30)
+    X3, Y3, T3 = np.meshgrid(x, y, t)
+    sinT3 = np.sin(2*np.pi*T3 /
+                   T3.max(axis=2)[..., np.newaxis])
+    
+    G = (X3**2 + Y3**2)*sinT3
+    # Graficar una flecha cada step puntos
+    step = 10
+    x_q, y_q = x[::step], y[::step]
+     
+    # Create U and V vectors to plot
+    U = G[::step, ::step, :-1].copy()
+    V = np.roll(U, shift=3, axis=2)
+    
+    # ############################################################
+
+
+.. code:: python
+
+    help(np.roll)
+
+.. code:: python
+
+    x = np.arange(10)
+    np.roll(x,2)
+
+.. code:: python
+
+    x2 = np.reshape(x, (2,5))
+    print(x2)
+    print(np.roll(x2,1))
+    print(np.roll(x2,1,axis=0))
+    print(np.roll(x2,2,axis=0))
+    print(np.roll(x2,1,axis=1))
+
+.. code:: python
+
+    print(sinT3.shape)
+    print(G.shape)
+    print(x_q.shape,y_q.shape)
+    print(U.shape)
+    print(V.shape)
+
+
+.. code:: python
+
+    # Figura y ejes. 
+    fig1, ax = plt.subplots(figsize=(12,8))
+    
+    ax.set_aspect('equal')
+     
+    ax.set(xlim=(-4, 4), ylim=(-4, 4))
+    
+     
+    qax = ax.quiver(x_q, y_q, U[..., 0], V[..., 0],
+                    scale=100)
+     
+    def animate(i):
+      qax.set_UVC(U[..., i], V[..., i])
+    
+    anim = animation.FuncAnimation(fig1, animate, interval=100, frames=len(t)-1, repeat=True)
+    
+    # anim.save('quiver.gif', writer='imagemagick')
+    anim.save('quiver.gif')
+    plt.show()
+
+.. code:: python
+
+    T3.max(axis=2)[..., np.newaxis].shape
+
+.. code:: python
+
+    T3.max(axis=2).shape
+
+.. code:: python
+
+    sinT3.shape
+Gráficos interactivos (“widgets”)
+---------------------------------
+
+Veamos cómo se puede hacer este tipo de trabajo en forma interactiva.
+Para ello **Matplotlib** tiene un submódulo ``widgets`` con rutinas que
+están diseñadas para funcionar con cualquier *backend* interactivo. (más
+información en: http://matplotlib.org/api/widgets_api.html)
+
+Cursor
+~~~~~~
+
+Empecemos estudiando como agregar un indicador de la posición del cursor
+a un gráfico.
+
+.. code:: python
+
+
+   # Archivo: ejemplo_cursor.py
+
+   from matplotlib.widgets import Cursor
+   import numpy as np
+   import matplotlib.pyplot as plt
+
+   fig, ax = plt.subplots(figsize=(8,6))
+
+   x, y = 4 * (np.random.rand(2, 100) - .5)
+   ax.plot(x, y, 'o')
+   ax.set_xlim(-2, 2)
+   ax.set_ylim(-2, 2)
+
+   # Usamos: useblit = True en el backed gtkagg
+   cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
+
+   plt.show()
+
+En este caso, el programa está escrito separadamente y lo podemos
+ejecutar desde la notebook (como en este caso) o desde una terminal
+independientemente. Para ejecutar un script en forma interactiva desde
+la *notebook* de *Jupyter* debemos setear el *backend* a una opción
+interactiva (que no es el valor por default en las notebooks). En este
+caso vamos a usar el backend *tk*
+
+.. code:: python
+
+    import numpy as np
+    %matplotlib ipympl
+    import matplotlib.pyplot as plt
+
+.. code:: python
+
+    fig, ax = plt.subplots(figsize=(8,6))
+    
+    x, y = 4 * (np.random.rand(2, 100) - .5)
+    ax.plot(x, y, 'o')
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-2, 2)
+
+.. code:: python
+
+    %matplotlib tk
+    import matplotlib.pyplot as plt
+    %run scripts/ejemplo_cursor.py
+
+.. code:: python
+
+    from matplotlib.widgets import Cursor
+    
+    # Usamos: useblit = True en el backed gtkagg
+    cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
+    
+    plt.show()
+
+En este ejemplo simple conocemos casi todas las líneas (creamos la
+figura y graficamos). Las líneas novedosas y relevantes son
+
+1. La primera línea importando la función ``Cursor()`` para describir el
+   *cursor* o *mouse*:
+
+.. code:: python
+
+   from matplotlib.widgets import Cursor
+
+2. La línea en que usamos la función ``Cursor``
+
+.. code:: python
+
+   cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
+
+que crea el objeto ``Cursor``. La forma de esta función es:
+
+.. code:: python
+
+   Cursor(ax, horizOn=True, vertOn=True, useblit=False, **lineprops)
+
+y toma como argumento el eje en el cuál agregamos el cursor. Como
+argumentos opcionales se puede controlar la visibilidad de la línea
+horizontal (``horizOn``) y vertical (``vertOn``) que pueden tomar
+valores lógicos ``True`` o ``False``. Además tiene argumentos *keyword*
+para controlar la apariencia de las líneas. En este ejemplo pusimos
+explícitamente que queremos una línea roja con un grosor igual a ``2``.
+
+Manejo de eventos
+~~~~~~~~~~~~~~~~~
+
+Para que la interactividad sea útil es importante obtener datos de
+nuestra interacción con el gráfico. Esto se obtiene con lo que se llama
+“manejo de eventos” (“Event handling”).
+
+Para recibir *events* necesitamos **escribir y conectar** una función
+que se activa cuando ocurre el evento (*callback*). Veamos un ejemplo
+simple pero importante, donde imprimimos las coordenadas donde se
+presiona el *mouse*.
+
+.. code:: python
+
+   # Archivo: ejemplo_callback.py
+   import numpy as np
+   import matplotlib.pyplot as plt
+
+   fig, ax = plt.subplots()
+   ax.plot(np.random.rand(10), 'o-', lw=3)
+
+   def onclick(event):
+     print('button=%d, x=%d, y=%d, xdata=%f, ydata=%f' % (event.button, event.x, event.y, event.xdata, event.ydata))
+
+   cid = fig.canvas.mpl_connect('button_press_event', onclick)
+   plt.show()
+
+.. image:: figuras/uso_callbacks1.png
+
+En este ejemplo utilizamos el método ``mpl_connect`` del objeto
+``canvas``.
+
+-  El objeto ``canvas`` es el área donde se dibuja la figura.
+
+-  La función ``mpl_connect`` realiza la conección de la función (que
+   aquí llamamos ``onclick``) con la figura. Esta función toma como
+   argumento el *event* (que, para nosotros, es interpretado
+   automaticamente por Matplotlib)
+
+-  El objeto ``event`` es de tipo ``button_press_event``. Se dispara
+   cuando apretamos un botón del *mouse* y *matplotlib* le pasa como
+   argumento un objeto del tipo ``event`` que contiene información.
+   Nosotros estamos imprimiendo la siguiente información que contiene
+   ``event`` por pantalla:
+
+   -  ``event.button``: indica que botón se presionó
+   -  ``event.x``, ``event.y``: dan la información sobre el índice en
+      los ejes horizontal y vertical
+   -  ``event.xdata, event.ydata``: dan los valores de los datos en los
+      ejes.
+
+Puede leer más información sobre el manejo de eventos en
+http://matplotlib.org/users/event_handling.html.
+
+Ejemplos integrados
+~~~~~~~~~~~~~~~~~~~
+
+Continuando con esta idea vamos a usar la capacidad de poder interactuar
+con el gráfico para elegir una zona del gráfico de la cuál obtenemos
+información sobre los datos.
+
+.. code:: python
+
+   # Archivo: scripts/analizar_figura_1.py
+
+   import matplotlib.pyplot as plt
+   from matplotlib.widgets import Cursor
+
+   img = plt.imread('../figuras/imagen_flujo_gray.jpg')
+   ymax = img.max()
+
+   def seleccionar(event):
+     """Secuencia:
+     1. Encuentro el punto donde el mouse hizo 'click'
+     2. Le doy valores a la línea vertical
+     3. Le doy valores a la curva en el grafico de la derecha
+     4. y 5. Grafico los nuevos valores
+     """
+     x0 = event.xdata
+     n0 = int(x0)
+     l1.set_data([[n0, n0], [0., 1.]])
+     l2.set_data(range(img.shape[0]), img[:, n0])
+     l1.figure.canvas.draw()
+     l2.figure.canvas.draw()
+
+
+   # Defino la figura
+   fig, (ax1, ax2) = plt.subplots(figsize=(12, 4), ncols=2)
+
+   # Mostramos la imagen como un mapa de grises
+   ax1.imshow(img, cmap='gray', interpolation='nearest')
+   ax1.axis('off')
+
+   # Agrego la línea inicial en un valor inicial
+   x0 = 100
+   l1 = ax1.axvline(x0, color='r', ls='--', lw=3)
+
+   # Grafico de la derecha
+   l2, = ax2.plot(img[:, x0], 'r-', lw=2, label='corte')
+   ax2.set_ylim((0, ymax))
+   ax2.set_xlabel(u'posición en eje $y$ (pixels)')
+   ax2.set_ylabel('Intensidad')
+   ax2.legend(loc='best')
+
+   fig.tight_layout()
+
+   # Agrego el cursor y conecto la accion de presionar a la funcion click
+   cursor = Cursor(ax1, horizOn=False, vertOn=True, useblit=True,
+                   color='blue', linewidth=1)
+   fig.canvas.mpl_connect('button_press_event', seleccionar)
+
+   plt.show()
+
+.. code:: python
+
+    !pwd
+    %matplotlib tk
+    %run ../scripts/analizar_figura.py
+
+
+.. parsed-literal::
+
+    /Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB/clases
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    FileNotFoundError                         Traceback (most recent call last)
+
+    File ~/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB/scripts/analizar_figura.py:4, in <module>
+          1 import matplotlib.pyplot as plt
+          2 from matplotlib.widgets import Cursor
+    ----> 4 img = plt.imread('../figuras/imagen_flujo_gray.jpg')
+          5 ymax = img.max()
+          7 def seleccionar(event):
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/matplotlib/pyplot.py:2139, in imread(fname, format)
+       2137 @_copy_docstring_and_deprecators(matplotlib.image.imread)
+       2138 def imread(fname, format=None):
+    -> 2139     return matplotlib.image.imread(fname, format)
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/matplotlib/image.py:1560, in imread(fname, format)
+       1558                 response = io.BytesIO(response.read())
+       1559             return imread(response, format=ext)
+    -> 1560 with img_open(fname) as image:
+       1561     return (_pil_png_to_float_array(image)
+       1562             if isinstance(image, PIL.PngImagePlugin.PngImageFile) else
+       1563             pil_to_array(image))
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/PIL/Image.py:2953, in open(fp, mode, formats)
+       2950     filename = fp
+       2952 if filename:
+    -> 2953     fp = builtins.open(filename, "rb")
+       2954     exclusive_fp = True
+       2956 try:
+
+
+    FileNotFoundError: [Errno 2] No such file or directory: '../figuras/imagen_flujo_gray.jpg'
+
+
+Este es un ejemplo un poco más largo (y un poquito más complejo).
+
+1. Importamos los módulos y funciones necesarias.
+
+-  ``matplotlib.pyplot as plt`` para casi todo
+-  ``imageio`` para leer la figura
+-  ``from matplotlib.widgets import Cursor`` para importar el objeto
+   ``Cursor`` que nos muestra la posición del mouse.
+
+2. Leemos la imagen de archivo, creamos la figura y la mostramos.
+3. Elegimos un valor de :math:`x` inicial (igual a 100) y agregamos una
+   línea vertical en ese punto.
+4. Creamos la figura de la derecha con los datos tomados de la columna
+   correspondiente de la matriz que representa la imagen.
+5. Agregamos *labels* y ajustamos las distancias
+6. Mostramos el cursor y le conectamos el evento (standard)
+   ``button_press_event`` a nuestra función ``seleccionar()``.
+7. La función ``seleccionar()`` toma como argumento el evento que se
+   dispara por interacción con el usuario.
+   El argumento ``event`` lo pasa automáticamente *Matplotlib*. En este
+   caso es un *click* del mouse en una zona del gráfico.
+
+La función ``seleccionar(event)``: 1. Del argumento ``event`` extrae la
+posición en el eje horizontal y lo asigna a la variable ``x0``. 2. El
+índice en el eje horizontal (``n0``). 2. Actualiza los datos de la línea
+``l1`` con valores para la línea vertical en el panel izquierdo. 4.
+Actualiza la línea ``l2`` en la figura de la derecha con el corte en
+``x0``. 5. Actualiza el dibujo de las líneas sobre el *canvas*.
+
+El siguiente ejemplo es muy similar al anterior. Sólo estamos
+actualizando la leyenda, para tener información del punto seleccionado.
+
+.. code:: python
+
+    %run scripts/analizar_figura_2.py
+
+.. code:: python
+
+   # Archivo:analizar_figura_2.py
+   import matplotlib.pyplot as plt
+   from scipy import misc
+   from matplotlib.widgets import Cursor
+
+   img = plt.imread('../figuras/imagen_flujo_gray.jpg')
+   ymax = img.max()
+
+
+   def click(event):
+     """Secuencia:
+     1. Encuentro el punto donde el mouse hizo 'click'
+     2. Le doy valores a la línea vertical
+     3. Le doy valores a la curva en el grafico de la derecha
+     4. y 5. Grafico los nuevos valores
+     """
+     x0 = event.xdata
+     n0 = int(x0)
+     l1.set_data([[n0, n0], [0., 1.]])
+     l2.set_data(range(img.shape[0]), img[:, n0])
+     leg2.texts[0].set_text('corte en {:.1f}'.format(x0))
+     l1.figure.canvas.draw()
+     l2.figure.canvas.draw()
+
+
+   # Defino la figura
+   # Defino la figura
+   fig, (ax1, ax2) = plt.subplots(figsize=(12, 4), ncols=2)
+
+   ax1.imshow(img, cmap="gray", interpolation='nearest')
+   ax1.axis('off')
+   # Agrego la línea inicial en un valor inicial
+   x0 = 100
+   l1 = ax1.axvline(x0, color='r', ls='--', lw=3)
+
+   # Grafico de la derecha
+   l2, = ax2.plot(img[:, x0], 'r-', lw=2, label='corte en {:.1f}'.format(x0))
+   ax2.set_ylim((0, ymax))
+   ax2.set_xlabel(u'posición en eje $y$ (pixels)')
+   ax2.set_ylabel('Intensidad')
+   leg2 = ax2.legend(loc='best')
+
+   fig.tight_layout()
+
+   # Agrego el cursor y conecto la accion de presionar a la funcion click
+   cursor = Cursor(ax1, horizOn=False, vertOn=True, useblit=True,
+                   color='blue', linewidth=1)
+   fig.canvas.mpl_connect('button_press_event', click)
+
+   plt.show()
+
+Las diferencias más notables con el ejemplo anterior son:
+
+1. Al crear la leyenda, asignamos el objeto creado a la variable
+   ``leg2``, en la línea:
+
+.. code:: python
+
+   leg2 = ax2.legend(loc='best')
+
+2. En la función ``click(event)`` (equivalente a ``seleccionar(evento)``
+   en el ejemplo anterior) actualizamos el texto de la leyenda con el
+   valor de ``x0``:
+
+.. code:: python
+
+   leg2.texts[0].set_text('corte en {:.1f}'.format(x0))
+
+--------------
+
+Ejercicios 14 (c)
+-----------------
+
+4. Modificar el ejemplo anterior (**analizar_figura_2.py**) para
+   presentar tres gráficos, agregando a la izquierda un panel donde se
+   muestre el corte horizontal de la misma manera que en el ejercicio
+   anterior. Al seleccionar con el *mouse* debe mostrar los dos cortes
+   (horizontal y vertical).
+
+--------------
+
+.
+Trabajo simple con imágenes
+---------------------------
+
+Vamos a empezar leyendo y mostrando algunas imágenes, para entender cómo
+es su representación. Para leer y escribir imágenes vamos a usar el
+paquete adicional ``imageio``. **Scipy** tiene funciones (con el mismo
+nombre) para realizar este trabajo en el submódulo ``misc`` pero está
+planeado que desaparezcan en un futuro no muy lejano.
+
+.. code:: python
+
+    import numpy as np
+    %matplotlib inline
+    import matplotlib.pyplot as plt
+    from PIL import Image
+
+El siguiente ejemplo es una figura tomada de algunas pruebas que hicimos
+en el laboratorio hace unos años. Es el resultado de la medición de
+flujo en toberas
+
+.. code:: python
+
+    imag1 = plt.imread('figuras/imagen_flujo.jpg')
+    print(f'La imagen "imag1" es del tipo: {type(imag1)} con "shape" {imag1.shape}')
+    plt.imshow(imag1);
+
+
+.. parsed-literal::
+
+    La imagen "imag1" es del tipo: <class 'numpy.ndarray'> con "shape" (272, 652, 3)
+
+
+
+.. image:: figuras/14_3_imagenes_3_1.png
+
+
+La representación de la imagen es una matriz, donde cada elemento
+corresponde a un pixel, y cada pixel tiene tres valores. El elemento
+``[0,0]`` corresponde al pixel ubicado en la esquina superior izquierda,
+el elemento ``[-1,0]`` al pixel ubicado en la esquina inferior
+izquierda, mientras que el ``[0,-1]`` a la esquina superior derecha:
+
+.. code:: python
+
+    plt.imshow(imag1)
+    color='white'
+    plt.annotate("[0,0]",(0,0), (60,40), arrowprops={}, fontsize='x-large', color=color)
+    plt.annotate("[-1,0]",(0,272), (60,240), arrowprops={}, fontsize='x-large', color=color)
+    plt.annotate("[0,-1]",(652,0), (510,40), arrowprops={}, fontsize='x-large', color=color);
+
+
+
+.. image:: figuras/14_3_imagenes_5_0.png
+
+
+En consecuencia podemos ver qué valores toma cada pixel
+
+.. code:: python
+
+    print(imag1[0,0])             # El primer elemento
+    print(imag1[0,1])             # El segundo elemento
+    print(imag1.min(),imag1.max())  # y sus valores mínimo y máximo
+
+
+.. parsed-literal::
+
+    [65 65 65]
+    [66 66 66]
+    0 255
+
+
+Como vemos en cada pixel el valor está dado por un array de tres números
+enteros
+
+.. code:: python
+
+    imag1.dtype
+
+
+
+
+.. parsed-literal::
+
+    dtype('uint8')
+
+
+
+Como originalmente teníamos una figura en escala de grises, podemos
+convertir los tres colores a una simple escala, por ejemplo promediando
+los tres valores. La función ``imread()`` puede interpretar la figura
+como una escala de grises con los argumentos adecuados:
+
+.. code:: python
+
+    imag2 = plt.imread('figuras/imagen_flujo_gray.jpg')
+
+La variable ``imag2`` contiene ahora una matriz con las dimensiones de
+la imagen (272 x 652) pero con sólo un valor por cada pixel
+
+.. code:: python
+
+    print(imag2.shape)
+    print(imag2[0,0])
+
+
+.. parsed-literal::
+
+    (272, 652)
+    65
+
+
+.. code:: python
+
+    plt.imshow(imag2);
+
+
+
+.. image:: figuras/14_3_imagenes_14_0.png
+
+
+--------------
+
+**Nota** ¿Qué pasó acá?
+
+La función ``imshow()`` está interpretando el valor de cada pixel como
+una posición en una cierta escala de colores (**colormap**). Como no
+especificamos cuál queremos utilizar, se usó el cmap *default*.
+
+--------------
+
+Especifiquemos el **colormap** a utilizar para la graficación:
+
+.. code:: python
+
+    plt.imshow(imag2, cmap='gray');
+
+
+
+.. image:: figuras/14_3_imagenes_17_0.png
+
+
+Los ``cmap`` aparecen también en el contexto de graficación de gráficos
+de contorno (``contour()`` y ``contourf()``).
+
+Al asociar un valor a un mapa de colores, la misma imagen puede
+mostrarse de diferente maneras. Veamos otros ejemplos de *colormap*
+
+.. code:: python
+
+    plt.imshow(imag2, cmap='inferno');
+
+
+
+.. image:: figuras/14_3_imagenes_19_0.png
+
+
+.. code:: python
+
+    plt.imshow(imag2, cmap='inferno_r');
+
+
+
+.. image:: figuras/14_3_imagenes_20_0.png
+
+
+La referencia de ubicación de los ``cmap`` existentes está en:
+http://matplotlib.org/examples/color/colormaps_reference.html
+
+.. code:: python
+
+    plt.imshow(imag2, cmap='gray_r');
+
+
+
+.. image:: figuras/14_3_imagenes_22_0.png
+
+
+Análisis de la imagen
+~~~~~~~~~~~~~~~~~~~~~
+
+La imagen es una representación en mapa de colores de lo valores en la
+matriz. Esta es una representación que da muy buena información
+cualitativa sobre las características de los datos. Para analizar los
+datos a veces es más fácil hacer cortes o promediar en alguna dirección
+los datos.
+
+Histograma de intensidades
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Un ejemplo es el cálculo de un histograma de intensidades, analizando
+toda la imagen.
+
+.. code:: python
+
+    hist, bin_edges = np.histogram(imag2, bins=50, density=True)
+    bin_centers = 0.5*(bin_edges[:-1] + bin_edges[1:])
+    plt.fill_between(bin_centers, 0, hist, alpha=0.7)
+    plt.plot(bin_centers, hist, color='C0', lw=3)
+    plt.xlabel('Intensidad')
+    plt.xlim((0,200));
+
+
+
+.. image:: figuras/14_3_imagenes_25_0.png
+
+
+.. code:: python
+
+    # Creamos una figura con los dos gráficos
+    fig, ax = plt.subplots(figsize=(10,2), ncols=2)
+    # En el gráfico de la izquierda mostramos la imagen en escala de grises
+    ax[0].imshow(imag2, cmap=plt.cm.gray, interpolation='nearest')
+    ax[0].axis('off')   # Eliminamos los dos ejes
+    #
+    # Graficamos a la derecha el histograma
+    ax[1].plot(bin_centers, hist, lw=2)
+    ax[1].text(180, 0.85*hist.max(), 'Histograma', fontsize=20)
+    ax[1].set_yticks([])   # Sólo valores en el eje x
+    plt.subplots_adjust(wspace=-0.20, top=1, bottom=0.1, left=-0.2, right=1)
+
+
+
+.. image:: figuras/14_3_imagenes_26_0.png
+
+
+Estos histogramas, son útiles pero no dan información sobre las
+variaciones de intensidad con la posición. De alguna manera estamos
+integrando demasiado. Cuando vemos la imagen, vemos un mapa de
+intensidad en dos dimensiones. Al hacer el histograma sobre toda la
+figura perdemos completamente la información sobre la posición.
+
+Cortes en una dirección
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Un análisis intermedio podemos hacerlo haciendo cortes a lo largo de
+alguna línea y analizando la intensidad. Por ejemplo, podemos elegir una
+línea vertical en un punto :math:`x_0`, y analizar como varía la
+intensidad a lo largo de esa línea:
+
+.. code:: python
+
+    x0 = int(imag2.shape[1]*7/9)      # Elegimos un punto en el eje x
+    print(f'posición en eje x={x0} de un total de {imag2.shape[1]}')
+
+
+.. parsed-literal::
+
+    posición en eje x=507 de un total de 652
+
+
+.. code:: python
+
+    # Creamos la figura con dos subplots
+    fig, (ax2, ax1) = plt.subplots(ncols=2, figsize=(10,2))
+    # graficamos la imagen en el subplot de la derecha
+    ax1.imshow(imag2, cmap=plt.cm.gray)
+    # y agregamos la línea vertical en el punto elegido
+    ax1.axvline(x0, ls='--', lw=3)
+    ax1.text(1.05*x0, 50, '$x_{0}$', fontsize='x-large', color='C0')
+    ax1.axis('off')
+    #
+    # Creamos linea como un array 1D con los datos a lo largo de la línea deseada
+    # y la graficamos
+    linea = imag2[:,x0]
+    ax2.plot(linea,'--', lw=3, label='Corte')
+    ax2.set_xlabel(u'posición en eje $y$ (pixels)')
+    ax2.set_ylabel('Intensidad')
+    ax2.legend(loc='best')
+    ax2.set_xlim((0,len(linea)))
+    # Ajustamos el margen izquierdo y la distancia entre los dos subplots  
+    plt.subplots_adjust(wspace=-0.1, left=0)
+
+
+
+.. image:: figuras/14_3_imagenes_30_0.png
+
+
+--------------
+
+Ejercicios 14 (b)
+-----------------
+
+3. Modificar el ejemplo anterior para presentar en una figura tres
+   gráficos, agregando a la izquierda un panel donde se muestre un corte
+   horizontal. El corte debe estar en la mitad del gráfico
+   (:math:`y_{0}=136`). En la figura debe mostrar la posición del corte
+   (similarmente a como se hizo con el corte en :math:`x`) con una línea
+   de otro color.
+
+--------------
+
+Gráficos interactivos (“widgets”)
+---------------------------------
+
+Veamos cómo se puede hacer este tipo de trabajo en forma interactiva.
+Para ello **Matplotlib** tiene un submódulo ``widgets`` con rutinas que
+están diseñadas para funcionar con cualquier *backend* interactivo. (más
+información en: http://matplotlib.org/api/widgets_api.html)
+
+Cursor
+~~~~~~
+
+Empecemos estudiando como agregar un indicador de la posición del cursor
+a un gráfico.
+
+.. code:: python
+
+
+   # Archivo: ejemplo_cursor.py
+
+   from matplotlib.widgets import Cursor
+   import numpy as np
+   import matplotlib.pyplot as plt
+
+   fig, ax = plt.subplots(figsize=(8,6))
+
+   x, y = 4 * (np.random.rand(2, 100) - .5)
+   ax.plot(x, y, 'o')
+   ax.set_xlim(-2, 2)
+   ax.set_ylim(-2, 2)
+
+   # Usamos: useblit = True en el backed gtkagg
+   cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
+
+   plt.show()
+
+En este caso, el programa está escrito separadamente y lo podemos
+ejecutar desde la notebook (como en este caso) o desde una terminal
+independientemente. Para ejecutar un script en forma interactiva desde
+la *notebook* de *Jupyter* debemos setear el *backend* a una opción
+interactiva (que no es el valor por default en las notebooks). En este
+caso vamos a usar el backend *tk*
+
+.. code:: python
+
+    fig, ax = plt.subplots(figsize=(8,6))
+    
+    x, y = 4 * (np.random.rand(2, 100) - .5)
+    ax.plot(x, y, 'o')
+    ax.set_xlim(-2, 2)
+    ax.set_ylim(-2, 2);
+
+
+
+.. image:: figuras/14_3_imagenes_36_0.png
+
+
+.. code:: python
+
+    %matplotlib tk
+    import matplotlib.pyplot as plt
+    %run scripts/ejemplo_cursor.py
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    OSError                                   Traceback (most recent call last)
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/core/magics/execution.py:696, in ExecutionMagics.run(self, parameter_s, runner, file_finder)
+        695     fpath = arg_lst[0]
+    --> 696     filename = file_finder(fpath)
+        697 except IndexError as e:
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/utils/path.py:91, in get_py_filename(name)
+         90 else:
+    ---> 91     raise IOError('File `%r` not found.' % name)
+
+
+    OSError: File `'scripts/ejemplo_cursor.py'` not found.
+
+    
+    The above exception was the direct cause of the following exception:
+
+
+    Exception                                 Traceback (most recent call last)
+
+    /Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb Cell 38 in <cell line: 3>()
+          <a href='vscode-notebook-cell:/Users/flavioc/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb#X52sZmlsZQ%3D%3D?line=0'>1</a> get_ipython().run_line_magic('matplotlib', 'tk')
+          <a href='vscode-notebook-cell:/Users/flavioc/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb#X52sZmlsZQ%3D%3D?line=1'>2</a> import matplotlib.pyplot as plt
+    ----> <a href='vscode-notebook-cell:/Users/flavioc/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb#X52sZmlsZQ%3D%3D?line=2'>3</a> get_ipython().run_line_magic('run', 'scripts/ejemplo_cursor.py')
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/core/interactiveshell.py:2285, in InteractiveShell.run_line_magic(self, magic_name, line, _stack_depth)
+       2283     kwargs['local_ns'] = self.get_local_scope(stack_depth)
+       2284 with self.builtin_trap:
+    -> 2285     result = fn(*args, **kwargs)
+       2286 return result
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/core/magics/execution.py:707, in ExecutionMagics.run(self, parameter_s, runner, file_finder)
+        705     if os.name == 'nt' and re.match(r"^'.*'$",fpath):
+        706         warn('For Windows, use double quotes to wrap a filename: %run "mypath\\myfile.py"')
+    --> 707     raise Exception(msg) from e
+        708 except TypeError:
+        709     if fpath in sys.meta_path:
+
+
+    Exception: File `'scripts/ejemplo_cursor.py'` not found.
+
+
+En este ejemplo simple conocemos casi todas las líneas (creamos la
+figura y graficamos). Las líneas novedosas y relevantes son
+
+1. La primera línea importando la función ``Cursor()`` para describir el
+   *cursor* o *mouse*:
+
+.. code:: python
+
+   from matplotlib.widgets import Cursor
+
+2. La línea en que usamos la función ``Cursor``
+
+.. code:: python
+
+   cursor = Cursor(ax, useblit=True, color='red', linewidth=2)
+
+que crea el objeto ``Cursor``. La forma de esta función es:
+
+.. code:: python
+
+   Cursor(ax, horizOn=True, vertOn=True, useblit=False, **lineprops)
+
+y toma como argumento el eje en el cuál agregamos el cursor. Como
+argumentos opcionales se puede controlar la visibilidad de la línea
+horizontal (``horizOn``) y vertical (``vertOn``) que pueden tomar
+valores lógicos ``True`` o ``False``. Además tiene argumentos *keyword*
+para controlar la apariencia de las líneas. En este ejemplo pusimos
+explícitamente que queremos una línea roja con un grosor igual a ``2``.
+
+Manejo de eventos
+~~~~~~~~~~~~~~~~~
+
+Para que la interactividad sea útil es importante obtener datos de
+nuestra interacción con el gráfico. Esto se obtiene con lo que se llama
+“manejo de eventos” (“Event handling”).
+
+Para recibir *events* necesitamos **escribir y conectar** una función
+que se activa cuando ocurre el evento (*callback*). Veamos un ejemplo
+simple pero importante, donde imprimimos las coordenadas donde se
+presiona el *mouse*.
+
+.. code:: python
+
+    # Mostramos la figura (sin interactividad)
+    %matplotlib inline
+    %run scripts/ejemplo_callback.py
+
+
+
+.. image:: figuras/14_3_imagenes_40_0.png
+
+
+
+.. parsed-literal::
+
+    <Figure size 640x480 with 0 Axes>
+
+
+.. code:: python
+
+   # Archivo: ejemplo_callback.py
+   import numpy as np
+   import matplotlib.pyplot as plt
+
+   fig, ax = plt.subplots()
+   ax.plot(np.random.rand(10), 'o-', lw=3)
+
+   def onclick(event):
+     print('button=%d, x=%d, y=%d, xdata=%f, ydata=%f' %
+           (event.button, event.x, event.y, event.xdata, event.ydata))
+
+   cid = fig.canvas.mpl_connect('button_press_event', onclick)
+   plt.show()
+
+.. image:: figuras/uso_callbacks1.png
+
+En este ejemplo utilizamos el método ``mpl_connect`` del objeto
+``canvas``.
+
+-  El objeto ``canvas`` es el área donde se dibuja la figura.
+
+-  La función ``mpl_connect`` realiza la conección de la función (que
+   aquí llamamos ``onclick``) con la figura. Esta función toma como
+   argumento el *event* (que, para nosotros, es interpretado
+   automaticamente por Matplotlib)
+
+-  El objeto ``event`` es de tipo ``button_press_event``. Se dispara
+   cuando apretamos un botón del *mouse* y *matplotlib* le pasa como
+   argumento un objeto del tipo ``event`` que contiene información.
+   Nosotros estamos imprimiendo la siguiente información que contiene
+   ``event`` por pantalla:
+
+   -  ``event.button``: indica que botón se presionó
+   -  ``event.x``, ``event.y``: dan la información sobre el índice en
+      los ejes horizontal y vertical
+   -  ``event.xdata, event.ydata``: dan los valores de los datos en los
+      ejes.
+
+Puede leer más información sobre el manejo de eventos en
+http://matplotlib.org/users/event_handling.html.
+
+Ejemplos integrados
+~~~~~~~~~~~~~~~~~~~
+
+Continuando con esta idea vamos a usar la capacidad de poder interactuar
+con el gráfico para elegir una zona del gráfico de la cuál obtenemos
+información sobre los datos.
+
+.. code:: python
+
+   # Archivo: scripts/analizar_figura_1.py
+
+   import matplotlib.pyplot as plt
+   from matplotlib.widgets import Cursor
+
+   img = plt.imread('../figuras/imagen_flujo_gray.jpg')
+   ymax = img.max()
+
+   def seleccionar(event):
+     """Secuencia:
+     1. Encuentro el punto donde el mouse hizo 'click'
+     2. Le doy valores a la línea vertical
+     3. Le doy valores a la curva en el grafico de la derecha
+     4. y 5. Grafico los nuevos valores
+     """
+     x0 = event.xdata
+     n0 = int(x0)
+     l1.set_data([[n0, n0], [0., 1.]])
+     l2.set_data(range(img.shape[0]), img[:, n0])
+     l1.figure.canvas.draw()
+     l2.figure.canvas.draw()
+
+
+   # Defino la figura
+   fig, (ax1, ax2) = plt.subplots(figsize=(12, 4), ncols=2)
+
+   # Mostramos la imagen como un mapa de grises
+   ax1.imshow(img, cmap='gray', interpolation='nearest')
+   ax1.axis('off')
+
+   # Agrego la línea inicial en un valor inicial
+   x0 = 100
+   l1 = ax1.axvline(x0, color='r', ls='--', lw=3)
+
+   # Grafico de la derecha
+   l2, = ax2.plot(img[:, x0], 'r-', lw=2, label='corte')
+   ax2.set_ylim((0, ymax))
+   ax2.set_xlabel(u'posición en eje $y$ (pixels)')
+   ax2.set_ylabel('Intensidad')
+   ax2.legend(loc='best')
+
+   fig.tight_layout()
+
+   # Agrego el cursor y conecto la accion de presionar a la funcion click
+   cursor = Cursor(ax1, horizOn=False, vertOn=True, useblit=True,
+                   color='blue', linewidth=1)
+   fig.canvas.mpl_connect('button_press_event', seleccionar)
+
+   plt.show()
+
+.. code:: python
+
+    %matplotlib tk
+    %run scripts/analizar_figura_1.py
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    OSError                                   Traceback (most recent call last)
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/core/magics/execution.py:696, in ExecutionMagics.run(self, parameter_s, runner, file_finder)
+        695     fpath = arg_lst[0]
+    --> 696     filename = file_finder(fpath)
+        697 except IndexError as e:
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/utils/path.py:91, in get_py_filename(name)
+         90 else:
+    ---> 91     raise IOError('File `%r` not found.' % name)
+
+
+    OSError: File `'scripts/analizar_figura_1.py'` not found.
+
+    
+    The above exception was the direct cause of the following exception:
+
+
+    Exception                                 Traceback (most recent call last)
+
+    /Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb Cell 45 in <cell line: 2>()
+          <a href='vscode-notebook-cell:/Users/flavioc/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb#X62sZmlsZQ%3D%3D?line=0'>1</a> get_ipython().run_line_magic('matplotlib', 'tk')
+    ----> <a href='vscode-notebook-cell:/Users/flavioc/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/cursos/Python/intro-python-IB-2022/clases/14_2_interactivo.ipynb#X62sZmlsZQ%3D%3D?line=1'>2</a> get_ipython().run_line_magic('run', 'scripts/analizar_figura_1.py')
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/core/interactiveshell.py:2285, in InteractiveShell.run_line_magic(self, magic_name, line, _stack_depth)
+       2283     kwargs['local_ns'] = self.get_local_scope(stack_depth)
+       2284 with self.builtin_trap:
+    -> 2285     result = fn(*args, **kwargs)
+       2286 return result
+
+
+    File /opt/miniconda3/lib/python3.9/site-packages/IPython/core/magics/execution.py:707, in ExecutionMagics.run(self, parameter_s, runner, file_finder)
+        705     if os.name == 'nt' and re.match(r"^'.*'$",fpath):
+        706         warn('For Windows, use double quotes to wrap a filename: %run "mypath\\myfile.py"')
+    --> 707     raise Exception(msg) from e
+        708 except TypeError:
+        709     if fpath in sys.meta_path:
+
+
+    Exception: File `'scripts/analizar_figura_1.py'` not found.
+
+
+Este es un ejemplo un poco más largo (y un poquito más complejo).
+
+1. Importamos los módulos y funciones necesarias.
+
+-  ``matplotlib.pyplot as plt`` para casi todo
+-  ``imageio`` para leer la figura
+-  ``from matplotlib.widgets import Cursor`` para importar el objeto
+   ``Cursor`` que nos muestra la posición del mouse.
+
+2. Leemos la imagen de archivo, creamos la figura y la mostramos.
+3. Elegimos un valor de :math:`x` inicial (igual a 100) y agregamos una
+   línea vertical en ese punto.
+4. Creamos la figura de la derecha con los datos tomados de la columna
+   correspondiente de la matriz que representa la imagen.
+5. Agregamos *labels* y ajustamos las distancias
+6. Mostramos el cursor y le conectamos el evento (standard)
+   ``button_press_event`` a nuestra función ``seleccionar()``.
+7. La función ``seleccionar()`` toma como argumento el evento que se
+   dispara por interacción con el usuario.
+   El argumento ``event`` lo pasa automáticamente *Matplotlib*. En este
+   caso es un *click* del mouse en una zona del gráfico.
+
+La función ``seleccionar(event)``: 1. Del argumento ``event`` extrae la
+posición en el eje horizontal y lo asigna a la variable ``x0``. 2. El
+índice en el eje horizontal (``n0``). 2. Actualiza los datos de la línea
+``l1`` con valores para la línea vertical en el panel izquierdo. 4.
+Actualiza la línea ``l2`` en la figura de la derecha con el corte en
+``x0``. 5. Actualiza el dibujo de las líneas sobre el *canvas*.
+
+El siguiente ejemplo es muy similar al anterior. Sólo estamos
+actualizando la leyenda, para tener información del punto seleccionado.
+
+.. code:: python
+
+    %run scripts/analizar_figura_2.py
+
+.. code:: python
+
+   # Archivo:analizar_figura_2.py
+   import matplotlib.pyplot as plt
+   from scipy import misc
+   from matplotlib.widgets import Cursor
+
+   img = plt.imread('../figuras/imagen_flujo_gray.jpg')
+   ymax = img.max()
+
+
+   def click(event):
+     """Secuencia:
+     1. Encuentro el punto donde el mouse hizo 'click'
+     2. Le doy valores a la línea vertical
+     3. Le doy valores a la curva en el grafico de la derecha
+     4. y 5. Grafico los nuevos valores
+     """
+     x0 = event.xdata
+     n0 = int(x0)
+     l1.set_data([[n0, n0], [0., 1.]])
+     l2.set_data(range(img.shape[0]), img[:, n0])
+     leg2.texts[0].set_text('corte en {:.1f}'.format(x0))
+     l1.figure.canvas.draw()
+     l2.figure.canvas.draw()
+
+
+   # Defino la figura
+   # Defino la figura
+   fig, (ax1, ax2) = plt.subplots(figsize=(12, 4), ncols=2)
+
+   ax1.imshow(img, cmap="gray", interpolation='nearest')
+   ax1.axis('off')
+   # Agrego la línea inicial en un valor inicial
+   x0 = 100
+   l1 = ax1.axvline(x0, color='r', ls='--', lw=3)
+
+   # Grafico de la derecha
+   l2, = ax2.plot(img[:, x0], 'r-', lw=2, label='corte en {:.1f}'.format(x0))
+   ax2.set_ylim((0, ymax))
+   ax2.set_xlabel(u'posición en eje $y$ (pixels)')
+   ax2.set_ylabel('Intensidad')
+   leg2 = ax2.legend(loc='best')
+
+   fig.tight_layout()
+
+   # Agrego el cursor y conecto la accion de presionar a la funcion click
+   cursor = Cursor(ax1, horizOn=False, vertOn=True, useblit=True,
+                   color='blue', linewidth=1)
+   fig.canvas.mpl_connect('button_press_event', click)
+
+   plt.show()
+
+Las diferencias más notables con el ejemplo anterior son:
+
+1. Al crear la leyenda, asignamos el objeto creado a la variable
+   ``leg2``, en la línea:
+
+.. code:: python
+
+   leg2 = ax2.legend(loc='best')
+
+2. En la función ``click(event)`` (equivalente a ``seleccionar(evento)``
+   en el ejemplo anterior) actualizamos el texto de la leyenda con el
+   valor de ``x0``:
+
+.. code:: python
+
+   leg2.texts[0].set_text('corte en {:.1f}'.format(x0))
+
+--------------
+
+Ejercicios 14 (c)
+-----------------
+
+4. Modificar el ejemplo anterior (**analizar_figura_2.py**) para
+   presentar tres gráficos, agregando a la izquierda un panel donde se
+   muestre el corte horizontal de la misma manera que en el ejercicio
+   anterior. Al seleccionar con el *mouse* debe mostrar los dos cortes
+   (horizontal y vertical).
+
+--------------
+
+.
