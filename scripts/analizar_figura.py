@@ -40,8 +40,8 @@ ax2.legend(loc='best')
 fig.tight_layout()
 
 # Agrego el cursor y conecto la accion de presionar a la funcion click
-cursor = Cursor(ax1, horizOn=False, vertOn=True, useblit=True,
+cursor = Cursor(ax1, horizOn=True, vertOn=True, useblit=True,
                 color='blue', linewidth=1)
-fig.canvas.mpl_connect('button_press_event', seleccionar)
+fig.canvas.mpl_connect('motion_notify_event', seleccionar)
 
 plt.show()
