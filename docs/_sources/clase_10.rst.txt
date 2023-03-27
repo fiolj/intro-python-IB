@@ -39,9 +39,8 @@ Vimos varios métodos que permiten crear e inicializar arrays
 .. parsed-literal::
 
     Array empty unid:
-     [4.65408517e-310 0.00000000e+000 2.94858377e-320 3.37446836e-321
-     6.91113211e+064 2.12199579e-314 4.65349601e-310 4.65349617e-310
-     1.06099790e-313 2.98020398e-320]
+     [ 38.06704666  62.77821128  87.4893759  112.20054053 136.91170515
+     161.62286977 186.33403439 211.04519901 235.75636364 241.64      ]
      ********************************************************************************
     Array zeros unid:
      [0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
@@ -388,7 +387,7 @@ Productos entre arrays y productos vectoriales
 
     ValueError                                Traceback (most recent call last)
 
-    Cell In [24], line 1
+    Cell In [112], line 1
     ----> 1 print(A*B)
 
 
@@ -402,59 +401,22 @@ Los productos se realizan “elemento a elemento”, si queremos obtener
 
     print(v1, '.', v2, '=', np.dot(v1, v2))
 
-
-.. parsed-literal::
-
-    [2 3 4] . [1 1 1] = 9
-
-
 .. code:: python
 
     print( A, 'x', v1, '=', np.dot(A, v1))
-
-
-
-.. parsed-literal::
-
-    [[ 1  3  5]
-     [ 7  9 11]] x [2 3 4] = [31 85]
 
 
 .. code:: python
 
     print(A.shape, B.shape)
 
-
-.. parsed-literal::
-
-    (2, 3) (3, 4)
-
-
 .. code:: python
 
     print( 'A x B = \n',np.dot(A, B) )
 
-
-.. parsed-literal::
-
-    A x B = 
-     [[ 56.5  65.5  74.5  83.5]
-     [137.5 164.5 191.5 218.5]]
-
-
 .. code:: python
 
     print( 'B^t x A^t =\n ',np.dot(B.T, A.T))
-
-
-.. parsed-literal::
-
-    B^t x A^t =
-      [[ 56.5 137.5]
-     [ 65.5 164.5]
-     [ 74.5 191.5]
-     [ 83.5 218.5]]
-
 
 Además, el módulo numpy.linalg incluye otras funcionalidades como
 determinantes, normas, determinación de autovalores y autovectores,
@@ -487,16 +449,6 @@ equal(x1, x2, /[, out, where, casting, …])      (x1 == x2)
     print(y)
     print(z)
 
-
-.. parsed-literal::
-
-    [0.01745329 0.53814319 1.05883308 1.57952297 2.10021287 2.62090276
-     3.14159265]
-    [ 10.          14.67799268  21.5443469   31.6227766   46.41588834
-      68.12920691 100.        ]
-    [-1.   3.   4.   0.5  2.   9.   0.7]
-
-
 .. code:: python
 
     c1 = x <= z
@@ -507,39 +459,13 @@ equal(x1, x2, /[, out, where, casting, …])      (x1 == x2)
     print(c3)
 
 
-
-.. parsed-literal::
-
-    [False  True  True False False  True False]
-    [ True  True  True  True  True  True  True]
-    [ True  True  True  True  True  True  True]
-
-
 .. code:: python
 
     c1                              # Veamos que tipo de array es:
 
-
-
-
-.. parsed-literal::
-
-    array([False,  True,  True, False, False,  True, False])
-
-
-
 .. code:: python
 
     np.sum(c1), np.sum(c2), c3.sum()
-
-
-
-
-.. parsed-literal::
-
-    (3, 7, 7)
-
-
 
 Como vemos, las comparaciones nos dan un vector de variables lógicas.
 Cuando queremos combinar condiciones no funciona usar las palabras
@@ -553,15 +479,6 @@ elementos (arrays completos).
     print(np.logical_and(c2, c3))
     print(c2 & c3)
 
-
-.. parsed-literal::
-
-    [False  True  True False False  True False]
-    [False  True  True False False  True False]
-    [ True  True  True  True  True  True  True]
-    [ True  True  True  True  True  True  True]
-
-
 .. code:: python
 
     print(np.logical_or(c1, c2))
@@ -569,26 +486,10 @@ elementos (arrays completos).
     print(np.logical_or(c2, c3))
     print(c2 | c3)
 
-
-.. parsed-literal::
-
-    [ True  True  True  True  True  True  True]
-    [ True  True  True  True  True  True  True]
-    [ True  True  True  True  True  True  True]
-    [ True  True  True  True  True  True  True]
-
-
 .. code:: python
 
     print(np.logical_xor(c1, c2))
     print(np.logical_xor(c2, c3))
-
-
-.. parsed-literal::
-
-    [ True False False  True  True False  True]
-    [False False False False False False False]
-
 
 Atributos de *arrays*
 ---------------------
@@ -619,24 +520,6 @@ reshape
     arr3= np.reshape(arr,(4,3))                # Le cambiamos la forma a matriz de 4x3
     print("Cambiando la forma a 4x3:\n", arr3)
 
-
-.. parsed-literal::
-
-    Vector original:
-     [ 0  1  2  3  4  5  6  7  8  9 10 11]
-    (12,)
-    Cambiando la forma a 3x4:
-     [[ 0  1  2  3]
-     [ 4  5  6  7]
-     [ 8  9 10 11]]
-    (3, 4)
-    Cambiando la forma a 4x3:
-     [[ 0  1  2]
-     [ 3  4  5]
-     [ 6  7  8]
-     [ 9 10 11]]
-
-
 .. code:: python
 
     arr2[0,0] = 5
@@ -646,36 +529,13 @@ reshape
 
     print(arr2)
 
-
-.. parsed-literal::
-
-    [[ 5  1  2  3]
-     [ 4  5  6  7]
-     [ 8 -9 10 11]]
-
-
 .. code:: python
 
     print(arr)
 
-
-.. parsed-literal::
-
-    [ 5  1  2  3  4  5  6  7  8 -9 10 11]
-
-
 .. code:: python
 
     print(arr3)
-
-
-.. parsed-literal::
-
-    [[ 5  1  2]
-     [ 3  4  5]
-     [ 6  7  8]
-     [-9 10 11]]
-
 
 .. code:: python
 
@@ -683,12 +543,6 @@ reshape
         arr.reshape((3,3))   # Si la nueva forma no es adecuada, falla
     except ValueError as e:
         print("Error: la nueva forma es incompatible:", e)
-
-
-.. parsed-literal::
-
-    Error: la nueva forma es incompatible: cannot reshape array of size 12 into shape (3,3)
-
 
 transpose
 ~~~~~~~~~
@@ -698,34 +552,12 @@ transpose
     print('Transpose:\n', arr2.T)
     print('Transpose:\n', np.transpose(arr2))
 
-
-.. parsed-literal::
-
-    Transpose:
-     [[ 5  4  8]
-     [ 1  5 -9]
-     [ 2  6 10]
-     [ 3  7 11]]
-    Transpose:
-     [[ 5  4  8]
-     [ 1  5 -9]
-     [ 2  6 10]
-     [ 3  7 11]]
-
-
 .. code:: python
 
     temp1 = arr2.T
     temp2 = np.transpose(arr2)
     print(temp1.base is temp2.base)
     print(temp1.base is arr2.base)
-
-
-
-.. parsed-literal::
-
-    True
-    True
 
 
 min, max
@@ -743,29 +575,9 @@ elegirse si se trabaja sobre uno de los ejes:
     print(np.max(arr2,axis=1))
 
 
-
-.. parsed-literal::
-
-    [[ 5  1  2  3]
-     [ 4  5  6  7]
-     [ 8 -9 10 11]]
-    11
-    [ 8  5 10 11]
-    [ 5  7 11]
-
-
 .. code:: python
 
     np.max(arr2[1,:])
-
-
-
-
-.. parsed-literal::
-
-    7
-
-
 
 El primer eje ``(axis=0)`` corresponde a las columnas (convención del
 lenguaje ``C``), y por lo tanto dará un valor por cada columna.
@@ -787,14 +599,6 @@ devuelve los índices en lugar de los valores.
     print(np.argmax(arr2,axis=1))
 
 
-
-.. parsed-literal::
-
-    11
-    [2 1 2 2]
-    [0 3 3]
-
-
 sum, prod, mean, std
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -806,30 +610,11 @@ sum, prod, mean, std
     print('sum, 1', np.sum(arr2,axis=1))
 
 
-
-.. parsed-literal::
-
-    [[ 5  1  2  3]
-     [ 4  5  6  7]
-     [ 8 -9 10 11]]
-    sum 53
-    sum, 0 [17 -3 18 21]
-    sum, 1 [11 22 20]
-
-
 .. code:: python
 
     print(np.prod(arr2))
     print(np.prod(arr2,axis=0))
     print(np.prod(arr2,axis=1))
-
-
-.. parsed-literal::
-
-    -199584000
-    [160 -45 120 231]
-    [   30   840 -7920]
-
 
 .. code:: python
 
@@ -838,16 +623,6 @@ sum, prod, mean, std
     print(np.mean(arr2,axis=1))
     print(np.std(arr2))
     print(np.std(arr2,axis=1))
-
-
-
-.. parsed-literal::
-
-    4.416666666666667 = 4.416666666666667
-    [ 5.66666667 -1.          6.          7.        ]
-    [2.75 5.5  5.  ]
-    4.9742391936411305
-    [1.47901995 1.11803399 8.15475322]
 
 
 cumsum, cumprod, trapz
@@ -860,78 +635,29 @@ acumulativo recorriendo el array, opcionalmente a lo largo de un eje
 
     print(arr2)
 
-
-.. parsed-literal::
-
-    [[ 5  1  2  3]
-     [ 4  5  6  7]
-     [ 8 -9 10 11]]
-
-
 .. code:: python
 
     # Suma todos los elementos anteriores y devuelve el array unidimensional
     print(arr2.cumsum())
-
-
-.. parsed-literal::
-
-    [ 5  6  8 11 15 20 26 33 41 32 42 53]
-
 
 .. code:: python
 
     # Para cada columna, en cada posición suma los elementos anteriores
     print(arr2.cumsum(axis=0))
 
-
-.. parsed-literal::
-
-    [[ 5  1  2  3]
-     [ 9  6  8 10]
-     [17 -3 18 21]]
-
-
 .. code:: python
 
     # En cada fila, el valor es la suma de todos los elementos anteriores de la fila
     print(arr2.cumsum(axis=1))
 
-
-.. parsed-literal::
-
-    [[ 5  6  8 11]
-     [ 4  9 15 22]
-     [ 8 -1  9 20]]
-
-
 .. code:: python
 
     arr2
-
-
-
-
-.. parsed-literal::
-
-    array([[ 5,  1,  2,  3],
-           [ 4,  5,  6,  7],
-           [ 8, -9, 10, 11]])
-
-
 
 .. code:: python
 
     # Igual que antes pero con el producto
     print(arr2.cumprod(axis=0))
-
-
-.. parsed-literal::
-
-    [[  5   1   2   3]
-     [ 20   5  12  21]
-     [160 -45 120 231]]
-
 
 La función trapz evalúa la integral a lo largo de un eje, usando la
 regla de los trapecios (la misma que nosotros programamos en un
@@ -942,23 +668,10 @@ ejercicio)
     print(np.trapz(arr2,axis=0))
     print(np.trapz(arr2,axis=1))
 
-
-.. parsed-literal::
-
-    [10.5  1.  12.  14. ]
-    [ 7.  16.5 10.5]
-
-
 .. code:: python
 
     # el valor por default de axis es -1
     print(np.trapz(arr2))
-
-
-.. parsed-literal::
-
-    [ 7.  16.5 10.5]
-
 
 nonzero
 ~~~~~~~
@@ -973,106 +686,30 @@ Devuelve una *tupla* de arrays, una por dimensión, que contiene los
     arr4[1,:2] = arr4[2,2:] = 0
     arr4
 
-
-
-
-.. parsed-literal::
-
-    array([[ 5,  1,  2,  3],
-           [ 0,  0,  6,  7],
-           [ 8, -9,  0,  0]])
-
-
-
 .. code:: python
 
     # Vemos que arr2 no se modifica al modificar arr4.
     arr2
 
-
-
-
-.. parsed-literal::
-
-    array([[ 5,  1,  2,  3],
-           [ 4,  5,  6,  7],
-           [ 8, -9, 10, 11]])
-
-
-
 .. code:: python
 
     np.nonzero(arr4)
-
-
-
-
-.. parsed-literal::
-
-    (array([0, 0, 0, 0, 1, 1, 2, 2]), array([0, 1, 2, 3, 2, 3, 0, 1]))
-
-
 
 .. code:: python
 
     np.transpose(arr4.nonzero())
 
-
-
-
-.. parsed-literal::
-
-    array([[0, 0],
-           [0, 1],
-           [0, 2],
-           [0, 3],
-           [1, 2],
-           [1, 3],
-           [2, 0],
-           [2, 1]])
-
-
-
 .. code:: python
 
     arr4[arr4.nonzero()]
-
-
-
-
-.. parsed-literal::
-
-    array([ 5,  1,  2,  3,  6,  7,  8, -9])
-
-
 
 .. code:: python
 
     arr4
 
-
-
-
-.. parsed-literal::
-
-    array([[ 5,  1,  2,  3],
-           [ 0,  0,  6,  7],
-           [ 8, -9,  0,  0]])
-
-
-
 .. code:: python
 
     arr4[([0,0], [2,3])]
-
-
-
-
-.. parsed-literal::
-
-    array([2, 3])
-
-
 
 Conveniencias con arrays
 ------------------------
@@ -1088,13 +725,6 @@ Convertir un array a unidimensional (ravel)
 
     print(a)
 
-
-.. parsed-literal::
-
-    [[1 2]
-     [3 4]]
-
-
 .. code:: python
 
     b= np.ravel(a)
@@ -1104,25 +734,9 @@ Convertir un array a unidimensional (ravel)
     print(a.shape, b.shape)
     print(b)
 
-
-.. parsed-literal::
-
-    (2, 2) (4,)
-    [1 2 3 4]
-
-
 .. code:: python
 
     b.base  is a
-
-
-
-
-.. parsed-literal::
-
-    True
-
-
 
 ``ravel`` tiene un argumento opcional ‘order’
 
@@ -1130,27 +744,9 @@ Convertir un array a unidimensional (ravel)
 
     np.ravel(a, order='C')          # order='C' es el default 
 
-
-
-
-.. parsed-literal::
-
-    array([1, 2, 3, 4])
-
-
-
 .. code:: python
 
     np.ravel(a, order='F')
-
-
-
-
-.. parsed-literal::
-
-    array([1, 3, 2, 4])
-
-
 
 El método ``flatten`` hace algo muy parecido a ``ravel``, la diferencia
 es que ``flatten`` siempre crea una nueva copia del array, mientras que
@@ -1165,7 +761,7 @@ es que ``flatten`` siempre crea una nueva copia del array, mientras que
 
 .. parsed-literal::
 
-    array([1, 2, 3, 4])
+    array([1, 3, 5])
 
 
 
@@ -1331,7 +927,7 @@ esta función en cada paso:
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x7f831be1ec10>]
+    [<matplotlib.lines.Line2D at 0x7f5ee1605a10>]
 
 
 
@@ -1357,7 +953,7 @@ que acepta arrays:
 
 .. parsed-literal::
 
-    [<matplotlib.lines.Line2D at 0x7f831bfea490>]
+    [<matplotlib.lines.Line2D at 0x7f5ed5d1c0d0>]
 
 
 
