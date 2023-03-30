@@ -1,0 +1,592 @@
+.. _clase_16:
+
+Clase 16: Programación funcional con Python
+============================================
+
+
+La programación funcional es un paradigma de programación, de la misma
+manera que otros paradigmas, como la programación orientada a objetos, o
+la programación estructurada.
+
+Existen lenguajes de programación que son directamente funcionales, esto
+es, implementan las reglas de la programación funcional directamente
+(por ejemplo, Lisp, Haskell, F#, etc.). Desde un punto de vista
+histórico, la programación funcional tiene su origen en la visión de
+Alonzo Church del problema de la decisión (*Entscheidungsproblem*), y es
+complementaria a la más conocida, propuesta por Alan Turing.
+
+Python es un lenguaje orientado a objetos (todo elemento del lenguaje es
+un objeto), de modo tal que no es posible hablar de un paradigma
+funcional en Python, sino mas bien de un *estilo* de programación
+funcional.
+
+Un trabajo interesante es el siguiente: ’Why Functional Programming
+Matters: http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf”.
+
+Los errores al programar
+------------------------
+
+En el continuo devenir de la programación, uno se encuentra,
+principalmente, resolviendo errores. Un resumen de los errores posibles
+en un código se pueden encontrar en la expresión
+
+   ``i = i+1``
+
+En esta expresión podemos encontrar tres tipos de errores:
+
+-  *Error de lectura* : el valor de ``i`` en el lado derecho no es el
+   que efectivamente uno desearía, es decir, el código está leyendo un
+   valor incorrecto.
+
+-  *Error de escritura* : el valor de ``i`` en el lado izquierdo no es
+   el que efectivamente uno desearía, es decir, estamos guardando la
+   expresión en una variable incorrecta.
+
+-  *Error de cómputo* : que se produce, por ejemplo, porque no queremos
+   sumar 1 sino 2, o queremos restar el valor de i.
+
+Existe un cuarto tipo de error que aparece y tiene que ver con un *error
+de flujo*, en el cual el código se ejecuta en una rama que no es la
+deseada, debido a que una condición lógica no se cumple tal como se
+esperaba. O por ejemplo, el orden en que se ejecutan las sentencias no
+es el adecuado:
+
+.. code:: python
+
+    # Función que calcula (x+1)(x+2)
+    def f(x):
+        x = x+1 
+        y = x+1
+        return x*y
+
+.. code:: python
+
+    # Función que calcula (x+1)(x+2) ?? Mmmm.....
+    def g(x):
+        y = x+1
+        x = x+1 
+        return x*y
+
+.. code:: python
+
+    print(f(3))
+    print(g(3))
+
+
+.. parsed-literal::
+
+    20
+    16
+
+
+Los errores en notebooks
+------------------------
+
+Además de las complejidades propias de la programación, que están
+asociadas al *dominio* donde se encuentra el problema que uno quiere
+resolver, y a las dificultades que eso implica; los *notebooks*
+introducen también una dificultad adicional: uno puede redefinir los
+datos en celdas posteriores, pero puede volver ‘atrás’ en el código y
+recalcular otra celda. Veamos un
+`ejemplo <https://verve.com/blog/jupyter-notebooks/>`__:
+
+.. code:: python
+
+    data = [1,2,3,4]
+
+.. code:: python
+
+    def prom(a):
+        s = sum(a)
+        n = len(a)
+        return s/n
+
+.. code:: python
+
+    prom(data)
+
+
+
+
+.. parsed-literal::
+
+    2.5
+
+
+
+.. figure:: https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/60d33beacf4ba7263a23cd79_qh6ImC4NPdyPbvn-7ns8FYsgOskDPDWLnX31mLCOgSwpX_SQgmo8krqdg4e6XAnSbqRAtZMYqlf7UTvlHiXgt5YtMwbt9IRY1fAbOjyq5hARui-xEQUgI48EOjhJGuIsSFDg90L6.jpeg
+   :alt: Más código
+
+   Más código
+
+.. code:: python
+
+    data = "Some data"
+    print(len(data))
+
+
+.. parsed-literal::
+
+    9
+
+
+Mutabilidad
+-----------
+
+Los problemas que vemos arriba se deben a la *mutabilidad*: las
+*variables* pueden cambiar (esto es, ser reescritas) a lo largo del
+código. Ahora bien, pareciera que la mutabilidad es intrínseca a la
+computación, al fin y al cabo, en el hardware hay una cantidad limitada
+de memoria y de registros que son continuamente reescritos para que
+nuestro código corra. Sin embargo, los lenguajes de programación de alto
+nivel que usamos nos alejan (afortunadamente) del requerimiento de
+mantener el estado de la memoria y los registros explícitamente en el
+código (y en el algoritmo en nuestra cabeza).
+
+La pregunta que cabe entonces es ¿cómo hacer un código que prevenga la
+mutabilidad, pero que a la vez me permita transformar los datos para
+resolver mi problema? La respuesta viene de la mano de un ente muy
+conocido en mátemáticas: *las funciones*
+
+Funciones
+---------
+
+Una función desde el punto de vista matemático es una relación que a
+cada elemento de un conjunto le asocia exactamente un elemento de otro
+conjunto. Estos conjuntos pueden ser números, vectores, matrices en el
+mundo matemático,
+
+.. raw:: html
+
+   <h3>
+
+.. raw:: html
+
+   <center>
+
+:math:`y = f(x)`
+
+.. raw:: html
+
+   </center>
+
+.. raw:: html
+
+   </h3>
+
+o, en un mundo más físico, peras, manzanas, nombres, apellidos, `objetos
+varios <https://commons.wikimedia.org/w/index.php?curid=20802095>`__:
+
+.. figure:: figuras/Function_color_example_3.png
+   :alt: una funcion
+
+   una funcion
+
+Estas funciones tienen dos características fundamentales para usar en
+programación: - Permiten “transformar” un valor en otro - El valor
+original **no** se modifica
+
+Es decir que el uso de funciones, al estilo matemático, en un código
+resuelven el problema de la mutabilidad, pero a la vez me permiten
+“transformar”, es decir, crear nuevos valores a partir del valor
+original.
+
+Funciones puras
+~~~~~~~~~~~~~~~
+
+El análogo computacional de las funciones matemáticas se llaman
+*funciones puras*. Una función se dice pura cuando: - Siempre retorna el
+mismo valor de salida para el mismo valor de entrada - No tiene efectos
+colaterales (*side effects*)
+
+.. figure:: figuras/afunction.png
+   :alt: una funcion
+
+   una funcion
+
+Funciones de primer orden o primera clase
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Un lenguaje se dice que tiene funciones de primera clase cuando son
+tratadas exactamente igual que otros valores o variables.
+
+Funciones de orden superior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Un lenguaje que permite pasar funciones como argumentos se dice que
+acepta funciones de orden superior.
+
+.. code:: python
+
+    def square(x):
+        return x*x
+
+.. code:: python
+
+    def next(x):
+        return x+1 
+
+.. code:: python
+
+    a = 4
+    b = next(a)
+    c = next(next(a))
+
+.. code:: python
+
+    print(a)
+    print(b)
+    print(c)
+
+
+.. parsed-literal::
+
+    4
+    5
+    6
+
+
+.. code:: python
+
+    def h(x):
+        return (next(x))*(next(next(x)))
+
+.. code:: python
+
+    print(h(3))
+
+
+.. parsed-literal::
+
+    20
+
+
+Si se tiene funciones puras, es posible componerlas
+
+.. code:: python
+
+    def compose(f, g):
+        return lambda x: f(g(x))
+
+.. code:: python
+
+    next2 = compose(next,next)
+
+.. code:: python
+
+    print(next2(a))
+
+
+.. parsed-literal::
+
+    6
+
+
+Inmutabilidad
+-------------
+
+Usando funciones puras se garantiza la inmutabilidad de los valores
+hacia adentro de la función. Pero, ¿qué sucede afuera? Python, al no ser
+un lenguaje funcional *per se*, no tiene la capacidad de establecer la
+inmutabilidad de cualquier valor, excepto para los casos de strings y
+tuplas, además, obviamente, de las expresiones literales.
+
+**Queda entonces en el programador la responsabilidad de no mutar los
+datos…**
+
+**… o usar anotaciones de tipos**
+
+.. code:: python
+
+    def cube(x: int) -> int:
+        return x*x*x
+
+.. code:: python
+
+    print(cube(2))
+
+
+.. parsed-literal::
+
+    8
+
+
+Nótese que Python NO chequea los tipos de datos, no tiene manera en
+forma nativa de hacerlo. Por eso puedo ejecutar la función ``cube`` con
+floats, por ejemplo:
+
+.. code:: python
+
+    print(cube(3.0))
+
+
+.. parsed-literal::
+
+    27.0
+
+
+Para poder utilizar la anotación de tipos en forma efectiva, se puede
+recurrir a ```mypy`` <http://mypy-lang.org/index.html>`__. Esta es una
+aplicación que me permite comprobar tipos de datos anotados en Python.
+Para instalar ``mypy`` usamos:
+
+``conda install mypy``
+
+.. code:: python
+
+    cd mypy_example
+
+
+.. parsed-literal::
+
+    /Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/curso-python/mypy_example
+
+
+.. code:: python
+
+    !cat cube.py
+
+
+.. parsed-literal::
+
+    def cube(x: int) -> int:
+    	return x*x*x
+    
+    def Hola(name: str) -> str:
+        return 'Hola ' + name	
+    
+    def Hola2(name):
+        return 'Hola ' + name	
+    
+    
+    
+    
+    if __name__ == "__main__":
+    	
+    	a = cube(2)
+    
+    	print(a)
+    
+    	b = cube(3.0)   # Esto no da error en Python, mypy si lo captura
+    
+    	print(b)
+    
+    	print(Hola('Juan'))
+    	print(Hola2(3)) # Esto da un error de concatenación
+    
+    	print(Hola(3)) # Esto da un error de concatenación, y además mypy lo captura
+    	
+
+.. code:: python
+
+    !python3 cube.py
+
+
+.. parsed-literal::
+
+    8
+    27.0
+    Hola Juan
+    Traceback (most recent call last):
+      File "/Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/curso-python/mypy_example/cube.py", line 24, in <module>
+        print(Hola2(3)) # Esto da un error de concatenación
+      File "/Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/curso-python/mypy_example/cube.py", line 8, in Hola2
+        return 'Hola ' + name	
+    TypeError: can only concatenate str (not "int") to str
+
+
+.. code:: python
+
+    !mypy cube.py
+
+
+.. parsed-literal::
+
+    cube.py:19: [1m[31merror:[m Argument 1 to [m[1m"cube"[m has incompatible type [m[1m"float"[m; expected [m[1m"int"[m[m
+    cube.py:26: [1m[31merror:[m Argument 1 to [m[1m"Hola"[m has incompatible type [m[1m"int"[m; expected [m[1m"str"[m[m
+    [1m[31mFound 2 errors in 1 file (checked 1 source file)[m
+
+
+Es posible que uno quiera usar ``mypy`` sobre un archivo de notebook
+``ipynb``. Para eso hay que instalar la aplicación ``nbQA`` `más
+detalles acá <https://github.com/nbQA-dev/nbQA>`__.
+
+No más loops
+------------
+
+Si las funciones deben ser puras, y las ‘variables’ dejan de ser
+variables y pasan a ser valores, entonces no puede haber loops en mi
+código. Un loop necesita invariablemente un contador (``i = i+1``) que
+necesariamente es una variable mutable. Así que así nomás, de un plumazo
+no existen más loops.
+
+¿Entonces? Entonces, todos los loops se reemplazan por llamados a
+funciones recursivas, o se utilizan funciones de orden superior:
+
+.. code:: python
+
+    # Filter 
+    
+    l = [1,2,3,4,5,6]
+    
+    def es_par(x):
+        return (x%2 == 0)
+    
+    pares = list(filter(es_par,l))
+    print(pares)
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6]
+
+
+.. code:: python
+
+    # Filter usando list comprehension
+    list(x for x in l if es_par(x))
+
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6]
+
+
+
+.. code:: python
+
+    # Map
+    siguientes = list(map(next,l))
+    print(siguientes)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 5, 6, 7]
+
+
+El módulo ``functools`` provee la función ``reduce``, que complementa a
+``map`` y ``filter``.
+
+.. code:: python
+
+    # Reduce
+    from functools import *
+    import operator
+    
+    # Suma usando el predicado desde el módulo `operator`
+    suma = reduce(operator.add,l,0)
+    print(suma)
+    
+
+
+
+.. parsed-literal::
+
+    21
+
+
+.. code:: python
+
+    help(reduce)
+
+
+.. parsed-literal::
+
+    Help on built-in function reduce in module _functools:
+    
+    reduce(...)
+        reduce(function, sequence[, initial]) -> value
+        
+        Apply a function of two arguments cumulatively to the items of a sequence,
+        from left to right, so as to reduce the sequence to a single value.
+        For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates
+        ((((1+2)+3)+4)+5).  If initial is present, it is placed before the items
+        of the sequence in the calculation, and serves as a default when the
+        sequence is empty.
+    
+
+
+.. code:: python
+
+    # Suma usando el predicado como lambda
+    otra_suma = reduce(lambda x,y: x+y, l)
+    print(otra_suma)
+
+
+.. parsed-literal::
+
+    21
+
+
+.. code:: python
+
+    # Suma definiendo la propia función suma
+    def add(x,y):
+        return x+y
+    
+    y_otra_suma = reduce(add,l)
+    print(y_otra_suma)
+
+
+.. parsed-literal::
+
+    21
+
+
+La suma de los cuadrados de una lista:
+
+.. code:: python
+
+    suma_cuadrados = reduce(lambda x,y: x+y, map(square,l))
+    print(suma_cuadrados)
+
+
+.. parsed-literal::
+
+    91
+
+
+--------------
+
+Ejercicios 16
+-------------
+
+1. Construya una función ``partition(lst,predicate)`` que dada una lista
+   ``lst`` y una función ``predicate``, separe la lista ``lst`` en dos:
+   una lista que contiene los valores para los cuales la función
+   ``predicate`` devuelve ``True``, y otra lista que contiene los
+   valores para los que ``predicate`` devuelve ``False``:
+
+   .. code:: python
+
+      def is_even(x):
+          return x % 2 == 0
+
+      numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      evens, odds = divide_list(numbers, is_even)
+
+      print(evens) # Output: [2, 4, 6, 8, 10]
+      print(odds)  # Output: [1, 3, 5, 7, 9]
+
+2. Dado la cadena de caracteres
+
+   .. code:: python
+
+      s1='En un lugar de la Mancha de cuyo nombre no quiero acordarme'
+
+   Utilice ``reduce``, ``map`` y/o ``filter`` (y las funciones
+   auxiliares necesarias) para:
+
+   -  Obtener la cantidad de caracteres.
+   -  Imprimir la frase anterior pero con cada palabra empezando en
+      mayúsculas.
+   -  Contar cuantas letras ‘a’ tiene la frase.
+   -  Contar cuántas vocales tiene.
+
+--------------
+
+
