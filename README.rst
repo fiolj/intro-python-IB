@@ -34,11 +34,6 @@ Internacional <http://creativecommons.org/licenses/by-sa/4.0/>`__.
 
 
 Bibliografía
-------------
-
-Se ha logrado constituir una gran comunidad en torno a Python, y en particular a las aplicaciones científicas en python, por lo que existe mucha información disponible. En la preparación de estas clases se leyó/tomó inspiración y se copió/adaptó material de las siguientes fuentes:
-
-Accesible en línea
 ~~~~~~~~~~~~~~~~~~
 
 -  `La documentación oficial de Python <https://docs.python.org/3/>`__
