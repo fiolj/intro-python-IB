@@ -18,7 +18,7 @@ Juan Fiol
 Version
 -------
 
-IB - 2022
+IB - 2023
 
 
 Licencia
@@ -73,7 +73,7 @@ Otras referencias de interés
     - `<http://mathesaurus.sourceforge.net/matlab-numpy.html>`__
     
 
-Blogs y otras publicaciones
+*Blogs* y otras publicaciones
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
  - `The Glowing Python <http://glowingpython.blogspot.com.ar/>`__
@@ -87,7 +87,7 @@ Programa tentativo
 ------------------
 
 :Autor: Juan Fiol
-:Version: Revision: 2022
+:Version: Revision: 2023
 :Copyright: Libre
 
 
