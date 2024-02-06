@@ -57,6 +57,19 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-02-a">Ejercicios 02 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tipos-simples-numeros">Tipos simples: Números</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tipos-compuestos">Tipos compuestos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#strings-secuencias-de-caracteres">Strings: Secuencias de caracteres</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#operaciones">Operaciones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteracion-y-metodos-de-strings">Iteración y Métodos de Strings</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#indexado-de-strings">Indexado de <em>strings</em></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#formato-de-strings">Formato de strings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#conversion-de-tipos">Conversión de tipos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-02-b">Ejercicios 02 (b)</a></li>
 </ul>
 </li>
 </ul>
@@ -334,6 +347,677 @@ se encuentran inscriptos en un círculo de radio unidad?</p></li>
 </li>
 </ol>
 <p>En todos los casos, pruebe las funciones escritas</p>
+</section>
+<hr class="docutils" />
+<section id="tipos-simples-numeros">
+<h2>Tipos simples: Números<a class="headerlink" href="#tipos-simples-numeros" title="Enlace permanente a este encabezado"></a></h2>
+<ul class="simple">
+<li><p>Números Enteros</p></li>
+<li><p>Números Reales o de punto flotante</p></li>
+<li><p>Números Complejos</p></li>
+</ul>
+<p>Mencionamos anteriormente que todos las entidades en Python son objetos,
+que tienen al menos tres atributos: tipo, valor e identidad. Pero
+además, puede tener otros atributos como datos o métodos. Por ejemplo
+los números enteros, unos de los tipos más simples que usaremos, tienen
+métodos que pueden resultar útiles en algunos contextos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>                           <span class="c1"># Números enteros</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">a</span><span class="o">.</span><span class="n">bit_length</span><span class="p">(),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;int&#39;&gt;
+2
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="mi">127</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="o">.</span><span class="n">bit_length</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;int&#39;&gt;
+7
+</pre></div>
+</div>
+<p>En estos casos, usamos el método <code class="docutils literal notranslate"><span class="pre">bit_length</span></code> de los enteros, que nos
+dice cuántos bits son necesarios para representar un número. Para verlo
+utilicemos la función <code class="docutils literal notranslate"><span class="pre">bin()</span></code> que nos da la representación en binario
+de un número entero</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># bin nos da la representación en binarios</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">a</span><span class="o">.</span><span class="n">bit_length</span><span class="p">(),</span><span class="s2">&quot;bits&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="nb">bin</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">bit_length</span><span class="p">(),</span><span class="s2">&quot;bits&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span> <span class="o">=</span> <span class="mb">0b11</span> <span class="o">-&gt;</span> <span class="mi">2</span> <span class="n">bits</span>
+<span class="mi">127</span> <span class="o">=</span> <span class="mb">0b1111111</span> <span class="o">-&gt;</span> <span class="mi">7</span> <span class="n">bits</span>
+</pre></div>
+</div>
+<p>Esto nos dice que el número <code class="docutils literal notranslate"><span class="pre">3</span></code> se puede representar con dos bits, y
+que para representar el número <code class="docutils literal notranslate"><span class="pre">127</span></code> se necesitan 7 bits.</p>
+<p>Los números de punto flotante también tienen algunos métodos definidos.
+Por ejemplo podemos saber si un número flotante corresponde a un entero:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.0</span>
+<span class="n">b</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mf">142.25</span>
+<span class="n">c</span><span class="o">.</span><span class="n">is_integer</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
+</pre></div>
+</div>
+<p>o podemos expresarlo como el cociente de dos enteros, o en forma
+hexadecimal</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">.</span><span class="n">as_integer_ratio</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">569</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mh">0x1</span><span class="mf">.1</span><span class="n">c80000000000p</span><span class="o">+</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p>Acá la notación, compartida con otros lenguajes (C, Java), significa:</p>
+<p><code class="docutils literal notranslate"><span class="pre">[sign]</span> <span class="pre">['0x']</span> <span class="pre">integer</span> <span class="pre">['.'</span> <span class="pre">fraction]</span> <span class="pre">['p'</span> <span class="pre">exponent]</span></code></p>
+<p>Entonces ‘0x1.1c8p+7’ corresponde a:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mf">1.</span><span class="o">/</span><span class="mi">16</span> <span class="o">+</span> <span class="mf">12.</span><span class="o">/</span><span class="mi">16</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">8.</span><span class="o">/</span><span class="mi">16</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mf">2.0</span><span class="o">**</span><span class="mi">7</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">142.25</span>
+</pre></div>
+</div>
+<p>Recordemos, como último ejemplo, los números complejos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span><span class="n">j</span>
+<span class="n">zc</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">conjugate</span><span class="p">()</span>              <span class="c1"># Método que devuelve el conjugado</span>
+<span class="n">zr</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">real</span>                     <span class="c1"># Componente, parte real</span>
+<span class="n">zi</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">imag</span>                     <span class="c1"># Componente, parte imaginaria</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zc</span><span class="p">,</span> <span class="n">zr</span><span class="p">,</span> <span class="n">zi</span><span class="p">,</span> <span class="n">zc</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="n">j</span><span class="p">)</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="n">j</span><span class="p">)</span> <span class="mf">1.0</span> <span class="mf">2.0</span> <span class="o">-</span><span class="mf">2.0</span>
+</pre></div>
+</div>
+</section>
+<section id="tipos-compuestos">
+<h2>Tipos compuestos<a class="headerlink" href="#tipos-compuestos" title="Enlace permanente a este encabezado"></a></h2>
+<p>En Python, además de los tipos simples (números y booleanos, entre
+ellos) existen tipos compuestos, que pueden contener más de un valor de
+algún tipo. Entre los tipos compuestos más importantes vamos a
+referirnos a:</p>
+<ul>
+<li><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.python.org/es/3/library/stdtypes.html#text-sequence-type-str">Strings</a></div>
+<div class="line">Se pueden definir con comillas dobles ( ” ), comillas simples ( ’
+), o tres comillas (simples o dobles). Comillas (dobles) y comillas
+simples producen el mismo resultado. Sólo debe asegurarse que se
+utiliza el mismo tipo para abrir y para cerrar el <em>string</em></div>
+<div class="line">Ejemplo: <code class="docutils literal notranslate"><span class="pre">s</span> <span class="pre">=</span> <span class="pre">&quot;abc&quot;</span></code> (el elemento <code class="docutils literal notranslate"><span class="pre">s[0]</span></code> tiene el valor
+<code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>).</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.python.org/es/3/library/stdtypes.html#sequence-types-list-tuple-range">Listas</a></div>
+<div class="line">Las listas son tipos que pueden contener más de un elemento de
+cualquier tipo. Los tipos de los elementos pueden ser diferentes.
+Las listas se definen separando los diferentes valores con comas,
+encerrados entre corchetes. Se puede referir a un elemento por su
+índice.</div>
+<div class="line">Ejemplo: <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">[&quot;a&quot;,1,</span> <span class="pre">0.5</span> <span class="pre">+</span> <span class="pre">1j]</span></code> (el elemento <code class="docutils literal notranslate"><span class="pre">L[0]</span></code> es igual
+al <em>string</em> <code class="docutils literal notranslate"><span class="pre">&quot;a&quot;</span></code>).</div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.python.org/es/3/library/stdtypes.html#sequence-types-list-tuple-range">Tuplas</a></div>
+<div class="line">Las tuplas se definen de la misma manera que las listas pero con
+paréntesis en lugar de corchetes. Ejemplo:
+<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">=</span> <span class="pre">(&quot;a&quot;,1,</span> <span class="pre">0.5</span> <span class="pre">+</span> <span class="pre">1j).</span></code></div>
+</div>
+</li>
+<li><div class="line-block">
+<div class="line"><a class="reference external" href="https://docs.python.org/es/3/library/stdtypes.html#mapping-types-dict">Diccionarios</a></div>
+<div class="line">Los diccionarios son contenedores a cuyos elementos se los
+identifica con un nombre (<em>key</em>) en lugar de un índice. Se los
+puede definir dando los pares <code class="docutils literal notranslate"><span class="pre">key:value</span></code> entre llaves</div>
+<div class="line">Ejemplo: <code class="docutils literal notranslate"><span class="pre">D</span> <span class="pre">=</span> <span class="pre">{'a':</span> <span class="pre">1,</span> <span class="pre">'b':</span> <span class="pre">2,</span> <span class="pre">1:</span> <span class="pre">'hola',</span> <span class="pre">2:</span> <span class="pre">3.14}</span></code> (el elemento
+<code class="docutils literal notranslate"><span class="pre">D['a']</span></code> es igual al número 1).</div>
+</div>
+</li>
+</ul>
+</section>
+<section id="strings-secuencias-de-caracteres">
+<h2>Strings: Secuencias de caracteres<a class="headerlink" href="#strings-secuencias-de-caracteres" title="Enlace permanente a este encabezado"></a></h2>
+<p>Una cadena o <em>string</em> es una <strong>secuencia</strong> de caracteres (letras,
+“números”, símbolos).</p>
+<p>Se pueden definir con comillas, comillas simples, o tres comillas
+(simples o dobles). Comillas simples o dobles producen el mismo
+resultado. Sólo debe asegurarse que se utilizan el mismo tipo para abrir
+y para cerrar el <em>string</em></p>
+<p>Triple comillas (simples o dobles) sirven para incluir una cadena de
+caracteres en forma textual, incluyendo saltos de líneas.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saludo</span> <span class="o">=</span> <span class="s1">&#39;Hola Mundo&#39;</span>           <span class="c1"># Definición usando comillas simples</span>
+<span class="n">saludo2</span> <span class="o">=</span> <span class="s2">&quot;Hola Mundo&quot;</span>          <span class="c1"># Definición usando comillas dobles</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saludo</span><span class="p">,</span> <span class="n">saludo2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;Hola Mundo&#39;</span><span class="p">,</span> <span class="s1">&#39;Hola Mundo&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saludo</span> <span class="o">==</span> <span class="n">saludo2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<p>Los <em>strings</em> se pueden definir <strong>equivalentemente</strong> usando comillas
+simples o dobles. De esta manera es fácil incluir comillas dentro de los
+<em>strings</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">otro</span><span class="o">=</span> <span class="s2">&quot;that&#39;s all&quot;</span>
+<span class="n">dijo</span> <span class="o">=</span> <span class="s1">&#39;&quot;Cómo te va&quot; dijo el murguista a la muchacha&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">otro</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">that</span><span class="s1">&#39;s all</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dijo</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Cómo te va&quot;</span> <span class="n">dijo</span> <span class="n">el</span> <span class="n">murguista</span> <span class="n">a</span> <span class="n">la</span> <span class="n">muchacha</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">respondio</span> <span class="o">=</span> <span class="s2">&quot;Le dijo </span><span class="se">\&quot;</span><span class="s2">Bien</span><span class="se">\&quot;</span><span class="s2"> y lo dejó como si nada&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">respondio</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Le</span> <span class="n">dijo</span> <span class="s2">&quot;Bien&quot;</span> <span class="n">y</span> <span class="n">lo</span> <span class="n">dejó</span> <span class="n">como</span> <span class="n">si</span> <span class="n">nada</span>
+</pre></div>
+</div>
+<p>Para definir <em>strings</em> que contengan más de una línea, manteniendo el
+formato, se pueden utilizar tres comillas (dobles o simples):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Texto_largo</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Aquí me pongo a cantar</span>
+<span class="s1">  Al compás de la vigüela,</span>
+<span class="s1">Que el hombre que lo desvela</span>
+<span class="s1">  Una pena estraordinaria</span>
+<span class="s1">Como la ave solitaria</span>
+<span class="s1">  Con el cantar se consuela.&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">Texto_largo</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aquí</span> <span class="n">me</span> <span class="n">pongo</span> <span class="n">a</span> <span class="n">cantar</span>
+  <span class="n">Al</span> <span class="n">compás</span> <span class="n">de</span> <span class="n">la</span> <span class="n">vigüela</span><span class="p">,</span>
+<span class="n">Que</span> <span class="n">el</span> <span class="n">hombre</span> <span class="n">que</span> <span class="n">lo</span> <span class="n">desvela</span>
+  <span class="n">Una</span> <span class="n">pena</span> <span class="n">estraordinaria</span>
+<span class="n">Como</span> <span class="n">la</span> <span class="n">ave</span> <span class="n">solitaria</span>
+  <span class="n">Con</span> <span class="n">el</span> <span class="n">cantar</span> <span class="n">se</span> <span class="n">consuela</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Texto_largo</span>
+</pre></div>
+</div>
+<pre class="literal-block">'Aquí me pongo a cantarn  Al compás de la vigüela,nQue el hombre que lo desvelan  Una pena estraordinarianComo la ave solitarian  Con el cantar se consuela.'</pre>
+<p>En <code class="docutils literal notranslate"><span class="pre">Python</span></code> se puede utilizar cualquier caracter que pueda ingresarse
+por teclado, ya que por default Python-3 trabaja usando la codificación
+UTF-8, que incluye todos los símbolos que se nos ocurran. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Un ejemplo que puede interesarnos un poco más:</span>
+<span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;σ = λ T/ µ + π · δξ&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;tipo de label: &#39;</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Resultados corresponden a:&#39;</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="s1">&#39; (en m/s²)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tipo de label:  &lt;class &#39;str&#39;&gt;
+Resultados corresponden a: σ = λ T/ µ + π · δξ  (en m/s²)
+</pre></div>
+</div>
+<section id="operaciones">
+<h3>Operaciones<a class="headerlink" href="#operaciones" title="Enlace permanente a este encabezado"></a></h3>
+<p>En <strong>Python</strong> ya hay definidas algunas operaciones que involucran
+<em>strings</em> como la suma (composición o concatenación) y el producto por
+enteros (repetición).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">saludo</span> <span class="o">+</span> <span class="s1">&#39; -&gt; &#39;</span> <span class="o">+</span> <span class="n">otro</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">s</span> <span class="o">+</span> <span class="s2">&quot;chau&quot;</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="c1">#  Suma de strings</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hola</span> <span class="n">Mundo</span> <span class="o">-&gt;</span> <span class="n">that</span><span class="s1">&#39;s all    chau</span>
+</pre></div>
+</div>
+<p>Como vemos la suma de <em>strings</em> es simplemente la concatenación de los
+argumentos. La multiplicación de un entero <code class="docutils literal notranslate"><span class="pre">n</span></code> por un <em>string</em> es
+simplemente la suma del string <code class="docutils literal notranslate"><span class="pre">n</span></code> veces:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;1&#39;</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1 &lt;class &#39;str&#39;&gt;
+1 &lt;class &#39;int&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Multiplicación por enteros de strings:&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="o">*</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Multiplicación por enteros de enteros:&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="o">*</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Multiplicación</span> <span class="n">por</span> <span class="n">enteros</span> <span class="n">de</span> <span class="n">strings</span><span class="p">:</span> <span class="mi">1111111</span>
+<span class="n">Multiplicación</span> <span class="n">por</span> <span class="n">enteros</span> <span class="n">de</span> <span class="n">enteros</span><span class="p">:</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<p>La longitud de una cadena de caracteres (como de otros objetos) se puede
+calcular con la función <code class="docutils literal notranslate"><span class="pre">len()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;longitud del saludo =&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">saludo</span><span class="p">),</span> <span class="s1">&#39;caracteres&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">longitud</span> <span class="k">del</span> <span class="n">saludo</span> <span class="o">=</span> <span class="mi">10</span> <span class="n">caracteres</span>
+</pre></div>
+</div>
+<p>Por ejemplo, podemos usar estas operaciones para realizar el centrado
+manual de una frase:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">titulo</span> <span class="o">=</span> <span class="s2">&quot;Centrado manual simple&quot;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">60</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">titulo</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># Para un ancho de 60 caracteres</span>
+<span class="nb">print</span> <span class="p">((</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="s1">&#39;&lt;&#39;</span><span class="p">,</span> <span class="n">titulo</span> <span class="p">,(</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="s1">&#39;&gt;&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">saludo</span> <span class="o">=</span> <span class="s1">&#39;Hola Mundo&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">60</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">saludo</span><span class="p">))</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># Para un ancho de 60 caracteres</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">saludo</span><span class="p">,</span> <span class="n">n</span><span class="o">*</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block">&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Centrado manual simple &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;
+<strong>*********************</strong> Hola Mundo <strong>*********************</strong></pre>
+</section>
+<section id="iteracion-y-metodos-de-strings">
+<h3>Iteración y Métodos de Strings<a class="headerlink" href="#iteracion-y-metodos-de-strings" title="Enlace permanente a este encabezado"></a></h3>
+<p>Los <em>strings</em> poseen varias cualidades y funcionalidades. Por ejemplo:</p>
+<ul class="simple">
+<li><p>Se puede iterar sobre ellos, y también quedarse con sólo una parte
+(slicing)</p></li>
+<li><p>Tienen métodos (funciones que se aplican a su <em>dueño</em>)</p></li>
+</ul>
+<p>Veamos en primer lugar cómo se hace para seleccionar parte de un
+<em>string</em></p>
+<section id="indexado-de-strings">
+<h4>Indexado de <em>strings</em><a class="headerlink" href="#indexado-de-strings" title="Enlace permanente a este encabezado"></a></h4>
+<p>Podemos referirnos a un caracter o una parte de una cadena de caracteres
+mediante su índice. Los índices en <strong>Python</strong> empiezan en 0.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;0123456789&quot;</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Primer caracter  :&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Segundo caracter :&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Primer</span> <span class="n">caracter</span>  <span class="p">:</span> <span class="mi">0</span>
+<span class="n">Segundo</span> <span class="n">caracter</span> <span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>Si queremos empezar desde el final utilizamos índices negativos. El
+índice “-1” corresponde al último caracter.n</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;El último caracter :&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;El anteúltimo caracter :&quot;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">último</span> <span class="n">caracter</span> <span class="p">:</span> <span class="mi">9</span>
+<span class="n">El</span> <span class="n">anteúltimo</span> <span class="n">caracter</span> <span class="p">:</span> <span class="mi">8</span>
+</pre></div>
+</div>
+<p>También podemos elegir un subconjunto de caracteres:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Los tres primeros:          &#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Todos a partir del tercero: &#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Los últimos dos:            &#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Todos menos los últimos dos:&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Los</span> <span class="n">tres</span> <span class="n">primeros</span><span class="p">:</span>           <span class="mi">012</span>
+<span class="n">Todos</span> <span class="n">a</span> <span class="n">partir</span> <span class="k">del</span> <span class="n">tercero</span><span class="p">:</span>  <span class="mi">3456789</span>
+<span class="n">Los</span> <span class="n">últimos</span> <span class="n">dos</span><span class="p">:</span>             <span class="mi">89</span>
+<span class="n">Todos</span> <span class="n">menos</span> <span class="n">los</span> <span class="n">últimos</span> <span class="n">dos</span><span class="p">:</span> <span class="mi">01234567</span>
+</pre></div>
+</div>
+<p>Estas “subcadenas” son cadenas de caracteres, y por lo tanto pueden
+utilizarse de la misma manera que cualquier otra cadena:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">s</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">01289</span>
+</pre></div>
+</div>
+<p>La selección de elementos y subcadenas de una cadena <code class="docutils literal notranslate"><span class="pre">s</span></code> tiene la
+forma general</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">:</span> <span class="n">f</span><span class="p">:</span> <span class="n">p</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>donde <code class="docutils literal notranslate"><span class="pre">i,</span> <span class="pre">f,</span> <span class="pre">p</span></code> son enteros. La notación se refiere a la subcadena
+empezando en el índice <code class="docutils literal notranslate"><span class="pre">i</span></code>, hasta el índice <code class="docutils literal notranslate"><span class="pre">f</span></code> recorriendo con paso
+<code class="docutils literal notranslate"><span class="pre">p</span></code>. Casos particulares de esta notación son:</p>
+<ul class="simple">
+<li><p>Un índice simple. Por ejemplo <code class="docutils literal notranslate"><span class="pre">s[3]</span></code> se refiere al tercer elemento.</p></li>
+<li><p>Un índice negativo se cuenta desde el final, empezando desde <code class="docutils literal notranslate"><span class="pre">-1</span></code>.</p></li>
+<li><p>Si el paso <code class="docutils literal notranslate"><span class="pre">p</span></code> no está presente el valor por defecto es 1. Ejemplo:
+<code class="docutils literal notranslate"><span class="pre">s[2:4]</span> <span class="pre">=</span> <span class="pre">s[2:4:1]</span></code>.</p></li>
+<li><p>Si se omite el primer índice, el valor asumido es 0. Ejemplo:
+<code class="docutils literal notranslate"><span class="pre">s[:2:1]</span> <span class="pre">=</span> <span class="pre">s[0:2:1]</span></code>.</p></li>
+<li><p>Si se omite el segundo índice, el valor asumido es -1. Ejemplo:
+<code class="docutils literal notranslate"><span class="pre">s[1::1]</span> <span class="pre">=</span> <span class="pre">s[1:-1:1]</span></code>.</p></li>
+<li><p>Notar que puede omitirse más de un índice. Ejemplo:
+<code class="docutils literal notranslate"><span class="pre">s[::2]</span> <span class="pre">=</span> <span class="pre">s[0:-1:2]</span></code>.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">s</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">s</span><span class="p">[::</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0123456789</span>
+<span class="mi">024</span>
+<span class="mi">02468</span>
+<span class="mi">9876543210</span>
+<span class="mi">9630</span>
+</pre></div>
+</div>
+<p>Veamos algunas utilidades que se pueden aplicar sobre un string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="s2">&quot;La mar estaba serena!&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>La mar estaba serena!
+</pre></div>
+</div>
+<p>Por ejemplo, en python es muy fácil reemplazar una cadena por otra
+usando el método de <em>strings</em> <code class="docutils literal notranslate"><span class="pre">replace()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>La mar astaba sarana!
+</pre></div>
+</div>
+<p>o separar las palabras:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;La&#39;</span><span class="p">,</span> <span class="s1">&#39;mar&#39;</span><span class="p">,</span> <span class="s1">&#39;estaba&#39;</span><span class="p">,</span> <span class="s1">&#39;serena!&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;La mar e&#39;</span><span class="p">,</span> <span class="s1">&#39;taba &#39;</span><span class="p">,</span> <span class="s1">&#39;erena!&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>En este caso, tanto <code class="docutils literal notranslate"><span class="pre">replace()</span></code> como <code class="docutils literal notranslate"><span class="pre">split()</span></code> son métodos que ya
+están definidos para los <em>strings</em>.</p>
+<p>Recordemos que un método es una función que está definida junto con el
+tipo de objeto. En este caso el string. Hay más información sobre todos
+los métodos de las cadenas de caracteres en: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#string-methods">String
+Methods</a></p>
+<p>Veamos algunos ejemplos más:</p>
+<p>Buscar y reemplazar cosas en un string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">7</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">15</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;re&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">16</span>
+</pre></div>
+</div>
+<p>El método <code class="docutils literal notranslate"><span class="pre">find(sub[,</span> <span class="pre">start[,</span> <span class="pre">end]])</span> <span class="pre">-&gt;</span> <span class="pre">int</span></code> busca el <em>substring</em>
+<code class="docutils literal notranslate"><span class="pre">sub</span></code> empezando con el índice <code class="docutils literal notranslate"><span class="pre">start</span></code> (argumento opcional) y
+finalizando en el índice <code class="docutils literal notranslate"><span class="pre">end</span></code> (argumento opcional, que sólo puede
+aparecer si también aparece <code class="docutils literal notranslate"><span class="pre">start</span></code>). Devuelve el índice donde inicial
+es <em>substring</em>.</p>
+</section>
+</section>
+<section id="formato-de-strings">
+<h3>Formato de strings<a class="headerlink" href="#formato-de-strings" title="Enlace permanente a este encabezado"></a></h3>
+<p>En python se le puede dar formato a los strings de distintas maneras.
+Vamos a ver dos opciones: - Uso del método <code class="docutils literal notranslate"><span class="pre">format</span></code> - Uso de
+“f-strings”</p>
+<p>El método <code class="docutils literal notranslate"><span class="pre">format()</span></code> es una función que busca en el strings las llaves
+y las reemplaza por los argumentos. Veamos esto con algunos ejemplos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">2024</span>
+<span class="n">m</span> <span class="o">=</span> <span class="s1">&#39;Feb&#39;</span>
+<span class="n">d</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Hoy es el día </span><span class="si">{}</span><span class="s2"> de </span><span class="si">{}</span><span class="s2"> de </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hoy es el día </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hoy es el día </span><span class="si">{0}</span><span class="s2">/</span><span class="si">{1}</span><span class="s2">/</span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hoy es el día </span><span class="si">{2}</span><span class="s2">/</span><span class="si">{1}</span><span class="s2">/</span><span class="si">{0}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hoy</span> <span class="n">es</span> <span class="n">el</span> <span class="n">día</span> <span class="mi">6</span> <span class="n">de</span> <span class="n">Feb</span> <span class="n">de</span> <span class="mi">2024</span>
+<span class="n">Hoy</span> <span class="n">es</span> <span class="n">el</span> <span class="n">día</span> <span class="mi">6</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2024</span>
+<span class="n">Hoy</span> <span class="n">es</span> <span class="n">el</span> <span class="n">día</span> <span class="mi">6</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">2024</span>
+<span class="n">Hoy</span> <span class="n">es</span> <span class="n">el</span> <span class="n">día</span> <span class="mi">2024</span><span class="o">/</span><span class="n">Feb</span><span class="o">/</span><span class="mi">6</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">raiz</span> <span class="o">=</span> <span class="s2">&quot;datos-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">-</span><span class="si">{}</span><span class="s2">.dat&quot;</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">raiz</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">datos</span><span class="o">-</span><span class="mi">2024</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mf">6.</span><span class="n">dat</span>
+</pre></div>
+</div>
+<p>Más recientemente se ha implementado en Python una forma más directa de
+intercalar datos con caracteres literales, mediante <em>f-strings</em>, que
+permite una sintaxis más compacta. Comparemos las dos maneras:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pi</span> <span class="o">=</span> <span class="mf">3.141592653589793</span>
+<span class="n">s1</span> <span class="o">=</span> <span class="s2">&quot;El valor de π es </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="s2">&quot;El valor de π con cuatro decimales es </span><span class="si">{0:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">π</span> <span class="n">es</span> <span class="mf">3.141592653589793</span>
+<span class="n">El</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">π</span> <span class="n">con</span> <span class="n">cuatro</span> <span class="n">decimales</span> <span class="n">es</span> <span class="mf">3.1416</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El valor de 2π con seis decimales es </span><span class="si">{:012.6f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">valor</span> <span class="n">de</span> <span class="mi">2</span><span class="n">π</span> <span class="n">con</span> <span class="n">seis</span> <span class="n">decimales</span> <span class="n">es</span> <span class="mf">00006.283185</span>
+</pre></div>
+</div>
+<p>Para darle formato a números enteros usamos el caracter ‘d’ (decimal)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:03d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:3d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">005</span>
+  <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;el valor de π es </span><span class="si">{</span><span class="n">pi</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">el</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">π</span> <span class="n">es</span> <span class="mf">3.141592653589793</span>
+</pre></div>
+</div>
+<p>Podemos obtener estos mismos resultados usando “f-strings”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;el valor de π es </span><span class="si">{</span><span class="n">pi</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El valor de π con seis decimales es </span><span class="si">{</span><span class="n">pi</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El valor de 2π con seis decimales es </span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="si">:</span><span class="s2">012.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">5</span><span class="si">:</span><span class="s2">03d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">5</span><span class="si">:</span><span class="s2">3d</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">el</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">π</span> <span class="n">es</span> <span class="mf">3.141592653589793</span>
+<span class="n">El</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">π</span> <span class="n">con</span> <span class="n">seis</span> <span class="n">decimales</span> <span class="n">es</span> <span class="mf">3.1416</span>
+<span class="n">El</span> <span class="n">valor</span> <span class="n">de</span> <span class="mi">2</span><span class="n">π</span> <span class="n">con</span> <span class="n">seis</span> <span class="n">decimales</span> <span class="n">es</span> <span class="mf">00006.283185</span>
+<span class="mi">005</span>
+  <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;datos-</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">.dat&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">datos</span><span class="o">-</span><span class="mi">2024</span><span class="o">-</span><span class="n">Feb</span><span class="o">-</span><span class="mf">6.</span><span class="n">dat</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="conversion-de-tipos">
+<h2>Conversión de tipos<a class="headerlink" href="#conversion-de-tipos" title="Enlace permanente a este encabezado"></a></h2>
+<p>Como comentamos anteriormente, y se ve en los ejemplos anteriores, uno
+no define el tipo de variable <em>a-priori</em> sino que queda definido al
+asignársele un valor (por ejemplo a=3 define a como una variable del
+tipo entero).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">3</span>                           <span class="c1"># a es entero</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mf">3.1</span>                         <span class="c1"># b es real</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">0</span><span class="n">j</span>                      <span class="c1"># c es complejo</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;a es de tipo </span><span class="si">{0}</span><span class="se">\n</span><span class="s2">b es de tipo </span><span class="si">{1}</span><span class="se">\n</span><span class="s2">c es de tipo </span><span class="si">{2}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">c</span><span class="p">)))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;&#39;a + b&#39; es de tipo </span><span class="si">{0}</span><span class="s2"> y &#39;a + c&#39; es de tipo </span><span class="si">{1}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">c</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>a es de tipo &lt;class &#39;int&#39;&gt;
+b es de tipo &lt;class &#39;float&#39;&gt;
+c es de tipo &lt;class &#39;complex&#39;&gt;
+&#39;a + b&#39; es de tipo &lt;class &#39;float&#39;&gt; y &#39;a + c&#39; es de tipo &lt;class &#39;complex&#39;&gt;
+</pre></div>
+</div>
+<p>Si bien <strong>Python</strong> hace la conversión de tipos de variables en algunos
+casos, <strong>no hace magia</strong>, no puede adivinar nuestra intención si no la
+explicitamos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">60</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="nb">print</span> <span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">unsupported</span> <span class="n">operand</span> <span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="o">+</span><span class="p">:</span> <span class="s1">&#39;int&#39;</span> <span class="ow">and</span> <span class="s1">&#39;str&#39;</span>
+</pre></div>
+</div>
+<p>Sin embargo, si le decimos explícitamente qué conversión queremos, todo
+funciona bien</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;1&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;1.e5&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">11</span>
+<span class="mi">2</span>
+<span class="mf">100001.0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># a menos que nosotros **nos equivoquemos explícitamente**</span>
+<span class="nb">print</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">62</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+      <span class="mi">1</span> <span class="c1"># a menos que nosotros **nos equivoquemos explícitamente**</span>
+<span class="o">----&gt;</span> <span class="mi">2</span> <span class="nb">print</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;z&#39;</span><span class="p">))</span>
+
+
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">invalid</span> <span class="n">literal</span> <span class="k">for</span> <span class="nb">int</span><span class="p">()</span> <span class="k">with</span> <span class="n">base</span> <span class="mi">10</span><span class="p">:</span> <span class="s1">&#39;z&#39;</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-02-b">
+<h2>Ejercicios 02 (b)<a class="headerlink" href="#ejercicios-02-b" title="Enlace permanente a este encabezado"></a></h2>
+<ol class="arabic simple" start="3">
+<li><p>Para la cadena de caracteres:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Aquí me pongo a cantar</span>
+<span class="s1">Al compás de la vigüela,</span>
+<span class="s1">Que el hombre que lo desvela</span>
+<span class="s1">Una pena estraordinaria</span>
+<span class="s1">Como la ave solitaria</span>
+<span class="s1">Con el cantar se consuela.&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Forme un nuevo string de 10 caracteres que contenga los 5 primeros y
+los 5 últimos del string anterior <code class="docutils literal notranslate"><span class="pre">s</span></code>. Imprima por pantalla el
+nuevo string.</p></li>
+<li><p>Forme un nuevo string que contenga los 10 caracteres centrales de
+<code class="docutils literal notranslate"><span class="pre">s</span></code> (utilizando un método que pueda aplicarse a otros strings
+también). Imprima por pantalla el nuevo string.</p></li>
+<li><p>Cuente la cantidad de veces que aparecen los substrings <code class="docutils literal notranslate"><span class="pre">es</span></code>,
+<code class="docutils literal notranslate"><span class="pre">la</span></code>, <code class="docutils literal notranslate"><span class="pre">que</span></code>, <code class="docutils literal notranslate"><span class="pre">co</span></code>, en los siguientes dos casos: distinguiendo
+entre mayúsculas y minúsculas, y no distinguiendo. Imprima el
+resultado.</p></li>
+<li><p>Cambie todas las letras “m” por “n” y todas las letras “n” por “m” en
+<code class="docutils literal notranslate"><span class="pre">s</span></code>. Imprima el resultado por pantalla.</p></li>
+</ul>
+<ol class="arabic" start="4">
+<li><p>Utilizando funciones y métodos de <em>strings</em> en la cadena de
+caracteres:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span><span class="o">=</span><span class="s1">&#39;En un lugar de la Mancha de cuyo nombre no quiero acordarme&#39;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<ul class="simple">
+<li><p>Obtenga la cantidad de caracteres.</p></li>
+<li><p>Imprima la frase anterior pero con cada palabra empezando en
+mayúsculas.</p></li>
+<li><p>Cuente cuantas letras ‘a’ tiene la frase, ¿cuántas vocales tiene?</p></li>
+</ul>
+<ol class="arabic" start="5">
+<li><p>Centrado manual de frases</p>
+<ol class="loweralpha">
+<li><p>Utilizando la función <code class="docutils literal notranslate"><span class="pre">len()</span></code> centre una frase corta en una
+pantalla de 80 caracteres. Utilice la frase: “Un ejercicio con
+cadena de caracteres”</p></li>
+<li><p>Agregue subrayado a la frase anterior</p></li>
+<li><p>Escriba una función que centre y subraye una frase dada como
+argumento. Se espera obtener algo así:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Un</span> <span class="n">ejercicio</span> <span class="n">con</span> <span class="n">cadena</span> <span class="n">de</span> <span class="n">caracteres</span>
+<span class="o">-------------------------------------</span>
+</pre></div>
+</div>
+</li>
+<li><p>Repita el punto anterior utilizando métodos de strings</p></li>
+</ol>
+</li>
+</ol>
 <hr class="docutils" />
 </section>
 </section>
