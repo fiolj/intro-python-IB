@@ -1200,7 +1200,7 @@ funciona bien
 Ejercicios 02 (b)
 -----------------
 
-3. Para la cadena de caracteres:
+4. Para la cadena de caracteres:
 
 .. code:: python
 
@@ -1258,3 +1258,1348 @@ Ejercicios 02 (b)
    d. Repita el punto anterior utilizando métodos de strings
 
 --------------
+
+.. code:: python
+
+    s = ""
+
+.. code:: python
+
+    help(str)
+
+
+.. parsed-literal::
+
+    Help on class str in module builtins:
+    
+    class str(object)
+     |  str(object='') -> str
+     |  str(bytes_or_buffer[, encoding[, errors]]) -> str
+     |  
+     |  Create a new string object from the given object. If encoding or
+     |  errors is specified, then the object must expose a data buffer
+     |  that will be decoded using the given encoding and error handler.
+     |  Otherwise, returns the result of object.__str__() (if defined)
+     |  or repr(object).
+     |  encoding defaults to sys.getdefaultencoding().
+     |  errors defaults to 'strict'.
+     |  
+     |  Methods defined here:
+     |  
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |  
+     |  __contains__(self, key, /)
+     |      Return key in self.
+     |  
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |  
+     |  __format__(self, format_spec, /)
+     |      Return a formatted version of the string as described by format_spec.
+     |  
+     |  __ge__(self, value, /)
+     |      Return self>=value.
+     |  
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |  
+     |  __getitem__(self, key, /)
+     |      Return self[key].
+     |  
+     |  __getnewargs__(...)
+     |  
+     |  __gt__(self, value, /)
+     |      Return self>value.
+     |  
+     |  __hash__(self, /)
+     |      Return hash(self).
+     |  
+     |  __iter__(self, /)
+     |      Implement iter(self).
+     |  
+     |  __le__(self, value, /)
+     |      Return self<=value.
+     |  
+     |  __len__(self, /)
+     |      Return len(self).
+     |  
+     |  __lt__(self, value, /)
+     |      Return self<value.
+     |  
+     |  __mod__(self, value, /)
+     |      Return self%value.
+     |  
+     |  __mul__(self, value, /)
+     |      Return self*value.
+     |  
+     |  __ne__(self, value, /)
+     |      Return self!=value.
+     |  
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |  
+     |  __rmod__(self, value, /)
+     |      Return value%self.
+     |  
+     |  __rmul__(self, value, /)
+     |      Return value*self.
+     |  
+     |  __sizeof__(self, /)
+     |      Return the size of the string in memory, in bytes.
+     |  
+     |  __str__(self, /)
+     |      Return str(self).
+     |  
+     |  capitalize(self, /)
+     |      Return a capitalized version of the string.
+     |      
+     |      More specifically, make the first character have upper case and the rest lower
+     |      case.
+     |  
+     |  casefold(self, /)
+     |      Return a version of the string suitable for caseless comparisons.
+     |  
+     |  center(self, width, fillchar=' ', /)
+     |      Return a centered string of length width.
+     |      
+     |      Padding is done using the specified fill character (default is a space).
+     |  
+     |  count(...)
+     |      S.count(sub[, start[, end]]) -> int
+     |      
+     |      Return the number of non-overlapping occurrences of substring sub in
+     |      string S[start:end].  Optional arguments start and end are
+     |      interpreted as in slice notation.
+     |  
+     |  encode(self, /, encoding='utf-8', errors='strict')
+     |      Encode the string using the codec registered for encoding.
+     |      
+     |      encoding
+     |        The encoding in which to encode the string.
+     |      errors
+     |        The error handling scheme to use for encoding errors.
+     |        The default is 'strict' meaning that encoding errors raise a
+     |        UnicodeEncodeError.  Other possible values are 'ignore', 'replace' and
+     |        'xmlcharrefreplace' as well as any other name registered with
+     |        codecs.register_error that can handle UnicodeEncodeErrors.
+     |  
+     |  endswith(...)
+     |      S.endswith(suffix[, start[, end]]) -> bool
+     |      
+     |      Return True if S ends with the specified suffix, False otherwise.
+     |      With optional start, test S beginning at that position.
+     |      With optional end, stop comparing S at that position.
+     |      suffix can also be a tuple of strings to try.
+     |  
+     |  expandtabs(self, /, tabsize=8)
+     |      Return a copy where all tab characters are expanded using spaces.
+     |      
+     |      If tabsize is not given, a tab size of 8 characters is assumed.
+     |  
+     |  find(...)
+     |      S.find(sub[, start[, end]]) -> int
+     |      
+     |      Return the lowest index in S where substring sub is found,
+     |      such that sub is contained within S[start:end].  Optional
+     |      arguments start and end are interpreted as in slice notation.
+     |      
+     |      Return -1 on failure.
+     |  
+     |  format(...)
+     |      S.format(*args, **kwargs) -> str
+     |      
+     |      Return a formatted version of S, using substitutions from args and kwargs.
+     |      The substitutions are identified by braces ('{' and '}').
+     |  
+     |  format_map(...)
+     |      S.format_map(mapping) -> str
+     |      
+     |      Return a formatted version of S, using substitutions from mapping.
+     |      The substitutions are identified by braces ('{' and '}').
+     |  
+     |  index(...)
+     |      S.index(sub[, start[, end]]) -> int
+     |      
+     |      Return the lowest index in S where substring sub is found,
+     |      such that sub is contained within S[start:end].  Optional
+     |      arguments start and end are interpreted as in slice notation.
+     |      
+     |      Raises ValueError when the substring is not found.
+     |  
+     |  isalnum(self, /)
+     |      Return True if the string is an alpha-numeric string, False otherwise.
+     |      
+     |      A string is alpha-numeric if all characters in the string are alpha-numeric and
+     |      there is at least one character in the string.
+     |  
+     |  isalpha(self, /)
+     |      Return True if the string is an alphabetic string, False otherwise.
+     |      
+     |      A string is alphabetic if all characters in the string are alphabetic and there
+     |      is at least one character in the string.
+     |  
+     |  isascii(self, /)
+     |      Return True if all characters in the string are ASCII, False otherwise.
+     |      
+     |      ASCII characters have code points in the range U+0000-U+007F.
+     |      Empty string is ASCII too.
+     |  
+     |  isdecimal(self, /)
+     |      Return True if the string is a decimal string, False otherwise.
+     |      
+     |      A string is a decimal string if all characters in the string are decimal and
+     |      there is at least one character in the string.
+     |  
+     |  isdigit(self, /)
+     |      Return True if the string is a digit string, False otherwise.
+     |      
+     |      A string is a digit string if all characters in the string are digits and there
+     |      is at least one character in the string.
+     |  
+     |  isidentifier(self, /)
+     |      Return True if the string is a valid Python identifier, False otherwise.
+     |      
+     |      Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+     |      such as "def" or "class".
+     |  
+     |  islower(self, /)
+     |      Return True if the string is a lowercase string, False otherwise.
+     |      
+     |      A string is lowercase if all cased characters in the string are lowercase and
+     |      there is at least one cased character in the string.
+     |  
+     |  isnumeric(self, /)
+     |      Return True if the string is a numeric string, False otherwise.
+     |      
+     |      A string is numeric if all characters in the string are numeric and there is at
+     |      least one character in the string.
+     |  
+     |  isprintable(self, /)
+     |      Return True if the string is printable, False otherwise.
+     |      
+     |      A string is printable if all of its characters are considered printable in
+     |      repr() or if it is empty.
+     |  
+     |  isspace(self, /)
+     |      Return True if the string is a whitespace string, False otherwise.
+     |      
+     |      A string is whitespace if all characters in the string are whitespace and there
+     |      is at least one character in the string.
+     |  
+     |  istitle(self, /)
+     |      Return True if the string is a title-cased string, False otherwise.
+     |      
+     |      In a title-cased string, upper- and title-case characters may only
+     |      follow uncased characters and lowercase characters only cased ones.
+     |  
+     |  isupper(self, /)
+     |      Return True if the string is an uppercase string, False otherwise.
+     |      
+     |      A string is uppercase if all cased characters in the string are uppercase and
+     |      there is at least one cased character in the string.
+     |  
+     |  join(self, iterable, /)
+     |      Concatenate any number of strings.
+     |      
+     |      The string whose method is called is inserted in between each given string.
+     |      The result is returned as a new string.
+     |      
+     |      Example: '.'.join(['ab', 'pq', 'rs']) -> 'ab.pq.rs'
+     |  
+     |  ljust(self, width, fillchar=' ', /)
+     |      Return a left-justified string of length width.
+     |      
+     |      Padding is done using the specified fill character (default is a space).
+     |  
+     |  lower(self, /)
+     |      Return a copy of the string converted to lowercase.
+     |  
+     |  lstrip(self, chars=None, /)
+     |      Return a copy of the string with leading whitespace removed.
+     |      
+     |      If chars is given and not None, remove characters in chars instead.
+     |  
+     |  partition(self, sep, /)
+     |      Partition the string into three parts using the given separator.
+     |      
+     |      This will search for the separator in the string.  If the separator is found,
+     |      returns a 3-tuple containing the part before the separator, the separator
+     |      itself, and the part after it.
+     |      
+     |      If the separator is not found, returns a 3-tuple containing the original string
+     |      and two empty strings.
+     |  
+     |  removeprefix(self, prefix, /)
+     |      Return a str with the given prefix string removed if present.
+     |      
+     |      If the string starts with the prefix string, return string[len(prefix):].
+     |      Otherwise, return a copy of the original string.
+     |  
+     |  removesuffix(self, suffix, /)
+     |      Return a str with the given suffix string removed if present.
+     |      
+     |      If the string ends with the suffix string and that suffix is not empty,
+     |      return string[:-len(suffix)]. Otherwise, return a copy of the original
+     |      string.
+     |  
+     |  replace(self, old, new, count=-1, /)
+     |      Return a copy with all occurrences of substring old replaced by new.
+     |      
+     |        count
+     |          Maximum number of occurrences to replace.
+     |          -1 (the default value) means replace all occurrences.
+     |      
+     |      If the optional argument count is given, only the first count occurrences are
+     |      replaced.
+     |  
+     |  rfind(...)
+     |      S.rfind(sub[, start[, end]]) -> int
+     |      
+     |      Return the highest index in S where substring sub is found,
+     |      such that sub is contained within S[start:end].  Optional
+     |      arguments start and end are interpreted as in slice notation.
+     |      
+     |      Return -1 on failure.
+     |  
+     |  rindex(...)
+     |      S.rindex(sub[, start[, end]]) -> int
+     |      
+     |      Return the highest index in S where substring sub is found,
+     |      such that sub is contained within S[start:end].  Optional
+     |      arguments start and end are interpreted as in slice notation.
+     |      
+     |      Raises ValueError when the substring is not found.
+     |  
+     |  rjust(self, width, fillchar=' ', /)
+     |      Return a right-justified string of length width.
+     |      
+     |      Padding is done using the specified fill character (default is a space).
+     |  
+     |  rpartition(self, sep, /)
+     |      Partition the string into three parts using the given separator.
+     |      
+     |      This will search for the separator in the string, starting at the end. If
+     |      the separator is found, returns a 3-tuple containing the part before the
+     |      separator, the separator itself, and the part after it.
+     |      
+     |      If the separator is not found, returns a 3-tuple containing two empty strings
+     |      and the original string.
+     |  
+     |  rsplit(self, /, sep=None, maxsplit=-1)
+     |      Return a list of the substrings in the string, using sep as the separator string.
+     |      
+     |        sep
+     |          The separator used to split the string.
+     |      
+     |          When set to None (the default value), will split on any whitespace
+     |          character (including \n \r \t \f and spaces) and will discard
+     |          empty strings from the result.
+     |        maxsplit
+     |          Maximum number of splits (starting from the left).
+     |          -1 (the default value) means no limit.
+     |      
+     |      Splitting starts at the end of the string and works to the front.
+     |  
+     |  rstrip(self, chars=None, /)
+     |      Return a copy of the string with trailing whitespace removed.
+     |      
+     |      If chars is given and not None, remove characters in chars instead.
+     |  
+     |  split(self, /, sep=None, maxsplit=-1)
+     |      Return a list of the substrings in the string, using sep as the separator string.
+     |      
+     |        sep
+     |          The separator used to split the string.
+     |      
+     |          When set to None (the default value), will split on any whitespace
+     |          character (including \n \r \t \f and spaces) and will discard
+     |          empty strings from the result.
+     |        maxsplit
+     |          Maximum number of splits (starting from the left).
+     |          -1 (the default value) means no limit.
+     |      
+     |      Note, str.split() is mainly useful for data that has been intentionally
+     |      delimited.  With natural text that includes punctuation, consider using
+     |      the regular expression module.
+     |  
+     |  splitlines(self, /, keepends=False)
+     |      Return a list of the lines in the string, breaking at line boundaries.
+     |      
+     |      Line breaks are not included in the resulting list unless keepends is given and
+     |      true.
+     |  
+     |  startswith(...)
+     |      S.startswith(prefix[, start[, end]]) -> bool
+     |      
+     |      Return True if S starts with the specified prefix, False otherwise.
+     |      With optional start, test S beginning at that position.
+     |      With optional end, stop comparing S at that position.
+     |      prefix can also be a tuple of strings to try.
+     |  
+     |  strip(self, chars=None, /)
+     |      Return a copy of the string with leading and trailing whitespace removed.
+     |      
+     |      If chars is given and not None, remove characters in chars instead.
+     |  
+     |  swapcase(self, /)
+     |      Convert uppercase characters to lowercase and lowercase characters to uppercase.
+     |  
+     |  title(self, /)
+     |      Return a version of the string where each word is titlecased.
+     |      
+     |      More specifically, words start with uppercased characters and all remaining
+     |      cased characters have lower case.
+     |  
+     |  translate(self, table, /)
+     |      Replace each character in the string using the given translation table.
+     |      
+     |        table
+     |          Translation table, which must be a mapping of Unicode ordinals to
+     |          Unicode ordinals, strings, or None.
+     |      
+     |      The table must implement lookup/indexing via __getitem__, for instance a
+     |      dictionary or list.  If this operation raises LookupError, the character is
+     |      left untouched.  Characters mapped to None are deleted.
+     |  
+     |  upper(self, /)
+     |      Return a copy of the string converted to uppercase.
+     |  
+     |  zfill(self, width, /)
+     |      Pad a numeric string with zeros on the left, to fill a field of the given width.
+     |      
+     |      The string is never truncated.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |  
+     |  __new__(*args, **kwargs) from builtins.type
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  maketrans(...)
+     |      Return a translation table usable for str.translate().
+     |      
+     |      If there is only one argument, it must be a dictionary mapping Unicode
+     |      ordinals (integers) or characters to Unicode ordinals, strings or None.
+     |      Character keys will be then converted to ordinals.
+     |      If there are two arguments, they must be strings of equal length, and
+     |      in the resulting dictionary, each character in x will be mapped to the
+     |      character at the same position in y. If there is a third argument, it
+     |      must be a string, whose characters will be mapped to None in the result.
+    
+
+
+Tipos contenedores
+------------------
+
+En Python existen tipos compuestos (que pueden contener más de un
+valor). Uno de ellos que ya vimos es el tipo *string* que es una cadena
+de caracteres. Veamos otros:
+
+Listas
+~~~~~~
+
+Las listas son tipos compuestos. Se definen separando los elementos con
+comas, todos encerrados entre corchetes. En general las listas pueden
+contener diferentes tipos, y pueden no ser todos iguales, pero suelen
+utilizarse con ítems del mismo tipo. Algunas características:
+
+-  Los elementos no son necesariamente homogéneos en tipo.
+
+-  Los elementos están ordenados.
+
+-  Se accede mediante un índice.
+
+-  Están definidas operaciones entre Listas, así como algunos métodos
+
+   -  ``x in L`` (¿x es un elemento de L?)
+   -  ``x not in L`` (¿x no es un elemento de L?)
+   -  ``L1 + L2`` (concatenar L1 y L2)
+   -  ``n*L1`` (n veces L1)
+   -  ``L1*n`` (n veces L1)
+   -  ``L[i]`` (Elemento i-ésimo)
+   -  ``L[i:j]`` (Elementos i a j)
+   -  ``L[i:j:k]`` (Elementos i a j, elegidos uno de cada k)
+   -  ``len(L)`` (longitud de L)
+   -  ``min(L)`` (Mínimo de L)
+   -  ``max(L)`` (Máximo de L)
+   -  ``L.index(x, [i])`` (Índice de x, iniciando en i)
+   -  ``L.count(x)`` (Número de veces que aparece x en L)
+   -  ``L.append(x)`` (Agrega el elemento x al final)
+
+Veamos algunos ejemplos:
+
+.. code:: python
+
+    cuadrados = [1, 9, 16, 25]
+
+En esta línea hemos declarado una variable llamada ``cuadrados``, y le
+hemos asignado una lista de cuatro elementos. En algunos aspectos las
+listas son muy similares a los *strings*. Se pueden realizar muchas de
+las mismas operaciones en strings, listas y otros objetos sobre los que
+se pueden iterar (*iterables*).
+
+Las listas pueden accederse por posición y también pueden rebanarse
+(*slicing*)
+
+.. note::  La indexación de iteradores empieza desde cero (como en C)
+  
+  
+
+.. code:: python
+
+    cuadrados[0]
+
+
+
+
+.. parsed-literal::
+
+    1
+
+
+
+.. code:: python
+
+    cuadrados[3]
+
+
+
+
+.. parsed-literal::
+
+    25
+
+
+
+.. code:: python
+
+    cuadrados[-1]
+
+
+
+
+.. parsed-literal::
+
+    25
+
+
+
+.. code:: python
+
+    cuadrados[:3:2]
+
+
+
+
+.. parsed-literal::
+
+    [1, 16]
+
+
+
+.. code:: python
+
+    cuadrados[-2:]
+
+
+
+
+.. parsed-literal::
+
+    [16, 25]
+
+
+
+Los índices pueden ser positivos (empezando desde cero) o negativos
+empezando desde -1.
+
+================== == == == ==
+cuadrados:         1  9  16 25
+================== == == == ==
+índices:           0  1  2  3
+índices negativos: -4 -3 -2 -1
+================== == == == ==
+
+.. note::  La asignación entre listas **no copia** todos los datos
+  
+  
+
+.. code:: python
+
+    a = cuadrados
+    a is cuadrados
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    print("Valores originales")
+    print(a)
+    cuadrados[0]= -1
+    print("Valores modificados")
+    print(a)
+    print(cuadrados)
+
+
+.. parsed-literal::
+
+    Valores originales
+    [1, 9, 16, 25]
+    Valores modificados
+    [-1, 9, 16, 25]
+    [-1, 9, 16, 25]
+
+
+.. code:: python
+
+    a is cuadrados
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    cuadrados[0] = 1
+    b = cuadrados.copy()
+    print("Valores originales")
+    print(b)
+    print(cuadrados)
+    print("Valores modificados")
+    cuadrados[0]=-2
+    print(b)
+    print(cuadrados)
+
+
+.. parsed-literal::
+
+    Valores originales
+    [1, 9, 16, 25]
+    [1, 9, 16, 25]
+    Valores modificados
+    [1, 9, 16, 25]
+    [-2, 9, 16, 25]
+
+
+Comprensión de Listas
+^^^^^^^^^^^^^^^^^^^^^
+
+Una manera sencilla de definir una lista es utilizando algo que se llama
+*Comprensión de listas*. Como primer ejemplo veamos una lista de
+*números cuadrados* como la que escribimos anteriormente. En lenguaje
+matemático la defiríamos como
+:math:`S = \{x^{2} : x \in \{0 \dots 9\}\}`. En python es muy parecido.
+
+Podemos crear la lista ``cuadrados`` utilizando compresiones de listas
+
+.. code:: python
+
+    L1 = [1,3,5]
+    L2= [i**2 for i in L1]
+
+.. code:: python
+
+    print(L2)
+
+
+.. parsed-literal::
+
+    [1, 9, 25]
+
+
+.. code:: python
+
+    cuadrados = [i**2 for i in range(10)]
+    cuadrados
+
+
+
+
+.. parsed-literal::
+
+    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+
+
+Una lista con los cuadrados sólo de los números pares también puede
+crearse de esta manera, ya que puede incorporarse una condición:
+
+.. code:: python
+
+    L = [a**2 for a in range(2,21) if a % 2 == 0]
+    L
+
+
+
+
+.. parsed-literal::
+
+    [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
+
+Tuplas
+~~~~~~
+
+Las tuplas son objetos similares a las listas, sobre las que se puede
+iterar y seleccionar partes según su índice. La principal diferencia es
+que son inmutables mientras que las listas pueden modificarse.
+
+.. code:: python
+
+    L1 = [0,1,2,3,4,5] # Las listas se definen con corchetes
+    T1 = (0,1,2,3,4,5) # Las tuplas se definen con paréntesis
+
+.. code:: python
+
+    L1[0] = -1
+    print(f"L1[0] = {L1[0]}")
+
+
+.. parsed-literal::
+
+    L1[0] = -1
+
+
+.. code:: python
+
+    try:
+        T1[0] = -1
+        print(f"{T1[0] = }")
+    except:
+        print('Tuples son inmutables')
+
+
+.. parsed-literal::
+
+    Tuples son inmutables
+
+
+Las tuplas se usan cuando uno quiere crear una “variable” que no va a
+ser modificada. Además códigos similares con tuplas pueden ser un poco
+más rápidos que si usan listas.
+
+Un uso común de las tuplas es el de asignación simultánea a múltiples
+variables:
+
+.. code:: python
+
+    a, b, c = (1, 3, 5)
+
+.. code:: python
+
+    print(b)
+    print(a, b, c)
+
+
+.. parsed-literal::
+
+    3
+    1 3 5
+
+
+.. code:: python
+
+    # Los paréntesis son opcionales en este caso
+    a, b, c = 4, 5, 6
+    print(b)
+    print(a,b,c)
+
+
+.. parsed-literal::
+
+    5
+    4 5 6
+
+
+Un uso muy común es el de intercambiar el valor de dos variables
+
+.. code:: python
+
+    print(a,b)
+    a, b = b, a                     # swap 
+    print(a,b)
+
+
+.. parsed-literal::
+
+    4 5
+    5 4
+
+
+Rangos
+~~~~~~
+
+Los objetos de tipo
+`range <https://docs.python.org/es/3/library/stdtypes.html#ranges>`__
+representan una secuencia inmutable de números y se usan habitualmente
+para ejecutar un bucle
+`for <https://docs.python.org/es/3/reference/compound_stmts.html#for>`__
+un número determinado de veces. El formato es uno de:
+
+::
+
+   range(stop)
+   range(start, stop)
+   range(start, stop, step)
+
+.. code:: python
+
+    range(2)
+
+
+
+
+.. parsed-literal::
+
+    range(0, 2)
+
+
+
+.. code:: python
+
+    type(range(2))
+
+
+
+
+.. parsed-literal::
+
+    range
+
+
+
+.. code:: python
+
+    range(2,9)
+
+
+
+
+.. parsed-literal::
+
+    range(2, 9)
+
+
+
+.. code:: python
+
+    list(range(2,9))
+
+
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 5, 6, 7, 8]
+
+
+
+.. code:: python
+
+    list(range(2,9,2))
+
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6, 8]
+
+
+
+Operaciones sobre listas
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Veamos algunas operaciones que se pueden realizar sobre listas. Por
+ejemplo, se puede fácilmente:
+
+-  concatenar dos listas,
+-  buscar un valor dado,
+-  agregar elementos,
+-  borrar elementos,
+-  calcular su longitud,
+-  invertirla
+
+Empecemos concatenando dos listas, usando el operador “suma”
+
+.. code:: python
+
+    L1 = [0,1,2,3,4,5]
+
+.. code:: python
+
+    L1 + L1
+
+
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
+
+
+
+.. code:: python
+
+    2*L1 == L1 + L1
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    L = 3*L1
+
+Las listas tienen definidos métodos, que podemos ver con la ayuda
+incluida, por ejemplo haciendo ``help(list)``
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5]
+
+
+.. code:: python
+
+    L.index(3)                      # Índice del elemento de valor 3
+
+
+
+
+.. parsed-literal::
+
+    3
+
+
+
+.. code:: python
+
+    L.index(3,4)                    # Índice del valor 3, empezando del cuarto
+
+
+
+
+.. parsed-literal::
+
+    9
+
+
+
+.. code:: python
+
+    L.count(3)                      # Cuenta las veces que aparece el valor "3"
+
+
+
+
+.. parsed-literal::
+
+    3
+
+
+
+Si queremos agregar un elemento al final utilizamos el método
+``append``:
+
+.. code:: python
+
+    L.append(8)
+
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 8]
+
+
+.. code:: python
+
+    L.append([9, 8, 7])
+    print(L)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 8, [9, 8, 7]]
+
+
+Si queremos insertar un elemento en una posición que no es el final de
+la lista, usamos el método ``insert()``. Por ejemplo para insertar el
+valor 6 en la primera posición:
+
+.. code:: python
+
+    L.insert(0,6)
+    print(L)
+
+
+.. parsed-literal::
+
+    [6, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 8, [9, 8, 7]]
+
+
+.. code:: python
+
+    L.insert(-2,6)
+    print(L)
+
+
+.. parsed-literal::
+
+    [6, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 8, [9, 8, 7]]
+
+
+En las listas podemos sobreescribir uno o más elementos
+
+.. code:: python
+
+    L[0:3] = [2,3,4]
+    L[4]=-4
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, -4, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 8, [9, 8, 7]]
+
+
+.. code:: python
+
+    L[-2:]=[0,1]
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, -4, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 0, 1]
+
+
+.. code:: python
+
+    L[-2:] = [7,"fin2"]
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, -4, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 7, 'fin2']
+
+
+.. code:: python
+
+    L.extend([0,1])                 # Extendemos con varios elementos
+
+.. code:: python
+
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, -4, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 7, 'fin2', 0, 1]
+
+
+.. code:: python
+
+    print(L)
+    L.remove('fin2')                     # Remueve la primera aparición del valor 3
+    print(L)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 2, -4, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 7, 'fin2', 0, 1]
+    [2, 3, 4, 2, -4, 4, 5, 0, 1, 2, 3, 4, 5, 0, 1, 2, 3, 4, 5, 6, 7, 0, 1]
+
+
+.. code:: python
+
+    print(L1)
+    L1.reverse()
+    print(L1)
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5]
+    [5, 4, 3, 2, 1, 0]
+
+
+Función de Python que invierte una lista
+
+.. code:: python
+
+    print(list(reversed(L1)))
+
+
+.. parsed-literal::
+
+    [0, 1, 2, 3, 4, 5]
+
+
+.. code:: python
+
+    L.sort()          # Ordena la lista (si los elementos son comparables)
+    print(L)
+
+
+.. parsed-literal::
+
+    [-4, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 7]
+
+
+El método ``sort()`` de las listas acepta dos argumentos opcionales:
+``key`` y ``reverse``
+
+.. code:: python
+
+    L.sort(True)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[50], line 1
+    ----> 1 L.sort(True)
+
+
+    TypeError: sort() takes no positional arguments
+
+
+.. code:: python
+
+    L.sort(reverse=True)            
+    print(L)
+
+
+.. parsed-literal::
+
+    [7, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 0, 0, 0, -4]
+
+
+Funciones que aplican sobre listas
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Hay algunas funciones de Python que se aplican sobre listas (o sobre
+iterables en general). Algunas de ellas son la suma ``sum()`` e
+inversión ``reversed()``
+
+.. code:: python
+
+    L
+
+
+
+
+.. parsed-literal::
+
+    [7, 6, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 0, 0, 0, -4]
+
+
+
+.. code:: python
+
+    sum(L)
+
+
+
+
+.. parsed-literal::
+
+    60
+
+
+
+.. code:: python
+
+    reversed(L)
+
+
+
+
+.. parsed-literal::
+
+    <list_reverseiterator at 0x7fed3814ceb0>
+
+
+
+.. code:: python
+
+    L1 = list(reversed(L))
+    print(L1)
+
+
+.. parsed-literal::
+
+    [-4, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 7]
+
+
+Las funciones mínimo ``min()``, máximo ``max()`` y ordenar ``sorted()``
+toman como argumento una lista (u otro iterable) de elementos que pueden
+compararse entre sí
+
+.. code:: python
+
+    print(min(L), max(L))
+
+
+.. parsed-literal::
+
+    -4 7
+
+
+.. code:: python
+
+    print(sorted(L))
+
+
+.. parsed-literal::
+
+    [-4, 0, 0, 0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 6, 7]
+
+
+.. code:: python
+
+    help(sorted)
+
+
+.. parsed-literal::
+
+    Help on built-in function sorted in module builtins:
+    
+    sorted(iterable, /, *, key=None, reverse=False)
+        Return a new list containing all items from the iterable in ascending order.
+        
+        A custom key function can be supplied to customize the sort order, and the
+        reverse flag can be set to request the result in descending order.
+    
+
+
+Estas funciones toman además un argumento opcional ``key``, que es una
+función que se aplica a cada elemento antes de compararlos
+
+Puede encontrarse más información en `la Biblioteca de
+Python <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`__.
+
+.. code:: python
+
+    s = "abcde"
+    L3 = ['hola','que','tal']
+    s.join(L3)
+
+
+
+
+.. parsed-literal::
+
+    'holaabcdequeabcdetal'
+
+
+
+.. code:: python
+
+    " ".join(L3)
+
+
+
+
+.. parsed-literal::
+
+    'hola que tal'
+
+
+
+.. code:: python
+
+    print("\n".join(L3))
+
+
+.. parsed-literal::
+
+    hola
+    que
+    tal
+
+
+--------------
+
+Ejercicios 02 (c)
+-----------------
+
+6.  **Para Entregar:** Manejos de listas:
+
+    -  Cree la lista **N** de longitud 50, donde cada elemento es un
+       número entero de 1 a 50 inclusive (Ayuda: vea la expresión
+       ``range``).
+    -  Invierta la lista.
+    -  Extraiga de **N** una lista **N1** que contenga sólo aquellos
+       elementos que sean el cuadrado de algún número entero.
+    -  Extraiga de **N** una lista **N2** que contenga sólo aquellos
+       elementos que sean iguales al :math:`n^2-n` para algún número
+       entero :math:`n`.
+
+    *Ayuda:* Puede resultar útil recordar el uso de comprensión de
+    listas.
+
+    Debe enviar por correo electrónico, con asunto “02_Suapellido”, un
+    programa llamado 02_SuApellido.py (en todos los casos utilice su
+    apellido, no la palabra “SuApellido”) .
+
+7.  Cree una lista de la forma ``L = [1,3,5,...,17,19,19,17,...,3,1]``
+    (*Ayuda:* vea la expresión ``range``).
+
+8.  Escriba una función que tome un número entero de tres cifras, y
+    devuelva el mayor entero que se puede formar con esas cifras
+    (*Ayuda:* considere convertir el número entero a otros tipos).
+
+9.  Construya una lista ``L2`` con 2000 elementos, todos iguales a
+    ``0.0005``. Imprima su suma utilizando la función ``sum`` y comparar
+    con el resultado que arroja la función que existe en el módulo
+    ``math`` para realizar suma de números de punto flotante.
+
+10. Operación “rara” sobre una lista:
+
+    -  Defina la lista ``L = [0,1]``
+    -  Realice la operación ``L.append(L)``
+    -  Ahora imprima L, e imprima el último elemento de ``L``.
+    -  Haga que una nueva lista ``L1`` tenga el valor del último
+       elemento de ``L`` y repita el inciso anterior.
+
+--------------
+
+.

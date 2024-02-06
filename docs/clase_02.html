@@ -70,6 +70,20 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#conversion-de-tipos">Conversión de tipos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-02-b">Ejercicios 02 (b)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tipos-contenedores">Tipos contenedores</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#listas">Listas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#comprension-de-listas">Comprensión de Listas</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#tuplas">Tuplas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rangos">Rangos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operaciones-sobre-listas">Operaciones sobre listas</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#funciones-que-aplican-sobre-listas">Funciones que aplican sobre listas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-02-c">Ejercicios 02 (c)</a></li>
 </ul>
 </li>
 </ul>
@@ -961,7 +975,7 @@ funciona bien</p>
 <hr class="docutils" />
 <section id="ejercicios-02-b">
 <h2>Ejercicios 02 (b)<a class="headerlink" href="#ejercicios-02-b" title="Enlace permanente a este encabezado"></a></h2>
-<ol class="arabic simple" start="3">
+<ol class="arabic simple" start="4">
 <li><p>Para la cadena de caracteres:</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Aquí me pongo a cantar</span>
@@ -1019,6 +1033,1038 @@ argumento. Se espera obtener algo así:</p>
 </li>
 </ol>
 <hr class="docutils" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block">Help on class str in module builtins:
+
+class str(object)
+ |  str(object='') -&gt; str
+ |  str(bytes_or_buffer[, encoding[, errors]]) -&gt; str
+ |
+ |  Create a new string object from the given object. If encoding or
+ |  errors is specified, then the object must expose a data buffer
+ |  that will be decoded using the given encoding and error handler.
+ |  Otherwise, returns the result of object.__str__() (if defined)
+ |  or repr(object).
+ |  encoding defaults to sys.getdefaultencoding().
+ |  errors defaults to 'strict'.
+ |
+ |  Methods defined here:
+ |
+ |  __add__(self, value, /)
+ |      Return self+value.
+ |
+ |  __contains__(self, key, /)
+ |      Return key in self.
+ |
+ |  __eq__(self, value, /)
+ |      Return self==value.
+ |
+ |  __format__(self, format_spec, /)
+ |      Return a formatted version of the string as described by format_spec.
+ |
+ |  __ge__(self, value, /)
+ |      Return self&gt;=value.
+ |
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |
+ |  __getitem__(self, key, /)
+ |      Return self[key].
+ |
+ |  __getnewargs__(...)
+ |
+ |  __gt__(self, value, /)
+ |      Return self&gt;value.
+ |
+ |  __hash__(self, /)
+ |      Return hash(self).
+ |
+ |  __iter__(self, /)
+ |      Implement iter(self).
+ |
+ |  __le__(self, value, /)
+ |      Return self&lt;=value.
+ |
+ |  __len__(self, /)
+ |      Return len(self).
+ |
+ |  __lt__(self, value, /)
+ |      Return self&lt;value.
+ |
+ |  __mod__(self, value, /)
+ |      Return self%value.
+ |
+ |  __mul__(self, value, /)
+ |      Return self*value.
+ |
+ |  __ne__(self, value, /)
+ |      Return self!=value.
+ |
+ |  __repr__(self, /)
+ |      Return repr(self).
+ |
+ |  __rmod__(self, value, /)
+ |      Return value%self.
+ |
+ |  __rmul__(self, value, /)
+ |      Return value*self.
+ |
+ |  __sizeof__(self, /)
+ |      Return the size of the string in memory, in bytes.
+ |
+ |  __str__(self, /)
+ |      Return str(self).
+ |
+ |  capitalize(self, /)
+ |      Return a capitalized version of the string.
+ |
+ |      More specifically, make the first character have upper case and the rest lower
+ |      case.
+ |
+ |  casefold(self, /)
+ |      Return a version of the string suitable for caseless comparisons.
+ |
+ |  center(self, width, fillchar=' ', /)
+ |      Return a centered string of length width.
+ |
+ |      Padding is done using the specified fill character (default is a space).
+ |
+ |  count(...)
+ |      S.count(sub[, start[, end]]) -&gt; int
+ |
+ |      Return the number of non-overlapping occurrences of substring sub in
+ |      string S[start:end].  Optional arguments start and end are
+ |      interpreted as in slice notation.
+ |
+ |  encode(self, /, encoding='utf-8', errors='strict')
+ |      Encode the string using the codec registered for encoding.
+ |
+ |      encoding
+ |        The encoding in which to encode the string.
+ |      errors
+ |        The error handling scheme to use for encoding errors.
+ |        The default is 'strict' meaning that encoding errors raise a
+ |        UnicodeEncodeError.  Other possible values are 'ignore', 'replace' and
+ |        'xmlcharrefreplace' as well as any other name registered with
+ |        codecs.register_error that can handle UnicodeEncodeErrors.
+ |
+ |  endswith(...)
+ |      S.endswith(suffix[, start[, end]]) -&gt; bool
+ |
+ |      Return True if S ends with the specified suffix, False otherwise.
+ |      With optional start, test S beginning at that position.
+ |      With optional end, stop comparing S at that position.
+ |      suffix can also be a tuple of strings to try.
+ |
+ |  expandtabs(self, /, tabsize=8)
+ |      Return a copy where all tab characters are expanded using spaces.
+ |
+ |      If tabsize is not given, a tab size of 8 characters is assumed.
+ |
+ |  find(...)
+ |      S.find(sub[, start[, end]]) -&gt; int
+ |
+ |      Return the lowest index in S where substring sub is found,
+ |      such that sub is contained within S[start:end].  Optional
+ |      arguments start and end are interpreted as in slice notation.
+ |
+ |      Return -1 on failure.
+ |
+ |  format(...)
+ |      S.format(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) -&gt; str
+ |
+ |      Return a formatted version of S, using substitutions from args and kwargs.
+ |      The substitutions are identified by braces ('{' and '}').
+ |
+ |  format_map(...)
+ |      S.format_map(mapping) -&gt; str
+ |
+ |      Return a formatted version of S, using substitutions from mapping.
+ |      The substitutions are identified by braces ('{' and '}').
+ |
+ |  index(...)
+ |      S.index(sub[, start[, end]]) -&gt; int
+ |
+ |      Return the lowest index in S where substring sub is found,
+ |      such that sub is contained within S[start:end].  Optional
+ |      arguments start and end are interpreted as in slice notation.
+ |
+ |      Raises ValueError when the substring is not found.
+ |
+ |  isalnum(self, /)
+ |      Return True if the string is an alpha-numeric string, False otherwise.
+ |
+ |      A string is alpha-numeric if all characters in the string are alpha-numeric and
+ |      there is at least one character in the string.
+ |
+ |  isalpha(self, /)
+ |      Return True if the string is an alphabetic string, False otherwise.
+ |
+ |      A string is alphabetic if all characters in the string are alphabetic and there
+ |      is at least one character in the string.
+ |
+ |  isascii(self, /)
+ |      Return True if all characters in the string are ASCII, False otherwise.
+ |
+ |      ASCII characters have code points in the range U+0000-U+007F.
+ |      Empty string is ASCII too.
+ |
+ |  isdecimal(self, /)
+ |      Return True if the string is a decimal string, False otherwise.
+ |
+ |      A string is a decimal string if all characters in the string are decimal and
+ |      there is at least one character in the string.
+ |
+ |  isdigit(self, /)
+ |      Return True if the string is a digit string, False otherwise.
+ |
+ |      A string is a digit string if all characters in the string are digits and there
+ |      is at least one character in the string.
+ |
+ |  isidentifier(self, /)
+ |      Return True if the string is a valid Python identifier, False otherwise.
+ |
+ |      Call keyword.iskeyword(s) to test whether string s is a reserved identifier,
+ |      such as &quot;def&quot; or &quot;class&quot;.
+ |
+ |  islower(self, /)
+ |      Return True if the string is a lowercase string, False otherwise.
+ |
+ |      A string is lowercase if all cased characters in the string are lowercase and
+ |      there is at least one cased character in the string.
+ |
+ |  isnumeric(self, /)
+ |      Return True if the string is a numeric string, False otherwise.
+ |
+ |      A string is numeric if all characters in the string are numeric and there is at
+ |      least one character in the string.
+ |
+ |  isprintable(self, /)
+ |      Return True if the string is printable, False otherwise.
+ |
+ |      A string is printable if all of its characters are considered printable in
+ |      repr() or if it is empty.
+ |
+ |  isspace(self, /)
+ |      Return True if the string is a whitespace string, False otherwise.
+ |
+ |      A string is whitespace if all characters in the string are whitespace and there
+ |      is at least one character in the string.
+ |
+ |  istitle(self, /)
+ |      Return True if the string is a title-cased string, False otherwise.
+ |
+ |      In a title-cased string, upper- and title-case characters may only
+ |      follow uncased characters and lowercase characters only cased ones.
+ |
+ |  isupper(self, /)
+ |      Return True if the string is an uppercase string, False otherwise.
+ |
+ |      A string is uppercase if all cased characters in the string are uppercase and
+ |      there is at least one cased character in the string.
+ |
+ |  join(self, iterable, /)
+ |      Concatenate any number of strings.
+ |
+ |      The string whose method is called is inserted in between each given string.
+ |      The result is returned as a new string.
+ |
+ |      Example: '.'.join(['ab', 'pq', 'rs']) -&gt; 'ab.pq.rs'
+ |
+ |  ljust(self, width, fillchar=' ', /)
+ |      Return a left-justified string of length width.
+ |
+ |      Padding is done using the specified fill character (default is a space).
+ |
+ |  lower(self, /)
+ |      Return a copy of the string converted to lowercase.
+ |
+ |  lstrip(self, chars=None, /)
+ |      Return a copy of the string with leading whitespace removed.
+ |
+ |      If chars is given and not None, remove characters in chars instead.
+ |
+ |  partition(self, sep, /)
+ |      Partition the string into three parts using the given separator.
+ |
+ |      This will search for the separator in the string.  If the separator is found,
+ |      returns a 3-tuple containing the part before the separator, the separator
+ |      itself, and the part after it.
+ |
+ |      If the separator is not found, returns a 3-tuple containing the original string
+ |      and two empty strings.
+ |
+ |  removeprefix(self, prefix, /)
+ |      Return a str with the given prefix string removed if present.
+ |
+ |      If the string starts with the prefix string, return string[len(prefix):].
+ |      Otherwise, return a copy of the original string.
+ |
+ |  removesuffix(self, suffix, /)
+ |      Return a str with the given suffix string removed if present.
+ |
+ |      If the string ends with the suffix string and that suffix is not empty,
+ |      return string[:-len(suffix)]. Otherwise, return a copy of the original
+ |      string.
+ |
+ |  replace(self, old, new, count=-1, /)
+ |      Return a copy with all occurrences of substring old replaced by new.
+ |
+ |        count
+ |          Maximum number of occurrences to replace.
+ |          -1 (the default value) means replace all occurrences.
+ |
+ |      If the optional argument count is given, only the first count occurrences are
+ |      replaced.
+ |
+ |  rfind(...)
+ |      S.rfind(sub[, start[, end]]) -&gt; int
+ |
+ |      Return the highest index in S where substring sub is found,
+ |      such that sub is contained within S[start:end].  Optional
+ |      arguments start and end are interpreted as in slice notation.
+ |
+ |      Return -1 on failure.
+ |
+ |  rindex(...)
+ |      S.rindex(sub[, start[, end]]) -&gt; int
+ |
+ |      Return the highest index in S where substring sub is found,
+ |      such that sub is contained within S[start:end].  Optional
+ |      arguments start and end are interpreted as in slice notation.
+ |
+ |      Raises ValueError when the substring is not found.
+ |
+ |  rjust(self, width, fillchar=' ', /)
+ |      Return a right-justified string of length width.
+ |
+ |      Padding is done using the specified fill character (default is a space).
+ |
+ |  rpartition(self, sep, /)
+ |      Partition the string into three parts using the given separator.
+ |
+ |      This will search for the separator in the string, starting at the end. If
+ |      the separator is found, returns a 3-tuple containing the part before the
+ |      separator, the separator itself, and the part after it.
+ |
+ |      If the separator is not found, returns a 3-tuple containing two empty strings
+ |      and the original string.
+ |
+ |  rsplit(self, /, sep=None, maxsplit=-1)
+ |      Return a list of the substrings in the string, using sep as the separator string.
+ |
+ |        sep
+ |          The separator used to split the string.
+ |
+ |          When set to None (the default value), will split on any whitespace
+ |          character (including n r t f and spaces) and will discard
+ |          empty strings from the result.
+ |        maxsplit
+ |          Maximum number of splits (starting from the left).
+ |          -1 (the default value) means no limit.
+ |
+ |      Splitting starts at the end of the string and works to the front.
+ |
+ |  rstrip(self, chars=None, /)
+ |      Return a copy of the string with trailing whitespace removed.
+ |
+ |      If chars is given and not None, remove characters in chars instead.
+ |
+ |  split(self, /, sep=None, maxsplit=-1)
+ |      Return a list of the substrings in the string, using sep as the separator string.
+ |
+ |        sep
+ |          The separator used to split the string.
+ |
+ |          When set to None (the default value), will split on any whitespace
+ |          character (including n r t f and spaces) and will discard
+ |          empty strings from the result.
+ |        maxsplit
+ |          Maximum number of splits (starting from the left).
+ |          -1 (the default value) means no limit.
+ |
+ |      Note, str.split() is mainly useful for data that has been intentionally
+ |      delimited.  With natural text that includes punctuation, consider using
+ |      the regular expression module.
+ |
+ |  splitlines(self, /, keepends=False)
+ |      Return a list of the lines in the string, breaking at line boundaries.
+ |
+ |      Line breaks are not included in the resulting list unless keepends is given and
+ |      true.
+ |
+ |  startswith(...)
+ |      S.startswith(prefix[, start[, end]]) -&gt; bool
+ |
+ |      Return True if S starts with the specified prefix, False otherwise.
+ |      With optional start, test S beginning at that position.
+ |      With optional end, stop comparing S at that position.
+ |      prefix can also be a tuple of strings to try.
+ |
+ |  strip(self, chars=None, /)
+ |      Return a copy of the string with leading and trailing whitespace removed.
+ |
+ |      If chars is given and not None, remove characters in chars instead.
+ |
+ |  swapcase(self, /)
+ |      Convert uppercase characters to lowercase and lowercase characters to uppercase.
+ |
+ |  title(self, /)
+ |      Return a version of the string where each word is titlecased.
+ |
+ |      More specifically, words start with uppercased characters and all remaining
+ |      cased characters have lower case.
+ |
+ |  translate(self, table, /)
+ |      Replace each character in the string using the given translation table.
+ |
+ |        table
+ |          Translation table, which must be a mapping of Unicode ordinals to
+ |          Unicode ordinals, strings, or None.
+ |
+ |      The table must implement lookup/indexing via __getitem__, for instance a
+ |      dictionary or list.  If this operation raises LookupError, the character is
+ |      left untouched.  Characters mapped to None are deleted.
+ |
+ |  upper(self, /)
+ |      Return a copy of the string converted to uppercase.
+ |
+ |  zfill(self, width, /)
+ |      Pad a numeric string with zeros on the left, to fill a field of the given width.
+ |
+ |      The string is never truncated.
+ |
+ |  ----------------------------------------------------------------------
+ |  Static methods defined here:
+ |
+ |  __new__(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |
+ |  maketrans(...)
+ |      Return a translation table usable for str.translate().
+ |
+ |      If there is only one argument, it must be a dictionary mapping Unicode
+ |      ordinals (integers) or characters to Unicode ordinals, strings or None.
+ |      Character keys will be then converted to ordinals.
+ |      If there are two arguments, they must be strings of equal length, and
+ |      in the resulting dictionary, each character in x will be mapped to the
+ |      character at the same position in y. If there is a third argument, it
+ |      must be a string, whose characters will be mapped to None in the result.</pre>
+</section>
+<section id="tipos-contenedores">
+<h2>Tipos contenedores<a class="headerlink" href="#tipos-contenedores" title="Enlace permanente a este encabezado"></a></h2>
+<p>En Python existen tipos compuestos (que pueden contener más de un
+valor). Uno de ellos que ya vimos es el tipo <em>string</em> que es una cadena
+de caracteres. Veamos otros:</p>
+<section id="listas">
+<h3>Listas<a class="headerlink" href="#listas" title="Enlace permanente a este encabezado"></a></h3>
+<p>Las listas son tipos compuestos. Se definen separando los elementos con
+comas, todos encerrados entre corchetes. En general las listas pueden
+contener diferentes tipos, y pueden no ser todos iguales, pero suelen
+utilizarse con ítems del mismo tipo. Algunas características:</p>
+<ul class="simple">
+<li><p>Los elementos no son necesariamente homogéneos en tipo.</p></li>
+<li><p>Los elementos están ordenados.</p></li>
+<li><p>Se accede mediante un índice.</p></li>
+<li><p>Están definidas operaciones entre Listas, así como algunos métodos</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">in</span> <span class="pre">L</span></code> (¿x es un elemento de L?)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">not</span> <span class="pre">in</span> <span class="pre">L</span></code> (¿x no es un elemento de L?)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L1</span> <span class="pre">+</span> <span class="pre">L2</span></code> (concatenar L1 y L2)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n*L1</span></code> (n veces L1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L1*n</span></code> (n veces L1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L[i]</span></code> (Elemento i-ésimo)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L[i:j]</span></code> (Elementos i a j)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L[i:j:k]</span></code> (Elementos i a j, elegidos uno de cada k)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">len(L)</span></code> (longitud de L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min(L)</span></code> (Mínimo de L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max(L)</span></code> (Máximo de L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L.index(x,</span> <span class="pre">[i])</span></code> (Índice de x, iniciando en i)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L.count(x)</span></code> (Número de veces que aparece x en L)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">L.append(x)</span></code> (Agrega el elemento x al final)</p></li>
+</ul>
+</li>
+</ul>
+<p>Veamos algunos ejemplos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>En esta línea hemos declarado una variable llamada <code class="docutils literal notranslate"><span class="pre">cuadrados</span></code>, y le
+hemos asignado una lista de cuatro elementos. En algunos aspectos las
+listas son muy similares a los <em>strings</em>. Se pueden realizar muchas de
+las mismas operaciones en strings, listas y otros objetos sobre los que
+se pueden iterar (<em>iterables</em>).</p>
+<p>Las listas pueden accederse por posición y también pueden rebanarse
+(<em>slicing</em>)</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>La indexación de iteradores empieza desde cero (como en C)</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[:</span><span class="mi">3</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Los índices pueden ser positivos (empezando desde cero) o negativos
+empezando desde -1.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>cuadrados:</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>9</p></th>
+<th class="head"><p>16</p></th>
+<th class="head"><p>25</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>índices:</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+<td><p>2</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>índices negativos:</p></td>
+<td><p>-4</p></td>
+<td><p>-3</p></td>
+<td><p>-2</p></td>
+<td><p>-1</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>La asignación entre listas <strong>no copia</strong> todos los datos</p>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">cuadrados</span>
+<span class="n">a</span> <span class="ow">is</span> <span class="n">cuadrados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores originales&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores modificados&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Valores</span> <span class="n">originales</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="n">Valores</span> <span class="n">modificados</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="ow">is</span> <span class="n">cuadrados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">cuadrados</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores originales&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Valores modificados&quot;</span><span class="p">)</span>
+<span class="n">cuadrados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cuadrados</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Valores</span> <span class="n">originales</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="n">Valores</span> <span class="n">modificados</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+<span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<section id="comprension-de-listas">
+<h4>Comprensión de Listas<a class="headerlink" href="#comprension-de-listas" title="Enlace permanente a este encabezado"></a></h4>
+<p>Una manera sencilla de definir una lista es utilizando algo que se llama
+<em>Comprensión de listas</em>. Como primer ejemplo veamos una lista de
+<em>números cuadrados</em> como la que escribimos anteriormente. En lenguaje
+matemático la defiríamos como
+<span class="math notranslate nohighlight">\(S = \{x^{2} : x \in \{0 \dots 9\}\}\)</span>. En python es muy parecido.</p>
+<p>Podemos crear la lista <code class="docutils literal notranslate"><span class="pre">cuadrados</span></code> utilizando compresiones de listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">L2</span><span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">L1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">25</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cuadrados</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">cuadrados</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">49</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">81</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Una lista con los cuadrados sólo de los números pares también puede
+crearse de esta manera, ya que puede incorporarse una condición:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">21</span><span class="p">)</span> <span class="k">if</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">L</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">196</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="mi">324</span><span class="p">,</span> <span class="mi">400</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="tuplas">
+<h3>Tuplas<a class="headerlink" href="#tuplas" title="Enlace permanente a este encabezado"></a></h3>
+<p>Las tuplas son objetos similares a las listas, sobre las que se puede
+iterar y seleccionar partes según su índice. La principal diferencia es
+que son inmutables mientras que las listas pueden modificarse.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span> <span class="c1"># Las listas se definen con corchetes</span>
+<span class="n">T1</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># Las tuplas se definen con paréntesis</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;L1[0] = </span><span class="si">{</span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">T1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">T1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Tuples son inmutables&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Tuples</span> <span class="n">son</span> <span class="n">inmutables</span>
+</pre></div>
+</div>
+<p>Las tuplas se usan cuando uno quiere crear una “variable” que no va a
+ser modificada. Además códigos similares con tuplas pueden ser un poco
+más rápidos que si usan listas.</p>
+<p>Un uso común de las tuplas es el de asignación simultánea a múltiples
+variables:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+<span class="mi">1</span> <span class="mi">3</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Los paréntesis son opcionales en este caso</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">5</span>
+<span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span>
+</pre></div>
+</div>
+<p>Un uso muy común es el de intercambiar el valor de dos variables</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>                     <span class="c1"># swap</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">4</span> <span class="mi">5</span>
+<span class="mi">5</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</section>
+<section id="rangos">
+<h3>Rangos<a class="headerlink" href="#rangos" title="Enlace permanente a este encabezado"></a></h3>
+<p>Los objetos de tipo
+<a class="reference external" href="https://docs.python.org/es/3/library/stdtypes.html#ranges">range</a>
+representan una secuencia inmutable de números y se usan habitualmente
+para ejecutar un bucle
+<a class="reference external" href="https://docs.python.org/es/3/reference/compound_stmts.html#for">for</a>
+un número determinado de veces. El formato es uno de:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="n">stop</span><span class="p">)</span>
+<span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">)</span>
+<span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="operaciones-sobre-listas">
+<h3>Operaciones sobre listas<a class="headerlink" href="#operaciones-sobre-listas" title="Enlace permanente a este encabezado"></a></h3>
+<p>Veamos algunas operaciones que se pueden realizar sobre listas. Por
+ejemplo, se puede fácilmente:</p>
+<ul class="simple">
+<li><p>concatenar dos listas,</p></li>
+<li><p>buscar un valor dado,</p></li>
+<li><p>agregar elementos,</p></li>
+<li><p>borrar elementos,</p></li>
+<li><p>calcular su longitud,</p></li>
+<li><p>invertirla</p></li>
+</ul>
+<p>Empecemos concatenando dos listas, usando el operador “suma”</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">+</span> <span class="n">L1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span><span class="o">*</span><span class="n">L1</span> <span class="o">==</span> <span class="n">L1</span> <span class="o">+</span> <span class="n">L1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">L1</span>
+</pre></div>
+</div>
+<p>Las listas tienen definidos métodos, que podemos ver con la ayuda
+incluida, por ejemplo haciendo <code class="docutils literal notranslate"><span class="pre">help(list)</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                      <span class="c1"># Índice del elemento de valor 3</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>                    <span class="c1"># Índice del valor 3, empezando del cuarto</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">9</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>                      <span class="c1"># Cuenta las veces que aparece el valor &quot;3&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+</pre></div>
+</div>
+<p>Si queremos agregar un elemento al final utilizamos el método
+<code class="docutils literal notranslate"><span class="pre">append</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>Si queremos insertar un elemento en una posición que no es el final de
+la lista, usamos el método <code class="docutils literal notranslate"><span class="pre">insert()</span></code>. Por ejemplo para insertar el
+valor 6 en la primera posición:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<p>En las listas podemos sobreescribir uno o más elementos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">L</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=-</span><span class="mi">4</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="s2">&quot;fin2&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;fin2&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>                 <span class="c1"># Extendemos con varios elementos</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;fin2&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="n">L</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;fin2&#39;</span><span class="p">)</span>                     <span class="c1"># Remueve la primera aparición del valor 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="s1">&#39;fin2&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+<span class="n">L1</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Función de Python que invierte una lista</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">L1</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>          <span class="c1"># Ordena la lista (si los elementos son comparables)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>El método <code class="docutils literal notranslate"><span class="pre">sort()</span></code> de las listas acepta dos argumentos opcionales:
+<code class="docutils literal notranslate"><span class="pre">key</span></code> y <code class="docutils literal notranslate"><span class="pre">reverse</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">50</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">sort</span><span class="p">()</span> <span class="n">takes</span> <span class="n">no</span> <span class="n">positional</span> <span class="n">arguments</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<section id="funciones-que-aplican-sobre-listas">
+<h4>Funciones que aplican sobre listas<a class="headerlink" href="#funciones-que-aplican-sobre-listas" title="Enlace permanente a este encabezado"></a></h4>
+<p>Hay algunas funciones de Python que se aplican sobre listas (o sobre
+iterables en general). Algunas de ellas son la suma <code class="docutils literal notranslate"><span class="pre">sum()</span></code> e
+inversión <code class="docutils literal notranslate"><span class="pre">reversed()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">60</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">reversed</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">list_reverseiterator</span> <span class="n">at</span> <span class="mh">0x7fed3814ceb0</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">L1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Las funciones mínimo <code class="docutils literal notranslate"><span class="pre">min()</span></code>, máximo <code class="docutils literal notranslate"><span class="pre">max()</span></code> y ordenar <code class="docutils literal notranslate"><span class="pre">sorted()</span></code>
+toman como argumento una lista (u otro iterable) de elementos que pueden
+compararse entre sí</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">L</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mi">4</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">L</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="nb">sorted</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">function</span> <span class="nb">sorted</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">builtins</span><span class="p">:</span>
+
+<span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">Return</span> <span class="n">a</span> <span class="n">new</span> <span class="nb">list</span> <span class="n">containing</span> <span class="nb">all</span> <span class="n">items</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">iterable</span> <span class="ow">in</span> <span class="n">ascending</span> <span class="n">order</span><span class="o">.</span>
+
+    <span class="n">A</span> <span class="n">custom</span> <span class="n">key</span> <span class="n">function</span> <span class="n">can</span> <span class="n">be</span> <span class="n">supplied</span> <span class="n">to</span> <span class="n">customize</span> <span class="n">the</span> <span class="n">sort</span> <span class="n">order</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span>
+    <span class="n">reverse</span> <span class="n">flag</span> <span class="n">can</span> <span class="n">be</span> <span class="nb">set</span> <span class="n">to</span> <span class="n">request</span> <span class="n">the</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">descending</span> <span class="n">order</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Estas funciones toman además un argumento opcional <code class="docutils literal notranslate"><span class="pre">key</span></code>, que es una
+función que se aplica a cada elemento antes de compararlos</p>
+<p>Puede encontrarse más información en <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range">la Biblioteca de
+Python</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;abcde&quot;</span>
+<span class="n">L3</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;hola&#39;</span><span class="p">,</span><span class="s1">&#39;que&#39;</span><span class="p">,</span><span class="s1">&#39;tal&#39;</span><span class="p">]</span>
+<span class="n">s</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;holaabcdequeabcdetal&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;hola que tal&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L3</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hola</span>
+<span class="n">que</span>
+<span class="n">tal</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-02-c">
+<h2>Ejercicios 02 (c)<a class="headerlink" href="#ejercicios-02-c" title="Enlace permanente a este encabezado"></a></h2>
+<ol class="arabic" start="6">
+<li><p><strong>Para Entregar:</strong> Manejos de listas:</p>
+<ul class="simple">
+<li><p>Cree la lista <strong>N</strong> de longitud 50, donde cada elemento es un
+número entero de 1 a 50 inclusive (Ayuda: vea la expresión
+<code class="docutils literal notranslate"><span class="pre">range</span></code>).</p></li>
+<li><p>Invierta la lista.</p></li>
+<li><p>Extraiga de <strong>N</strong> una lista <strong>N1</strong> que contenga sólo aquellos
+elementos que sean el cuadrado de algún número entero.</p></li>
+<li><p>Extraiga de <strong>N</strong> una lista <strong>N2</strong> que contenga sólo aquellos
+elementos que sean iguales al <span class="math notranslate nohighlight">\(n^2-n\)</span> para algún número
+entero <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ul>
+<p><em>Ayuda:</em> Puede resultar útil recordar el uso de comprensión de
+listas.</p>
+<p>Debe enviar por correo electrónico, con asunto “02_Suapellido”, un
+programa llamado 02_SuApellido.py (en todos los casos utilice su
+apellido, no la palabra “SuApellido”) .</p>
+</li>
+<li><p>Cree una lista de la forma <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">[1,3,5,...,17,19,19,17,...,3,1]</span></code>
+(<em>Ayuda:</em> vea la expresión <code class="docutils literal notranslate"><span class="pre">range</span></code>).</p></li>
+<li><p>Escriba una función que tome un número entero de tres cifras, y
+devuelva el mayor entero que se puede formar con esas cifras
+(<em>Ayuda:</em> considere convertir el número entero a otros tipos).</p></li>
+<li><p>Construya una lista <code class="docutils literal notranslate"><span class="pre">L2</span></code> con 2000 elementos, todos iguales a
+<code class="docutils literal notranslate"><span class="pre">0.0005</span></code>. Imprima su suma utilizando la función <code class="docutils literal notranslate"><span class="pre">sum</span></code> y comparar
+con el resultado que arroja la función que existe en el módulo
+<code class="docutils literal notranslate"><span class="pre">math</span></code> para realizar suma de números de punto flotante.</p></li>
+<li><p>Operación “rara” sobre una lista:</p>
+<ul class="simple">
+<li><p>Defina la lista <code class="docutils literal notranslate"><span class="pre">L</span> <span class="pre">=</span> <span class="pre">[0,1]</span></code></p></li>
+<li><p>Realice la operación <code class="docutils literal notranslate"><span class="pre">L.append(L)</span></code></p></li>
+<li><p>Ahora imprima L, e imprima el último elemento de <code class="docutils literal notranslate"><span class="pre">L</span></code>.</p></li>
+<li><p>Haga que una nueva lista <code class="docutils literal notranslate"><span class="pre">L1</span></code> tenga el valor del último
+elemento de <code class="docutils literal notranslate"><span class="pre">L</span></code> y repita el inciso anterior.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
 </section>
 </section>
 
