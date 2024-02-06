@@ -1,0 +1,320 @@
+.. _clase_02:
+
+Clase 2: Modularización y tipos compuestos 
+============================================
+
+
+.. note::  **Escenas del capítulo anterior:**
+  
+  En la clase anterior preparamos la infraestructura:
+  
+  -  Instalamos los programas y paquetes necesarios.
+  -  Aprendimos como ejecutar: una consola usual, de ipython, o iniciar un
+     *jupyter notebook*
+  -  Aprendimos a utilizar la consola como una calculadora
+  -  Vimos algunos comandos mágicos y como enviar comandos al sistema
+     operativo
+  -  Aprendimos como obtener ayuda
+  -  Iniciamos los primeros pasos del lenguaje
+  
+  Veamos un ejemplo completo de un programa (semi-trivial):
+  
+  .. code:: python
+  
+  
+     # Definición de los datos
+     r = 9.
+     pi = 3.14159
+     #
+     # Cálculos
+     A = pi*r**2
+     As = 4 * A
+     V = 4*A*r/3
+     #
+     # Salida de los resultados
+     print("Para un círculo de radio",r,"cm, el área es",A,"cm²")
+     print("Para una esfera de radio",r,"cm, el área es",As,"cm²")
+     print("Para una esfera de radio",r,"cm, el volumen es",V,"cm³")
+  
+  En este ejemplo simple, definimos algunas variables con los datos del
+  problema (``r`` y ``pi``), realizamos cálculos y sacamos por pantalla
+  los resultados. A diferencia de otros lenguajes, python no necesita una
+  estructura rígida, con definición de un programa principal.
+  
+  Otro punto importante de este ejemplo es el uso de comentarios. El
+  caracter “#” inicia un comentario de línea, y el intérprete de python
+  ignora todos lo que viene a continuación hasta que encuentra una nueva
+  línea.
+  
+  
+
+Modularización y encapsulado
+----------------------------
+
+Una característica importante de la programación es la posibilidad de
+definir partes del código para realizar alguna tarea específica y poder
+reutilizarla. En Python, una de las maneras más efectivas de hacer esto
+es mediante la definición de *funciones*. Ya vimos un ejemplo, con la
+función ``print()``, que se usa para imprimir valores a pantalla (por
+defecto) o un archivo. Existen otras funciones ya definidas en Python
+(``len()``, ``max()``, ``min()``, ``abs()``, etc). Puede ver la `lista
+completa en la
+documentación <https://docs.python.org/3/library/functions.html>`__.
+
+Definición básica de funciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Tomemos el ejemplo del programa anterior para definir una función que
+calcule el área de un disco
+
+.. code:: python
+
+    def area_disco(r):
+      """Cálculo del área de un círculo de radio `r`"""
+      # Definición de constantes
+      pi = 3.141593
+      # Cálculo
+      A = pi * r**2
+      return A
+
+**Puntos a notar:**
+
+-  Las funciones se definen utilizando la palabra ``def`` seguida por el
+   nombre.
+-  A continuación, entre paréntesis se escriben los argumentos, en este
+   caso el radio ``r``,
+-  La función devuelve algo; puede ser uno o más valores.
+-  Lo que devuelve la función se especifica mediante la palabra
+   reservada ``return`` (en este caso ``A`` que es un valor real). Si es
+   más de un valor, se separan con comas. Si una función no devuelve
+   algo explícitamente, entonces devuelve ``None``.
+-  Al principio de la definición de la función se escribe el *string* de
+   documentación.
+
+.. code:: python
+
+    help(area_disco)
+
+
+.. parsed-literal::
+
+    Help on function area_disco in module __main__:
+    
+    area_disco(r)
+        Cálculo del área de un círculo de radio `r`
+    
+
+
+.. code:: python
+
+    R = 2
+    Area = area_disco(R)
+    print("Para un círculo de radio", R, "cm, el área es",Area,"cm²")
+
+
+.. parsed-literal::
+
+    Para un círculo de radio 2 cm, el área es 12.566372 cm²
+
+
+.. code:: python
+
+    print("Para un círculo de radio", 3, "cm, el área es",area_disco(3),"cm²")
+
+
+.. parsed-literal::
+
+    Para un círculo de radio 3 cm, el área es 28.274337 cm²
+
+
+Módulos
+-------
+
+Los módulos son el mecanismo de Python para reusar código. Existen
+varios módulos que son parte de la biblioteca *standard* para distintos
+tipos de aplicaciones. Además existe un repositorio en la que contribuye
+la comunidad, con bibliotecas para muchos usos diversos.
+
+El uso de módulos es muy simple, para poder aprovecharlo necesitaremos
+saber dos cosas:
+
+-  Qué funciones están ya definidas y listas para usar
+-  Cómo acceder a ellas
+
+Empecemos con la segunda cuestión. Para utilizar las funciones debemos
+*importarlas* en la forma ``import modulo``, donde modulo es el nombre
+que queremos importar.
+
+Esto nos lleva a la primera cuestión: cómo saber ese nombre, y que
+funciones están disponibles. La respuesta es: **la documentación**.
+
+Una vez importado, podemos utilizar constantes y funciones definidas en
+el módulo con la notación “de punto”: ``modulo.funcion()``.
+
+Módulo math
+~~~~~~~~~~~
+
+El módulo **math** contiene las funciones más comunes (trigonométricas,
+exponenciales, logaritmos, etc) para operar sobre números de *punto
+flotante*, y algunas constantes importantes (pi, e, etc). En realidad es
+una interface a la biblioteca math en C.
+
+.. code:: python
+
+    import math
+    # algunas constantes y funciones elementales
+    raiz5pi= math.sqrt(5*math.pi)
+    print (raiz5pi, math.floor(raiz5pi), math.ceil(raiz5pi))
+    print (math.e, math.floor(math.e), math.ceil(math.e))
+    # otras funciones elementales
+    print (math.log(1024,2), math.log(27,3))
+    print (math.factorial(7), math.factorial(9), math.factorial(10))
+    print ('Combinatorio: C(6,2):',math.factorial(6)/(math.factorial(4)*math.factorial(2)))
+
+
+
+.. parsed-literal::
+
+    3.963327297606011 3 4
+    2.718281828459045 2 3
+    10.0 3.0
+    5040 362880 3628800
+    Combinatorio: C(6,2): 15.0
+
+
+A veces, sólo necesitamos unas pocas funciones de un módulo. Entonces
+para abreviar la notación combiene importar sólo lo que vamos a usar,
+usando la notación:
+
+``from xxx import yyy``
+
+.. code:: python
+
+    from math import sqrt, pi, log
+    import math
+    raiz5pi = sqrt(5*pi)
+    print (log(1024, 2))
+    print (raiz5pi, math.floor(raiz5pi))
+
+
+.. parsed-literal::
+
+    10.0
+    3.963327297606011 3
+
+
+.. code:: python
+
+    import math as m
+    m.sqrt(3.2)
+
+
+
+
+.. parsed-literal::
+
+    1.7888543819998317
+
+
+
+.. code:: python
+
+    import math
+    print(math.sqrt(-1))
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Cell In[9], line 2
+          1 import math
+    ----> 2 print(math.sqrt(-1))
+
+
+    ValueError: math domain error
+
+
+Módulo ``cmath``
+~~~~~~~~~~~~~~~~
+
+El módulo ``math`` no está diseñado para trabajar con números complejos,
+para ello existe el módulo **cmath**
+
+.. code:: python
+
+    import cmath
+    print('Usando cmath (-1)^0.5=', cmath.sqrt(-1))
+    print(cmath.cos(cmath.pi/3 + 2j))
+
+
+
+.. parsed-literal::
+
+    Usando cmath (-1)^0.5= 1j
+    (1.8810978455418161-3.1409532491755083j)
+
+
+Si queremos calcular la fase (el ángulo que forma con el eje x) podemos
+usar la función phase
+
+.. code:: python
+
+    z = 1 + 0.5j
+    cmath.phase(z)                  # Resultado en radianes
+
+
+
+
+.. parsed-literal::
+
+    0.4636476090008061
+
+
+
+.. code:: python
+
+    math.degrees(cmath.phase(z))    # Resultado en grados
+
+
+
+
+.. parsed-literal::
+
+    26.56505117707799
+
+
+
+--------------
+
+Ejercicios 02 (a)
+-----------------
+
+1. Escriba funciones que calculen:
+
+-  El volumen de una esfera
+-  El volumen de una caja de lados ``L1``, ``L2``, ``L3``
+
+2. Escriba una función que tome como argumentos tres valores: ``a``,
+   ``b``, ``c`` y calcule los ceros (raíces) del polinomio
+   :math:`a x^{2} + b x + c`.
+
+3. Considere un polígono regular de :math:`N` lados inscripto en un
+   círculo de radio unidad:
+
+   -  Escriba una función que tome como argumento el número de lados
+      :math:`N` y calcule el ángulo interior del polígono regular
+      correspondiente (por ejemplo el de un triángulo es 60 grados, de
+      un cuadrado es 90 grados, y de un pentágono es 108 grados). Pruebe
+      su función para valores de :math:`N= 3, 5, 6, 8, 9, 10, 12`.
+   -  ¿Puede calcular la longitud del lado de los polígonos regulares si
+      se encuentran inscriptos en un círculo de radio unidad?
+
+En todos los casos, pruebe las funciones escritas
+
+--------------
+
+
