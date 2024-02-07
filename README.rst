@@ -37,6 +37,75 @@ Bibliografía
 ------------
 
 
+Accesible en línea
+~~~~~~~~~~~~~~~~~~
+
+-  La documentación oficial de Python (https://docs.python.org/3/)
+-  El Tutorial de Python (https://docs.python.org/3/tutorial/), también
+   en español (http://docs.python.org.ar/tutorial/3/)
+-  Documentación de Numpy (http://docs.scipy.org/doc/numpy/user/)
+-  Documentación de Scipy (https://docs.scipy.org/doc/scipy/reference/)
+-  Documentación de Matplotlib (http://matplotlib.org), en particular la
+   Galería (http://matplotlib.org/gallery.html)
+-  Introduction to Python for Science
+   (http://www.physics.nyu.edu/pine/pymanual/html/pymanMaster.html)
+-  El curso de Python científico
+   (https://github.com/mgaitan/curso-python-cientifico)
+-  Las clases de Scipy Scipy Lectures (http://scipy-lectures.org)
+-  Scipy Cookbook (http://scipy-cookbook.readthedocs.io/index.html)
+-  Computational Statistics in Python
+   (http://people.duke.edu/~ccc14/sta-663-2017/index.html)
+
+Libros
+~~~~~~
+
+-  The Python Standard Library by Example
+   (https://doughellmann.com/blog/the-python-3-standard-library-by-example/)
+   de Doug Hellman, Addison-Wesley, 2017
+-  Python Cookbook
+   (https://www.amazon.com/Python-Cookbook-Third-David-Beazley/dp/1449340377)
+   de David Beazley, Brian K. Jones, O'Reilly Pub., 2013.
+-  Elegant Scipy
+   (https://www.oreilly.com/library/view/elegant-scipy/9781491922927/)
+   de Harriet Dashnow, Stéfan van der Walt, Juan Nunez-Iglesias,
+   O'Reilly Pub., 2017.
+-  Scientific Computing with Python 3
+   (https://www.packtpub.com/big-data-and-business-intelligence/scientific-computing-python-3)
+   de Claus Führer, Jan Erik Solem, Olivier Verdier, Packt Pub., 2016.
+-  Interactive Applications Using Matplotlib
+   (https://www.packtpub.com/application-development/interactive-applications-using-matplotlib)
+   de Benjamin V Root, Packt Pub., 2015.
+-  Mastering Python Regular Expressions
+   (https://www.packtpub.com/application-development/mastering-python-regular-expressions)
+   de Félix López, Víctor Romero, Packt Pub., 2014,
+
+
+Otras referencias de interés
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Otras bibliotecas útiles:       
+     - `Pandas <http://pandas.pydata.org/pandas-docs/stable/>`__
+     - `Sympy <http://docs.sympy.org/latest/index.html>`__
+
+- Información para usuarios de Matlab:
+
+    - `Numpy para usuarios de Matlab <https://docs.scipy.org/doc/numpy-dev/user/numpy-for-matlab-users.html>`__
+    - `<http://mathesaurus.sourceforge.net/matlab-numpy.html>`__
+    
+
+*Blogs* y otras publicaciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+ - `The Glowing Python <http://glowingpython.blogspot.com.ar/>`__
+ - `Python for Signal Processing <http://python-for-signal-processing.blogspot.com.ar/>`__
+ - `Ejercicios en Numpy <http://www.labri.fr/perso/nrougier/teaching/numpy.100/>`__
+ - `Videos de Curso para Científicos e Ingenieros <https://www.youtube.com/playlist?list=PLoGFizEtm_6iheDXw2-8onKClyxgstBO1>`__ 
+
+
+   
+
+
+
 
 .. _prog-detalle:
 
@@ -44,7 +113,7 @@ Programa Detallado
 ==================
 
 :Autor: Juan Fiol
-:Version: Revision: 2022
+:Version: Revision: 2023
 :Copyright: Libre
 
   
