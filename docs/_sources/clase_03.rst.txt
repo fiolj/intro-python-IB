@@ -815,3 +815,609 @@ Ejercicios 03 (a)
       Falso en otro caso.
 
 
+Control de flujo
+----------------
+
+if/elif/else
+~~~~~~~~~~~~
+
+En todo lenguaje necesitamos controlar el flujo de una ejecución segun
+una condición Verdadero/Falso (booleana). *Si (condicion) es verdadero
+hacé (bloque A); Sino hacé (Bloque B)*. En pseudo código:
+
+::
+
+       Si condición 1:
+           bloque A
+       sino y condición 2:
+           bloque B
+       sino:
+           bloque C
+
+y en Python es muy parecido!
+
+.. code:: python
+
+       if condición_1:
+         bloque A
+       elif condicion_2:
+         bloque B
+       elif condicion_3:
+         bloque C
+       else:
+         Bloque final
+
+En un ``if``, la conversión a tipo *boolean* es implícita. El tipo
+``None`` (nulo), el número ``0`` (entero, real o complejo), cualquier
+secuencia (lista, tupla, string, conjunto o diccionario) vacía siempre
+evalua a ``False``. Cualquier otro objeto evalua a ``True``.
+
+Podemos tener multiples condiciones. Se ejecutará el primer bloque cuya
+condición sea verdadera, o en su defecto el bloque ``else``. Esto es
+equivalente a la sentencia ``switch`` de otros lenguajes.
+
+.. code:: python
+
+    def mensaje(Nota):
+        if Nota >= 8:
+            print ("Aprobó cómodo, felicitaciones!")
+        elif 6 <= Nota < 8:
+            print ("Bueno, al menos aprobó!")
+        elif 4 <= Nota < 6 :
+            print ("Bastante bien, pero no le alcanzó")
+        else:
+            print("Siga participando!")
+
+.. code:: python
+
+    mensaje(7)
+
+
+.. parsed-literal::
+
+    Bueno, al menos aprobó!
+
+
+.. code:: python
+
+    mensaje(3)
+
+
+.. parsed-literal::
+
+    Siga participando!
+
+
+Iteraciones
+~~~~~~~~~~~
+
+Sentencia for
+^^^^^^^^^^^^^
+
+Otro elemento de control es el que permite *iterar* sobre una secuencia
+(o *“iterador”*). Obtener cada elemento para hacer algo. En Python se
+logra con la sentencia ``for``. En lugar de iterar sobre una condición
+aritmética hasta que se cumpla una condición (como en C o en Fortran) en
+Python la sentencia ``for`` itera sobre los ítems de una secuencia en
+forma ordenada
+
+.. code:: python
+
+    for elemento in range(10):
+        print(elemento, end=', ')
+
+
+
+.. parsed-literal::
+
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+
+Veamos otro ejemplo, iterando sobre una lista:
+
+.. code:: python
+
+    Lista = ['auto', 'casa', "perro", "gato", "árbol", "lechuza", "banana"]
+    for L in Lista:
+      print(L)
+
+
+.. parsed-literal::
+
+    auto
+    casa
+    perro
+    gato
+    árbol
+    lechuza
+    banana
+
+
+La misma sintaxis se utiliza con otros tipos que se pueden iterar
+(*strings*, tuplas, conjuntos):
+
+.. code:: python
+
+    conj = set(Lista)
+
+.. code:: python
+
+    conj
+
+
+
+
+.. parsed-literal::
+
+    {'auto', 'banana', 'casa', 'gato', 'lechuza', 'perro', 'árbol'}
+
+
+
+.. code:: python
+
+    for c in conj:
+      print(c)
+
+
+.. parsed-literal::
+
+    auto
+    árbol
+    perro
+    lechuza
+    casa
+    gato
+    banana
+
+
+En estos ejemplos, en cada iteración ``L`` toma sucesivamente los
+valores de ``Lista``. La primera vez es ``L='auto'``, la segunda
+``L='casa'``, … El cuerpo del *loop* ``for``, como todos los bloques en
+**Python** está definido por la **indentación**. La última línea está
+fuera del loop y se ejecuta al terminar todas las iteraciones del
+``for``.
+
+.. code:: python
+
+    for L in Lista:
+        print(f'En la palabra {L} hay {L.count("a")} letras "a"')
+    
+    print(f'\nLa palabra más larga es {max(Lista, key=len)}')
+    print(f'\nLa última palabra es {max(Lista)}')
+
+
+.. parsed-literal::
+
+    En la palabra auto hay 1 letras "a"
+    En la palabra casa hay 2 letras "a"
+    En la palabra perro hay 0 letras "a"
+    En la palabra gato hay 1 letras "a"
+    En la palabra árbol hay 0 letras "a"
+    En la palabra lechuza hay 1 letras "a"
+    En la palabra banana hay 3 letras "a"
+    
+    La palabra más larga es lechuza
+    
+    La última palabra es árbol
+
+
+.. note::  Acá utilizamos la función ``max()`` con un argumento requerido
+  (``Lista``) que es la entidad sobre la que se va a encontrar el mayor
+  valor. Notar que el mayor valor depende de como se defina la comparación
+  entre dos elementos. La función ``max()`` permite un argumento opcional
+  (``key``) que debe ser una “función” que se aplicará a cada elemento y
+  luego se compararán los resultados de la aplicación de la función a los
+  elementos. En este caso, a cada palabra se le calcula la longitud y esto
+  es lo que se compara.
+  
+  
+
+Otro ejemplo:
+
+.. code:: python
+
+    suma = 0
+    for elemento in range(11):
+      suma += elemento
+      print("x={},  suma parcial={}".format(elemento, suma))
+    print ('Suma total =', suma)
+
+
+.. parsed-literal::
+
+    x=0,  suma parcial=0
+    x=1,  suma parcial=1
+    x=2,  suma parcial=3
+    x=3,  suma parcial=6
+    x=4,  suma parcial=10
+    x=5,  suma parcial=15
+    x=6,  suma parcial=21
+    x=7,  suma parcial=28
+    x=8,  suma parcial=36
+    x=9,  suma parcial=45
+    x=10,  suma parcial=55
+    Suma total = 55
+
+
+Notar que utilizamos el operador asignación de suma: ``+=``.
+
+.. code:: python
+
+   suma += elemento
+
+es equivalente a:
+
+.. code:: python
+
+   suma = suma + elemento
+
+que corresponde a realizar la suma de la derecha, y el resultado
+asignarlo a la variable de la izquierda.
+
+Por supuesto, para obtener la suma anterior podemos simplemente usar las
+funciones de python:
+
+.. code:: python
+
+    print (sum(range(11))) # El ejemplo anterior puede escribirse usando sum y range
+
+
+.. parsed-literal::
+
+    55
+
+
+Loops: ``enumerate``, ``continue``, ``break``, ``else``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Veamos otras características del bloque ``for``.
+
+.. code:: python
+
+    suma = 0
+    cuadrados = []
+    for i,elem in enumerate(range(3,30)):
+      if elem % 2:       # Si resto (%) es diferente de cero -> Impares
+        continue
+      suma += elem**2
+      cuadrados.append(elem**2)
+      print (i, elem, elem**2, suma)   # Imprimimos el índice y el elem al cuadrado
+    print ("sumatoria de números pares al cuadrado entre 3 y 20:", suma)
+    print ('cuadrados= ', cuadrados)
+
+
+.. parsed-literal::
+
+    1 4 16 16
+    3 6 36 52
+    5 8 64 116
+    7 10 100 216
+    9 12 144 360
+    11 14 196 556
+    13 16 256 812
+    15 18 324 1136
+    17 20 400 1536
+    19 22 484 2020
+    21 24 576 2596
+    23 26 676 3272
+    25 28 784 4056
+    sumatoria de números pares al cuadrado entre 3 y 20: 4056
+    cuadrados=  [16, 36, 64, 100, 144, 196, 256, 324, 400, 484, 576, 676, 784]
+
+
+**Puntos a notar:**
+
+-  Inicializamos una variable entera en cero y una lista vacía
+-  ``range(3,30)`` nos da consecutivamente los números entre 3 y 29 en
+   cada iteración.
+-  ``enumerate`` nos permite iterar sobre algo, agregando un contador
+   automático.
+-  La línea condicional ``if elem % 2:`` es equivalente a
+   ``if (elem % 2) != 0:`` y es verdadero si ``elem`` no es divisible
+   por 2 (número impar)
+-  La sentencia ``continue`` hace que se omita la ejecución del resto
+   del bloque por esta iteración
+-  El método ``append`` agrega el elemento a la lista
+
+Antes de seguir veamos otro ejemplo de uso de ``enumerate``.
+Consideremos una iteración sobre una lista como haríamos normalmente en
+otros lenguajes:
+
+.. code:: python
+
+    L = "I've had a perfectly wonderful evening.  But this wasn't it.".split()
+
+.. code:: python
+
+    L
+
+
+
+
+.. parsed-literal::
+
+    ["I've",
+     'had',
+     'a',
+     'perfectly',
+     'wonderful',
+     'evening.',
+     'But',
+     'this',
+     "wasn't",
+     'it.']
+
+
+
+.. code:: python
+
+    # En otros lenguajes...
+    for j in range(len(L)):
+      print(f'Índice: {j} -> {L[j]} ({len(L[j])} caracteres)')
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
+
+.. code:: python
+
+    # En otros lenguajes...
+    for j in range(len(L)):
+      print(f'La palabra "{L[j]}" tiene {len(L[j])} caracteres')
+
+
+
+.. parsed-literal::
+
+    La palabra "I've" tiene 4 caracteres
+    La palabra "had" tiene 3 caracteres
+    La palabra "a" tiene 1 caracteres
+    La palabra "perfectly" tiene 9 caracteres
+    La palabra "wonderful" tiene 9 caracteres
+    La palabra "evening." tiene 8 caracteres
+    La palabra "But" tiene 3 caracteres
+    La palabra "this" tiene 4 caracteres
+    La palabra "wasn't" tiene 6 caracteres
+    La palabra "it." tiene 3 caracteres
+
+
+En python:
+
+.. code:: python
+
+    for pal in L:
+      print(f'La palabra "{pal}" tiene {len(pal)} caracteres')
+
+
+
+.. parsed-literal::
+
+    La palabra "I've" tiene 4 caracteres
+    La palabra "had" tiene 3 caracteres
+    La palabra "a" tiene 1 caracteres
+    La palabra "perfectly" tiene 9 caracteres
+    La palabra "wonderful" tiene 9 caracteres
+    La palabra "evening." tiene 8 caracteres
+    La palabra "But" tiene 3 caracteres
+    La palabra "this" tiene 4 caracteres
+    La palabra "wasn't" tiene 6 caracteres
+    La palabra "it." tiene 3 caracteres
+
+
+Hay ocasiones en que necesitamos conocer el índice. La solución de otros
+lenguajes nos lo provee (nos obliga a proveerlo). Python ofrece la
+función ``enumerate()`` que agrega un contador automático
+
+.. code:: python
+
+    for j, elem in enumerate(L):
+      print(f'Índice: {j} -> {elem} ({len(elem)} caracteres)')
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
+
+Veamos otro ejemplo, que puede encontrarse en la `documentación
+oficial <https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops>`__:
+
+.. code:: python
+
+    for n in range(2, 20):
+      for x in range(2, n):
+        if n % x == 0:
+          print( f'{n:2d} = {x} x {n//x}')
+          break
+      else:
+         # Salió sin encontrar un factor, entonces ...
+         print('{:2d} es un número primo'.format(n))
+
+
+
+.. parsed-literal::
+
+     2 es un número primo
+     3 es un número primo
+     4 = 2 x 2
+     5 es un número primo
+     6 = 2 x 3
+     7 es un número primo
+     8 = 2 x 4
+     9 = 3 x 3
+    10 = 2 x 5
+    11 es un número primo
+    12 = 2 x 6
+    13 es un número primo
+    14 = 2 x 7
+    15 = 3 x 5
+    16 = 2 x 8
+    17 es un número primo
+    18 = 2 x 9
+    19 es un número primo
+
+
+**Puntos a notar:**
+
+-  Acá estamos usando dos *loops* anidados. Uno recorre ``n`` entre 2 y
+   9, y el otro ``x`` entre 2 y ``n``.
+-  La comparación ``if n % x == 0:`` chequea si ``x`` es un divisor de
+   ``n``
+-  La sentencia ``break`` interrumpe el *loop* interior (sobre ``x``)
+-  Notar la alineación de la sentencia ``else``. No está referida a
+   ``if`` sino a ``for``. Es opcional y se ejecuta cuando el loop se
+   termina normalmente (sin ``break``)
+
+While
+^^^^^
+
+Otra sentencia de control es *while*: que permite iterar mientras se
+cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
+(en la cuál cada término es la suma de los dos anteriores)
+
+.. code:: python
+
+    a, b = 0, 1
+    while b < 5000:
+      print (b, end=' ')
+      a, b = b, a+b
+
+
+.. parsed-literal::
+
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 
+
+.. code:: python
+
+    a, b = 0, 1
+    while b < 5000:
+      a, b = b, a+b
+      if b == 8:
+        continue
+      print (b, end=' ')
+
+
+
+.. parsed-literal::
+
+    1 2 3 5 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 
+
+--------------
+
+Ejercicios 03 (b)
+-----------------
+
+1. De los primeros 100 números naturales imprimir aquellos que no son
+   divisibles por alguno de 2, 3, 5 o 7.
+
+2. Usando estructuras de control, calcule el valor de la suma:
+
+   .. math::  s_{1} = \frac{1}{2} \left(\sum_{k=1}^{100}k^{-1} \right)
+
+   para los casos:
+
+   1. Incluyendo todos los valores de ``k``
+   2. Incluyendo únicamente los valores pares de ``k``.
+
+3. Escriba una función que estime la suma
+
+   .. math:: s_{2} = \sum_{k=1}^{\infty} \frac{(-1)^{k} (k+1)}{2 k^{3} + k^{2}}
+
+   La función toma como argumentos un error relativo :math:`\epsilon`
+   deseado y devuelve el valor de la suma y el error relativo estimado.
+   Pruebe su función para un valor :math:`\epsilon=10^{-5}`
+
+4. Escriba una función que tome como argumento un párrafo de texto y
+   devuelva un string con el párrafo en un “cartel” de un cierto ancho:
+
+   .. code:: python
+
+      cartelizar(parrafo, ancho)
+
+   Por ejemplo, para el texto:
+
+   .. code:: python
+
+      s = "Ullam vel totam cum neque exercitationem ut. Quae omnis rerum sit reprehenderit accusamus. Molestiae molestiae sit totam sint. Neque pariatur temporibus ut minima accusantium. Ad perferendis natus nisi dolor. Et sint maiores exercitationem reiciendis ut ab et."
+
+      sout = cartelizar(s, 60)
+
+   debe devolver el *string*:
+
+   .. code:: python
+
+      sout = '* ******************************************************** *\n* Ullam vel totam cum neque exercitationem ut. Quae omnis  *\n*  rerum sit reprehenderit accusamus. Molestiae molestiae  *\n*   sit totam sint. Neque pariatur temporibus ut minima    *\n*  accusantium. Ad perferendis natus nisi dolor. Et sint   *\n* ******************************************************** *'
+
+   que al imprimirlo se verá:
+
+   .. code:: python
+
+      print(sout)
+
+   ::
+
+       * ******************************************************** *
+       * Ullam vel totam cum neque exercitationem ut. Quae omnis  *
+       *  rerum sit reprehenderit accusamus. Molestiae molestiae  *
+       *   sit totam sint. Neque pariatur temporibus ut minima    *
+       *  accusantium. Ad perferendis natus nisi dolor. Et sint   *
+       * ******************************************************** *
+
+5. En 1949, D. R. Kaprekar, un matemático de la India especializado en
+   matemática recreacional, describió un algoritmo que consiste en:
+
+   1. Tomar un número de cuatro cifras
+   2. Reacomodar las cifras para obtener el mayor número posible
+   3. Obtener reacomodando las cifras también el menor posible
+   4. Restarlos
+   5. GOTO 1
+
+   Este algoritmo tiene un “punto fijo” igual a **6174** y es al que el
+   algoritmo llega si se inicia con un número que no tiene las cifras
+   repetidas. Si alguna cifra es repetida el punto fijo puede ser el
+   trivial, igual a cero. Escribir una función
+   rutina_recreacional\ ``(numero)`` que tome un número de cuatro cifras
+   y devuelva el punto fijo y el número de números necesarios hasta
+   alcanzarlo.
+
+   Por ejemplo: Para el número 1392, la secuencia es:
+
+   1392 -> 8082 -> 8532 -> 6174 -> 6174 -> …
+
+   por lo que tendremos al aplicar la función:
+
+   .. code:: python
+
+         rutina_kaprekar(1392)
+
+   ::
+
+         6174, 4
+
+**Ayuda:** Tenga en cuenta que si un número tiene menos de cuatro cifras
+debe agregarle ceros. Por ejemplo el número ``978`` debe entenderse como
+``0978`` por lo que el mayor número que puede escribirse con estas
+cifras es ``9870``.
+
+--------------
+
+.
