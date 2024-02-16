@@ -55,6 +55,14 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-04-a">Ejercicios 04 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#argumentos-de-las-funciones">Argumentos de las funciones</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ambito-de-las-variables-en-los-argumentos">Ámbito de las variables en los argumentos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#funciones-con-argumentos-opcionales">Funciones con argumentos opcionales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tipos-mutables-en-argumentos-opcionales">Tipos mutables en argumentos opcionales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#numero-variable-de-argumentos-y-argumentos-keywords">Número variable de argumentos y argumentos <em>keywords</em></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-4-b">Ejercicios 4 (b)</a></li>
 </ul>
 </li>
 </ul>
@@ -385,6 +393,502 @@ aplicarla al ejemplo de la figura.</p></li>
 </ol>
 <hr class="docutils" />
 <p>.</p>
+</section>
+<section id="argumentos-de-las-funciones">
+<h2>Argumentos de las funciones<a class="headerlink" href="#argumentos-de-las-funciones" title="Enlace permanente a este encabezado"></a></h2>
+<section id="ambito-de-las-variables-en-los-argumentos">
+<h3>Ámbito de las variables en los argumentos<a class="headerlink" href="#ambito-de-las-variables-en-los-argumentos" title="Enlace permanente a este encabezado"></a></h3>
+<p>Consideremos la siguiente función</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sep</span> <span class="o">=</span> <span class="mi">47</span><span class="o">*</span><span class="s1">&#39;-&#39;</span>
+<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Id</span> <span class="n">afuera</span> <span class="n">antes</span><span class="p">:</span> <span class="mi">140188951942440</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="mi">50</span>
+<span class="o">-----------------------------------------------</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="mi">50</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">140188951942440</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="mi">2</span>
+<span class="n">Id</span> <span class="n">adentro</span> <span class="n">nuevo</span><span class="p">:</span> <span class="mi">140188951940904</span>
+ <span class="o">-----------------------------------------------</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="mi">50</span>
+<span class="n">Id</span> <span class="n">afuera</span> <span class="n">después</span><span class="p">:</span> <span class="mi">140188951942440</span>
+</pre></div>
+</div>
+<p>Vemos que la variable <code class="docutils literal notranslate"><span class="pre">x</span></code> que utilizamos como argumento de la función
+debe ser diferente a la variable <code class="docutils literal notranslate"><span class="pre">x</span></code> que se define fuera de la
+función, ya que su valor no cambia al salir. Además usamos la función
+<code class="docutils literal notranslate"><span class="pre">id()</span></code> para obtener la identidad de la variable y vemos que</p>
+<p>Consideremos ahora la siguiente función:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La función es muy parecida, sólo que le estamos dando a la variable
+<code class="docutils literal notranslate"><span class="pre">x</span></code> dentro de la función un nuevo valor del tipo <code class="docutils literal notranslate"><span class="pre">lista</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Id</span> <span class="n">afuera</span> <span class="n">antes</span><span class="p">:</span> <span class="mi">140188951942440</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="mi">50</span>
+<span class="o">-----------------------------------------------</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="mi">50</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">140188951942440</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span> <span class="n">nuevo</span><span class="p">:</span> <span class="mi">140188621633792</span>
+ <span class="o">-----------------------------------------------</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="mi">50</span>
+<span class="n">Id</span> <span class="n">afuera</span> <span class="n">después</span><span class="p">:</span> <span class="mi">140188951942440</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Id</span> <span class="n">afuera</span> <span class="n">antes</span><span class="p">:</span> <span class="mi">140188662789248</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="o">-----------------------------------------------</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">140188662789248</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span> <span class="n">nuevo</span><span class="p">:</span> <span class="mi">140188621702208</span>
+ <span class="o">-----------------------------------------------</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">afuera</span> <span class="n">después</span><span class="p">:</span> <span class="mi">140188662789248</span>
+</pre></div>
+</div>
+<p>¿Qué está pasando acá?</p>
+<ul class="simple">
+<li><p>Cuando se realiza la llamada a la función, se le pasa una copia del
+nombre <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p>Cuando le damos un nuevo valor dentro de la función, como en el caso
+<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">7]</span></code>, entonces se crea una nueva variable y el nombre <code class="docutils literal notranslate"><span class="pre">x</span></code>
+queda asociado a la nueva variable.</p></li>
+<li><p>La variable original –definida fuera de la función– no cambia.</p></li>
+</ul>
+<p>En el primer caso, como los escalares son inmutables (de la misma manera
+que los strings y tuplas) no puede ser modificada. Al reasignar el
+nombre siempre se crea una nueva variable (para cualquier tipo).</p>
+<p>Consideremos estas variantes, donde el comportamiento entre tipos
+mutables e inmutables son diferentes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">x</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Id</span> <span class="n">afuera</span> <span class="n">antes</span><span class="p">:</span> <span class="mi">140188610229760</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="o">-----------------------------------------------</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">140188610229760</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span> <span class="n">nuevo</span><span class="p">:</span> <span class="mi">140188610229760</span>
+ <span class="o">-----------------------------------------------</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">afuera</span> <span class="n">después</span><span class="p">:</span> <span class="mi">140188610229760</span>
+</pre></div>
+</div>
+<p>En este caso, como no estamos redefiniendo la variable sino que la
+estamos modificando, el nuevo valor se mantiene al terminar la ejecución
+de la función. Otra variante:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func4</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+  <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="n">func4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Id</span> <span class="n">afuera</span> <span class="n">antes</span><span class="p">:</span> <span class="mi">140188663004160</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Originalmente</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="o">-----------------------------------------------</span>
+<span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span><span class="p">:</span> <span class="mi">140188663004160</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">adentro</span> <span class="n">nuevo</span><span class="p">:</span> <span class="mi">140188663004160</span>
+ <span class="o">-----------------------------------------------</span>
+<span class="n">Fuera</span> <span class="n">de</span> <span class="n">la</span> <span class="n">función</span><span class="p">:</span> <span class="n">Ahora</span> <span class="n">x</span> <span class="n">vale</span> <span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Id</span> <span class="n">afuera</span> <span class="n">después</span><span class="p">:</span> <span class="mi">140188663004160</span>
+</pre></div>
+</div>
+<p>Vemos que, cuando modificamos la variable (solo es posible para tipos
+mutables), asignando un valor a uno o más de sus elementos o
+agregando/removiendo elementos, la copia sigue apuntando a la variable
+original y el valor de la variable, definida originalmente afuera,
+cambia.</p>
+</section>
+<section id="funciones-con-argumentos-opcionales">
+<h3>Funciones con argumentos opcionales<a class="headerlink" href="#funciones-con-argumentos-opcionales" title="Enlace permanente a este encabezado"></a></h3>
+<p>Las funciones pueden tener muchos argumentos. En <strong>Python</strong> pueden tener
+un número variable de argumentos y pueden tener valores por <em>default</em>
+para algunos de ellos. En el caso de la función de caída libre, vamos a
+extenderlo de manera que podamos usarlo fuera de la tierra (o en otras
+latitudes) permitiendo cambiar el valor de la gravedad y asumiendo que,
+a menos que lo pidamos explícitamente se trata de una simple caída
+libre:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h0</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Devuelve la velocidad y la posición de una partícula en</span>
+<span class="sd">  caída libre para condiciones iniciales dadas</span>
+
+<span class="sd">  Parameters</span>
+<span class="sd">  ----------</span>
+<span class="sd">  t : float</span>
+<span class="sd">      el tiempo al que queremos realizar el cálculo</span>
+<span class="sd">  h0: float</span>
+<span class="sd">      la altura inicial</span>
+<span class="sd">  v0: float (opcional)</span>
+<span class="sd">      la velocidad inicial (default = 0.0)</span>
+<span class="sd">   g: float (opcional)</span>
+<span class="sd">      valor de la aceleración de la gravedad (default = 9.8)</span>
+
+<span class="sd">  Returns</span>
+<span class="sd">  -------</span>
+<span class="sd">  (v,h):  tuple of floats</span>
+<span class="sd">       v= v0 - g*t</span>
+<span class="sd">       h= h0 - v0*t -g*t^2/2</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">v0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+  <span class="n">h</span> <span class="o">=</span> <span class="n">h0</span> <span class="o">-</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mf">2.</span>
+  <span class="k">return</span> <span class="n">v</span><span class="p">,</span><span class="n">h</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">caida_libre</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1000</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">19.6</span><span class="p">,</span> <span class="mf">980.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial hacia arriba</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">caida_libre</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mf">0.1999999999999993</span><span class="p">,</span> <span class="mf">985.1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">caida_libre</span><span class="p">(</span><span class="n">h0</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">19.6</span><span class="p">,</span> <span class="mf">980.4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Desde 1000 metros con velocidad inicial cero en la luna</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">caida_libre</span><span class="p">(</span> <span class="n">v0</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">h0</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="mf">14.2857137</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">1.625</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">23.2142847625</span><span class="p">,</span> <span class="mf">834.1836870663262</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="n">caida_libre</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">1.625</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="o">-</span><span class="mf">4.875</span><span class="p">,</span> <span class="mf">992.6875</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">caida_libre</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Help</span> <span class="n">on</span> <span class="n">function</span> <span class="n">caida_libre</span> <span class="ow">in</span> <span class="n">module</span> <span class="n">__main__</span><span class="p">:</span>
+
+<span class="n">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">h0</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="mf">9.8</span><span class="p">)</span>
+    <span class="n">Devuelve</span> <span class="n">la</span> <span class="n">velocidad</span> <span class="n">y</span> <span class="n">la</span> <span class="n">posición</span> <span class="n">de</span> <span class="n">una</span> <span class="n">partícula</span> <span class="n">en</span>
+    <span class="n">caída</span> <span class="n">libre</span> <span class="n">para</span> <span class="n">condiciones</span> <span class="n">iniciales</span> <span class="n">dadas</span>
+
+    <span class="n">Parameters</span>
+    <span class="o">----------</span>
+    <span class="n">t</span> <span class="p">:</span> <span class="nb">float</span>
+        <span class="n">el</span> <span class="n">tiempo</span> <span class="n">al</span> <span class="n">que</span> <span class="n">queremos</span> <span class="n">realizar</span> <span class="n">el</span> <span class="n">cálculo</span>
+    <span class="n">h0</span><span class="p">:</span> <span class="nb">float</span>
+        <span class="n">la</span> <span class="n">altura</span> <span class="n">inicial</span>
+    <span class="n">v0</span><span class="p">:</span> <span class="nb">float</span> <span class="p">(</span><span class="n">opcional</span><span class="p">)</span>
+        <span class="n">la</span> <span class="n">velocidad</span> <span class="n">inicial</span> <span class="p">(</span><span class="n">default</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">)</span>
+     <span class="n">g</span><span class="p">:</span> <span class="nb">float</span> <span class="p">(</span><span class="n">opcional</span><span class="p">)</span>
+        <span class="n">valor</span> <span class="n">de</span> <span class="n">la</span> <span class="n">aceleración</span> <span class="n">de</span> <span class="n">la</span> <span class="n">gravedad</span> <span class="p">(</span><span class="n">default</span> <span class="o">=</span> <span class="mf">9.8</span><span class="p">)</span>
+
+    <span class="n">Returns</span>
+    <span class="o">-------</span>
+    <span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">h</span><span class="p">):</span>  <span class="nb">tuple</span> <span class="n">of</span> <span class="n">floats</span>
+         <span class="n">v</span><span class="o">=</span> <span class="n">v0</span> <span class="o">-</span> <span class="n">g</span><span class="o">*</span><span class="n">t</span>
+         <span class="n">h</span><span class="o">=</span> <span class="n">h0</span> <span class="o">-</span> <span class="n">v0</span><span class="o">*</span><span class="n">t</span> <span class="o">-</span><span class="n">g</span><span class="o">*</span><span class="n">t</span><span class="o">^</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>No se pueden usar argumentos con <em>nombre</em> antes de los
+argumentos requeridos (en este caso <code class="docutils literal notranslate"><span class="pre">t</span></code>).</p>
+<p>Tampoco se pueden usar argumentos sin su <em>nombre</em> después de haber
+incluido alguno con su nombre. Por ejemplo no son válidas las llamadas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">caida_libre</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.</span><span class="p">)</span>
+<span class="n">caida_libre</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="tipos-mutables-en-argumentos-opcionales">
+<h3>Tipos mutables en argumentos opcionales<a class="headerlink" href="#tipos-mutables-en-argumentos-opcionales" title="Enlace permanente a este encabezado"></a></h3>
+<p>Hay que tener cuidado cuando usamos valores por defecto con tipos que
+pueden modificarse dentro de la función. Consideremos la siguiente
+función:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2b</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="p">[]):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+  <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">func2b</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[]</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">func2b</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="n">entró</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">con</span> <span class="n">el</span> <span class="n">valor</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">El</span> <span class="n">nuevo</span> <span class="n">valor</span> <span class="n">de</span> <span class="n">x</span> <span class="n">es</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>El argumento opcional <code class="docutils literal notranslate"><span class="pre">x</span></code> tiene como valor por defecto una lista
+vacía, entonces esperaríamos que el valor de <code class="docutils literal notranslate"><span class="pre">x</span></code> sea igual a <code class="docutils literal notranslate"><span class="pre">x1</span></code>, y
+en este caso imprima “El nuevo valor de x es [2]”. Sin embargo, entre
+llamadas mantiene el valor de <code class="docutils literal notranslate"><span class="pre">x</span></code> anterior. El valor por defecto se
+fija en la definición y en el caso de tipos mutables puede modificarse.</p>
+</section>
+<section id="numero-variable-de-argumentos-y-argumentos-keywords">
+<h3>Número variable de argumentos y argumentos <em>keywords</em><a class="headerlink" href="#numero-variable-de-argumentos-y-argumentos-keywords" title="Enlace permanente a este encabezado"></a></h3>
+<p>Se pueden definir funciones que toman un número variable de argumentos
+(como una lista), o que aceptan un diccionario como argumento. Este tipo
+de argumentos se llaman argumentos <em>keyword</em> (<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>). Una buena
+explicación se encuentra en el <a class="reference external" href="https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments">Tutorial de la
+documentación</a>.
+Ahora vamos a dar una explicación rápida. Consideremos la función <code class="docutils literal notranslate"><span class="pre">f</span></code>,
+que imprime sus argumentos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s2">&quot;p: </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">, tipo: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">p</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s2">&quot;args: </span><span class="si">{</span><span class="n">args</span><span class="si">}</span><span class="s2">, tipo: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s2">&quot;kwargs: </span><span class="si">{</span><span class="n">kwargs</span><span class="si">}</span><span class="s2">, tipo: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">anteultimo</span><span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">ultimo</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1.5, tipo: &lt;class &#39;float&#39;&gt;
+args: (2, 3, 5), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;anteultimo&#39;: 9, &#39;ultimo&#39;: -1}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<p>Veamos que pasa cuando ejecutamos esta función con distintos argumentos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>                          <span class="c1"># Solo el argumento posicional requerido</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>                  <span class="c1"># argumento posicional y args. No kwargs</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (2, 3, 4, 5, 6), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">otro</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (2, 3, 4, 5), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;otro&#39;: 6}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<p>En este ejemplo, el primer valor se asigna al argumento requerido <code class="docutils literal notranslate"><span class="pre">p</span></code>,
+el segundo a <code class="docutils literal notranslate"><span class="pre">q</span></code> y los siguientes a una variable que se llama
+<code class="docutils literal notranslate"><span class="pre">args</span></code>, que es del tipo <code class="docutils literal notranslate"><span class="pre">tuple</span></code>. No hay argumento <code class="docutils literal notranslate"><span class="pre">kwargs</span></code> y por
+lo tanto la variable es un diccionario vacío</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 2, tipo: &lt;class &#39;int&#39;&gt;
+args: (), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;ultimo&#39;: -1}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;chau&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="mi">4</span><span class="p">,</span> <span class="n">ultimo</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>p: 1, tipo: &lt;class &#39;int&#39;&gt;
+args: (&#39;chau&#39;, (1, 2, 3), 4), tipo: &lt;class &#39;tuple&#39;&gt;
+kwargs: {&#39;ultimo&#39;: -1}, tipo: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+<p>En estas otras llamadas a la función, todos los argumentos que se pasan
+indicando el nombre se asignan a un diccionario.</p>
+<p>Al definir una función, con la construcción <code class="docutils literal notranslate"><span class="pre">*args</span></code> se indica <em>“mapear
+todos los argumentos posicionales no explícitos a una tupla llamada
+``args``”</em>. Con <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> se indica “mapear todos los argumentos de
+palabra clave no explícitos a un diccionario llamado <code class="docutils literal notranslate"><span class="pre">kwargs</span></code>”. Esta
+acción de convertir un conjunto de argumentos a una tuple o diccionario
+se conoce como <em>empacar</em> o <em>empaquetar</em> los datos.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Por supuesto, no es necesario utilizar los nombres “args” y
+“kwargs”. Podemos llamarlas de cualquier otra manera! los simbolos que
+indican cantidades arbitrarias de parametros son <code class="docutils literal notranslate"><span class="pre">*</span></code> y <code class="docutils literal notranslate"><span class="pre">**</span></code>. Además
+es posible poner parametros “comunes” antes de los parametros
+arbitrarios, como se muestra en el ejemplo.</p>
+</div>
+<p>Un ejemplo de una función con número variable de argumentos puede ser la
+función <code class="docutils literal notranslate"><span class="pre">multiplica</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiplica</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="mi">1</span>
+  <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+    <span class="n">s</span> <span class="o">*=</span> <span class="n">a</span>
+  <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">multiplica</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">10</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">multiplica</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="mi">90</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-4-b">
+<h2>Ejercicios 4 (b)<a class="headerlink" href="#ejercicios-4-b" title="Enlace permanente a este encabezado"></a></h2>
+<ol class="arabic" start="2">
+<li><p>Escriba funciones para analizar la divisibilidad de enteros:</p>
+<ul class="simple">
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible</span></code> que retorna <code class="docutils literal notranslate"><span class="pre">True</span></code> si el argumento
+<code class="docutils literal notranslate"><span class="pre">x</span></code> es divisible por alguno de los elemntos del segundo
+argumento: <code class="docutils literal notranslate"><span class="pre">divisores</span></code>. El argumento <code class="docutils literal notranslate"><span class="pre">divisores</span></code> es opcional y
+si está presente es una variable del tipo lista que contiene los
+valores para los cuáles debemos examinar la divisibilidad.</p></li>
+</ul>
+<p>El valor por defecto de <code class="docutils literal notranslate"><span class="pre">divisores</span></code> es <code class="docutils literal notranslate"><span class="pre">[2,3,5,7]</span></code>. Las
+siguientes expresiones deben retornar el mismo valor:
+<code class="docutils literal notranslate"><span class="pre">python</span>&#160; <span class="pre">es_divisible(x)</span>&#160;&#160; <span class="pre">es_divisible(x,</span> <span class="pre">[2,3,5,7])</span></code></p>
+<ul class="simple">
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible_por</span></code> cuyo primer argumento (mandatorio)
+es <code class="docutils literal notranslate"><span class="pre">x</span></code>, y luego puede aceptar un número indeterminado de
+argumentos:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># retorna verdadero siempre</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># verdadero si x es par</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c1"># igual resultado que es_divisible(x)</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>  <span class="c1"># o cualquier secuencia de argumentos debe funcionar</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>PARA ENTREGAR.</strong> Describimos una grilla de <strong>sudoku</strong> como un
+string de nueve líneas, cada una con 9 números, con números entre 1 y
+9. Escribir un conjunto de funciones que permitan chequear si una
+grilla de sudoku es correcta. Para que una grilla sea correcta deben
+cumplirse las siguientes condiciones</p>
+<ul class="simple">
+<li><p>Los números están entre 1 y 9</p></li>
+<li><p>En cada fila no deben repetirse</p></li>
+<li><p>En cada columna no deben repetirse</p></li>
+<li><p>En todas las regiones de 3x3 que no se solapan, empezando de
+cualquier esquina, no deben repetirse</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Escribir una función que convierta un string con formato a una
+lista bidimensional. El string estará dado con nueve números por
+línea, de la siguiente manera (los espacios en blanco en cada
+línea pueden variar):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudoku</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;145327698</span>
+<span class="s2">        839654127</span>
+<span class="s2">        672918543</span>
+<span class="s2">        496185372</span>
+<span class="s2">        218473956</span>
+<span class="s2">        753296481</span>
+<span class="s2">        367542819</span>
+<span class="s2">        984761235</span>
+<span class="s2">        521839764&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Escribir una función <code class="docutils literal notranslate"><span class="pre">check_repetidos()</span></code> que tome por argumento
+una lista (unidimensional) y devuelva verdadero si la lista tiene
+elementos repetidos y falso en caso contrario.</p></li>
+<li><p>Escribir la función <code class="docutils literal notranslate"><span class="pre">check_sudoku()</span></code> que toma como argumento una
+grilla (como una lista bidimensional de <code class="docutils literal notranslate"><span class="pre">9x9</span></code>) y devuelva
+verdadero si los números corresponden a la resolución correcta del
+Sudoku y falso en caso contrario. Note que debe verificar que los
+números no se repiten en filas, ni en columnas ni en recuadros de
+<code class="docutils literal notranslate"><span class="pre">3x3</span></code>. Para obtener la posición de los recuadros puede
+investigar que hacen las líneas de código:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>suponiendo que <code class="docutils literal notranslate"><span class="pre">grid</span></code> es el nombre de nuestra lista bidimensional,
+cuando <code class="docutils literal notranslate"><span class="pre">i</span></code> toma valores entre <code class="docutils literal notranslate"><span class="pre">0</span></code> y <code class="docutils literal notranslate"><span class="pre">8</span></code>.</p>
+<p>Debe enviar por correo electrónico, con asunto “04_SuApellido”, un
+programa llamado 04_SuApellido.py (en todos los casos utilice su
+apellido, no la palabra “SuApellido”) .</p>
+</li>
+</ol>
+<hr class="docutils" />
 </section>
 </section>
 
