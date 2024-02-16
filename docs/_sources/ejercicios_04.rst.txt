@@ -97,3 +97,129 @@ Ejercicios de Clase 04
    Debe enviar por correo electrónico, con asunto “04_SuApellido”, un
    programa llamado 04_SuApellido.py (en todos los casos utilice su
    apellido, no la palabra “SuApellido”) .
+
+4. Escriba una función ``crear_sen(A, w)`` que acepte dos números reales
+   :math:`A, w` como argumentos y devuelva la función ``f(x)``.
+
+Al evaluar la función ``f`` en un dado valor :math:`x` debe dar el
+resultado: :math:`f(x) = A \sin(w x)` tal que se pueda utilizar de la
+siguiente manera:
+
+.. code:: python
+
+   from math import pi
+   f = crear_sen(3, w)
+   f(2*pi/2)    # Debería imprimir el resultado de 3*sin(pi) aprox. cero
+
+5. Escriba una serie de funciones que permitan trabajar con polinomios.
+   Vamos a representar a un polinomio como una lista de números reales,
+   donde cada elemento corresponde a un coeficiente que acompaña una
+   potencia. En cada caso elija los argumentos que considere necesario.
+
+   -  Una función que devuelva el orden del polinomio (un número entero)
+   -  Una función que sume dos polinomios y devuelva un polinomio
+      (objeto del mismo tipo)
+   -  Una función que multiplique dos polinomios y devuelva el resultado
+      en otro polinomio
+   -  Una función devuelva la derivada del polinomio (otro polinomio).
+   -  Una función que acepte el polinomio y devuelva la función
+      correspondiente.
+
+6. Escriba una función ``direccion_media(ang1, ang2, ...)`` cuyos
+   argumentos son direcciones en el plano, expresadas por los ángulos en
+   grados a partir de un cierto eje, y calcule la dirección promedio,
+   expresada en ángulos. Pruebe su función con las listas:
+
+   .. code:: python
+
+      a1 = direccion_media(0, 180, 370, 10)
+      a2 = direccion_media(30, 0, 80, 180)
+      a3 = direccion_media(80, 180, 540, 280)
+
+7. Las funciones de Bessel de orden :math:`n` cumplen las relaciones de
+   recurrencia
+
+   .. math::
+
+
+       J_{n -1}(x)- \frac{2n }{x}\, J_{n }(x) + J_{n +1}(x) = 0 
+
+   .. math::
+
+
+      J^{2}_{0}(x) + \sum_{n=1}^{\infty} 2 J^{2}_{n}(x) = 1
+
+   Para calcular la función de Bessel de orden :math:`N`, se empieza con
+   un valor de :math:`M \gg N`, y utilizando los valores iniciales
+   :math:`J_{M}=1`, :math:`J_{M+1}=0` se utiliza la primera relación
+   para calcular todos los valores de :math:`n < M`. Luego, utilizando
+   la segunda relación se normalizan todos los valores.
+
+   .. note::  Estas relaciones son válidas si :math:`M \gg x` (use algún
+     valor estimado, como por ejemplo :math:`M=N+20`).
+  
+     
+
+   Utilice estas relaciones para calcular :math:`J_{N}(x)` para
+   :math:`N=3,4,7` y :math:`x=2.5, 5.7, 10`. Para referencia se dan los
+   valores esperados
+
+   .. math::
+
+
+      J_3( 2.5) =  0.21660\\
+      J_4( 2.5) =  0.07378\\
+      J_7( 2.5) =  0.00078\\
+      J_3( 5.7) =  0.20228\\
+      J_4( 5.7) =  0.38659\\
+      J_7( 5.7) =  0.10270\\
+      J_3(10.0) =  0.05838\\
+      J_4(10.0) = -0.21960\\
+      J_7(10.0) =  0.21671\\
+
+8. Dada una lista de números, vamos a calcular valores relacionados a su
+   estadística.
+
+   -  Realizar una función ``calc_media(x, que="aritmetica")`` que
+      calcule los valores de la media aritmética, la media geométrica o
+      la media armónica dependiendo del valor del argumento ``que``. Las
+      medias están dadas por:
+
+      .. math::
+
+
+          A(x_1, \ldots, x_n) = \bar{x} = \frac{x_1 + \cdots + x_n}{n} 
+
+      .. math::
+
+
+          G(x_1, \ldots, x_n) = \sqrt[n]{x_1 \cdots x_n} 
+
+      .. math::
+
+
+          H(x_1, \ldots, x_n) = \frac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}
+          
+
+   -  Realizar una función que calcule la mediana de una lista de
+      números (el argumento en este caso es del tipo ``list``). La
+      mediana se define como el valor para el cual la mitad de los
+      valores de la lista es menor que ella. Si el número de elementos
+      es par, se toma el promedio entre los dos adyacentes.
+
+   Realizar los cálculos para las listas de números:
+
+   .. code:: python
+
+      L1 = [6.41, 1.28, 11.54, 5.13, 8.97, 3.84, 10.26, 14.1, 12.82, 16.67, 2.56, 17.95, 7.69, 15.39]
+      L2 = [4.79, 1.59, 2.13, 4.26, 3.72, 1.06, 6.92, 3.19, 5.32, 2.66, 5.85, 6.39, 0.53]
+
+   -  La *moda* se define como el valor que ocurre más frecuentemente en
+      una colección. Note que la moda puede no ser única. En ese caso
+      debe obtener todos los valores. Escriba una función que retorne la
+      moda de una lista de números. Utilícela para calcular la moda de
+      la siguiente lista de números enteros:
+
+   .. code:: python
+
+      L = [8, 9, 10, 11, 10, 6, 10, 17, 8, 8, 5, 10, 14, 7, 9, 12, 8, 17, 10, 12, 9, 11, 9, 12, 11, 11, 6, 9, 12, 5, 12, 9, 10, 16, 8, 4, 5, 8, 11, 12]

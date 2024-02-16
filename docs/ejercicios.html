@@ -446,6 +446,109 @@ cuando <code class="docutils literal notranslate"><span class="pre">i</span></co
 programa llamado 04_SuApellido.py (en todos los casos utilice su
 apellido, no la palabra “SuApellido”) .</p>
 </li>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">crear_sen(A,</span> <span class="pre">w)</span></code> que acepte dos números reales
+<span class="math notranslate nohighlight">\(A, w\)</span> como argumentos y devuelva la función <code class="docutils literal notranslate"><span class="pre">f(x)</span></code>.</p></li>
+</ol>
+<p>Al evaluar la función <code class="docutils literal notranslate"><span class="pre">f</span></code> en un dado valor <span class="math notranslate nohighlight">\(x\)</span> debe dar el
+resultado: <span class="math notranslate nohighlight">\(f(x) = A \sin(w x)\)</span> tal que se pueda utilizar de la
+siguiente manera:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="n">f</span> <span class="o">=</span> <span class="n">crear_sen</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>    <span class="c1"># Debería imprimir el resultado de 3*sin(pi) aprox. cero</span>
+</pre></div>
+</div>
+<ol class="arabic" start="5">
+<li><p>Escriba una serie de funciones que permitan trabajar con polinomios.
+Vamos a representar a un polinomio como una lista de números reales,
+donde cada elemento corresponde a un coeficiente que acompaña una
+potencia. En cada caso elija los argumentos que considere necesario.</p>
+<ul class="simple">
+<li><p>Una función que devuelva el orden del polinomio (un número entero)</p></li>
+<li><p>Una función que sume dos polinomios y devuelva un polinomio
+(objeto del mismo tipo)</p></li>
+<li><p>Una función que multiplique dos polinomios y devuelva el resultado
+en otro polinomio</p></li>
+<li><p>Una función devuelva la derivada del polinomio (otro polinomio).</p></li>
+<li><p>Una función que acepte el polinomio y devuelva la función
+correspondiente.</p></li>
+</ul>
+</li>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">direccion_media(ang1,</span> <span class="pre">ang2,</span> <span class="pre">...)</span></code> cuyos
+argumentos son direcciones en el plano, expresadas por los ángulos en
+grados a partir de un cierto eje, y calcule la dirección promedio,
+expresada en ángulos. Pruebe su función con las listas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">direccion_media</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">370</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">direccion_media</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">180</span><span class="p">)</span>
+<span class="n">a3</span> <span class="o">=</span> <span class="n">direccion_media</span><span class="p">(</span><span class="mi">80</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">540</span><span class="p">,</span> <span class="mi">280</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>Las funciones de Bessel de orden <span class="math notranslate nohighlight">\(n\)</span> cumplen las relaciones de
+recurrencia</p>
+<div class="math notranslate nohighlight">
+\[J_{n -1}(x)- \frac{2n }{x}\, J_{n }(x) + J_{n +1}(x) = 0\]</div>
+<div class="math notranslate nohighlight">
+\[J^{2}_{0}(x) + \sum_{n=1}^{\infty} 2 J^{2}_{n}(x) = 1\]</div>
+<p>Para calcular la función de Bessel de orden <span class="math notranslate nohighlight">\(N\)</span>, se empieza con
+un valor de <span class="math notranslate nohighlight">\(M \gg N\)</span>, y utilizando los valores iniciales
+<span class="math notranslate nohighlight">\(J_{M}=1\)</span>, <span class="math notranslate nohighlight">\(J_{M+1}=0\)</span> se utiliza la primera relación
+para calcular todos los valores de <span class="math notranslate nohighlight">\(n &lt; M\)</span>. Luego, utilizando
+la segunda relación se normalizan todos los valores.</p>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Estas relaciones son válidas si <span class="math notranslate nohighlight">\(M \gg x\)</span> (use algún
+valor estimado, como por ejemplo <span class="math notranslate nohighlight">\(M=N+20\)</span>).</p>
+</div>
+<p>Utilice estas relaciones para calcular <span class="math notranslate nohighlight">\(J_{N}(x)\)</span> para
+<span class="math notranslate nohighlight">\(N=3,4,7\)</span> y <span class="math notranslate nohighlight">\(x=2.5, 5.7, 10\)</span>. Para referencia se dan los
+valores esperados</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}J_3( 2.5) =  0.21660\\
+J_4( 2.5) =  0.07378\\
+J_7( 2.5) =  0.00078\\
+J_3( 5.7) =  0.20228\\
+J_4( 5.7) =  0.38659\\
+J_7( 5.7) =  0.10270\\
+J_3(10.0) =  0.05838\\
+J_4(10.0) = -0.21960\\
+J_7(10.0) =  0.21671\\\end{split}\]</div>
+</li>
+<li><p>Dada una lista de números, vamos a calcular valores relacionados a su
+estadística.</p>
+<ul>
+<li><p>Realizar una función <code class="docutils literal notranslate"><span class="pre">calc_media(x,</span> <span class="pre">que=&quot;aritmetica&quot;)</span></code> que
+calcule los valores de la media aritmética, la media geométrica o
+la media armónica dependiendo del valor del argumento <code class="docutils literal notranslate"><span class="pre">que</span></code>. Las
+medias están dadas por:</p>
+<div class="math notranslate nohighlight">
+\[A(x_1, \ldots, x_n) = \bar{x} = \frac{x_1 + \cdots + x_n}{n}\]</div>
+<div class="math notranslate nohighlight">
+\[G(x_1, \ldots, x_n) = \sqrt[n]{x_1 \cdots x_n}\]</div>
+<div class="math notranslate nohighlight">
+\[H(x_1, \ldots, x_n) = \frac{n}{\frac{1}{x_1} + \cdots + \frac{1}{x_n}}\]</div>
+</li>
+<li><p>Realizar una función que calcule la mediana de una lista de
+números (el argumento en este caso es del tipo <code class="docutils literal notranslate"><span class="pre">list</span></code>). La
+mediana se define como el valor para el cual la mitad de los
+valores de la lista es menor que ella. Si el número de elementos
+es par, se toma el promedio entre los dos adyacentes.</p></li>
+</ul>
+<p>Realizar los cálculos para las listas de números:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">6.41</span><span class="p">,</span> <span class="mf">1.28</span><span class="p">,</span> <span class="mf">11.54</span><span class="p">,</span> <span class="mf">5.13</span><span class="p">,</span> <span class="mf">8.97</span><span class="p">,</span> <span class="mf">3.84</span><span class="p">,</span> <span class="mf">10.26</span><span class="p">,</span> <span class="mf">14.1</span><span class="p">,</span> <span class="mf">12.82</span><span class="p">,</span> <span class="mf">16.67</span><span class="p">,</span> <span class="mf">2.56</span><span class="p">,</span> <span class="mf">17.95</span><span class="p">,</span> <span class="mf">7.69</span><span class="p">,</span> <span class="mf">15.39</span><span class="p">]</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.79</span><span class="p">,</span> <span class="mf">1.59</span><span class="p">,</span> <span class="mf">2.13</span><span class="p">,</span> <span class="mf">4.26</span><span class="p">,</span> <span class="mf">3.72</span><span class="p">,</span> <span class="mf">1.06</span><span class="p">,</span> <span class="mf">6.92</span><span class="p">,</span> <span class="mf">3.19</span><span class="p">,</span> <span class="mf">5.32</span><span class="p">,</span> <span class="mf">2.66</span><span class="p">,</span> <span class="mf">5.85</span><span class="p">,</span> <span class="mf">6.39</span><span class="p">,</span> <span class="mf">0.53</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>La <em>moda</em> se define como el valor que ocurre más frecuentemente en
+una colección. Note que la moda puede no ser única. En ese caso
+debe obtener todos los valores. Escriba una función que retorne la
+moda de una lista de números. Utilícela para calcular la moda de
+la siguiente lista de números enteros:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
 </ol>
 </section>
 </section>
