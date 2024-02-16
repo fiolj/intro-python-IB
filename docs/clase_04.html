@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 4: Iteraciones y detalles de Funciones &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 3: Tipos complejos y control de flujo" href="clase_03.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Clases de Python
+            <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2024
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 4: Iteraciones y detalles de Funciones</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tecnicas-de-iteracion">Técnicas de iteración</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#iteracion-sobre-elementos-de-dos-listas">Iteración sobre elementos de dos listas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteraciones-sobre-diccionarios">Iteraciones sobre diccionarios</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-04-a">Ejercicios 04 (a)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Clase 4: Iteraciones y detalles de Funciones</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_04.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-4-iteraciones-y-detalles-de-funciones">
+<span id="clase-04"></span><h1>Clase 4: Iteraciones y detalles de Funciones<a class="headerlink" href="#clase-4-iteraciones-y-detalles-de-funciones" title="Enlace permanente a este encabezado"></a></h1>
+<section id="tecnicas-de-iteracion">
+<h2>Técnicas de iteración<a class="headerlink" href="#tecnicas-de-iteracion" title="Enlace permanente a este encabezado"></a></h2>
+<p>Introdujimos tipos complejos: strings, listas, tuples, diccionarios
+(<code class="docutils literal notranslate"><span class="pre">dict</span></code>), conjuntos (<code class="docutils literal notranslate"><span class="pre">set</span></code>). Veamos algunas técnicas usuales de
+iteración sobre estos objetos.</p>
+<section id="iteracion-sobre-elementos-de-dos-listas">
+<h3>Iteración sobre elementos de dos listas<a class="headerlink" href="#iteracion-sobre-elementos-de-dos-listas" title="Enlace permanente a este encabezado"></a></h3>
+<p>Consideremos las listas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_min</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">temp_max</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Queremos imprimir una lista que combine los dos datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La temperatura mínima fue </span><span class="si">{</span><span class="n">t1</span><span class="si">}</span><span class="s2"> y la máxima fue </span><span class="si">{</span><span class="n">t2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como vemos, la función <code class="docutils literal notranslate"><span class="pre">zip</span></code> nos permite combinar los elementos,
+tomando uno de cada lista por iteración.</p>
+<p>¿Qué retorna exactamente `zip``?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Podemos agregar información del día en la salida por pantalla si
+volvemos a utilizar la función <code class="docutils literal notranslate"><span class="pre">enumerate</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">)):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El día </span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> y la máxima fue </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">),</span><span class="mi">1</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El día </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> y la máxima fue </span><span class="si">{</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># ¿Qué pasa cuando una se consume antes que la otra?</span>
+<span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">zip</span></code> funciona también con más de dos listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">t1</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">temp_min</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El día </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> la temperatura mínima fue </span><span class="si">{</span><span class="n">t1</span><span class="si">}</span><span class="s1"> y la máxima fue </span><span class="si">{</span><span class="n">t2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Podemos utilizar la función <code class="docutils literal notranslate"><span class="pre">zip</span></code> para sumar dos listas término a
+término</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tmedia</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">t1</span><span class="p">,</span> <span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">):</span>
+  <span class="n">tmedia</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">t1</span><span class="o">+</span><span class="n">t2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tmedia</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>También podemos escribirlo en forma más compacta usando comprensiones de
+listas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tm</span> <span class="o">=</span> <span class="p">[(</span><span class="n">t1</span><span class="o">+</span><span class="n">t2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">t1</span><span class="p">,</span><span class="n">t2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span><span class="n">temp_max</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tm</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="iteraciones-sobre-diccionarios">
+<h3>Iteraciones sobre diccionarios<a class="headerlink" href="#iteraciones-sobre-diccionarios" title="Enlace permanente a este encabezado"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># temps = {j:{&quot;Tmin&quot;: temp_min[j], &quot;Tmax&quot;:temp_max[j]} for j in range(len(temp_min))}</span>
+<span class="n">temps</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:{</span><span class="s2">&quot;Tmin&quot;</span><span class="p">:</span> <span class="n">tmin</span><span class="p">,</span> <span class="s2">&quot;Tmax&quot;</span><span class="p">:</span><span class="n">tmax</span><span class="p">}</span> <span class="k">for</span> <span class="n">j</span><span class="p">,(</span><span class="n">tmin</span><span class="p">,</span><span class="n">tmax</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">temp_min</span><span class="p">,</span> <span class="n">temp_max</span><span class="p">))}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temps</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">},</span>
+ <span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">},</span>
+ <span class="mi">2</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">},</span>
+ <span class="mi">3</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">},</span>
+ <span class="mi">4</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">},</span>
+ <span class="mi">5</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">},</span>
+ <span class="mi">6</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">},</span>
+ <span class="mi">7</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">},</span>
+ <span class="mi">8</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">},</span>
+ <span class="mi">9</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">temps</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;La temperatura máxima del día </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> fue </span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;Tmax&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> y la mínima </span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;Tmin&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como comentamos anteriormente, cuando iteramos sobre un diccionario
+estamos moviéndonos sobre las <code class="docutils literal notranslate"><span class="pre">(k)eys</span></code>. El ejemplo anterior es
+equivalente a:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;La temperatura máxima del día </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1"> fue </span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;Tmax&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1"> y la mínima </span><span class="si">{</span><span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="s2">&quot;Tmin&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En este caso, para referirnos al valor tenemos que hacerlo en la forma
+<code class="docutils literal notranslate"><span class="pre">temps[k]</span></code>, y no siempre es una manera muy clara de escribir las
+cosas. Otra manera similar, pero más limpia en este caso sería:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;La temperatura máxima del día </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> fue </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;Tmin&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> y la mínima </span><span class="si">{</span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;Tmax&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si queremos iterar sobre los valores podemos utilizar simplemente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">temps</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Remarquemos que los diccionarios no tienen definidos un orden por lo que
+no hay garantías que la próxima vez que ejecutemos cualquiera de estas
+líneas de código el orden del resultado sea exactamente el mismo.
+Además, si queremos imprimirlos en un orden predecible debemos
+escribirlo explícitamente. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">temps</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">L</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>La secuencia anterior puede escribirse en forma más compacta como</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">temps</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">temps</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">9</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">8</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="mi">7</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">}</span>
+<span class="mi">6</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">}</span>
+<span class="mi">5</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
+<span class="mi">4</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">}</span>
+<span class="mi">3</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">}</span>
+<span class="mi">2</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">}</span>
+<span class="mi">1</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">}</span>
+<span class="mi">0</span> <span class="p">{</span><span class="s1">&#39;Tmin&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mf">3.2</span><span class="p">,</span> <span class="s1">&#39;Tmax&#39;</span><span class="p">:</span> <span class="mf">13.2</span><span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-04-a">
+<h2>Ejercicios 04 (a)<a class="headerlink" href="#ejercicios-04-a" title="Enlace permanente a este encabezado"></a></h2>
+<ol class="arabic">
+<li><p>Un método para calcular el área de un polígono (no necesariamente
+regular) que se conoce como fórmula del área de Gauss o fórmula de la
+Lazada (<em>shoelace formula</em>) consiste en describir al polígono por sus
+puntos en un sistema de coordenadas. Cada punto se describe como un
+par <span class="math notranslate nohighlight">\((x,y)\)</span> y la fórmula del área está dada mediante la suma de
+la multiplicación de los valores en una diagonal a los que se le
+resta los valores en la otra diagonal, como muestra la figura</p>
+<img alt="_images/shoelace.png" src="_images/shoelace.png" />
+<div class="math notranslate nohighlight">
+\[2 A = (x_{1} y_{2} + x_{2} y_{3} + x_{3} y_{4} + \dots) - (x_{2} y_{1} + x_{3} y_{2} + x_{4} y_{3} + \dots)\]</div>
+<img alt="_images/ejemplo_shoelace.png" src="_images/ejemplo_shoelace.png" />
+<ul class="simple">
+<li><p>Utilizando una descripción adecuada del polígono, escribir una
+función que implemente la fórmula de Gauss para calcular su área y
+aplicarla al ejemplo de la figura.</p></li>
+<li><p>Verificar que el resultado no depende del punto de inicio.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_03.html" class="btn btn-neutral float-left" title="Clase 3: Tipos complejos y control de flujo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2024, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

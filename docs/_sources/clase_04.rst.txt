@@ -1,0 +1,210 @@
+.. _clase_04:
+
+Clase 4: Iteraciones y detalles de Funciones
+=============================================
+
+
+Técnicas de iteración
+---------------------
+
+Introdujimos tipos complejos: strings, listas, tuples, diccionarios
+(``dict``), conjuntos (``set``). Veamos algunas técnicas usuales de
+iteración sobre estos objetos.
+
+Iteración sobre elementos de dos listas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consideremos las listas:
+
+.. code:: python
+
+    temp_min = [-3.2, -2, 0, -1, 4, -5, -2, 0, 4, 0]
+    temp_max = [13.2, 12, 13, 7, 18, 5, 11, 14, 10 , 10]
+
+Queremos imprimir una lista que combine los dos datos:
+
+.. code:: python
+
+    for t1, t2 in zip(temp_min, temp_max):
+      print(f"La temperatura mínima fue {t1} y la máxima fue {t2}")
+
+Como vemos, la función ``zip`` nos permite combinar los elementos,
+tomando uno de cada lista por iteración.
+
+¿Qué retorna exactamente \`zip``?
+
+.. code:: python
+
+    list(zip(temp_min, temp_max))
+
+Podemos agregar información del día en la salida por pantalla si
+volvemos a utilizar la función ``enumerate``
+
+.. code:: python
+
+    for j, t in enumerate(zip(temp_min, temp_max)):
+      print(f'El día {j+1} la temperatura mínima fue {t[0]} y la máxima fue {t[1]}')
+
+.. code:: python
+
+    for j, t in enumerate(zip(temp_min, temp_max),1):
+      print(f'El día {j} la temperatura mínima fue {t[0]} y la máxima fue {t[1]}')
+
+
+.. code:: python
+
+    # ¿Qué pasa cuando una se consume antes que la otra?
+    for t1, t2 in zip([1,2,3,4,5],[3,4,5]):
+        print(t1,t2)
+
+``zip`` funciona también con más de dos listas
+
+.. code:: python
+
+    for j,t1,t2 in zip(range(1,len(temp_min)+1),temp_min, temp_max):
+      print(f'El día {j} la temperatura mínima fue {t1} y la máxima fue {t2}')
+
+
+Podemos utilizar la función ``zip`` para sumar dos listas término a
+término
+
+.. code:: python
+
+    tmedia = []
+    for t1, t2 in zip(temp_min, temp_max):
+      tmedia.append((t1+t2)/2)
+    print(tmedia)
+
+También podemos escribirlo en forma más compacta usando comprensiones de
+listas
+
+.. code:: python
+
+    tm = [(t1+t2)/2 for t1,t2 in zip(temp_min,temp_max)]
+    print(tm)
+
+Iteraciones sobre diccionarios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    # temps = {j:{"Tmin": temp_min[j], "Tmax":temp_max[j]} for j in range(len(temp_min))}
+    temps = {j:{"Tmin": tmin, "Tmax":tmax} for j,(tmin,tmax) in enumerate(zip(temp_min, temp_max))}
+
+.. code:: python
+
+    temps
+
+
+
+
+.. parsed-literal::
+
+    {0: {'Tmin': -3.2, 'Tmax': 13.2},
+     1: {'Tmin': -2, 'Tmax': 12},
+     2: {'Tmin': 0, 'Tmax': 13},
+     3: {'Tmin': -1, 'Tmax': 7},
+     4: {'Tmin': 4, 'Tmax': 18},
+     5: {'Tmin': -5, 'Tmax': 5},
+     6: {'Tmin': -2, 'Tmax': 11},
+     7: {'Tmin': 0, 'Tmax': 14},
+     8: {'Tmin': 4, 'Tmax': 10},
+     9: {'Tmin': 0, 'Tmax': 10}}
+
+
+
+.. code:: python
+
+    for k in temps:
+      print(f'La temperatura máxima del día {k} fue {temps[k]["Tmax"]} y la mínima {temps[k]["Tmin"]}')
+
+Como comentamos anteriormente, cuando iteramos sobre un diccionario
+estamos moviéndonos sobre las ``(k)eys``. El ejemplo anterior es
+equivalente a:
+
+.. code:: python
+
+    for k in temps.keys():
+      print(f'La temperatura máxima del día {k} fue {temps[k]["Tmax"]} y la mínima {temps[k]["Tmin"]}')
+
+En este caso, para referirnos al valor tenemos que hacerlo en la forma
+``temps[k]``, y no siempre es una manera muy clara de escribir las
+cosas. Otra manera similar, pero más limpia en este caso sería:
+
+.. code:: python
+
+    for k, v in temps.items():
+      print(f"La temperatura máxima del día {k} fue {v['Tmin']} y la mínima {v['Tmax']}")
+
+Si queremos iterar sobre los valores podemos utilizar simplemente:
+
+.. code:: python
+
+    for v in temps.values():
+      print(v)
+
+Remarquemos que los diccionarios no tienen definidos un orden por lo que
+no hay garantías que la próxima vez que ejecutemos cualquiera de estas
+líneas de código el orden del resultado sea exactamente el mismo.
+Además, si queremos imprimirlos en un orden predecible debemos
+escribirlo explícitamente. Por ejemplo:
+
+.. code:: python
+
+    L = list(temps.keys())
+    L.sort(reverse=True)
+    for k in L:
+      print(k, temps[k])
+
+La secuencia anterior puede escribirse en forma más compacta como
+
+.. code:: python
+
+    for k in sorted(temps,reverse=True):
+      print(k, temps[k])
+
+
+.. parsed-literal::
+
+    9 {'Tmin': 0, 'Tmax': 10}
+    8 {'Tmin': 4, 'Tmax': 10}
+    7 {'Tmin': 0, 'Tmax': 14}
+    6 {'Tmin': -2, 'Tmax': 11}
+    5 {'Tmin': -5, 'Tmax': 5}
+    4 {'Tmin': 4, 'Tmax': 18}
+    3 {'Tmin': -1, 'Tmax': 7}
+    2 {'Tmin': 0, 'Tmax': 13}
+    1 {'Tmin': -2, 'Tmax': 12}
+    0 {'Tmin': -3.2, 'Tmax': 13.2}
+
+
+--------------
+
+Ejercicios 04 (a)
+-----------------
+
+1. Un método para calcular el área de un polígono (no necesariamente
+   regular) que se conoce como fórmula del área de Gauss o fórmula de la
+   Lazada (*shoelace formula*) consiste en describir al polígono por sus
+   puntos en un sistema de coordenadas. Cada punto se describe como un
+   par :math:`(x,y)` y la fórmula del área está dada mediante la suma de
+   la multiplicación de los valores en una diagonal a los que se le
+   resta los valores en la otra diagonal, como muestra la figura
+
+   .. image:: figuras/shoelace.png
+
+   .. math::  2 A = (x_{1} y_{2} + x_{2} y_{3} + x_{3} y_{4} + \dots) - (x_{2} y_{1} + x_{3} y_{2} + x_{4} y_{3} + \dots) 
+
+   .. image:: figuras/ejemplo_shoelace.png
+
+   -  Utilizando una descripción adecuada del polígono, escribir una
+      función que implemente la fórmula de Gauss para calcular su área y
+      aplicarla al ejemplo de la figura.
+
+   -  Verificar que el resultado no depende del punto de inicio.
+
+--------------
+
+.
+
+
