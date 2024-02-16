@@ -28,6 +28,21 @@ Queremos imprimir una lista que combine los dos datos:
     for t1, t2 in zip(temp_min, temp_max):
       print(f"La temperatura mínima fue {t1} y la máxima fue {t2}")
 
+
+.. parsed-literal::
+
+    La temperatura mínima fue -3.2 y la máxima fue 13.2
+    La temperatura mínima fue -2 y la máxima fue 12
+    La temperatura mínima fue 0 y la máxima fue 13
+    La temperatura mínima fue -1 y la máxima fue 7
+    La temperatura mínima fue 4 y la máxima fue 18
+    La temperatura mínima fue -5 y la máxima fue 5
+    La temperatura mínima fue -2 y la máxima fue 11
+    La temperatura mínima fue 0 y la máxima fue 14
+    La temperatura mínima fue 4 y la máxima fue 10
+    La temperatura mínima fue 0 y la máxima fue 10
+
+
 Como vemos, la función ``zip`` nos permite combinar los elementos,
 tomando uno de cada lista por iteración.
 
@@ -35,7 +50,31 @@ tomando uno de cada lista por iteración.
 
 .. code:: python
 
+    print(zip(temp_min, temp_max))
     list(zip(temp_min, temp_max))
+
+
+.. parsed-literal::
+
+    <zip object at 0x7f0c96b02240>
+
+
+
+
+.. parsed-literal::
+
+    [(-3.2, 13.2),
+     (-2, 12),
+     (0, 13),
+     (-1, 7),
+     (4, 18),
+     (-5, 5),
+     (-2, 11),
+     (0, 14),
+     (4, 10),
+     (0, 10)]
+
+
 
 Podemos agregar información del día en la salida por pantalla si
 volvemos a utilizar la función ``enumerate``
@@ -45,10 +84,40 @@ volvemos a utilizar la función ``enumerate``
     for j, t in enumerate(zip(temp_min, temp_max)):
       print(f'El día {j+1} la temperatura mínima fue {t[0]} y la máxima fue {t[1]}')
 
+
+.. parsed-literal::
+
+    El día 1 la temperatura mínima fue -3.2 y la máxima fue 13.2
+    El día 2 la temperatura mínima fue -2 y la máxima fue 12
+    El día 3 la temperatura mínima fue 0 y la máxima fue 13
+    El día 4 la temperatura mínima fue -1 y la máxima fue 7
+    El día 5 la temperatura mínima fue 4 y la máxima fue 18
+    El día 6 la temperatura mínima fue -5 y la máxima fue 5
+    El día 7 la temperatura mínima fue -2 y la máxima fue 11
+    El día 8 la temperatura mínima fue 0 y la máxima fue 14
+    El día 9 la temperatura mínima fue 4 y la máxima fue 10
+    El día 10 la temperatura mínima fue 0 y la máxima fue 10
+
+
 .. code:: python
 
-    for j, t in enumerate(zip(temp_min, temp_max),1):
-      print(f'El día {j} la temperatura mínima fue {t[0]} y la máxima fue {t[1]}')
+    for j, (t1,t2) in enumerate(zip(temp_min, temp_max),1):
+      print(f'El día {j} la temperatura mínima fue {t1} y la máxima fue {t2}')
+
+
+
+.. parsed-literal::
+
+    El día 1 la temperatura mínima fue -3.2 y la máxima fue 13.2
+    El día 2 la temperatura mínima fue -2 y la máxima fue 12
+    El día 3 la temperatura mínima fue 0 y la máxima fue 13
+    El día 4 la temperatura mínima fue -1 y la máxima fue 7
+    El día 5 la temperatura mínima fue 4 y la máxima fue 18
+    El día 6 la temperatura mínima fue -5 y la máxima fue 5
+    El día 7 la temperatura mínima fue -2 y la máxima fue 11
+    El día 8 la temperatura mínima fue 0 y la máxima fue 14
+    El día 9 la temperatura mínima fue 4 y la máxima fue 10
+    El día 10 la temperatura mínima fue 0 y la máxima fue 10
 
 
 .. code:: python
@@ -57,12 +126,35 @@ volvemos a utilizar la función ``enumerate``
     for t1, t2 in zip([1,2,3,4,5],[3,4,5]):
         print(t1,t2)
 
+
+.. parsed-literal::
+
+    1 3
+    2 4
+    3 5
+
+
 ``zip`` funciona también con más de dos listas
 
 .. code:: python
 
     for j,t1,t2 in zip(range(1,len(temp_min)+1),temp_min, temp_max):
       print(f'El día {j} la temperatura mínima fue {t1} y la máxima fue {t2}')
+
+
+
+.. parsed-literal::
+
+    El día 1 la temperatura mínima fue -3.2 y la máxima fue 13.2
+    El día 2 la temperatura mínima fue -2 y la máxima fue 12
+    El día 3 la temperatura mínima fue 0 y la máxima fue 13
+    El día 4 la temperatura mínima fue -1 y la máxima fue 7
+    El día 5 la temperatura mínima fue 4 y la máxima fue 18
+    El día 6 la temperatura mínima fue -5 y la máxima fue 5
+    El día 7 la temperatura mínima fue -2 y la máxima fue 11
+    El día 8 la temperatura mínima fue 0 y la máxima fue 14
+    El día 9 la temperatura mínima fue 4 y la máxima fue 10
+    El día 10 la temperatura mínima fue 0 y la máxima fue 10
 
 
 Podemos utilizar la función ``zip`` para sumar dos listas término a
@@ -75,6 +167,12 @@ término
       tmedia.append((t1+t2)/2)
     print(tmedia)
 
+
+.. parsed-literal::
+
+    [5.0, 5.0, 6.5, 3.0, 11.0, 0.0, 4.5, 7.0, 7.0, 5.0]
+
+
 También podemos escribirlo en forma más compacta usando comprensiones de
 listas
 
@@ -82,6 +180,12 @@ listas
 
     tm = [(t1+t2)/2 for t1,t2 in zip(temp_min,temp_max)]
     print(tm)
+
+
+.. parsed-literal::
+
+    [5.0, 5.0, 6.5, 3.0, 11.0, 0.0, 4.5, 7.0, 7.0, 5.0]
+
 
 Iteraciones sobre diccionarios
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,6 +222,21 @@ Iteraciones sobre diccionarios
     for k in temps:
       print(f'La temperatura máxima del día {k} fue {temps[k]["Tmax"]} y la mínima {temps[k]["Tmin"]}')
 
+
+.. parsed-literal::
+
+    La temperatura máxima del día 0 fue 13.2 y la mínima -3.2
+    La temperatura máxima del día 1 fue 12 y la mínima -2
+    La temperatura máxima del día 2 fue 13 y la mínima 0
+    La temperatura máxima del día 3 fue 7 y la mínima -1
+    La temperatura máxima del día 4 fue 18 y la mínima 4
+    La temperatura máxima del día 5 fue 5 y la mínima -5
+    La temperatura máxima del día 6 fue 11 y la mínima -2
+    La temperatura máxima del día 7 fue 14 y la mínima 0
+    La temperatura máxima del día 8 fue 10 y la mínima 4
+    La temperatura máxima del día 9 fue 10 y la mínima 0
+
+
 Como comentamos anteriormente, cuando iteramos sobre un diccionario
 estamos moviéndonos sobre las ``(k)eys``. El ejemplo anterior es
 equivalente a:
@@ -126,6 +245,21 @@ equivalente a:
 
     for k in temps.keys():
       print(f'La temperatura máxima del día {k} fue {temps[k]["Tmax"]} y la mínima {temps[k]["Tmin"]}')
+
+
+.. parsed-literal::
+
+    La temperatura máxima del día 0 fue 13.2 y la mínima -3.2
+    La temperatura máxima del día 1 fue 12 y la mínima -2
+    La temperatura máxima del día 2 fue 13 y la mínima 0
+    La temperatura máxima del día 3 fue 7 y la mínima -1
+    La temperatura máxima del día 4 fue 18 y la mínima 4
+    La temperatura máxima del día 5 fue 5 y la mínima -5
+    La temperatura máxima del día 6 fue 11 y la mínima -2
+    La temperatura máxima del día 7 fue 14 y la mínima 0
+    La temperatura máxima del día 8 fue 10 y la mínima 4
+    La temperatura máxima del día 9 fue 10 y la mínima 0
+
 
 En este caso, para referirnos al valor tenemos que hacerlo en la forma
 ``temps[k]``, y no siempre es una manera muy clara de escribir las
@@ -136,12 +270,42 @@ cosas. Otra manera similar, pero más limpia en este caso sería:
     for k, v in temps.items():
       print(f"La temperatura máxima del día {k} fue {v['Tmin']} y la mínima {v['Tmax']}")
 
+
+.. parsed-literal::
+
+    La temperatura máxima del día 0 fue -3.2 y la mínima 13.2
+    La temperatura máxima del día 1 fue -2 y la mínima 12
+    La temperatura máxima del día 2 fue 0 y la mínima 13
+    La temperatura máxima del día 3 fue -1 y la mínima 7
+    La temperatura máxima del día 4 fue 4 y la mínima 18
+    La temperatura máxima del día 5 fue -5 y la mínima 5
+    La temperatura máxima del día 6 fue -2 y la mínima 11
+    La temperatura máxima del día 7 fue 0 y la mínima 14
+    La temperatura máxima del día 8 fue 4 y la mínima 10
+    La temperatura máxima del día 9 fue 0 y la mínima 10
+
+
 Si queremos iterar sobre los valores podemos utilizar simplemente:
 
 .. code:: python
 
     for v in temps.values():
       print(v)
+
+
+.. parsed-literal::
+
+    {'Tmin': -3.2, 'Tmax': 13.2}
+    {'Tmin': -2, 'Tmax': 12}
+    {'Tmin': 0, 'Tmax': 13}
+    {'Tmin': -1, 'Tmax': 7}
+    {'Tmin': 4, 'Tmax': 18}
+    {'Tmin': -5, 'Tmax': 5}
+    {'Tmin': -2, 'Tmax': 11}
+    {'Tmin': 0, 'Tmax': 14}
+    {'Tmin': 4, 'Tmax': 10}
+    {'Tmin': 0, 'Tmax': 10}
+
 
 Remarquemos que los diccionarios no tienen definidos un orden por lo que
 no hay garantías que la próxima vez que ejecutemos cualquiera de estas
@@ -155,6 +319,21 @@ escribirlo explícitamente. Por ejemplo:
     L.sort(reverse=True)
     for k in L:
       print(k, temps[k])
+
+
+.. parsed-literal::
+
+    9 {'Tmin': 0, 'Tmax': 10}
+    8 {'Tmin': 4, 'Tmax': 10}
+    7 {'Tmin': 0, 'Tmax': 14}
+    6 {'Tmin': -2, 'Tmax': 11}
+    5 {'Tmin': -5, 'Tmax': 5}
+    4 {'Tmin': 4, 'Tmax': 18}
+    3 {'Tmin': -1, 'Tmax': 7}
+    2 {'Tmin': 0, 'Tmax': 13}
+    1 {'Tmin': -2, 'Tmax': 12}
+    0 {'Tmin': -3.2, 'Tmax': 13.2}
+
 
 La secuencia anterior puede escribirse en forma más compacta como
 
