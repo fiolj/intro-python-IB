@@ -508,3 +508,384 @@ Note que la masa sólo debe contener 5 números decimales
   
 
 
+Atrapar y administrar errores
+-----------------------------
+
+**Python** tiene incorporado un mecanismo para atrapar errores de
+distintos tipos, así como para generar errores que den información al
+usuario sobre usos incorrectos del código.
+
+En primer lugar consideremos lo que se llama un error de sintaxis. El
+siguiente comando es sintácticamente correcto y el intérprete sabe como
+leerlo
+
+.. code:: python
+
+    print("hola")
+
+
+.. parsed-literal::
+
+    hola
+
+
+mientras que, si escribimos algo que no está permitido en el lenguaje
+
+.. code:: python
+
+    print("hola"))
+
+
+::
+
+
+      Cell In[2], line 1
+        print("hola"))
+                     ^
+    SyntaxError: unmatched ')'
+
+
+
+El intérprete detecta el error y repite la línea donde lo identifica.
+Este tipo de errores debe corregirse para poder seguir con el programa.
+
+Consideremos ahora el código siguiente, que es sintácticamente correcto
+pero igualmente causa un error
+
+.. code:: python
+
+    a = 1
+    b = 0
+    z = a / b
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ZeroDivisionError                         Traceback (most recent call last)
+
+    Cell In[3], line 3
+          1 a = 1
+          2 b = 0
+    ----> 3 z = a / b
+
+
+    ZeroDivisionError: division by zero
+
+
+Cuando se encuentra un error, **Python** muestra el lugar en que ocurre
+y de qué tipo de error se trata.
+
+.. code:: python
+
+    print(hola)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Cell In[4], line 1
+    ----> 1 print(hola)
+
+
+    NameError: name 'hola' is not defined
+
+
+Este mensaje da un tipo de error diferente. Ambos: ``ZeroDivisionError``
+y ``NameError`` son tipos de errores (o excepciones). Hay una larga
+lista de tipos de errores que son parte del lenguaje y puede consultarse
+en la documentación de `Built-in
+Exceptions <https://docs.python.org/3/library/exceptions.html#bltin-exceptions>`__.
+
+Administración de excepciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Cuando nuestro programa aumenta en complejidad, aumenta la posibilidad
+de encontrar errores. Esto se incrementa si se tiene que interactuar con
+otros usuarios o con datos externos. Consideremos el siguiente ejemplo
+simple:
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        print("t = {}".format(t))        # Línea sólo para inspección
+        m = int(t[0])
+        n = int(t[1])
+        print(f"m = {m}, n = {n}, m x n = {m*n}")
+    print("Seguimos")
+
+
+.. parsed-literal::
+
+    t = ['1', '2']
+    m = 1, n = 2, m x n = 2
+    t = ['2', '6']
+    m = 2, n = 6, m x n = 12
+    t = ['3', '9']
+    m = 3, n = 9, m x n = 27
+    t = ['4', '12']
+    m = 4, n = 12, m x n = 48
+    t = ['5.5', '30.25']
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Cell In[5], line 5
+          3 t = l.split()
+          4 print("t = {}".format(t))        # Línea sólo para inspección
+    ----> 5 m = int(t[0])
+          6 n = int(t[1])
+          7 print(f"m = {m}, n = {n}, m x n = {m*n}")
+
+
+    ValueError: invalid literal for int() with base 10: '5.5'
+
+
+En este caso se “levanta” una excepción del tipo ``ValueError`` debido a
+que este valor (``5.5``) no se puede convertir a ``int``. Podemos
+modificar nuestro programa para manejar este error:
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print(f"m = {m}, n = {n}, m x n = {m*n}")
+        except:
+          print(f"Error: t = {t} no puede convertirse a entero")
+    print("Seguimos")
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+    m = 3, n = 9, m x n = 27
+    Error: t = ['2'] no puede convertirse a entero
+    Seguimos
+
+
+En este caso podríamos ser más precisos y especificar el tipo de
+excepción que estamos esperando
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print(f"m = {m}, n = {n}, m x n = {m*n}")
+        except(ValueError):
+          print(f"Error: t = {t} no puede convertirse a entero")
+          
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+    m = 3, n = 9, m x n = 27
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    IndexError                                Traceback (most recent call last)
+
+    Cell In[12], line 6
+          4 try:
+          5   m = int(t[0])
+    ----> 6   n = int(t[1])
+          7   print(f"m = {m}, n = {n}, m x n = {m*n}")
+          8 except(ValueError):
+
+
+    IndexError: list index out of range
+
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print(f"m = {m}, n = {n}, m x n = {m*n}")
+        except(ValueError):
+          print(f"Error: t = {t} no puede convertirse a entero")
+        except(IndexError):
+          print(f'Error: La línea "{l.strip()}" no contiene un par')
+    print("Seguimos...")
+          
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+    m = 3, n = 9, m x n = 27
+    Error: La línea "2" no contiene un par
+    Seguimos...
+
+
+.. code:: python
+
+    with open("../data/ej_clase5.dat") as fi:
+      for l in fi:
+        t = l.split()
+        try:
+          m = int(t[0])
+          n = int(t[1])
+          print("m = {}, n = {}, m x n = {}".format(m,n, m*n))
+        except(ValueError):
+          print("Error: t = {} no puede convertirse a entero".format(t))
+        except:
+          print('Error: La línea "{}" tiene otro error'.format(l.strip()))
+    print("Seguimos...")
+          
+
+
+.. parsed-literal::
+
+    m = 1, n = 2, m x n = 2
+    m = 2, n = 6, m x n = 12
+    m = 3, n = 9, m x n = 27
+    m = 4, n = 12, m x n = 48
+    Error: t = ['5.5', '30.25'] no puede convertirse a entero
+    m = 3, n = 9, m x n = 27
+    Error: La línea "2" tiene otro error
+    Seguimos...
+
+
+La forma general
+
+La declaración ``try`` funciona de la siguiente manera:
+
+-  Primero, se ejecuta el *bloque try* (el código entre las declaración
+   ``try`` y ``except``).
+
+-  Si no ocurre ninguna excepción, el *bloque except* se saltea y
+   termina la ejecución de la declaración ``try``.
+
+-  Si ocurre una excepción durante la ejecución del *bloque try*, el
+   resto del bloque se saltea. Luego, si su tipo coincide con la
+   excepción nombrada luego de la palabra reservada ``except``, se
+   ejecuta el *bloque except*, y la ejecución continúa luego de la
+   declaración ``try``.
+
+-  Si ocurre una excepción que no coincide con la excepción nombrada en
+   el ``except``, esta se pasa a declaraciones ``try`` de más afuera; si
+   no se encuentra nada que la maneje, es una *excepción no manejada*, y
+   la ejecución se frena con un mensaje como los mostrados arriba.
+
+El mecanismo es un poco más complejo, y permite un control más fino que
+lo descripto aquí.
+
+“Crear” excepciones
+~~~~~~~~~~~~~~~~~~~
+
+Podemos forzar a que nuestro código cree una excepción usando ``raise``.
+Por ejemplo:
+
+.. code:: python
+
+    import math
+    def mi_sqrt(x):
+      if x < 0:
+        raise ValueError(f"x = {x}, debería ser positivo")
+      return math.sqrt(x)
+
+.. code:: python
+
+    mi_sqrt(12)
+
+
+
+
+.. parsed-literal::
+
+    3.4641016151377544
+
+
+
+.. code:: python
+
+    mi_sqrt(-2)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Cell In[19], line 1
+    ----> 1 mi_sqrt(-2)
+
+
+    Cell In[17], line 4, in mi_sqrt(x)
+          2 def mi_sqrt(x):
+          3   if x < 0:
+    ----> 4     raise ValueError(f"x = {x}, debería ser positivo")
+          5   return math.sqrt(x)
+
+
+    ValueError: x = -2, debería ser positivo
+
+
+.. code:: python
+
+    mi_sqrt(1+2j)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[20], line 1
+    ----> 1 mi_sqrt(1+2j)
+
+
+    Cell In[17], line 3, in mi_sqrt(x)
+          2 def mi_sqrt(x):
+    ----> 3   if x < 0:
+          4     raise ValueError(f"x = {x}, debería ser positivo")
+          5   return math.sqrt(x)
+
+
+    TypeError: '<' not supported between instances of 'complex' and 'int'
+

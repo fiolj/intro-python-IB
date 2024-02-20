@@ -59,6 +59,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#archivos-comprimidos">Archivos comprimidos</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-05-a">Ejercicios 05 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#atrapar-y-administrar-errores">Atrapar y administrar errores</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#administracion-de-excepciones">Administración de excepciones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#crear-excepciones">“Crear” excepciones</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -466,6 +471,305 @@ forma:</p></li>
 otros archivos usados en las clases) pueden encontrarse en la carpeta
 <a class="reference external" href="https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing">intro-python</a></p>
 </div>
+</section>
+<section id="atrapar-y-administrar-errores">
+<h2>Atrapar y administrar errores<a class="headerlink" href="#atrapar-y-administrar-errores" title="Enlace permanente a este encabezado"></a></h2>
+<p><strong>Python</strong> tiene incorporado un mecanismo para atrapar errores de
+distintos tipos, así como para generar errores que den información al
+usuario sobre usos incorrectos del código.</p>
+<p>En primer lugar consideremos lo que se llama un error de sintaxis. El
+siguiente comando es sintácticamente correcto y el intérprete sabe como
+leerlo</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hola</span>
+</pre></div>
+</div>
+<p>mientras que, si escribimos algo que no está permitido en el lenguaje</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">))</span>
+                 <span class="o">^</span>
+<span class="ne">SyntaxError</span><span class="p">:</span> <span class="n">unmatched</span> <span class="s1">&#39;)&#39;</span>
+</pre></div>
+</div>
+<p>El intérprete detecta el error y repite la línea donde lo identifica.
+Este tipo de errores debe corregirse para poder seguir con el programa.</p>
+<p>Consideremos ahora el código siguiente, que es sintácticamente correcto
+pero igualmente causa un error</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ZeroDivisionError</span>                         <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+      <span class="mi">1</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+      <span class="mi">2</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="o">----&gt;</span> <span class="mi">3</span> <span class="n">z</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+
+
+<span class="ne">ZeroDivisionError</span><span class="p">:</span> <span class="n">division</span> <span class="n">by</span> <span class="n">zero</span>
+</pre></div>
+</div>
+<p>Cuando se encuentra un error, <strong>Python</strong> muestra el lugar en que ocurre
+y de qué tipo de error se trata.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">hola</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">NameError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="n">hola</span><span class="p">)</span>
+
+
+<span class="ne">NameError</span><span class="p">:</span> <span class="n">name</span> <span class="s1">&#39;hola&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">defined</span>
+</pre></div>
+</div>
+<p>Este mensaje da un tipo de error diferente. Ambos: <code class="docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code>
+y <code class="docutils literal notranslate"><span class="pre">NameError</span></code> son tipos de errores (o excepciones). Hay una larga
+lista de tipos de errores que son parte del lenguaje y puede consultarse
+en la documentación de <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#bltin-exceptions">Built-in
+Exceptions</a>.</p>
+<section id="administracion-de-excepciones">
+<h3>Administración de excepciones<a class="headerlink" href="#administracion-de-excepciones" title="Enlace permanente a este encabezado"></a></h3>
+<p>Cuando nuestro programa aumenta en complejidad, aumenta la posibilidad
+de encontrar errores. Esto se incrementa si se tiene que interactuar con
+otros usuarios o con datos externos. Consideremos el siguiente ejemplo
+simple:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/ej_clase5.dat&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;t = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>        <span class="c1"># Línea sólo para inspección</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, m x n = </span><span class="si">{</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Seguimos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;4&#39;</span><span class="p">,</span> <span class="s1">&#39;12&#39;</span><span class="p">]</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;5.5&#39;</span><span class="p">,</span> <span class="s1">&#39;30.25&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
+      <span class="mi">3</span> <span class="n">t</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+      <span class="mi">4</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;t = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>        <span class="c1"># Línea sólo para inspección</span>
+<span class="o">----&gt;</span> <span class="mi">5</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="mi">6</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, m x n = </span><span class="si">{</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">invalid</span> <span class="n">literal</span> <span class="k">for</span> <span class="nb">int</span><span class="p">()</span> <span class="k">with</span> <span class="n">base</span> <span class="mi">10</span><span class="p">:</span> <span class="s1">&#39;5.5&#39;</span>
+</pre></div>
+</div>
+<p>En este caso se “levanta” una excepción del tipo <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> debido a
+que este valor (<code class="docutils literal notranslate"><span class="pre">5.5</span></code>) no se puede convertir a <code class="docutils literal notranslate"><span class="pre">int</span></code>. Podemos
+modificar nuestro programa para manejar este error:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/ej_clase5.dat&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, m x n = </span><span class="si">{</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: t = </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> no puede convertirse a entero&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Seguimos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;5.5&#39;</span><span class="p">,</span> <span class="s1">&#39;30.25&#39;</span><span class="p">]</span> <span class="n">no</span> <span class="n">puede</span> <span class="n">convertirse</span> <span class="n">a</span> <span class="n">entero</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;2&#39;</span><span class="p">]</span> <span class="n">no</span> <span class="n">puede</span> <span class="n">convertirse</span> <span class="n">a</span> <span class="n">entero</span>
+<span class="n">Seguimos</span>
+</pre></div>
+</div>
+<p>En este caso podríamos ser más precisos y especificar el tipo de
+excepción que estamos esperando</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/ej_clase5.dat&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, m x n = </span><span class="si">{</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: t = </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> no puede convertirse a entero&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;5.5&#39;</span><span class="p">,</span> <span class="s1">&#39;30.25&#39;</span><span class="p">]</span> <span class="n">no</span> <span class="n">puede</span> <span class="n">convertirse</span> <span class="n">a</span> <span class="n">entero</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">IndexError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">6</span>
+      <span class="mi">4</span> <span class="k">try</span><span class="p">:</span>
+      <span class="mi">5</span>   <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="o">----&gt;</span> <span class="mi">6</span>   <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="mi">7</span>   <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, m x n = </span><span class="si">{</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+      <span class="mi">8</span> <span class="k">except</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+
+
+<span class="ne">IndexError</span><span class="p">:</span> <span class="nb">list</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/ej_clase5.dat&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;m = </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2">, n = </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">, m x n = </span><span class="si">{</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: t = </span><span class="si">{</span><span class="n">t</span><span class="si">}</span><span class="s2"> no puede convertirse a entero&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">(</span><span class="ne">IndexError</span><span class="p">):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Error: La línea &quot;</span><span class="si">{</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="si">}</span><span class="s1">&quot; no contiene un par&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Seguimos...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;5.5&#39;</span><span class="p">,</span> <span class="s1">&#39;30.25&#39;</span><span class="p">]</span> <span class="n">no</span> <span class="n">puede</span> <span class="n">convertirse</span> <span class="n">a</span> <span class="n">entero</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">La</span> <span class="n">línea</span> <span class="s2">&quot;2&quot;</span> <span class="n">no</span> <span class="n">contiene</span> <span class="n">un</span> <span class="n">par</span>
+<span class="n">Seguimos</span><span class="o">...</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;../data/ej_clase5.dat&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+      <span class="n">m</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+      <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;m = </span><span class="si">{}</span><span class="s2">, n = </span><span class="si">{}</span><span class="s2">, m x n = </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">):</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: t = </span><span class="si">{}</span><span class="s2"> no puede convertirse a entero&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    <span class="k">except</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Error: La línea &quot;</span><span class="si">{}</span><span class="s1">&quot; tiene otro error&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Seguimos...&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">m</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">6</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">12</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">t</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;5.5&#39;</span><span class="p">,</span> <span class="s1">&#39;30.25&#39;</span><span class="p">]</span> <span class="n">no</span> <span class="n">puede</span> <span class="n">convertirse</span> <span class="n">a</span> <span class="n">entero</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">9</span><span class="p">,</span> <span class="n">m</span> <span class="n">x</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">27</span>
+<span class="n">Error</span><span class="p">:</span> <span class="n">La</span> <span class="n">línea</span> <span class="s2">&quot;2&quot;</span> <span class="n">tiene</span> <span class="n">otro</span> <span class="n">error</span>
+<span class="n">Seguimos</span><span class="o">...</span>
+</pre></div>
+</div>
+<p>La forma general</p>
+<p>La declaración <code class="docutils literal notranslate"><span class="pre">try</span></code> funciona de la siguiente manera:</p>
+<ul class="simple">
+<li><p>Primero, se ejecuta el <em>bloque try</em> (el código entre las declaración
+<code class="docutils literal notranslate"><span class="pre">try</span></code> y <code class="docutils literal notranslate"><span class="pre">except</span></code>).</p></li>
+<li><p>Si no ocurre ninguna excepción, el <em>bloque except</em> se saltea y
+termina la ejecución de la declaración <code class="docutils literal notranslate"><span class="pre">try</span></code>.</p></li>
+<li><p>Si ocurre una excepción durante la ejecución del <em>bloque try</em>, el
+resto del bloque se saltea. Luego, si su tipo coincide con la
+excepción nombrada luego de la palabra reservada <code class="docutils literal notranslate"><span class="pre">except</span></code>, se
+ejecuta el <em>bloque except</em>, y la ejecución continúa luego de la
+declaración <code class="docutils literal notranslate"><span class="pre">try</span></code>.</p></li>
+<li><p>Si ocurre una excepción que no coincide con la excepción nombrada en
+el <code class="docutils literal notranslate"><span class="pre">except</span></code>, esta se pasa a declaraciones <code class="docutils literal notranslate"><span class="pre">try</span></code> de más afuera; si
+no se encuentra nada que la maneje, es una <em>excepción no manejada</em>, y
+la ejecución se frena con un mensaje como los mostrados arriba.</p></li>
+</ul>
+<p>El mecanismo es un poco más complejo, y permite un control más fino que
+lo descripto aquí.</p>
+</section>
+<section id="crear-excepciones">
+<h3>“Crear” excepciones<a class="headerlink" href="#crear-excepciones" title="Enlace permanente a este encabezado"></a></h3>
+<p>Podemos forzar a que nuestro código cree una excepción usando <code class="docutils literal notranslate"><span class="pre">raise</span></code>.
+Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
+<span class="k">def</span> <span class="nf">mi_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x = </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, debería ser positivo&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mi_sqrt</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">3.4641016151377544</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mi_sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">mi_sqrt</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span><span class="p">,</span> <span class="ow">in</span> <span class="n">mi_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="mi">2</span> <span class="k">def</span> <span class="nf">mi_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+      <span class="mi">3</span>   <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="o">----&gt;</span> <span class="mi">4</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x = </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, debería ser positivo&quot;</span><span class="p">)</span>
+      <span class="mi">5</span>   <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="n">debería</span> <span class="n">ser</span> <span class="n">positivo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mi_sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="n">j</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">mi_sqrt</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="mi">2</span><span class="n">j</span><span class="p">)</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span><span class="p">,</span> <span class="ow">in</span> <span class="n">mi_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="mi">2</span> <span class="k">def</span> <span class="nf">mi_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+<span class="o">----&gt;</span> <span class="mi">3</span>   <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="mi">4</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x = </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, debería ser positivo&quot;</span><span class="p">)</span>
+      <span class="mi">5</span>   <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="s1">&#39;&lt;&#39;</span> <span class="ow">not</span> <span class="n">supported</span> <span class="n">between</span> <span class="n">instances</span> <span class="n">of</span> <span class="s1">&#39;complex&#39;</span> <span class="ow">and</span> <span class="s1">&#39;int&#39;</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
