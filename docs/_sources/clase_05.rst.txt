@@ -1,0 +1,510 @@
+.. _clase_05:
+
+Clase 5: Persistencia de datos y administración de problemas
+=============================================================
+
+
+Escritura y lectura a archivos
+------------------------------
+
+Nuestros programas necesitan interactuar con el mundo exterior. Hasta
+ahora utilizamos la función ``print()`` para imprimir por pantalla
+mensajes y resultados. Para leer o escribir un archivo primero debemos
+abrirlo, utilizando la función ``open()``
+
+.. code:: python
+
+    f = open('../data/names.txt')   # Abrimos el archivo (para leer)
+
+.. code:: python
+
+    f
+
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
+.. code:: python
+
+    s = f.read()                    # Leemos el archivo
+
+.. code:: python
+
+    f.close()                       # Cerramos el archivo
+
+.. code:: python
+
+    print(s[:100])
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+    Agatha
+    Agnetha
+    Ahmed
+    Ahmet
+    Aimee
+    Al
+    Ala
+    Alain
+
+
+Esta secuencia básica de trabajo en adecuada y muy común en el trabajo
+con archivos. Sin embargo, hay un potencial problema, que ocurrirá si
+hay algún error entre la apertura y el cierre del archivo. Para ello
+existe una sintaxis alternativa
+
+.. code:: python
+
+    with open('../data/names.txt') as fi:
+      s = fi.read()
+    print(s[:50])
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adri
+
+
+.. code:: python
+
+    # fi todavía existe pero está cerrado
+    fi
+
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='../data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
+.. code:: python
+
+    type(fi)
+
+
+
+
+.. parsed-literal::
+
+    _io.TextIOWrapper
+
+
+
+La palabra ``with`` es una palabra reservada del lenguaje y la
+construcción se conoce como *contexto*. Básicamente dice que todo lo que
+está dentro del bloque se realizará en el contexto en que ``f`` es el
+objeto de archivo abierto para lectura.
+
+Ejemplos
+~~~~~~~~
+
+Vamos a repasar algunos de los conceptos discutidos las clases
+anteriores e introducir algunas nuevas funcionalidades con ejemplos
+
+Ejemplo 05-1
+^^^^^^^^^^^^
+
+.. code:: python
+
+    fname = '../data/names.txt'
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    
+    with  open(fname, 'r') as fi:
+      lines = fi.readlines()        # El resultado es una lista
+    
+    for line in lines:
+      if minlen <= len(line.strip()) <= maxlen:
+        n += 1
+        print(line.strip(), end=', ')  # No Newline
+    
+    print('\n')
+    if minlen == maxlen:
+      mensaje = f"Encontramos {n} palabras que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos {n} palabras que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+
+
+
+.. parsed-literal::
+
+    Aaa, Aba, Ada, Ada, Adam, Ala, Alan, Alex, Alf, Ama, Ami, Amir, Amos, Amy, Ana, Andy, Ann, Anna, Anna, Anne, Anya, Arne, Art, Axel, Bart, Bea, Ben, Bert, Beth, Bib, Bill, Bob, Bob, Boob, Boyd, Brad, Bret, Bub, Buck, Bud, Carl, Cary, Case, Cdc, Chet, Chip, Clay, Clem, Cody, Cole, Cory, Cris, Curt, Dad, Dale, Dan, Dana, Dani, Dave, Dawn, Dean, Deb, Debi, Deed, Del, Dick, Did, Dion, Dirk, Dod, Don, Donn, Dora, Dori, Dory, Doug, Drew, Dud, Duke, Earl, Eddy, Eke, Eli, Elsa, Emil, Emma, Enya, Ere, Eric, Erik, Esme, Eva, Evan, Eve, Eve, Ewe, Eye, Fay, Fred, Gag, Gaia, Gail, Gale, Gary, Gay, Gene, Gig, Gigi, Gil, Gill, Glen, Gog, Greg, Guy, Hal, Hank, Hans, Harv, Hein, Herb, Hohn, Hon, Hope, Hsi, Huey, Hugh, Huh, Hui, Hume, Hurf, Hwa, Iain, Ian, Igor, Iii, Ilya, Ima, Imad, Ira, Isis, Izzy, Jack, Jade, Jan, Jane, Jarl, Jay, Jean, Jef, Jeff, Jem, Jen, Jenn, Jess, Jill, Jim, Jin, Jiri, Joan, Job, Jock, Joe, Joel, John, Jon, Jong, Joni, Joon, Jos, Jose, Josh, Juan, Judy, Juha, Jun, June, Juri, Kaj, Kari, Karl, Kate, Kay, Kee, Kees, Ken, Kenn, Kent, Kiki, Kim, King, Kirk, Kit, Knut, Kory, Kris, Kurt, Kyle, Kylo, Kyu, Lana, Lar, Lara, Lars, Lea, Leah, Lee, Leif, Len, Leo, Leon, Les, Lex, Liam, Lila, Lin, Lisa, List, Liz, Liza, Lois, Lola, Lord, Lori, Lou, Loyd, Luc, Lucy, Lui, Luis, Luke, Lum, Lynn, Mac, Mah, Mann, Mara, Marc, Mark, Mary, Mat, Mats, Matt, Max, May, Mayo, Meg, Mick, Miek, Mike, Miki, Milo, Moe, Mott, Mum, Mwa, Naim, Nan, Nate, Neal, Ned, Neil, Nhan, Nici, Nick, Nils, Ning, Noam, Noel, Non, Noon, Nora, Norm, Nou, Novo, Nun, Ofer, Olaf, Old, Ole, Oleg, Olof, Omar, Otto, Owen, Ozan, Page, Pam, Pap, Part, Pat, Paul, Pdp, Peep, Pep, Per, Pete, Petr, Phil, Pia, Piet, Pim, Ping, Pip, Poop, Pop, Pria, Pup, Raif, Raj, Raja, Ralf, Ram, Rand, Raul, Ravi, Ray, Real, Rees, Reg, Reid, Rene, Renu, Rex, Ric, Rich, Rick, Rik, Rob, Rod, Rolf, Ron, Root, Rose, Ross, Roy, Rudy, Russ, Ruth, S's, Saad, Sal, Sam, Sara, Saul, Scot, Sean, Sees, Seth, Shai, Shaw, Shel, Sho, Sid, Sir, Sis, Skef, Skip, Son, Spy, Sri, Ssi, Stan, Stu, Sue, Sus, Suu, Syd, Syed, Syun, Tad, Tai, Tait, Tal, Tao, Tara, Tat, Ted, Teet, Teri, Tex, Thad, The, Theo, Tim, Timo, Tip, Tit, Tnt, Toby, Todd, Toft, Tom, Tony, Toot, Tor, Tot, Tran, Trey, Troy, Tuan, Tuna, Uma, Una, Uri, Urs, Val, Van, Vern, Vic, Vice, Vick, Wade, Walt, Wes, Will, Win, Wolf, Wow, Zoe, Zon, 
+    
+    Encontramos 420 palabras que tienen entre 3 y 4 letras
+
+
+Hemos utilizado aquí:
+
+-  Apertura, lectura, y cerrado de archivos
+-  Iteración en un loop ``for``
+-  Bloques condicionales (if/else)
+-  Formato de cadenas de caracteres con reemplazo
+-  Impresión por pantalla
+
+La apertura de archivos se realiza utilizando la función ``open`` (este
+es un buen momento para mirar su documentación) con dos argumentos: el
+primero es el nombre del archivo y el segundo el modo en que queremos
+abrirlo (en este caso la ``r`` indica lectura).
+
+Con el archivo abierto, en la línea 9 leemos línea por línea todo el
+archivo. El resultado es una lista, donde cada elemento es una línea.
+
+Recorremos la lista, y en cada elemento comparamos la longitud de la
+línea con ciertos valores. Imprimimos las líneas seleccionadas
+
+Finalmente, escribimos el número total de líneas.
+
+Veamos una leve modificación de este programa
+
+Ejemplo 05-2
+^^^^^^^^^^^^
+
+.. code:: python
+
+    lines[0]
+
+
+
+
+.. parsed-literal::
+
+    'Aaa\n'
+
+
+
+.. code:: python
+
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    
+    fname = '../data/names.txt'
+    
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    
+    with  open(fname, 'r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          print('({:02d}): {}'.format(n, p), end=', ')  # Vamos numerando las coincidencias
+    print('\n')
+    if minlen == maxlen:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+
+
+
+.. parsed-literal::
+
+    (01): aaa, (02): aba, (03): ada, (04): ada, (05): ala, (06): ama, (07): ana, (08): anna, (09): anna, (10): bib, (11): bob, (12): bob, (13): boob, (14): bub, (15): cdc, (16): dad, (17): deed, (18): did, (19): dod, (20): dud, (21): eke, (22): ere, (23): eve, (24): eve, (25): ewe, (26): eye, (27): gag, (28): gig, (29): gog, (30): huh, (31): iii, (32): mum, (33): nan, (34): non, (35): noon, (36): nun, (37): otto, (38): pap, (39): pdp, (40): peep, (41): pep, (42): pip, (43): poop, (44): pop, (45): pup, (46): s's, (47): sees, (48): sis, (49): sus, (50): tat, (51): teet, (52): tit, (53): tnt, (54): toot, (55): tot, (56): wow, 
+    
+    Encontramos un total de 56 palabras capicúa que tienen entre 3 y 4 letras
+
+
+Aquí en lugar de leer todas las líneas e iterar sobre las líneas
+resultantes, iteramos directamente sobre el archivo abierto.
+
+Además incluimos un string al principio del archivo, que servirá de
+documentación, y puede accederse mediante los mecanismos usuales de
+ayuda de Python.
+
+Imprimimos el número de palabra junto con la palabra, usamos ``02d``,
+indicando que es un entero (``d``), que queremos que el campo sea de un
+mínimo número de caracteres de ancho (en este caso 2). Al escribirlo
+como ``02`` le pedimos que complete los vacíos con ceros.
+
+.. code:: python
+
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    
+    fname = '../data/names.txt'
+    
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    L = []
+    with  open(fname, 'r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          #ss += f"\n{p}"  # ss += "\n" + p
+          L.append(p)  # L += [p]
+    ss = " ".join(L)
+    if minlen == maxlen:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+    with open('../data/tmp.txt','w') as fo:
+        fo.write(ss)
+
+
+
+.. parsed-literal::
+
+    Encontramos un total de 56 palabras capicúa que tienen entre 3 y 4 letras
+
+
+Archivos comprimidos
+--------------------
+
+Existen varias formas de reducir el tamaño de los archivos de datos.
+Varios factores, tales como el sistema operativo, nuestra familiaridad
+con cada uno de ellos, le da una cierta preferencia a algunos de los
+métodos disponibles. Veamos cómo hacer para leer y escribir algunos de
+los siguientes formatos: **zip, gzip, bz2**
+
+.. code:: python
+
+    import gzip
+    import bz2
+
+.. code:: python
+
+    with gzip.open('../data/palabras.words.gz', 'rb') as fi:
+      a = fi.read()
+
+
+.. code:: python
+
+    with gzip.open('../data/palabras.words.gz', 'r') as fi:
+      b = fi.read()
+
+
+.. code:: python
+
+    b[:30]
+
+
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica\n\xc3\x81ngela\n\xc3\xa1baco\n\xc3\xa1bsida'
+
+
+
+.. code:: python
+
+    l= a.splitlines()
+    print(l[:10])
+
+
+.. parsed-literal::
+
+    [b'\xc3\x81frica', b'\xc3\x81ngela', b'\xc3\xa1baco', b'\xc3\xa1bsida', b'\xc3\xa1bside', b'\xc3\xa1cana', b'\xc3\xa1caro', b'\xc3\xa1cates', b'\xc3\xa1cido', b'\xc3\xa1cigos']
+
+
+.. code:: python
+
+    a[:30]
+
+
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica\n\xc3\x81ngela\n\xc3\xa1baco\n\xc3\xa1bsida'
+
+
+
+.. code:: python
+
+    str(l[0])
+
+
+
+
+.. parsed-literal::
+
+    "b'\\xc3\\x81frica'"
+
+
+
+.. code:: python
+
+    type(l[0])
+
+
+
+
+.. parsed-literal::
+
+    bytes
+
+
+
+.. note::  Vemos que el archivo tiene algunos caracteres que no podemos
+  interpretar. Por ejemplo:
+  
+  .. code:: python
+  
+  
+     l[0] = "b'\\xc3\\x81frica'"
+     l[0] = str(l[0])
+  
+  Esto indica que la variable es del tipo “bytes”, que es la manera en que
+  python describe los strings, pero hay un caracter que no sabemos como
+  mostrar. Para hacerlo debemos codificarlo:
+  
+  .. code:: python
+  
+  
+     str(l[0], encoding='utf-8') -> 'África'
+  
+  
+
+.. code:: python
+
+    str(l[0], encoding='utf-8')
+
+
+
+
+.. parsed-literal::
+
+    'África'
+
+
+
+Con todo esto podríamos escribir (si tuviéramos necesidad) una función
+que puede leer un archivo en cualquiera de estos formatos
+
+.. code:: python
+
+    import gzip
+    import bz2
+    from os.path import splitext
+    import zipfile
+    
+    def abrir(fname, modo='r'):
+      if fname.endswith('gz'):
+        fi= gzip.open(fname, mode=modo)
+      elif fname.endswith('bz2'):
+        fi= bz2.open(fname, mode=modo)    
+      elif fname.endswith('zip'):
+        fi= zipfile.ZipFile(fname, mode=modo)
+      else:
+        fi = open(fname, mode=modo)
+      return fi
+
+.. code:: python
+
+    ff= abrir('../data/palabras.words.gz')
+    a = ff.read()
+    ff.close()
+
+.. code:: python
+
+    l = a.splitlines()
+
+.. code:: python
+
+    print(str(l[0], encoding='utf-8'))
+
+
+.. parsed-literal::
+
+    África
+
+
+--------------
+
+Ejercicios 05 (a)
+-----------------
+
+1. Realice un programa que:
+
+-  Lea el archivo **names.txt**
+-  Guarde en un nuevo archivo (llamado “pares.txt”) palabra por medio
+   del archivo original (la primera, tercera, …) una por línea, pero en
+   el orden inverso al leído
+-  Agregue al final de dicho archivo, las palabras pares pero separadas
+   por un punto y coma (;)
+-  En un archivo llamado “longitudes.txt” guarde las palabras ordenadas
+   por su longitud, y para cada longitud ordenadas alfabéticamente.
+-  En un archivo llamado “letras.txt” guarde sólo aquellas palabras que
+   contienen las letras ``w,x,y,z``, con el formato:
+
+   -  w: Walter, ….
+   -  x: Xilofón, …
+   -  y: ….
+   -  z: ….
+
+-  Cree un diccionario, donde cada *key* es la primera letra y cada
+   valor es una lista, cuyo elemento es una tuple (palabra, longitud).
+   Por ejemplo:
+
+.. code:: python
+
+   d['a'] = [('Aaa',3),('Anna', 4), ...]
+
+2. Realice un programa para:
+
+   -  Leer los datos del archivo **aluminio.dat** y poner los datos del
+      elemento en un diccionario de la forma:
+
+   .. code:: python
+
+      d = {'S': 'Al', 'Z':13, 'A':27, 'M': '26.98153863(12)', 'P': 1.0000, 'MS':'26.9815386(8)'}
+
+   -  Modifique el programa anterior para que las masas sean números
+      (``float``) y descarte el valor de la incerteza (el número entre
+      paréntesis)
+   -  Agregue el código necesario para obtener una impresión de la
+      forma:
+
+   ::
+
+      Elemento: Al
+      Número Atómico: 13
+      Número de Masa: 27
+      Masa: 26.98154
+
+Note que la masa sólo debe contener 5 números decimales
+
+--------------
+
+.. note::  Los archivos de texto “names.txt” y “aluminio.txt” (así como
+  otros archivos usados en las clases) pueden encontrarse en la carpeta
+  `intro-python <https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing>`__
+  
+  
+
+

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 5: Persistencia de datos y administración de problemas &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 4: Iteraciones y detalles de Funciones" href="clase_04.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Clases de Python
+            <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2024
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Iteraciones y detalles de Funciones</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 5: Persistencia de datos y administración de problemas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#escritura-y-lectura-a-archivos">Escritura y lectura a archivos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejemplos">Ejemplos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ejemplo-05-1">Ejemplo 05-1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ejemplo-05-2">Ejemplo 05-2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#archivos-comprimidos">Archivos comprimidos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-05-a">Ejercicios 05 (a)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Clase 5: Persistencia de datos y administración de problemas</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_05.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-5-persistencia-de-datos-y-administracion-de-problemas">
+<span id="clase-05"></span><h1>Clase 5: Persistencia de datos y administración de problemas<a class="headerlink" href="#clase-5-persistencia-de-datos-y-administracion-de-problemas" title="Enlace permanente a este encabezado"></a></h1>
+<section id="escritura-y-lectura-a-archivos">
+<h2>Escritura y lectura a archivos<a class="headerlink" href="#escritura-y-lectura-a-archivos" title="Enlace permanente a este encabezado"></a></h2>
+<p>Nuestros programas necesitan interactuar con el mundo exterior. Hasta
+ahora utilizamos la función <code class="docutils literal notranslate"><span class="pre">print()</span></code> para imprimir por pantalla
+mensajes y resultados. Para leer o escribir un archivo primero debemos
+abrirlo, utilizando la función <code class="docutils literal notranslate"><span class="pre">open()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../data/names.txt&#39;</span><span class="p">)</span>   <span class="c1"># Abrimos el archivo (para leer)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;../data/names.txt&#39;</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>                    <span class="c1"># Leemos el archivo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                       <span class="c1"># Cerramos el archivo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aaa</span>
+<span class="n">Aaron</span>
+<span class="n">Aba</span>
+<span class="n">Ababa</span>
+<span class="n">Ada</span>
+<span class="n">Ada</span>
+<span class="n">Adam</span>
+<span class="n">Adlai</span>
+<span class="n">Adrian</span>
+<span class="n">Adrienne</span>
+<span class="n">Agatha</span>
+<span class="n">Agnetha</span>
+<span class="n">Ahmed</span>
+<span class="n">Ahmet</span>
+<span class="n">Aimee</span>
+<span class="n">Al</span>
+<span class="n">Ala</span>
+<span class="n">Alain</span>
+</pre></div>
+</div>
+<p>Esta secuencia básica de trabajo en adecuada y muy común en el trabajo
+con archivos. Sin embargo, hay un potencial problema, que ocurrirá si
+hay algún error entre la apertura y el cierre del archivo. Para ello
+existe una sintaxis alternativa</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../data/names.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aaa</span>
+<span class="n">Aaron</span>
+<span class="n">Aba</span>
+<span class="n">Ababa</span>
+<span class="n">Ada</span>
+<span class="n">Ada</span>
+<span class="n">Adam</span>
+<span class="n">Adlai</span>
+<span class="n">Adrian</span>
+<span class="n">Adri</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fi todavía existe pero está cerrado</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;../data/names.txt&#39;</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;UTF-8&#39;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">fi</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_io</span><span class="o">.</span><span class="n">TextIOWrapper</span>
+</pre></div>
+</div>
+<p>La palabra <code class="docutils literal notranslate"><span class="pre">with</span></code> es una palabra reservada del lenguaje y la
+construcción se conoce como <em>contexto</em>. Básicamente dice que todo lo que
+está dentro del bloque se realizará en el contexto en que <code class="docutils literal notranslate"><span class="pre">f</span></code> es el
+objeto de archivo abierto para lectura.</p>
+<section id="ejemplos">
+<h3>Ejemplos<a class="headerlink" href="#ejemplos" title="Enlace permanente a este encabezado"></a></h3>
+<p>Vamos a repasar algunos de los conceptos discutidos las clases
+anteriores e introducir algunas nuevas funcionalidades con ejemplos</p>
+<section id="ejemplo-05-1">
+<h4>Ejemplo 05-1<a class="headerlink" href="#ejemplo-05-1" title="Enlace permanente a este encabezado"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;../data/names.txt&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+
+<span class="k">with</span>  <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">lines</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>        <span class="c1"># El resultado es una lista</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>  <span class="c1"># No Newline</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Aaa</span><span class="p">,</span> <span class="n">Aba</span><span class="p">,</span> <span class="n">Ada</span><span class="p">,</span> <span class="n">Ada</span><span class="p">,</span> <span class="n">Adam</span><span class="p">,</span> <span class="n">Ala</span><span class="p">,</span> <span class="n">Alan</span><span class="p">,</span> <span class="n">Alex</span><span class="p">,</span> <span class="n">Alf</span><span class="p">,</span> <span class="n">Ama</span><span class="p">,</span> <span class="n">Ami</span><span class="p">,</span> <span class="n">Amir</span><span class="p">,</span> <span class="n">Amos</span><span class="p">,</span> <span class="n">Amy</span><span class="p">,</span> <span class="n">Ana</span><span class="p">,</span> <span class="n">Andy</span><span class="p">,</span> <span class="n">Ann</span><span class="p">,</span> <span class="n">Anna</span><span class="p">,</span> <span class="n">Anna</span><span class="p">,</span> <span class="n">Anne</span><span class="p">,</span> <span class="n">Anya</span><span class="p">,</span> <span class="n">Arne</span><span class="p">,</span> <span class="n">Art</span><span class="p">,</span> <span class="n">Axel</span><span class="p">,</span> <span class="n">Bart</span><span class="p">,</span> <span class="n">Bea</span><span class="p">,</span> <span class="n">Ben</span><span class="p">,</span> <span class="n">Bert</span><span class="p">,</span> <span class="n">Beth</span><span class="p">,</span> <span class="n">Bib</span><span class="p">,</span> <span class="n">Bill</span><span class="p">,</span> <span class="n">Bob</span><span class="p">,</span> <span class="n">Bob</span><span class="p">,</span> <span class="n">Boob</span><span class="p">,</span> <span class="n">Boyd</span><span class="p">,</span> <span class="n">Brad</span><span class="p">,</span> <span class="n">Bret</span><span class="p">,</span> <span class="n">Bub</span><span class="p">,</span> <span class="n">Buck</span><span class="p">,</span> <span class="n">Bud</span><span class="p">,</span> <span class="n">Carl</span><span class="p">,</span> <span class="n">Cary</span><span class="p">,</span> <span class="n">Case</span><span class="p">,</span> <span class="n">Cdc</span><span class="p">,</span> <span class="n">Chet</span><span class="p">,</span> <span class="n">Chip</span><span class="p">,</span> <span class="n">Clay</span><span class="p">,</span> <span class="n">Clem</span><span class="p">,</span> <span class="n">Cody</span><span class="p">,</span> <span class="n">Cole</span><span class="p">,</span> <span class="n">Cory</span><span class="p">,</span> <span class="n">Cris</span><span class="p">,</span> <span class="n">Curt</span><span class="p">,</span> <span class="n">Dad</span><span class="p">,</span> <span class="n">Dale</span><span class="p">,</span> <span class="n">Dan</span><span class="p">,</span> <span class="n">Dana</span><span class="p">,</span> <span class="n">Dani</span><span class="p">,</span> <span class="n">Dave</span><span class="p">,</span> <span class="n">Dawn</span><span class="p">,</span> <span class="n">Dean</span><span class="p">,</span> <span class="n">Deb</span><span class="p">,</span> <span class="n">Debi</span><span class="p">,</span> <span class="n">Deed</span><span class="p">,</span> <span class="n">Del</span><span class="p">,</span> <span class="n">Dick</span><span class="p">,</span> <span class="n">Did</span><span class="p">,</span> <span class="n">Dion</span><span class="p">,</span> <span class="n">Dirk</span><span class="p">,</span> <span class="n">Dod</span><span class="p">,</span> <span class="n">Don</span><span class="p">,</span> <span class="n">Donn</span><span class="p">,</span> <span class="n">Dora</span><span class="p">,</span> <span class="n">Dori</span><span class="p">,</span> <span class="n">Dory</span><span class="p">,</span> <span class="n">Doug</span><span class="p">,</span> <span class="n">Drew</span><span class="p">,</span> <span class="n">Dud</span><span class="p">,</span> <span class="n">Duke</span><span class="p">,</span> <span class="n">Earl</span><span class="p">,</span> <span class="n">Eddy</span><span class="p">,</span> <span class="n">Eke</span><span class="p">,</span> <span class="n">Eli</span><span class="p">,</span> <span class="n">Elsa</span><span class="p">,</span> <span class="n">Emil</span><span class="p">,</span> <span class="n">Emma</span><span class="p">,</span> <span class="n">Enya</span><span class="p">,</span> <span class="n">Ere</span><span class="p">,</span> <span class="n">Eric</span><span class="p">,</span> <span class="n">Erik</span><span class="p">,</span> <span class="n">Esme</span><span class="p">,</span> <span class="n">Eva</span><span class="p">,</span> <span class="n">Evan</span><span class="p">,</span> <span class="n">Eve</span><span class="p">,</span> <span class="n">Eve</span><span class="p">,</span> <span class="n">Ewe</span><span class="p">,</span> <span class="n">Eye</span><span class="p">,</span> <span class="n">Fay</span><span class="p">,</span> <span class="n">Fred</span><span class="p">,</span> <span class="n">Gag</span><span class="p">,</span> <span class="n">Gaia</span><span class="p">,</span> <span class="n">Gail</span><span class="p">,</span> <span class="n">Gale</span><span class="p">,</span> <span class="n">Gary</span><span class="p">,</span> <span class="n">Gay</span><span class="p">,</span> <span class="n">Gene</span><span class="p">,</span> <span class="n">Gig</span><span class="p">,</span> <span class="n">Gigi</span><span class="p">,</span> <span class="n">Gil</span><span class="p">,</span> <span class="n">Gill</span><span class="p">,</span> <span class="n">Glen</span><span class="p">,</span> <span class="n">Gog</span><span class="p">,</span> <span class="n">Greg</span><span class="p">,</span> <span class="n">Guy</span><span class="p">,</span> <span class="n">Hal</span><span class="p">,</span> <span class="n">Hank</span><span class="p">,</span> <span class="n">Hans</span><span class="p">,</span> <span class="n">Harv</span><span class="p">,</span> <span class="n">Hein</span><span class="p">,</span> <span class="n">Herb</span><span class="p">,</span> <span class="n">Hohn</span><span class="p">,</span> <span class="n">Hon</span><span class="p">,</span> <span class="n">Hope</span><span class="p">,</span> <span class="n">Hsi</span><span class="p">,</span> <span class="n">Huey</span><span class="p">,</span> <span class="n">Hugh</span><span class="p">,</span> <span class="n">Huh</span><span class="p">,</span> <span class="n">Hui</span><span class="p">,</span> <span class="n">Hume</span><span class="p">,</span> <span class="n">Hurf</span><span class="p">,</span> <span class="n">Hwa</span><span class="p">,</span> <span class="n">Iain</span><span class="p">,</span> <span class="n">Ian</span><span class="p">,</span> <span class="n">Igor</span><span class="p">,</span> <span class="n">Iii</span><span class="p">,</span> <span class="n">Ilya</span><span class="p">,</span> <span class="n">Ima</span><span class="p">,</span> <span class="n">Imad</span><span class="p">,</span> <span class="n">Ira</span><span class="p">,</span> <span class="n">Isis</span><span class="p">,</span> <span class="n">Izzy</span><span class="p">,</span> <span class="n">Jack</span><span class="p">,</span> <span class="n">Jade</span><span class="p">,</span> <span class="n">Jan</span><span class="p">,</span> <span class="n">Jane</span><span class="p">,</span> <span class="n">Jarl</span><span class="p">,</span> <span class="n">Jay</span><span class="p">,</span> <span class="n">Jean</span><span class="p">,</span> <span class="n">Jef</span><span class="p">,</span> <span class="n">Jeff</span><span class="p">,</span> <span class="n">Jem</span><span class="p">,</span> <span class="n">Jen</span><span class="p">,</span> <span class="n">Jenn</span><span class="p">,</span> <span class="n">Jess</span><span class="p">,</span> <span class="n">Jill</span><span class="p">,</span> <span class="n">Jim</span><span class="p">,</span> <span class="n">Jin</span><span class="p">,</span> <span class="n">Jiri</span><span class="p">,</span> <span class="n">Joan</span><span class="p">,</span> <span class="n">Job</span><span class="p">,</span> <span class="n">Jock</span><span class="p">,</span> <span class="n">Joe</span><span class="p">,</span> <span class="n">Joel</span><span class="p">,</span> <span class="n">John</span><span class="p">,</span> <span class="n">Jon</span><span class="p">,</span> <span class="n">Jong</span><span class="p">,</span> <span class="n">Joni</span><span class="p">,</span> <span class="n">Joon</span><span class="p">,</span> <span class="n">Jos</span><span class="p">,</span> <span class="n">Jose</span><span class="p">,</span> <span class="n">Josh</span><span class="p">,</span> <span class="n">Juan</span><span class="p">,</span> <span class="n">Judy</span><span class="p">,</span> <span class="n">Juha</span><span class="p">,</span> <span class="n">Jun</span><span class="p">,</span> <span class="n">June</span><span class="p">,</span> <span class="n">Juri</span><span class="p">,</span> <span class="n">Kaj</span><span class="p">,</span> <span class="n">Kari</span><span class="p">,</span> <span class="n">Karl</span><span class="p">,</span> <span class="n">Kate</span><span class="p">,</span> <span class="n">Kay</span><span class="p">,</span> <span class="n">Kee</span><span class="p">,</span> <span class="n">Kees</span><span class="p">,</span> <span class="n">Ken</span><span class="p">,</span> <span class="n">Kenn</span><span class="p">,</span> <span class="n">Kent</span><span class="p">,</span> <span class="n">Kiki</span><span class="p">,</span> <span class="n">Kim</span><span class="p">,</span> <span class="n">King</span><span class="p">,</span> <span class="n">Kirk</span><span class="p">,</span> <span class="n">Kit</span><span class="p">,</span> <span class="n">Knut</span><span class="p">,</span> <span class="n">Kory</span><span class="p">,</span> <span class="n">Kris</span><span class="p">,</span> <span class="n">Kurt</span><span class="p">,</span> <span class="n">Kyle</span><span class="p">,</span> <span class="n">Kylo</span><span class="p">,</span> <span class="n">Kyu</span><span class="p">,</span> <span class="n">Lana</span><span class="p">,</span> <span class="n">Lar</span><span class="p">,</span> <span class="n">Lara</span><span class="p">,</span> <span class="n">Lars</span><span class="p">,</span> <span class="n">Lea</span><span class="p">,</span> <span class="n">Leah</span><span class="p">,</span> <span class="n">Lee</span><span class="p">,</span> <span class="n">Leif</span><span class="p">,</span> <span class="n">Len</span><span class="p">,</span> <span class="n">Leo</span><span class="p">,</span> <span class="n">Leon</span><span class="p">,</span> <span class="n">Les</span><span class="p">,</span> <span class="n">Lex</span><span class="p">,</span> <span class="n">Liam</span><span class="p">,</span> <span class="n">Lila</span><span class="p">,</span> <span class="n">Lin</span><span class="p">,</span> <span class="n">Lisa</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Liz</span><span class="p">,</span> <span class="n">Liza</span><span class="p">,</span> <span class="n">Lois</span><span class="p">,</span> <span class="n">Lola</span><span class="p">,</span> <span class="n">Lord</span><span class="p">,</span> <span class="n">Lori</span><span class="p">,</span> <span class="n">Lou</span><span class="p">,</span> <span class="n">Loyd</span><span class="p">,</span> <span class="n">Luc</span><span class="p">,</span> <span class="n">Lucy</span><span class="p">,</span> <span class="n">Lui</span><span class="p">,</span> <span class="n">Luis</span><span class="p">,</span> <span class="n">Luke</span><span class="p">,</span> <span class="n">Lum</span><span class="p">,</span> <span class="n">Lynn</span><span class="p">,</span> <span class="n">Mac</span><span class="p">,</span> <span class="n">Mah</span><span class="p">,</span> <span class="n">Mann</span><span class="p">,</span> <span class="n">Mara</span><span class="p">,</span> <span class="n">Marc</span><span class="p">,</span> <span class="n">Mark</span><span class="p">,</span> <span class="n">Mary</span><span class="p">,</span> <span class="n">Mat</span><span class="p">,</span> <span class="n">Mats</span><span class="p">,</span> <span class="n">Matt</span><span class="p">,</span> <span class="n">Max</span><span class="p">,</span> <span class="n">May</span><span class="p">,</span> <span class="n">Mayo</span><span class="p">,</span> <span class="n">Meg</span><span class="p">,</span> <span class="n">Mick</span><span class="p">,</span> <span class="n">Miek</span><span class="p">,</span> <span class="n">Mike</span><span class="p">,</span> <span class="n">Miki</span><span class="p">,</span> <span class="n">Milo</span><span class="p">,</span> <span class="n">Moe</span><span class="p">,</span> <span class="n">Mott</span><span class="p">,</span> <span class="n">Mum</span><span class="p">,</span> <span class="n">Mwa</span><span class="p">,</span> <span class="n">Naim</span><span class="p">,</span> <span class="n">Nan</span><span class="p">,</span> <span class="n">Nate</span><span class="p">,</span> <span class="n">Neal</span><span class="p">,</span> <span class="n">Ned</span><span class="p">,</span> <span class="n">Neil</span><span class="p">,</span> <span class="n">Nhan</span><span class="p">,</span> <span class="n">Nici</span><span class="p">,</span> <span class="n">Nick</span><span class="p">,</span> <span class="n">Nils</span><span class="p">,</span> <span class="n">Ning</span><span class="p">,</span> <span class="n">Noam</span><span class="p">,</span> <span class="n">Noel</span><span class="p">,</span> <span class="n">Non</span><span class="p">,</span> <span class="n">Noon</span><span class="p">,</span> <span class="n">Nora</span><span class="p">,</span> <span class="n">Norm</span><span class="p">,</span> <span class="n">Nou</span><span class="p">,</span> <span class="n">Novo</span><span class="p">,</span> <span class="n">Nun</span><span class="p">,</span> <span class="n">Ofer</span><span class="p">,</span> <span class="n">Olaf</span><span class="p">,</span> <span class="n">Old</span><span class="p">,</span> <span class="n">Ole</span><span class="p">,</span> <span class="n">Oleg</span><span class="p">,</span> <span class="n">Olof</span><span class="p">,</span> <span class="n">Omar</span><span class="p">,</span> <span class="n">Otto</span><span class="p">,</span> <span class="n">Owen</span><span class="p">,</span> <span class="n">Ozan</span><span class="p">,</span> <span class="n">Page</span><span class="p">,</span> <span class="n">Pam</span><span class="p">,</span> <span class="n">Pap</span><span class="p">,</span> <span class="n">Part</span><span class="p">,</span> <span class="n">Pat</span><span class="p">,</span> <span class="n">Paul</span><span class="p">,</span> <span class="n">Pdp</span><span class="p">,</span> <span class="n">Peep</span><span class="p">,</span> <span class="n">Pep</span><span class="p">,</span> <span class="n">Per</span><span class="p">,</span> <span class="n">Pete</span><span class="p">,</span> <span class="n">Petr</span><span class="p">,</span> <span class="n">Phil</span><span class="p">,</span> <span class="n">Pia</span><span class="p">,</span> <span class="n">Piet</span><span class="p">,</span> <span class="n">Pim</span><span class="p">,</span> <span class="n">Ping</span><span class="p">,</span> <span class="n">Pip</span><span class="p">,</span> <span class="n">Poop</span><span class="p">,</span> <span class="n">Pop</span><span class="p">,</span> <span class="n">Pria</span><span class="p">,</span> <span class="n">Pup</span><span class="p">,</span> <span class="n">Raif</span><span class="p">,</span> <span class="n">Raj</span><span class="p">,</span> <span class="n">Raja</span><span class="p">,</span> <span class="n">Ralf</span><span class="p">,</span> <span class="n">Ram</span><span class="p">,</span> <span class="n">Rand</span><span class="p">,</span> <span class="n">Raul</span><span class="p">,</span> <span class="n">Ravi</span><span class="p">,</span> <span class="n">Ray</span><span class="p">,</span> <span class="n">Real</span><span class="p">,</span> <span class="n">Rees</span><span class="p">,</span> <span class="n">Reg</span><span class="p">,</span> <span class="n">Reid</span><span class="p">,</span> <span class="n">Rene</span><span class="p">,</span> <span class="n">Renu</span><span class="p">,</span> <span class="n">Rex</span><span class="p">,</span> <span class="n">Ric</span><span class="p">,</span> <span class="n">Rich</span><span class="p">,</span> <span class="n">Rick</span><span class="p">,</span> <span class="n">Rik</span><span class="p">,</span> <span class="n">Rob</span><span class="p">,</span> <span class="n">Rod</span><span class="p">,</span> <span class="n">Rolf</span><span class="p">,</span> <span class="n">Ron</span><span class="p">,</span> <span class="n">Root</span><span class="p">,</span> <span class="n">Rose</span><span class="p">,</span> <span class="n">Ross</span><span class="p">,</span> <span class="n">Roy</span><span class="p">,</span> <span class="n">Rudy</span><span class="p">,</span> <span class="n">Russ</span><span class="p">,</span> <span class="n">Ruth</span><span class="p">,</span> <span class="n">S</span><span class="s1">&#39;s, Saad, Sal, Sam, Sara, Saul, Scot, Sean, Sees, Seth, Shai, Shaw, Shel, Sho, Sid, Sir, Sis, Skef, Skip, Son, Spy, Sri, Ssi, Stan, Stu, Sue, Sus, Suu, Syd, Syed, Syun, Tad, Tai, Tait, Tal, Tao, Tara, Tat, Ted, Teet, Teri, Tex, Thad, The, Theo, Tim, Timo, Tip, Tit, Tnt, Toby, Todd, Toft, Tom, Tony, Toot, Tor, Tot, Tran, Trey, Troy, Tuan, Tuna, Uma, Una, Uri, Urs, Val, Van, Vern, Vic, Vice, Vick, Wade, Walt, Wes, Will, Win, Wolf, Wow, Zoe, Zon,</span>
+
+<span class="n">Encontramos</span> <span class="mi">420</span> <span class="n">palabras</span> <span class="n">que</span> <span class="n">tienen</span> <span class="n">entre</span> <span class="mi">3</span> <span class="n">y</span> <span class="mi">4</span> <span class="n">letras</span>
+</pre></div>
+</div>
+<p>Hemos utilizado aquí:</p>
+<ul class="simple">
+<li><p>Apertura, lectura, y cerrado de archivos</p></li>
+<li><p>Iteración en un loop <code class="docutils literal notranslate"><span class="pre">for</span></code></p></li>
+<li><p>Bloques condicionales (if/else)</p></li>
+<li><p>Formato de cadenas de caracteres con reemplazo</p></li>
+<li><p>Impresión por pantalla</p></li>
+</ul>
+<p>La apertura de archivos se realiza utilizando la función <code class="docutils literal notranslate"><span class="pre">open</span></code> (este
+es un buen momento para mirar su documentación) con dos argumentos: el
+primero es el nombre del archivo y el segundo el modo en que queremos
+abrirlo (en este caso la <code class="docutils literal notranslate"><span class="pre">r</span></code> indica lectura).</p>
+<p>Con el archivo abierto, en la línea 9 leemos línea por línea todo el
+archivo. El resultado es una lista, donde cada elemento es una línea.</p>
+<p>Recorremos la lista, y en cada elemento comparamos la longitud de la
+línea con ciertos valores. Imprimimos las líneas seleccionadas</p>
+<p>Finalmente, escribimos el número total de líneas.</p>
+<p>Veamos una leve modificación de este programa</p>
+</section>
+<section id="ejemplo-05-2">
+<h4>Ejemplo 05-2<a class="headerlink" href="#ejemplo-05-2" title="Enlace permanente a este encabezado"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<pre class="literal-block">'Aaan'</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Programa para contar e imprimir las palabras de una longitud dada&quot;&quot;&quot;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;../data/names.txt&#39;</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+
+<span class="k">with</span>  <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">p</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+      <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;(</span><span class="si">{:02d}</span><span class="s1">): </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>  <span class="c1"># Vamos numerando las coincidencias</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">01</span><span class="p">):</span> <span class="n">aaa</span><span class="p">,</span> <span class="p">(</span><span class="mi">02</span><span class="p">):</span> <span class="n">aba</span><span class="p">,</span> <span class="p">(</span><span class="mi">03</span><span class="p">):</span> <span class="n">ada</span><span class="p">,</span> <span class="p">(</span><span class="mi">04</span><span class="p">):</span> <span class="n">ada</span><span class="p">,</span> <span class="p">(</span><span class="mi">05</span><span class="p">):</span> <span class="n">ala</span><span class="p">,</span> <span class="p">(</span><span class="mi">06</span><span class="p">):</span> <span class="n">ama</span><span class="p">,</span> <span class="p">(</span><span class="mi">07</span><span class="p">):</span> <span class="n">ana</span><span class="p">,</span> <span class="p">(</span><span class="mi">08</span><span class="p">):</span> <span class="n">anna</span><span class="p">,</span> <span class="p">(</span><span class="mi">09</span><span class="p">):</span> <span class="n">anna</span><span class="p">,</span> <span class="p">(</span><span class="mi">10</span><span class="p">):</span> <span class="n">bib</span><span class="p">,</span> <span class="p">(</span><span class="mi">11</span><span class="p">):</span> <span class="n">bob</span><span class="p">,</span> <span class="p">(</span><span class="mi">12</span><span class="p">):</span> <span class="n">bob</span><span class="p">,</span> <span class="p">(</span><span class="mi">13</span><span class="p">):</span> <span class="n">boob</span><span class="p">,</span> <span class="p">(</span><span class="mi">14</span><span class="p">):</span> <span class="n">bub</span><span class="p">,</span> <span class="p">(</span><span class="mi">15</span><span class="p">):</span> <span class="n">cdc</span><span class="p">,</span> <span class="p">(</span><span class="mi">16</span><span class="p">):</span> <span class="n">dad</span><span class="p">,</span> <span class="p">(</span><span class="mi">17</span><span class="p">):</span> <span class="n">deed</span><span class="p">,</span> <span class="p">(</span><span class="mi">18</span><span class="p">):</span> <span class="n">did</span><span class="p">,</span> <span class="p">(</span><span class="mi">19</span><span class="p">):</span> <span class="n">dod</span><span class="p">,</span> <span class="p">(</span><span class="mi">20</span><span class="p">):</span> <span class="n">dud</span><span class="p">,</span> <span class="p">(</span><span class="mi">21</span><span class="p">):</span> <span class="n">eke</span><span class="p">,</span> <span class="p">(</span><span class="mi">22</span><span class="p">):</span> <span class="n">ere</span><span class="p">,</span> <span class="p">(</span><span class="mi">23</span><span class="p">):</span> <span class="n">eve</span><span class="p">,</span> <span class="p">(</span><span class="mi">24</span><span class="p">):</span> <span class="n">eve</span><span class="p">,</span> <span class="p">(</span><span class="mi">25</span><span class="p">):</span> <span class="n">ewe</span><span class="p">,</span> <span class="p">(</span><span class="mi">26</span><span class="p">):</span> <span class="n">eye</span><span class="p">,</span> <span class="p">(</span><span class="mi">27</span><span class="p">):</span> <span class="n">gag</span><span class="p">,</span> <span class="p">(</span><span class="mi">28</span><span class="p">):</span> <span class="n">gig</span><span class="p">,</span> <span class="p">(</span><span class="mi">29</span><span class="p">):</span> <span class="n">gog</span><span class="p">,</span> <span class="p">(</span><span class="mi">30</span><span class="p">):</span> <span class="n">huh</span><span class="p">,</span> <span class="p">(</span><span class="mi">31</span><span class="p">):</span> <span class="n">iii</span><span class="p">,</span> <span class="p">(</span><span class="mi">32</span><span class="p">):</span> <span class="n">mum</span><span class="p">,</span> <span class="p">(</span><span class="mi">33</span><span class="p">):</span> <span class="n">nan</span><span class="p">,</span> <span class="p">(</span><span class="mi">34</span><span class="p">):</span> <span class="n">non</span><span class="p">,</span> <span class="p">(</span><span class="mi">35</span><span class="p">):</span> <span class="n">noon</span><span class="p">,</span> <span class="p">(</span><span class="mi">36</span><span class="p">):</span> <span class="n">nun</span><span class="p">,</span> <span class="p">(</span><span class="mi">37</span><span class="p">):</span> <span class="n">otto</span><span class="p">,</span> <span class="p">(</span><span class="mi">38</span><span class="p">):</span> <span class="n">pap</span><span class="p">,</span> <span class="p">(</span><span class="mi">39</span><span class="p">):</span> <span class="n">pdp</span><span class="p">,</span> <span class="p">(</span><span class="mi">40</span><span class="p">):</span> <span class="n">peep</span><span class="p">,</span> <span class="p">(</span><span class="mi">41</span><span class="p">):</span> <span class="n">pep</span><span class="p">,</span> <span class="p">(</span><span class="mi">42</span><span class="p">):</span> <span class="n">pip</span><span class="p">,</span> <span class="p">(</span><span class="mi">43</span><span class="p">):</span> <span class="n">poop</span><span class="p">,</span> <span class="p">(</span><span class="mi">44</span><span class="p">):</span> <span class="n">pop</span><span class="p">,</span> <span class="p">(</span><span class="mi">45</span><span class="p">):</span> <span class="n">pup</span><span class="p">,</span> <span class="p">(</span><span class="mi">46</span><span class="p">):</span> <span class="n">s</span><span class="s1">&#39;s, (47): sees, (48): sis, (49): sus, (50): tat, (51): teet, (52): tit, (53): tnt, (54): toot, (55): tot, (56): wow,</span>
+
+<span class="n">Encontramos</span> <span class="n">un</span> <span class="n">total</span> <span class="n">de</span> <span class="mi">56</span> <span class="n">palabras</span> <span class="n">capicúa</span> <span class="n">que</span> <span class="n">tienen</span> <span class="n">entre</span> <span class="mi">3</span> <span class="n">y</span> <span class="mi">4</span> <span class="n">letras</span>
+</pre></div>
+</div>
+<p>Aquí en lugar de leer todas las líneas e iterar sobre las líneas
+resultantes, iteramos directamente sobre el archivo abierto.</p>
+<p>Además incluimos un string al principio del archivo, que servirá de
+documentación, y puede accederse mediante los mecanismos usuales de
+ayuda de Python.</p>
+<p>Imprimimos el número de palabra junto con la palabra, usamos <code class="docutils literal notranslate"><span class="pre">02d</span></code>,
+indicando que es un entero (<code class="docutils literal notranslate"><span class="pre">d</span></code>), que queremos que el campo sea de un
+mínimo número de caracteres de ancho (en este caso 2). Al escribirlo
+como <code class="docutils literal notranslate"><span class="pre">02</span></code> le pedimos que complete los vacíos con ceros.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Programa para contar e imprimir las palabras de una longitud dada&quot;&quot;&quot;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;../data/names.txt&#39;</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span>  <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">p</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+      <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="c1">#ss += f&quot;\n{p}&quot;  # ss += &quot;\n&quot; + p</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># L += [p]</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../data/tmp.txt&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
+    <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Encontramos</span> <span class="n">un</span> <span class="n">total</span> <span class="n">de</span> <span class="mi">56</span> <span class="n">palabras</span> <span class="n">capicúa</span> <span class="n">que</span> <span class="n">tienen</span> <span class="n">entre</span> <span class="mi">3</span> <span class="n">y</span> <span class="mi">4</span> <span class="n">letras</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="archivos-comprimidos">
+<h2>Archivos comprimidos<a class="headerlink" href="#archivos-comprimidos" title="Enlace permanente a este encabezado"></a></h2>
+<p>Existen varias formas de reducir el tamaño de los archivos de datos.
+Varios factores, tales como el sistema operativo, nuestra familiaridad
+con cada uno de ellos, le da una cierta preferencia a algunos de los
+métodos disponibles. Veamos cómo hacer para leer y escribir algunos de
+los siguientes formatos: <strong>zip, gzip, bz2</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../data/palabras.words.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;../data/palabras.words.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="p">[:</span><span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+<pre class="literal-block">b'xc3x81fricanxc3x81ngelanxc3xa1baconxc3xa1bsida'</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<pre class="literal-block">[b'xc3x81frica', b'xc3x81ngela', b'xc3xa1baco', b'xc3xa1bsida', b'xc3xa1bside', b'xc3xa1cana', b'xc3xa1caro', b'xc3xa1cates', b'xc3xa1cido', b'xc3xa1cigos']</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">[:</span><span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+<pre class="literal-block">b'xc3x81fricanxc3x81ngelanxc3xa1baconxc3xa1bsida'</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<pre class="literal-block">&quot;b'\xc3\x81frica'&quot;</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">bytes</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Vemos que el archivo tiene algunos caracteres que no podemos
+interpretar. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;b&#39;</span><span class="se">\\</span><span class="s2">xc3</span><span class="se">\\</span><span class="s2">x81frica&#39;&quot;</span>
+<span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Esto indica que la variable es del tipo “bytes”, que es la manera en que
+python describe los strings, pero hay un caracter que no sabemos como
+mostrar. Para hacerlo debemos codificarlo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;África&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;África&#39;</span>
+</pre></div>
+</div>
+<p>Con todo esto podríamos escribir (si tuviéramos necesidad) una función
+que puede leer un archivo en cualquiera de estos formatos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">def</span> <span class="nf">abrir</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">modo</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;gz&#39;</span><span class="p">):</span>
+    <span class="n">fi</span><span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;bz2&#39;</span><span class="p">):</span>
+    <span class="n">fi</span><span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;zip&#39;</span><span class="p">):</span>
+    <span class="n">fi</span><span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">fi</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">fi</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ff</span><span class="o">=</span> <span class="n">abrir</span><span class="p">(</span><span class="s1">&#39;../data/palabras.words.gz&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">ff</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">África</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-05-a">
+<h2>Ejercicios 05 (a)<a class="headerlink" href="#ejercicios-05-a" title="Enlace permanente a este encabezado"></a></h2>
+<ol class="arabic simple">
+<li><p>Realice un programa que:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Lea el archivo <strong>names.txt</strong></p></li>
+<li><p>Guarde en un nuevo archivo (llamado “pares.txt”) palabra por medio
+del archivo original (la primera, tercera, …) una por línea, pero en
+el orden inverso al leído</p></li>
+<li><p>Agregue al final de dicho archivo, las palabras pares pero separadas
+por un punto y coma (;)</p></li>
+<li><p>En un archivo llamado “longitudes.txt” guarde las palabras ordenadas
+por su longitud, y para cada longitud ordenadas alfabéticamente.</p></li>
+<li><p>En un archivo llamado “letras.txt” guarde sólo aquellas palabras que
+contienen las letras <code class="docutils literal notranslate"><span class="pre">w,x,y,z</span></code>, con el formato:</p>
+<ul>
+<li><p>w: Walter, ….</p></li>
+<li><p>x: Xilofón, …</p></li>
+<li><p>y: ….</p></li>
+<li><p>z: ….</p></li>
+</ul>
+</li>
+<li><p>Cree un diccionario, donde cada <em>key</em> es la primera letra y cada
+valor es una lista, cuyo elemento es una tuple (palabra, longitud).
+Por ejemplo:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Aaa&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="s1">&#39;Anna&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p>Realice un programa para:</p>
+<ul class="simple">
+<li><p>Leer los datos del archivo <strong>aluminio.dat</strong> y poner los datos del
+elemento en un diccionario de la forma:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="s1">&#39;26.98153863(12)&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="mf">1.0000</span><span class="p">,</span> <span class="s1">&#39;MS&#39;</span><span class="p">:</span><span class="s1">&#39;26.9815386(8)&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Modifique el programa anterior para que las masas sean números
+(<code class="docutils literal notranslate"><span class="pre">float</span></code>) y descarte el valor de la incerteza (el número entre
+paréntesis)</p></li>
+<li><p>Agregue el código necesario para obtener una impresión de la
+forma:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Elemento</span><span class="p">:</span> <span class="n">Al</span>
+<span class="n">Número</span> <span class="n">Atómico</span><span class="p">:</span> <span class="mi">13</span>
+<span class="n">Número</span> <span class="n">de</span> <span class="n">Masa</span><span class="p">:</span> <span class="mi">27</span>
+<span class="n">Masa</span><span class="p">:</span> <span class="mf">26.98154</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Note que la masa sólo debe contener 5 números decimales</p>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Los archivos de texto “names.txt” y “aluminio.txt” (así como
+otros archivos usados en las clases) pueden encontrarse en la carpeta
+<a class="reference external" href="https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing">intro-python</a></p>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_04.html" class="btn btn-neutral float-left" title="Clase 4: Iteraciones y detalles de Funciones" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2024, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
