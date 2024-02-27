@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 7: Funciones, decoradores y programación funcional &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/rtd_overrides.css" type="text/css" />
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 6: Programación Orientada a Objetos" href="clase_06.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Clases de Python
+            <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2024
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Iteraciones y detalles de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Persistencia de datos y administración de problemas</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Programación Orientada a Objetos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 7: Funciones, decoradores y programación funcional</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#funciones-que-aceptan-y-devuelven-funciones-decoradores">Funciones que aceptan y devuelven funciones (Decoradores)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#decoradores-un-ejemplo-mas-util">Decoradores, un ejemplo más útil</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-07-a">Ejercicios 07 (a)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#programacion-orientada-a-objetos">Programación orientada a objetos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ejemplo-oop">Ejemplo: OOP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-7-b">Ejercicios 7 (b)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+      <li class="breadcrumb-item active">Clase 7: Funciones, decoradores y programación funcional</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_07.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-7-funciones-decoradores-y-programacion-funcional">
+<span id="clase-07"></span><h1>Clase 7: Funciones, decoradores y programación funcional<a class="headerlink" href="#clase-7-funciones-decoradores-y-programacion-funcional" title="Enlace permanente a este encabezado"></a></h1>
+<p>Hemos visto que en Python todo es un objeto, con lo cual, incluso las
+funciones, son objetos. Como tales tienen métodos y atributos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lio_messi</span> <span class="o">=</span> <span class="s2">&quot;Lio Messi&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">lio_messi</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;str&#39;&gt;
+</pre></div>
+</div>
+<p>La variable <code class="docutils literal notranslate"><span class="pre">lio_messi</span></code> es un string, y como tal, pertenece a la clase
+<code class="docutils literal notranslate"><span class="pre">str</span></code>, que tiene sus propios atributos y métodos:</p>
+<p>Veamos qué pasa con las funciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">saluda_a</span><span class="p">(</span><span class="n">alguien</span><span class="p">):</span>
+    <span class="n">saludo</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">alguien</span><span class="si">}</span><span class="s2">!&quot;</span>
+    <span class="k">return</span> <span class="n">saludo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">lio_messi</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Hola Lio Messi!
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">))</span>
+</pre></div>
+</div>
+<pre class="literal-block"> &lt;class 'function'&gt;
+
+
+Un atributo interesante de las funciones es <code class="docutils literal notranslate"><span class="pre">__name__</span></code> por razones
+que veremos en breve:</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">saluda_a</span>
+</pre></div>
+</div>
+<p>Es decir, <code class="docutils literal notranslate"><span class="pre">__name__</span></code> es el nombre de la función, que está guardado
+dentro del objeto que representa dicha función. &gt; La capacidad del
+lenguaje de responderse preguntas sobre las propias entidades que
+componen el lenguaje se llama <em>introspección</em>.</p>
+<p>Clases atrás vimos dos características importantes de las funciones en
+Python. La primera de ellas es que las funciones pueden retornar (esto
+es, crear) otras funciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">genera_recta</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="s2">&quot;Genera la función recta y = a x + b&quot;</span>
+    <span class="k">def</span> <span class="nf">recta</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="s2">&quot;Evalúa la función recta en x&quot;</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+        <span class="k">return</span> <span class="n">y</span>
+    <span class="k">return</span> <span class="n">recta</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="n">genera_recta</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>       <span class="c1"># f(x) = 2 * x + 3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;f(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>   <span class="c1"># f(2) = 2 * 2 + 3</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;f(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>   <span class="c1"># f(0) = 2 * 0 + 3</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;function&#39;&gt;
+</pre></div>
+</div>
+<p>La segunda de ellas es que es posible pasar como argumento una función a
+otra:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">g</span> <span class="o">=</span> <span class="n">genera_recta</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># g(x) = x - 1</span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;parabola(</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">) = </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parabola</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">=</span> <span class="mi">7</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">g</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;function&#39;&gt;
+</pre></div>
+</div>
+<section id="funciones-que-aceptan-y-devuelven-funciones-decoradores">
+<h2>Funciones que aceptan y devuelven funciones (Decoradores)<a class="headerlink" href="#funciones-que-aceptan-y-devuelven-funciones-decoradores" title="Enlace permanente a este encabezado"></a></h2>
+<p>Vamos a trabajar ahora con los decoradores. Los decoradores no son otra
+cosa que funciones, pero que, por sus características, adquieren ese
+nombre y una forma particular de llamarlos que reduce convenientemente
+la sintaxis al programar. Empecemos por definir una función que devuelve
+otra función, como vimos arriba, de la siguiente forma:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mi_decorador</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Por llamar a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listo, ya llamé a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<p>Definamos ahora un saludo genérico:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">saluda</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Holaa!!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saluda</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Holaa!!
+</pre></div>
+</div>
+<p>Nada nuevo hasta ahora, pero empecemos a combinar las funciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saluda_w</span> <span class="o">=</span> <span class="n">mi_decorador</span><span class="p">(</span><span class="n">saluda</span><span class="p">)</span>
+<span class="n">saluda_w</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Por llamar a la función saluda
+Holaa!!
+Listo, ya llamé a la función saluda
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">saluda_w</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;function&#39;&gt;
+</pre></div>
+</div>
+<p>Tenemos ahora una función <code class="docutils literal notranslate"><span class="pre">saluda</span></code> y su versión <em>decorada</em>
+<code class="docutils literal notranslate"><span class="pre">saluda_w</span></code>, que simplemente llama a la función <code class="docutils literal notranslate"><span class="pre">saluda</span></code>, pero además
+imprime mensajes antes y después del llamado a la función. Esto es algo
+que uno va a querer hacer, por ejemplo para calcular el tiempo de
+ejecución de una función, o para imprimir mensajes de registro
+(<em>logging</em>) o debug, u otras tantas cosas más. Por eso Python introduce
+una notación especial para este tipo de funciones <code class="docutils literal notranslate"><span class="pre">mi_decorador</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> @mi_decorador
+ def saluda_en_ingles():
+     print(&quot;Hello!!&quot;)
+
+Notar que el decorador siempre empieza con el símbolo ``@`` y se
+encuentra en la línea inmediatamente anterior a la definición de la
+función.
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saluda_en_ingles</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Por llamar a la función saluda_en_ingles
+Hello!!
+Listo, ya llamé a la función saluda_en_ingles
+</pre></div>
+</div>
+<p>Qué pasa si queremos aplicar el decorador a una función que recibe
+argumentos como <code class="docutils literal notranslate"><span class="pre">saluda_a</span></code>?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@mi_decorador</span>
+<span class="k">def</span> <span class="nf">saluda_a</span><span class="p">(</span><span class="n">alguien</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">alguien</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Lio Messi&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">19</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Lio Messi&quot;</span><span class="p">)</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">mi_decorador</span><span class="o">.&lt;</span><span class="nb">locals</span><span class="o">&gt;.</span><span class="n">wrapper</span><span class="p">()</span> <span class="n">takes</span> <span class="mi">0</span> <span class="n">positional</span> <span class="n">arguments</span> <span class="n">but</span> <span class="mi">1</span> <span class="n">was</span> <span class="n">given</span>
+</pre></div>
+</div>
+<p>Notemos que como está definido el decorador, recibe una función sin
+argumentos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mi_decorador</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Por llamar a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listo, ya llamé a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<p>En este último caso, al aplicar <code class="docutils literal notranslate"><span class="pre">&#64;mi_decorador</span></code> a
+<code class="docutils literal notranslate"><span class="pre">saluda_a(alguien)</span></code>, estamos pasando a la función <code class="docutils literal notranslate"><span class="pre">mi_decorador</span></code> una
+función <code class="docutils literal notranslate"><span class="pre">func</span></code> que dentro de <code class="docutils literal notranslate"><span class="pre">mi_decorador</span></code> se llama como
+<code class="docutils literal notranslate"><span class="pre">func()</span></code>, es decir, no tiene argumentos. Para resolver este problema,
+tenemos que indicar explícitamente que la función que vamos a llamar
+dentro del decorador puede tener argumentos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mi_nuevo_decorador</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Por llamar a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listo, ya llamé a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@mi_nuevo_decorador</span>
+<span class="k">def</span> <span class="nf">saluda_a</span><span class="p">(</span><span class="n">alguien</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">alguien</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Lio Messi&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Por llamar a la función saluda_a
+Hola Lio Messi!
+Listo, ya llamé a la función saluda_a
+</pre></div>
+</div>
+<p>Hasta ahora la función <code class="docutils literal notranslate"><span class="pre">func</span></code> que envuelve el decorador no devuelve
+ningún valor, sólo imprime un mensaje en pantalla. Cómo hacemos para
+usar un decorador con una función que devuelve un valor?</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">proto_debug_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Por llamar a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">resultado</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listo, ya llamé a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resultado</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@proto_debug_decorator</span>
+<span class="k">def</span> <span class="nf">mi_calculo_complicado</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">mi_calculo_complicado</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Por</span> <span class="n">llamar</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">mi_calculo_complicado</span>
+<span class="n">Listo</span><span class="p">,</span> <span class="n">ya</span> <span class="n">llamé</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">mi_calculo_complicado</span>
+<span class="mi">14</span>
+</pre></div>
+</div>
+</section>
+<section id="decoradores-un-ejemplo-mas-util">
+<h2>Decoradores, un ejemplo más útil<a class="headerlink" href="#decoradores-un-ejemplo-mas-util" title="Enlace permanente a este encabezado"></a></h2>
+<p>Recordemos que al llamar una función, <code class="docutils literal notranslate"><span class="pre">*args</span></code> representa a la tupla de
+argumentos mientras que <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> es el diccionario de argumentos
+opcionales. Escribamos un par de funciones útiles para transformar estos
+tipos en string, de modo que se puedan imprimir, por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">args_as_str</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">args_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">])</span>
+    <span class="n">kwargs_str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">args_str</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">kwargs_str</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">debug_me</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">args_as_str</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="n">resultado</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Listo, ya llamé a la función </span><span class="si">{</span><span class="n">func</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">resultado</span>
+    <span class="k">return</span> <span class="n">wrapper</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@debug_me</span>
+<span class="k">def</span> <span class="nf">mi_calculo_recontracomplicado</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">z</span><span class="o">**</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span>  <span class="n">mi_calculo_recontracomplicado</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mi_calculo_recontracomplicado</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">Listo</span><span class="p">,</span> <span class="n">ya</span> <span class="n">llamé</span> <span class="n">a</span> <span class="n">la</span> <span class="n">función</span> <span class="n">mi_calculo_recontracomplicado</span>
+<span class="mi">14</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-07-a">
+<h2>Ejercicios 07 (a)<a class="headerlink" href="#ejercicios-07-a" title="Enlace permanente a este encabezado"></a></h2>
+<p>El módulo time calcula el tiempo en segundos desde el comienzo de la era
+de la computación (?), que para los fines prácticos, da inicio el 1 de
+enero de 1970 ;-D. Veamos unos ejemplos de su uso:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">ahora</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">ahora</span><span class="p">)</span>
+<span class="c1"># duerme 5 segundos</span>
+<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># zzzz.....</span>
+
+<span class="n">ahora</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">ahora</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1708994999.8172288</span>
+<span class="mf">1708995004.8177679</span>
+</pre></div>
+</div>
+<p>Utilizando las funciones anteriores, escriba el decorador <code class="docutils literal notranslate"><span class="pre">&#64;time_me</span></code>
+que calcula e imprime el tiempo que tarda en ejecutarse una función.
+<strong>No empiece desde cero!!</strong> Use como plantilla para empezar el decorador
+<code class="docutils literal notranslate"><span class="pre">&#64;debug_me</span></code> y modifíquelo adecuadamente.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># descomente el decorador una vez que lo tenga programado</span>
+<span class="c1"># @time_me</span>
+<span class="k">def</span> <span class="nf">mi_calculo_recontralargo</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">l</span><span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mi_calculo_recontralargo</span><span class="p">(</span><span class="mi">20000000</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">199999990000000</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="programacion-orientada-a-objetos">
+<h1>Programación orientada a objetos<a class="headerlink" href="#programacion-orientada-a-objetos" title="Enlace permanente a este encabezado"></a></h1>
+<section id="ejemplo-oop">
+<h2>Ejemplo: OOP<a class="headerlink" href="#ejemplo-oop" title="Enlace permanente a este encabezado"></a></h2>
+<p>En este ejemplo queremos hacer un programa para manejar toda la
+información relativa a un equipo de fútbol femenino.</p>
+<p>Una manera de manejar este problema sería tipo “hoja de cálculo”. Una
+matriz donde cada fila corresponde a una jugadora, y cada columna
+corresponde a un dato diferente.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Primera columna: Nombre</span>
+<span class="c1"># Segunda Columna: Apellido</span>
+<span class="c1"># Tercera Columna: DNI</span>
+<span class="c1"># Cuarta Columna: Posición en que juega</span>
+<span class="n">socias</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Vanina&#39;</span><span class="p">,</span> <span class="s1">&#39;Correa&#39;</span><span class="p">,</span> <span class="mi">33333333</span><span class="p">,</span> <span class="s1">&#39;Arquera&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+          <span class="p">(</span><span class="s1">&#39;Laurina&#39;</span><span class="p">,</span> <span class="s1">&#39;Oliveros&#39;</span><span class="p">,</span> <span class="mi">39111111</span><span class="p">,</span> <span class="s1">&#39;Arquera&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+          <span class="p">(</span><span class="s1">&#39;Gabriela&#39;</span><span class="p">,</span> <span class="s1">&#39;Garton&#39;</span><span class="p">,</span> <span class="mi">36999999</span><span class="p">,</span> <span class="s1">&#39;Arquera&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número total de jugadoras&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">socias</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">socias</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si queremos agregar una jugadora, podemos usar <code class="docutils literal notranslate"><span class="pre">append</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">socias</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;Agustina&#39;</span><span class="p">,</span> <span class="s1">&#39;Barroso&#39;</span><span class="p">,</span><span class="mi">38011011</span><span class="p">,</span><span class="s1">&#39;Defensora&#39;</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número total de jugadoras&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">socias</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">socias</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sin embargo es claro que esta no es una solución óptima.</p>
+<p>En primer lugar, es engorroso agregar jugadoras. Pero es aún más
+engorroso agregar detalles a cada jugadora, porque tenemos que encontrar
+la jugadora correcta y luego agregar “columnas”. En casos como este
+puede ser mucho más conveniente usar <strong>diccionarios</strong>, o mejor aún
+definir un nuevo objeto basado en diccionarios.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Ejemplo de uso de programación orientada a objetos.</span>
+<span class="sd">Descripción de participantes de un club de fútbol. Versión 1.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">Socie</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Socie es un objeto que contiene toda la información sobre cada asociade al club</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># dP describe los campos relevantes</span>
+  <span class="n">dP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;contacto&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;idsoc&#39;</span><span class="p">,</span>                <span class="c1"># Número de asociado</span>
+        <span class="s1">&#39;cuotas&#39;</span><span class="p">,</span>               <span class="c1"># Cuotas pagas</span>
+        <span class="s1">&#39;asistencia&#39;</span><span class="p">,</span>           <span class="c1"># Contamos si asiste a entrenamientos</span>
+        <span class="s1">&#39;posicion&#39;</span>              <span class="c1"># Posición en que juega</span>
+  <span class="p">]</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dP</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Vanina&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">:</span><span class="s1">&#39;Correa&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">:</span><span class="mi">33333333</span><span class="p">,</span> <span class="s1">&#39;posicion&#39;</span><span class="p">:</span> <span class="s1">&#39;Arquera&#39;</span><span class="p">,</span> <span class="s1">&#39;idsoc&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Socie</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+<p>Como vemos, no necesitamos acordarnos a qué corresponde cada columna.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DatosPersonales</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_dP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;contacto&#39;</span><span class="p">]</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dP</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Socie</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Socie es un objeto que contiene toda la información sobre cada asociade al club</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># dP describe los campos relevantes</span>
+  <span class="n">_info</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;idsoc&#39;</span><span class="p">,</span>                <span class="c1"># Número de asociado</span>
+        <span class="s1">&#39;cuotas&#39;</span><span class="p">,</span>               <span class="c1"># Cuotas pagas</span>
+        <span class="s1">&#39;asistencia&#39;</span><span class="p">,</span>           <span class="c1"># Contamos si asiste a entreanamientos</span>
+        <span class="s1">&#39;posicion&#39;</span>              <span class="c1"># Posición en que juega</span>
+  <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">personal</span> <span class="o">=</span> <span class="n">DatosPersonales</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Vanina&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">:</span><span class="s1">&#39;Correa&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">:</span><span class="mi">33333333</span><span class="p">,</span> <span class="s1">&#39;idsoc&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;posicion&#39;</span><span class="p">:</span><span class="s1">&#39;arquera&#39;</span><span class="p">}</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Socie</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">personal</span>
+</pre></div>
+</div>
+<p>La forma de imprimir los datos es la que se hereda de los diccionarios.
+Vamos a mejorarla para nuestro caso:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DatosPersonales</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_dP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;contacto&#39;</span><span class="p">]</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">DatosPersonales</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dP</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Socie</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Socie es un objeto que contiene toda la información sobre cada asociade al club</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># dP describe los campos relevantes</span>
+  <span class="n">_info</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;idsoc&#39;</span><span class="p">,</span>                <span class="c1"># Número de asociado</span>
+        <span class="s1">&#39;cuotas&#39;</span><span class="p">,</span>               <span class="c1"># Cuotas pagas</span>
+        <span class="s1">&#39;asistencia&#39;</span><span class="p">,</span>           <span class="c1"># Contamos si asiste a entreanamientos</span>
+        <span class="s1">&#39;posicion&#39;</span>              <span class="c1"># Posición en que juega</span>
+  <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">personal</span> <span class="o">=</span> <span class="n">DatosPersonales</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Vanina&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">:</span><span class="s1">&#39;Correa&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">:</span><span class="mi">33333333</span><span class="p">,</span> <span class="s1">&#39;idsoc&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;posicion&#39;</span><span class="p">:</span><span class="s1">&#39;arquera&#39;</span><span class="p">}</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Socie</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>¿Qué pasó acá?</p>
+<p>Básicamente que los datos personales están encapsulados en el atributo
+<code class="docutils literal notranslate"><span class="pre">personal</span></code>. Voy a pedir que también lo muestre cuando imprima:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DatosPersonales</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_dP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;contacto&#39;</span><span class="p">]</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">DatosPersonales</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dP</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Socie</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Socie es un objeto que contiene toda la información sobre cada asociade al club</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># dP describe los campos relevantes</span>
+  <span class="n">_info</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;idsoc&#39;</span><span class="p">,</span>                <span class="c1"># Número de asociado</span>
+        <span class="s1">&#39;cuotas&#39;</span><span class="p">,</span>               <span class="c1"># Cuotas pagas</span>
+        <span class="s1">&#39;asistencia&#39;</span><span class="p">,</span>           <span class="c1"># Contamos si asiste a entreanamientos</span>
+        <span class="s1">&#39;posicion&#39;</span>              <span class="c1"># Posición en que juega</span>
+  <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">personal</span> <span class="o">=</span> <span class="n">DatosPersonales</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;Datos Personales</span><span class="se">\n</span><span class="s1">----- ----------</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estado actual:</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Vanina&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">:</span><span class="s1">&#39;Correa&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">:</span><span class="mi">33333333</span><span class="p">,</span> <span class="s1">&#39;idsoc&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;posicion&#39;</span><span class="p">:</span><span class="s1">&#39;arquera&#39;</span><span class="p">}</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Socie</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">print</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Como vemos, podemos definir cómo queremos imprimir los datos de una
+jugadora.</p>
+<p>Pero eso es exactamente lo que hace el método <code class="docutils literal notranslate"><span class="pre">__str__</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DatosPersonales</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">_dP</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nombre&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">,</span> <span class="s1">&#39;tel&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;contacto&#39;</span><span class="p">]</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="nb">super</span><span class="p">(</span><span class="n">DatosPersonales</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dP</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Socie</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Socie es un objeto que contiene toda la información sobre cada asociade al club</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># dP describe los campos relevantes</span>
+  <span class="n">_info</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;idsoc&#39;</span><span class="p">,</span>                <span class="c1"># Número de asociado</span>
+        <span class="s1">&#39;cuotas&#39;</span><span class="p">,</span>               <span class="c1"># Cuotas pagas</span>
+        <span class="s1">&#39;asistencia&#39;</span><span class="p">,</span>           <span class="c1"># Contamos si asiste a entreanamientos</span>
+        <span class="s1">&#39;posicion&#39;</span>              <span class="c1"># Posición en que juega</span>
+  <span class="p">]</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datos</span><span class="o">=</span><span class="p">{}):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">personal</span> <span class="o">=</span> <span class="n">DatosPersonales</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_info</span><span class="p">:</span>
+      <span class="bp">self</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;Datos Personales</span><span class="se">\n</span><span class="s1">----- ----------</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">personal</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Estado actual:</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+      <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">: </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span> <span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Vanina&#39;</span><span class="p">,</span> <span class="s1">&#39;apellido&#39;</span><span class="p">:</span><span class="s1">&#39;Correa&#39;</span><span class="p">,</span> <span class="s1">&#39;dni&#39;</span><span class="p">:</span><span class="mi">33333333</span><span class="p">,</span> <span class="s1">&#39;idsoc&#39;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;posicion&#39;</span><span class="p">:</span><span class="s1">&#39;arquera&#39;</span><span class="p">}</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">Socie</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="ejercicios-7-b">
+<h2>Ejercicios 7 (b)<a class="headerlink" href="#ejercicios-7-b" title="Enlace permanente a este encabezado"></a></h2>
+<ol class="arabic">
+<li><p>En nuestro ejemplo quedó un problema. Cuando representamos el objeto,
+en la forma:</p>
+<p><code class="docutils literal notranslate"><span class="pre">s</span></code></p>
+<p>no muestra nada respecto a los datos personales. Solucione esto.</p>
+</li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_06.html" class="btn btn-neutral float-left" title="Clase 6: Programación Orientada a Objetos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2024, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

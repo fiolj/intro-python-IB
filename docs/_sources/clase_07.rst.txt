@@ -1,0 +1,730 @@
+.. _clase_07:
+
+Clase 7: Funciones, decoradores y programación funcional
+=========================================================
+
+
+Hemos visto que en Python todo es un objeto, con lo cual, incluso las
+funciones, son objetos. Como tales tienen métodos y atributos:
+
+.. code:: python
+
+    lio_messi = "Lio Messi"
+    print(type(lio_messi))
+
+
+.. parsed-literal::
+
+    <class 'str'>
+
+
+La variable ``lio_messi`` es un string, y como tal, pertenece a la clase
+``str``, que tiene sus propios atributos y métodos:
+
+Veamos qué pasa con las funciones:
+
+.. code:: python
+
+    def saluda_a(alguien):
+        saludo = f"Hola {alguien}!"
+        return saludo
+
+.. code:: python
+
+    print(saluda_a(lio_messi))
+
+
+.. parsed-literal::
+
+    Hola Lio Messi!
+
+
+.. code:: python
+
+    print(type(saluda_a))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+   Un atributo interesante de las funciones es ``__name__`` por razones
+   que veremos en breve:
+
+.. code:: python
+
+    print(saluda_a.__name__)
+
+
+.. parsed-literal::
+
+    saluda_a
+
+
+Es decir, ``__name__`` es el nombre de la función, que está guardado
+dentro del objeto que representa dicha función. > La capacidad del
+lenguaje de responderse preguntas sobre las propias entidades que
+componen el lenguaje se llama *introspección*.
+
+Clases atrás vimos dos características importantes de las funciones en
+Python. La primera de ellas es que las funciones pueden retornar (esto
+es, crear) otras funciones:
+
+.. code:: python
+
+    def genera_recta(a,b):
+        "Genera la función recta y = a x + b"
+        def recta(x):
+            "Evalúa la función recta en x"
+            y = a * x + b
+            return y
+        return recta
+
+.. code:: python
+
+    f = genera_recta(2,3)       # f(x) = 2 * x + 3
+    x = 2
+    print(f"f({x}) = {f(x)}")   # f(2) = 2 * 2 + 3 
+    x = 0
+    print(f"f({x}) = {f(x)}")   # f(0) = 2 * 0 + 3 
+
+
+.. parsed-literal::
+
+    f(2) = 7
+    f(0) = 3
+
+
+.. code:: python
+
+    print(type(f))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+La segunda de ellas es que es posible pasar como argumento una función a
+otra:
+
+.. code:: python
+
+    g = genera_recta(1,-1) # g(x) = x - 1
+    x = 3
+    y = f(g(x))
+    print(f"parabola({x}) = {y}") 
+
+
+.. parsed-literal::
+
+    parabola(3) = 7
+
+
+.. code:: python
+
+    print(type(g))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+Funciones que aceptan y devuelven funciones (Decoradores)
+---------------------------------------------------------
+
+Vamos a trabajar ahora con los decoradores. Los decoradores no son otra
+cosa que funciones, pero que, por sus características, adquieren ese
+nombre y una forma particular de llamarlos que reduce convenientemente
+la sintaxis al programar. Empecemos por definir una función que devuelve
+otra función, como vimos arriba, de la siguiente forma:
+
+.. code:: python
+
+    def mi_decorador(func):
+        def wrapper():
+            print(f"Por llamar a la función {func.__name__}")
+            func()
+            print(f"Listo, ya llamé a la función {func.__name__}")
+        return wrapper
+
+
+Definamos ahora un saludo genérico:
+
+.. code:: python
+
+    def saluda():
+        print("Holaa!!")
+
+.. code:: python
+
+    saluda()
+
+
+.. parsed-literal::
+
+    Holaa!!
+
+
+Nada nuevo hasta ahora, pero empecemos a combinar las funciones:
+
+.. code:: python
+
+    saluda_w = mi_decorador(saluda)
+    saluda_w()
+
+
+.. parsed-literal::
+
+    Por llamar a la función saluda
+    Holaa!!
+    Listo, ya llamé a la función saluda
+
+
+.. code:: python
+
+    print(type(saluda_w))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+Tenemos ahora una función ``saluda`` y su versión *decorada*
+``saluda_w``, que simplemente llama a la función ``saluda``, pero además
+imprime mensajes antes y después del llamado a la función. Esto es algo
+que uno va a querer hacer, por ejemplo para calcular el tiempo de
+ejecución de una función, o para imprimir mensajes de registro
+(*logging*) o debug, u otras tantas cosas más. Por eso Python introduce
+una notación especial para este tipo de funciones ``mi_decorador``:
+
+.. code:: python
+
+    @mi_decorador
+    def saluda_en_ingles():
+        print("Hello!!")
+
+   Notar que el decorador siempre empieza con el símbolo ``@`` y se
+   encuentra en la línea inmediatamente anterior a la definición de la
+   función.
+
+.. code:: python
+
+    saluda_en_ingles()
+
+
+.. parsed-literal::
+
+    Por llamar a la función saluda_en_ingles
+    Hello!!
+    Listo, ya llamé a la función saluda_en_ingles
+
+
+Qué pasa si queremos aplicar el decorador a una función que recibe
+argumentos como ``saluda_a``?
+
+.. code:: python
+
+    @mi_decorador
+    def saluda_a(alguien):
+        print(f"Hola {alguien}!")
+
+.. code:: python
+
+    saluda_a("Lio Messi")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[19], line 1
+    ----> 1 saluda_a("Lio Messi")
+
+
+    TypeError: mi_decorador.<locals>.wrapper() takes 0 positional arguments but 1 was given
+
+
+Notemos que como está definido el decorador, recibe una función sin
+argumentos:
+
+.. code:: python
+
+   def mi_decorador(func):
+       def wrapper():
+           print(f"Por llamar a la función {func.__name__}")
+           func()
+           print(f"Listo, ya llamé a la función {func.__name__}")
+       return wrapper
+
+En este último caso, al aplicar ``@mi_decorador`` a
+``saluda_a(alguien)``, estamos pasando a la función ``mi_decorador`` una
+función ``func`` que dentro de ``mi_decorador`` se llama como
+``func()``, es decir, no tiene argumentos. Para resolver este problema,
+tenemos que indicar explícitamente que la función que vamos a llamar
+dentro del decorador puede tener argumentos:
+
+.. code:: python
+
+    def mi_nuevo_decorador(func):
+        def wrapper(*args, **kwargs):
+            print(f"Por llamar a la función {func.__name__}")
+            func(*args, **kwargs)
+            print(f"Listo, ya llamé a la función {func.__name__}")
+        return wrapper
+
+.. code:: python
+
+    @mi_nuevo_decorador
+    def saluda_a(alguien):
+        print(f"Hola {alguien}!")
+
+.. code:: python
+
+    saluda_a("Lio Messi")
+
+
+.. parsed-literal::
+
+    Por llamar a la función saluda_a
+    Hola Lio Messi!
+    Listo, ya llamé a la función saluda_a
+
+
+Hasta ahora la función ``func`` que envuelve el decorador no devuelve
+ningún valor, sólo imprime un mensaje en pantalla. Cómo hacemos para
+usar un decorador con una función que devuelve un valor?
+
+.. code:: python
+
+    def proto_debug_decorator(func):
+        def wrapper(*args, **kwargs):
+            print(f"Por llamar a la función {func.__name__}")
+            resultado = func(*args, **kwargs)
+            print(f"Listo, ya llamé a la función {func.__name__}")
+            return resultado
+        return wrapper
+
+.. code:: python
+
+    @proto_debug_decorator
+    def mi_calculo_complicado(x,y,z=0):
+        return x**2 + y**2 + z**2
+        
+
+.. code:: python
+
+    v = mi_calculo_complicado(1,2,3)
+    print(v)
+
+
+.. parsed-literal::
+
+    Por llamar a la función mi_calculo_complicado
+    Listo, ya llamé a la función mi_calculo_complicado
+    14
+
+
+Decoradores, un ejemplo más útil
+--------------------------------
+
+Recordemos que al llamar una función, ``*args`` representa a la tupla de
+argumentos mientras que ``**kwargs`` es el diccionario de argumentos
+opcionales. Escribamos un par de funciones útiles para transformar estos
+tipos en string, de modo que se puedan imprimir, por ejemplo:
+
+.. code:: python
+
+    def args_as_str(*args, **kwargs):
+        args_str = ", ".join([str(a) for a in args])
+        kwargs_str = ", ".join([f"{k}={v}" for k,v in kwargs.items()])
+        return f"{args_str}, {kwargs_str}"
+
+.. code:: python
+
+    def debug_me(func):
+        def wrapper(*args, **kwargs):
+            print(f"{func.__name__} ({args_as_str(*args, **kwargs)})")
+            resultado = func(*args, **kwargs)
+            print(f"Listo, ya llamé a la función {func.__name__}")
+            return resultado
+        return wrapper
+
+.. code:: python
+
+    @debug_me
+    def mi_calculo_recontracomplicado(x,y,z=0):
+        return x**2 + y**2 + z**2
+
+.. code:: python
+
+    v =  mi_calculo_recontracomplicado(1,2,z=3)
+    print(v)
+
+
+
+.. parsed-literal::
+
+    mi_calculo_recontracomplicado (1, 2, z=3)
+    Listo, ya llamé a la función mi_calculo_recontracomplicado
+    14
+
+
+--------------
+
+Ejercicios 07 (a)
+-----------------
+
+El módulo time calcula el tiempo en segundos desde el comienzo de la era
+de la computación (?), que para los fines prácticos, da inicio el 1 de
+enero de 1970 ;-D. Veamos unos ejemplos de su uso:
+
+.. code:: python
+
+    import time 
+    
+    ahora = time.time()
+    print (ahora)
+    # duerme 5 segundos
+    time.sleep(5) # zzzz.....
+    
+    ahora = time.time()
+    print (ahora)
+    
+
+
+
+.. parsed-literal::
+
+    1708994999.8172288
+    1708995004.8177679
+
+
+Utilizando las funciones anteriores, escriba el decorador ``@time_me``
+que calcula e imprime el tiempo que tarda en ejecutarse una función.
+**No empiece desde cero!!** Use como plantilla para empezar el decorador
+``@debug_me`` y modifíquelo adecuadamente.
+
+.. code:: python
+
+    # descomente el decorador una vez que lo tenga programado
+    # @time_me
+    def mi_calculo_recontralargo(n):
+        l= [x for x in range(n)]
+        return sum(l)
+
+.. code:: python
+
+    mi_calculo_recontralargo(20000000)
+
+
+
+
+.. parsed-literal::
+
+    199999990000000
+
+
+
+
+Programación orientada a objetos
+================================
+
+Ejemplo: OOP
+------------
+
+En este ejemplo queremos hacer un programa para manejar toda la
+información relativa a un equipo de fútbol femenino.
+
+Una manera de manejar este problema sería tipo “hoja de cálculo”. Una
+matriz donde cada fila corresponde a una jugadora, y cada columna
+corresponde a un dato diferente.
+
+.. code:: python
+
+    # Primera columna: Nombre
+    # Segunda Columna: Apellido
+    # Tercera Columna: DNI
+    # Cuarta Columna: Posición en que juega
+    socias = [('Vanina', 'Correa', 33333333, 'Arquera', 1),
+              ('Laurina', 'Oliveros', 39111111, 'Arquera', 2),
+              ('Gabriela', 'Garton', 36999999, 'Arquera',3)]
+
+.. code:: python
+
+    print('Número total de jugadoras', len(socias))
+    for v in socias[1]:
+      print(v)
+
+Si queremos agregar una jugadora, podemos usar ``append``
+
+.. code:: python
+
+    socias.append(('Agustina', 'Barroso',38011011,'Defensora',4))
+
+.. code:: python
+
+    print('Número total de jugadoras', len(socias))
+    print(socias)
+
+Sin embargo es claro que esta no es una solución óptima.
+
+En primer lugar, es engorroso agregar jugadoras. Pero es aún más
+engorroso agregar detalles a cada jugadora, porque tenemos que encontrar
+la jugadora correcta y luego agregar “columnas”. En casos como este
+puede ser mucho más conveniente usar **diccionarios**, o mejor aún
+definir un nuevo objeto basado en diccionarios.
+
+.. code:: python
+
+    """Ejemplo de uso de programación orientada a objetos.
+    Descripción de participantes de un club de fútbol. Versión 1.
+    """
+    class Socie(dict):
+      """Socie es un objeto que contiene toda la información sobre cada asociade al club
+      """
+      # dP describe los campos relevantes 
+      dP = ['nombre', 'apellido', 'dni', 'tel', 'email', 'contacto',
+            'idsoc',                # Número de asociado
+            'cuotas',               # Cuotas pagas
+            'asistencia',           # Contamos si asiste a entrenamientos
+            'posicion'              # Posición en que juega
+      ]
+      def __init__(self, datos={}):
+        for k in self.dP:
+          self[k] = datos.get(k,None)
+    
+
+
+.. code:: python
+
+      
+    d = {'nombre': 'Vanina', 'apellido':'Correa', 'dni':33333333, 'posicion': 'Arquera', 'idsoc': 1}
+    s = Socie(d)
+
+
+.. code:: python
+
+    for k, v in s.items():
+      print('{}: {}'.format(k.capitalize(), v))
+
+.. code:: python
+
+    d
+
+.. code:: python
+
+    s
+
+Como vemos, no necesitamos acordarnos a qué corresponde cada columna.
+
+.. code:: python
+
+    class DatosPersonales(dict):
+      """DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado
+      """
+      _dP = ['nombre', 'apellido', 'dni', 'tel', 'email', 'contacto']
+      def __init__(self, datos={}):
+        for k in self._dP:
+          self[k] = datos.get(k,None)
+    
+    class Socie(dict):
+      """Socie es un objeto que contiene toda la información sobre cada asociade al club
+      """
+      # dP describe los campos relevantes 
+      _info = ['idsoc',                # Número de asociado
+            'cuotas',               # Cuotas pagas
+            'asistencia',           # Contamos si asiste a entreanamientos
+            'posicion'              # Posición en que juega
+      ]
+    
+      def __init__(self, datos={}):
+        self.personal = DatosPersonales(datos)
+        for k in self._info:
+          self[k] = datos.get(k,None)
+
+
+.. code:: python
+
+    d = {'nombre': 'Vanina', 'apellido':'Correa', 'dni':33333333, 'idsoc':3, 'posicion':'arquera'}
+    s = Socie(d)
+
+
+.. code:: python
+
+    print(s)
+
+.. code:: python
+
+    s.personal
+
+La forma de imprimir los datos es la que se hereda de los diccionarios.
+Vamos a mejorarla para nuestro caso:
+
+.. code:: python
+
+    class DatosPersonales(dict):
+      """DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado
+      """
+      _dP = ['nombre', 'apellido', 'dni', 'tel', 'email', 'contacto']
+      def __init__(self, datos={}):
+        super(DatosPersonales, self).__init__()
+        for k in self._dP:
+          self[k] = datos.get(k,None)
+    
+    class Socie(dict):
+      """Socie es un objeto que contiene toda la información sobre cada asociade al club
+      """
+      # dP describe los campos relevantes 
+      _info = ['idsoc',                # Número de asociado
+            'cuotas',               # Cuotas pagas
+            'asistencia',           # Contamos si asiste a entreanamientos
+            'posicion'              # Posición en que juega
+      ]
+    
+      def __init__(self, datos={}):
+        self.personal = DatosPersonales(datos)
+        for k in self._info:
+          self[k] = datos.get(k,None)
+    
+      def print(self):
+        s = ''
+        for k, v in self.items():
+          s += '{}: {}\n'.format(k.capitalize(), v)
+        print(s)
+
+.. code:: python
+
+    d = {'nombre': 'Vanina', 'apellido':'Correa', 'dni':33333333, 'idsoc':3, 'posicion':'arquera'}
+    s = Socie(d)
+
+
+.. code:: python
+
+    s
+
+.. code:: python
+
+    print(s)
+
+.. code:: python
+
+    s.print()
+
+¿Qué pasó acá?
+
+Básicamente que los datos personales están encapsulados en el atributo
+``personal``. Voy a pedir que también lo muestre cuando imprima:
+
+.. code:: python
+
+    class DatosPersonales(dict):
+      """DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado
+      """
+      _dP = ['nombre', 'apellido', 'dni', 'tel', 'email', 'contacto']
+      def __init__(self, datos={}):
+        super(DatosPersonales, self).__init__()
+        for k in self._dP:
+          self[k] = datos.get(k,None)
+    
+    class Socie(dict):
+      """Socie es un objeto que contiene toda la información sobre cada asociade al club
+      """
+      # dP describe los campos relevantes 
+      _info = ['idsoc',                # Número de asociado
+            'cuotas',               # Cuotas pagas
+            'asistencia',           # Contamos si asiste a entreanamientos
+            'posicion'              # Posición en que juega
+      ]
+    
+      def __init__(self, datos={}):
+        self.personal = DatosPersonales(datos)
+        for k in self._info:
+          self[k] = datos.get(k,None)
+    
+      def print(self):
+        s = 'Datos Personales\n----- ----------\n'
+        for k, v in self.personal.items():
+          s += '{}: {}\n'.format(k.capitalize(), v)
+        s += '\nEstado actual:\n'
+        for k, v in self.items():
+          s += '{}: {}\n'.format(k.capitalize(), v)
+        print(s)
+
+
+.. code:: python
+
+    d = {'nombre': 'Vanina', 'apellido':'Correa', 'dni':33333333, 'idsoc':3, 'posicion':'arquera'}
+    s = Socie(d)
+
+
+.. code:: python
+
+    s.print()
+
+Como vemos, podemos definir cómo queremos imprimir los datos de una
+jugadora.
+
+Pero eso es exactamente lo que hace el método ``__str__``
+
+.. code:: python
+
+    class DatosPersonales(dict):
+      """DatosPersonales es un objeto que contiene toda la información sobre los datos personales de cada asociado
+      """
+      _dP = ['nombre', 'apellido', 'dni', 'tel', 'email', 'contacto']
+      def __init__(self, datos={}):
+        super(DatosPersonales, self).__init__()
+        for k in self._dP:
+          self[k] = datos.get(k,None)
+    
+    class Socie(dict):
+      """Socie es un objeto que contiene toda la información sobre cada asociade al club
+      """
+      # dP describe los campos relevantes 
+      _info = ['idsoc',                # Número de asociado
+            'cuotas',               # Cuotas pagas
+            'asistencia',           # Contamos si asiste a entreanamientos
+            'posicion'              # Posición en que juega
+      ]
+    
+      def __init__(self, datos={}):
+        self.personal = DatosPersonales(datos)
+        for k in self._info:
+          self[k] = datos.get(k,None)
+    
+      def __str__(self):
+        s = 'Datos Personales\n----- ----------\n'
+        for k, v in self.personal.items():
+          s += '{}: {}\n'.format(k.capitalize(), v)
+        s += '\nEstado actual:\n'
+        for k, v in self.items():
+          s += '{}: {}\n'.format(k.capitalize(), v)
+        return s
+
+
+.. code:: python
+
+    d = {'nombre': 'Vanina', 'apellido':'Correa', 'dni':33333333, 'idsoc':3, 'posicion':'arquera'}
+    s = Socie(d)
+
+
+.. code:: python
+
+    print(s)
+
+Ejercicios 7 (b)
+----------------
+
+1. En nuestro ejemplo quedó un problema. Cuando representamos el objeto,
+   en la forma:
+
+   ``s``
+
+   no muestra nada respecto a los datos personales. Solucione esto.
