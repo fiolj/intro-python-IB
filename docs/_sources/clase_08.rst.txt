@@ -1,0 +1,655 @@
+.. _clase_08:
+
+Clase 8: Introducción a Numpy 
+===============================
+
+
+Introducción
+------------
+
+Dos paquetes que van a resultar muy importantes para nosotros son los
+paquetes **numpy** y **matplotlib**. Como con todos los módulos, se
+cargan utilizando la palabra ``import``, tal como hicimos en los
+ejemplos anteriores. Existen variantes en la manera de importar los
+módulos que son “equivalentes”. En este caso le vamos a dar un alias que
+sea más corto de tipear. Después podemos utilizar sus funciones y
+definiciones.
+
+.. code:: python
+
+    import numpy as np               # Importa el paquete numpy para trabajo numérico
+    import matplotlib.pyplot as plt  # Importa el paquete matplotlib para graficación
+
+Un ejemplo muy común es la graficación de datos que obtuvimos
+previamente:
+
+.. code:: python
+
+    x, y = np.loadtxt('../data/ejemplo_plot_07_1.dat', unpack=True)
+    plt.plot(x, y)
+
+Lectura y escritura de datos a archivos
+---------------------------------------
+
+Numpy tiene funciones que permiten escribir y leer datos de varias
+maneras, tanto en formato *texto* como en *binario*. En general el modo
+*texto* ocupa más espacio pero puede ser leído y modificado con un
+editor.
+
+Veamos qué datos hay en el archivo:
+
+.. code:: python
+
+    !head ../data/ejemplo_plot_07_1.dat
+
+Hay dos columnas, en la primera fila hay texto, y en las siguientes hay
+valores separados por un espacio.
+
+Dos funciones simples y útiles para entrada y salida de datos son
+``np.loadtxt()`` para lectura, y ``np.savetxt()`` para escritura.
+
+.. code:: python
+
+    x, y = np.loadtxt('../data/ejemplo_plot_07_1.dat', unpack=True)
+
+La función ``np.loadtxt()`` carga estos valores a las variables ``x`` e
+``y``
+
+.. code:: python
+
+    len(x), len(y)
+
+.. code:: python
+
+    print(x[:10])
+
+.. code:: python
+
+    print(x[:10])
+
+Vemos que, con este uso, la variable ``x`` contiene los valores de la
+primera columna y la variable ``y`` los de la segunda.
+
+Para grabar datos a un archivo le damos como primer argumento el nombre
+del archivo y como segundo los datos a guardar. Vamos a ver detalles más
+adelante.
+
+.. code:: python
+
+    np.savetxt('test.out', np.c_[x,y])
+
+.. code:: python
+
+    !head test.out
+
+
+En la primera línea hay texto explicativo, en las siguientes líneas el
+archivo tiene dos columnas.
+
+Veamos que tipo de variable son ``x`` e ``y``:
+
+.. code:: python
+
+    type(x), type(y)
+
+Como vemos, el tipo de la variable **no es una lista** sino un nuevo
+tipo: **ndarray**, o simplemente **array**. Veamos cómo trabajar con
+ellos.
+
+Características de *arrays* en **Numpy**
+----------------------------------------
+
+Numpy define unas nuevas estructuras llamadas *ndarrays* o *arrays* para
+trabajar con vectores de datos, en una dimensión o más dimensiones
+(“matrices”). Los arrays son variantes de las listas de python
+preparadas para trabajar a mayor velocidad y menor consumo de memoria.
+Por ello se requiere que los arrays sean menos generales y versátiles
+que las listas usuales. Analicemos brevemente las diferencias entre
+estos tipos y las consecuencias que tendrá en su uso para nosotros.
+
+Comparación de listas y *arrays*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Comparemos como operamos sobre un conjunto de números cuando los
+representamos por una lista, o por un array:
+
+.. code:: python
+
+    dlist = [1.5, 3.8, 4.9, 12.3, 27.2, 35.8, 70.2, 90., 125., 180.]
+
+.. code:: python
+
+    d = np.array(dlist)
+
+.. code:: python
+
+    d is dlist
+
+.. code:: python
+
+    print(dlist)
+
+.. code:: python
+
+    print(d)
+
+Veamos cómo se hace para operar con estos dos tipos. Si los valores
+representan ángulos en grados, hagamos la conversión a radianes (radián
+= :math:`\pi/180` grado)
+
+.. code:: python
+
+    from math import pi
+    drlist= [a*pi/180 for a in dlist]
+
+.. code:: python
+
+    print(drlist)
+
+.. code:: python
+
+    dr= d*(np.pi/180)
+
+.. code:: python
+
+    print(dr)
+
+Vemos que el modo de trabajar es más simple ya que los array permiten
+trabajar con operaciones elemento-a-elemento mientras que para las
+listas tenemos que usar comprensiones de listas. Veamos otros ejemplos:
+
+.. code:: python
+
+    print([np.sin(a*pi/180) for a in dlist])
+
+.. code:: python
+
+    print(np.sin(np.deg2rad(d)))
+
+Además de la simplicidad para trabajar con operaciones que actúan sobre
+cada elemento, el paquete tiene una gran cantidad de funciones y
+constantes definidas (como por ejemplo ``np.pi`` para :math:`\pi`).
+
+.. code:: python
+
+    plt.plot(d, np.sin(np.deg2rad(d)),'o-')
+    plt.show()
+
+Uso de memoria de listas y arrays
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Las listas son sucesiones de elementos, completamente generales y no
+necesariamente todos iguales. Un esquema de su representación interna se
+muestra en el siguiente gráfico para una lista de números enteros (Las
+figuras y el análisis de esta sección son de
+www.python-course.eu/numpy.php)
+
+.. figure:: figuras/list_structure.png
+   :alt: Representación en memoria de una lista
+
+   Representación en memoria de una lista
+
+Básicamente en una lista se guarda información común a cualquier lista,
+un lugar de almacenamiento que referencia donde buscar cada uno de sus
+elementos (que puede ser un objeto diferente) y luego el lugar efectivo
+para guardar cada elemento. Veamos cuanta memoria se necesita para
+guardar una lista de enteros:
+
+.. code:: python
+
+    from sys import getsizeof
+    lst = [24, 12, 57]
+    size_of_list_object = getsizeof(lst)   # La lista sin sus datos
+    #size_of_elements = getsizeof(lst[0]) + getsizeof(lst[1]) + getsizeof(lst[2])
+    size_of_elements = sum(getsizeof(l) for l in lst)
+    total_list_size = size_of_list_object + size_of_elements
+    print("Tamaño sin considerar los elementos: ", size_of_list_object)
+    print("Tamaño de los elementos: ", size_of_elements)
+    print("Tamaño total: ", total_list_size)
+
+Para calcular cuánta memoria se usa en cada parte de una lista
+analicemos el tamaño de distintos casos:
+
+.. code:: python
+
+    print('Una lista vacía ocupa: {} bytes'.format(getsizeof([])))
+    print('Una lista con un elem: {} bytes'.format(getsizeof([24])))
+    print('Una lista con 2 elems: {} bytes'.format(getsizeof([24,12])))
+    print('Un entero en Python  : {} bytes'.format(getsizeof(24)))
+
+Vemos que la “Información general de listas” ocupa **56 bytes**, y la
+referencia a cada elemento entero ocupa adicionalmente **8 bytes**, por
+lo que la lista con dos elementos ocupa **72 bytes**. Además, cada
+elemento, un entero de Python, en este caso ocupa **28 bytes**, por lo
+que el tamaño total de una **lista** de :math:`n` números enteros será:
+
+.. math::   M_{L}(n) = 56 + n \times 8 + n \times 28 
+
+.. code:: python
+
+    # Notar que no siempre es fácil identificar el tamaño correcto
+    print('Una lista con 3 elems: {} bytes'.format(getsizeof([24,12,57])))
+    print('Una lista con 4 elems: {} bytes'.format(getsizeof([24,12,57,38])))
+    print('Una lista con 5 elems: {} bytes'.format(getsizeof([24,12,57,38,47])))
+
+En contraste, los *arrays* deben ser todos del mismo tipo por lo que su
+representación es más simple (por ejemplo, no es necesario guardar sus
+valores separadamente)
+
+.. figure:: figuras/array_structure.png
+   :alt: Representación en memoria de una lista
+
+   Representación en memoria de una lista
+
+.. code:: python
+
+    a = np.array(lst)
+    print(getsizeof(a))
+
+Para analizar como se distribuye el consumo de memoria en un array vamos
+a calcular el tamaño de cada uno de los elementos como hicimos con las
+listas:
+
+.. code:: python
+
+    print('Un array vacío ocupa: {} bytes'.format(getsizeof(np.array([]))))
+    print('Un array con un elem: {} bytes'.format(getsizeof(np.array([24]))))
+    print('Un array con 2 elems: {} bytes'.format(getsizeof(np.array([24,12]))))
+    print('Un entero de Numpy es: {}'.format(type(a[0])))
+    print('Un entero de Numpy usa: {}'.format(getsizeof(a[0])))
+
+Vemos que la información general sobre arrays ocupa **96 bytes** (en
+contraste a **64** para listas), y por cada elemento otros **8 bytes**
+adicionales (``numpy.int64`` corresponde a 64 bits), por lo que el
+tamaño total será:
+
+.. math::   M_{a}(n) = 96 + n \times 8 
+
+.. code:: python
+
+    from sys import getsizeof
+    lst1 = list(range(1000))
+    total_list_size = getsizeof(lst1) + sum(getsizeof(l) for l in lst1)
+    print("Tamaño total de la lista: ", total_list_size)
+    a1 = np.array(lst1)
+    print("Tamaño total de array: ", getsizeof(a1))
+
+Velocidad de **Numpy**
+~~~~~~~~~~~~~~~~~~~~~~
+
+Una de las grandes ventajas de usar *Numpy* está relacionada con la
+velocidad de cálculo. Veamos (superficialmente) esto
+
+.. code:: python
+
+    # %load scripts/timing.py
+    # Ejemplo del libro en www.python-course.eu/numpy.php
+    
+    import numpy as np
+    from timeit import Timer
+    Ndim = 10000
+    
+    
+    def pure_python_version():
+      X = range(Ndim)
+      Y = range(Ndim)
+      Z = []
+      for i in range(len(X)):
+        Z.append(X[i] + Y[i])
+      return Z
+    
+    
+    def numpy_version():
+      X = np.arange(Ndim)
+      Y = np.arange(Ndim)
+      Z = X + Y
+      return Z
+    
+    timer_obj1 = Timer("pure_python_version()", "from __main__ import pure_python_version")
+    timer_obj2 = Timer("numpy_version()", "from __main__ import numpy_version")
+    t1 = timer_obj1.timeit(10)
+    t2 = timer_obj2.timeit(10)
+    
+    print(f"Numpy es en este ejemplo {t1 / t2 : .3f} más rápido")
+
+
+Como vemos, utilizar *Numpy* puede ser considerablemente más rápido que
+usar *Python puro*.
+
+Creación de *arrays* en **Numpy**
+---------------------------------
+
+Un ``array`` en numpy es un tipo de variable parecido a una lista, pero
+está optimizado para realizar trabajo numérico.
+
+Todos los elementos deben ser del mismo tipo, y además de los valores,
+contiene información sobre su tipo. Veamos algunos ejemplos de cómo
+crearlos y utilizarlos:
+
+Creación de *Arrays* unidimensionales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    i1 = np.array([1, 2, 3, 1, 5, 1, 9, 22, 0])
+    r1 = np.array([1.4 ,2.3 ,3.0 ,1, 5, 1, 9, 22, 0])
+
+.. code:: python
+
+    print(i1)
+    print(r1)
+
+.. code:: python
+
+    print('tipo de i1: {} \ntipo de r1: {}'.format(i1.dtype, r1.dtype))
+
+.. code:: python
+
+    print('Para i1:\n  Número de dimensiones: {}\n  Longitud: {}'.format(np.ndim(i1), len(i1)))
+
+.. code:: python
+
+    print('Para r1:\n  Número de dimensiones: {}\n  Longitud: {}'.format(np.ndim(r1), len(r1)))
+
+Arrays multidimensionales
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Podemos crear explícitamente *arrays* multidimensionales con la función
+``np.array`` si el argumento es una lista anidada
+
+.. code:: python
+
+    L = [ [1, 2, 3], [.2, -.2, -1], [-1, 2, 9], [0, 0.5, 0] ]
+    
+    A = np.array(L)
+
+.. code:: python
+
+    A
+
+.. code:: python
+
+    print(A)
+
+.. code:: python
+
+    print(np.ndim(A),A.ndim) # Ambos son equivalentes
+
+.. code:: python
+
+    print(len(A))
+
+Vemos que la dimensión de ``A`` es 2, pero la longitud que me reporta
+**Python** corresponde al primer eje. Los *arrays* tienen un atributo
+que es la “forma” (shape)
+
+.. code:: python
+
+    print(A.shape)
+
+.. code:: python
+
+    r1.shape # una tupla de un solo elemento
+
+Generación de datos equiespaciados
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Para obtener datos equiespaciados hay dos funciones complementarias
+
+.. code:: python
+
+    a1 = np.arange(0,190,10)
+    a2 = np.linspace(0,180,19)
+
+.. code:: python
+
+    a1
+
+.. code:: python
+
+    a2
+
+Como vemos, ambos pueden dar resultados similares, y es una cuestión de
+conveniencia cual utilizar. El uso es:
+
+.. code:: python
+
+   np.arange([start,] stop[, step,], dtype=None)
+
+   np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None)
+
+Mientras que a ``arange()`` le decimos cuál es el paso a utilizar, a
+``linspace()`` debemos (podemos) darle como tercer argumento el número
+de valores que queremos.
+
+.. code:: python
+
+    # Si queremos que devuelva enteros:
+    np.arange(0,180.,10, dtype=int)
+
+.. code:: python
+
+    # Pedimos que devuelva el paso también
+    v1, step1 = np.linspace(0,10,20, endpoint=True, retstep=True)
+    v2, step2 = np.linspace(0,10,20, endpoint=False, retstep=True)
+
+.. code:: python
+
+    print(step1)
+    print(step2)
+
+.. code:: python
+
+    plt.plot(a2, np.sin(np.deg2rad(a2)),'o-')
+    plt.show()
+
+Además de valores linealmente espaciados podemos obtener valores
+espaciados en escala logarítmica
+
+.. code:: python
+
+    w= np.logspace(0,10,20)
+
+.. code:: python
+
+    plt.plot(v1, w, 'o-')
+    plt.show()
+
+.. code:: python
+
+    w1 = np.logspace(0,2,3) # Start y Stop son los exponentes
+    print(w1)
+
+.. code:: python
+
+    w2 = np.geomspace(1,100,3) # Start y Stop son los valores
+    print(w2)
+
+Otras formas de creación
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hay otras maneras de crear **numpy arrays**. Algunas, de las más comunes
+es cuando necesitamos crear un array con todos ceros o unos o algún
+valor dado
+
+.. code:: python
+
+    a = np.zeros(5)
+
+.. code:: python
+
+    a.dtype                         # El tipo default es float de 64 bits
+
+.. code:: python
+
+    print(a)
+
+.. code:: python
+
+    i= np.zeros(5, dtype=int)
+
+.. code:: python
+
+    print(i)
+
+.. code:: python
+
+    i.dtype
+
+.. code:: python
+
+    c= np.zeros(5,dtype=complex)
+    print(c)
+    print(c.dtype)
+
+En lugar de inicializarlo en cero podemos inicializarlo con algún valor
+
+.. code:: python
+
+    np.ones(5, dtype=complex)     # Algo similar pero inicializando a unos
+
+Ya vimos que también podemos inicializarlos con valores “equiespaciados”
+con ``np.arange()``, con ``np.linspace()`` o con ``np.logspace()``
+
+.. code:: python
+
+    v = np.arange(2,15,2) # Crea un array con una secuencia (similar a la función range)
+
+Para crear *arrays* multidimensionales usamos:
+
+.. code:: python
+
+    np.ones((4,5))
+
+.. code:: python
+
+    np.ones((4,3,6))
+
+.. code:: python
+
+    np.eye(4)
+
+.. code:: python
+
+    np.eye(3,7)
+
+En este último ejemplo hemos creado matrices con unos en la diagonal y
+ceros en todos los demás lugares.
+
+Acceso a los elementos
+----------------------
+
+El acceso a los elementos tiene una forma muy parecida a la de las
+listas (pero no exactamente igual).
+
+.. code:: python
+
+    print(r1)
+
+Si queremos uno de los elementos usamos la notación:
+
+.. code:: python
+
+    print(r1[0], r1[3], r1[-1])
+
+y para “tajadas” (*slices*)
+
+.. code:: python
+
+    print(r1[:3])
+
+.. code:: python
+
+    print(r1[-3:])
+
+.. code:: python
+
+    print(r1[5:7])
+
+.. code:: python
+
+    print(r1[0:8:2])
+
+Como con vectores unidimensionales, con arrays multidimensionales, se
+puede ubicar un elemento o usar *slices*:
+
+.. code:: python
+
+    arr = np.arange(55).reshape((5,11))
+
+.. code:: python
+
+    arr
+
+.. code:: python
+
+    print("primer y segundo elementos", arr[0,0], arr[0,1])
+
+.. code:: python
+
+    print( 'Slicing parte de la segunda fila :', arr[1, 2:4])
+    print('Todas las filas, tercera columna :', arr[:, 2])
+
+.. code:: python
+
+    print( 'Primera fila   :\n', arr[0], '\nes igual a :\n', arr[0,:])
+
+.. code:: python
+
+    print( 'Segunda fila   :\n', arr[1], '\nes igual a :\n', arr[1,:])
+
+.. code:: python
+
+    print( 'Primera columna:', arr[:,0])
+
+.. code:: python
+
+    print( 'Última columna : \n', arr[:,-1])
+
+.. code:: python
+
+    print( 'Segunda fila, elementos impares (0,2,...) : ', arr[1,::2])
+
+.. code:: python
+
+    print( 'Segunda fila, todos los elementos pares : ', arr[1,1::2])
+
+Cuando el *slicing* se hace de la forma ``[i:f:s]`` significa que
+tomaremos los elementos entre ``i`` (inicial), hasta ``f`` (final, no
+incluido), pero tomando sólo uno de cada ``s`` (stride) elementos
+
+.. image:: figuras/numpy_indexing.png
+
+En `Scipy Lectures at
+http://scipy-lectures.github.io <http://scipy-lectures.github.io>`__ hay
+una descripción del acceso a arrays.
+
+--------------
+
+Ejercicios 08 (a)
+-----------------
+
+1. Genere arrays en 2d, cada uno de tamaño 10x10 con:
+
+   1. Un array con valores 1 en la “diagonal principal” y 0 en el resto
+      (Matriz identidad).
+
+   2. Un array con valores 0 en la “diagonal principal” y 1 en el resto.
+
+   3. Un array con valores 1 en los bordes y 0 en el interior.
+
+   4. Un array con números enteros consecutivos (empezando en 1) en los
+      bordes y 0 en el interior.
+
+2. Diga qué resultado produce el siguiente código, y explíquelo
+
+.. code:: python
+
+   # Ejemplo propuesto por Jake VanderPlas
+   print(sum(range(5),-1))
+   from numpy import *
+   print(sum(range(5),-1))
+
+--------------
+
+
