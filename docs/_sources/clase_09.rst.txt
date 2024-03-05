@@ -544,6 +544,19 @@ Para cambiar los límites de graficación se puede usar las funciones
     plt.xlim((0,2.5))
     plt.ylim((-0.4, 0.32))
 
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_39_1.png
+
+
 Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
 
 .. code:: python
@@ -560,6 +573,19 @@ Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
     plt.xscale('log')
     plt.ylim((-0.4, 0.32))
 
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_41_1.png
+
+
 .. code:: python
 
     plt.plot(x,1+y, '-b', label="teoría")
@@ -574,6 +600,19 @@ Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
     plt.xscale('log')
     plt.yscale('log')
     plt.ylim((0.6, 1.4))
+
+
+
+
+.. parsed-literal::
+
+    (0.6, 1.4)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_42_1.png
+
 
 Exportar las figuras
 --------------------
@@ -599,13 +638,112 @@ utilizamos la función ``savefig()``.
     plt.savefig(f'{foname}.png')
     plt.savefig(f'{foname}.pdf')
 
+
+
+.. image:: figuras/09_1_intro_visualizacion_44_0.png
+
+
 .. code:: python
 
     %pwd
 
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/Clases/IntPython/clases-python/clases'
+
+
+
 .. code:: python
 
     help(plt.grid)
+
+
+.. parsed-literal::
+
+    Help on function grid in module matplotlib.pyplot:
+    
+    grid(visible=None, which='major', axis='both', **kwargs)
+        Configure the grid lines.
+        
+        Parameters
+        ----------
+        visible : bool or None, optional
+            Whether to show the grid lines.  If any *kwargs* are supplied, it
+            is assumed you want the grid on and *visible* will be set to True.
+        
+            If *visible* is *None* and there are no *kwargs*, this toggles the
+            visibility of the lines.
+        
+        which : {'major', 'minor', 'both'}, optional
+            The grid lines to apply the changes on.
+        
+        axis : {'both', 'x', 'y'}, optional
+            The axis to apply the changes on.
+        
+        **kwargs : `~matplotlib.lines.Line2D` properties
+            Define the line properties of the grid, e.g.::
+        
+                grid(color='r', linestyle='-', linewidth=2)
+        
+            Valid keyword arguments are:
+        
+            Properties:
+            agg_filter: a filter function, which takes a (m, n, 3) float array and a dpi value, and returns a (m, n, 3) array and two offsets from the bottom left corner of the image
+            alpha: scalar or None
+            animated: bool
+            antialiased or aa: bool
+            clip_box: `.Bbox`
+            clip_on: bool
+            clip_path: Patch or (Path, Transform) or None
+            color or c: color
+            dash_capstyle: `.CapStyle` or {'butt', 'projecting', 'round'}
+            dash_joinstyle: `.JoinStyle` or {'miter', 'round', 'bevel'}
+            dashes: sequence of floats (on/off ink in points) or (None, None)
+            data: (2, N) array or two 1D arrays
+            drawstyle or ds: {'default', 'steps', 'steps-pre', 'steps-mid', 'steps-post'}, default: 'default'
+            figure: `.Figure`
+            fillstyle: {'full', 'left', 'right', 'bottom', 'top', 'none'}
+            gapcolor: color or None
+            gid: str
+            in_layout: bool
+            label: object
+            linestyle or ls: {'-', '--', '-.', ':', '', (offset, on-off-seq), ...}
+            linewidth or lw: float
+            marker: marker style string, `~.path.Path` or `~.markers.MarkerStyle`
+            markeredgecolor or mec: color
+            markeredgewidth or mew: float
+            markerfacecolor or mfc: color
+            markerfacecoloralt or mfcalt: color
+            markersize or ms: float
+            markevery: None or int or (int, int) or slice or list[int] or float or (float, float) or list[bool]
+            mouseover: bool
+            path_effects: `.AbstractPathEffect`
+            picker: float or callable[[Artist, Event], tuple[bool, dict]]
+            pickradius: unknown
+            rasterized: bool
+            sketch_params: (scale: float, length: float, randomness: float)
+            snap: bool or None
+            solid_capstyle: `.CapStyle` or {'butt', 'projecting', 'round'}
+            solid_joinstyle: `.JoinStyle` or {'miter', 'round', 'bevel'}
+            transform: unknown
+            url: str
+            visible: bool
+            xdata: 1D array
+            ydata: 1D array
+            zorder: float
+        
+        Notes
+        -----
+        The axis is drawn as a unit, so the effective zorder for drawing the
+        grid is determined by the zorder of each axis, not by the zorder of the
+        `.Line2D` objects comprising the grid.  Therefore, to set grid zorder,
+        use `.set_axisbelow` or, for more control, call the
+        `~.Artist.set_zorder` method of each axis.
+    
+
 
 Acá también hemos utilizado formato tipo LaTeX para parte del texto. Si
 utilizamos una expresión encerrada entre los símbolos ``$``, matplotlib
@@ -664,6 +802,11 @@ figura. Veamos un ejemplo utilizando la función ``subplots()``
     plt.savefig(f'{fname}.png', dpi=150)
 
 
+
+
+.. image:: figuras/09_1_intro_visualizacion_49_0.png
+
+
 .. code:: python
 
     # %load scripts/ejemplo_08_5.py
@@ -705,6 +848,11 @@ figura. Veamos un ejemplo utilizando la función ``subplots()``
     
     # Guardamos el resultado
     plt.savefig(f'{fname}_B.png', dpi=150)
+
+
+
+
+.. image:: figuras/09_1_intro_visualizacion_50_0.png
 
 
 En este ejemplo utilizamos un enfoque diferente al utilizado
