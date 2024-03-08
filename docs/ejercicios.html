@@ -1018,6 +1018,102 @@ símbolos de mayor tamaño (sugerencia ~10).</p></li>
 <p>Encontrar el número más cercano a un número escalar dado (por ejemplo
 x=0.5). Utilice los métodos discutidos.</p>
 </li>
+<li><p>Vamos a estudiar la frecuencia de aparición de cada dígito en la
+serie de Fibonacci, generada siguiendo las reglas:</p>
+<div class="math notranslate nohighlight">
+\[a_{1} = a_{2} = 1, \quad a_{i} = a_{i-1} + a_{i-2}.\]</div>
+<p>Se pide:</p>
+<ol class="arabic">
+<li><p>Crear una función que acepta como argumento un número entero
+<span class="math notranslate nohighlight">\(N\)</span> y retorna una secuencia (lista, tupla, diccionario o
+<em>array</em>) con los elementos de la serie de Fibonacci.</p></li>
+<li><p>Crear una función que devuelva un histograma de ocurrencia de cada
+uno de los dígitos en el primer lugar del número. Por ejemplo para
+los primeros 8 valores (<span class="math notranslate nohighlight">\(N=8\)</span>): <span class="math notranslate nohighlight">\(1,1,2,3,5,8,13,21\)</span>
+tendremos que el <span class="math notranslate nohighlight">\(1\)</span> aparece 3 veces, el <span class="math notranslate nohighlight">\(2\)</span> aparece
+<span class="math notranslate nohighlight">\(2\)</span> veces, <span class="math notranslate nohighlight">\(3, 5, 8\)</span> una vez. Normalizar los datos
+dividiendo por el número de valores <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+<li><p>Utilizando las dos funciones anteriores graficar el histograma
+para un número <span class="math notranslate nohighlight">\(N\)</span> grande y comparar los resultados con la
+ley de Benford</p>
+<div class="math notranslate nohighlight">
+\[P(n) = \log_{10}\left(1+ \frac{1}{d} \right).\]</div>
+</li>
+</ol>
+</li>
+<li><p><strong>PARA ENTREGAR:</strong> Estimar el valor de π usando diferentes métodos
+basados en el método de Monte Carlo:</p>
+<ol class="arabic simple">
+<li><p>Crear una función para calcular el valor de <span class="math notranslate nohighlight">\(\pi\)</span> usando el
+“método de cociente de áreas”. Para ello:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Generar puntos en el plano dentro del cuadrado de lado unidad cuyo
+lado inferior va de <span class="math notranslate nohighlight">\(x=0\)</span> a <span class="math notranslate nohighlight">\(x=1\)</span></p></li>
+<li><p>Contar cuantos puntos caen dentro del (cuarto de) círculo unidad.
+Este número tiende a ser proporcional al área del círculo</p></li>
+<li><p>La estimación de <span class="math notranslate nohighlight">\(\pi\)</span> será igual a cuatro veces el cociente
+de números dentro del círculo dividido por el número total de
+puntos.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Crear una función para calcular el valor de <span class="math notranslate nohighlight">\(\pi\)</span> usando el
+“método del valor medio”: Este método se basa en la idea de que el
+valor medio de una función se puede calcular de la siguiente
+manera:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\langle f \rangle = \frac{1}{b-a} \int_{a}^{b} f(x)\, dx\]</div>
+<p>Tomando la función particular <span class="math notranslate nohighlight">\(f(x)= \sqrt{1- x^{2}}\)</span> entre
+<span class="math notranslate nohighlight">\(x=0\)</span> y <span class="math notranslate nohighlight">\(x=1\)</span>, obtenemos:</p>
+<div class="math notranslate nohighlight">
+\[\langle f \rangle = \int_{0}^{1} \sqrt{1- x^{2}}\, dx = \frac{\pi}{4}\]</div>
+<p>Entonces, tenemos que estimar el valor medio de la función <span class="math notranslate nohighlight">\(f\)</span>
+y, mediante la relación anterior obtener
+<span class="math notranslate nohighlight">\(\pi = 4 \langle f(x) \rangle\)</span>. Para obtener el valor medio de
+la función notamos que si tomamos <span class="math notranslate nohighlight">\(X\)</span> es una variable aleatoria
+entre 0 y 1, entonces el valor medio de <span class="math notranslate nohighlight">\(f(X)\)</span> es justamente
+<span class="math notranslate nohighlight">\(\langle f \rangle\)</span>. Su función debe entonces</p>
+<ul class="simple">
+<li><p>Generar puntos aleatoriamente en el intervalo <span class="math notranslate nohighlight">\([0,1]\)</span></p></li>
+<li><p>Calcular el valor medio de <span class="math notranslate nohighlight">\(f(x)\)</span> para los puntos aleatorios
+<span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+<li><p>El resultado va a ser igual al valor de la integral, y por lo
+tanto a <span class="math notranslate nohighlight">\(\pi/4\)</span>.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Utilizar las funciones anteriores con diferentes valores para el
+número total de puntos <span class="math notranslate nohighlight">\(N\)</span>. En particular, hacerlo para 20
+valores de <span class="math notranslate nohighlight">\(N\)</span> equiespaciados logarítmicamente entre 100 y
+10000. Para cada valor de <span class="math notranslate nohighlight">\(N\)</span> calcular la estimación de
+<span class="math notranslate nohighlight">\(\pi\)</span>. Realizar un gráfico con el valor estimado como
+función del número <span class="math notranslate nohighlight">\(N\)</span> con los dos métodos (dos curvas en un
+solo gráfico)</p></li>
+<li><p>Para <span class="math notranslate nohighlight">\(N=15000\)</span> repetir el “experimento” muchas veces (al
+menos 1000) y realizar un histograma de los valores obtenidos para
+<span class="math notranslate nohighlight">\(\pi\)</span> con cada método. Graficar el histograma y calcular la
+desviación standard. Superponer una función Gaussiana con el mismo
+ancho. El gráfico debe ser similar al siguiente (<em>el estilo de
+graficación no tiene que ser el mismo</em>)</p></li>
+</ol>
+<img alt="_images/ejercicio_09_1.png" src="_images/ejercicio_09_1.png" />
+<ol class="arabic simple" start="5">
+<li><p>El método de la aguja del bufón se puede utilizar para estimar el
+valor de <span class="math notranslate nohighlight">\(\pi\)</span>, y consiste en tirar agujas (o palitos,
+fósforos, etc) al azar sobre una superficie rayada</p></li>
+</ol>
+<img alt="_images/Streicholz-Pi-wiki.jpg" src="_images/Streicholz-Pi-wiki.jpg" />
+<p>Por simplicidad vamos a considerar que la distancia entre rayas
+<span class="math notranslate nohighlight">\(t\)</span> es mayor que la longitud de las agujas <span class="math notranslate nohighlight">\(\ell\)</span></p>
+<img alt="_images/Buffon_needle_wiki.png" src="_images/Buffon_needle_wiki.png" />
+<p>La probabilidad de que una aguja cruce una línea será:</p>
+<div class="math notranslate nohighlight">
+\[P = \frac{2 \ell}{t\, \pi}\]</div>
+<p>por lo que podemos calcular el valor de <span class="math notranslate nohighlight">\(\pi\)</span> si estimamos la
+probabilidad <span class="math notranslate nohighlight">\(P\)</span>. Realizar una función que estime <span class="math notranslate nohighlight">\(\pi\)</span>
+utilizando este método y repetir las comparaciones de los dos puntos
+anteriores pero ahora utilizando este método y el de las áreas.</p>
+</li>
 </ol>
 </section>
 </section>
