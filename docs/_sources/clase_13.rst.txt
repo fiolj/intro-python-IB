@@ -1513,6 +1513,32 @@ Generamos ahora “datos” con dispersión basados en la función
 
 .. code:: python
 
+    sfuncion
+
+
+
+
+.. parsed-literal::
+
+    '${0:.3}\\, \\sin ({1:.2}\\, x {3:+.2f}) \\, \\exp(-{2:.2f} x)$'
+
+
+
+.. code:: python
+
+    sfuncion.format(1.,2.,3.,4.)
+
+
+
+
+.. parsed-literal::
+
+    '$1.0\\, \\sin (2.0\\, x +4.00) \\, \\exp(-3.00 x)$'
+
+
+
+.. code:: python
+
     x = np.linspace(0., 2*np.pi, 50)
     y0 = fit_func(x, 1., 3., 1/3, 0 )
     y = y0 + 0.1*ruido
@@ -1527,6 +1553,11 @@ y los graficamos
     plt.xlabel("Eje x") # labels again
     plt.ylabel("Eje y")
     plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_130_0.png
+
 
 Ahora vamos a interpolar los datos utilizando funciones del paquete
 **Scipy**. En primer lugar vamos a utilizar la función ``curve_fit``:
@@ -1596,7 +1627,7 @@ Ya tenemos los valores a ajustar guardados en arrays ``x`` e ``y``
 
 .. code:: python
 
-    plt.figure(figsize=(8,10))
+    plt.figure(figsize=(8,8))
     plt.plot(x,y0,'-', alpha=0.7,label="$f(x)$") 
     plt.plot(x,y,'ok', alpha=0.5, label='Datos') # repeated from above
     label=sfuncion.format(*params)
@@ -1606,6 +1637,11 @@ Ya tenemos los valores a ajustar guardados en arrays ``x`` e ``y``
     plt.legend(loc='best');
     ylim = plt.ylim()
     plt.ylim((ylim[0],1.2*ylim[1]));
+
+
+
+.. image:: figuras/13_fiteos_138_0.png
+
 
 Veamos otro ejemplo similar, con muchos datos y dispersión
 
@@ -1642,6 +1678,11 @@ Veamos otro ejemplo similar, con muchos datos y dispersión
     plt.ylabel("Eje y")
     plt.legend(loc='best');
 
+
+
+.. image:: figuras/13_fiteos_144_0.png
+
+
 La función ``curve_fit()`` que realiza el ajuste devuelve dos valores:
 El primero es un *array* con los valores de los parámetros obtenidos, y
 el segundo es un *array* con los valores correspondientes a la matriz de
@@ -1650,7 +1691,42 @@ para cada parámetro
 
 .. code:: python
 
+    params
+
+
+
+
+.. parsed-literal::
+
+    array([1.00791281e+00, 3.00256605e+00, 3.37480757e-01, 2.05060525e-03])
+
+
+
+.. code:: python
+
+    p_covarianza.shape
+
+
+
+
+.. parsed-literal::
+
+    (4, 4)
+
+
+
+.. code:: python
+
     np.diagonal(p_covarianza)
+
+
+
+
+.. parsed-literal::
+
+    array([1.69717514e-04, 4.11713696e-05, 4.52836100e-05, 1.47952641e-04])
+
+
 
 Así, por ejemplo el primer parámetro (correspondiente a la amplitud
 ``a``) toma en estos casos el valor:
@@ -1659,6 +1735,15 @@ Así, por ejemplo el primer parámetro (correspondiente a la amplitud
 
     for j,v in enumerate(['a','b', 'c', 'd' ]):
       print("{} = {:.5g} ± {:.3g}".format(v, params[j], np.sqrt(p_covarianza[j,j])))
+
+
+.. parsed-literal::
+
+    a = 1.0079 ± 0.013
+    b = 3.0026 ± 0.00642
+    c = 0.33748 ± 0.00673
+    d = 0.0020506 ± 0.0122
+
 
 Ejemplo: Fiteo de picos
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1675,6 +1760,19 @@ mediciones
 
     # Veamos qué obtuvimos
     plt.plot(r,'.')
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f934bcc4190>]
+
+
+
+
+.. image:: figuras/13_fiteos_154_1.png
+
 
 .. code:: python
 
@@ -1694,6 +1792,11 @@ valor correspondiente de la “Función Densidad de Probabilidad” (pdf)
     plt.legend(loc='best');
 
 
+
+
+.. image:: figuras/13_fiteos_157_0.png
+
+
 Usando esta idea generemos “datos” correspondiente a dos picos, que son
 diferentes y están separados pero que no podemos distinguirlos
 completamente porque se superponen.
@@ -1703,15 +1806,33 @@ Generemos los datos:
 .. code:: python
 
     npoints = 3000
-    r = np.r_[np.random.normal(size=npoints), np.random.normal(loc=2, scale=.6, size=npoints)]
+    r = np.hstack([np.random.normal(size=npoints), np.random.normal(loc=2, scale=.6, size=npoints)])
     y,x = np.histogram(r , bins = 40, range = (-3.5,4.5), density=True)
     x = (x[1:]+x[:-1])/2
+
+.. code:: python
+
+    r.shape, r.size
+
+
+
+
+.. parsed-literal::
+
+    ((6000,), 6000)
+
+
 
 .. code:: python
 
     plt.figure(figsize=fsize)
     plt.plot(x,y,'o--k', alpha=0.6, label='"Medición"')
     plt.legend(loc='best');
+
+
+
+
+.. image:: figuras/13_fiteos_161_0.png
 
 
 Ahora, por razones físicas (o porque no tenemos ninguna idea mejor)
@@ -1734,6 +1855,16 @@ ellas. En total tendremos seis parámetros a optimizar:
 
     help(modelo)
 
+
+.. parsed-literal::
+
+    Help on function modelo in module __main__:
+    
+    modelo(x, *coeffs)
+        Suma de dos Gaussianas, con pesos dados por coeffs[0] y coeffs[3], respectivamente
+    
+
+
 Ahora es muy fácil realizar el fiteo. Mirando el gráfico proponemos
 valores iniciales, donde los tres primeros valores corresponde a los
 parámetros de la primera Gaussiana y los tres últimos a los de la
@@ -1745,6 +1876,12 @@ segunda:
     c, cov = curve_fit(modelo, x, y, p0 = c0)
     print(c)
 
+
+.. parsed-literal::
+
+    [0.50382101 0.02637146 0.99590753 0.49702386 2.0090235  0.60030736]
+
+
 .. code:: python
 
     plt.figure(figsize=fsize)
@@ -1754,6 +1891,11 @@ segunda:
     plt.plot(x,c[0]*stats.norm.pdf(x,loc=c[1], scale=c[2]), '--', alpha=0.7, label='Gaussiana 1')
     plt.plot(x,c[3]*stats.norm.pdf(x,loc=c[4], scale=c[5]), '--', alpha=0.7, label='Gaussiana 2')
     plt.legend( loc = 'best' );
+
+
+
+
+.. image:: figuras/13_fiteos_167_0.png
 
 
 Veamos un ejemplo de ajuste de datos en el plano mediante la función
@@ -1828,9 +1970,33 @@ Veamos un ejemplo de ajuste de datos en el plano mediante la función
     plt.subplots_adjust(hspace=0.3, wspace=0.)
 
 
+
+.. parsed-literal::
+
+    --------------------------------------------------
+    Valores de los parámetros
+    ------- -- --- ----------
+    Real   : (3, 1, 0.5)
+    Inicial: (1, 4, 1)
+    Ajuste : [3.0019936  1.00706439 0.49887468]
+
+
+
+.. image:: figuras/13_fiteos_169_1.png
+
+
 .. code:: python
 
     ydata.shape, Z.shape
+
+
+
+
+.. parsed-literal::
+
+    ((10000,), (100, 100))
+
+
 
 En este gráfico tenemos:
 
@@ -1848,17 +2014,19 @@ En este gráfico tenemos:
 Ejercicios 13 (b)
 -----------------
 
-2. Queremos hacer un programa que permita fitear una curva como suma de
-   ``N`` funciones gaussianas:
+2. **Para Entregar:** Queremos hacer un programa que permita fitear una
+   curva como suma de ``N`` funciones gaussianas:
 
-   1. Haga una función, que debe tomar como argumento los arrays con los
+   1. Usando distribuciones normales e histogramas cree conjuntos de
+      datos con dos, tres y cuatro máximos.
+   2. Haga una función, que debe tomar como argumento los arrays con los
       datos: ``x``, ``y``, y valores iniciales para las Gaussianas:
       ``fit_gaussianas(x, y, *params)`` donde params son los 3N
       coeficientes (tres coeficientes para cada Gaussiana). Debe
       devolver los parámetros óptimos obtenidos.
-   2. Realice un programita que grafique los datos dados y la función
+   3. Realice un programita que grafique los datos dados y la función
       que resulta de sumar las gaussianas en una misma figura.
-   3. *Si puede* agregue líneas o flechas indicando la posición del
+   4. *Si puede* agregue líneas o flechas indicando la posición del
       máximo y el ancho de cada una de las Gaussianas obtenidas.
 
 --------------
