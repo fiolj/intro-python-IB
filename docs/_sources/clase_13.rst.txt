@@ -1,0 +1,1866 @@
+.. _clase_13:
+
+Clase 13: Interpolación y ajuste de curvas (fiteo) 
+====================================================
+
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    plt.style.use('presentation')
+    fsize= (9,6)
+
+Interpolación
+-------------
+
+Muchas veces tenemos mediciones de datos variando algún parámetro en las
+condiciones, y estos datos están medidos a intervalos mayores de los que
+deseamos. En estos casos es común tratar de inferir los valores que
+tendrían las mediciones para valores intermedios de nuestro parámetro.
+Una opción es interpolar los datos. Algunas facilidades para ello están
+en el subpaquete **interpolate** del paquete **Scipy**.
+
+Generemos algunos “datos experimentales”
+
+.. code:: python
+
+    def fmodel(x):
+      return (np.sin(x))**2*np.exp(-(x/3.5)**2)
+
+.. code:: python
+
+    x0 = np.linspace(0., 2*np.pi, 60)
+    y0 = fmodel(x0)
+    x = np.linspace(0., 2*np.pi, 8)
+    y = fmodel(x)
+
+.. code:: python
+
+    plt.plot(x0,y0,'--k', label='función', alpha=0.5)
+    plt.plot(x,y,'o', markersize=12, label='puntos')
+    plt.legend(loc='best')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f93b48cb490>
+
+
+
+
+.. image:: figuras/13_fiteos_6_1.png
+
+
+Acá hemos simulado datos con una función oscilante con un decaimiento
+exponencial.
+
+Ahora, importamos el submódulo ``interpolate`` del módulo ``scipy``, que
+nos permite interpolar los datos:
+
+.. code:: python
+
+    from scipy import interpolate
+
+La interpolación funciona en dos pasos. En el primer paso realizamos
+todos los cálculos y obtenemos la función interpolante, y en una segunda
+etapa utilizamos esa función para interpolar los valores en los nuevos
+puntos sobre el eje x que necesitamos.
+
+Utilizamos los *arrays* ``x`` e ``y`` como los pocos “datos
+experimentales” obtenidos
+
+.. code:: python
+
+    print(f"{x = }")
+
+
+.. parsed-literal::
+
+    x = array([0.        , 0.8975979 , 1.7951958 , 2.6927937 , 3.5903916 ,
+           4.48798951, 5.38558741, 6.28318531])
+
+
+y creamos la función interpolante basada en estos puntos:
+
+.. code:: python
+
+    interpol_lineal = interpolate.interp1d(x, y)
+
+.. code:: python
+
+    interpol_lineal # función
+
+
+
+
+.. parsed-literal::
+
+    <scipy.interpolate._interpolate.interp1d at 0x7f93b467c820>
+
+
+
+Ahora, creamos un conjunto de puntos ``x1`` donde queremos evaluar la
+función interpolando entre datos medidos
+
+.. code:: python
+
+    x1 = np.linspace(0, 2*np.pi, 33)
+    y1_l = interpol_lineal(x1)
+
+.. code:: python
+
+    plt.plot(x0,y0, '-k', label='función', alpha=0.5)
+    plt.plot(x, y,'o',  markersize=12, label='datos')
+    plt.plot(x1, y1_l,'--s', markersize=7, label='interp-1d')
+    plt.legend(loc='best')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f93b46806d0>
+
+
+
+
+.. image:: figuras/13_fiteos_16_1.png
+
+
+Como vemos, la función que creamos consiste de tramos rectos entre los
+puntos “datos”. Para realizar interpolaciones lineales (una recta entre
+pares de puntos) también se puede utilizar la rutina ``interp()`` del
+módulo **Numpy**, cuyos argumentos requeridos son: los nuevos puntos
+``x1`` donde queremos interpolar, además de los valores originales de
+``x`` y de ``y`` de la tabla a interpolar:
+
+.. code:: python
+
+    y1_l2= np.interp(x1,x,y)
+
+Notar que ``y1_l2`` da exactamente los mismos valores que ``y1_l``
+
+.. code:: python
+
+    np.all(y1_l2 == y1_l)
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Si bien el uso de ``np.interp`` es más directo, porque no se crea la
+función intermedia, cuando creamos la función con ``interp1d`` podemos
+aplicarla a diferentes conjuntos de valores de x:
+
+.. code:: python
+
+    interpol_lineal(np.linspace(0, 2*np.pi, 12))
+
+
+
+
+.. parsed-literal::
+
+    array([0.00000000e+00, 3.64223643e-01, 6.15515285e-01, 7.16230928e-01,
+           3.88910634e-01, 9.71667086e-02, 7.27120078e-02, 1.19301459e-01,
+           1.72109481e-01, 9.17229560e-02, 3.64455561e-02, 2.39038977e-33])
+
+
+
+La interface ``interp1d()`` tiene un argumento opcional, ``kind``, que
+define el tipo de interpolación a utilizar. Cuando utilizamos el
+argumento ‘nearest’ utiliza para cada valor el más cercano
+
+.. code:: python
+
+    interpol_near = interpolate.interp1d(x, y, kind='nearest')
+    y1_n = interpol_near(x1)
+
+.. code:: python
+
+    plt.plot(x0,y0, '-k', label='función', alpha=0.5)
+    plt.plot(x, y,'o', markersize=12, label='datos')
+    plt.plot(x1, y1_l,'--s', markersize=7, label='interp-1d')
+    plt.plot(x1, y1_n,'.', label='nearest')
+    plt.legend(loc='best');
+    print(x1.size, x1.size, x.size)
+
+
+.. parsed-literal::
+
+    33 33 8
+
+
+
+.. image:: figuras/13_fiteos_25_1.png
+
+
+Interpolación con polinomios
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Scipy** tiene rutinas para interpolar los datos usando un único
+polinomio global con grado igual al número de puntos dados:
+
+.. code:: python
+
+    def fm(x):
+      return x**4 - x**3*np.sin(x/6)
+    
+    x0 = np.linspace(0., 2*np.pi, 60)
+    y0 = fm(x0)
+    x = np.linspace(0., 2*np.pi, 5)
+    y = fm(x)
+    # 
+    # Creamos el polinomio interpolador
+    f = interpolate.lagrange(x, y)
+    y1 = f(x0)
+    # 
+    plt.figure(figsize=fsize)
+    plt.plot(x0,y1,'-', label=f'Lagrange ({x.size})')
+    plt.plot(x,y,'o', label='datos')
+    plt.plot(x0,y0,'--', color='C1', label='f(x)', alpha=0.7)
+    plt.legend(loc='best')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f939ffe8bd0>
+
+
+
+
+.. image:: figuras/13_fiteos_27_1.png
+
+
+Acá la función ``lagrange()`` devuelve un polinomio del tipo ``poly1d``,
+que puede ser ejecutado (como hicimos en la celda anterior)
+
+.. code:: python
+
+    type(f)
+
+
+
+
+.. parsed-literal::
+
+    numpy.poly1d
+
+
+
+.. code:: python
+
+    f.coeffs
+
+
+
+
+.. parsed-literal::
+
+    array([ 0.9463431 , -0.80568571,  1.98841541, -1.56609363,  0.        ])
+
+
+
+Los polinomios interpolantes pueden tener problemas, principalmente en
+las puntas, o cuando el grado del polinomio es muy alto. Consideremos
+por ejemplo el caso donde tenemos una tabla ``x1  f(x1)`` con muchos
+datos y queremos interpolar sobre una nueva tabla de valores ``x0``.
+Incluso para un grado intermedio de polinomio se observan oscilaciones
+entre los puntos
+
+.. code:: python
+
+    x0 = np.linspace(0., 2*np.pi, 60)
+    x1 = np.linspace(0, 2*np.pi, 7)
+    y1 = fmodel(x1)
+    f1 = interpolate.lagrange(x1, y1)
+    plt.figure(figsize=fsize)
+    plt.plot(x0,f1(x0),'-', label=f'Lagrange ({x1.size})')
+    plt.plot(x1,y1,'o', label='datos')
+    plt.plot(x0,fmodel(x0),'--', color='C1', label='f(x)', alpha=0.7)
+    plt.legend(loc='best')
+
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f939ffd8bd0>
+
+
+
+
+.. image:: figuras/13_fiteos_32_1.png
+
+
+.. code:: python
+
+    x0 = np.linspace(0., 4*np.pi, 60)
+    x1 = np.linspace(0, 4*np.pi, 21)
+    y1 = fmodel(x1)
+    f1 = interpolate.lagrange(x1, y1)
+    plt.figure(figsize=fsize)
+    plt.plot(x0,f1(x0),'-', label=f'Lagrange ({x1.size})')
+    plt.plot(x1,y1,'o', label='datos')
+    plt.plot(x0, interpolate.barycentric_interpolate(x1,y1,x0), label="Lagrange (estable)")
+    plt.plot(x0,fmodel(x0),'--', color='C1', label='f(x)', alpha=0.7)
+    plt.legend(loc='best')
+
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f93abfd8bd0>
+
+
+
+
+.. image:: figuras/13_fiteos_33_1.png
+
+
+De todas maneras, para los casos en que es aplicable, existen dos
+implementaciones: ``interpolate.lagrange()`` y una segunda llamada
+``interpolate.barycentric_interpolate()`` que está basada en un trabajo
+de 2004 y es numéricamente más estable.
+
+Splines
+~~~~~~~
+
+-  Las *Splines* son interpolaciones por polinomios de a trazos, que se
+   eligen para que no sólo los valores sino también sus derivadas
+   coincidan dando una curva suave.
+-  Para eso, si se pide que la aproximación coincida con los valores
+   tabulados en los puntos dados, la aproximación es efectivamente una
+   **interpolación**.
+-  *Cubic Splines* se refiere a que utilizamos polinomios cúbicos en
+   cada trozo.
+
+El argumento opcional ``kind`` de la interface ``interp1d()``, que
+define el tipo de interpolación a utilizar, acepta valores del tipo
+*string* que pueden ser: ‘linear’, ‘nearest’, ‘zero’, ‘slinear’,
+‘quadratic’, ‘cubic’, o un número entero indicando el orden.
+
+.. code:: python
+
+    x0 = np.linspace(0, 2*np.pi, 60)
+    x1 = np.linspace(0, 2*np.pi, 30)
+    interp = {}
+    for k in ['zero', 'slinear', 'quadratic', 'cubic']:
+      interp[k] = interpolate.interp1d(x, y, kind=k)
+
+.. code:: python
+
+    fig = plt.figure(figsize=fsize)
+    plt.plot(x0,y0,'-k', alpha=0.7, label='f(x)')
+    plt.plot(x,y,'o', markersize=12, label='datos')
+    plt.plot(x1,interp['cubic'](x1),  '--', color='C2', label=u'cúbica')
+    plt.plot(x1,interp['slinear'](x1),'.-', lw=2, label='lineal')
+    plt.legend(loc='best')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f939eb4b650>
+
+
+
+
+.. image:: figuras/13_fiteos_39_1.png
+
+
+Tratamos de incluir todo en un sólo gráfico (y rogamos que se entienda
+algo)
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    for k, v in interp.items():
+      plt.plot(x1, v(x1), label=k)
+    plt.plot(x0,y0,'--k', alpha=0.7, label='f(x)')
+    plt.plot(x,y,'ob', markersize=12, label='datos')
+    plt.legend(loc='best')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7f939ebfc150>
+
+
+
+
+.. image:: figuras/13_fiteos_41_1.png
+
+
+En resumen, los métodos disponibles en ``interpolate.interp1d`` son:
+
+-  ``linear``: Interpolación lineal, utilizando rectas (default)
+-  ``nearest`` : Valor constante correspondiente al dato más cercano
+-  ``zero`` o ``0`` : Una spline de orden cero. Toma el valor a la
+   izquierda
+-  ``slinear`` o ``1`` : Spline de orden 1. Igual a ‘linear’
+-  ``quadratic`` o ``2`` : Spline de segundo orden
+-  ``cubic`` o ``3`` : Spline de tercer orden
+
+Como vemos de los argumentos ``zero``, ``slinear``, ``quadratic``,
+``cubic`` para especificar splines de cero, primer, segundo y tercer
+orden se puede pasar como argumento un número. En ese caso se utiliza
+siempre **splines** y el número indica el orden de las splines a
+utilizar:
+
+.. code:: python
+
+    for k,s in zip([0,1,2,3], ['zero','slinear','quadratic','cubic']):
+      num = interpolate.interp1d(x,y, kind=k)
+      tipo = interpolate.interp1d(x,y, kind=s)
+      print(f"¿{k} == {s}? -> {np.allclose(num(x1), tipo(x1))}")
+
+
+.. parsed-literal::
+
+    ¿0 == zero? -> True
+    ¿1 == slinear? -> True
+    ¿2 == quadratic? -> True
+    ¿3 == cubic? -> True
+
+
+Además La interpolación lineal simple es, en la práctica, igual a la
+interpolación por splines de primer orden:
+
+.. code:: python
+
+    interpol_lineal = interpolate.interp1d(x, y)
+    np.allclose(interp['slinear'](x1), interpol_lineal(x1)) # También son iguales
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Finalmente, veamos que la interpolación ``nearest`` toma para cada nuevo
+valor ``x1`` el valor ``y1(x1)`` igual a ``y(x0)`` donde ``x0`` es el
+valor **más cercano** a ``x1`` mientras que la spline de orden cero
+(``zero``) toma el valor **más cercano a la izquierda del dato**:
+
+.. code:: python
+
+    interpol_near = interpolate.interp1d(x, y, kind='nearest')
+    alfa=1
+    plt.figure(figsize=fsize)
+    plt.plot(x1, interpol_near(x1),'-o', label='nearest', alpha=alfa)
+    plt.plot(x1, interp['zero'](x1), '-.', label='Spline zero'.format(k), alpha=alfa)
+    plt.plot(x,y,'xk', markersize=12, label='datos')
+    
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_47_0.png
+
+
+El submódulo ``signal`` tiene rutinas adicionales para realizar
+*splines*, que permiten agregar un “alisado”, pero en este caso ya no
+interpolan estrictamente sino que puede ser que la aproximación no pase
+por los puntos dados.
+
+B-Splines
+~~~~~~~~~
+
+Hay otra opción para realizar interpolación con Splines en Scipy. Las
+llamadas **B-Splines** son funciones diseñadas para generalizar
+polinomios, con un alto grado de **localidad**.
+
+Para definir las **B-Splines** necesitamos dos cosas:
+
+1. Elegir el grado de los polinomios (mayor o igual a 0)
+2. Dividir el intervalo en :math:`n` “nodos”
+
+Las funciones se definen mediante la recursión:
+
+.. math::
+
+
+   N_{i, 0}(x) = 1,\qquad \qquad \textrm{si $t_i \le x < t_{i+1}, \qquad \qquad$ sino $0$,}
+
+.. math::
+
+
+   N_{i, k}(x) = \frac{x - t_i}{t_{i+k} - t_i} N_{i, k-1}(x)
+            + \frac{t_{i+k+1} - x}{t_{i+k+1} - t_{i+1}} N_{i+1, k-1}(x)
+
+Las más simples, cuando el orden es k=0, son funciones constantes a
+trozos
+
+.. image:: figuras/bsplines0.png
+
+Para :math:`k>0` las funciones se calculan por recurrencia en término de
+dos funciones del orden anterior. Entonces, siempre serán diferentes de
+cero sólo en un intervalo finito. En ese intervalo presentan un único
+máximo y luego decaen suavemente. Las más usuales son las de orden
+:math:`k=3`:
+
+.. image:: figuras/bsplines.png
+
+(Figura de http://www.brnt.eu/phd)
+
+La idea es encontrar una función :math:`f(x)` que sea suave y pase por
+la tabla de puntos :math:`(x,y)` dados, o cerca de ellos con la
+condición que tanto la función como algunas de sus derivadas sea suave.
+La función :math:`f(x)` se describe como una expansión en la base de
+Splines (y de ahí el nombre *B-Splines*)
+
+.. math::
+
+
+   f(x) = \sum_{j=0} a_{i,j} N_{j}(x) \qquad \forall \quad x_{i} < x \le x_{i+1}
+
+La aproximación se elige de tal manera de optimizar el número de
+elementos de la base a utilizar con la condición que el error cuadrático
+a los puntos sea menor a un cierto valor umbral :math:`s`
+
+.. math::
+
+
+   \sum_{i=1}^{n} \left| f(x_{i}) - y_{i}\right|^2 \le s
+
+Veamos cómo usar la implementación de **Scipy** para interpolar datos.
+En primer lugar creamos la representación en B-Splines de nuestra tabla
+de datos :math:`(x,y)`:
+
+.. code:: python
+
+    tck0 = interpolate.splrep(x,y)
+
+Acá, otra vez estamos operando en dos pasos. En el primero creamos la
+representación de las splines para los datos dados. Como no pusimos
+explícitamente el orden, utiliza el valor por default ``k=3``.
+
+En el segundo paso obtenemos los valores interpolados sobre la grilla
+``x2``:
+
+.. code:: python
+
+    tck0
+
+
+
+
+.. parsed-literal::
+
+    (array([0.        , 0.        , 0.        , 0.        , 3.14159265,
+            6.28318531, 6.28318531, 6.28318531, 6.28318531]),
+     array([-1.10164975e-15,  1.37237275e+01, -6.86554640e+01,  4.51211011e+02,
+             1.34372767e+03,  0.00000000e+00,  0.00000000e+00,  0.00000000e+00,
+             0.00000000e+00]),
+     3)
+
+
+
+.. code:: python
+
+    x2 = np.linspace(0, 2*np.pi, 60) # Nuevos puntos donde interpolar
+    y_s0 = interpolate.splev(x2, tck0) # Valores interpolados: y_s0[j] = f(x2[j])
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x,y,'o', markersize=12, label='datos')
+    plt.plot(x2,y_s0,'-', label=r'B-Spline')
+    plt.plot(x0,y0,'--k', alpha=0.7, label='f(x)')
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_58_0.png
+
+
+Estas funciones interpolan los datos con curvas continuas y con
+derivadas segundas continuas.
+
+Lines are guides to the eyes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sin embargo, estas rutinas no necesariamente realizan *interpolación* en
+forma estricta, pasando por todos los puntos dados, sino que en realidad
+realiza una aproximación minimzando por cuadrados mínimos la distancia a
+la tabla de puntos dados.
+
+Esto es particularmente importante cuando tenemos datos que tienen
+dispersión. En esos casos necesitamos curvas que no interpolen, es decir
+que *no necesariamente* pasen por todos los puntos.
+
+| La rutina ``splrep`` tiene varios argumentos opcionales. Entre ellos
+  un parámetro de suavizado ``s`` que corresponde a la condición de
+  distancia entre la aproximación y los valores de la tabla mencionado
+  anteriormente.
+| Para ver como funciona, creemos una tabla de valores ``x, y`` con
+  :math:`x \in [0,2\pi]` **no necesariamente equiespaciados**,
+  :math:`y=\sin(x)/2`, donde le agregamos algo de ruido a ``y``
+
+.. code:: python
+
+    # Creamos dos tablas de valores x, y
+    x3 = np.linspace(0., 2*np.pi, 40)
+    x4 = np.linspace(0., 2*np.pi, 40)
+    x3[5:-5] -= 0.7*(0.5-np.random.random(30)) # Le agregamos una separación al azar
+    x3.sort()                       # Los ordenamos 
+    plt.plot(x3-x4,'o',label='data')
+    plt.plot(x3-x3, '-', alpha=0.7,label='sin incerteza')
+    plt.ylim((-0.3,0.3));
+
+
+
+.. image:: figuras/13_fiteos_63_0.png
+
+
+.. code:: python
+
+    y4 = 0.5* np.sin(x4)
+    y3 = 0.5* np.sin(x3) * (1+ 0.6*(0.5-np.random.random(x3.size)))
+
+.. code:: python
+
+    # Los puntos a interpolar tienen "ruido" en las dos direcciones x-y
+    plt.plot(x3,y3,'o', x4,y4, '.', alpha=0.7 );
+
+
+
+.. image:: figuras/13_fiteos_65_0.png
+
+
+.. code:: python
+
+    # Grilla donde evaluar la función interpolada
+    x1 = np.linspace(0, 2*np.pi, 90)
+
+.. code:: python
+
+    tck0 = interpolate.splrep(x3,y3, s=0)  # Interpolación con B-Splines
+    y_s0 = interpolate.splev(x1,tck0)      # Evaluamos en la nueva grilla
+    tck3 = interpolate.splrep(x3,y3,s=0.3) # Aproximación suavizada
+    y_s3 = interpolate.splev(x1,tck3)      # Evaluamos en la nueva grilla
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x1,y_s0,'--', lw=3, label=u'interpolación' )
+    plt.plot(x1,y_s3, "-",  label=u'suavizado');
+    plt.plot(x3,y3,'o', label='datos' )
+    plt.legend(loc='best');
+
+
+
+
+.. image:: figuras/13_fiteos_68_0.png
+
+
+El valor del parámetro ``s`` determina cuanto se suaviza la curva. El
+valor por default ``s=0`` obliga al algoritmo a obtener una solución que
+no difiere en los valores de la tabla, un valor de ``s`` mayor que cero
+da cierta libertad para obtener la aproximación que se acerque a todos
+los valores manteniendo una curva relativamente suave. El suavizado
+máximo corresponde a ``s=1``. Veamos cómo cambia la aproximación con el
+factor ``s``:
+
+.. code:: python
+
+    tck1 = interpolate.splrep(x3,y3, s=0.1)  # Interpolación con suavizado
+    y_s1 = interpolate.splev(x1,tck1)
+    plt.figure(figsize=fsize)
+    plt.plot(x1,y_s1, "-",  label='s=0.1');
+    plt.plot(x1,y_s3, "--",  label='s=0.3');
+    plt.plot(x3,y3,'o', markersize=8, label='datos' )
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_70_0.png
+
+
+.. code:: python
+
+    fig, (ax0, ax1) = plt.subplots(figsize=(2.1*fsize[0], fsize[1]), ncols=2)
+    for s in [0, 0.01, 0.05, 0.1, 0.2]:
+      tck1 = interpolate.splrep(x3,y3, s=s)  # Interpolación con suavizado
+      ys = interpolate.splev(x1,tck1)
+      ax0.plot(x1,ys, "-",  label=f'{s =}');
+      ax1.plot(x1,ys, "-",  label=f'{s =}');
+    ax0.plot(x3,y3,'ok', label='datos' )
+    ax1.plot(x3,y3,'ok', label='datos' )
+    plt.xlim(3,6)
+    ax1.set_ylim(-0.9, -0.2)
+    ax1.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_71_0.png
+
+
+Cantidades derivadas de *splines*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+De la interpolación (suavizada) podemos calcular, por ejemplo, la
+derivada.
+
+.. code:: python
+
+    yderiv = interpolate.splev(x1,tck3,der=1) #  Derivada
+
+Si tenemos sólo los datos podríamos tratar de calcular la derivada en
+forma numérica como el coseno
+
+.. math::  y' = 0.5 \sqrt{1 - (2y)^2} 
+
+Comparemos los dos resultados:
+
+.. code:: python
+
+    cond = (x3 > np.pi/2) & (x3 < 3*np.pi/2)
+    yprima1 = np.where(cond, -1, 1) * 0.5*np.sqrt(np.abs(1 - (2*y3)**2))
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x3, yprima1,"sr", label=r"con $\sqrt{1-(2y)^2}/2$")
+    plt.plot(x1,yderiv,'-k', label=u'Splines')
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_77_0.png
+
+
+o podemos calcular la integral, o las raíces de la función
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    yt= np.array([interpolate.splint(0,t,tck3) for t in x1])
+    plt.plot(x1,yt,'o');
+
+
+
+.. image:: figuras/13_fiteos_79_0.png
+
+
+.. code:: python
+
+    raices = interpolate.sproot(tck3)
+
+.. code:: python
+
+    plt.axhline(0, color='k',ls='--');
+    plt.plot(x3,y3, "--",  label=u'datos');
+    plt.plot(x1,y_s3, "-",  label=u's=0.3');
+    plt.plot(raices, np.zeros(len(raices)), 'o', markersize=12)
+    plt.legend();
+
+
+
+.. image:: figuras/13_fiteos_81_0.png
+
+
+Interpolación en dos dimensiones
+--------------------------------
+
+Un ejemplo del caso más simple de interpolación en dos dimensiones
+podría ser cuando tenemos los datos sobre una grilla, que puede no estar
+equiespaciada y necesitamos los valores sobre otra grilla (quizás para
+graficarlos). En ese caso podemos usar ``scipy.interpolate.interp2d()``
+para interpolar los datos a una grilla equiespaciada. El método necesita
+conocer los datos sobre la grilla, y los valores de ``x`` e ``y`` a los
+que corresponden.
+
+Definamos una tabla de valores con nuestros datos sobre una grilla
+:math:`x-y`, no-equiespaciada en la dirección :math:`y`:
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    def f(x,y):
+      return 5* y * (1-x) * np.cos(4*np.pi*x) * np.exp(-y/2)
+    
+    # Nuestra tabla de valores
+    x = np.linspace(0, 4, 13)
+    y = np.array([0, 1, 2, 3.75, 3.875, 3.9375, 4])
+
+
+.. code:: python
+
+    # 
+    X, Y = np.meshgrid(x, y)
+    Z = f(X,Y)
+
+.. code:: python
+
+    Y
+
+
+
+
+.. parsed-literal::
+
+    array([[0.    , 0.    , 0.    , 0.    , 0.    , 0.    , 0.    , 0.    ,
+            0.    , 0.    , 0.    , 0.    , 0.    ],
+           [1.    , 1.    , 1.    , 1.    , 1.    , 1.    , 1.    , 1.    ,
+            1.    , 1.    , 1.    , 1.    , 1.    ],
+           [2.    , 2.    , 2.    , 2.    , 2.    , 2.    , 2.    , 2.    ,
+            2.    , 2.    , 2.    , 2.    , 2.    ],
+           [3.75  , 3.75  , 3.75  , 3.75  , 3.75  , 3.75  , 3.75  , 3.75  ,
+            3.75  , 3.75  , 3.75  , 3.75  , 3.75  ],
+           [3.875 , 3.875 , 3.875 , 3.875 , 3.875 , 3.875 , 3.875 , 3.875 ,
+            3.875 , 3.875 , 3.875 , 3.875 , 3.875 ],
+           [3.9375, 3.9375, 3.9375, 3.9375, 3.9375, 3.9375, 3.9375, 3.9375,
+            3.9375, 3.9375, 3.9375, 3.9375, 3.9375],
+           [4.    , 4.    , 4.    , 4.    , 4.    , 4.    , 4.    , 4.    ,
+            4.    , 4.    , 4.    , 4.    , 4.    ]])
+
+
+
+.. code:: python
+
+    X
+
+
+
+
+.. parsed-literal::
+
+    array([[0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ],
+           [0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ],
+           [0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ],
+           [0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ],
+           [0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ],
+           [0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ],
+           [0.        , 0.33333333, 0.66666667, 1.        , 1.33333333,
+            1.66666667, 2.        , 2.33333333, 2.66666667, 3.        ,
+            3.33333333, 3.66666667, 4.        ]])
+
+
+
+.. code:: python
+
+    # Grilla en la cual interpolar
+    x2 = np.linspace(0, 4, 65)
+    y2 = np.linspace(0, 4, 65)
+    # Notar que le tenemos que pasar los arrays unidimensionales x e y
+    f1 = interpolate.interp2d(x, y, Z, kind='linear')
+    Z1 = f1(x2, y2)
+    f3 = interpolate.interp2d(x, y, Z, kind='cubic')
+    Z3 = f3(x2, y2)
+    f5 = interpolate.interp2d(x, y, Z, kind='quintic')
+    Z5 = f5(x2, y2)
+
+
+.. parsed-literal::
+
+    /tmp/ipykernel_19269/250484020.py:5: DeprecationWarning: `interp2d` is deprecated!
+    `interp2d` is deprecated in SciPy 1.10 and will be removed in SciPy 1.12.0.
+    
+    For legacy code, nearly bug-for-bug compatible replacements are
+    `RectBivariateSpline` on regular grids, and `bisplrep`/`bisplev` for
+    scattered 2D data.
+    
+    In new code, for regular grids use `RegularGridInterpolator` instead.
+    For scattered data, prefer `LinearNDInterpolator` or
+    `CloughTocher2DInterpolator`.
+    
+    For more details see
+    `https://gist.github.com/ev-br/8544371b40f414b7eaf3fe6217209bff`
+    
+      f1 = interpolate.interp2d(x, y, Z, kind='linear')
+    /tmp/ipykernel_19269/250484020.py:6: DeprecationWarning:         `interp2d` is deprecated!
+            `interp2d` is deprecated in SciPy 1.10 and will be removed in SciPy 1.12.0.
+    
+            For legacy code, nearly bug-for-bug compatible replacements are
+            `RectBivariateSpline` on regular grids, and `bisplrep`/`bisplev` for
+            scattered 2D data.
+    
+            In new code, for regular grids use `RegularGridInterpolator` instead.
+            For scattered data, prefer `LinearNDInterpolator` or
+            `CloughTocher2DInterpolator`.
+    
+            For more details see
+            `https://gist.github.com/ev-br/8544371b40f414b7eaf3fe6217209bff`
+    
+      Z1 = f1(x2, y2)
+    /tmp/ipykernel_19269/250484020.py:7: DeprecationWarning: `interp2d` is deprecated!
+    `interp2d` is deprecated in SciPy 1.10 and will be removed in SciPy 1.12.0.
+    
+    For legacy code, nearly bug-for-bug compatible replacements are
+    `RectBivariateSpline` on regular grids, and `bisplrep`/`bisplev` for
+    scattered 2D data.
+    
+    In new code, for regular grids use `RegularGridInterpolator` instead.
+    For scattered data, prefer `LinearNDInterpolator` or
+    `CloughTocher2DInterpolator`.
+    
+    For more details see
+    `https://gist.github.com/ev-br/8544371b40f414b7eaf3fe6217209bff`
+    
+      f3 = interpolate.interp2d(x, y, Z, kind='cubic')
+    /tmp/ipykernel_19269/250484020.py:8: DeprecationWarning:         `interp2d` is deprecated!
+            `interp2d` is deprecated in SciPy 1.10 and will be removed in SciPy 1.12.0.
+    
+            For legacy code, nearly bug-for-bug compatible replacements are
+            `RectBivariateSpline` on regular grids, and `bisplrep`/`bisplev` for
+            scattered 2D data.
+    
+            In new code, for regular grids use `RegularGridInterpolator` instead.
+            For scattered data, prefer `LinearNDInterpolator` or
+            `CloughTocher2DInterpolator`.
+    
+            For more details see
+            `https://gist.github.com/ev-br/8544371b40f414b7eaf3fe6217209bff`
+    
+      Z3 = f3(x2, y2)
+    /tmp/ipykernel_19269/250484020.py:9: DeprecationWarning: `interp2d` is deprecated!
+    `interp2d` is deprecated in SciPy 1.10 and will be removed in SciPy 1.12.0.
+    
+    For legacy code, nearly bug-for-bug compatible replacements are
+    `RectBivariateSpline` on regular grids, and `bisplrep`/`bisplev` for
+    scattered 2D data.
+    
+    In new code, for regular grids use `RegularGridInterpolator` instead.
+    For scattered data, prefer `LinearNDInterpolator` or
+    `CloughTocher2DInterpolator`.
+    
+    For more details see
+    `https://gist.github.com/ev-br/8544371b40f414b7eaf3fe6217209bff`
+    
+      f5 = interpolate.interp2d(x, y, Z, kind='quintic')
+    /tmp/ipykernel_19269/250484020.py:10: DeprecationWarning:         `interp2d` is deprecated!
+            `interp2d` is deprecated in SciPy 1.10 and will be removed in SciPy 1.12.0.
+    
+            For legacy code, nearly bug-for-bug compatible replacements are
+            `RectBivariateSpline` on regular grids, and `bisplrep`/`bisplev` for
+            scattered 2D data.
+    
+            In new code, for regular grids use `RegularGridInterpolator` instead.
+            For scattered data, prefer `LinearNDInterpolator` or
+            `CloughTocher2DInterpolator`.
+    
+            For more details see
+            `https://gist.github.com/ev-br/8544371b40f414b7eaf3fe6217209bff`
+    
+      Z5 = f5(x2, y2)
+
+
+Ahora tenemos los valores de la función sobre la grilla determinada por
+todos los posibles pares :math:`(x,y)` de la tabla original. En el caso
+de ``f1`` utilizamos una interpolación lineal para cada punto, en ``f3``
+una interpolación cúbica, y en ``f5`` una interpolación de orden 5.
+Grafiquemos los resultados
+
+.. code:: python
+
+    fig, ax = plt.subplots(figsize=fsize, nrows=2, ncols=2)
+    
+    # Solo para graficar
+    X2, Y2 = np.meshgrid(x2, y2)
+    
+    # Agregamos los puntos de la grilla original
+    for (i,j),a in np.ndenumerate(ax):
+      ax[i,j].plot(X,Y,'.k', markersize=3)
+    
+    ax[0,0].pcolormesh(X, Y, Z, shading='auto')
+    ax[0,0].set_title('Datos')
+    ax[0,1].pcolormesh(X2, Y2, Z1, shading='auto')
+    ax[0,1].set_title('Lineal')
+    ax[1,0].pcolormesh(X2, Y2, Z3, shading='auto')
+    ax[1,0].set_title('Cúbica')
+    ax[1,1].pcolormesh(X2, Y2, Z5, shading='auto')
+    ax[1,1].set_title('Quíntica');
+    fig.subplots_adjust(hspace=0.3)
+
+
+
+
+.. image:: figuras/13_fiteos_90_0.png
+
+
+Acá usamos ``numpy.meshgrid()`` que permite generar grillas
+bidimensionales a partir de dos vectores unidimensionales. Por ejemplo
+de
+
+.. code:: python
+
+   X, Y = np.meshgrid(x,y)
+
+Repitamos un ejemplo simple de ``meshgrid()`` para entender su uso
+
+.. code:: python
+
+    a = np.arange(3)
+    b = np.arange(3,7)
+    print(' a=', a,'\n','b=', b)
+
+
+.. parsed-literal::
+
+     a= [0 1 2] 
+     b= [3 4 5 6]
+
+
+.. code:: python
+
+    A,B = np.meshgrid(a,b)
+    print('A=\n', A,'\n')
+    print('B=\n', B)
+
+
+.. parsed-literal::
+
+    A=
+     [[0 1 2]
+     [0 1 2]
+     [0 1 2]
+     [0 1 2]] 
+    
+    B=
+     [[3 3 3]
+     [4 4 4]
+     [5 5 5]
+     [6 6 6]]
+
+
+Interpolación sobre datos no estructurados
+------------------------------------------
+
+Si tenemos datos, correspondientes a una función o una medición sólo
+sobre algunos valores :math:`(x,y)` que no se encuentran sobre una
+grilla, podemos interpolarlos a una grilla regular usando ``griddat()``.
+Veamos un ejemplo de uso
+
+.. code:: python
+
+    # Generamos los datos
+    
+    def f(x, y):
+      s = np.hypot(x, y)          # Calcula la hipotenusa
+      phi = np.arctan2(y, x)      # Calcula el ángulo
+      tau = s + s*(1-s)/5 * np.sin(6*phi) 
+      return 5*(1-tau) + tau
+    
+    # Generamos los puntos x,y,z en una grilla para comparar con la interpolación
+    # Notar que es una grilla de 100x100 = 10000 puntos
+    #
+    x = np.linspace(-1,1,100)
+    y =  np.linspace(-1,1,100)
+    X, Y = np.meshgrid(x,y)
+    T = f(X, Y)
+
+
+Aquí ``T`` contiene la función sobre todos los puntos :math:`(x,y)`
+obtenidos de combinar cada punto en el vector ``x`` con cada punto en el
+vector ``y``. Notar que la cantidad total de puntos de ``T`` es
+``T.size = 10000``
+
+Elegimos ``npts=400`` puntos al azar de la función que vamos a usar como
+tabla de datos a interpolar usando distintos métodos de interpolación
+
+.. code:: python
+
+    npts = 400
+    px, py = np.random.choice(x, npts), np.random.choice(y, npts)
+    Z = f(px, py)
+
+Para poder mostrar todos los métodos juntos, vamos a interpolar dentro
+del loop ``for``
+
+.. code:: python
+
+    # Graficación:
+    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=fsize, )
+    
+    # Graficamos la función sobre la grilla estructurada a modo de ilustración
+    # Graficamos los puntos seleccionados
+    ax[0,0].contourf(X, Y, T)
+    ax[0,0].scatter(px, py, c='k', alpha=0.6, marker='.', s=8)
+    ax[0,0].set_title('Puntos de f(X,Y)', fontsize='large')
+    
+    # Interpolamos usando los distintos métodos y graficamos
+    for i, method in enumerate(('nearest', 'linear', 'cubic')):
+      Ti = interpolate.griddata((px, py), Z, (X, Y), method=method)
+      r, c = (i+1) // 2, (i+1) % 2
+      ax[r,c].contourf(X, Y, Ti)
+      ax[r,c].set_title('{}'.format(method), fontsize='large')
+        
+    plt.subplots_adjust(hspace=0.3, wspace=0.3)
+
+
+
+.. image:: figuras/13_fiteos_101_0.png
+
+
+En la primera figura (arriba a la izquierda) graficamos la función
+evaluada en el total de puntos (10000 puntos) junto con los puntos
+utilizados para el ajuste. Los otros tres gráficos corresponden a la
+función evaluada siguiendo el ajuste correspondiente en cada caso.
+
+Fiteos de datos
+---------------
+
+Ajuste con polinomios
+~~~~~~~~~~~~~~~~~~~~~
+
+Habitualmente realizamos ajustes sobre datos que tienen incertezas o
+ruido. Generemos estos datos (con ruido normalmente distribuido)
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    x = np.linspace(0, 10, 50)
+    y0 = 2.5*x + 1.2
+    ruido = np.random.normal(loc= 0., scale= 1, size= y0.size)
+    y = y0 + ruido
+    plt.plot(x,y0,'--')
+    plt.plot(x,y, 'ok', alpha=0.6)
+    plt.xlabel("Eje x")
+    plt.ylabel("Eje y");
+
+
+
+.. image:: figuras/13_fiteos_105_0.png
+
+
+Ahora vamos a ajustar con una recta
+
+.. math:: y = m x + b    \qquad \equiv \qquad    f(x) = p[0] x + p[1]
+
+Es una regresión lineal (o una aproximación con polinomios de primer
+orden)
+
+.. code:: python
+
+    p = np.polyfit(x,y,1)
+    # np.info(np.polyfit) # para obtener más información
+
+.. code:: python
+
+    print(p)
+    print(type(p))                  # Qué tipo es?
+
+
+.. parsed-literal::
+
+    [2.5494265  0.82929011]
+    <class 'numpy.ndarray'>
+
+
+.. note::  ¿Qué devuelve ``polyfit()``?
+  
+  Un array correspondiente a los coeficientes del polinomio de fiteo. En
+  este caso, como estamos haciendo un ajuste lineal, nos devuelve los
+  coeficientes de un polinomio de primer orden (una recta)
+  
+  .. code:: python
+  
+     y = p[0]*x + p[1]
+  
+  
+
+.. code:: python
+
+    np.polyfit?
+
+
+
+.. parsed-literal::
+
+    [0;31mSignature:[0m [0mnp[0m[0;34m.[0m[0mpolyfit[0m[0;34m([0m[0mx[0m[0;34m,[0m [0my[0m[0;34m,[0m [0mdeg[0m[0;34m,[0m [0mrcond[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m [0mfull[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m [0mw[0m[0;34m=[0m[0;32mNone[0m[0;34m,[0m [0mcov[0m[0;34m=[0m[0;32mFalse[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+    [0;31mDocstring:[0m
+    Least squares polynomial fit.
+    
+    .. note::
+       This forms part of the old polynomial API. Since version 1.4, the
+       new polynomial API defined in `numpy.polynomial` is preferred.
+       A summary of the differences can be found in the
+       :doc:`transition guide </reference/routines.polynomials>`.
+    
+    Fit a polynomial ``p(x) = p[0] * x**deg + ... + p[deg]`` of degree `deg`
+    to points `(x, y)`. Returns a vector of coefficients `p` that minimises
+    the squared error in the order `deg`, `deg-1`, ... `0`.
+    
+    The `Polynomial.fit <numpy.polynomial.polynomial.Polynomial.fit>` class
+    method is recommended for new code as it is more stable numerically. See
+    the documentation of the method for more information.
+    
+    Parameters
+    ----------
+    x : array_like, shape (M,)
+        x-coordinates of the M sample points ``(x[i], y[i])``.
+    y : array_like, shape (M,) or (M, K)
+        y-coordinates of the sample points. Several data sets of sample
+        points sharing the same x-coordinates can be fitted at once by
+        passing in a 2D-array that contains one dataset per column.
+    deg : int
+        Degree of the fitting polynomial
+    rcond : float, optional
+        Relative condition number of the fit. Singular values smaller than
+        this relative to the largest singular value will be ignored. The
+        default value is len(x)*eps, where eps is the relative precision of
+        the float type, about 2e-16 in most cases.
+    full : bool, optional
+        Switch determining nature of return value. When it is False (the
+        default) just the coefficients are returned, when True diagnostic
+        information from the singular value decomposition is also returned.
+    w : array_like, shape (M,), optional
+        Weights. If not None, the weight ``w[i]`` applies to the unsquared
+        residual ``y[i] - y_hat[i]`` at ``x[i]``. Ideally the weights are
+        chosen so that the errors of the products ``w[i]*y[i]`` all have the
+        same variance.  When using inverse-variance weighting, use
+        ``w[i] = 1/sigma(y[i])``.  The default value is None.
+    cov : bool or str, optional
+        If given and not `False`, return not just the estimate but also its
+        covariance matrix. By default, the covariance are scaled by
+        chi2/dof, where dof = M - (deg + 1), i.e., the weights are presumed
+        to be unreliable except in a relative sense and everything is scaled
+        such that the reduced chi2 is unity. This scaling is omitted if
+        ``cov='unscaled'``, as is relevant for the case that the weights are
+        w = 1/sigma, with sigma known to be a reliable estimate of the
+        uncertainty.
+    
+    Returns
+    -------
+    p : ndarray, shape (deg + 1,) or (deg + 1, K)
+        Polynomial coefficients, highest power first.  If `y` was 2-D, the
+        coefficients for `k`-th data set are in ``p[:,k]``.
+    
+    residuals, rank, singular_values, rcond
+        These values are only returned if ``full == True``
+    
+        - residuals -- sum of squared residuals of the least squares fit
+        - rank -- the effective rank of the scaled Vandermonde
+           coefficient matrix
+        - singular_values -- singular values of the scaled Vandermonde
+           coefficient matrix
+        - rcond -- value of `rcond`.
+    
+        For more details, see `numpy.linalg.lstsq`.
+    
+    V : ndarray, shape (M,M) or (M,M,K)
+        Present only if ``full == False`` and ``cov == True``.  The covariance
+        matrix of the polynomial coefficient estimates.  The diagonal of
+        this matrix are the variance estimates for each coefficient.  If y
+        is a 2-D array, then the covariance matrix for the `k`-th data set
+        are in ``V[:,:,k]``
+    
+    
+    Warns
+    -----
+    RankWarning
+        The rank of the coefficient matrix in the least-squares fit is
+        deficient. The warning is only raised if ``full == False``.
+    
+        The warnings can be turned off by
+    
+        >>> import warnings
+        >>> warnings.simplefilter('ignore', np.RankWarning)
+    
+    See Also
+    --------
+    polyval : Compute polynomial values.
+    linalg.lstsq : Computes a least-squares fit.
+    scipy.interpolate.UnivariateSpline : Computes spline fits.
+    
+    Notes
+    -----
+    The solution minimizes the squared error
+    
+    .. math::
+        E = \sum_{j=0}^k |p(x_j) - y_j|^2
+    
+    in the equations::
+    
+        x[0]**n * p[0] + ... + x[0] * p[n-1] + p[n] = y[0]
+        x[1]**n * p[0] + ... + x[1] * p[n-1] + p[n] = y[1]
+        ...
+        x[k]**n * p[0] + ... + x[k] * p[n-1] + p[n] = y[k]
+    
+    The coefficient matrix of the coefficients `p` is a Vandermonde matrix.
+    
+    `polyfit` issues a `RankWarning` when the least-squares fit is badly
+    conditioned. This implies that the best fit is not well-defined due
+    to numerical error. The results may be improved by lowering the polynomial
+    degree or by replacing `x` by `x` - `x`.mean(). The `rcond` parameter
+    can also be set to a value smaller than its default, but the resulting
+    fit may be spurious: including contributions from the small singular
+    values can add numerical noise to the result.
+    
+    Note that fitting polynomial coefficients is inherently badly conditioned
+    when the degree of the polynomial is large or the interval of sample points
+    is badly centered. The quality of the fit should always be checked in these
+    cases. When polynomial fits are not satisfactory, splines may be a good
+    alternative.
+    
+    References
+    ----------
+    .. [1] Wikipedia, "Curve fitting",
+           https://en.wikipedia.org/wiki/Curve_fitting
+    .. [2] Wikipedia, "Polynomial interpolation",
+           https://en.wikipedia.org/wiki/Polynomial_interpolation
+    
+    Examples
+    --------
+    >>> import warnings
+    >>> x = np.array([0.0, 1.0, 2.0, 3.0,  4.0,  5.0])
+    >>> y = np.array([0.0, 0.8, 0.9, 0.1, -0.8, -1.0])
+    >>> z = np.polyfit(x, y, 3)
+    >>> z
+    array([ 0.08703704, -0.81349206,  1.69312169, -0.03968254]) # may vary
+    
+    It is convenient to use `poly1d` objects for dealing with polynomials:
+    
+    >>> p = np.poly1d(z)
+    >>> p(0.5)
+    0.6143849206349179 # may vary
+    >>> p(3.5)
+    -0.34732142857143039 # may vary
+    >>> p(10)
+    22.579365079365115 # may vary
+    
+    High-order polynomials may oscillate wildly:
+    
+    >>> with warnings.catch_warnings():
+    ...     warnings.simplefilter('ignore', np.RankWarning)
+    ...     p30 = np.poly1d(np.polyfit(x, y, 30))
+    ...
+    >>> p30(4)
+    -0.80000000000000204 # may vary
+    >>> p30(5)
+    -0.99999999999999445 # may vary
+    >>> p30(4.5)
+    -0.10547061179440398 # may vary
+    
+    Illustration:
+    
+    >>> import matplotlib.pyplot as plt
+    >>> xp = np.linspace(-2, 6, 100)
+    >>> _ = plt.plot(x, y, '.', xp, p(xp), '-', xp, p30(xp), '--')
+    >>> plt.ylim(-2,2)
+    (-2, 2)
+    >>> plt.show()
+    [0;31mFile:[0m      /usr/lib64/python3.11/site-packages/numpy/lib/polynomial.py
+    [0;31mType:[0m      function
+
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x, p[0]*x + p[1], '-', label='Ajuste')
+    plt.plot(x,y,'ok', label='datos', alpha=0.6)
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_111_0.png
+
+
+Ahora en vez de escribir la recta explícitamente le pedimos a **numpy**
+que lo haga usando los coeficientes que encontramos mediante el fiteo
+(utilizando la función *polyval*)
+
+.. code:: python
+
+   y = np.polyval(p,x)
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x, np.polyval(p,x), '-', label='Ajuste')
+    plt.plot(x,y,'ok', label='datos', alpha=0.6)
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_113_0.png
+
+
+Como vemos, arroja exactamente el mismo resultado.
+
+Si los datos tienen mucho ruido lo que obtenemos es, por supuesto, una
+recta que pasa por la nube de puntos:
+
+.. code:: python
+
+    y= y0 + 5*ruido
+    p = np.polyfit(x, y , 1)
+    plt.figure(figsize=fsize)
+    plt.plot(x,np.polyval(p,x),'--', label='Ajuste') 
+    plt.plot(x,y, 'ok', alpha=0.6, label='datos')
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_115_0.png
+
+
+.. code:: python
+
+    p
+
+
+
+
+.. parsed-literal::
+
+    array([ 2.74713249, -0.65354945])
+
+
+
+Similarmente podemos usar polinomios de orden superior. Por ejemplo,
+para utilizar parábolas sólo tenemos que cambiar el orden ``n`` del
+polinomio en el argumento de ``polyfit(x, y, n)``:
+
+.. code:: python
+
+    # Generamos los datos
+    a = [2.5, 1.4, 3.]
+    y0 = np.polyval(a,x)
+    y = y0 + 10*ruido
+
+.. code:: python
+
+    # Ajustamos con un polinomio de segundo grado
+    p = np.polyfit(x, y , 2)
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x,y0,'-', label="$f(x)={0:.2}x^2 + {1:.2} x + {2:.2}$".format(*a)) 
+    plt.plot(x,np.polyval(p,x),'--', label="$P(x)={0:.2}x^2 + {1:.2} x + {2:.2}$".format(*p))
+    plt.plot(x,y,'ok', alpha=0.7,label='Datos')
+    plt.legend(loc='best');
+
+
+
+.. image:: figuras/13_fiteos_120_0.png
+
+
+--------------
+
+Ejercicios 13 (a)
+-----------------
+
+1. En el archivo co_nrg.dat se encuentran los datos de la posición de
+   los máximos de un espectro de CO2 como función del número cuántico
+   rotacional J (entero). Haga un programa que lea los datos. Los ajuste
+   con polinomios (elija el orden adecuado) y grafique luego los datos
+   (con símbolos) y el ajuste con una línea sólida roja. Además, debe
+   mostrar los parámetros obtenidos para el polinomio.
+
+--------------
+
+Fiteos con funciones arbitrarias
+--------------------------------
+
+| Vamos ahora a fitear una función que no responde a la forma
+  polinomial.
+| El submódulo ``optimize`` del paquete ``scipy`` tiene rutinas para
+  realizar ajustes de datos utilizando funciones arbitrarias
+
+Utilicemos una función “complicada”:
+
+.. code:: python
+
+    # string definido para la leyenda
+    sfuncion= r'${0:.3}\, \sin ({1:.2}\, x {3:+.2f}) \, \exp(-{2:.2f} x)$'
+    
+    def fit_func(x, a, b, c, d):
+      y = a*np.sin(b*x-d)*np.exp(-c*x)
+      return y
+
+Generamos ahora “datos” con dispersión basados en la función
+
+.. math::
+
+
+   f(x) = a \, \sin(b x - d) e^{-c x}
+
+.. code:: python
+
+    x = np.linspace(0., 2*np.pi, 50)
+    y0 = fit_func(x, 1., 3., 1/3, 0 )
+    y = y0 + 0.1*ruido
+
+y los graficamos
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x,y0,'-',label="$f(x)$") 
+    plt.plot(x,y,'ok',alpha=0.5,label='Datos') # repeated from above
+    plt.xlabel("Eje x") # labels again
+    plt.ylabel("Eje y")
+    plt.legend(loc='best');
+
+Ahora vamos a interpolar los datos utilizando funciones del paquete
+**Scipy**. En primer lugar vamos a utilizar la función ``curve_fit``:
+
+.. code:: python
+
+    from scipy.optimize import curve_fit
+
+.. code:: python
+
+    # ¿Qué hace esta función?
+    help(curve_fit)
+
+En su forma más simple toma los siguientes argumentos:
+
+::
+
+   Parameters
+   ----------
+   f : callable
+       The model function, f(x, ...).  It must take the independent
+       variable as the first argument and the parameters to fit as
+       separate remaining arguments.
+   xdata : An M-length sequence or an (k,M)-shaped array for functions with k predictors
+       The independent variable where the data is measured.
+   ydata : M-length sequence
+       The dependent data --- nominally f(xdata, ...)
+   p0 : None, scalar, or N-length sequence, optional
+       Initial guess for the parameters.  If None, then the initial
+       values will all be 1 (if the number of parameters for the function
+       can be determined using introspection, otherwise a ValueError
+       is raised).
+
+| El primero: ``f`` es la función que utilizamos para modelar los datos,
+  y que dependerá de la variable independiente ``x`` y de los parámetros
+  a ajustar.
+| También debemos darle los valores tabulados en las direcciones
+  :math:`x` (la variable independiente) e :math:`y` (la variable
+  dependiente).
+| Además, debido a las características del cálculo numérico que realiza
+  suele ser muy importante darle valores iniciales a los parámetros que
+  queremos ajustar.
+
+Veamos lo que devuelve:
+
+::
+
+   Returns
+   -------
+   popt : array
+       Optimal values for the parameters so that the sum of the squared error
+       of ``f(xdata, *popt) - ydata`` is minimized
+   pcov : 2d array
+       The estimated covariance of popt.  The diagonals provide the variance
+       of the parameter estimate.
+
+El primer *array* tiene los parámetros para “best-fit”, y el segundo da
+la estimación del error: la matriz de covarianza
+
+Ya tenemos los valores a ajustar guardados en arrays ``x`` e ``y``
+
+.. code:: python
+
+    # initial_guess= None 
+    initial_guess= [1., -1., 1., 0.2]
+    params, p_covarianza = curve_fit(fit_func, x, y, initial_guess)
+
+.. code:: python
+
+    plt.figure(figsize=(8,10))
+    plt.plot(x,y0,'-', alpha=0.7,label="$f(x)$") 
+    plt.plot(x,y,'ok', alpha=0.5, label='Datos') # repeated from above
+    label=sfuncion.format(*params)
+    plt.plot(x,fit_func(x, *params), '--', label=label)
+    plt.xlabel("Eje x") # labels again
+    plt.ylabel("Eje y")
+    plt.legend(loc='best');
+    ylim = plt.ylim()
+    plt.ylim((ylim[0],1.2*ylim[1]));
+
+Veamos otro ejemplo similar, con muchos datos y dispersión
+
+.. code:: python
+
+    from scipy.optimize import least_squares
+
+.. code:: python
+
+    least_squares?
+
+.. code:: python
+
+    # Puntos "experimentales" con dispersión
+    x = np.linspace(0., 2*np.pi, 5000)
+    y0= fit_func(x, 1., 3., 1/3, 0 )
+    y = y0 + 0.2* np.random.normal(loc= 0., scale= 1, size= y0.size);
+    # Fiteo
+
+.. code:: python
+
+    initial_guess= [1., 3., 1., 0.2]
+    params, p_covarianza = curve_fit(fit_func, x, y, initial_guess)
+
+.. code:: python
+
+    # Graficación
+    plt.figure(figsize=fsize)
+    plt.plot(x,y0,'-b',label="$f(x)$") 
+    plt.plot(x,y,'.k',label='datos') # repeated from above
+    label=sfuncion.format(*params)
+    plt.plot(x,fit_func(x, *params), '-r', label=label)
+    plt.xlabel("Eje x") # labels again
+    plt.ylabel("Eje y")
+    plt.legend(loc='best');
+
+La función ``curve_fit()`` que realiza el ajuste devuelve dos valores:
+El primero es un *array* con los valores de los parámetros obtenidos, y
+el segundo es un *array* con los valores correspondientes a la matriz de
+covarianza, cuyos elementos de la diagonal corresponden a la varianza
+para cada parámetro
+
+.. code:: python
+
+    np.diagonal(p_covarianza)
+
+Así, por ejemplo el primer parámetro (correspondiente a la amplitud
+``a``) toma en estos casos el valor:
+
+.. code:: python
+
+    for j,v in enumerate(['a','b', 'c', 'd' ]):
+      print("{} = {:.5g} ± {:.3g}".format(v, params[j], np.sqrt(p_covarianza[j,j])))
+
+Ejemplo: Fiteo de picos
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Vamos a suponer que los datos son obtenidos mediante la repetición de
+mediciones
+
+.. code:: python
+
+    # Realizamos 1000 mediciones, eso nos da una distribución de valores
+    r = np.random.normal(loc=6, size=1000)
+
+.. code:: python
+
+    # Veamos qué obtuvimos
+    plt.plot(r,'.')
+
+.. code:: python
+
+    y, x = np.histogram(r, bins=30, range=(2,10), density=True)
+    x = (x[1:]+x[:-1])/2        # Calculamos los centros de los intervalos 
+
+Vamos a graficar el histograma junto con la función Gaussiana con el
+valor correspondiente de la “Función Densidad de Probabilidad” (pdf)
+
+.. code:: python
+
+    from scipy import stats
+    b = stats.norm.pdf(x, loc=6)
+    plt.figure(figsize=fsize)
+    plt.plot(x,b,'-', label=u'Función')
+    plt.plot(x,y,'o-', alpha=0.7, label='random')
+    plt.legend(loc='best');
+
+
+Usando esta idea generemos “datos” correspondiente a dos picos, que son
+diferentes y están separados pero que no podemos distinguirlos
+completamente porque se superponen.
+
+Generemos los datos:
+
+.. code:: python
+
+    npoints = 3000
+    r = np.r_[np.random.normal(size=npoints), np.random.normal(loc=2, scale=.6, size=npoints)]
+    y,x = np.histogram(r , bins = 40, range = (-3.5,4.5), density=True)
+    x = (x[1:]+x[:-1])/2
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x,y,'o--k', alpha=0.6, label='"Medición"')
+    plt.legend(loc='best');
+
+
+Ahora, por razones físicas (o porque no tenemos ninguna idea mejor)
+suponemos que esta curva corresponde a dos “picos” del tipo Gaussiano,
+sólo que no conocemos sus posiciones, ni sus anchos ni sus alturas
+relativas. Creamos entonces una función que describa esta situación: La
+suma de dos Gaussianas, cada una de ellas con su posición y ancho
+característico, y un factor de normalización diferente para cada una de
+ellas. En total tendremos seis parámetros a optimizar:
+
+.. code:: python
+
+    def modelo(x, *coeffs):
+      "Suma de dos Gaussianas, con pesos dados por coeffs[0] y coeffs[3], respectivamente"
+      G = stats.norm.pdf
+      return coeffs[0]*G(x,loc=coeffs[1], scale=coeffs[2]) + \
+      coeffs[3]*G(x,loc=coeffs[4], scale=coeffs[5])
+
+.. code:: python
+
+    help(modelo)
+
+Ahora es muy fácil realizar el fiteo. Mirando el gráfico proponemos
+valores iniciales, donde los tres primeros valores corresponde a los
+parámetros de la primera Gaussiana y los tres últimos a los de la
+segunda:
+
+.. code:: python
+
+    c0 = np.array([1., -0.5, 1., 1., 1.5, 1.])
+    c, cov = curve_fit(modelo, x, y, p0 = c0)
+    print(c)
+
+.. code:: python
+
+    plt.figure(figsize=fsize)
+    plt.plot(x, y,'ok', alpha=0.8, label='random distrib')
+    plt.plot(x, modelo(x,*c0), '--', alpha=0.9, label='Curva inicial')
+    plt.plot(x, modelo(x,*c), '-', label='fiteo')
+    plt.plot(x,c[0]*stats.norm.pdf(x,loc=c[1], scale=c[2]), '--', alpha=0.7, label='Gaussiana 1')
+    plt.plot(x,c[3]*stats.norm.pdf(x,loc=c[4], scale=c[5]), '--', alpha=0.7, label='Gaussiana 2')
+    plt.legend( loc = 'best' );
+
+
+Veamos un ejemplo de ajuste de datos en el plano mediante la función
+
+.. math::
+
+
+   f(x, y) = (a \sin{(2  x)} + b) \, \exp{(-c  (x + y - \pi)^2 / 4)}
+
+.. code:: python
+
+    def func(x, a, b, c):
+      return (a * np.sin(2 * x[0]) + b) * np.exp(-c * (x[1] + x[0] - np.pi)**2 / 4)
+    
+    # Límites de los datos. Usados también para los gráficos
+    limits = [0, 2 * np.pi, 0, 2 * np.pi]  # [x1_min, x1_max, x2_min, x2_max]
+    
+    sx = np.linspace(limits[0], limits[1], 100)
+    sy = np.linspace(limits[2], limits[3], 100)
+    
+    # Creamos las grillas
+    X1, X2 = np.meshgrid(sx, sy)
+    forma = X1.shape
+    
+    # Los pasamos a unidimensional
+    x1_1d = X1.reshape((1, np.prod(forma)))
+    x2_1d = X2.reshape((1, np.prod(forma)))
+    
+    # xdata[0] tiene los valores de x
+    # xdata[1] tiene los valores de y
+    xdata = np.vstack((x1_1d, x2_1d))
+    
+    # La función original que vamos a ajustar. 
+    # Sólo la usamos para comparar el resultado final con el deseado
+    original = (3, 1, 0.5)
+    z = func(xdata, *original)
+    
+    # Le agregamos ruido. Estos van a ser los datos a ajustar
+    z_noise = z + 0.2 * np.random.randn(len(z))
+    
+    # Hacemos el fiteo
+    ydata = z_noise
+    p0 = (1, 4, 1)
+    popt, pcov = curve_fit(func, xdata, ydata, p0=p0)
+    
+    print(50*"-")
+    print("Valores de los parámetros")
+    print("------- -- --- ----------")
+    print("Real   : {}\nInicial: {}\nAjuste : {}".format(original, p0, popt))
+    
+    z_0 = func(xdata, *p0)
+    Z = z.reshape(forma)
+    Z_noise = z_noise.reshape(forma)
+    Z_0 = z_0.reshape(forma)
+    
+    z_fit = func(xdata, *popt)
+    Z_fit = z_fit.reshape(forma)
+    
+    fig, ax = plt.subplots(nrows=2, ncols=2, figsize=(12, 7))
+    
+    titulos = [["Función Real", "Función inicial"],
+               ["Datos con ruido", "Ajuste a los datos"]]
+    
+    datos = [[Z, Z_0], [Z_noise, Z_fit]]
+    
+    for k, a in np.ndenumerate(titulos):
+      ax[k[0], k[1]].set_title(a)
+      im = ax[k[0], k[1]].pcolormesh(X1, X2, datos[k[0]][k[1]], shading='auto')
+      ax[k[0], k[1]].axis(limits)
+      fig.colorbar(im, ax=ax[k[0], k[1]])
+    
+    plt.subplots_adjust(hspace=0.3, wspace=0.)
+
+
+.. code:: python
+
+    ydata.shape, Z.shape
+
+En este gráfico tenemos:
+
+-  Arriba a la izquierda se encuentra para referencia la función real de
+   la que derivamos los datos (que no se utiliza en los ajustes).
+-  Abajo a la izquierda se grafican los datos que se van a ajustar
+-  Arriba a la derecha se encuentra graficada la función con los
+   parámetros iniciales, antes de realizar el ajuste. Como se ve, es muy
+   diferente a los datos, y a la función deseada.
+-  Abajo a la derecha se grafica la función utilizando los parámetros
+   que se obtienen con el ajuste
+
+--------------
+
+Ejercicios 13 (b)
+-----------------
+
+2. Queremos hacer un programa que permita fitear una curva como suma de
+   ``N`` funciones gaussianas:
+
+   1. Haga una función, que debe tomar como argumento los arrays con los
+      datos: ``x``, ``y``, y valores iniciales para las Gaussianas:
+      ``fit_gaussianas(x, y, *params)`` donde params son los 3N
+      coeficientes (tres coeficientes para cada Gaussiana). Debe
+      devolver los parámetros óptimos obtenidos.
+   2. Realice un programita que grafique los datos dados y la función
+      que resulta de sumar las gaussianas en una misma figura.
+   3. *Si puede* agregue líneas o flechas indicando la posición del
+      máximo y el ancho de cada una de las Gaussianas obtenidas.
+
+--------------
+
+
