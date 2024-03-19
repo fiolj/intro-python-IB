@@ -1318,3 +1318,1468 @@ con rango de variación de :math:`L` entre :math:`0` y :math:`2 \pi`.
 .
 
 
+Álgebra lineal
+--------------
+
+El módulo de álgebra lineal se solapa un poco con funciones similares en
+**Numpy**. Ambos usan finalmente una implementación de bibliotecas
+conocidas (LAPACK, BLAS). La diferencia es que **Scipy** asegura que
+utiliza las optimizaciones de la librería ATLAS y presenta algunos
+métodos y algoritmos que no están presentes en **Numpy**.
+
+Una de las aplicaciones más conocidas por nosotros es la rotación de
+vectores. Como bien sabemos rotar un vector es equivalente a
+multiplicarlo por la matriz de rotación correspondiente.
+Esquemáticamente:
+
+.. image:: https://imgs.xkcd.com/comics/matrix_transform.png
+
+(Gentileza de `xkcd <https://www.xkcd.com/184/>`__)
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from scipy import linalg
+
+Este módulo tiene funciones para trabajar con matrices, descriptas como
+*arrays* bidimensionales.
+
+.. code:: python
+
+    arr = np.array([[3, 2,1],[6, 4,1],[12, 8, 13.3]])
+    print(arr)
+
+
+.. parsed-literal::
+
+    [[ 3.   2.   1. ]
+     [ 6.   4.   1. ]
+     [12.   8.  13.3]]
+
+
+.. code:: python
+
+    A = np.array([[1, -2,-3],[1, -1,-1],[-1, 3, 1]])
+    print(A)
+
+
+.. parsed-literal::
+
+    [[ 1 -2 -3]
+     [ 1 -1 -1]
+     [-1  3  1]]
+
+
+.. code:: python
+
+    # La matriz transpuesta
+    A.T
+
+
+
+
+.. parsed-literal::
+
+    array([[ 1,  1, -1],
+           [-2, -1,  3],
+           [-3, -1,  1]])
+
+
+
+Productos y normas
+~~~~~~~~~~~~~~~~~~
+
+Norma de un vector
+^^^^^^^^^^^^^^^^^^
+
+La norma está dada por
+
+.. math:: ||v|| = \sqrt{v_1^2+...+v_n^2}
+
+.. code:: python
+
+    v = np.array([2,1,3])
+    linalg.norm(v)                  # Norma
+
+
+
+
+.. parsed-literal::
+
+    3.7416573867739413
+
+
+
+.. code:: python
+
+    linalg.norm(v) == np.sqrt(np.sum(np.square(v)))
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Producto interno
+^^^^^^^^^^^^^^^^
+
+El producto entre una matriz y un vector está definido en **Numpy**
+mediante las funciones ``dot()``, o ``matmul()``, o mediante el operador
+``@``:
+
+.. code:: python
+
+    w1 = np.dot(A, v)                # Multiplicación de matrices
+    w1
+
+
+
+
+.. parsed-literal::
+
+    array([-9, -2,  4])
+
+
+
+.. code:: python
+
+    np.allclose?
+
+
+
+.. parsed-literal::
+
+    [0;31mSignature:[0m [0mnp[0m[0;34m.[0m[0mallclose[0m[0;34m([0m[0ma[0m[0;34m,[0m [0mb[0m[0;34m,[0m [0mrtol[0m[0;34m=[0m[0;36m1e-05[0m[0;34m,[0m [0matol[0m[0;34m=[0m[0;36m1e-08[0m[0;34m,[0m [0mequal_nan[0m[0;34m=[0m[0;32mFalse[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+    [0;31mDocstring:[0m
+    Returns True if two arrays are element-wise equal within a tolerance.
+    
+    The tolerance values are positive, typically very small numbers.  The
+    relative difference (`rtol` * abs(`b`)) and the absolute difference
+    `atol` are added together to compare against the absolute difference
+    between `a` and `b`.
+    
+    NaNs are treated as equal if they are in the same place and if
+    ``equal_nan=True``.  Infs are treated as equal if they are in the same
+    place and of the same sign in both arrays.
+    
+    Parameters
+    ----------
+    a, b : array_like
+        Input arrays to compare.
+    rtol : float
+        The relative tolerance parameter (see Notes).
+    atol : float
+        The absolute tolerance parameter (see Notes).
+    equal_nan : bool
+        Whether to compare NaN's as equal.  If True, NaN's in `a` will be
+        considered equal to NaN's in `b` in the output array.
+    
+        .. versionadded:: 1.10.0
+    
+    Returns
+    -------
+    allclose : bool
+        Returns True if the two arrays are equal within the given
+        tolerance; False otherwise.
+    
+    See Also
+    --------
+    isclose, all, any, equal
+    
+    Notes
+    -----
+    If the following equation is element-wise True, then allclose returns
+    True.
+    
+     absolute(`a` - `b`) <= (`atol` + `rtol` * absolute(`b`))
+    
+    The above equation is not symmetric in `a` and `b`, so that
+    ``allclose(a, b)`` might be different from ``allclose(b, a)`` in
+    some rare cases.
+    
+    The comparison of `a` and `b` uses standard broadcasting, which
+    means that `a` and `b` need not have the same shape in order for
+    ``allclose(a, b)`` to evaluate to True.  The same is true for
+    `equal` but not `array_equal`.
+    
+    `allclose` is not defined for non-numeric data types.
+    `bool` is considered a numeric data-type for this purpose.
+    
+    Examples
+    --------
+    >>> np.allclose([1e10,1e-7], [1.00001e10,1e-8])
+    False
+    >>> np.allclose([1e10,1e-8], [1.00001e10,1e-9])
+    True
+    >>> np.allclose([1e10,1e-8], [1.0001e10,1e-9])
+    False
+    >>> np.allclose([1.0, np.nan], [1.0, np.nan])
+    False
+    >>> np.allclose([1.0, np.nan], [1.0, np.nan], equal_nan=True)
+    True
+    [0;31mFile:[0m      /usr/lib64/python3.11/site-packages/numpy/core/numeric.py
+    [0;31mType:[0m      function
+
+
+.. code:: python
+
+    np.allclose(np.dot(A,v), np.matmul(A,v))  # dot y matmul son equivalentes
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    np.allclose(A @ v, np.matmul(A,v))  # También son equivalentes al operador @
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    w2 = np.dot(v,  A)
+    w2
+
+
+
+
+.. parsed-literal::
+
+    array([ 0,  4, -4])
+
+
+
+.. code:: python
+
+    np.dot(v.T,  A) == np.dot(v,  A)  # Si es unidimensional, el vector se transpone automáticamente
+
+
+
+
+
+.. parsed-literal::
+
+    array([ True,  True,  True])
+
+
+
+.. code:: python
+
+    print(v.shape, A.shape)
+
+
+.. parsed-literal::
+
+    (3,) (3, 3)
+
+
+El producto interno entre vectores se calcula de la misma manera
+
+.. math::  \langle v, w \rangle
+
+.. code:: python
+
+    np.dot(v,w1)
+
+
+
+
+.. parsed-literal::
+
+    -8
+
+
+
+y está relacionado con la norma
+
+.. math:: ||v|| = \sqrt{ \langle v, v \rangle}
+
+.. code:: python
+
+    linalg.norm(v) == np.sqrt(np.dot(v,v))
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    np.dot(v,A)
+
+
+
+
+.. parsed-literal::
+
+    array([ 0,  4, -4])
+
+
+
+.. code:: python
+
+    v.shape
+
+
+
+
+.. parsed-literal::
+
+    (3,)
+
+
+
+.. code:: python
+
+    v2 = np.reshape(v, (3,1))
+
+.. code:: python
+
+    v2.shape
+
+
+
+
+.. parsed-literal::
+
+    (3, 1)
+
+
+
+.. code:: python
+
+    np.dot(A, v2)
+
+
+
+
+.. parsed-literal::
+
+    array([[-9],
+           [-2],
+           [ 4]])
+
+
+
+.. code:: python
+
+    np.dot(A, v2).shape
+
+
+
+
+.. parsed-literal::
+
+    (3, 1)
+
+
+
+Ahora las dimensiones de ``v2`` y ``A`` no coinciden para hacer el
+producto matricial
+
+.. code:: python
+
+   np.dot(v2, A)
+
+.. code:: python
+
+    np.dot( v2,A)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Cell In[22], line 1
+    ----> 1 np.dot( v2,A)
+
+
+    File <__array_function__ internals>:200, in dot(*args, **kwargs)
+
+
+    ValueError: shapes (3,1) and (3,3) not aligned: 1 (dim 1) != 3 (dim 0)
+
+
+Notemos que el producto interno se puede pensar como un producto de
+matrices. En este caso, el producto de una matriz de 3x1, por otra de
+1x3:
+
+.. math::  v^{t} \, w = \begin{pmatrix} -9&-2&4 \end{pmatrix} \begin{pmatrix} 2\\1\\3 \end{pmatrix} 
+
+donde estamos pensando al vector como columna.
+
+Producto exterior
+^^^^^^^^^^^^^^^^^
+
+El producto exterior puede ponerse en términos de multiplicación de
+matrices como
+
+.. math:: v\otimes w = vw^{t} = \begin{pmatrix} -9\\-2\\4 \end{pmatrix} \begin{pmatrix} 2&1&3 \end{pmatrix}
+
+.. code:: python
+
+    oprod = np.outer(v,w1)
+    print(oprod)
+
+
+.. parsed-literal::
+
+    [[-18  -4   8]
+     [ -9  -2   4]
+     [-27  -6  12]]
+
+
+Aplicación a la resolución de sistemas de ecuaciones
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vamos a usar ``scipy.linalg`` permite obtener determinantes e inversas
+de matrices. Veamos como resolver un sistema de ecuaciones lineales:
+
+.. math::
+
+
+   \left\{
+   \begin{array}{rl}
+   a_{11} x_1 + a_{12} x_2 + a_{13} x_3 &= b_1 \\
+   a_{21} x_1 + a_{22} x_2 + a_{23} x_3 &= b_2 \\
+   a_{31} x_1 + a_{32} x_2 + a_{33} x_3 &= b_3
+   \end{array}
+   \right.
+
+Esta ecuación se puede escribir en forma matricial como
+
+.. math::
+
+    \begin{pmatrix}a_{11}&a_{12} & a_{13}\\a_{21}&a_{22}&a_{23}\\a_{31}&a_{32}&a_{33}\end{pmatrix}
+   \begin{pmatrix}x_1\\x_2\\x_3\end{pmatrix} = \begin{pmatrix}b_1\\b_2\\b_3\end{pmatrix}
+
+Veamos un ejemplo concreto. Supongamos que tenemos el siguiente sistema
+
+.. math::
+
+
+   \left\{
+   \begin{array}{rl}
+    x_1 + 2 x_2 + 3 x_3 &= 1 \\
+   2 x_1 +  x_2 + 3 x_3 &= 2 \\
+   4 x_1 +  x_2 - x_3 &= 3
+   \end{array}
+   \right.
+
+por lo que, en forma matricial será:
+
+.. math::  A = \begin{pmatrix} 1 &2 &3 \\ 2& 1& 3 \\ 4& 1& -1 \end{pmatrix} 
+
+y
+
+.. math::  b =  \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} 
+
+.. code:: python
+
+    A = np.array([[1,2,3],[2,1,3],[4,1,-1]])
+    b = np.array([[1,2,3]]).T
+    print('A=', A,"\n")
+    print('b=', b,"\n")
+
+
+.. parsed-literal::
+
+    A= [[ 1  2  3]
+     [ 2  1  3]
+     [ 4  1 -1]] 
+    
+    b= [[1]
+     [2]
+     [3]] 
+    
+
+
+.. code:: python
+
+    x = np.dot(linalg.inv(A), b)
+    print('Resultado:\n', x)
+
+
+.. parsed-literal::
+
+    Resultado:
+     [[ 0.83333333]
+     [-0.16666667]
+     [ 0.16666667]]
+
+
+Descomposición de matrices
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si consideramos el mismo problema de resolución de ecuaciones
+
+.. math:: A x = b 
+
+pero donde debemos resolver el problema para un valor dado de los
+coeficientes (la matriz :math:`A`) y muchos valores distintos del vector
+:math:`b`, suele ser útil realizar lo que se llama la descompocición
+:math:`LU` de la matriz.
+
+Si escribimos a la matriz :math:`A` como el producto de tres matrices
+:math:`A = PLU` donde :math:`P` es una permutación de las filas,
+:math:`L` es una matriz triangular inferior (Los elementos por encima de
+la diagonal son nulos) y :math:`U` una triangular superior. En este caso
+los dos sistemas:
+
+.. math::  Ax = b \qquad  \mathrm{ y } \qquad P A x = Pb  
+
+tienen la misma solución. Entonces podemos resolver el sistema en dos
+pasos:
+
+.. math::  Ly=b 
+
+con
+
+.. math::  y = Ux. 
+
+En ese caso, resolvemos una sola vez la descompocición :math:`LU`, y
+luego ambas ecuaciones se pueden resolver eficientemente debido a la
+forma de las matrices.
+
+.. code:: python
+
+    A = np.array([[1,3,4],[2,1,3],[4,1,2]])
+    
+    print('A=', A,"\n")
+    
+    P, L, U = linalg.lu(A)
+    print("PLU=", np.dot(P, np.dot(L, U)))
+    print("\nLU=", np.dot(L, U))
+    print("\nL=",L)
+    print("\nU=", U)
+
+
+.. parsed-literal::
+
+    A= [[1 3 4]
+     [2 1 3]
+     [4 1 2]] 
+    
+    PLU= [[1. 3. 4.]
+     [2. 1. 3.]
+     [4. 1. 2.]]
+    
+    LU= [[4. 1. 2.]
+     [1. 3. 4.]
+     [2. 1. 3.]]
+    
+    L= [[1.         0.         0.        ]
+     [0.25       1.         0.        ]
+     [0.5        0.18181818 1.        ]]
+    
+    U= [[4.         1.         2.        ]
+     [0.         2.75       3.5       ]
+     [0.         0.         1.36363636]]
+
+
+.. code:: python
+
+    # Determinante de A
+    linalg.det(A)
+
+
+
+
+.. parsed-literal::
+
+    15.0
+
+
+
+Autovalores y autovectores
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La necesidad de encontrar los autovalores y autovectores de una matriz
+aparece en muchos problemas de física e ingeniería. Se trata de
+encontrar el escalar :math:`\lambda` y el vector (no nulo) :math:`v`
+tales que
+
+.. math::  A v = \lambda v
+
+.. code:: python
+
+    with np.printoptions(precision=3):
+      B = np.array([[0,1.,1],[2,1,0], [3,4,5]])
+      print(B,'\n')
+      u, v = linalg.eig(B)
+      c = np.dot(v,np.dot(np.diag(u), linalg.inv(v)))
+      print(c,'\n')
+      print(np.real_if_close(c),'\n')
+      print('')
+      print('Autovalores=', u,'\n')
+      print('Autovalores=', np.real_if_close(u))
+
+
+.. parsed-literal::
+
+    [[0. 1. 1.]
+     [2. 1. 0.]
+     [3. 4. 5.]] 
+    
+    [[ 6.572e-16+0.j  1.000e+00+0.j  1.000e+00+0.j]
+     [ 2.000e+00+0.j  1.000e+00+0.j -1.260e-16+0.j]
+     [ 3.000e+00+0.j  4.000e+00+0.j  5.000e+00+0.j]] 
+    
+    [[ 6.572e-16  1.000e+00  1.000e+00]
+     [ 2.000e+00  1.000e+00 -1.260e-16]
+     [ 3.000e+00  4.000e+00  5.000e+00]] 
+    
+    
+    Autovalores= [ 5.854+0.j -0.854+0.j  1.   +0.j] 
+    
+    Autovalores= [ 5.854 -0.854  1.   ]
+
+
+.. code:: python
+
+    v
+
+
+
+
+.. parsed-literal::
+
+    array([[ 1.80228488e-01,  6.72063326e-01,  1.86622559e-16],
+           [ 7.42582208e-02, -7.24947536e-01, -7.07106781e-01],
+           [ 9.80817725e-01,  1.50936928e-01,  7.07106781e-01]])
+
+
+
+Veamos como funciona para la matriz definida anteriormente
+
+.. code:: python
+
+    print(A)
+    u, v = linalg.eig(A)
+    print(np.real_if_close(np.dot(v,np.dot(np.diag(u), linalg.inv(v)))))
+    print("Autovalores=" , np.real_if_close(u))
+    print("Autovectores=", np.real_if_close(v))
+
+
+.. parsed-literal::
+
+    [[1 3 4]
+     [2 1 3]
+     [4 1 2]]
+    [[1. 3. 4.]
+     [2. 1. 3.]
+     [4. 1. 2.]]
+    Autovalores= [ 7.10977223 -2.10977223 -1.        ]
+    Autovectores= [[-0.63273853 -0.66101705 -0.33333333]
+     [-0.49820655 -0.25550401 -0.66666667]
+     [-0.59281716  0.70553112  0.66666667]]
+
+
+.. code:: python
+
+    np.real_if_close?
+
+
+
+.. parsed-literal::
+
+    [0;31mSignature:[0m [0mnp[0m[0;34m.[0m[0mreal_if_close[0m[0;34m([0m[0ma[0m[0;34m,[0m [0mtol[0m[0;34m=[0m[0;36m100[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+    [0;31mDocstring:[0m
+    If input is complex with all imaginary parts close to zero, return
+    real parts.
+    
+    "Close to zero" is defined as `tol` * (machine epsilon of the type for
+    `a`).
+    
+    Parameters
+    ----------
+    a : array_like
+        Input array.
+    tol : float
+        Tolerance in machine epsilons for the complex part of the elements
+        in the array.
+    
+    Returns
+    -------
+    out : ndarray
+        If `a` is real, the type of `a` is used for the output.  If `a`
+        has complex elements, the returned type is float.
+    
+    See Also
+    --------
+    real, imag, angle
+    
+    Notes
+    -----
+    Machine epsilon varies from machine to machine and between data types
+    but Python floats on most platforms have a machine epsilon equal to
+    2.2204460492503131e-16.  You can use 'np.finfo(float).eps' to print
+    out the machine epsilon for floats.
+    
+    Examples
+    --------
+    >>> np.finfo(float).eps
+    2.2204460492503131e-16 # may vary
+    
+    >>> np.real_if_close([2.1 + 4e-14j, 5.2 + 3e-15j], tol=1000)
+    array([2.1, 5.2])
+    >>> np.real_if_close([2.1 + 4e-13j, 5.2 + 3e-15j], tol=1000)
+    array([2.1+4.e-13j, 5.2 + 3e-15j])
+    [0;31mFile:[0m      /usr/lib64/python3.11/site-packages/numpy/lib/type_check.py
+    [0;31mType:[0m      function
+
+
+Rutinas de resolución de ecuaciones lineales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Scipy** tiene además de las rutinas de trabajo con matrices, rutinas
+de resolución de sistemas de ecuaciones. En particular la función
+``solve()``
+
+.. code:: python
+
+    solve(a, b, sym_pos=False, lower=False, overwrite_a=False, overwrite_b=False,
+          debug=False, check_finite=True)
+
+   Solve the equation ``a x = b`` for ``x``.
+
+   Parameters
+   ----------
+   a : (M, M) array_like
+       A square matrix.
+   b : (M,) or (M, N) array_like
+       Right-hand side matrix in ``a x = b``.
+   ...
+
+.. code:: python
+
+    linalg.solve?
+
+
+
+.. parsed-literal::
+
+    [0;31mSignature:[0m
+    [0mlinalg[0m[0;34m.[0m[0msolve[0m[0;34m([0m[0;34m[0m
+    [0;34m[0m    [0ma[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0mb[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0msym_pos[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0mlower[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0moverwrite_a[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0moverwrite_b[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0mcheck_finite[0m[0;34m=[0m[0;32mTrue[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0massume_a[0m[0;34m=[0m[0;34m'gen'[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m    [0mtransposed[0m[0;34m=[0m[0;32mFalse[0m[0;34m,[0m[0;34m[0m
+    [0;34m[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+    [0;31mDocstring:[0m
+    Solves the linear equation set ``a @ x == b`` for the unknown ``x``
+    for square `a` matrix.
+    
+    If the data matrix is known to be a particular type then supplying the
+    corresponding string to ``assume_a`` key chooses the dedicated solver.
+    The available options are
+    
+    ===================  ========
+     generic matrix       'gen'
+     symmetric            'sym'
+     hermitian            'her'
+     positive definite    'pos'
+    ===================  ========
+    
+    If omitted, ``'gen'`` is the default structure.
+    
+    The datatype of the arrays define which solver is called regardless
+    of the values. In other words, even when the complex array entries have
+    precisely zero imaginary parts, the complex solver will be called based
+    on the data type of the array.
+    
+    Parameters
+    ----------
+    a : (N, N) array_like
+        Square input data
+    b : (N, NRHS) array_like
+        Input data for the right hand side.
+    sym_pos : bool, default: False, deprecated
+        Assume `a` is symmetric and positive definite.
+    
+        .. deprecated:: 0.19.0
+            This keyword is deprecated and should be replaced by using
+           ``assume_a = 'pos'``. `sym_pos` will be removed in SciPy 1.11.0.
+    
+    lower : bool, default: False
+        Ignored if ``assume_a == 'gen'`` (the default). If True, the
+        calculation uses only the data in the lower triangle of `a`;
+        entries above the diagonal are ignored. If False (default), the
+        calculation uses only the data in the upper triangle of `a`; entries
+        below the diagonal are ignored.
+    overwrite_a : bool, default: False
+        Allow overwriting data in `a` (may enhance performance).
+    overwrite_b : bool, default: False
+        Allow overwriting data in `b` (may enhance performance).
+    check_finite : bool, default: True
+        Whether to check that the input matrices contain only finite numbers.
+        Disabling may give a performance gain, but may result in problems
+        (crashes, non-termination) if the inputs do contain infinities or NaNs.
+    assume_a : str, {'gen', 'sym', 'her', 'pos'}
+        Valid entries are explained above.
+    transposed : bool, default: False
+        If True, solve ``a.T @ x == b``. Raises `NotImplementedError`
+        for complex `a`.
+    
+    Returns
+    -------
+    x : (N, NRHS) ndarray
+        The solution array.
+    
+    Raises
+    ------
+    ValueError
+        If size mismatches detected or input a is not square.
+    LinAlgError
+        If the matrix is singular.
+    LinAlgWarning
+        If an ill-conditioned input a is detected.
+    NotImplementedError
+        If transposed is True and input a is a complex matrix.
+    
+    Notes
+    -----
+    If the input b matrix is a 1-D array with N elements, when supplied
+    together with an NxN input a, it is assumed as a valid column vector
+    despite the apparent size mismatch. This is compatible with the
+    numpy.dot() behavior and the returned result is still 1-D array.
+    
+    The generic, symmetric, Hermitian and positive definite solutions are
+    obtained via calling ?GESV, ?SYSV, ?HESV, and ?POSV routines of
+    LAPACK respectively.
+    
+    Examples
+    --------
+    Given `a` and `b`, solve for `x`:
+    
+    >>> import numpy as np
+    >>> a = np.array([[3, 2, 0], [1, -1, 0], [0, 5, 1]])
+    >>> b = np.array([2, 4, -1])
+    >>> from scipy import linalg
+    >>> x = linalg.solve(a, b)
+    >>> x
+    array([ 2., -2.,  9.])
+    >>> np.dot(a, x) == b
+    array([ True,  True,  True], dtype=bool)
+    [0;31mFile:[0m      /usr/lib64/python3.11/site-packages/scipy/linalg/_basic.py
+    [0;31mType:[0m      function
+
+
+.. code:: python
+
+    a = np.array([[3, 2, 0], [1, -1, 0], [0, 5, 1]])
+    b = np.array([2, 4, -1])
+    x = linalg.solve(a, b)
+    x
+
+
+
+
+.. parsed-literal::
+
+    array([ 2., -2.,  9.])
+
+
+
+.. code:: python
+
+    np.allclose(np.dot(a, x) , b)
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    np.dot(a,x) == b
+
+
+
+
+.. parsed-literal::
+
+    array([ True,  True,  True])
+
+
+
+Para sistemas de ecuaciones grandes, la función ``solve()`` es más
+rápida que invertir la matriz
+
+.. code:: python
+
+    A1 = np.random.random((2000,2000))
+    b1 = np.random.random(2000)
+
+.. code:: python
+
+    %timeit linalg.solve(A1,b1)
+
+
+.. parsed-literal::
+
+    123 ms ± 4.67 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+
+.. code:: python
+
+    %timeit np.dot(linalg.inv(A1),b1)
+
+
+.. parsed-literal::
+
+    275 ms ± 22.5 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
+
+Entrada y salida de datos
+-------------------------
+
+Entrada/salida con *Numpy*
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Datos en formato texto
+^^^^^^^^^^^^^^^^^^^^^^
+
+Veamos un ejemplo (apenas) más complicado, de un archivo en formato de
+texto, donde antes de la lista de números hay un encabezado
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+.. code:: python
+
+    !head ../data/tof_signal_5.dat
+
+
+.. parsed-literal::
+
+    # tiempo    cuentas
+    4.953125e-06 -7.940000e-05
+    4.963125e-06 -5.930000e-05
+    4.973125e-06 -8.945000e-05
+    4.983125e-06 -7.940000e-05
+    4.993125e-06 -6.935000e-05
+    5.003125e-06 -6.935000e-05
+    5.013125e-06 -9.950000e-05
+    5.023125e-06 -5.930000e-05
+    5.033125e-06 -5.930000e-05
+
+
+.. code:: python
+
+    X0 = np.loadtxt('../data/tof_signal_5.dat')
+
+.. code:: python
+
+    X0.shape, type(X0)
+
+
+
+
+.. parsed-literal::
+
+    ((1000, 2), numpy.ndarray)
+
+
+
+.. code:: python
+
+    X0[0].shape
+
+
+
+
+.. parsed-literal::
+
+    (2,)
+
+
+
+.. code:: python
+
+    X0[0]
+
+
+
+
+.. parsed-literal::
+
+    array([ 4.953125e-06, -7.940000e-05])
+
+
+
+.. code:: python
+
+    plt.plot(X0[:,0], X0[:,1])
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8740d8ab90>]
+
+
+
+
+.. image:: figuras/12_2_scipy_al_62_1.png
+
+
+La manera más simple de leer datos de un archivo es a través de
+``loadtxt()``.
+
+.. code:: python
+
+   np.info(np.loadtxt)
+    loadtxt(fname, dtype=<class 'float'>, comments='#', delimiter=None,
+            converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0,
+            encoding='bytes')
+   Load data from a text file.
+
+   Each row in the text file must have the same number of values.
+
+En su forma más simple sólo necesita como argumento el nombre del
+archivo. En este caso, había una primera línea que fue ignorada porque
+empieza con el caracter “#” que indica que la línea es un comentario.
+
+Veamos otro ejemplo, donde las líneas que son parte de un encabezado se
+saltean, utilizando el argumento ``skiprows``
+
+.. code:: python
+
+    fdatos= '../data/exper_col.dat'
+    !head ../data/exper_col.dat
+
+
+.. parsed-literal::
+
+    Datos del día 15/05/2017
+    Tomados por Daniel 
+    Mediciones de secciones eficaces
+    
+    Energy      0 grados        7 grados        10 grados
+    9.901	15.3519846480154 12.1212121212121 14.8604933279418
+    11.881	17.2544398619645 13.3849650643994 12.1375590020229
+    13.793	17.5451315884869 11.0136946598073 12.3340346804034
+    15.813	14.6714728388035 9.49006706314058 10.6894370651486
+    17.802	15.0544882597461 11.0630650867636 11.1185983827493
+
+
+.. code:: python
+
+    X1 = np.loadtxt(fdatos, skiprows=5)
+    print(X1.shape)
+    print(X1[0])
+
+
+.. parsed-literal::
+
+    (76, 4)
+    [ 9.901      15.35198465 12.12121212 14.86049333]
+
+
+Como el archivo tiene cuatro columnas el array ``X`` tiene dimensiones
+``(74, 4)`` correspondiente a las 74 filas y las 4 columnas. Si sólo
+necesitamos un grupo de estos datos podemos utilizar el argumento
+``usecols = (c1, c2)`` que nos permite elegir cuáles son las columnas a
+leer:
+
+.. code:: python
+
+    x, y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2], unpack=True)
+    print (x.size, y.size)
+
+
+.. parsed-literal::
+
+    76 76
+
+
+.. code:: python
+
+    Y = np.loadtxt(fdatos, skiprows=5, usecols=[0, 2])
+    print (Y.size, Y[0])
+
+
+.. parsed-literal::
+
+    152 [ 9.901      12.12121212]
+
+
+En este ejemplo, mediante el argumento ``unpack=True``, le indicamos a
+la función ``loadtxt``\ que desempaque lo que lee en variables
+diferentes (``x,y`` en este caso)
+
+.. code:: python
+
+    plt.plot(x,y, 'o-')
+
+
+
+
+.. parsed-literal::
+
+    [<matplotlib.lines.Line2D at 0x7f8740337990>]
+
+
+
+
+.. image:: figuras/12_2_scipy_al_71_1.png
+
+
+Como numpy se especializa en manejar números, tiene muchas funciones
+para crear arrays a partir de información numérica a partir de texto o
+archivos (como los CSV, por ejemplo). Ya vimos como leer datos con
+``loadtxt``. También se pueden generar desde un string:
+
+.. code:: python
+
+    np.fromstring(u"1.0 2.3   3.0 4.1   -3.1", sep=" ", dtype=float)
+
+
+
+
+.. parsed-literal::
+
+    array([ 1. ,  2.3,  3. ,  4.1, -3.1])
+
+
+
+Para guardar datos en formato texto podemos usar, de la misma manera,
+
+.. code:: python
+
+    Y = np.vstack((x,y)).T
+    print(Y.shape)
+
+
+.. parsed-literal::
+
+    (76, 2)
+
+
+.. code:: python
+
+    np.savetxt('tmp.dat', Y)
+
+.. code:: python
+
+    !head tmp.dat
+
+
+.. parsed-literal::
+
+    9.900999999999999801e+00 1.212121212121209979e+01
+    1.188100000000000023e+01 1.338496506439940070e+01
+    1.379299999999999926e+01 1.101369465980729956e+01
+    1.581300000000000061e+01 9.490067063140580572e+00
+    1.780199999999999960e+01 1.106306508676360068e+01
+    1.978399999999999892e+01 1.056836569579290064e+01
+    2.180600000000000094e+01 9.041259351048690718e+00
+    2.380199999999999960e+01 9.743805123897519849e+00
+    2.567999999999999972e+01 1.000583998442670008e+01
+    2.769900000000000162e+01 1.093034161826770045e+01
+
+
+La función ``savetxt()``\ tiene varios argumentos opcionales:
+
+.. code:: python
+
+   np.savetxt(fname, X, fmt='%.18e', delimiter=' ', newline='\n', header='', footer='', comments='# ', encoding=None)
+
+Por ejemplo, podemos darle un formato de salida con el argumento
+``fmt``, y darle un encabezado con ``header``
+
+.. code:: python
+
+    np.savetxt('tmp.dat', Y, fmt='%.6g', header="Energ Exper")
+    !head tmp.dat
+
+
+.. parsed-literal::
+
+    # Energ Exper
+    9.901 12.1212
+    11.881 13.385
+    13.793 11.0137
+    15.813 9.49007
+    17.802 11.0631
+    19.784 10.5684
+    21.806 9.04126
+    23.802 9.74381
+    25.68 10.0058
+
+
+Datos en formato binario
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    np.save('test.npy', X1)  # Grabamos el array a archivo 
+    X2 = np.load('test.npy')     # Y lo leemos
+
+.. code:: python
+
+    # Veamos si alguno de los elementos difiere
+    print('X1=', X1[:10])
+    print('X2=', X2[:10])
+
+
+.. parsed-literal::
+
+    X1= [[ 9.901      15.35198465 12.12121212 14.86049333]
+     [11.881      17.25443986 13.38496506 12.137559  ]
+     [13.793      17.54513159 11.01369466 12.33403468]
+     [15.813      14.67147284  9.49006706 10.68943707]
+     [17.802      15.05448826 11.06306509 11.11859838]
+     [19.784      12.99029519 10.5683657  10.77717061]
+     [21.806      12.19847748  9.04125935 10.50844347]
+     [23.802      13.57028821  9.74380512 10.46262448]
+     [25.68       13.16199377 10.00583998  9.76919784]
+     [27.699      14.91028557 10.93034162 11.29189365]]
+    X2= [[ 9.901      15.35198465 12.12121212 14.86049333]
+     [11.881      17.25443986 13.38496506 12.137559  ]
+     [13.793      17.54513159 11.01369466 12.33403468]
+     [15.813      14.67147284  9.49006706 10.68943707]
+     [17.802      15.05448826 11.06306509 11.11859838]
+     [19.784      12.99029519 10.5683657  10.77717061]
+     [21.806      12.19847748  9.04125935 10.50844347]
+     [23.802      13.57028821  9.74380512 10.46262448]
+     [25.68       13.16199377 10.00583998  9.76919784]
+     [27.699      14.91028557 10.93034162 11.29189365]]
+
+
+.. code:: python
+
+    print('¿Alguna differencia?', np.any(X1-X2))
+
+
+.. parsed-literal::
+
+    ¿Alguna differencia? False
+
+
+Ejemplo de análisis de palabras
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    # %load scripts/10_palabras.py
+    #! /usr/bin/ipython
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import gzip
+    ifiname = '../data/palabras.words.gz'
+    
+    letras = [0] * 512
+    with gzip.open(ifiname, mode='r') as fi:
+      for l in fi.readlines():
+        c = ord(l.decode('utf-8')[0])
+        letras[c] += 1
+    
+    nmax = np.nonzero(letras)[0].max() + 1
+    z = np.array(letras[:nmax])
+    # nmin = z.nonzero()[0].min()     # Máximo valor diferente de cero
+    nmin = np.argwhere(z != 0).min()
+    plt.ion()
+    with plt.style.context(['seaborn-talk', 'presentation']):
+      fig = plt.figure(figsize=(12, 10))
+      plt.clf()
+      plt.bar(np.arange(nmin, nmax), z[nmin:nmax])
+      plt.xlabel('Letras con y sin acentos')
+      plt.ylabel('Frecuencia')
+    
+      labels = ['A', 'Z', 'a', 'o', 'z', 'á', 'ú']
+      ll = [r'$\mathrm{{{}}}$'.format(t) for t in labels]
+      ts = [ord(t) for t in labels]
+      plt.xticks(ts, ll, fontsize='xx-large')
+    
+      x0 = 0.5 * ord('á') + ord('z')
+      y0 = 0.2 * z.max()
+      umbral = 0.25
+      lista = (z > umbral * z.max()).nonzero()[0]
+    
+      dx = [10, 40, 70]
+      dy = [-550, -350, -100]
+    
+      for j, t in enumerate(reversed(lista)):
+        plt.annotate('{} ({})'.format(chr(t), z[t]), xy=(t, z[t]), xycoords='data',
+                     xytext=(t + dx[j % 3], z[t] + dy[j % 3]), bbox=dict(boxstyle="round", fc="0.8"),
+                     arrowprops=dict(arrowstyle="simple", fc="0.5")
+                     )
+
+
+
+
+.. image:: figuras/12_2_scipy_al_85_0.png
+
+
+Entrada y salida en Scipy
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El submódulo ``io`` tiene algunas utilidades de entrada y salida de
+datos que permite interactuar con otros paquetes/programas. Algunos de
+ellos son:
+
+-  Archivos IDL (`Interactive Data
+   Language <https://hesperia.gsfc.nasa.gov/hessi/solar_cd/FAQ/IDL_FAQ.htm>`__)
+
+   -  ``scipy.io.readsav()``
+
+-  Archivos de sonido wav, con ``scipy.io.wavfile``
+
+   -  ``scipy.io.wavfile.read()``
+   -  ``scipy.io.wavfile.write()``
+
+-  Archivos fortran sin formato, con ``scipy.io.FortranFile``
+
+-  Archivos Netcdf (para gran número de datos), con ``scipy.io.netcdf``
+
+-  Archivos de matrices de Matlab
+
+.. code:: python
+
+    from scipy import io as sio
+    a = np.ones((3, 3)) + np.eye(3,3)
+    print(a)
+    sio.savemat('datos.mat', {'a': a}) # savemat espera un diccionario
+    data = sio.loadmat('datos.mat', struct_as_record=True)
+    print(data['a'])
+
+
+.. parsed-literal::
+
+    [[2. 1. 1.]
+     [1. 2. 1.]
+     [1. 1. 2.]]
+    [[2. 1. 1.]
+     [1. 2. 1.]
+     [1. 1. 2.]]
+
+
+.. code:: python
+
+    data
+
+
+
+
+.. parsed-literal::
+
+    {'__header__': b'MATLAB 5.0 MAT-file Platform: posix, Created on: Fri Mar 15 17:28:58 2024',
+     '__version__': '1.0',
+     '__globals__': [],
+     'a': array([[2., 1., 1.],
+            [1., 2., 1.],
+            [1., 1., 2.]])}
+
+
+
+--------------
+
+Ejercicios 12 (b)
+-----------------
+
+2. En el archivo ``palabras.words.gz`` hay una larga lista de palabras,
+   en formato comprimido. Siguiendo la idea del ejemplo dado en clases
+   realizar un histograma de las longitudes de las palabras.
+
+3. Modificar el programa del ejemplo de la clase para calcular el
+   histograma de frecuencia de letras en las palabras (no sólo la
+   primera). Considere el caso insensible a la capitalización: las
+   mayúsculas y minúsculas corresponden a la misma letra (‘á’ es lo
+   mismo que ‘Á’ y ambas corresponden a ‘a’).
+
+4. Utilizando el mismo archivo de palabras, Guardar todas las palabras
+   en un array y obtener los índices de las palabras que tienen una dada
+   letra (por ejemplo la letra ‘j’), los índices de las palabras con un
+   número dado de letras (por ejemplo 5 letras), y los índices de las
+   palabras cuya tercera letra es una vocal. En cada caso, dar luego las
+   palabras que cumplen dichas condiciones.
+
+5. En el archivo ``colision.npy`` hay una gran cantidad de datos que
+   corresponden al resultado de una simulación. Los datos están
+   organizados en trece columnas. La primera corresponde a un parámetro,
+   mientras que las 12 restantes corresponde a cada una de las tres
+   componentes de la velocidad de cuatro partículas. Calcular y
+   graficar:
+
+   1. la distribución de ocurrencias del primer parámetro.
+   2. la distribución de ocurrencias de energías de la tercera
+      partícula.
+   3. la distribución de ocurrencias de ángulos de la cuarta partícula,
+      medido respecto al tercer eje. Realizar los cuatro gráficos
+      utilizando un formato adecuado para presentación (charla o
+      poster).
+
+6. Leer el archivo ``colision.npy`` y guardar los datos en formato texto
+   con un encabezado adecuado. Usando el comando mágico ``%timeit`` o el
+   módulo timeit, comparar el tiempo que tarda en leer los datos e
+   imprimir el último valor utilizando el formato de texto y el formato
+   original ``npy``. Comparar el tamaño de los dos archivos.
+
+7. El submódulo **scipy.constants** tiene valores de constantes físicas
+   de interés. Usando este módulo compute la constante de
+   Stefan-Boltzmann :math:`\sigma` utilizando la relación:
+
+   .. math:: \sigma = \frac{2 \pi^5 k_B^4}{15 h^3 c^2}
+
+   Confirme que el valor obtenido es correcto comparando con la
+   constante para esta cantidad en ``scipy.constants``
+
+8. Usando **Scipy** y **Matplotlib** grafique las funciones de onda del
+   oscilador armónico unidimensional para las cuatro energías más bajas
+   (:math:`n=1,2,3,4`), en el intervalo :math:`[-5,5]`. Asegúrese de que
+   están correctamente normalizados.
+
+Las funciones están dadas por:
+
+.. math::  \psi _{n}(x)={\frac {1}{\sqrt {2^{n}\,n!}}}\cdot \left({\frac {\omega }{\pi}}\right)^{1/4}\cdot e^{-{\frac {\omega x^{2}}{2 }}}\cdot H_{n}\left({\sqrt{\omega}}\, x\right),\qquad n=0,1,2,\ldots .
+
+donde :math:`H_{n}` son los polinomios de Hermite, y usando
+:math:`\omega = 2`.
+
+Trate de obtener un gráfico similar al siguiente (tomado de
+`wikipedia <https://en.wikipedia.org/wiki/Quantum_harmonic_oscillator>`__.
+Realizado por By AllenMcC. - File:HarmOsziFunktionen.jpg, `CC BY-SA
+3.0 <https://commons.wikimedia.org/w/index.php?curid=11623546>`__)
+
+.. image:: figuras/HarmOsziFunktionen.png
+
+--------------
+
+.
