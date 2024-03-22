@@ -1,0 +1,985 @@
+.. _clase_07:
+
+Clase 7: Funciones, decoradores y programación funcional
+=========================================================
+
+
+Hemos visto que en Python todo es un objeto, con lo cual, incluso las
+funciones, son objetos. Como tales tienen métodos y atributos:
+
+.. code:: python
+
+    lio_messi = "Lio Messi"
+    print(type(lio_messi))
+
+
+.. parsed-literal::
+
+    <class 'str'>
+
+
+La variable ``lio_messi`` es un string, y como tal, pertenece a la clase
+``str``, que tiene sus propios atributos y métodos:
+
+Veamos qué pasa con las funciones:
+
+.. code:: python
+
+    def saluda_a(alguien):
+        saludo = f"Hola {alguien}!"
+        return saludo
+
+.. code:: python
+
+    print(saluda_a(lio_messi))
+
+
+.. parsed-literal::
+
+    Hola Lio Messi!
+
+
+.. code:: python
+
+    print(type(saluda_a))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+   Un atributo interesante de las funciones es ``__name__`` por razones
+   que veremos en breve:
+
+.. code:: python
+
+    print(saluda_a.__name__)
+
+
+.. parsed-literal::
+
+    saluda_a
+
+
+Es decir, ``__name__`` es el nombre de la función, que está guardado
+dentro del objeto que representa dicha función. > La capacidad del
+lenguaje de responderse preguntas sobre las propias entidades que
+componen el lenguaje se llama *introspección*.
+
+Clases atrás vimos dos características importantes de las funciones en
+Python. La primera de ellas es que las funciones pueden retornar (esto
+es, crear) otras funciones:
+
+.. code:: python
+
+    def genera_recta(a,b):
+        "Genera la función recta y = a x + b"
+        def recta(x):
+            "Evalúa la función recta en x"
+            y = a * x + b
+            return y
+        return recta
+
+.. code:: python
+
+    f = genera_recta(2,3)       # f(x) = 2 * x + 3
+    x = 2
+    print(f"f({x}) = {f(x)}")   # f(2) = 2 * 2 + 3 
+    x = 0
+    print(f"f({x}) = {f(x)}")   # f(0) = 2 * 0 + 3 
+
+
+.. parsed-literal::
+
+    f(2) = 7
+    f(0) = 3
+
+
+.. code:: python
+
+    print(type(f))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+La segunda de ellas es que es posible pasar como argumento una función a
+otra:
+
+.. code:: python
+
+    g = genera_recta(1,-1) # g(x) = x - 1
+    x = 3
+    y = f(g(x))
+    print(f"y = {y}") 
+
+
+.. parsed-literal::
+
+    y = 7
+
+
+.. code:: python
+
+    print(type(g))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+Funciones que aceptan y devuelven funciones (Decoradores)
+---------------------------------------------------------
+
+Vamos a trabajar ahora con los decoradores. Los decoradores no son otra
+cosa que funciones, pero que, por sus características, adquieren ese
+nombre y una forma particular de llamarlos que reduce convenientemente
+la sintaxis al programar. Empecemos por definir una función que devuelve
+otra función, como vimos arriba, de la siguiente forma:
+
+.. code:: python
+
+    def mi_decorador(func):
+        def wrapper():
+            print(f"Por llamar a la función {func.__name__}")
+            func()
+            print(f"Listo, ya llamé a la función {func.__name__}")
+        return wrapper
+
+
+Definamos ahora un saludo genérico:
+
+.. code:: python
+
+    def saluda():
+        print("Holaa!!")
+
+.. code:: python
+
+    saluda()
+
+
+.. parsed-literal::
+
+    Holaa!!
+
+
+Nada nuevo hasta ahora, pero empecemos a combinar las funciones:
+
+.. code:: python
+
+    saluda_w = mi_decorador(saluda)
+    saluda_w()
+
+
+.. parsed-literal::
+
+    Por llamar a la función saluda
+    Holaa!!
+    Listo, ya llamé a la función saluda
+
+
+.. code:: python
+
+    print(type(saluda_w))
+
+
+.. parsed-literal::
+
+    <class 'function'>
+
+
+Tenemos ahora una función ``saluda`` y su versión *decorada*
+``saluda_w``, que simplemente llama a la función ``saluda``, pero además
+imprime mensajes antes y después del llamado a la función. Esto es algo
+que uno va a querer hacer, por ejemplo para calcular el tiempo de
+ejecución de una función, o para imprimir mensajes de registro
+(*logging*) o debug, u otras tantas cosas más. Por eso Python introduce
+una notación especial para este tipo de funciones ``mi_decorador``:
+
+.. code:: python
+
+    @mi_decorador
+    def saluda_en_ingles():
+        print("Hello!!")
+
+   Notar que el decorador siempre empieza con el símbolo ``@`` y se
+   encuentra en la línea inmediatamente anterior a la definición de la
+   función.
+
+.. code:: python
+
+    saluda_en_ingles()
+
+
+.. parsed-literal::
+
+    Por llamar a la función saluda_en_ingles
+    Hello!!
+    Listo, ya llamé a la función saluda_en_ingles
+
+
+Qué pasa si queremos aplicar el decorador a una función que recibe
+argumentos como ``saluda_a``?
+
+.. code:: python
+
+    @mi_decorador
+    def saluda_a(alguien):
+        print(f"Hola {alguien}!")
+
+.. code:: python
+
+    saluda_a("Lio Messi")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[20], line 1
+    ----> 1 saluda_a("Lio Messi")
+
+
+    TypeError: mi_decorador.<locals>.wrapper() takes 0 positional arguments but 1 was given
+
+
+Notemos que como está definido el decorador, recibe una función sin
+argumentos:
+
+.. code:: python
+
+   def mi_decorador(func):
+       def wrapper():
+           print(f"Por llamar a la función {func.__name__}")
+           func()
+           print(f"Listo, ya llamé a la función {func.__name__}")
+       return wrapper
+
+En este último caso, al aplicar ``@mi_decorador`` a
+``saluda_a(alguien)``, estamos pasando a la función ``mi_decorador`` una
+función ``func`` que dentro de ``mi_decorador`` se llama como
+``func()``, es decir, no tiene argumentos. Para resolver este problema,
+tenemos que indicar explícitamente que la función que vamos a llamar
+dentro del decorador puede tener argumentos:
+
+.. code:: python
+
+    def mi_nuevo_decorador(func):
+        def wrapper(*args, **kwargs):
+            print(f"Por llamar a la función {func.__name__}")
+            func(*args, **kwargs)
+            print(f"Listo, ya llamé a la función {func.__name__}")
+        return wrapper
+
+.. code:: python
+
+    @mi_nuevo_decorador
+    def saluda_a(alguien):
+        print(f"Hola {alguien}!")
+
+.. code:: python
+
+    saluda_a("Lio Messi")
+
+
+.. parsed-literal::
+
+    Por llamar a la función saluda_a
+    Hola Lio Messi!
+    Listo, ya llamé a la función saluda_a
+
+
+Hasta ahora la función ``func`` que envuelve el decorador no devuelve
+ningún valor, sólo imprime un mensaje en pantalla. Cómo hacemos para
+usar un decorador con una función que devuelve un valor?
+
+.. code:: python
+
+    def proto_debug_decorator(func):
+        def wrapper(*args, **kwargs):
+            print(f"Por llamar a la función {func.__name__}")
+            resultado = func(*args, **kwargs)
+            print(f"Listo, ya llamé a la función {func.__name__}")
+            return resultado
+        return wrapper
+
+.. code:: python
+
+    @proto_debug_decorator
+    def mi_calculo_complicado(x,y,z=0):
+        return x**2 + y**2 + z**2
+        
+
+.. code:: python
+
+    v = mi_calculo_complicado(1,2,3)
+    print(v)
+
+
+.. parsed-literal::
+
+    Por llamar a la función mi_calculo_complicado
+    Listo, ya llamé a la función mi_calculo_complicado
+    14
+
+
+Decoradores, un ejemplo más útil
+--------------------------------
+
+Recordemos que al llamar una función, ``*args`` representa a la tupla de
+argumentos mientras que ``**kwargs`` es el diccionario de argumentos
+opcionales. Escribamos un par de funciones útiles para transformar estos
+tipos en string, de modo que se puedan imprimir, por ejemplo:
+
+.. code:: python
+
+    def args_as_str(*args, **kwargs):
+        args_str = ", ".join([str(a) for a in args])
+        kwargs_str = ", ".join([f"{k}={v}" for k,v in kwargs.items()])
+        return f"{args_str}, {kwargs_str}"
+
+.. code:: python
+
+    def debug_me(func):
+        def wrapper(*args, **kwargs):
+            print(f"{func.__name__} ({args_as_str(*args, **kwargs)})")
+            resultado = func(*args, **kwargs)
+            print(f"Listo, ya llamé a la función {func.__name__}")
+            return resultado
+        return wrapper
+
+.. code:: python
+
+    @debug_me
+    def mi_calculo_recontracomplicado(x,y,z=0):
+        return x**2 + y**2 + z**2
+
+.. code:: python
+
+    v =  mi_calculo_recontracomplicado(1,2,z=3)
+    print(v)
+
+
+
+.. parsed-literal::
+
+    mi_calculo_recontracomplicado (1, 2, z=3)
+    Listo, ya llamé a la función mi_calculo_recontracomplicado
+    14
+
+
+--------------
+
+Ejercicios 07 (a)
+-----------------
+
+El módulo time calcula el tiempo en segundos desde el comienzo de la era
+de la computación (?), que para los fines prácticos, da inicio el 1 de
+enero de 1970 ;-D. Veamos unos ejemplos de su uso:
+
+.. code:: python
+
+    import time 
+    
+    ahora = time.time()
+    print (ahora)
+    # duerme 5 segundos
+    time.sleep(5) # zzzz.....
+    
+    ahora = time.time()
+    print (ahora)
+    
+
+
+
+.. parsed-literal::
+
+    1709038864.1231098
+    1709038869.1235564
+
+
+Utilizando las funciones anteriores, escriba el decorador ``@time_me``
+que calcula e imprime el tiempo que tarda en ejecutarse una función.
+**No empiece desde cero!!** Use como plantilla para empezar el decorador
+``@debug_me`` y modifíquelo adecuadamente.
+
+.. code:: python
+
+    # descomente el decorador una vez que lo tenga programado
+    # @time_me
+    def mi_calculo_recontralargo(n):
+        l= [x for x in range(n)]
+        return sum(l)
+
+.. code:: python
+
+    mi_calculo_recontralargo(20000000)
+
+
+
+
+.. parsed-literal::
+
+    199999990000000
+
+
+
+--------------
+
+
+Programación funcional con Python
+---------------------------------
+
+La programación funcional es un paradigma de programación, de la misma
+manera que otros paradigmas, como la programación orientada a objetos, o
+la programación estructurada.
+
+Existen lenguajes de programación que son directamente funcionales, esto
+es, implementan las reglas de la programación funcional directamente
+(por ejemplo, Lisp, Haskell, F#, etc.). Desde un punto de vista
+histórico, la programación funcional tiene su origen en la visión de
+Alonzo Church del problema de la decisión (*Entscheidungsproblem*), y es
+complementaria a la más conocida, propuesta por Alan Turing.
+
+Python es un lenguaje orientado a objetos (todo elemento del lenguaje es
+un objeto), de modo tal que no es posible hablar de un paradigma
+funcional en Python, sino mas bien de un *estilo* de programación
+funcional.
+
+Un trabajo interesante es el siguiente: ’Why Functional Programming
+Matters: http://www.cse.chalmers.se/~rjmh/Papers/whyfp.pdf”.
+
+Los errores al programar
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+En el continuo devenir de la programación, uno se encuentra,
+principalmente, resolviendo errores. Un resumen de los errores posibles
+en un código se pueden encontrar en la expresión
+
+   ``i = i+1``
+
+En esta expresión podemos encontrar tres tipos de errores:
+
+-  *Error de lectura* : el valor de ``i`` en el lado derecho no es el
+   que efectivamente uno desearía, es decir, el código está leyendo un
+   valor incorrecto.
+
+-  *Error de escritura* : el valor de ``i`` en el lado izquierdo no es
+   el que efectivamente uno desearía, es decir, estamos guardando la
+   expresión en una variable incorrecta.
+
+-  *Error de cómputo* : que se produce, por ejemplo, porque no queremos
+   sumar 1 sino 2, o queremos restar el valor de i.
+
+Existe un cuarto tipo de error que aparece y tiene que ver con un *error
+de flujo*, en el cual el código se ejecuta en una rama que no es la
+deseada, debido a que una condición lógica no se cumple tal como se
+esperaba. O por ejemplo, el orden en que se ejecutan las sentencias no
+es el adecuado:
+
+.. code:: python
+
+    # Función que calcula (x+1)(x+2)
+    def f(x):
+        x = x+1 
+        y = x+1
+        return x*y
+
+.. code:: python
+
+    # Función que calcula (x+1)(x+2) ?? Mmmm.....
+    def g(x):
+        y = x+1
+        x = x+1 
+        return x*y
+
+.. code:: python
+
+    print(f(3))
+    print(g(3))
+
+
+.. parsed-literal::
+
+    20
+    16
+
+
+Los errores en notebooks
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Además de las complejidades propias de la programación, que están
+asociadas al *dominio* donde se encuentra el problema que uno quiere
+resolver, y a las dificultades que eso implica; los *notebooks*
+introducen también una dificultad adicional: uno puede redefinir los
+datos en celdas posteriores, pero puede volver ‘atrás’ en el código y
+recalcular otra celda. Veamos un
+`ejemplo <https://verve.com/blog/jupyter-notebooks/>`__:
+
+.. code:: python
+
+    data = [1,2,3,4]
+
+.. code:: python
+
+    def prom(a):
+        s = sum(a)
+        n = len(a)
+        return s/n
+
+.. code:: python
+
+    prom(data)
+
+
+
+
+.. parsed-literal::
+
+    2.5
+
+
+
+.. figure:: https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/60d33beacf4ba7263a23cd79_qh6ImC4NPdyPbvn-7ns8FYsgOskDPDWLnX31mLCOgSwpX_SQgmo8krqdg4e6XAnSbqRAtZMYqlf7UTvlHiXgt5YtMwbt9IRY1fAbOjyq5hARui-xEQUgI48EOjhJGuIsSFDg90L6.jpeg
+   :alt: Más código
+
+   Más código
+
+.. code:: python
+
+    data = "Some data"
+    print(len(data))
+
+
+.. parsed-literal::
+
+    9
+
+
+Mutabilidad
+~~~~~~~~~~~
+
+Los problemas que vemos arriba se deben a la *mutabilidad*: las
+*variables* pueden cambiar (esto es, ser reescritas) a lo largo del
+código. Ahora bien, pareciera que la mutabilidad es intrínseca a la
+computación, al fin y al cabo, en el hardware hay una cantidad limitada
+de memoria y de registros que son continuamente reescritos para que
+nuestro código corra. Sin embargo, los lenguajes de programación de alto
+nivel que usamos nos alejan (afortunadamente) del requerimiento de
+mantener el estado de la memoria y los registros explícitamente en el
+código (y en el algoritmo en nuestra cabeza).
+
+La pregunta que cabe entonces es ¿cómo hacer un código que prevenga la
+mutabilidad, pero que a la vez me permita transformar los datos para
+resolver mi problema? La respuesta viene de la mano de un ente muy
+conocido en mátemáticas: *las funciones*
+
+Funciones
+~~~~~~~~~
+
+Una función desde el punto de vista matemático es una relación que a
+cada elemento de un conjunto le asocia exactamente un elemento de otro
+conjunto. Estos conjuntos pueden ser números, vectores, matrices en el
+mundo matemático,
+
+.. raw:: html
+
+   <h3>
+
+.. raw:: html
+
+   <center>
+
+:math:`y = f(x)`
+
+.. raw:: html
+
+   </center>
+
+.. raw:: html
+
+   </h3>
+
+o, en un mundo más físico, peras, manzanas, nombres, apellidos, `objetos
+varios <https://commons.wikimedia.org/w/index.php?curid=20802095>`__:
+
+.. figure:: figuras/Function_color_example_3.png
+   :alt: una funcion
+
+   una funcion
+
+Estas funciones tienen dos características fundamentales para usar en
+programación: - Permiten “transformar” un valor en otro - El valor
+original **no** se modifica
+
+Es decir que el uso de funciones, al estilo matemático, en un código
+resuelven el problema de la mutabilidad, pero a la vez me permiten
+“transformar”, es decir, crear nuevos valores a partir del valor
+original.
+
+Funciones puras
+^^^^^^^^^^^^^^^
+
+El análogo computacional de las funciones matemáticas se llaman
+*funciones puras*. Una función se dice pura cuando: - Siempre retorna el
+mismo valor de salida para el mismo valor de entrada - No tiene efectos
+colaterales (*side effects*)
+
+.. figure:: figuras/afunction.png
+   :alt: una funcion
+
+   una funcion
+
+Funciones de primer orden o primera clase
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Un lenguaje se dice que tiene funciones de primera clase cuando son
+tratadas exactamente igual que otros valores o variables.
+
+Funciones de orden superior
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Un lenguaje que permite pasar funciones como argumentos se dice que
+acepta funciones de orden superior.
+
+.. code:: python
+
+    def square(x):
+        return x*x
+
+.. code:: python
+
+    def next(x):
+        return x+1 
+
+.. code:: python
+
+    a = 4
+    b = next(a)
+    c = next(next(a))
+
+.. code:: python
+
+    print(a)
+    print(b)
+    print(c)
+
+
+.. parsed-literal::
+
+    4
+    5
+    6
+
+
+.. code:: python
+
+    def h(x):
+        return (next(x))*(next(next(x)))
+
+.. code:: python
+
+    print(h(3))
+
+
+.. parsed-literal::
+
+    20
+
+
+Si se tiene funciones puras, es posible componerlas
+
+.. code:: python
+
+    def compose(f, g):
+        return lambda x: f(g(x))
+
+.. code:: python
+
+    next2 = compose(next,next)
+
+.. code:: python
+
+    print(next2(a))
+
+
+.. parsed-literal::
+
+    6
+
+
+Inmutabilidad
+~~~~~~~~~~~~~
+
+Usando funciones puras se garantiza la inmutabilidad de los valores
+hacia adentro de la función. Pero, ¿qué sucede afuera? Python, al no ser
+un lenguaje funcional *per se*, no tiene la capacidad de establecer la
+inmutabilidad de cualquier valor, excepto para los casos de strings y
+tuplas, además, obviamente, de las expresiones literales.
+
+**Queda entonces en el programador la responsabilidad de no mutar los
+datos…**
+
+**… o usar anotaciones de tipos**
+
+.. code:: python
+
+    def cube(x: int) -> int:
+        return x*x*x
+
+.. code:: python
+
+    print(cube(2))
+
+
+.. parsed-literal::
+
+    8
+
+
+Nótese que Python NO chequea los tipos de datos, no tiene manera en
+forma nativa de hacerlo. Por eso puedo ejecutar la función ``cube`` con
+floats, por ejemplo:
+
+.. code:: python
+
+    print(cube(3.0))
+
+
+.. parsed-literal::
+
+    27.0
+
+
+
+
+Usando ``mypy``
+^^^^^^^^^^^^^^^
+
+Para poder utilizar la anotación de tipos en forma efectiva, se puede
+recurrir a `mypy <http://mypy-lang.org/index.html>`__. Esta es una
+aplicación que me permite comprobar tipos de datos anotados en Python.
+Para instalar ``mypy`` usamos:
+
+``conda install mypy``
+
+o lo instalamos a través del manejador de paquetes de preferencia
+(Anaconda, mamba, etc.)
+
+Podemos ver el ejemplo ``07_cube.py``
+
+.. code:: python
+
+    !python3 cube.py
+
+
+.. parsed-literal::
+
+    python3: can't open file '/home/fiol/Clases/IntPython/clases-python/clases/cube.py': [Errno 2] No such file or directory
+
+
+.. code:: python
+
+    !mypy cube.py
+
+
+.. parsed-literal::
+
+    /bin/bash: line 1: mypy: command not found
+
+
+   Es posible que uno quiera usar ``mypy`` sobre un archivo de notebook
+   ``ipynb``. Para eso hay que instalar la aplicación ``nbQA`` `más
+   detalles acá <https://github.com/nbQA-dev/nbQA>`__.
+
+Si se usa VS Code, se puede instalar la extensión ``MyPy Type Checker``,
+y luego indicarle a VS Code que la utilice. Para eso vamos a
+``Settings`` y buscamos ``type checking``. Donde dice ``PyLance``
+elegimos el modo que queremos que se chequeen los tipos, desde ``off``
+hasta ``strict``.
+
+No más loops
+~~~~~~~~~~~~
+
+Si las funciones deben ser puras, y las ‘variables’ dejan de ser
+variables y pasan a ser valores, entonces no puede haber loops en mi
+código. Un loop necesita invariablemente un contador (``i = i+1``) que
+necesariamente es una variable mutable. Así que así nomás, de un plumazo
+no existen más loops.
+
+¿Entonces? Entonces, todos los loops se reemplazan por llamados a
+funciones recursivas, o se utilizan funciones de orden superior:
+
+.. code:: python
+
+    # Filter 
+    
+    l = [1,2,3,4,5,6]
+    
+    def es_par(x):
+        return (x%2 == 0)
+    
+    pares = list(filter(es_par,l))
+    print(pares)
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6]
+
+
+.. code:: python
+
+    # Filter usando list comprehension
+    list(x for x in l if es_par(x))
+
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6]
+
+
+
+.. code:: python
+
+    # Map
+    siguientes = list(map(next,l))
+    print(siguientes)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 5, 6, 7]
+
+
+El módulo ``functools`` provee la función ``reduce``, que complementa a
+``map`` y ``filter``.
+
+.. code:: python
+
+    # Reduce
+    from functools import *
+    import operator
+    
+    # Suma usando el predicado desde el módulo `operator`
+    suma = reduce(operator.add,l,0)
+    print(suma)
+    
+
+
+
+.. parsed-literal::
+
+    21
+
+
+.. code:: python
+
+    help(reduce)
+
+
+.. parsed-literal::
+
+    Help on built-in function reduce in module _functools:
+    
+    reduce(...)
+        reduce(function, iterable[, initial]) -> value
+        
+        Apply a function of two arguments cumulatively to the items of a sequence
+        or iterable, from left to right, so as to reduce the iterable to a single
+        value.  For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates
+        ((((1+2)+3)+4)+5).  If initial is present, it is placed before the items
+        of the iterable in the calculation, and serves as a default when the
+        iterable is empty.
+    
+
+
+.. code:: python
+
+    # Suma usando el predicado como lambda
+    otra_suma = reduce(lambda x,y: x+y, l)
+    print(otra_suma)
+
+
+.. parsed-literal::
+
+    21
+
+
+.. code:: python
+
+    # Suma definiendo la propia función suma
+    def add(x,y):
+        return x+y
+    
+    y_otra_suma = reduce(add,l)
+    print(y_otra_suma)
+
+
+.. parsed-literal::
+
+    21
+
+
+La suma de los cuadrados de una lista:
+
+.. code:: python
+
+    suma_cuadrados = reduce(lambda x,y: x+y, map(square,l))
+    print(suma_cuadrados)
+
+
+.. parsed-literal::
+
+    91
+
+
+--------------
+
+Ejercicios 07 (b)
+-----------------
+
+1. Construya una función ``partition(lst,predicate)`` que dada una lista
+   ``lst`` y una función ``predicate``, separe la lista ``lst`` en dos:
+   una lista que contiene los valores para los cuales la función
+   ``predicate`` devuelve ``True``, y otra lista que contiene los
+   valores para los que ``predicate`` devuelve ``False``:
+
+   .. code:: python
+
+      def is_even(x):
+          return x % 2 == 0
+
+      numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      evens, odds = divide_list(numbers, is_even)
+
+      print(evens) # Output: [2, 4, 6, 8, 10]
+      print(odds)  # Output: [1, 3, 5, 7, 9]
+
+2. Dado la cadena de caracteres
+
+   .. code:: python
+
+      s1='En un lugar de la Mancha de cuyo nombre no quiero acordarme'
+
+   Utilice ``reduce``, ``map`` y/o ``filter`` (y las funciones
+   auxiliares necesarias) para:
+
+   -  Obtener la cantidad de caracteres.
+   -  Imprimir la frase anterior pero con cada palabra empezando en
+      mayúsculas.
+   -  Contar cuantas letras ‘a’ tiene la frase.
+   -  Contar cuántas vocales tiene.
+
+--------------
