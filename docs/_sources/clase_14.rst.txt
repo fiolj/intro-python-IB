@@ -1,0 +1,1622 @@
+.. _clase_14:
+
+Clase 14: Interfaces con otros lenguajes
+=========================================
+
+
+A diferencia de **Python**, tanto **Fortran** como **C** y **C++** son
+lenguajes *compilados*: el código fuente tiene que se convertido a un
+lenguaje ejecutable para poder ser utilizado. Como mencionamos
+anteriormente, esto suele ser muy conveniente en el flujo de
+programación usual pero puede haber casos en que el código en Python es
+notablemente más lento, o casos en que ya existen rutinas en otros
+lenguajes y convertirlas a un nuevo lenguaje sea mucho trabajo. En esos
+casos, una solución posible y conveniente es utilizar un lenguaje
+compilado para rutinas específicas y Python para todo el resto del
+trabajo (entrada/salida, manejo de datos, graficación, etc).
+
+Ejemplo 1: Rotación de vectores
+-------------------------------
+
+Supongamos que queremos resolver el problema de la rotación de vectores
+en el espacio usando los `tres ángulos de
+Euler <https://mathworld.wolfram.com/EulerAngles.html>`__.
+
+Dado un array con los tres ángulos de Euler, calculamos la matriz de
+rotación (de 3 x 3), y la aplicamos (esto es, multiplicamos) a un
+arreglo de *N* vectores.
+
+En una primera versión, podemos hacerlo en Python directamente en el
+notebook:
+
+.. code:: python
+
+    import numpy as np
+    
+    def matrix_rotation(angles):
+      cx, cy, cz = np.cos(angles)
+      sx, sy, sz = np.sin(angles)
+      R = np.zeros((3, 3))
+      R[0, 0] = cx * cz - sx * cy * sz
+      R[0, 1] = cx * sz + sx * cy * cz
+      R[0, 2] = sx * sy
+    
+      R[1, 0] = -sx * cz - cx * cy * sz
+      R[1, 1] = -sx * sz + cx * cy * cz
+      R[1, 2] = cx * sy
+    
+      R[2, 0] = sy * sz
+      R[2, 1] = -sy * cz
+      R[2, 2] = cy
+      return R
+    
+    
+    def rotate(angles, v):
+      return np.dot(matrix_rotation(angles), v)
+
+.. code:: python
+
+    N = 100
+    # Ángulos de Euler
+    angle = np.random.random(3)
+    # Definimos N vectores tridimensionales
+    v = np.random.random((3, N))
+
+Si ya tenemos un módulo donde están programadas las funciones necesarias
+
+.. code:: python
+
+    # %load rotacion_p.py
+    #! /usr/bin/ipython3
+    import numpy as np
+    
+    
+    def matrix_rotation(angles):
+      cx, cy, cz = np.cos(angles)
+      sx, sy, sz = np.sin(angles)
+      R = np.zeros((3, 3))
+      R[0, 0] = cx * cz - sx * cy * sz
+      R[0, 1] = cx * sz + sx * cy * cz
+      R[0, 2] = sx * sy
+    
+      R[1, 0] = -sx * cz - cx * cy * sz
+      R[1, 1] = -sx * sz + cx * cy * cz
+      R[1, 2] = cx * sy
+    
+      R[2, 0] = sy * sz
+      R[2, 1] = -sy * cz
+      R[2, 2] = cy
+      return R
+    
+    
+    def rotate(angles, v):
+      return np.dot(matrix_rotation(angles), v)
+
+
+es fácil utilizarlas:
+
+.. code:: python
+
+    N = 100
+    # Ángulos de Euler
+    angle = np.random.random(3)
+    # Definimos N vectores tridimensionales
+    v = np.random.random((3, N))
+
+.. code:: python
+
+    y = rotate(angle,v)
+
+.. code:: python
+
+    print(angle)
+    print(y[:,0:5].T)
+
+
+.. parsed-literal::
+
+    [0.06193349 0.99877501 0.79127934]
+    [[ 0.90717864  0.68082735 -0.01987772]
+     [ 0.43798584  0.78786433  0.54493442]
+     [ 0.75536562  0.51102298  0.41541194]
+     [ 0.17681573  0.1682188  -0.02342615]
+     [ 0.20673471  0.38302061  0.17507386]]
+
+
+Importando desde un módulo en un archivo
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+También podemos tener las funciones para la rotación en un módulo
+``rotaciones.py``. Recordemos cómo se importarían en este caso
+
+.. code:: python
+
+    pwd
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/Clases/IntPython/clases-python/clases'
+
+
+
+.. code:: python
+
+    cd ../scripts/interfacing_python
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/scripts/interfacing_python
+
+
+.. code:: python
+
+    ls
+
+
+.. parsed-literal::
+
+    [0m[01;34m__pycache__[0m/  rotaciones.py
+
+
+.. code:: python
+
+    import rotaciones as rotp
+
+.. code:: python
+
+    help(rotp)
+
+
+.. parsed-literal::
+
+    Help on module rotaciones:
+    
+    NAME
+        rotaciones
+    
+    FUNCTIONS
+        matrix_rotation(angles)
+        
+        rotate(angles, v)
+    
+    FILE
+        /home/fiol/Clases/IntPython/clases-python/scripts/interfacing_python/rotaciones.py
+    
+    
+
+
+.. code:: python
+
+    yp = rotp.rotate(angle,v)
+
+.. code:: python
+
+    print(yp[:,0:5].T)
+    np.allclose(y,yp)
+
+
+.. parsed-literal::
+
+    [[ 0.90717864  0.68082735 -0.01987772]
+     [ 0.43798584  0.78786433  0.54493442]
+     [ 0.75536562  0.51102298  0.41541194]
+     [ 0.17681573  0.1682188  -0.02342615]
+     [ 0.20673471  0.38302061  0.17507386]]
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Interfaces con Fortran
+----------------------
+
+Veamos cómo trabajar si tenemos el código para realizar las rotaciones
+en Fortran
+
+Primer ejemplo: Nuestro código
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El código en Fortran que tenemos es:
+
+.. code:: fortran
+
+   function rotate(theta, v, N) result(y)
+     implicit none
+     integer :: N
+     real(8), intent(IN) :: theta(3)
+     real(8), intent(IN) :: v(3,N)
+     real(8) :: y(3,N)
+     real(8) :: R(3,3)
+     real(8) :: cx, cy, cz, sx, sy, sz
+
+     ! Senos y Cosenos de los tres ángulos de Euler 
+     cx = cos(theta(1)); cy = cos(theta(2)); cz = cos(theta(3))
+     sx = sin(theta(1)); sy = sin(theta(2)); sz = sin(theta(3))
+
+     ! Matriz de rotación
+     R(1,1) = cx*cz - sx*cy*sz
+     R(1,2) = cx*sz + sx*cy*cz
+     R(1,3) = sx*sy
+
+     R(2,1) = -sx*cz - cx*cy*sz
+     R(2,2) = -sx*sz + cx*cy*cz
+     R(2,3) = cx*sy
+
+     R(3,1) = sy*sz
+     R(3,2) = -sy*cz
+     R(3,3) = cy
+
+     ! Aplicamos la rotación
+     y = matmul(R, v)
+   end function rotate
+
+.. code:: python
+
+    cd ../interfacing_F
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/scripts/interfacing_F
+
+
+F2PY
+~~~~
+
+F2PY -Fortran to Python interface generator- es una utilidad que permite
+generar una interface para utilizar funciones y datos definidos en
+Fortran desde Python.
+
+Información sobre la interfaz entre Fotran y Python, y en particular
+sobre F2PY, puede encontrarse en:
+
+-  `Scipy
+   cookbook <http://scipy-cookbook.readthedocs.io/items/idx_interfacing_with_other_languages.html>`__
+-  `F2PY Users Guide and Reference
+   Manual <https://docs.scipy.org/doc/numpy-dev/f2py/index.html>`__
+-  `Fortran Best
+   Practices <http://www.fortran90.org/src/best-practices.html#interfacing-with-python>`__
+-  http://websrv.cs.umt.edu/isis/index.php/F2py_example
+
+El primer paso es utilizar esta utilidad:
+
+.. code:: bash
+
+   $ f2py3 -c rotacion.f90 -m rotacion_f
+
+.. code:: python
+
+    !f2py3 -c rotacion.f90 -m rotacion_f
+
+
+.. parsed-literal::
+
+    [39mrunning build[0m
+    [39mrunning config_cc[0m
+    [39mINFO: unifing config_cc, config, build_clib, build_ext, build commands --compiler options[0m
+    [39mrunning config_fc[0m
+    [39mINFO: unifing config_fc, config, build_clib, build_ext, build commands --fcompiler options[0m
+    [39mrunning build_src[0m
+    [39mINFO: build_src[0m
+    [39mINFO: building extension "rotacion_f" sources[0m
+    [39mINFO: f2py options: [][0m
+    [39mINFO: f2py:> /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_fmodule.c[0m
+    [39mcreating /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11[0m
+    Reading fortran codes...
+    	Reading file 'rotacion.f90' (format:free)
+    Post-processing...
+    	Block: rotacion_f
+    			Block: rotaciones
+    				Block: matrix_rotation
+    appenddecl: "dimension" not implemented.
+    				Block: rotate
+    appenddecl: "dimension" not implemented.
+    			Block: test_rotation
+    Applying post-processing hooks...
+      character_backward_compatibility_hook
+    Post-processing (stage 2)...
+    	Block: rotacion_f
+    		Block: unknown_interface
+    			Block: rotaciones
+    				Block: matrix_rotation
+    				Block: rotate
+    			Block: test_rotation
+    Building modules...
+        Building module "rotacion_f"...
+    		Constructing F90 module support for "rotaciones"...
+    		Creating wrapper for Fortran function "matrix_rotation"("matrix_rotation")...
+                Constructing wrapper function "rotaciones.matrix_rotation"...
+                  r = matrix_rotation(angles)
+    		Creating wrapper for Fortran function "rotate"("rotate")...
+                Constructing wrapper function "rotaciones.rotate"...
+                  y = rotate(angles,v,[n])
+        Wrote C/API module "rotacion_f" to file "/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_fmodule.c"
+        Fortran 90 wrappers are saved to "/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_f-f2pywrappers2.f90"
+    [39mINFO:   adding '/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/fortranobject.c' to sources.[0m
+    [39mINFO:   adding '/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11' to include_dirs.[0m
+    [39mcopying /usr/lib64/python3.11/site-packages/numpy/f2py/src/fortranobject.c -> /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11[0m
+    [39mcopying /usr/lib64/python3.11/site-packages/numpy/f2py/src/fortranobject.h -> /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11[0m
+    [39mINFO:   adding '/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_f-f2pywrappers2.f90' to sources.[0m
+    [39mINFO: build_src: building npy-pkg config files[0m
+    /home/fiol/.local/lib/python3.11/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+    !!
+    
+            ********************************************************************************
+            Please avoid running ``setup.py`` directly.
+            Instead, use pypa/build, pypa/installer or other
+            standards-based tools.
+    
+            See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+            ********************************************************************************
+    
+    !!
+      self.initialize_options()
+    [39mrunning build_ext[0m
+    [39mINFO: customize UnixCCompiler[0m
+    [39mINFO: customize UnixCCompiler using build_ext[0m
+    [39mINFO: get_default_fcompiler: matching types: '['arm', 'gnu95', 'intel', 'lahey', 'pg', 'nv', 'absoft', 'nag', 'vast', 'compaq', 'intele', 'intelem', 'gnu', 'g95', 'pathf95', 'nagfor', 'fujitsu']'[0m
+    [39mINFO: customize ArmFlangCompiler[0m
+    [31mWARN: Could not locate executable armflang[0m
+    [39mINFO: customize Gnu95FCompiler[0m
+    [39mINFO: Found executable /usr/bin/gfortran[0m
+    [39mINFO: customize Gnu95FCompiler[0m
+    [39mINFO: customize Gnu95FCompiler using build_ext[0m
+    [39mINFO: building 'rotacion_f' extension[0m
+    [39mINFO: compiling C sources[0m
+    [39mINFO: C compiler: gcc -Wsign-compare -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DNDEBUG -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -fPIC
+    [0m
+    [39mcreating /tmp/tmp8o0oz7vs/tmp[0m
+    [39mcreating /tmp/tmp8o0oz7vs/tmp/tmp8o0oz7vs[0m
+    [39mcreating /tmp/tmp8o0oz7vs/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11[0m
+    [39mINFO: compile options: '-DNPY_DISABLE_OPTIMIZATION=1 -I/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11 -I/usr/lib64/python3.11/site-packages/numpy/core/include -I/usr/include/python3.11 -c'[0m
+    [39mINFO: gcc: /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_fmodule.c[0m
+    [39mINFO: gcc: /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/fortranobject.c[0m
+    [39mINFO: compiling Fortran 90 module sources[0m
+    [39mINFO: Fortran f77 compiler: /usr/bin/gfortran -Wall -g -ffixed-form -fno-second-underscore -fPIC -O3 -funroll-loops
+    Fortran f90 compiler: /usr/bin/gfortran -Wall -g -fno-second-underscore -fPIC -O3 -funroll-loops
+    Fortran fix compiler: /usr/bin/gfortran -Wall -g -ffixed-form -fno-second-underscore -Wall -g -fno-second-underscore -fPIC -O3 -funroll-loops[0m
+    [39mINFO: compile options: '-I/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11 -I/usr/lib64/python3.11/site-packages/numpy/core/include -I/usr/include/python3.11 -c'
+    extra options: '-J/tmp/tmp8o0oz7vs/ -I/tmp/tmp8o0oz7vs/'[0m
+    [39mINFO: gfortran:f90: rotacion.f90[0m
+    [01m[Krotacion.f90:56:24:[m[K
+    
+       56 |   integer :: n, Nloops,i,j
+          |                        [01;35m[K1[m[K
+    [01;35m[KWarning:[m[K Unused variable ‘[01m[Ki[m[K’ declared at [01;35m[K(1)[m[K [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+    [01m[Krotacion.f90:56:26:[m[K
+    
+       56 |   integer :: n, Nloops,i,j
+          |                          [01;35m[K1[m[K
+    [01;35m[KWarning:[m[K Unused variable ‘[01m[Kj[m[K’ declared at [01;35m[K(1)[m[K [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+    [01m[Krotacion.f90:59:31:[m[K
+    
+       59 |   real(8), dimension(3, 3) :: R
+          |                               [01;35m[K1[m[K
+    [01;35m[KWarning:[m[K Unused variable ‘[01m[Kr[m[K’ declared at [01;35m[K(1)[m[K [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-variable-Wunused-variable]8;;[m[K]
+    [01m[Krotacion.f90:44:42:[m[K
+    
+       44 |     y = matmul(matrix_rotation(angles), v)
+          |                                          [01;35m[K^[m[K
+    [01;35m[KWarning:[m[K ‘[01m[K__var_1_mma.offset[m[K’ is used uninitialized [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wuninitialized-Wuninitialized]8;;[m[K]
+    [01m[Krotacion.f90:47:21:[m[K
+    
+       47 | end module rotaciones
+          |                     [01;36m[K^[m[K
+    [01;36m[Knote:[m[K ‘[01m[K__var_1_mma[m[K’ declared here
+    [01m[Krotacion.f90:44:42:[m[K
+    
+       44 |     y = matmul(matrix_rotation(angles), v)
+          |                                          [01;35m[K^[m[K
+    [01;35m[KWarning:[m[K ‘[01m[K__var_1_mma.dim[0].lbound[m[K’ is used uninitialized [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wuninitialized-Wuninitialized]8;;[m[K]
+    [01m[Krotacion.f90:47:21:[m[K
+    
+       47 | end module rotaciones
+          |                     [01;36m[K^[m[K
+    [01;36m[Knote:[m[K ‘[01m[K__var_1_mma[m[K’ declared here
+    [01m[Krotacion.f90:44:42:[m[K
+    
+       44 |     y = matmul(matrix_rotation(angles), v)
+          |                                          [01;35m[K^[m[K
+    [01;35m[KWarning:[m[K ‘[01m[K__var_1_mma.dim[0].ubound[m[K’ is used uninitialized [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wuninitialized-Wuninitialized]8;;[m[K]
+    [01m[Krotacion.f90:47:21:[m[K
+    
+       47 | end module rotaciones
+          |                     [01;36m[K^[m[K
+    [01;36m[Knote:[m[K ‘[01m[K__var_1_mma[m[K’ declared here
+    [01m[Krotacion.f90:44:42:[m[K
+    
+       44 |     y = matmul(matrix_rotation(angles), v)
+          |                                          [01;35m[K^[m[K
+    [01;35m[KWarning:[m[K ‘[01m[K__var_1_mma.dim[1].lbound[m[K’ is used uninitialized [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wuninitialized-Wuninitialized]8;;[m[K]
+    [01m[Krotacion.f90:47:21:[m[K
+    
+       47 | end module rotaciones
+          |                     [01;36m[K^[m[K
+    [01;36m[Knote:[m[K ‘[01m[K__var_1_mma[m[K’ declared here
+    [01m[Krotacion.f90:44:42:[m[K
+    
+       44 |     y = matmul(matrix_rotation(angles), v)
+          |                                          [01;35m[K^[m[K
+    [01;35m[KWarning:[m[K ‘[01m[K__var_1_mma.dim[1].ubound[m[K’ is used uninitialized [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wuninitialized-Wuninitialized]8;;[m[K]
+    [01m[Krotacion.f90:47:21:[m[K
+    
+       47 | end module rotaciones
+          |                     [01;36m[K^[m[K
+    [01;36m[Knote:[m[K ‘[01m[K__var_1_mma[m[K’ declared here
+    [39mINFO: compiling Fortran sources[0m
+    [39mINFO: Fortran f77 compiler: /usr/bin/gfortran -Wall -g -ffixed-form -fno-second-underscore -fPIC -O3 -funroll-loops
+    Fortran f90 compiler: /usr/bin/gfortran -Wall -g -fno-second-underscore -fPIC -O3 -funroll-loops
+    Fortran fix compiler: /usr/bin/gfortran -Wall -g -ffixed-form -fno-second-underscore -Wall -g -fno-second-underscore -fPIC -O3 -funroll-loops[0m
+    [39mINFO: compile options: '-I/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11 -I/usr/lib64/python3.11/site-packages/numpy/core/include -I/usr/include/python3.11 -c'
+    extra options: '-J/tmp/tmp8o0oz7vs/ -I/tmp/tmp8o0oz7vs/'[0m
+    [39mINFO: gfortran:f90: /tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_f-f2pywrappers2.f90[0m
+    [01m[K/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_f-f2pywrappers2.f90:5:52:[m[K
+    
+        5 |       subroutine f2pywrap_rotaciones_matrix_rotation (matrix_rotationf2p&
+          |                                                    [01;35m[K1[m[K
+    ......
+       24 |       subroutine f2pywrap_rotaciones_matrix_rotation (matrix_rotationf2p&
+          |                                                    [32m[K2[m[K
+    [01;35m[KWarning:[m[K Rank mismatch in argument 'matrix_rotation' (2/1) between [01;35m[K(1)[m[K and [32m[K(2)[m[K
+    [01m[K/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_f-f2pywrappers2.f90:12:43:[m[K
+    
+       12 |       subroutine f2pywrap_rotaciones_rotate (rotatef2pywrap, angles, v, &
+          |                                           [01;35m[K1[m[K
+    ......
+       30 |       subroutine f2pywrap_rotaciones_rotate (rotatef2pywrap, rotate, ang&
+          |                                           [32m[K2[m[K
+    [01;35m[KWarning:[m[K Rank mismatch in argument 'rotate' (2/1) between [01;35m[K(1)[m[K and [32m[K(2)[m[K
+    [39mINFO: /usr/bin/gfortran -Wall -g -Wall -g -shared /tmp/tmp8o0oz7vs/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_fmodule.o /tmp/tmp8o0oz7vs/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/fortranobject.o /tmp/tmp8o0oz7vs/rotacion.o /tmp/tmp8o0oz7vs/tmp/tmp8o0oz7vs/src.linux-x86_64-3.11/rotacion_f-f2pywrappers2.o -L/usr/lib/gcc/x86_64-redhat-linux/13 -L/usr/lib/gcc/x86_64-redhat-linux/13 -L/usr/lib64 -lgfortran -o ./rotacion_f.cpython-311-x86_64-linux-gnu.so[0m
+    Removing build directory /tmp/tmp8o0oz7vs
+
+
+.. code:: python
+
+    from rotacion_f import rotaciones as rotf
+
+.. code:: python
+
+    yf = rotf.rotate(angle, v)
+    print(y[:,0:5].T)
+    print(yf[:,0:5].T)
+    np.allclose(yf,y)
+
+
+.. parsed-literal::
+
+    [[ 0.90717864  0.68082735 -0.01987772]
+     [ 0.43798584  0.78786433  0.54493442]
+     [ 0.75536562  0.51102298  0.41541194]
+     [ 0.17681573  0.1682188  -0.02342615]
+     [ 0.20673471  0.38302061  0.17507386]]
+    [[ 0.90717864  0.68082735 -0.01987772]
+     [ 0.43798584  0.78786433  0.54493442]
+     [ 0.75536562  0.51102298  0.41541194]
+     [ 0.17681573  0.1682188  -0.02342615]
+     [ 0.20673471  0.38302061  0.17507386]]
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    %timeit rotate(angle,v)
+
+
+.. parsed-literal::
+
+    6.42 µs ± 107 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+
+
+.. code:: python
+
+    %timeit rotf.rotate(angle, v)
+
+
+.. parsed-literal::
+
+    2.48 µs ± 24.2 ns per loop (mean ± std. dev. of 7 runs, 100,000 loops each)
+
+
+Veamos qué es exactamente lo que importamos:
+
+.. code:: python
+
+    np.info(rotf.rotate)
+
+
+.. parsed-literal::
+
+    y = rotate(angles,v,[n])
+    
+    Wrapper for ``rotate``.
+    
+    Parameters
+    ----------
+    angles : input rank-1 array('d') with bounds (3)
+    v : input rank-2 array('d') with bounds (3,n)
+    
+    Other Parameters
+    ----------------
+    n : input int, optional
+        Default: shape(v, 1)
+    
+    Returns
+    -------
+    y : rank-2 array('d') with bounds (3,n) and rotate storage
+
+
+Como vemos, estamos usando la función ``rotate`` definida en Fortran.
+Notar que: \* Tiene tres argumentos. \* Dos argumentos requeridos:
+``angles`` y ``v`` \* Un argumento, correspondiente a la dimensión ``n``
+que F2PY automáticamente detecta como opcional.
+
+Segundo Ejemplo: Código heredado
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+La conversión que realizamos con f2py3 la podríamos haber realizado en
+dos pasos:
+
+.. code:: bash
+
+   $ f2py3 rotacion.f90 -m rotacion_f -h rotacion.pyf
+   $ f2py3 -c rotacion.pyf -m rotacion_f
+
+En el primer paso se crea un archivo *signature* que después se utiliza
+para crear el módulo que llamaremos desde **Python**. Haciéndolo en dos
+pasos nos permite modificar el texto del archivo *.pyf* antes de
+ejecutar el segundo comando.
+
+Esto es útil cuando el código original no es lo suficientemente
+“moderno”, no tiene toda la información necesaria sobre los argumentos o
+es un código que uno no quiere o puede editar. Veamos que forma tienen
+con un ejemplo más simple (tomado de la `guía de
+usuario <https://docs.scipy.org/doc/numpy-dev/f2py/getting-started.html>`__):
+
+.. code:: fortran
+
+         SUBROUTINE FIB(A,N)
+   C
+   C     CALCULATE FIRST N FIBONACCI NUMBERS
+   C
+         INTEGER N
+         REAL*8 A(N)
+         DO I=1,N
+            IF (I.EQ.1) THEN
+               A(I) = 0.0D0
+            ELSEIF (I.EQ.2) THEN
+               A(I) = 1.0D0
+            ELSE 
+               A(I) = A(I-1) + A(I-2)
+            ENDIF
+         ENDDO
+         END
+
+.. code:: python
+
+    !f2py3 --overwrite-signature fib1.f -m fib1 -h fib1.pyf
+
+
+.. parsed-literal::
+
+    Reading fortran codes...
+    	Reading file 'fib1.f' (format:fix,strict)
+    Post-processing...
+    	Block: fib1
+    			Block: fib
+    Applying post-processing hooks...
+      character_backward_compatibility_hook
+    Post-processing (stage 2)...
+    Saving signatures to file "./fib1.pyf"
+
+
+El contenido del archivo ``fib1.pyf`` es:
+
+.. code:: fortran90
+
+   python module fib1 ! in 
+       interface  ! in :fib1
+           subroutine fib(a,n) ! in :fib1:fib1.f
+               real*8 dimension(n) :: a
+               integer, optional,check(len(a)>=n),depend(a) :: n=len(a)
+           end subroutine fib
+       end interface 
+   end python module fib1
+
+Este código indica que tenemos una subrutina que toma dos argumentos: -
+``a`` es un array - ``n`` es un entero opcional, que tiene que ser mayor
+que ``len(a)``
+
+.. code:: python
+
+    !f2py3  -c fib1.pyf fib1.f 
+
+
+.. parsed-literal::
+
+    [39mrunning build[0m
+    [39mrunning config_cc[0m
+    [39mINFO: unifing config_cc, config, build_clib, build_ext, build commands --compiler options[0m
+    [39mrunning config_fc[0m
+    [39mINFO: unifing config_fc, config, build_clib, build_ext, build commands --fcompiler options[0m
+    [39mrunning build_src[0m
+    [39mINFO: build_src[0m
+    [39mINFO: building extension "fib1" sources[0m
+    [39mcreating /tmp/tmpvzr316vv/src.linux-x86_64-3.11[0m
+    [39mINFO: f2py options: [][0m
+    [39mINFO: f2py: fib1.pyf[0m
+    Reading fortran codes...
+    	Reading file 'fib1.pyf' (format:free)
+    Post-processing...
+    	Block: fib1
+    			Block: fib
+    Applying post-processing hooks...
+      character_backward_compatibility_hook
+    Post-processing (stage 2)...
+    Building modules...
+        Building module "fib1"...
+        Generating possibly empty wrappers"
+        Maybe empty "fib1-f2pywrappers.f"
+            Constructing wrapper function "fib"...
+              fib(a,[n])
+        Wrote C/API module "fib1" to file "/tmp/tmpvzr316vv/src.linux-x86_64-3.11/fib1module.c"
+    [39mINFO:   adding '/tmp/tmpvzr316vv/src.linux-x86_64-3.11/fortranobject.c' to sources.[0m
+    [39mINFO:   adding '/tmp/tmpvzr316vv/src.linux-x86_64-3.11' to include_dirs.[0m
+    [39mcopying /usr/lib64/python3.11/site-packages/numpy/f2py/src/fortranobject.c -> /tmp/tmpvzr316vv/src.linux-x86_64-3.11[0m
+    [39mcopying /usr/lib64/python3.11/site-packages/numpy/f2py/src/fortranobject.h -> /tmp/tmpvzr316vv/src.linux-x86_64-3.11[0m
+    [39mINFO:   adding '/tmp/tmpvzr316vv/src.linux-x86_64-3.11/fib1-f2pywrappers.f' to sources.[0m
+    [39mINFO: build_src: building npy-pkg config files[0m
+    /home/fiol/.local/lib/python3.11/site-packages/setuptools/_distutils/cmd.py:66: SetuptoolsDeprecationWarning: setup.py install is deprecated.
+    !!
+    
+            ********************************************************************************
+            Please avoid running ``setup.py`` directly.
+            Instead, use pypa/build, pypa/installer or other
+            standards-based tools.
+    
+            See https://blog.ganssle.io/articles/2021/10/setup-py-deprecated.html for details.
+            ********************************************************************************
+    
+    !!
+      self.initialize_options()
+    [39mrunning build_ext[0m
+    [39mINFO: customize UnixCCompiler[0m
+    [39mINFO: customize UnixCCompiler using build_ext[0m
+    [39mINFO: get_default_fcompiler: matching types: '['arm', 'gnu95', 'intel', 'lahey', 'pg', 'nv', 'absoft', 'nag', 'vast', 'compaq', 'intele', 'intelem', 'gnu', 'g95', 'pathf95', 'nagfor', 'fujitsu']'[0m
+    [39mINFO: customize ArmFlangCompiler[0m
+    [31mWARN: Could not locate executable armflang[0m
+    [39mINFO: customize Gnu95FCompiler[0m
+    [39mINFO: Found executable /usr/bin/gfortran[0m
+    [39mINFO: customize Gnu95FCompiler[0m
+    [39mINFO: customize Gnu95FCompiler using build_ext[0m
+    [39mINFO: building 'fib1' extension[0m
+    [39mINFO: compiling C sources[0m
+    [39mINFO: C compiler: gcc -Wsign-compare -DDYNAMIC_ANNOTATIONS_ENABLED=1 -DNDEBUG -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -O2 -fexceptions -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-U_FORTIFY_SOURCE,-D_FORTIFY_SOURCE=3 -Wp,-D_GLIBCXX_ASSERTIONS -fstack-protector-strong -m64 -mtune=generic -fasynchronous-unwind-tables -fstack-clash-protection -fcf-protection -fPIC
+    [0m
+    [39mcreating /tmp/tmpvzr316vv/tmp[0m
+    [39mcreating /tmp/tmpvzr316vv/tmp/tmpvzr316vv[0m
+    [39mcreating /tmp/tmpvzr316vv/tmp/tmpvzr316vv/src.linux-x86_64-3.11[0m
+    [39mINFO: compile options: '-DNPY_DISABLE_OPTIMIZATION=1 -I/tmp/tmpvzr316vv/src.linux-x86_64-3.11 -I/usr/lib64/python3.11/site-packages/numpy/core/include -I/usr/include/python3.11 -c'[0m
+    [39mINFO: gcc: /tmp/tmpvzr316vv/src.linux-x86_64-3.11/fib1module.c[0m
+    [39mINFO: gcc: /tmp/tmpvzr316vv/src.linux-x86_64-3.11/fortranobject.c[0m
+    [39mINFO: compiling Fortran sources[0m
+    [39mINFO: Fortran f77 compiler: /usr/bin/gfortran -Wall -g -ffixed-form -fno-second-underscore -fPIC -O3 -funroll-loops
+    Fortran f90 compiler: /usr/bin/gfortran -Wall -g -fno-second-underscore -fPIC -O3 -funroll-loops
+    Fortran fix compiler: /usr/bin/gfortran -Wall -g -ffixed-form -fno-second-underscore -Wall -g -fno-second-underscore -fPIC -O3 -funroll-loops[0m
+    [39mINFO: compile options: '-I/tmp/tmpvzr316vv/src.linux-x86_64-3.11 -I/usr/lib64/python3.11/site-packages/numpy/core/include -I/usr/include/python3.11 -c'[0m
+    [39mINFO: gfortran:f77: fib1.f[0m
+    [39mINFO: gfortran:f77: /tmp/tmpvzr316vv/src.linux-x86_64-3.11/fib1-f2pywrappers.f[0m
+    [39mINFO: /usr/bin/gfortran -Wall -g -Wall -g -shared /tmp/tmpvzr316vv/tmp/tmpvzr316vv/src.linux-x86_64-3.11/fib1module.o /tmp/tmpvzr316vv/tmp/tmpvzr316vv/src.linux-x86_64-3.11/fortranobject.o /tmp/tmpvzr316vv/fib1.o /tmp/tmpvzr316vv/tmp/tmpvzr316vv/src.linux-x86_64-3.11/fib1-f2pywrappers.o -L/usr/lib/gcc/x86_64-redhat-linux/13 -L/usr/lib/gcc/x86_64-redhat-linux/13 -L/usr/lib64 -lgfortran -o ./fib1.cpython-311-x86_64-linux-gnu.so[0m
+    Removing build directory /tmp/tmpvzr316vv
+
+
+.. code:: python
+
+    ls -ltr
+
+
+.. parsed-literal::
+
+    total 780
+    drwxr-xr-x. 1 fiol fiol     16 mar 27  2023 [0m[01;34mfib2.cpython-39-darwin.so.dSYM[0m/
+    drwxr-xr-x. 1 fiol fiol     16 mar 27  2023 [01;34mfib3.cpython-39-darwin.so.dSYM[0m/
+    -rwxr-xr-x. 1 fiol fiol  55448 mar 27  2023 [01;32mfib3.cpython-39-darwin.so[0m*
+    -rw-r--r--. 1 fiol fiol    403 mar 27  2023 fib2.pyf
+    -rwxr-xr-x. 1 fiol fiol  55448 mar 27  2023 [01;32mfib2.cpython-39-darwin.so[0m*
+    -rw-r--r--. 1 fiol fiol    347 mar 27  2023 fib1.f
+    -rwxr-xr-x. 1 fiol fiol  55512 mar 27  2023 [01;32mfib1.cpython-39-darwin.so[0m*
+    -rw-r--r--. 1 fiol fiol   1007 mar 27  2023 rotacion.pyf
+    -rwxr-xr-x. 1 fiol fiol  58480 mar 27  2023 [01;32mrotacion_f.cpython-39-darwin.so[0m*
+    -rw-r--r--. 1 fiol fiol   2202 mar 27  2023 rotacion.f90
+    -rw-r--r--. 1 fiol fiol    558 mar 27  2023 rotaciones.mod
+    -rw-r--r--. 1 fiol fiol    372 mar 27  2023 fib3.f
+    -rwxr-xr-x. 1 fiol fiol 124216 mar 22 13:27 [01;32mfib2.cpython-311-x86_64-linux-gnu.so[0m*
+    -rwxr-xr-x. 1 fiol fiol 124216 mar 22 13:28 [01;32mfib3.cpython-311-x86_64-linux-gnu.so[0m*
+    -rwxr-xr-x. 1 fiol fiol 151944 mar 22 14:28 [01;32mrotacion_f.cpython-311-x86_64-linux-gnu.so[0m*
+    -rw-r--r--. 1 fiol fiol    501 mar 22 14:41 fib1.pyf
+    -rwxr-xr-x. 1 fiol fiol 125040 mar 22 14:43 [01;32mfib1.cpython-311-x86_64-linux-gnu.so[0m*
+
+
+.. code:: python
+
+    import fib1
+
+.. code:: python
+
+    print(fib1.fib.__doc__)
+
+
+.. parsed-literal::
+
+    fib(a,[n])
+    
+    Wrapper for ``fib``.
+    
+    Parameters
+    ----------
+    a : input rank-1 array('d') with bounds (n)
+    
+    Other Parameters
+    ----------------
+    n : input int, optional
+        Default: shape(a, 0)
+    
+
+
+.. code:: python
+
+    a = np.zeros(12)
+    fib1.fib(a)
+    print(a)
+
+
+.. parsed-literal::
+
+    [ 0.  1.  1.  2.  3.  5.  8. 13. 21. 34. 55. 89.]
+
+
+Podemos darle además a la función ``fib`` el argumento opcional ``n``.
+Solo que debe cumplir la condición especificada en el archivo *fib1.pyf*
+
+.. code:: python
+
+    a = np.zeros(12)
+    fib1.fib(a,12)
+    print(a)
+
+
+.. parsed-literal::
+
+    [ 0.  1.  1.  2.  3.  5.  8. 13. 21. 34. 55. 89.]
+
+
+.. code:: python
+
+    a = np.zeros(12)
+    fib1.fib(a,8)
+    print(a)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    error                                     Traceback (most recent call last)
+
+    Cell In[29], line 2
+          1 a = np.zeros(12)
+    ----> 2 fib1.fib(a,8)
+          3 print(a)
+
+
+    error: (shape(a, 0) == n) failed for 1st keyword n: fib:n=8
+
+
+.. code:: python
+
+    a = np.zeros(12)
+    fib1.fib(a,18)
+    print(a)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    error                                     Traceback (most recent call last)
+
+    Cell In[30], line 2
+          1 a = np.zeros(12)
+    ----> 2 fib1.fib(a,18)
+          3 print(a)
+
+
+    error: (shape(a, 0) == n) failed for 1st keyword n: fib:n=18
+
+
+Esta es una de las características de F2PY: hace un chequeo básico de
+los argumentos. Hay otro error que no llega a atrapar: Si le pasamos un
+array que no es del tipo indicado, falla (sin avisar). Éste claramente
+no es el comportamiento deseado:
+
+.. code:: python
+
+    a = np.zeros(12, dtype=int)
+    fib1.fib(a)
+    print(a)
+
+
+.. parsed-literal::
+
+    [0 0 0 0 0 0 0 0 0 0 0 0]
+
+
+Vamos a modificar el archivo de *signature* para enseñarle dos cosas:
+
+-  El entero es un argumento de entrada (requerido)
+-  El *array* ``a`` es un archivo de salida **exclusivamente**. Entonces
+   no debemos dárselo. La parte ``dimension(n)`` y ``depend(n)`` indica
+   que debe crear un vector de ese tamaño.
+
+.. code:: python
+
+    !f2py3  -c fib2.pyf fib1.f 1&2> /dev/null
+
+.. code:: python
+
+    import fib2
+    print(fib2.fib.__doc__)
+
+
+.. parsed-literal::
+
+    a = fib(n)
+    
+    Wrapper for ``fib``.
+    
+    Parameters
+    ----------
+    n : input int
+    
+    Returns
+    -------
+    a : rank-1 array('d') with bounds (n)
+    
+
+
+.. code:: python
+
+    fib2.fib(9)
+
+
+
+
+.. parsed-literal::
+
+    array([ 0.,  1.,  1.,  2.,  3.,  5.,  8., 13., 21.])
+
+
+
+.. code:: python
+
+    print(fib2.fib(14))
+
+
+.. parsed-literal::
+
+    [  0.   1.   1.   2.   3.   5.   8.  13.  21.  34.  55.  89. 144. 233.]
+
+
+La segunda manera de arreglar este problema, en lugar de modificar el
+archivo de *signature* podría haber sido modificar el código (o hacer
+una rutina intermedia). Agregando comentarios de la forma ``Cf2py`` no
+influimos en la compilación ``Fortran`` pero F2PY los reconoce. En este
+caso le damos la información sobre la intención de los argumentos en el
+código:
+
+.. code:: fortran
+
+         SUBROUTINE FIB(A,N)
+   C
+   C     CALCULATE FIRST N FIBONACCI NUMBERS
+   C
+         INTEGER N
+         REAL*8 A(N)
+   Cf2py intent(in) n
+   Cf2py intent(out) a
+   Cf2py depend(n) a
+         DO I=1,N
+            IF (I.EQ.1) THEN
+               A(I) = 0.0D0
+            ELSEIF (I.EQ.2) THEN
+               A(I) = 1.0D0
+            ELSE 
+               A(I) = A(I-1) + A(I-2)
+            ENDIF
+         ENDDO
+         END
+
+.. code:: python
+
+    !f2py3  -c fib3.f -m fib3 1&2> /dev/null
+
+.. code:: python
+
+    import fib3
+    print(fib3.fib.__doc__)
+
+
+.. parsed-literal::
+
+    a = fib(n)
+    
+    Wrapper for ``fib``.
+    
+    Parameters
+    ----------
+    n : input int
+    
+    Returns
+    -------
+    a : rank-1 array('d') with bounds (n)
+    
+
+
+.. code:: python
+
+    print(fib2.fib.__doc__)
+
+
+.. parsed-literal::
+
+    a = fib(n)
+    
+    Wrapper for ``fib``.
+    
+    Parameters
+    ----------
+    n : input int
+    
+    Returns
+    -------
+    a : rank-1 array('d') with bounds (n)
+    
+
+
+como vemos, son exactamente iguales.
+
+F2PY para código en C
+~~~~~~~~~~~~~~~~~~~~~
+
+Es posible usar F2PY para código escrito en C, pero en ese caso debemos
+escribir el *signature file* a mano.
+
+Para código en C es conveniente utilizar **Cython**. Cython es un
+lenguaje de programación pensado para hacer más fácil escribir
+extensiones a Python en C. Uno escribe el código en Cython, y luego es
+traducido a C, con optimizaciones.
+
+**Cython** también puede utilizarse con Fortran de una manera similar a
+cómo se usa con C. Para más información ver la `documentación
+oficial <http://docs.cython.org/en/latest/index.html>`__
+
+
+Interfaces con otros lenguajes: C
+---------------------------------
+
+Existen varias formas de utilizar bibliotecas o códigos hechos en C
+desde Python. Nosotros veremos el uso de ``Ctypes``, sin embargo existen
+otras alternativas como `Cython <https://cython.org/>`__,
+`CFFI <https://cffi.readthedocs.io/en/latest/>`__,
+`pybind11 <https://pybind11.readthedocs.io/en/stable/>`__ y
+`Boost.Python <https://www.boost.org/doc/libs/1_70_0/libs/python/doc/html/index.html>`__.
+
+Seguimos con el ejemplo de la rotación de vectores. Por completitud,
+agregamos la funciones en Python para comparar
+
+.. code:: python
+
+    import numpy as np
+
+.. code:: python
+
+    pwd
+
+
+
+
+.. parsed-literal::
+
+    '/home/fiol/Clases/IntPython/clases-python/clases'
+
+
+
+Si ya tenemos un módulo donde están programadas las funciones necesarias
+
+.. code:: python
+
+    import numpy as np
+    
+    def matrix_rotation(angles):
+      cx, cy, cz = np.cos(angles)
+      sx, sy, sz = np.sin(angles)
+      R = np.zeros((3, 3))
+      R[0, 0] = cx * cz - sx * cy * sz
+      R[0, 1] = cx * sz + sx * cy * cz
+      R[0, 2] = sx * sy
+    
+      R[1, 0] = -sx * cz - cx * cy * sz
+      R[1, 1] = -sx * sz + cx * cy * cz
+      R[1, 2] = cx * sy
+    
+      R[2, 0] = sy * sz
+      R[2, 1] = -sy * cz
+      R[2, 2] = cy
+      return R
+    
+    
+    def rotate(angles, v):
+      return np.dot(matrix_rotation(angles), v)
+
+
+.. code:: python
+
+    N = 100
+    # Ángulos de Euler
+    angle = np.random.random(3)
+    # Definimos N vectores tridimensionales
+    v = np.random.random((3, N))
+
+.. code:: python
+
+    # y= rotp.rotate(angle, v)
+    y = rotate(angle,v)
+
+.. code:: python
+
+    print(angle)
+    print(y[:,0:5].T)
+
+
+.. parsed-literal::
+
+    [0.58546738 0.89120506 0.36725088]
+    [[ 0.57382166  0.36547642  0.42691154]
+     [ 1.20276102  0.38198882  0.35784136]
+     [ 0.3032189   0.17018825 -0.15835914]
+     [ 0.69480807  0.1054089  -0.15883335]
+     [ 1.36627837  0.1736621   0.17036402]]
+
+
+Veamos cómo trabajar si tenemos el código para realizar las rotaciones
+en C.
+
+Primer ejemplo: Nuestro código
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El código en C que tenemos es:
+
+.. code:: c
+
+    typedef struct {
+         float m[3][3];
+       } m3x3;
+
+       typedef struct {
+         float a[3];
+       } v3;
+       
+   ...
+
+   float * rotate(float angles[3], float *v, int N){
+
+           m3x3 R = matrix_rotation(angles);
+           
+           float* y = (float*)malloc(3*N*sizeof(float));
+           v3 p;
+
+           printf("%p\n",y);
+           for(int i=0; i<N; i++){
+               // p = &y[i*3];
+               p = matmul3(R,&v[i*3]);
+               y[i*3+0] = p.a[0];
+               y[i*3+1] = p.a[1];
+               y[i*3+2] = p.a[2];
+               // printf("%6.3f %6.3f %6.3f \n",y[i*3+0],y[i*3+1],y[i*3+2]);
+           }
+           return y;
+
+
+     }
+
+.. code:: python
+
+    cd ../scripts/interfacing_C
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/scripts/interfacing_C
+
+
+CTypes
+~~~~~~
+
+No vamos a usar directamente ``Ctypes``, sino a través de ``NumPy``, que
+provee algunas funciones convenientes para acceder al código C.
+
+El primer paso es compilar nuestro código y generar una biblioteca:
+
+.. code:: bash
+
+   $ gcc -fpic -Wall -shared rotacion.c -o librotacion.so
+
+Si uno trabaja en Windows con `MS
+C++ <https://visualstudio.microsoft.com/es/vs/features/cplusplus/>`__,
+generará una dll
+
+.. code:: cmd
+
+   cl.exe -c rotacion.c
+   link.exe /DLL /OUT:rotacion.dll
+
+Si en cambio `instaló gcc <https://www.msys2.org/>`__, puede usar el
+comando previo.
+
+.. code:: python
+
+    !gcc -fpic -Wall -shared rotacion.c -o librotacion.so
+
+.. code:: python
+
+    !ls
+
+
+.. parsed-literal::
+
+    librotacion.so	rotacion.c
+
+
+En segundo lugar, importamos el módulo ``ctypeslib``
+
+.. code:: python
+
+    import numpy.ctypeslib as ctl
+
+Este módulo nos provee de la función ``load_library`` para importar la
+biblioteca
+
+.. code:: python
+
+    help(ctl.load_library)
+
+
+.. parsed-literal::
+
+    Help on function load_library in module numpy.ctypeslib:
+    
+    load_library(libname, loader_path)
+        It is possible to load a library using
+        
+        >>> lib = ctypes.cdll[<full_path_name>] # doctest: +SKIP
+        
+        But there are cross-platform considerations, such as library file extensions,
+        plus the fact Windows will just load the first library it finds with that name.
+        NumPy supplies the load_library function as a convenience.
+        
+        .. versionchanged:: 1.20.0
+            Allow libname and loader_path to take any
+            :term:`python:path-like object`.
+        
+        Parameters
+        ----------
+        libname : path-like
+            Name of the library, which can have 'lib' as a prefix,
+            but without an extension.
+        loader_path : path-like
+            Where the library can be found.
+        
+        Returns
+        -------
+        ctypes.cdll[libpath] : library object
+           A ctypes library object
+        
+        Raises
+        ------
+        OSError
+            If there is no library with the expected extension, or the
+            library is defective and cannot be loaded.
+    
+
+
+.. code:: python
+
+    rotc = ctl.load_library('librotacion.so','.')
+
+Una vez cargada la biblioteca, tenemos que definir adecuadamente cómo
+pasar los argumentos a la función ``rotate`` de C:
+
+.. code:: c
+
+       float * rotate(float angles[3], float *v, int N)
+
+Para eso se utiliza la función ``argtypes`` que recibe una lista de
+tipos. Notemos que los dos primeros argumentos son arreglos de C (o sea,
+punteros), mientras que el último es un entero.
+
+.. code:: python
+
+    npflags = ['C_CONTIGUOUS']   # Require a C contiguous array in memory
+    
+    float_1d_type = ctl.ndpointer(dtype=np.float32, ndim=1, flags=npflags) # Puntero a float, 1D
+    float_2d_type = ctl.ndpointer(dtype=np.float32, ndim=2, flags=npflags) # Puntero a float, 2D
+
+.. code:: python
+
+    type(float_1d_type)
+
+
+
+
+.. parsed-literal::
+
+    _ctypes.PyCSimpleType
+
+
+
+Con estos tipos de datos, defino los tipos de argumentos, que son tres
+en total. El último es un dato de tipo entero, para lo cual se usa
+directamente ``c_intp``. Para definir el tipo de argumentos de entrada a
+la función ``rotc.rotate`` usamos el método ``argtypes``:
+
+.. code:: python
+
+    rotc.rotate.argtypes =  [float_1d_type, float_2d_type, ctl.c_intp]
+
+.. code:: python
+
+    help(rotc.rotate)
+
+
+.. parsed-literal::
+
+    Help on _FuncPtr in module ctypes object:
+    
+    rotate = class _FuncPtr(_ctypes.CFuncPtr)
+     |  Method resolution order:
+     |      _FuncPtr
+     |      _ctypes.CFuncPtr
+     |      _ctypes._CData
+     |      builtins.object
+     |  
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from _ctypes.CFuncPtr:
+     |  
+     |  __bool__(self, /)
+     |      True if self else False
+     |  
+     |  __call__(self, /, *args, **kwargs)
+     |      Call self as a function.
+     |  
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |  
+     |  ----------------------------------------------------------------------
+     |  Static methods inherited from _ctypes.CFuncPtr:
+     |  
+     |  __new__(*args, **kwargs) from _ctypes.PyCFuncPtrType
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors inherited from _ctypes.CFuncPtr:
+     |  
+     |  argtypes
+     |      specify the argument types
+     |  
+     |  errcheck
+     |      a function to check for errors
+     |  
+     |  restype
+     |      specify the result type
+     |  
+     |  ----------------------------------------------------------------------
+     |  Methods inherited from _ctypes._CData:
+     |  
+     |  __ctypes_from_outparam__(...)
+     |  
+     |  __hash__(self, /)
+     |      Return hash(self).
+     |  
+     |  __reduce__(...)
+     |      Helper for pickle.
+     |  
+     |  __setstate__(...)
+    
+
+
+Hagamos un ejemplo sencillo con N=2
+
+.. code:: python
+
+    N = 2
+    # Ángulos de Euler
+    angle = np.random.random(3).astype(np.float32)
+    # Definimos N vectores tridimensionales
+    v = np.random.random((3, N)).astype(np.float32)
+
+Las funciones que dispongo en C reciben tipos ``float``, es decir que me
+tengo que asegurar esto a través del método ``astype``.
+
+Ahora tenemos que definir el tipo de dato de salida, que retorna C a
+través de un puntero a float, ``float*``. Para esto usamos el método
+``restype``. Como a priori no sé qué tipo de rango tiene mi arreglo de
+salida, tengo que definirlo explícitamente.
+
+.. code:: python
+
+    rotc.rotate.restype = ctl.ndpointer(dtype=np.float32, shape=(N,3)) 
+
+Hay que tener precaución con el manejo de arreglos, que es muy distinto
+en C y Python. En Python son objetos, de los cuales yo puedo tener
+distintas vistas, slices, etc. Hay que recordar que en principio estas
+son formas de acceder al mismo objeto, pero no se pueden traducir
+directamente a C, que necesita un arreglo contiguo de datos.
+
+.. code:: python
+
+    v = np.array([[1,0], [0,1], [0,0]]).astype(np.float32) 
+    vt = v.T.copy()
+    
+    print(v)
+    print(vt)
+    print(np.shape(v))
+    print(np.shape(v.T))
+
+
+.. parsed-literal::
+
+    [[1. 0.]
+     [0. 1.]
+     [0. 0.]]
+    [[1. 0. 0.]
+     [0. 1. 0.]]
+    (3, 2)
+    (2, 3)
+
+
+Veamos, v es un arreglo de 3 filas y 2 columnas, que contiene *dos*
+vectores de tres dimensiones que se desean rotar, organizados como
+columnas. Esto *no* es lo que necesita mi arreglo en C, que es tiene los
+vectores organizados contiguamente en un solo arreglo unidimensional.
+Entonces, tengo que transformarlo. Para eso usamos el ``.T``. Ojo que
+además, hay que crear un objeto nuevo con ``copy()``, sino es una vista
+del mismo objeto ``v``.
+
+.. code:: python
+
+    angle90 = np.array([0,0,np.pi/2],dtype = np.float32)
+    print(angle90)
+
+
+.. parsed-literal::
+
+    [0.        0.        1.5707964]
+
+
+.. code:: python
+
+    yf = rotc.rotate(angle90,
+                          vt,
+                          N) 
+    y = rotate(angle90,v)
+
+.. code:: python
+
+    np.set_printoptions(suppress=True) # suppress controla cómo print va a escribir los números de punto flotante.
+    
+    print(y)
+    print(yf.T)
+    np.allclose(y,yf.T)
+
+
+.. parsed-literal::
+
+    [[-0.00000004  1.        ]
+     [-1.         -0.00000004]
+     [ 0.          0.        ]]
+    [[-0.00000004  1.        ]
+     [-1.         -0.00000004]
+     [ 0.          0.        ]]
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+Interfaces con clases en C++
+----------------------------
+
+El ejemplo original está
+`acá <https://stackoverflow.com/questions/602580/how-can-i-use-c-class-in-python>`__
+que sigue `este
+ejemplo <https://www.auctoris.co.uk/2017/04/29/calling-c-classes-from-python-with-ctypes/>`__:
+
+El código en C++ que tenemos es:
+
+.. code:: cpp
+
+   class Test{
+        private:
+           int n;
+        public:
+           Test(int k){
+               n=k;
+           }
+           void setInt(int k){
+               n = k;
+           }
+           int getInt(){
+               return n;
+           }
+   };
+
+.. code:: python
+
+    cd ../scripts/interfacing_Cpp
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/scripts/interfacing_Cpp
+
+
+La implementación de Python que estamos usando está escrita en C, de
+modo tal que tenemos que exportar las funciones de la clase ``Test`` en
+C++ en el código fuente de la siguiente manera:
+
+.. code:: cpp
+
+   extern "C" 
+   {
+       // include below each method you want to make visible outside
+       Test* init(int k) {return new Test(k);}
+       void setInt(Test *self, int k) {self->setInt(k);}
+       int getInt(Test *self) {return self->getInt();}
+       
+       // Add the declaration '__declspec(dllexport)' before each function in Windows
+   }
+
+La declaración ``extern "C"`` indican al compilador de C++ que genere
+código compatible con C de todas las funciones incluídas en el bloque.
+
+CTypes
+~~~~~~
+
+Vamos ahora a usar directamente ``Ctypes``. Como antes, el primer paso
+es compilar nuestro código y generar una biblioteca:
+
+.. code:: bash
+
+   $ g++ -fpic -shared test.cpp -o libtest.so
+
+Si uno trabaja en Windows, generará una dll
+
+.. code:: cmd
+
+   cl.exe -c test.cpp
+   link.exe /DLL /OUT:test.dll
+
+.. code:: python
+
+    # !gcc -fpic -Wall -shared rotacion.c -o librotacion.so
+    !g++ -fpic -shared test.cpp -o libtest.so
+    
+
+
+.. code:: python
+
+    !ls
+
+
+.. parsed-literal::
+
+    libtest.so  test.cpp
+
+
+En segundo lugar, importamos el módulo ``ctypes``
+
+.. code:: python
+
+    import ctypes
+
+Este módulo nos provee de la función ``CDLL`` para importar la
+biblioteca
+
+.. code:: python
+
+    lib = ctypes.CDLL('./libtest.so')
+
+Ahora vamos a crear una clase en Python equivalente a la que teníamos en
+C++. Al igual que en el caso de C, tenemos que establecer los tipos de
+datos de entrada (via el método ``argtypes``) y salida (vía el método
+``restype``) para *cada función de la clase*.
+
+.. code:: python
+
+    
+    class Test():
+        def __init__(self, val: int):
+            # Declare input and output types for each method you intend to use
+            lib.init.argtypes = [ctypes.c_int]
+            lib.init.restype = ctypes.c_void_p
+    
+            lib.setInt.argtypes = [ctypes.c_void_p, ctypes.c_int]
+            lib.setInt.restype = ctypes.c_void_p
+    
+            lib.getInt.argtypes = [ctypes.c_void_p]
+            lib.getInt.restype = ctypes.c_int
+            
+            # use the C++ constructor to build the instance 
+            self.q = lib.init(val)
+    
+        def setInt(self, n):
+            lib.setInt(self.q, n)
+        
+        def getInt(self):
+            return lib.getInt(self.q)
+
+
+.. code:: python
+
+    T1 = Test(12)
+    print(T1.getInt())
+    T1.setInt(32)
+    print(T1.getInt())
+
+
+.. parsed-literal::
+
+    12
+    32
+
+
+.. code:: python
+
+    type(T1.q)
+
+
+
+
+.. parsed-literal::
+
+    int
+
+
