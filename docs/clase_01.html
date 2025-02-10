@@ -74,6 +74,23 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-01-a">Ejercicios 01 (a)</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#ambientes">Ambientes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#gestionando-ambientes-con-conda">Gestionando ambientes con <code class="docutils literal notranslate"><span class="pre">conda</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creando-ambientes">Creando ambientes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#instalando-paquetes">Instalando paquetes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ambientes-y-notebooks">Ambientes y Notebooks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#instalando-jupyter">Instalando <code class="docutils literal notranslate"><span class="pre">jupyter</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#instalando-nb-conda-kernels">Instalando <code class="docutils literal notranslate"><span class="pre">nb_conda_kernels</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visual-studio-code">Visual Studio Code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#compartiendo-ambientes">Compartiendo ambientes</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul>
@@ -432,6 +449,232 @@ volumen.</p></li>
 </ol>
 <hr class="docutils" />
 <p>.</p>
+</section>
+</section>
+<section id="ambientes">
+<h1>Ambientes<a class="headerlink" href="#ambientes" title="Link to this heading"></a></h1>
+<p>Uno de los problemas principales de cualquier proyecto de software es el
+mantenimiento de las dependencias del código. Python no es ajeno a ello.
+En Python las bibliotecas de software se distribuyen a través de
+<a class="reference external" href="https://pypi.org/">paquetes</a>. Cada paquete tiene su nombre y su
+versión.</p>
+<p>La manera tradicional de encapsular dependencias en proyectos que tiene
+Python es a través de la creación de ambientes virtuales o <em>virtual
+environments</em>. De esta forma, un conjunto de paquetes se instalan en
+forma local en un directorio aislado de otros, en lugar de ser instalado
+en forma global. De esa forma, determinados proyectos acudirán a cierto
+<em>environment</em>, mientras otros usarán otros… Por ejemplo, un proyecto de
+Machine Learning requerirá de ciertos paquetes de manejo de Álgebra
+Lineal, optimización en GPU, etc., mientras que un server web no
+necesitará de ellos.</p>
+<p>Para manejar ambientes se usan ciertas herramientas equivalentes como:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/venv.html">venv</a></p></li>
+<li><p><a class="reference external" href="https://packaging.python.org/en/latest/key_projects/#virtualenv">virtualenv</a></p></li>
+</ul>
+<p>La distribución Anaconda a través del comando <code class="docutils literal notranslate"><span class="pre">conda</span></code> también puede
+administrar <em>environments</em>, y es la que usaremos en este curso.</p>
+<section id="gestionando-ambientes-con-conda">
+<h2>Gestionando ambientes con <code class="docutils literal notranslate"><span class="pre">conda</span></code><a class="headerlink" href="#gestionando-ambientes-con-conda" title="Link to this heading"></a></h2>
+<p>Empecemos viendo qué ambientes tenemos en nuestro sistema con:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>list
+</pre></div>
+</div>
+<p>Si recién hemos instalado Python con miniconda, obtendremos:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>base<span class="o">)</span><span class="w"> </span>C:<span class="se">\U</span>sers<span class="se">\H</span>eisenberg&gt;conda<span class="w"> </span>env<span class="w"> </span>list
+<span class="c1"># conda environments:</span>
+<span class="c1">#</span>
+base<span class="w">                  </span>*<span class="w">  </span>C:<span class="se">\U</span>sers<span class="se">\H</span>eisenberg<span class="se">\m</span>iniconda3
+</pre></div>
+</div>
+<p>Vemos que existe un ambiente default que se llama <code class="docutils literal notranslate"><span class="pre">base</span></code>, que también
+es el indicado entre paréntesis en el prompt. Este ambiente se crea al
+instalar Python a través de miniconda.</p>
+<blockquote>
+<div><p>El comando <code class="docutils literal notranslate"><span class="pre">conda</span></code> tiene ayudas instructivas, basta agregar
+<code class="docutils literal notranslate"><span class="pre">--help</span></code> al final del comando</p>
+</div></blockquote>
+<section id="creando-ambientes">
+<h3>Creando ambientes<a class="headerlink" href="#creando-ambientes" title="Link to this heading"></a></h3>
+<p>El comando para crear un nuevo ambiente es
+<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">&lt;nombre_del_ambiente&gt;</span></code>:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>clases
+Channels:
+<span class="w"> </span>-<span class="w"> </span>defaults
+Platform:<span class="w"> </span>win-64
+Collecting<span class="w"> </span>package<span class="w"> </span>metadata<span class="w"> </span><span class="o">(</span>repodata.json<span class="o">)</span>:<span class="w"> </span><span class="k">done</span>
+Solving<span class="w"> </span>environment:<span class="w"> </span><span class="k">done</span>
+
+<span class="c1">## Package Plan ##</span>
+
+<span class="w">  </span>environment<span class="w"> </span>location:<span class="w"> </span>C:<span class="se">\U</span>sers<span class="se">\H</span>eisenberg<span class="se">\m</span>iniconda3<span class="se">\e</span>nvs<span class="se">\c</span>lases
+
+
+
+Proceed<span class="w"> </span><span class="o">([</span>y<span class="o">]</span>/n<span class="o">)</span>?<span class="w"> </span>y
+
+Preparing<span class="w"> </span>transaction:<span class="w"> </span><span class="k">done</span>
+Verifying<span class="w"> </span>transaction:<span class="w"> </span><span class="k">done</span>
+Executing<span class="w"> </span>transaction:<span class="w"> </span><span class="k">done</span>
+<span class="c1">#</span>
+<span class="c1"># To activate this environment, use</span>
+<span class="c1">#</span>
+<span class="c1">#     $ conda activate clases</span>
+<span class="c1">#</span>
+<span class="c1"># To deactivate an active environment, use</span>
+<span class="c1">#</span>
+<span class="c1">#     $ conda deactivate</span>
+</pre></div>
+</div>
+<p>El resultado de la ejecución del comando nos indica cómo activar y
+desactivar el ambiente. ¿Qué significa esto? Para poder trabajar
+ordenadamente en un proyecto, <em>activamos</em> primero el ambiente,
+instalamos los paquetes requeridos, programamos, etc. etc., y luego
+<em>desactivamos</em> el ambiente. Por supuesto que la instalación de paquetes
+en un ambiente se hace una única vez.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>clases
+</pre></div>
+</div>
+<img alt="_images/activate.png" src="_images/activate.png" />
+<p>Nótese que el <em>prompt</em> cambia indicando bajo qué ambiente estamos
+trabajando. En efecto:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">(</span>clases<span class="o">)</span><span class="w"> </span>C:<span class="se">\U</span>sers<span class="se">\H</span>eisenberg&gt;conda<span class="w"> </span>env<span class="w"> </span>list
+<span class="c1"># conda environments:</span>
+<span class="c1">#</span>
+base<span class="w">                     </span>C:<span class="se">\U</span>sers<span class="se">\H</span>eisenberg<span class="se">\m</span>iniconda3
+clases<span class="w">                </span>*<span class="w">  </span>C:<span class="se">\U</span>sers<span class="se">\H</span>eisenberg<span class="se">\m</span>iniconda3<span class="se">\e</span>nvs<span class="se">\c</span>lases
+</pre></div>
+</div>
+<p>Nos indica que hay un nuevo ambiente creado, y es el que está activo
+(indicado por el asterisco).</p>
+<p>Para borrar un ambiente, usamos</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>remove<span class="w"> </span>--name<span class="w"> </span>&lt;nombre_del_ambiente&gt;
+</pre></div>
+</div>
+<blockquote>
+<div><p>Recordar desactivar el ambiente antes de borrarlo. De todas formas,
+<code class="docutils literal notranslate"><span class="pre">conda</span></code> avisará si uno se olvida de este paso</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>deactivate
+conda<span class="w"> </span>env<span class="w"> </span>remove<span class="w"> </span>--name<span class="w"> </span>clases
+</pre></div>
+</div>
+<p>Más documentación y opciones por
+<a class="reference external" href="https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html">acá</a>.</p>
+<section id="instalando-paquetes">
+<h4>Instalando paquetes<a class="headerlink" href="#instalando-paquetes" title="Link to this heading"></a></h4>
+<p>Por defecto <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">&lt;nombre_del_ambiente&gt;</span></code> no instala ningún
+paquete, con lo cual, tenemos que empezar instalando Python:</p>
+<blockquote>
+<div><p>Recordar que estamos instalando paquetes <em>dentro del ambiente</em>, así
+que hay que asegurarse que hayamos hecho
+<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">&lt;nombre_del_ambiente&gt;</span></code></p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11.4
+</pre></div>
+</div>
+<p>Instalará la versión 3.11.4 de Python. La sintaxis es en general</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>&lt;nombre_del_paquete_1&gt;<span class="o">[=</span>&lt;versión&gt;<span class="o">]</span><span class="w"> </span>&lt;nombre_del_paquete_2&gt;<span class="o">[=</span>&lt;versión&gt;<span class="o">]</span><span class="w"> </span>...
+</pre></div>
+</div>
+<p>Es optativo especificar la versión del paquete, por defecto <code class="docutils literal notranslate"><span class="pre">conda</span></code>
+usará la versión más nueva (compatible con el resto de los paquetes que
+se están instalando o están instalados en el ambiente).</p>
+<p>Ahora sí, podemos usar python</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>--version
+Python<span class="w"> </span><span class="m">3</span>.11.3
+</pre></div>
+</div>
+<p>Para ver qué paquetes están instalados, hacemos <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">list</span></code></p>
+<img alt="_images/lista_de_paquetes.png" src="_images/lista_de_paquetes.png" />
+</section>
+</section>
+</section>
+<section id="ambientes-y-notebooks">
+<h2>Ambientes y Notebooks<a class="headerlink" href="#ambientes-y-notebooks" title="Link to this heading"></a></h2>
+<p>Una vez que creamos un ambiente y le agregamos paquetes, nos gustaría
+utilizarlo desde un jupyter notebook. Hay algunas opciones</p>
+<section id="instalando-jupyter">
+<h3>Instalando <code class="docutils literal notranslate"><span class="pre">jupyter</span></code><a class="headerlink" href="#instalando-jupyter" title="Link to this heading"></a></h3>
+<p>Una opción es instalar <code class="docutils literal notranslate"><span class="pre">jupyter</span></code> en cada ambiente, activarlo y
+correrlo via <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">notebook</span></code> como hicimos al comienzo en el
+ambiente <em>base</em>. Si se prefiere, también se puede instalar jupyter labs
+con <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">jupyterlab</span></code> y luego correr
+<code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code> desde la terminal. En este caso tendremos un nuevo
+jupyter en el menú de windows</p>
+<img alt="_images/jupyter_ambiente.png" src="_images/jupyter_ambiente.png" />
+</section>
+<section id="instalando-nb-conda-kernels">
+<h3>Instalando <code class="docutils literal notranslate"><span class="pre">nb_conda_kernels</span></code><a class="headerlink" href="#instalando-nb-conda-kernels" title="Link to this heading"></a></h3>
+<p>Jupyter es una plataforma poderosa y permite utilizar otros <em>kernels</em>.
+Un kernel de Jupyter es un proceso que corre paralelamente al notebook,
+y se ocupa de la ejecución del código. Si bien lo usaremos en Python,
+Jupyter puede usar otros kernels en <a class="reference external" href="https://github.com/jupyter/jupyter/wiki/Jupyter-kernels">distintos
+lenguajes</a>.
+El paquete <code class="docutils literal notranslate"><span class="pre">ipykernel</span></code> es el que encapsula a IPython (la consola
+interactiva) para que pueda usarse desde jupyter, y se instala como
+dependencia del paquete <code class="docutils literal notranslate"><span class="pre">jupyter</span></code>.</p>
+<p>El paquete <code class="docutils literal notranslate"><span class="pre">nb_conda_kernels</span></code> permite que cualquier notebook pueda
+ejecutarse con distintos ambientes (más documentación
+<a class="reference external" href="https://github.com/anaconda/nb_conda_kernels">acá</a>).</p>
+<blockquote>
+<div><p>Atención! <code class="docutils literal notranslate"><span class="pre">ipykernel</span></code> tiene que estar instalado en cada ambiente
+que se quiera utilizar con esta opción.</p>
+</div></blockquote>
+<img alt="_images/kernels_en_jupyter.png" src="_images/kernels_en_jupyter.png" />
+<p>En resumen: - Si se quiere usar notebooks con un ambiente dedicado,
+instalar jupyter en cada ambiente. - Si se desea usar notebooks con
+distintos ambientes, instalar <code class="docutils literal notranslate"><span class="pre">ipykernel</span></code> en cada ambiente y
+<code class="docutils literal notranslate"><span class="pre">nb_conda_kernels</span></code> en el ambiente desde el cual se correrá jupyter (en
+general, es el default <em>base</em>)</p>
+</section>
+<section id="visual-studio-code">
+<h3>Visual Studio Code<a class="headerlink" href="#visual-studio-code" title="Link to this heading"></a></h3>
+<p>VS Code maneja esto automáticamente, instalando <code class="docutils literal notranslate"><span class="pre">ipykernel</span></code> en cada
+ambiente de ser necesario, y realizando todas las conexiones necesarias
+para que uno pueda tener disponibles todos los ambientes al abrir un
+notebook.</p>
+</section>
+</section>
+<section id="compartiendo-ambientes">
+<h2>Compartiendo ambientes<a class="headerlink" href="#compartiendo-ambientes" title="Link to this heading"></a></h2>
+<p>La forma más sencilla es crear un archivo con la lista de paquetes del
+ambiente local que estamos usando, compartir dicho archivo y recrear el
+ambiente en la nueva locación. Extrayendo el ambiente local</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span><span class="nb">export</span><span class="w"> </span>--from-history<span class="w"> </span>&gt;<span class="w"> </span>environment.yml
+</pre></div>
+</div>
+<p>Resulta en un archivo
+<a class="reference external" href="https://www.redhat.com/en/topics/automation/what-is-yaml#:~:text=YAML%20is%20a%20human%2Dreadable,is%20for%20data%2C%20not%20documents.">YAML</a>
+de la forma:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">clases</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipykernel</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypy</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jupyter</span>
+</pre></div>
+</div>
+<p>Esta es la forma más general de exportar los paquetes. Obsérvese que
+están incluídos aquellos paquetes que hemos instalado explícitamente con
+<code class="docutils literal notranslate"><span class="pre">conda</span></code>.</p>
+<blockquote>
+<div><p>Se estila usar como nombre de archivo <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code>, pero se
+puede usar cualquier otro nombre de base,</p>
+</div></blockquote>
+<blockquote>
+<div><p>Existen otras maneras más específicas de crear archivos que contengan
+el listado de paquetes instalados, pero adolecen de algunos
+problemas, como por ejemplo, no son multiplataforma.</p>
+</div></blockquote>
+<p>Una vez copiado el archivo yaml en la nueva máquina/usuario/etc.,
+procedemos a crear el ambiente con</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>clases2<span class="w"> </span>--file<span class="w"> </span>environment.yml
+</pre></div>
+</div>
+<p>donde en este caso <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> es el archivo que creamos antes,
+y <code class="docutils literal notranslate"><span class="pre">clases2</span></code> sería el nombre del nuevo ambiente.</p>
 </section>
 </section>
 
