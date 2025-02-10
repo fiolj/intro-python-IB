@@ -420,7 +420,7 @@ Ejercicios 01 (a)
 
 
 Ambientes
-=========
+---------
 
 Uno de los problemas principales de cualquier proyecto de software es el
 mantenimiento de las dependencias del código. Python no es ajeno a ello.
@@ -447,7 +447,7 @@ La distribución Anaconda a través del comando ``conda`` también puede
 administrar *environments*, y es la que usaremos en este curso.
 
 Gestionando ambientes con ``conda``
------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Empecemos viendo qué ambientes tenemos en nuestro sistema con:
 
@@ -472,7 +472,7 @@ instalar Python a través de miniconda.
    ``--help`` al final del comando
 
 Creando ambientes
-~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 El comando para crear un nuevo ambiente es
 ``conda create -n <nombre_del_ambiente>``:
@@ -596,13 +596,13 @@ Para ver qué paquetes están instalados, hacemos ``conda list``
 
 
 Ambientes y Notebooks
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 Una vez que creamos un ambiente y le agregamos paquetes, nos gustaría
 utilizarlo desde un jupyter notebook. Hay algunas opciones
 
 Instalando ``jupyter``
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^
 
 Una opción es instalar ``jupyter`` en cada ambiente, activarlo y
 correrlo via ``python -m notebook`` como hicimos al comienzo en el
@@ -616,7 +616,7 @@ jupyter en el menú de windows
 
 
 Instalando ``nb_conda_kernels``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Jupyter es una plataforma poderosa y permite utilizar otros *kernels*.
 Un kernel de Jupyter es un proceso que corre paralelamente al notebook,
@@ -645,7 +645,7 @@ distintos ambientes, instalar ``ipykernel`` en cada ambiente y
 general, es el default *base*)
 
 Visual Studio Code
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 VS Code maneja esto automáticamente, instalando ``ipykernel`` en cada
 ambiente de ser necesario, y realizando todas las conexiones necesarias
@@ -656,7 +656,7 @@ notebook.
 
 
 Compartiendo ambientes
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~
 
 La forma más sencilla es crear un archivo con la lista de paquetes del
 ambiente local que estamos usando, compartir dicho archivo y recrear el
@@ -702,3 +702,587 @@ procedemos a crear el ambiente con
 
 donde en este caso ``environment.yml`` es el archivo que creamos antes,
 y ``clases2`` sería el nombre del nuevo ambiente.
+
+Conceptos básicos de Python
+---------------------------
+
+Características generales del lenguaje
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Python es un lenguaje de uso general que presenta características
+modernas. Posiblemente su característica más visible/notable es que la
+estructuración del código está fuertemente relacionada con su
+legibilidad:
+
+-  Las funciones, bloques, ámbitos están definidos por la indentación
+
+-  Es un lenguaje interpretado (no se compila separadamente)
+
+-  Provee tanto un entorno interactivo como ejecución de programas
+   completos
+
+-  Tiene una estructura altamente modular, permitiendo su reusabilidad
+
+-  Es un lenguaje de *tipeado dinámico*, no tenemos que declarar el tipo
+   de variable antes de usarla.
+
+Python es un lenguaje altamente modular con una biblioteca standard que
+provee funciones y tipos para un amplio rango de aplicaciones, y que se
+distribuye junto con el lenguaje. Además hay un conjunto muy importante
+de utilidades que pueden instalarse e incorporarse muy fácilmente. El
+núcleo del lenguaje es pequeño, existiendo sólo unas pocas palabras
+reservadas:
+
+====== ======== ======= ======== ========
+Las    Palabras claves  del      Lenguaje
+====== ======== ======= ======== ========
+False  class    finally is       return
+None   continue for     lambda   try
+True   def      from    nonlocal while
+and    del      global  not      with
+as     elif     if      or       yield
+assert else     import  pass     
+break  except   in      raise    
+====== ======== ======= ======== ========
+
+Tipos de variables
+~~~~~~~~~~~~~~~~~~
+
+Python es un lenguaje de muy alto nivel y por lo tanto trae muchos
+*tipos* de datos ya definidos:
+
+-  Números: enteros, reales, complejos
+-  Tipos lógicos (booleanos)
+-  Cadenas de caracteres (strings) y bytes
+-  Listas: una lista es una colección de cosas, ordenadas, que pueden
+   ser todas distintas entre sí
+-  Diccionarios: También son colecciones de cosas, pero no están
+   ordenadas y son identificadas con una etiqueta
+-  Conjuntos, tuples, …
+
+Tipos simples: Números
+^^^^^^^^^^^^^^^^^^^^^^
+
+Hay varios tipos de números en Python. Veamos un ejemplo donde definimos
+y asignamos valor a distintas variables:
+
+.. code:: python
+
+    a = 13
+    b = 1.23
+    c = a + b
+    print(a, type(a))
+    print(b, type(b))
+    print(c, type(c))
+
+Acá usamos la función ``type()`` que retorna el tipo de su argumento.
+Acá ilustramos una de las características salientes de Python: El tipo
+de variable se define en forma dinámica, al asignarle un valor.
+
+De la misma manera se cambia el tipo de una variable en forma dinámica,
+para poder operar. Por ejemplo en el último caso, la variable ``a`` es
+de tipo ``int``, pero para poder sumarla con la variable ``b`` debe
+convertirse su valor a otra de tipo ``float``.
+
+.. code:: python
+
+    print (a, type(a))
+    a = 1.5 * a
+    print (a, type(a))
+
+Ahora, la variable ``a`` es del tipo ``float``.
+
+Lo que está pasando acá en realidad es que la variable ``a`` del tipo
+entero en la primera, en la segunda línea se destruye (después de ser
+multiplicada por ``1.5``) y se crea una nueva variable del tipo
+``float`` que se llama ``a`` a la que se le asigna el valor real.
+
+En Python 3 la división entre números enteros da como resultado un
+número de punto flotante
+
+.. code:: python
+
+    print(20/5)
+    print(type(20/5))
+    print(20/3)
+
+.. warning::  En *Python 2.x* la división entre números enteros es
+     entera
+  
+  
+
+Por ejemplo, en cualquier versión de Python 2 tendremos: 1/2 = 3/4 = 0.
+Esto es diferente en *Python 3* donde 1/2=0.5 y 3/4=0.75.
+
+.. note::  La función ``print``
+  
+     Estuvimos usando, sin hacer ningún comentario, la función
+  
+     ``print(arg1, arg2, arg3, ..., sep=' ', end='\n', file=sys.stdout, flush=False)``
+  
+     que acepta un número variable de argumentos. Esta función Imprime por
+     pantalla todos los argumentos que se le pasan separados por el string
+     ``sep`` (cuyo valor por defecto es un espacio), y termina con el
+     string ``end`` (con valor por defecto *newline*).
+  
+  .. code:: python
+  
+      help(print)
+  
+  
+  .. parsed-literal::
+  
+      Help on built-in function print in module builtins:
+      
+      print(*args, sep=' ', end='\n', file=None, flush=False)
+          Prints the values to a stream, or to sys.stdout by default.
+      
+          sep
+            string inserted between values, default a space.
+          end
+            string appended after the last value, default a newline.
+          file
+            a file-like object (stream); defaults to the current sys.stdout.
+          flush
+            whether to forcibly flush the stream.
+      
+  
+  
+  .. code:: python
+  
+      print(3,2,'hola')
+      print(4,1,'chau')
+  
+  
+  .. parsed-literal::
+  
+      3 2 hola
+      4 1 chau
+  
+  
+  .. code:: python
+  
+      print(3,2,'hola',sep='++++',end=' -> ')
+      print(4,1,'chau',sep='++++')
+  
+  
+  .. parsed-literal::
+  
+      3++++2++++hola -> 4++++1++++chau
+  
+  
+  
+
+.. warning::  En *Python 2.x* no existe la función ``print()``. Se
+     trata de un comando. Para escribir las sentencias anteriores en
+     Python 2 sólo debemos omitir los paréntesis y separar la palabra
+     ``print`` de sus argumentos con un espacio.
+  
+  
+
+.. note::  Disgresión: Objetos
+  
+     En python, la forma de tratar datos es mediante *objetos*. Todos los
+     objetos tienen, al menos:
+  
+     -  un tipo,
+     -  un valor,
+     -  una identidad.
+  
+     Además, pueden tener:
+  
+     -  componentes
+     -  métodos
+  
+     Los *métodos* son funciones que pertenecen a un objeto y cuyo primer
+     argumento es el objeto que la posee.
+  
+  
+
+Todos los números, al igual que otros tipos, son objetos y tienen
+definidos algunos métodos que pueden ser útiles.
+
+Números complejos
+^^^^^^^^^^^^^^^^^
+
+Los números complejos son parte standard del lenguaje, y las operaciones
+básicas que están incorporadas en forma nativa pueden utilizarse
+normalmente
+
+.. code:: python
+
+    z1 = 3 + 1j
+    z2 = 2 + 2.124j
+    print ('z1 =', z1, ', z2 =', z2)
+
+
+.. parsed-literal::
+
+    z1 = (3+1j) , z2 = (2+2.124j)
+
+
+.. code:: python
+
+    print('1.5j * z2 + z1 = ', 1.5j * z2 + z1)  # sumas, multiplicaciones de números complejos
+    print('z2² = ', z2**2)  # potencia de números complejos
+    print('conj(z1) = ', z1.conjugate())
+
+
+.. parsed-literal::
+
+    1.5j * z2 + z1 =  (-0.18599999999999994+4j)
+    z2² =  (-0.5113760000000003+8.496j)
+    conj(z1) =  (3-1j)
+
+
+.. code:: python
+
+    print ('Im(z1) = ', z1.imag)
+    print ('Re(z1) = ', z1.real)
+    print ('abs(z1) = ', abs(z1))
+
+.. code:: python
+
+    type(z1)
+
+.. code:: python
+
+    help(z1)
+
+Operaciones
+^^^^^^^^^^^
+
+Las operaciones aritméticas básicas son:
+
+-  adición: ``+``
+-  sustracción: ``-``
+-  multiplicación: ``*``
+-  división: ``/``
+-  potencia: ``**``
+-  módulo: ``%``
+-  división entera: ``//``
+
+Las operaciones se pueden agrupar con parentesis y tienen precedencia
+estándar.
+
+División entera (//) significa quedarse con la parte entera de la
+división (sin redondear).
+
+   **Nota:** Las operaciones matemáticas están incluidas en el lenguaje.
+   En particular las funciones elementales: trigonométricas,
+   hiperbólicas, logaritmos no están incluidas. En todos los casos es
+   fácil utilizarlas porque las proveen módulos. Lo veremos pronto.
+
+.. code:: python
+
+    print('división de 20/3:         ', 20/3)
+    print('parte entera de 20/3:     ', 20//3)
+    print('fracción restante de 20/3:', 20/3 - 20//3)
+    print('Resto de 20/3:            ', 20%3)
+
+
+.. parsed-literal::
+
+    división de 20/3:          6.666666666666667
+    parte entera de 20/3:      6
+    fracción restante de 20/3: 0.666666666666667
+    Resto de 20/3:             2
+
+
+Tipos simples: Booleanos
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Los tipos lógicos o *booleanos*, pueden tomar los valores *Verdadero* o
+*Falso* (``True`` o ``False``)
+
+.. code:: python
+
+    t = False
+    print('¿t is True?', t == True)
+    print('¿t is False?', t == False)
+
+
+.. parsed-literal::
+
+    ¿t is True? False
+    ¿t is False? True
+
+
+.. code:: python
+
+    c = (t == True)
+    print('¿t is True?', c)
+    print (type(c))
+
+
+.. parsed-literal::
+
+    ¿t is True? False
+    <class 'bool'>
+
+
+
+Hay un tipo *especial*, el elemento ``None``.
+
+.. code:: python
+
+    print ('True == None: ',True == None)
+    print ('False == None: ', False == None)
+    a = None
+    print ('type(a): ',type(a))
+    print (bool(None))
+    print(bool(0))
+    print(bool(1))
+
+
+.. parsed-literal::
+
+    True == None:  False
+    False == None:  False
+    type(a):  <class 'NoneType'>
+    False
+    False
+    True
+
+
+Aquí hemos estado preguntando si dos cosas eran iguales o no (igualdad).
+También podemos preguntar si una **es** la otra (identidad):
+
+.. code:: python
+
+    a = 1280
+    b = 1280
+    print(a == b)
+    print ('b is a: ', b is a)
+
+
+.. parsed-literal::
+
+    True
+    b is a:  False
+
+
+.. code:: python
+
+    a = None
+    b = True
+    c = a
+    print ('b is True: ', b is True)
+    print ('a is None: ', a is None)
+    print ('c is a: ', c is a)
+
+
+
+.. parsed-literal::
+
+    b is True:  True
+    a is None:  True
+    c is a:  True
+
+
+Acá vemos que ``None`` es “único”, en el sentido de que si dos variables
+son ``None``, entonces son el mismo objeto.
+
+Operadores lógicos
+^^^^^^^^^^^^^^^^^^
+
+Los operadores lógicos en Python son muy explicitos:
+
+::
+
+   A == B  (A igual que B)
+   A > B   (A mayor que B)
+   A < B   (A menor que B)
+   A >= B  (A igual o mayor que B)
+   A <= B  (A igual o menor que B)
+   A != B  (A diferente que B)
+   A in B  (A incluido en B)
+   A is B  (Identidad: A es el mismo elemento que B)
+
+y a todos los podemos combinar con ``not``, que niega la condición.
+Veamos algunos ejemplos
+
+.. code:: python
+
+    print ('¿20/3 == 6?',20/3 == 6)
+    print ('¿20//3 == 6?', 20//3 == 6)
+    print ('¿20//3 >= 6?', 20//3 >= 6)
+    print ('¿20//3 > 6?', 20//3 > 6)
+
+
+.. parsed-literal::
+
+    ¿20/3 == 6? False
+    ¿20//3 == 6? True
+    ¿20//3 >= 6? True
+    ¿20//3 > 6? False
+
+
+.. code:: python
+
+    a = 1001
+    b = 1001
+    print ('a == b:', a == b)
+    print ('a is b:',a is b)
+    print ('a is not b:',a is not b)
+
+
+.. parsed-literal::
+
+    a == b: True
+    a is b: False
+    a is not b: True
+
+
+Note que en las últimas dos líneas estamos fijándonos si las dos
+variables son la misma (identidad), y no ocurre aunque vemos que sus
+valores son iguales.
+
+--------------
+
+**Warning:** En algunos casos **Python** puede reusar un lugar de
+memoria.
+
+Por razones de optimización, en algunos casos **Python** puede utilizar
+el mismo lugar de memoria para dos variables que tienen el mismo valor,
+cuando este es pequeño.
+
+--------------
+
+.. code:: python
+
+    a = 10
+    b = 5
+    print (a, ': a is b:', a is b)
+
+
+.. parsed-literal::
+
+    10 : a is b: False
+
+
+Este es un detalle de implementación y nuestros programas no deberían
+depender de este comportamiento.
+
+.. code:: python
+
+    b = 2*b
+    print(a, b, a is b)
+
+
+.. parsed-literal::
+
+    10 10 True
+
+
+Acá utilizó otro lugar de memoria para guardar el nuevo valor de ``b``
+(22).
+
+Esto sigue valiendo para otros números:
+
+.. code:: python
+
+    a = -5
+    b = -5
+    print (a, ': a is b:', a is b)
+    print(type(a))
+
+
+.. parsed-literal::
+
+    -5 : a is b: True
+    <class 'int'>
+
+
+.. code:: python
+
+    a = 257
+    b = 257
+    print (a, ': a is b:', a is b)
+
+
+.. parsed-literal::
+
+    257 : a is b: False
+
+
+En la implementación que estamos usando, se utiliza el mismo lugar de
+memoria para dos números enteros iguales si son menores o iguales a 256.
+De todas maneras, es claro que deberíamos utilizar el símbolo ``==``
+para probar igualdad y la palabra ``is`` para probar identidad.
+
+En este caso, para valores mayores que 256, ya no usa el mismo lugar de
+memoria. Tampoco lo hace para números de punto flotante.
+
+.. code:: python
+
+    a = -6
+    b = -6
+    print (a, ': a is b:', a is b)
+    print(type(a))
+
+
+.. parsed-literal::
+
+    -6 : a is b: False
+    <class 'int'>
+
+
+.. code:: python
+
+    a = 1.5
+    b = 1.5
+    print (a, ': a is b:', a is b)
+    print(type(a))
+
+
+.. parsed-literal::
+
+    1.5 : a is b: False
+    <class 'float'>
+
+
+.. code:: python
+
+    a = 0.
+    b = 0.
+    a is b
+
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
+--------------
+
+Ejercicios 01 (b)
+-----------------
+
+4. Para cubos de lados de longitud L = 1, 3, y 5: calcule su superficie
+   y su volumen.
+
+5. Para esferas de radios r = 1, 3, 5 y 8, calcule su superficie y su
+   volumen.
+
+6. Fíjese si alguno de los valores: :math:`x_1=0.49`, :math:`x_2=0.50`,
+   :math:`x_3=0.51` es un cero de la función
+   :math:`f(x)=x^{2} + x/2 - 1/2`, esto es :math:`f(x_i)=0` para
+   :math:`i=1,2` o :math:`3` .
+
+7. Para el número complejo :math:`z= 1 + 0.5\ i`
+
+   -  Calcular :math:`z^2` y :math:`z^5`.
+   -  Calcular los complejos conjugados de :math:`z` y :math:`z^3`.
+   -  Escribir un programa que escriba las frases:
+
+      -  “El conjugado de z=1+0.5i es 1-0.5j”
+      -  “El conjugado de z=(1+0.5i)^2 es …” (con el valor
+         correspondiente)
+
+--------------
+
+.
