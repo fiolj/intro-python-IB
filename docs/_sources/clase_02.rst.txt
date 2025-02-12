@@ -481,3 +481,1503 @@ En todos los casos, pruebe las funciones escritas
 
 
 
+Tipos simples: Números
+----------------------
+
+-  Números Enteros
+-  Números Reales o de punto flotante
+-  Números Complejos
+
+Mencionamos anteriormente que todos las entidades en Python son objetos,
+que tienen al menos tres atributos: tipo, valor e identidad. Pero
+además, puede tener otros atributos como datos o métodos. Por ejemplo
+los números enteros, unos de los tipos más simples que usaremos, tienen
+métodos que pueden resultar útiles en algunos contextos.
+
+.. code:: python
+
+    a = 3                           # Número entero
+    print(type(a), a.bit_length(), sep="\n")
+
+
+.. parsed-literal::
+
+    <class 'int'>
+    2
+
+
+.. code:: python
+
+    a.bit_length?
+
+
+
+.. parsed-literal::
+
+    [0;31mSignature:[0m [0ma[0m[0;34m.[0m[0mbit_length[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+    [0;31mDocstring:[0m
+    Number of bits necessary to represent self in binary.
+    
+    >>> bin(37)
+    '0b100101'
+    >>> (37).bit_length()
+    6
+    [0;31mType:[0m      builtin_function_or_method
+
+
+.. code:: python
+
+    b = 127
+    print(type(b))
+    print(b.bit_length())
+
+
+.. parsed-literal::
+
+    <class 'int'>
+    7
+
+
+En estos casos, usamos el método ``bit_length`` de los enteros, que nos
+dice cuántos bits son necesarios para representar un número. Para verlo
+utilicemos la función ``bin()`` que nos da la representación en binario
+de un número entero
+
+.. code:: python
+
+    # bin nos da la representación en binarios
+    print(a, "=", bin(a), "->", a.bit_length(),"bits")
+    print(b, "=", bin(b), "->", b.bit_length(),"bits")
+
+
+.. parsed-literal::
+
+    3 = 0b11 -> 2 bits
+    127 = 0b1111111 -> 7 bits
+
+
+Esto nos dice que el número ``3`` se puede representar con dos bits, y
+que para representar el número ``127`` se necesitan 7 bits.
+
+.. code:: python
+
+    help(a)
+
+
+.. parsed-literal::
+
+    Help on int object:
+    
+    class int(object)
+     |  int([x]) -> integer
+     |  int(x, base=10) -> integer
+     |
+     |  Convert a number or string to an integer, or return 0 if no arguments
+     |  are given.  If x is a number, return x.__int__().  For floating-point
+     |  numbers, this truncates towards zero.
+     |
+     |  If x is not a number or if base is given, then x must be a string,
+     |  bytes, or bytearray instance representing an integer literal in the
+     |  given base.  The literal can be preceded by '+' or '-' and be surrounded
+     |  by whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.
+     |  Base 0 means to interpret the base from the string as an integer literal.
+     |  >>> int('0b100', base=0)
+     |  4
+     |
+     |  Built-in subclasses:
+     |      bool
+     |
+     |  Methods defined here:
+     |
+     |  __abs__(self, /)
+     |      abs(self)
+     |
+     |  __add__(self, value, /)
+     |      Return self+value.
+     |
+     |  __and__(self, value, /)
+     |      Return self&value.
+     |
+     |  __bool__(self, /)
+     |      True if self else False
+     |
+     |  __ceil__(self, /)
+     |      Ceiling of an Integral returns itself.
+     |
+     |  __divmod__(self, value, /)
+     |      Return divmod(self, value).
+     |
+     |  __eq__(self, value, /)
+     |      Return self==value.
+     |
+     |  __float__(self, /)
+     |      float(self)
+     |
+     |  __floor__(self, /)
+     |      Flooring an Integral returns itself.
+     |
+     |  __floordiv__(self, value, /)
+     |      Return self//value.
+     |
+     |  __format__(self, format_spec, /)
+     |      Convert to a string according to format_spec.
+     |
+     |  __ge__(self, value, /)
+     |      Return self>=value.
+     |
+     |  __getattribute__(self, name, /)
+     |      Return getattr(self, name).
+     |
+     |  __getnewargs__(self, /)
+     |
+     |  __gt__(self, value, /)
+     |      Return self>value.
+     |
+     |  __hash__(self, /)
+     |      Return hash(self).
+     |
+     |  __index__(self, /)
+     |      Return self converted to an integer, if self is suitable for use as an index into a list.
+     |
+     |  __int__(self, /)
+     |      int(self)
+     |
+     |  __invert__(self, /)
+     |      ~self
+     |
+     |  __le__(self, value, /)
+     |      Return self<=value.
+     |
+     |  __lshift__(self, value, /)
+     |      Return self<<value.
+     |
+     |  __lt__(self, value, /)
+     |      Return self<value.
+     |
+     |  __mod__(self, value, /)
+     |      Return self%value.
+     |
+     |  __mul__(self, value, /)
+     |      Return self*value.
+     |
+     |  __ne__(self, value, /)
+     |      Return self!=value.
+     |
+     |  __neg__(self, /)
+     |      -self
+     |
+     |  __or__(self, value, /)
+     |      Return self|value.
+     |
+     |  __pos__(self, /)
+     |      +self
+     |
+     |  __pow__(self, value, mod=None, /)
+     |      Return pow(self, value, mod).
+     |
+     |  __radd__(self, value, /)
+     |      Return value+self.
+     |
+     |  __rand__(self, value, /)
+     |      Return value&self.
+     |
+     |  __rdivmod__(self, value, /)
+     |      Return divmod(value, self).
+     |
+     |  __repr__(self, /)
+     |      Return repr(self).
+     |
+     |  __rfloordiv__(self, value, /)
+     |      Return value//self.
+     |
+     |  __rlshift__(self, value, /)
+     |      Return value<<self.
+     |
+     |  __rmod__(self, value, /)
+     |      Return value%self.
+     |
+     |  __rmul__(self, value, /)
+     |      Return value*self.
+     |
+     |  __ror__(self, value, /)
+     |      Return value|self.
+     |
+     |  __round__(self, ndigits=<unrepresentable>, /)
+     |      Rounding an Integral returns itself.
+     |
+     |      Rounding with an ndigits argument also returns an integer.
+     |
+     |  __rpow__(self, value, mod=None, /)
+     |      Return pow(value, self, mod).
+     |
+     |  __rrshift__(self, value, /)
+     |      Return value>>self.
+     |
+     |  __rshift__(self, value, /)
+     |      Return self>>value.
+     |
+     |  __rsub__(self, value, /)
+     |      Return value-self.
+     |
+     |  __rtruediv__(self, value, /)
+     |      Return value/self.
+     |
+     |  __rxor__(self, value, /)
+     |      Return value^self.
+     |
+     |  __sizeof__(self, /)
+     |      Returns size in memory, in bytes.
+     |
+     |  __sub__(self, value, /)
+     |      Return self-value.
+     |
+     |  __truediv__(self, value, /)
+     |      Return self/value.
+     |
+     |  __trunc__(self, /)
+     |      Truncating an Integral returns itself.
+     |
+     |  __xor__(self, value, /)
+     |      Return self^value.
+     |
+     |  as_integer_ratio(self, /)
+     |      Return a pair of integers, whose ratio is equal to the original int.
+     |
+     |      The ratio is in lowest terms and has a positive denominator.
+     |
+     |      >>> (10).as_integer_ratio()
+     |      (10, 1)
+     |      >>> (-10).as_integer_ratio()
+     |      (-10, 1)
+     |      >>> (0).as_integer_ratio()
+     |      (0, 1)
+     |
+     |  bit_count(self, /)
+     |      Number of ones in the binary representation of the absolute value of self.
+     |
+     |      Also known as the population count.
+     |
+     |      >>> bin(13)
+     |      '0b1101'
+     |      >>> (13).bit_count()
+     |      3
+     |
+     |  bit_length(self, /)
+     |      Number of bits necessary to represent self in binary.
+     |
+     |      >>> bin(37)
+     |      '0b100101'
+     |      >>> (37).bit_length()
+     |      6
+     |
+     |  conjugate(self, /)
+     |      Returns self, the complex conjugate of any int.
+     |
+     |  is_integer(self, /)
+     |      Returns True. Exists for duck type compatibility with float.is_integer.
+     |
+     |  to_bytes(self, /, length=1, byteorder='big', *, signed=False)
+     |      Return an array of bytes representing an integer.
+     |
+     |      length
+     |        Length of bytes object to use.  An OverflowError is raised if the
+     |        integer is not representable with the given number of bytes.  Default
+     |        is length 1.
+     |      byteorder
+     |        The byte order used to represent the integer.  If byteorder is 'big',
+     |        the most significant byte is at the beginning of the byte array.  If
+     |        byteorder is 'little', the most significant byte is at the end of the
+     |        byte array.  To request the native byte order of the host system, use
+     |        sys.byteorder as the byte order value.  Default is to use 'big'.
+     |      signed
+     |        Determines whether two's complement is used to represent the integer.
+     |        If signed is False and a negative integer is given, an OverflowError
+     |        is raised.
+     |
+     |  ----------------------------------------------------------------------
+     |  Class methods defined here:
+     |
+     |  from_bytes(bytes, byteorder='big', *, signed=False)
+     |      Return the integer represented by the given array of bytes.
+     |
+     |      bytes
+     |        Holds the array of bytes to convert.  The argument must either
+     |        support the buffer protocol or be an iterable object producing bytes.
+     |        Bytes and bytearray are examples of built-in objects that support the
+     |        buffer protocol.
+     |      byteorder
+     |        The byte order used to represent the integer.  If byteorder is 'big',
+     |        the most significant byte is at the beginning of the byte array.  If
+     |        byteorder is 'little', the most significant byte is at the end of the
+     |        byte array.  To request the native byte order of the host system, use
+     |        sys.byteorder as the byte order value.  Default is to use 'big'.
+     |      signed
+     |        Indicates whether two's complement is used to represent the integer.
+     |
+     |  ----------------------------------------------------------------------
+     |  Static methods defined here:
+     |
+     |  __new__(*args, **kwargs)
+     |      Create and return a new object.  See help(type) for accurate signature.
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  denominator
+     |      the denominator of a rational number in lowest terms
+     |
+     |  imag
+     |      the imaginary part of a complex number
+     |
+     |  numerator
+     |      the numerator of a rational number in lowest terms
+     |
+     |  real
+     |      the real part of a complex number
+    
+
+
+Los números de punto flotante también tienen algunos métodos definidos.
+Por ejemplo podemos saber si un número flotante corresponde a un entero:
+
+.. code:: python
+
+    b = -3.0
+    b.is_integer()
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+.. code:: python
+
+    c = 142.25
+    c.is_integer()
+
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
+o podemos expresarlo como el cociente de dos enteros, o en forma
+hexadecimal
+
+.. code:: python
+
+    c.as_integer_ratio()
+
+
+
+
+.. parsed-literal::
+
+    (569, 4)
+
+
+
+Recordemos, como último ejemplo, los números complejos:
+
+.. code:: python
+
+    z = 1 + 2j
+    zc = z.conjugate()              # Método que devuelve el conjugado
+    zr = z.real                     # Componente, parte real
+    zi = z.imag                     # Componente, parte imaginaria
+
+.. code:: python
+
+    print(z, zc, zr, zi, zc.imag)
+
+
+.. parsed-literal::
+
+    (1+2j) (1-2j) 1.0 2.0 -2.0
+
+
+Tipos compuestos
+----------------
+
+En Python, además de los tipos simples (números y booleanos, entre
+ellos) existen tipos compuestos, que pueden contener más de un valor de
+algún tipo. Entre los tipos compuestos más importantes vamos a
+referirnos a:
+
+-  | `Strings <https://docs.python.org/es/3/library/stdtypes.html#text-sequence-type-str>`__
+   | Se pueden definir con comillas dobles ( ” ), comillas simples ( ’
+     ), o tres comillas (simples o dobles). Comillas (dobles) y comillas
+     simples producen el mismo resultado. Sólo debe asegurarse que se
+     utiliza el mismo tipo para abrir y para cerrar el *string*
+   | Ejemplo: ``s = "abc"`` (el elemento ``s[0]`` tiene el valor
+     ``"a"``).
+
+-  | `Listas <https://docs.python.org/es/3/library/stdtypes.html#sequence-types-list-tuple-range>`__
+   | Las listas son tipos que pueden contener más de un elemento de
+     cualquier tipo. Los tipos de los elementos pueden ser diferentes.
+     Las listas se definen separando los diferentes valores con comas,
+     encerrados entre corchetes. Se puede referir a un elemento por su
+     índice.
+   | Ejemplo: ``L = ["a",1, 0.5 + 1j]`` (el elemento ``L[0]`` es igual
+     al *string* ``"a"``).
+
+-  | `Tuplas <https://docs.python.org/es/3/library/stdtypes.html#sequence-types-list-tuple-range>`__
+   | Las tuplas se definen de la misma manera que las listas pero con
+     paréntesis en lugar de corchetes. Ejemplo:
+     ``T = ("a",1, 0.5 + 1j).``
+
+-  | `Diccionarios <https://docs.python.org/es/3/library/stdtypes.html#mapping-types-dict>`__
+   | Los diccionarios son contenedores a cuyos elementos se los
+     identifica con un nombre (*key*) en lugar de un índice. Se los
+     puede definir dando los pares ``key:value`` entre llaves
+   | Ejemplo: ``D = {'a': 1, 'b': 2, 1: 'hola', 2: 3.14}`` (el elemento
+     ``D['a']`` es igual al número 1).
+
+Strings: Secuencias de caracteres
+---------------------------------
+
+Una cadena o *string* es una **secuencia** de caracteres (letras,
+“números”, símbolos).
+
+Se pueden definir con comillas, comillas simples, o tres comillas
+(simples o dobles). Comillas simples o dobles producen el mismo
+resultado. Sólo debe asegurarse que se utilizan el mismo tipo para abrir
+y para cerrar el *string*
+
+Triple comillas (simples o dobles) sirven para incluir una cadena de
+caracteres en forma textual, incluyendo saltos de líneas.
+
+.. code:: python
+
+    saludo = 'Hola Mundo'           # Definición usando comillas simples
+    saludo2 = "Hola Mundo"          # Definición usando comillas dobles
+
+.. code:: python
+
+    saludo, saludo2
+
+
+
+
+.. parsed-literal::
+
+    ('Hola Mundo', 'Hola Mundo')
+
+
+
+.. code:: python
+
+    saludo == saludo2
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
+Los *strings* se pueden definir **equivalentemente** usando comillas
+simples o dobles. De esta manera es fácil incluir comillas dentro de los
+*strings*
+
+.. code:: python
+
+    otro = "that's all"              
+    dijo = '"Cómo te va" dijo el murguista a la muchacha'
+
+.. code:: python
+
+    print(otro)
+
+
+.. parsed-literal::
+
+    that's all
+
+
+.. code:: python
+
+    print(dijo)
+
+
+.. parsed-literal::
+
+    "Cómo te va" dijo el murguista a la muchacha
+
+
+.. code:: python
+
+    respondio = "Le dijo \"Bien\" y lo dejó como si nada"
+
+.. code:: python
+
+    print(respondio)
+
+
+.. parsed-literal::
+
+    Le dijo "Bien" y lo dejó como si nada
+
+
+Para definir *strings* que contengan más de una línea, manteniendo el
+formato, se pueden utilizar tres comillas (dobles o simples):
+
+.. code:: python
+
+    Texto_largo = '''Aquí me pongo a cantar
+      Al compás de la vigüela,
+    Que el hombre que lo desvela
+      Una pena estraordinaria
+    Como la ave solitaria
+      Con el cantar se consuela.'''
+
+.. code:: python
+
+    print (Texto_largo)
+
+
+.. parsed-literal::
+
+    Aquí me pongo a cantar
+      Al compás de la vigüela,
+    Que el hombre que lo desvela
+      Una pena estraordinaria
+    Como la ave solitaria
+      Con el cantar se consuela.
+
+
+.. code:: python
+
+    Texto_largo
+
+
+
+
+.. parsed-literal::
+
+    'Aquí me pongo a cantar\n  Al compás de la vigüela,\nQue el hombre que lo desvela\n  Una pena estraordinaria\nComo la ave solitaria\n  Con el cantar se consuela.'
+
+
+
+En ``Python`` se puede utilizar cualquier caracter que pueda ingresarse
+por teclado, ya que por default Python-3 trabaja usando la codificación
+UTF-8, que incluye todos los símbolos que se nos ocurran. Por ejemplo:
+
+.. code:: python
+
+    # Un ejemplo que puede interesarnos un poco más:
+    label = "σ = λ T/ µ + π · δξ"
+    print('tipo de label: ', type(label))
+    print ('Resultados corresponden a:', label, ' (en m/s²)')
+
+
+.. parsed-literal::
+
+    tipo de label:  <class 'str'>
+    Resultados corresponden a: σ = λ T/ µ + π · δξ  (en m/s²)
+
+
+Operaciones
+~~~~~~~~~~~
+
+En **Python** ya hay definidas algunas operaciones que involucran
+*strings* como la suma (composición o concatenación) y el producto por
+enteros (repetición).
+
+.. code:: python
+
+    s = saludo + ' -> ' + otro + '\t' 
+    s = s + "chau"
+    print (s) #  Suma de strings
+
+
+.. parsed-literal::
+
+    Hola Mundo -> that's all	chau
+
+
+Como vemos la suma de *strings* es simplemente la concatenación de los
+argumentos. La multiplicación de un entero ``n`` por un *string* es
+simplemente la suma del string ``n`` veces:
+
+.. code:: python
+
+    a = '1'
+    b = 1
+
+.. code:: python
+
+    print(a, type(a))
+    print(b, type(b))
+
+
+.. parsed-literal::
+
+    1 <class 'str'>
+    1 <class 'int'>
+
+
+.. code:: python
+
+    print ("Multiplicación por enteros de strings:", 7*a)
+    print ("Multiplicación por enteros de enteros:", 7*b)
+
+
+.. parsed-literal::
+
+    Multiplicación por enteros de strings: 1111111
+    Multiplicación por enteros de enteros: 7
+
+
+La longitud de una cadena de caracteres (como de otros objetos) se puede
+calcular con la función ``len()``
+
+.. code:: python
+
+    print ('longitud del saludo =', len(saludo), 'caracteres')
+
+
+.. parsed-literal::
+
+    longitud del saludo = 10 caracteres
+
+
+Por ejemplo, podemos usar estas operaciones para realizar el centrado
+manual de una frase:
+
+.. code:: python
+
+    titulo = "Centrado manual simple"
+    n = int((60-len(titulo))//2)    # Para un ancho de 60 caracteres
+    print ((n)*'<', titulo ,(n)*'>')
+    # 
+    saludo = 'Hola Mundo'           
+    n = int((60-len(saludo))//2)    # Para un ancho de 60 caracteres
+    print (n*'*', saludo, n*'*')
+
+
+.. parsed-literal::
+
+    <<<<<<<<<<<<<<<<<<< Centrado manual simple >>>>>>>>>>>>>>>>>>>
+    ************************* Hola Mundo *************************
+
+
+Iteración y Métodos de Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Los *strings* poseen varias cualidades y funcionalidades. Por ejemplo:
+
+-  Se puede iterar sobre ellos, y también quedarse con sólo una parte
+   (slicing)
+-  Tienen métodos (funciones que se aplican a su *dueño*)
+
+Veamos en primer lugar cómo se hace para seleccionar parte de un
+*string*
+
+Indexado de *strings*
+^^^^^^^^^^^^^^^^^^^^^
+
+Podemos referirnos a un caracter o una parte de una cadena de caracteres
+mediante su índice. Los índices en **Python** empiezan en 0.
+
+.. code:: python
+
+    s = "0123456789"
+    print ('Primer caracter  :', s[0])
+    print ("Segundo caracter :", s[1])
+
+
+.. parsed-literal::
+
+    Primer caracter  : 0
+    Segundo caracter : 1
+
+
+Si queremos empezar desde el final utilizamos índices negativos. El
+índice “-1” corresponde al último caracter.n
+
+.. code:: python
+
+    print ("El último caracter :", s[-1])
+    print ("El anteúltimo caracter :", s[-2])
+
+
+.. parsed-literal::
+
+    El último caracter : 9
+    El anteúltimo caracter : 8
+
+
+También podemos elegir un subconjunto de caracteres:
+
+.. code:: python
+
+    print ('Los tres primeros:          ', s[0:3])
+    print ('Todos a partir del tercero: ', s[3:])
+    print ('Los últimos dos:            ', s[-2:])
+    print ('Todos menos los últimos dos:', s[:-2])
+
+
+.. parsed-literal::
+
+    Los tres primeros:           012
+    Todos a partir del tercero:  3456789
+    Los últimos dos:             89
+    Todos menos los últimos dos: 01234567
+
+
+Estas “subcadenas” son cadenas de caracteres, y por lo tanto pueden
+utilizarse de la misma manera que cualquier otra cadena:
+
+.. code:: python
+
+    print (s[:3] + s[-2:])
+
+
+.. parsed-literal::
+
+    01289
+
+
+La selección de elementos y subcadenas de una cadena ``s`` tiene la
+forma general
+
+.. code:: python
+
+   s[i: f: p]
+
+donde ``i, f, p`` son enteros. La notación se refiere a la subcadena
+empezando en el índice ``i``, hasta el índice ``f`` recorriendo con paso
+``p``. Casos particulares de esta notación son:
+
+-  Un índice simple. Por ejemplo ``s[2]`` se refiere al tercer elemento.
+-  Un índice negativo se cuenta desde el final, empezando desde ``-1``.
+-  Si el paso ``p`` no está presente el valor por defecto es 1. Ejemplo:
+   ``s[2:4] = s[2:4:1]``.
+-  Si se omite el primer índice, el valor asumido es 0. Ejemplo:
+   ``s[:2:1] = s[0:2:1] = s[0:2]``.
+-  Si se omite el segundo índice, el valor asumido es el del último
+   elemento. Ejemplo: ``s[1::1] = s[1:]``.
+-  Notar que puede omitirse más de un índice. Ejemplo:
+   ``s[::2] = s[0:-1:2]``.
+
+.. code:: python
+
+    print(s)
+    print(s[0:5:2])
+    print (s[::2])
+    print (s[::-1])
+    print (s[::-3])
+
+
+.. parsed-literal::
+
+    0123456789
+    024
+    02468
+    9876543210
+    9630
+
+
+Veamos algunas utilidades que se pueden aplicar sobre un string:
+
+.. code:: python
+
+    a = "La mar estaba serena!"
+    print(a)
+
+
+.. parsed-literal::
+
+    La mar estaba serena!
+
+
+Por ejemplo, en python es muy fácil reemplazar una cadena por otra
+usando el método de *strings* ``replace()``
+
+.. code:: python
+
+    b = a.replace('e','a')
+    print(b)
+
+
+.. parsed-literal::
+
+    La mar astaba sarana!
+
+
+o separar las palabras:
+
+.. code:: python
+
+    print(a.split())
+
+
+.. parsed-literal::
+
+    ['La', 'mar', 'estaba', 'serena!']
+
+
+.. code:: python
+
+    print(a.split('s'))
+
+
+.. parsed-literal::
+
+    ['La mar e', 'taba ', 'erena!']
+
+
+En este caso, tanto ``replace()`` como ``split()`` son métodos que ya
+están definidos para los *strings*.
+
+Recordemos que un método es una función que está definida junto con el
+tipo de objeto. En este caso el string. Hay más información sobre todos
+los métodos de las cadenas de caracteres en: `String
+Methods <https://docs.python.org/3/library/stdtypes.html#string-methods>`__
+
+Veamos algunos ejemplos más:
+
+Buscar y reemplazar cosas en un string:
+
+.. code:: python
+
+    a.find('e')
+
+
+
+
+.. parsed-literal::
+
+    7
+
+
+
+.. code:: python
+
+    a.find('x')
+
+
+
+
+.. parsed-literal::
+
+    -1
+
+
+
+.. code:: python
+
+    a.find('e',8)
+
+
+
+
+.. parsed-literal::
+
+    15
+
+
+
+.. code:: python
+
+    a.find('re')
+
+
+
+
+.. parsed-literal::
+
+    16
+
+
+
+El método ``find(sub[, start[, end]]) -> int`` busca el *substring*
+``sub`` empezando con el índice ``start`` (argumento opcional) y
+finalizando en el índice ``end`` (argumento opcional, que sólo puede
+aparecer si también aparece ``start``). Devuelve el índice donde inicial
+es *substring*.
+
+Formato de strings
+~~~~~~~~~~~~~~~~~~
+
+En python se le puede dar formato a los strings de distintas maneras.
+Vamos a ver dos opciones: - Uso del método ``format`` - Uso de
+“f-strings”
+
+El método ``format()`` es una función que busca en el strings las llaves
+y las reemplaza por los argumentos. Veamos esto con algunos ejemplos:
+
+.. code:: python
+
+    a = 2024
+    m = 'Feb'
+    d = 6
+    s = "Hoy es el día {} de {} de {}".format(d, m, a)
+    print(s)
+    print("Hoy es el día {}/{}/{}".format(d,m,a))
+    print("Hoy es el día {0}/{1}/{2}".format(d,m,a))
+    print("Hoy es el día {2}/{1}/{0}".format(d,m,a))
+
+
+
+.. parsed-literal::
+
+    Hoy es el día 6 de Feb de 2024
+    Hoy es el día 6/Feb/2024
+    Hoy es el día 6/Feb/2024
+    Hoy es el día 2024/Feb/6
+
+
+.. code:: python
+
+    raiz = "datos-{}-{}-{}.dat"
+    fname = raiz.format(a,m,d)
+    print(fname)
+
+
+.. parsed-literal::
+
+    datos-2024-Feb-6.dat
+
+
+Más recientemente se ha implementado en Python una forma más directa de
+intercalar datos con caracteres literales, mediante *f-strings*, que
+permite una sintaxis más compacta. Comparemos las dos maneras:
+
+.. code:: python
+
+    pi = 3.141592653589793
+    s1 = "El valor de π es {}".format(pi)
+    s2 = "El valor de π con cuatro decimales es {0:.4f}".format(pi)
+    print(s1)
+    print(s2)
+
+
+.. parsed-literal::
+
+    El valor de π es 3.141592653589793
+    El valor de π con cuatro decimales es 3.1416
+
+
+.. code:: python
+
+    print("El valor de 2π con seis decimales es {:012.6f}".format(2*pi))
+
+
+.. parsed-literal::
+
+    El valor de 2π con seis decimales es 00006.283185
+
+
+.. code:: python
+
+    print("El valor de 2π con seis decimales es {:12.6f}".format(2*pi))
+
+
+.. parsed-literal::
+
+    El valor de 2π con seis decimales es     6.283185
+
+
+.. code:: python
+
+    print("Un valor con seis decimales es {:012.6f}".format(12345678.12345678))
+
+
+.. parsed-literal::
+
+    Un valor con seis decimales es 12345678.123457
+
+
+Para darle formato a números enteros usamos el caracter ‘d’ (decimal)
+
+.. code:: python
+
+    print("{:03d}".format(5))
+    print("{:3d}".format(5))
+
+
+.. parsed-literal::
+
+    005
+      5
+
+
+.. code:: python
+
+    t1 = "el valor de π es {pi}"
+
+.. code:: python
+
+    print(t1)
+
+
+.. parsed-literal::
+
+    el valor de π es {pi}
+
+
+.. code:: python
+
+    t = f"el valor de π es {pi}"
+
+.. code:: python
+
+    print(t)
+
+
+.. parsed-literal::
+
+    el valor de π es 3.141592653589793
+
+
+Podemos obtener estos mismos resultados usando “f-strings”
+
+.. code:: python
+
+    print(f"el valor de π es {pi}")
+    print(f"El valor de π con cuatro decimales es {pi:.4f}")
+    print(f"El valor de 2π con seis decimales es {2*pi:012.6f}")
+    print(f"{5:03d}")
+    print(f"{5:3d}")
+
+
+.. parsed-literal::
+
+    el valor de π es 3.141592653589793
+    El valor de π con cuatro decimales es 3.1416
+    El valor de 2π con seis decimales es 00006.283185
+    005
+      5
+
+
+.. code:: python
+
+    fname = f"datos-{a}-{m}-{d}.dat"
+    print(fname)
+
+
+.. parsed-literal::
+
+    datos-2024-Feb-6.dat
+
+
+Conversión de tipos
+-------------------
+
+Como comentamos anteriormente, y se ve en los ejemplos anteriores, uno
+no define el tipo de variable *a-priori* sino que queda definido al
+asignársele un valor (por ejemplo a=3 define a como una variable del
+tipo entero).
+
+.. code:: python
+
+    a = 3                           # a es entero
+    b = 3.                         # b es real
+    c = 3 + 0j                      # c es complejo
+    print ("a es de tipo {0}\nb es de tipo {1}\nc es de tipo {2}".format(type(a), type(b), type(c)))
+    print ("'a + b' es de tipo {0} y 'a + c' es de tipo {1}".format(type(a+b), type(a+c)))
+
+
+.. parsed-literal::
+
+    a es de tipo <class 'int'>
+    b es de tipo <class 'float'>
+    c es de tipo <class 'complex'>
+    'a + b' es de tipo <class 'float'> y 'a + c' es de tipo <class 'complex'>
+
+
+Si bien **Python** hace la conversión de tipos de variables en algunos
+casos, **no hace magia**, no puede adivinar nuestra intención si no la
+explicitamos.
+
+.. code:: python
+
+    print (1+'1')
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[58], line 1
+    ----> 1 print (1+'1')
+
+
+    TypeError: unsupported operand type(s) for +: 'int' and 'str'
+
+
+Sin embargo, si le decimos explícitamente qué conversión queremos, todo
+funciona bien
+
+.. code:: python
+
+    print (str(1) + '1')
+    print (1 + int('1'))
+    print (1 + float('1.e5'))
+
+
+.. parsed-literal::
+
+    11
+    2
+    100001.0
+
+
+.. code:: python
+
+    # a menos que nosotros **nos equivoquemos explícitamente**
+    print (1 + int('z'))
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    ValueError                                Traceback (most recent call last)
+
+    Cell In[60], line 2
+          1 # a menos que nosotros **nos equivoquemos explícitamente**
+    ----> 2 print (1 + int('z'))
+
+
+    ValueError: invalid literal for int() with base 10: 'z'
+
+
+--------------
+
+Ejercicios 02 (b)
+-----------------
+
+4. **Para Entregar:** Para la cadena de caracteres:
+
+.. code:: python
+
+   s = '''Aquí me pongo a cantar
+   Al compás de la vigüela,
+   Que el hombre que lo desvela
+   Una pena estraordinaria
+   Como la ave solitaria
+   Con el cantar se consuela.'''
+
+-  Forme un nuevo string de 10 caracteres que contenga los 5 primeros y
+   los 5 últimos del string anterior ``s``. Imprima por pantalla el
+   nuevo string.
+
+-  Forme un nuevo string que contenga los 10 caracteres centrales de
+   ``s`` (utilizando un método que pueda aplicarse a otros strings
+   también). Imprima por pantalla el nuevo string.
+
+-  Cuente la cantidad de veces que aparecen los substrings ``es``,
+   ``la``, ``que``, ``co``, en los siguientes dos casos: distinguiendo
+   entre mayúsculas y minúsculas, y no distinguiendo. Imprima el
+   resultado.
+
+-  Cambie todas las letras “m” por “n” y todas las letras “n” por “m” en
+   ``s``. Imprima el resultado por pantalla.
+
+5. Utilizando funciones y métodos de *strings* en la cadena de
+   caracteres:
+
+   .. code:: python
+
+      s1='En un lugar de la Mancha de cuyo nombre no quiero acordarme'
+
+-  Obtenga la cantidad de caracteres.
+-  Imprima la frase anterior pero con cada palabra empezando en
+   mayúsculas.
+-  Cuente cuantas letras ‘a’ tiene la frase, ¿cuántas vocales tiene?
+
+6. Centrado manual de frases
+
+   a. Utilizando la función ``len()`` centre una frase corta en una
+      pantalla de 80 caracteres. Utilice la frase: “Un ejercicio con
+      cadena de caracteres”
+
+   b. Agregue subrayado a la frase anterior
+
+   c. Escriba una función que centre y subraye una frase dada como
+      argumento. Se espera obtener algo así:
+
+      ::
+
+          Un ejercicio con cadena de caracteres
+          -------------------------------------
+
+   d. Repita el punto anterior utilizando métodos de strings
+
+--------------
+
+Tipos contenedores
+------------------
+
+En Python existen tipos compuestos (que pueden contener más de un
+valor). Uno de ellos que ya vimos es el tipo *string* que es una cadena
+de caracteres. Veamos otros:
+
+Listas
+~~~~~~
+
+Las listas son tipos compuestos. Se definen separando los elementos con
+comas, todos encerrados entre corchetes. En general las listas pueden
+contener diferentes tipos, y pueden no ser todos iguales, pero suelen
+utilizarse con ítems del mismo tipo. Algunas características:
+
+-  Los elementos no son necesariamente homogéneos en tipo.
+
+-  Los elementos están ordenados.
+
+-  Se accede mediante un índice.
+
+-  Están definidas operaciones entre Listas, así como algunos métodos
+
+   -  ``x in L`` (¿x es un elemento de L?)
+   -  ``x not in L`` (¿x no es un elemento de L?)
+   -  ``L1 + L2`` (concatenar L1 y L2)
+   -  ``n*L1`` (n veces L1)
+   -  ``L1*n`` (n veces L1)
+   -  ``L[i]`` (Elemento i-ésimo)
+   -  ``L[i:j]`` (Elementos i a j)
+   -  ``L[i:j:k]`` (Elementos i a j, elegidos uno de cada k)
+   -  ``len(L)`` (longitud de L)
+   -  ``min(L)`` (Mínimo de L)
+   -  ``max(L)`` (Máximo de L)
+   -  ``L.index(x, [i])`` (Índice de x, iniciando en i)
+   -  ``L.count(x)`` (Número de veces que aparece x en L)
+   -  ``L.append(x)`` (Agrega el elemento x al final)
+
+Veamos algunos ejemplos:
+
+.. code:: python
+
+    cuadrados = [1, 4, 9, 16, 25]
+
+En esta línea hemos declarado una variable llamada ``cuadrados``, y le
+hemos asignado una lista de cuatro elementos. En algunos aspectos las
+listas son muy similares a los *strings*. Se pueden realizar muchas de
+las mismas operaciones en strings, listas y otros objetos sobre los que
+se pueden iterar (*iterables*).
+
+Las listas pueden accederse por posición y también pueden rebanarse
+(*slicing*)
+
+.. note::  La indexación de iteradores empieza desde cero (como en C)
+  
+  
+
+.. code:: python
+
+    cuadrados[0]
+
+.. code:: python
+
+    cuadrados[3]
+
+.. code:: python
+
+    cuadrados[-1]
+
+.. code:: python
+
+    cuadrados[:3:2]
+
+.. code:: python
+
+    cuadrados[-2:]
+
+Los índices pueden ser positivos (empezando desde cero) o negativos
+empezando desde -1.
+
+================== == == == == ==
+cuadrados:         1  4  9  16 25
+================== == == == == ==
+índices:           0  1  2  3  4
+índices negativos: -5 -4 -3 -2 -1
+================== == == == == ==
+
+.. note::  La asignación entre listas **no copia** todos los datos
+  
+  
+
+.. code:: python
+
+    a = cuadrados
+    a is cuadrados
+
+.. code:: python
+
+    print("Valores originales")
+    print(a)
+    cuadrados[0]= -1
+    print("Valores modificados")
+    print(a)
+    print(cuadrados)
+
+.. code:: python
+
+    a is cuadrados
+
+.. code:: python
+
+    cuadrados[0] = 1
+    b = cuadrados.copy()
+    print("Valores originales")
+    print(b)
+    print(cuadrados)
+    print("Valores modificados")
+    cuadrados[0]=-2
+    print(b)
+    print(cuadrados)
+
+Comprensión de Listas
+^^^^^^^^^^^^^^^^^^^^^
+
+Una manera sencilla de definir una lista es utilizando algo que se llama
+*Comprensión de listas*. Como primer ejemplo veamos una lista de
+*números cuadrados* como la que escribimos anteriormente. En lenguaje
+matemático la defiríamos como
+:math:`S = \{x^{2} : x \in \{0 \dots 9\}\}`. En python es muy parecido.
+
+Podemos crear la lista ``cuadrados`` utilizando compresiones de listas
+
+.. code:: python
+
+    L1 = [1,3,5]
+    L2 = [i**2 for i in L1]
+    L3 = [i+1 for i in L2]
+
+.. code:: python
+
+    print(L2)
+
+.. code:: python
+
+    L3
+
+.. code:: python
+
+    cuadrados = [i**2 for i in range(10)]
+    cuadrados
+
+Una lista con los cuadrados sólo de los números pares también puede
+crearse de esta manera, ya que puede incorporarse una condición:
+
+.. code:: python
+
+    [a**2 for a in range(2,21)]
+
+.. code:: python
+
+    L = [a**2 for a in range(2,21) if a % 2 == 0]
+    L
+
+Tuplas
+~~~~~~
+
+Las tuplas son objetos similares a las listas, sobre las que se puede
+iterar y seleccionar partes según su índice. La principal diferencia es
+que son inmutables mientras que las listas pueden modificarse.
+
+.. code:: python
+
+    L1 = [0,1,2,3,4,5] # Las listas se definen con corchetes
+    T1 = (0,1,2,3,4,5) # Las tuplas se definen con paréntesis
+
+.. code:: python
+
+    L1[0] = -1
+    print(f"L1[0] = {L1[0]}")
+
+.. code:: python
+
+    T1[0] = -1
+    print(f"{T1[0] = }")
+
+.. code:: python
+
+    try:
+        T1[0] = -1
+        print(f"{T1[0] = }")
+    except:
+        print('Tuples son inmutables')
+
+Las tuplas se usan cuando uno quiere crear una “variable” que no va a
+ser modificada. Además códigos similares con tuplas pueden ser un poco
+más rápidos que si usan listas.
+
+Un uso común de las tuplas es el de asignación simultánea a múltiples
+variables:
+
+.. code:: python
+
+    a, b, c = (1, 3, 5)
+
+.. code:: python
+
+    print(b)
+    print(a, b, c)
+
+.. code:: python
+
+    # Los paréntesis son opcionales en este caso
+    a, b, c = 4, 5, 6
+    print(b)
+    print(a,b,c)
+
+Un uso muy común es el de intercambiar el valor de dos variables
+
+.. code:: python
+
+    print(a,b)
+    a, b = b, a                     # swap 
+    print(a,b)
+
+Rangos
+~~~~~~
+
+Los objetos de tipo
+`range <https://docs.python.org/es/3/library/stdtypes.html#ranges>`__
+representan una secuencia inmutable de números y se usan habitualmente
+para ejecutar un bucle
+`for <https://docs.python.org/es/3/reference/compound_stmts.html#for>`__
+un número determinado de veces. El formato es uno de:
+
+::
+
+   range(stop)
+   range(start, stop)
+   range(start, stop, step)
+
+.. code:: python
+
+    range(2)
+
+.. code:: python
+
+    type(range(2))
+
+.. code:: python
+
+    range(2,9)
+
+.. code:: python
+
+    list(range(2,9))
+
+.. code:: python
+
+    list(range(2,9,2))
