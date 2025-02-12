@@ -1783,21 +1783,66 @@ Las listas pueden accederse por posición y también pueden rebanarse
 
     cuadrados[0]
 
+
+
+
+.. parsed-literal::
+
+    1
+
+
+
 .. code:: python
 
     cuadrados[3]
+
+
+
+
+.. parsed-literal::
+
+    16
+
+
 
 .. code:: python
 
     cuadrados[-1]
 
+
+
+
+.. parsed-literal::
+
+    25
+
+
+
 .. code:: python
 
     cuadrados[:3:2]
 
+
+
+
+.. parsed-literal::
+
+    [1, 9]
+
+
+
 .. code:: python
 
     cuadrados[-2:]
+
+
+
+
+.. parsed-literal::
+
+    [16, 25]
+
+
 
 Los índices pueden ser positivos (empezando desde cero) o negativos
 empezando desde -1.
@@ -1818,6 +1863,15 @@ cuadrados:         1  4  9  16 25
     a = cuadrados
     a is cuadrados
 
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
 .. code:: python
 
     print("Valores originales")
@@ -1827,9 +1881,28 @@ cuadrados:         1  4  9  16 25
     print(a)
     print(cuadrados)
 
+
+.. parsed-literal::
+
+    Valores originales
+    [1, 4, 9, 16, 25]
+    Valores modificados
+    [-1, 4, 9, 16, 25]
+    [-1, 4, 9, 16, 25]
+
+
 .. code:: python
 
     a is cuadrados
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
 
 .. code:: python
 
@@ -1842,6 +1915,17 @@ cuadrados:         1  4  9  16 25
     cuadrados[0]=-2
     print(b)
     print(cuadrados)
+
+
+.. parsed-literal::
+
+    Valores originales
+    [1, 4, 9, 16, 25]
+    [1, 4, 9, 16, 25]
+    Valores modificados
+    [1, 4, 9, 16, 25]
+    [-2, 4, 9, 16, 25]
+
 
 Comprensión de Listas
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1864,26 +1948,66 @@ Podemos crear la lista ``cuadrados`` utilizando compresiones de listas
 
     print(L2)
 
+
+.. parsed-literal::
+
+    [1, 9, 25]
+
+
 .. code:: python
 
     L3
+
+
+
+
+.. parsed-literal::
+
+    [2, 10, 26]
+
+
 
 .. code:: python
 
     cuadrados = [i**2 for i in range(10)]
     cuadrados
 
+
+
+
+.. parsed-literal::
+
+    [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+
+
 Una lista con los cuadrados sólo de los números pares también puede
 crearse de esta manera, ya que puede incorporarse una condición:
 
 .. code:: python
 
-    [a**2 for a in range(2,21)]
+    L0 = [a**2 for a in range(2,21)]
+    print(L0)
+
+
+.. parsed-literal::
+
+    [4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, 225, 256, 289, 324, 361, 400]
+
 
 .. code:: python
 
     L = [a**2 for a in range(2,21) if a % 2 == 0]
     L
+
+
+
+
+.. parsed-literal::
+
+    [4, 16, 36, 64, 100, 144, 196, 256, 324, 400]
+
+
 
 Tuplas
 ~~~~~~
@@ -1902,10 +2026,32 @@ que son inmutables mientras que las listas pueden modificarse.
     L1[0] = -1
     print(f"L1[0] = {L1[0]}")
 
+
+.. parsed-literal::
+
+    L1[0] = -1
+
+
 .. code:: python
 
     T1[0] = -1
     print(f"{T1[0] = }")
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[24], line 1
+    ----> 1 T1[0] = -1
+          2 print(f"{T1[0] = }")
+
+
+    TypeError: 'tuple' object does not support item assignment
+
 
 .. code:: python
 
@@ -1914,6 +2060,12 @@ que son inmutables mientras que las listas pueden modificarse.
         print(f"{T1[0] = }")
     except:
         print('Tuples son inmutables')
+
+
+.. parsed-literal::
+
+    Tuples son inmutables
+
 
 Las tuplas se usan cuando uno quiere crear una “variable” que no va a
 ser modificada. Además códigos similares con tuplas pueden ser un poco
@@ -1931,12 +2083,26 @@ variables:
     print(b)
     print(a, b, c)
 
+
+.. parsed-literal::
+
+    3
+    1 3 5
+
+
 .. code:: python
 
     # Los paréntesis son opcionales en este caso
     a, b, c = 4, 5, 6
     print(b)
     print(a,b,c)
+
+
+.. parsed-literal::
+
+    5
+    4 5 6
+
 
 Un uso muy común es el de intercambiar el valor de dos variables
 
@@ -1945,6 +2111,39 @@ Un uso muy común es el de intercambiar el valor de dos variables
     print(a,b)
     a, b = b, a                     # swap 
     print(a,b)
+
+
+.. parsed-literal::
+
+    4 5
+    5 4
+
+
+.. code:: python
+
+    a=3
+    t = (a,5)
+    t[0]
+
+
+
+
+.. parsed-literal::
+
+    3
+
+
+
+.. code:: python
+
+    a=5
+    print(t)
+
+
+.. parsed-literal::
+
+    (3, 5)
+
 
 Rangos
 ~~~~~~
@@ -1966,18 +2165,89 @@ un número determinado de veces. El formato es uno de:
 
     range(2)
 
+
+
+
+.. parsed-literal::
+
+    range(0, 2)
+
+
+
 .. code:: python
 
     type(range(2))
+
+
+
+
+.. parsed-literal::
+
+    range
+
+
 
 .. code:: python
 
     range(2,9)
 
+
+
+
+.. parsed-literal::
+
+    range(2, 9)
+
+
+
 .. code:: python
 
     list(range(2,9))
 
+
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 5, 6, 7, 8]
+
+
+
 .. code:: python
 
     list(range(2,9,2))
+
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6, 8]
+
+
+
+.. code:: python
+
+    list("hola")
+
+
+
+
+.. parsed-literal::
+
+    ['h', 'o', 'l', 'a']
+
+
+
+.. code:: python
+
+    tuple("hola")
+
+
+
+
+.. parsed-literal::
+
+    ('h', 'o', 'l', 'a')
+
+
