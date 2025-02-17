@@ -1,0 +1,249 @@
+.. _clase_03:
+
+Clase 3: Tipos complejos y control de flujo
+============================================
+
+
+Listas
+------
+
+Vimos en la clase anterior el tipo “Lista”, que es un objeto que puede
+contener muchos valores, de igual o distinto tipo. Veamos algunas
+características
+
+Operaciones sobre listas
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Están definidas algunas operaciones entre listas y sobre ellas. Por
+ejemplo, se puede fácilmente:
+
+-  concatenar dos listas,
+-  buscar un valor dado,
+-  agregar elementos,
+-  borrar elementos,
+-  calcular su longitud,
+-  invertirla
+
+Empecemos concatenando dos listas, usando el operador “suma”
+
+.. code:: python
+
+    L1 = [0,1,2,3,4,5]
+
+.. code:: python
+
+    L1 + L1
+
+.. code:: python
+
+    2*L1 == L1 + L1
+
+.. code:: python
+
+    L = 3*L1
+
+Las listas tienen definidos métodos, que podemos ver con la ayuda
+incluida, por ejemplo haciendo ``help(list)``
+
+.. code:: python
+
+    print(L)
+
+.. code:: python
+
+    L.index(3)                      # Índice del elemento de valor 3
+
+.. code:: python
+
+    L.index(3,4)                    # Índice del valor 3, empezando del cuarto
+
+.. code:: python
+
+    L.count(3)                      # Cuenta las veces que aparece el valor "3"
+
+Si queremos agregar un elemento al final utilizamos el método
+``append``:
+
+.. code:: python
+
+    L.append(8)
+
+.. code:: python
+
+    print(L)
+
+.. code:: python
+
+    L.append([9, 8, 7])
+    print(L)
+
+Si queremos insertar un elemento en una posición que no es el final de
+la lista, usamos el método ``insert()``. Por ejemplo para insertar el
+valor 6 en la primera posición:
+
+.. code:: python
+
+    L.insert(0,6)
+    print(L)
+
+.. code:: python
+
+    L.insert(-2,6)
+    print(L)
+
+En las listas podemos sobreescribir uno o más elementos
+
+.. code:: python
+
+    L[0:3] = [2,3,4]
+    L[4]=-4
+    print(L)
+
+.. code:: python
+
+    L[-2:]=[0,1]
+    print(L)
+
+.. code:: python
+
+    L[-2:] = [7,"fin2"]
+
+.. code:: python
+
+    print(L)
+
+.. code:: python
+
+    L.extend([0,1])                 # Extendemos con varios elementos
+
+.. code:: python
+
+    print(L)
+
+.. code:: python
+
+    print(L)
+    L.remove('fin2')                # Elimina la primera aparición del valor 'fin2'
+    print(L)
+
+.. code:: python
+
+    print(L1)
+    L1.reverse()
+    print(L1)
+
+Función de Python que invierte un objeto iterable (como una lista)
+
+.. code:: python
+
+    print(list(reversed(L1)))
+
+El método ``sort()`` de las listas ordena sus elementos (si pueden
+compararse), y acepta dos argumentos opcionales: ``key`` y ``reverse``
+
+.. code:: python
+
+    L.sort()          # Ordena la lista (si los elementos son comparables)
+    print(L)
+
+.. code:: python
+
+    Ls = ['a','vaca','bote','chancho']
+    Ls.sort()
+    print(Ls)
+
+.. code:: python
+
+    L.sort(reverse=True)            
+    print(L)
+
+Este método toma además un argumento opcional ``key``, que es una
+función que se aplica a cada elemento antes de compararlos
+
+Funciones que aplican sobre listas
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Hay algunas funciones de Python que se aplican sobre listas (o sobre
+iterables en general). Algunas de ellas son la suma ``sum()`` e
+inversión ``reversed()``
+
+.. code:: python
+
+    L
+
+.. code:: python
+
+    sum(L)
+
+Las funciones mínimo ``min()``, máximo ``max()`` y ordenar ``sorted()``
+toman como argumento una lista (u otro iterable) de elementos que pueden
+compararse entre sí
+
+.. code:: python
+
+    print(min(L), max(L))
+
+.. code:: python
+
+    print(sorted(L))
+
+Puede encontrarse más información en `la Biblioteca de
+Python <https://docs.python.org/3/library/stdtypes.html#sequence-types-list-tuple-range>`__.
+
+.. code:: python
+
+    s = "abcde"
+    L3 = ['hola','que','tal']
+    s.join(L3)
+
+.. code:: python
+
+    " ".join(L3)
+
+.. code:: python
+
+    print("\n".join(L3))
+
+--------------
+
+Ejercicios 03 (a)
+-----------------
+
+1. Manejos de listas:
+
+   -  Cree la lista **N** de longitud 50, donde cada elemento es un
+      número entero de 1 a 50 inclusive (Ayuda: vea la expresión
+      ``range``).
+   -  Invierta la lista.
+   -  Extraiga de **N** una lista **N1** que contenga sólo aquellos
+      elementos que sean el cuadrado de algún número entero.
+   -  Extraiga de **N** una lista **N2** que contenga sólo aquellos
+      elementos que sean iguales al :math:`n^2-n` para algún número
+      entero :math:`n`.
+
+   *Ayuda:* Puede resultar útil recordar el uso de comprensión de
+   listas.
+
+2. Cree una lista de la forma ``L = [1,3,5,...,17,19,19,17,...,3,1]``
+   (*Ayuda:* vea la expresión ``range``).
+
+3. Escriba una función que tome un número entero de tres cifras, y
+   devuelva el mayor entero que se puede formar con esas cifras
+   (*Ayuda:* considere convertir el número entero a otros tipos).
+
+4. Construya una lista ``L2`` con 2000 elementos, todos iguales a
+   ``0.0005``. Imprima su suma utilizando la función ``sum`` y comparar
+   con el resultado que arroja la función que existe en el módulo
+   ``math`` para realizar suma de números de punto flotante.
+
+5. Operación “rara” sobre una lista:
+
+   -  Defina la lista ``L = [0,1]``
+   -  Realice la operación ``L.append(L)``
+   -  Ahora imprima L, e imprima el último elemento de ``L``.
+   -  Haga que una nueva lista ``L1`` tenga el valor del último elemento
+      de ``L`` y repita el inciso anterior.
+
+--------------
+
+
