@@ -59,6 +59,18 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-03-a">Ejercicios 03 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#control-de-flujo">Control de flujo</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#if-elif-else">if/elif/else</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#iteraciones">Iteraciones</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sentencia-for">Sentencia for</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loops-enumerate-continue-break-else">Loops: <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, <code class="docutils literal notranslate"><span class="pre">continue</span></code>, <code class="docutils literal notranslate"><span class="pre">break</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#while">While</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#multiples-condiciones">Múltiples condiciones</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-03-b">Ejercicios 03 (b)</a></li>
 </ul>
 </li>
 </ul>
@@ -427,7 +439,357 @@ de <code class="docutils literal notranslate"><span class="pre">L</span></code> 
 </ul>
 </li>
 </ol>
+</section>
 <hr class="docutils" />
+<section id="control-de-flujo">
+<h2>Control de flujo<a class="headerlink" href="#control-de-flujo" title="Link to this heading"></a></h2>
+<section id="if-elif-else">
+<h3>if/elif/else<a class="headerlink" href="#if-elif-else" title="Link to this heading"></a></h3>
+<p>En todo lenguaje necesitamos controlar el flujo de una ejecución segun
+una condición Verdadero/Falso (booleana). <em>Si (condicion) es verdadero
+hacé (bloque A); Sino hacé (Bloque B)</em>. En pseudo código:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Si</span> <span class="n">condición</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">bloque</span> <span class="n">A</span>
+<span class="n">sino</span> <span class="n">y</span> <span class="n">condición</span> <span class="mi">2</span><span class="p">:</span>
+    <span class="n">bloque</span> <span class="n">B</span>
+<span class="n">sino</span><span class="p">:</span>
+    <span class="n">bloque</span> <span class="n">C</span>
+</pre></div>
+</div>
+<p>y en Python es muy parecido!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">condición_1</span><span class="p">:</span>
+  <span class="n">bloque</span> <span class="n">A</span>
+<span class="k">elif</span> <span class="n">condicion_2</span><span class="p">:</span>
+  <span class="n">bloque</span> <span class="n">B</span>
+<span class="k">elif</span> <span class="n">condicion_3</span><span class="p">:</span>
+  <span class="n">bloque</span> <span class="n">C</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">Bloque</span> <span class="n">final</span>
+</pre></div>
+</div>
+<p>En un <code class="docutils literal notranslate"><span class="pre">if</span></code>, la conversión a tipo <em>boolean</em> es implícita. El tipo
+<code class="docutils literal notranslate"><span class="pre">None</span></code> (nulo), el número <code class="docutils literal notranslate"><span class="pre">0</span></code> (entero, real o complejo), cualquier
+secuencia (lista, tupla, string, conjunto o diccionario) vacía siempre
+evalua a <code class="docutils literal notranslate"><span class="pre">False</span></code>. Cualquier otro objeto evalua a <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<p>Podemos tener multiples condiciones. Se ejecutará el primer bloque cuya
+condición sea verdadera, o en su defecto el bloque <code class="docutils literal notranslate"><span class="pre">else</span></code>. Esto es
+equivalente a la sentencia <code class="docutils literal notranslate"><span class="pre">switch</span></code> de otros lenguajes.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">mensaje</span><span class="p">(</span><span class="n">Nota</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">Nota</span> <span class="o">&gt;=</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Aprobó cómodo, felicitaciones!&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="mi">6</span> <span class="o">&lt;=</span> <span class="n">Nota</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Bueno, al menos aprobó!&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="mi">4</span> <span class="o">&lt;=</span> <span class="n">Nota</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Bastante bien, pero no le alcanzó&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Siga participando!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mensaje</span><span class="p">(</span><span class="mf">7.3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mensaje</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="iteraciones">
+<h3>Iteraciones<a class="headerlink" href="#iteraciones" title="Link to this heading"></a></h3>
+<section id="sentencia-for">
+<h4>Sentencia for<a class="headerlink" href="#sentencia-for" title="Link to this heading"></a></h4>
+<p>Otro elemento de control es el que permite <em>iterar</em> sobre una secuencia
+(o <em>“iterador”</em>). Obtener cada elemento para hacer algo. En Python se
+logra con la sentencia <code class="docutils literal notranslate"><span class="pre">for</span></code>. En lugar de iterar sobre una condición
+aritmética hasta que se cumpla una condición (como en C o en Fortran) en
+Python la sentencia <code class="docutils literal notranslate"><span class="pre">for</span></code> itera sobre los ítems de una secuencia en
+forma ordenada</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">elemento</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">elemento</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Veamos otro ejemplo, iterando sobre una lista:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Lista</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;casa&#39;</span><span class="p">,</span> <span class="s2">&quot;perro&quot;</span><span class="p">,</span> <span class="s2">&quot;gato&quot;</span><span class="p">,</span> <span class="s2">&quot;árbol&quot;</span><span class="p">,</span> <span class="s2">&quot;lechuza&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="n">Lista</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La misma sintaxis se utiliza con otros tipos que se pueden iterar
+(<em>strings</em>, tuplas, conjuntos):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conj</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">Lista</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">conj</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">conj</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En estos ejemplos, en cada iteración <code class="docutils literal notranslate"><span class="pre">L</span></code> toma sucesivamente los
+valores de <code class="docutils literal notranslate"><span class="pre">Lista</span></code>. La primera vez es <code class="docutils literal notranslate"><span class="pre">L='auto'</span></code>, la segunda
+<code class="docutils literal notranslate"><span class="pre">L='casa'</span></code>, … El cuerpo del <em>loop</em> <code class="docutils literal notranslate"><span class="pre">for</span></code>, como todos los bloques en
+<strong>Python</strong> está definido por la <strong>indentación</strong>. La última línea está
+fuera del loop y se ejecuta al terminar todas las iteraciones del
+<code class="docutils literal notranslate"><span class="pre">for</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">L</span> <span class="ow">in</span> <span class="n">Lista</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;En la palabra </span><span class="si">{</span><span class="n">L</span><span class="si">}</span><span class="s1"> hay </span><span class="si">{</span><span class="n">L</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1"> letras &quot;a&quot;&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">La palabra más larga es </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">Lista</span><span class="p">,</span><span class="w"> </span><span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">La última palabra es </span><span class="si">{</span><span class="nb">max</span><span class="p">(</span><span class="n">Lista</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Acá utilizamos la función <code class="docutils literal notranslate"><span class="pre">max()</span></code> con un argumento requerido
+(<code class="docutils literal notranslate"><span class="pre">Lista</span></code>) que es la entidad sobre la que se va a encontrar el mayor
+valor. Notar que el mayor valor depende de como se defina la comparación
+entre dos elementos. La función <code class="docutils literal notranslate"><span class="pre">max()</span></code> permite un argumento opcional
+(<code class="docutils literal notranslate"><span class="pre">key</span></code>) que debe ser una “función” que se aplicará a cada elemento y
+luego se compararán los resultados de la aplicación de la función a los
+elementos. En este caso, a cada palabra se le calcula la longitud y esto
+es lo que se compara.</p>
+</div>
+<p>Otro ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">suma</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">elemento</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">):</span>
+  <span class="n">suma</span> <span class="o">+=</span> <span class="n">elemento</span>     <span class="c1"># suma = suma + elemento</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;x=</span><span class="si">{}</span><span class="s2">,  suma parcial=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elemento</span><span class="p">,</span> <span class="n">suma</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Suma total =&#39;</span><span class="p">,</span> <span class="n">suma</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notar que utilizamos el operador asignación de suma: <code class="docutils literal notranslate"><span class="pre">+=</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">suma</span> <span class="o">+=</span> <span class="n">elemento</span>
+</pre></div>
+</div>
+<p>es equivalente a:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">suma</span> <span class="o">=</span> <span class="n">suma</span> <span class="o">+</span> <span class="n">elemento</span>
+</pre></div>
+</div>
+<p>que corresponde a realizar la suma de la derecha, y el resultado
+asignarlo a la variable de la izquierda.</p>
+<p>Por supuesto, para obtener la suma anterior podemos simplemente usar las
+funciones de python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">11</span><span class="p">)))</span> <span class="c1"># El ejemplo anterior puede escribirse usando sum y range</span>
+</pre></div>
+</div>
+</section>
+<section id="loops-enumerate-continue-break-else">
+<h4>Loops: <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>, <code class="docutils literal notranslate"><span class="pre">continue</span></code>, <code class="docutils literal notranslate"><span class="pre">break</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code><a class="headerlink" href="#loops-enumerate-continue-break-else" title="Link to this heading"></a></h4>
+<p>Veamos otras características del bloque <code class="docutils literal notranslate"><span class="pre">for</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">suma</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">cuadrados</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">30</span><span class="p">)):</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">elem</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>       <span class="c1"># Si resto (%) es diferente de cero -&gt; Impares</span>
+    <span class="k">continue</span>
+  <span class="n">suma</span> <span class="o">+=</span> <span class="n">elem</span><span class="o">**</span><span class="mi">2</span>
+  <span class="n">cuadrados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">elem</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+  <span class="nb">print</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">elem</span><span class="p">,</span> <span class="n">elem</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">suma</span><span class="p">)</span>   <span class="c1"># Imprimimos el índice y el elem al cuadrado</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;sumatoria de números pares al cuadrado entre 3 y 29:&quot;</span><span class="p">,</span> <span class="n">suma</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;cuadrados= &#39;</span><span class="p">,</span> <span class="n">cuadrados</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Puntos a notar:</strong></p>
+<ul class="simple">
+<li><p>Inicializamos una variable entera en cero y una lista vacía</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">range(3,30)</span></code> nos da consecutivamente los números entre 3 y 29 en
+cada iteración.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">enumerate</span></code> nos permite iterar sobre algo, agregando un contador
+automático.</p></li>
+<li><p>La línea condicional <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">elem</span> <span class="pre">%</span> <span class="pre">2:</span></code> es equivalente a
+<code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">(elem</span> <span class="pre">%</span> <span class="pre">2)</span> <span class="pre">!=</span> <span class="pre">0:</span></code> y es verdadero si <code class="docutils literal notranslate"><span class="pre">elem</span></code> no es divisible
+por 2 (número impar)</p></li>
+<li><p>La sentencia <code class="docutils literal notranslate"><span class="pre">continue</span></code> hace que se omita la ejecución del resto
+del bloque por esta iteración</p></li>
+<li><p>El método <code class="docutils literal notranslate"><span class="pre">append</span></code> agrega el elemento a la lista</p></li>
+</ul>
+<p>Antes de seguir veamos otro ejemplo de uso de <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>.
+Consideremos una iteración sobre una lista como haríamos normalmente en
+otros lenguajes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="s2">&quot;I&#39;ve had a perfectly wonderful evening.  But this wasn&#39;t it.&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># En otros lenguajes...</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">)):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Índice: </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> -&gt; </span><span class="si">{</span><span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="si">}</span><span class="s1"> caracteres)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># En otros lenguajes...</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">)):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;La palabra &quot;</span><span class="si">{</span><span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot; tiene </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">j</span><span class="p">])</span><span class="si">}</span><span class="s1"> caracteres&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">pal</span> <span class="ow">in</span> <span class="n">L</span><span class="p">:</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;La palabra &quot;</span><span class="si">{</span><span class="n">pal</span><span class="si">}</span><span class="s1">&quot; tiene </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pal</span><span class="p">)</span><span class="si">}</span><span class="s1"> caracteres&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hay ocasiones en que necesitamos conocer el índice. La solución de otros
+lenguajes nos lo provee (nos obliga a proveerlo). Python ofrece la
+función <code class="docutils literal notranslate"><span class="pre">enumerate()</span></code> que agrega un contador automático</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Índice: </span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s1"> -&gt; </span><span class="si">{</span><span class="n">elem</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span><span class="si">}</span><span class="s1"> caracteres)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Veamos otro ejemplo, que puede encontrarse en la <a class="reference external" href="https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops">documentación
+oficial</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+  <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="nb">print</span><span class="p">(</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s1">2d</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1"> x </span><span class="si">{</span><span class="n">n</span><span class="o">//</span><span class="n">x</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+      <span class="k">break</span>
+  <span class="k">else</span><span class="p">:</span>
+     <span class="c1"># Salió sin encontrar un factor, entonces ...</span>
+     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{:2d}</span><span class="s1"> es un número primo&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+</pre></div>
+</div>
+<p><strong>Puntos a notar:</strong></p>
+<ul class="simple">
+<li><p>Acá estamos usando dos <em>loops</em> anidados. Uno recorre <code class="docutils literal notranslate"><span class="pre">n</span></code> entre 2 y
+9, y el otro <code class="docutils literal notranslate"><span class="pre">x</span></code> entre 2 y <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p></li>
+<li><p>La comparación <code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">n</span> <span class="pre">%</span> <span class="pre">x</span> <span class="pre">==</span> <span class="pre">0:</span></code> chequea si <code class="docutils literal notranslate"><span class="pre">x</span></code> es un divisor de
+<code class="docutils literal notranslate"><span class="pre">n</span></code></p></li>
+<li><p>La sentencia <code class="docutils literal notranslate"><span class="pre">break</span></code> interrumpe el <em>loop</em> interior (sobre <code class="docutils literal notranslate"><span class="pre">x</span></code>)</p></li>
+<li><p>Notar la alineación de la sentencia <code class="docutils literal notranslate"><span class="pre">else</span></code>. No está referida a
+<code class="docutils literal notranslate"><span class="pre">if</span></code> sino a <code class="docutils literal notranslate"><span class="pre">for</span></code>. Es opcional y se ejecuta cuando el loop se
+termina normalmente (sin <code class="docutils literal notranslate"><span class="pre">break</span></code>)</p></li>
+</ul>
+</section>
+<section id="while">
+<h4>While<a class="headerlink" href="#while" title="Link to this heading"></a></h4>
+<p>Otra sentencia de control es <em>while</em>: que permite iterar mientras se
+cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
+(en la cuál cada término es la suma de los dos anteriores)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">5000</span><span class="p">:</span>
+  <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+  <span class="nb">print</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">5000</span><span class="p">:</span>
+  <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+  <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+    <span class="k">continue</span>
+  <span class="nb">print</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="multiples-condiciones">
+<h3>Múltiples condiciones<a class="headerlink" href="#multiples-condiciones" title="Link to this heading"></a></h3>
+<p>Se pueden combinar condiciones, y utilizar en los elementos de control
+mediante el uso de las palabras <code class="docutils literal notranslate"><span class="pre">and</span></code> y <code class="docutils literal notranslate"><span class="pre">or</span></code>. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="ow">and</span> <span class="n">a</span> <span class="o">&gt;</span> <span class="mi">4</span>  <span class="c1"># Los paréntesis son opcionales</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">)</span>  <span class="c1"># Los paréntesis son opcionales</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">((</span><span class="n">a</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">))</span> <span class="ow">or</span> <span class="p">(</span><span class="n">a</span> <span class="o">%</span><span class="mi">2</span> <span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-03-b">
+<h2>Ejercicios 03 (b)<a class="headerlink" href="#ejercicios-03-b" title="Link to this heading"></a></h2>
+<ol class="arabic" start="7">
+<li><p>De los primeros 100 números naturales imprimir aquellos que no son
+divisibles por ninguno de: 2, 3, 5 o 7.</p></li>
+<li><p>Usando estructuras de control, calcule el valor de la suma:</p>
+<div class="math notranslate nohighlight">
+\[s_{1} = \frac{1}{2} \left(\sum_{k=1}^{100}k^{-1} \right)\]</div>
+<p>para los casos:</p>
+<ol class="arabic simple">
+<li><p>Incluyendo todos los valores de <code class="docutils literal notranslate"><span class="pre">k</span></code></p></li>
+<li><p>Incluyendo únicamente los valores pares de <code class="docutils literal notranslate"><span class="pre">k</span></code>.</p></li>
+</ol>
+</li>
+<li><p>Escriba una función que estime la suma</p>
+<div class="math notranslate nohighlight">
+\[s_{2} = \sum_{k=1}^{\infty} \frac{(-1)^{k} (k+1)}{2 k^{3} + k^{2}}\]</div>
+<p>La función toma como argumentos un error relativo <span class="math notranslate nohighlight">\(\epsilon\)</span>
+deseado y devuelve el valor de la suma y el error relativo estimado.
+Pruebe su función para un valor <span class="math notranslate nohighlight">\(\epsilon=10^{-5}\)</span></p>
+</li>
+<li><p>Escriba una función que tome como argumento un párrafo de texto y
+devuelva un string con el párrafo en un “cartel” de un cierto ancho:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cartelizar</span><span class="p">(</span><span class="n">parrafo</span><span class="p">,</span> <span class="n">ancho</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Por ejemplo, para el texto:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="s2">&quot;Ullam vel totam cum neque exercitationem ut. Quae omnis rerum sit reprehenderit accusamus. Molestiae molestiae sit totam sint. Neque pariatur temporibus ut minima accusantium. Ad perferendis natus nisi dolor. Et sint maiores exercitationem reiciendis ut ab et.&quot;</span>
+
+<span class="n">sout</span> <span class="o">=</span> <span class="n">cartelizar</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>debe devolver el <em>string</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sout</span> <span class="o">=</span> <span class="s1">&#39;* ******************************************************** *</span><span class="se">\n</span><span class="s1">* Ullam vel totam cum neque exercitationem ut. Quae omnis  *</span><span class="se">\n</span><span class="s1">*  rerum sit reprehenderit accusamus. Molestiae molestiae  *</span><span class="se">\n</span><span class="s1">*   sit totam sint. Neque pariatur temporibus ut minima    *</span><span class="se">\n</span><span class="s1">*  accusantium. Ad perferendis natus nisi dolor. Et sint   *</span><span class="se">\n</span><span class="s1">* ******************************************************** *&#39;</span>
+</pre></div>
+</div>
+<p>que al imprimirlo se verá:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sout</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="o">********************************************************</span> <span class="o">*</span>
+<span class="o">*</span> <span class="n">Ullam</span> <span class="n">vel</span> <span class="n">totam</span> <span class="n">cum</span> <span class="n">neque</span> <span class="n">exercitationem</span> <span class="n">ut</span><span class="o">.</span> <span class="n">Quae</span> <span class="n">omnis</span>  <span class="o">*</span>
+<span class="o">*</span>  <span class="n">rerum</span> <span class="n">sit</span> <span class="n">reprehenderit</span> <span class="n">accusamus</span><span class="o">.</span> <span class="n">Molestiae</span> <span class="n">molestiae</span>  <span class="o">*</span>
+<span class="o">*</span>   <span class="n">sit</span> <span class="n">totam</span> <span class="n">sint</span><span class="o">.</span> <span class="n">Neque</span> <span class="n">pariatur</span> <span class="n">temporibus</span> <span class="n">ut</span> <span class="n">minima</span>    <span class="o">*</span>
+<span class="o">*</span>  <span class="n">accusantium</span><span class="o">.</span> <span class="n">Ad</span> <span class="n">perferendis</span> <span class="n">natus</span> <span class="n">nisi</span> <span class="n">dolor</span><span class="o">.</span> <span class="n">Et</span> <span class="n">sint</span>   <span class="o">*</span>
+<span class="o">*</span> <span class="o">********************************************************</span> <span class="o">*</span>
+</pre></div>
+</div>
+</li>
+<li><p>En 1949, D. R. Kaprekar, un matemático de la India especializado en
+matemática recreacional, describió un algoritmo que consiste en:</p>
+<ol class="arabic simple">
+<li><p>Tomar un número de cuatro cifras</p></li>
+<li><p>Reacomodar las cifras para obtener el mayor número posible</p></li>
+<li><p>Obtener reacomodando las cifras también el menor posible</p></li>
+<li><p>Restarlos</p></li>
+<li><p>GOTO 1</p></li>
+</ol>
+<p>Este algoritmo tiene un “punto fijo” igual a <strong>6174</strong> y es al que el
+algoritmo llega si se inicia con un número que no tiene las cifras
+repetidas. Si alguna cifra es repetida el punto fijo puede ser el
+trivial, igual a cero. Escribir una función
+<code class="docutils literal notranslate"><span class="pre">rutina_kaprekar(numero)</span></code> que tome un número de cuatro cifras y
+devuelva el punto fijo y el número de números necesarios hasta
+alcanzarlo.</p>
+<p>Por ejemplo: Para el número 1392, la secuencia es:</p>
+<p>1392 -&gt; 8082 -&gt; 8532 -&gt; 6174 -&gt; 6174 -&gt; …</p>
+<p>por lo que tendremos al aplicar la función:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rutina_kaprekar</span><span class="p">(</span><span class="mi">1392</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">6174</span><span class="p">,</span> <span class="mi">4</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition hint">
+<p class="admonition-title">Consejo</p>
+<p>Tenga en cuenta que si un número tiene menos de cuatro
+cifras debe agregarle ceros. Por ejemplo el número <code class="docutils literal notranslate"><span class="pre">978</span></code> debe
+entenderse como <code class="docutils literal notranslate"><span class="pre">0978</span></code> por lo que el mayor número que puede
+escribirse con estas cifras es <code class="docutils literal notranslate"><span class="pre">9870</span></code>.</p>
+</div>
+<hr class="docutils" />
+<p>.</p>
 </section>
 </section>
 
