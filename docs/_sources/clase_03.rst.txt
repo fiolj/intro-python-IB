@@ -568,6 +568,7 @@ equivalente a la sentencia ``switch`` de otros lenguajes.
 .. code:: python
 
     def mensaje(Nota):
+        
         if Nota >= 8:
             print ("Aprobó cómodo, felicitaciones!")
         elif 6 <= Nota < 8:
@@ -576,14 +577,28 @@ equivalente a la sentencia ``switch`` de otros lenguajes.
             print ("Bastante bien, pero no le alcanzó")
         else:
             print("Siga participando!")
+            
+        return None
 
 .. code:: python
 
     mensaje(7.3)
 
+
+.. parsed-literal::
+
+    Bueno, al menos aprobó!
+
+
 .. code:: python
 
     mensaje(3)
+
+
+.. parsed-literal::
+
+    Siga participando!
+
 
 Iteraciones
 ~~~~~~~~~~~
@@ -603,6 +618,31 @@ forma ordenada
     for elemento in range(10):
         print(elemento, end=', ')
 
+
+.. parsed-literal::
+
+    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+
+.. code:: python
+
+    for elemento in range(10):
+        print(elemento)
+
+
+.. parsed-literal::
+
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+
+
 Veamos otro ejemplo, iterando sobre una lista:
 
 .. code:: python
@@ -611,21 +651,17 @@ Veamos otro ejemplo, iterando sobre una lista:
     for L in Lista:
       print(L)
 
-La misma sintaxis se utiliza con otros tipos que se pueden iterar
-(*strings*, tuplas, conjuntos):
 
-.. code:: python
+.. parsed-literal::
 
-    conj = set(Lista)
+    auto
+    casa
+    perro
+    gato
+    árbol
+    lechuza
+    banana
 
-.. code:: python
-
-    conj
-
-.. code:: python
-
-    for c in conj:
-      print(c)
 
 En estos ejemplos, en cada iteración ``L`` toma sucesivamente los
 valores de ``Lista``. La primera vez es ``L='auto'``, la segunda
@@ -641,6 +677,22 @@ fuera del loop y se ejecuta al terminar todas las iteraciones del
     
     print(f'\nLa palabra más larga es {max(Lista, key=len)}')
     print(f'\nLa última palabra es {max(Lista)}')
+
+
+.. parsed-literal::
+
+    En la palabra auto hay 1 letras "a"
+    En la palabra casa hay 2 letras "a"
+    En la palabra perro hay 0 letras "a"
+    En la palabra gato hay 1 letras "a"
+    En la palabra árbol hay 0 letras "a"
+    En la palabra lechuza hay 1 letras "a"
+    En la palabra banana hay 3 letras "a"
+    
+    La palabra más larga es lechuza
+    
+    La última palabra es árbol
+
 
 .. note::  Acá utilizamos la función ``max()`` con un argumento requerido
   (``Lista``) que es la entidad sobre la que se va a encontrar el mayor
@@ -662,6 +714,23 @@ Otro ejemplo:
       suma += elemento     # suma = suma + elemento
       print("x={},  suma parcial={}".format(elemento, suma))
     print ('Suma total =', suma)
+
+
+.. parsed-literal::
+
+    x=0,  suma parcial=0
+    x=1,  suma parcial=1
+    x=2,  suma parcial=3
+    x=3,  suma parcial=6
+    x=4,  suma parcial=10
+    x=5,  suma parcial=15
+    x=6,  suma parcial=21
+    x=7,  suma parcial=28
+    x=8,  suma parcial=36
+    x=9,  suma parcial=45
+    x=10,  suma parcial=55
+    Suma total = 55
+
 
 Notar que utilizamos el operador asignación de suma: ``+=``.
 
@@ -685,6 +754,12 @@ funciones de python:
 
     print (sum(range(11))) # El ejemplo anterior puede escribirse usando sum y range
 
+
+.. parsed-literal::
+
+    55
+
+
 Loops: ``enumerate``, ``continue``, ``break``, ``else``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -702,6 +777,26 @@ Veamos otras características del bloque ``for``.
       print (i, elem, elem**2, suma)   # Imprimimos el índice y el elem al cuadrado
     print ("sumatoria de números pares al cuadrado entre 3 y 29:", suma)
     print ('cuadrados= ', cuadrados)
+
+
+.. parsed-literal::
+
+    1 4 16 16
+    3 6 36 52
+    5 8 64 116
+    7 10 100 216
+    9 12 144 360
+    11 14 196 556
+    13 16 256 812
+    15 18 324 1136
+    17 20 400 1536
+    19 22 484 2020
+    21 24 576 2596
+    23 26 676 3272
+    25 28 784 4056
+    sumatoria de números pares al cuadrado entre 3 y 29: 4056
+    cuadrados=  [16, 36, 64, 100, 144, 196, 256, 324, 400, 484, 576, 676, 784]
+
 
 **Puntos a notar:**
 
@@ -729,17 +824,44 @@ otros lenguajes:
 
     L
 
-.. code:: python
 
-    # En otros lenguajes...
-    for j in range(len(L)):
-      print(f'Índice: {j} -> {L[j]} ({len(L[j])} caracteres)')
+
+
+.. parsed-literal::
+
+    ["I've",
+     'had',
+     'a',
+     'perfectly',
+     'wonderful',
+     'evening.',
+     'But',
+     'this',
+     "wasn't",
+     'it.']
+
+
 
 .. code:: python
 
     # En otros lenguajes...
     for j in range(len(L)):
       print(f'La palabra "{L[j]}" tiene {len(L[j])} caracteres')
+
+
+
+.. parsed-literal::
+
+    La palabra "I've" tiene 4 caracteres
+    La palabra "had" tiene 3 caracteres
+    La palabra "a" tiene 1 caracteres
+    La palabra "perfectly" tiene 9 caracteres
+    La palabra "wonderful" tiene 9 caracteres
+    La palabra "evening." tiene 8 caracteres
+    La palabra "But" tiene 3 caracteres
+    La palabra "this" tiene 4 caracteres
+    La palabra "wasn't" tiene 6 caracteres
+    La palabra "it." tiene 3 caracteres
 
 
 En python:
@@ -750,14 +872,65 @@ En python:
       print(f'La palabra "{pal}" tiene {len(pal)} caracteres')
 
 
+
+.. parsed-literal::
+
+    La palabra "I've" tiene 4 caracteres
+    La palabra "had" tiene 3 caracteres
+    La palabra "a" tiene 1 caracteres
+    La palabra "perfectly" tiene 9 caracteres
+    La palabra "wonderful" tiene 9 caracteres
+    La palabra "evening." tiene 8 caracteres
+    La palabra "But" tiene 3 caracteres
+    La palabra "this" tiene 4 caracteres
+    La palabra "wasn't" tiene 6 caracteres
+    La palabra "it." tiene 3 caracteres
+
+
 Hay ocasiones en que necesitamos conocer el índice. La solución de otros
 lenguajes nos lo provee (nos obliga a proveerlo). Python ofrece la
 función ``enumerate()`` que agrega un contador automático
 
 .. code:: python
 
+    # En otros lenguajes...
+    for j in range(len(L)):
+      print(f'Índice: {j} -> {L[j]} ({len(L[j])} caracteres)')
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
+
+.. code:: python
+
     for j, elem in enumerate(L):
       print(f'Índice: {j} -> {elem} ({len(elem)} caracteres)')
+
+
+.. parsed-literal::
+
+    Índice: 0 -> I've (4 caracteres)
+    Índice: 1 -> had (3 caracteres)
+    Índice: 2 -> a (1 caracteres)
+    Índice: 3 -> perfectly (9 caracteres)
+    Índice: 4 -> wonderful (9 caracteres)
+    Índice: 5 -> evening. (8 caracteres)
+    Índice: 6 -> But (3 caracteres)
+    Índice: 7 -> this (4 caracteres)
+    Índice: 8 -> wasn't (6 caracteres)
+    Índice: 9 -> it. (3 caracteres)
+
 
 Veamos otro ejemplo, que puede encontrarse en la `documentación
 oficial <https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-statements-and-else-clauses-on-loops>`__:
@@ -772,6 +945,47 @@ oficial <https://docs.python.org/3/tutorial/controlflow.html#break-and-continue-
       else:
          # Salió sin encontrar un factor, entonces ...
          print('{:2d} es un número primo'.format(n))
+
+
+
+.. parsed-literal::
+
+     2 es un número primo
+     3 es un número primo
+     4 = 2 x 2
+     5 es un número primo
+     6 = 2 x 3
+     7 es un número primo
+     8 = 2 x 4
+     9 = 3 x 3
+    10 = 2 x 5
+    11 es un número primo
+    12 = 2 x 6
+    13 es un número primo
+    14 = 2 x 7
+    15 = 3 x 5
+    16 = 2 x 8
+    17 es un número primo
+    18 = 2 x 9
+    19 es un número primo
+
+
+.. code:: python
+
+    n=5
+    for x in range(2, n):
+      if n % x == 0:
+        print( f'{n:2d} = {x} x {n//x}')
+        break
+    else:
+       # Salió sin encontrar un factor, entonces ...
+       print('{:2d} es un número primo'.format(n))
+
+
+
+.. parsed-literal::
+
+     5 es un número primo
 
 
 **Puntos a notar:**
@@ -799,6 +1013,11 @@ cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
       a, b = b, a+b
       print (b, end=' ')
 
+
+.. parsed-literal::
+
+    1 2 3 5 8 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 
+
 .. code:: python
 
     a, b = 0, 1
@@ -808,6 +1027,11 @@ cumple una condición. El siguiente ejemplo imprime la serie de Fibonacci
         continue
       print (b, end=' ')
 
+
+
+.. parsed-literal::
+
+    1 2 3 5 13 21 34 55 89 144 233 377 610 987 1597 2584 4181 6765 
 
 Múltiples condiciones
 ~~~~~~~~~~~~~~~~~~~~~
@@ -823,25 +1047,79 @@ mediante el uso de las palabras ``and`` y ``or``. Por ejemplo:
 
     1 < a < 4
 
+
+
+
+.. parsed-literal::
+
+    True
+
+
+
 .. code:: python
 
     a > 2 or a < 1
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
 
 .. code:: python
 
     a < 1 or a > 5
 
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
 .. code:: python
 
     a < 5 and a > 4  # Los paréntesis son opcionales
+
+
+
+
+.. parsed-literal::
+
+    False
+
+
 
 .. code:: python
 
     (a < 5) and (a > 4)  # Los paréntesis son opcionales
 
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
 .. code:: python
 
     ((a < 5) and (a > 4)) or (a %2 ==1)
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
 
 --------------
 
@@ -941,6 +1219,371 @@ Ejercicios 03 (b)
      escribirse con estas cifras es ``9870``.
   
   
+
+--------------
+
+.
+Diccionarios
+------------
+
+Los diccionarios son colecciones de objetos *no necesariamente
+homogéneos* que no están ordenados y no se pueden identificar mediante
+un índice (como L[3] para una lista) sino por un nombre o clave (llamado
+**key**). Las claves pueden ser cualquier objeto inmutable (cadenas de
+caracteres, números, tuplas) y los valores pueden ser cualquier tipo de
+objeto. Las claves no se pueden repetir pero los valores sí.
+
+Creación de diccionarios
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    d01 = {}
+    d02 = dict()
+    d1 = {'S': 'Al', 'Z': 13, 'A': 27, 'M':26.98153863 }
+    d2 = {'A': 27, 'M':26.98153863, 'S': 'Al', 'Z': 13 }
+    d3 = dict( [('S','Al'), ('A',27), ('Z',13), ('M',26.98153863)])
+    d4 = {n: n**2 for n in range(6)}
+
+Acá estamos creando diccionarios de diferentes maneras:
+
+-  ``d01`` y ``d02`` corresponden a diccionarios vacíos
+-  ``d1`` y ``d2`` se crean utilizando el formato ``clave: valor``
+-  ``d3`` se crea a partir de una lista de 2-tuplas donde el primer
+   elemento de cada tupla es la clave y el segundo el valor
+-  ``d4`` se crea mediante una “comprensión de diccionarios”
+
+.. code:: python
+
+    print(d01)
+    print(d02)
+
+.. code:: python
+
+    print(d4)
+
+Notar que los diccionarios ``d1``, ``d2``, ``d3`` tienen las mismas
+claves y valores, pero se crean con distinto orden
+
+.. code:: python
+
+    print(f"d4 = {d4}")
+    print(f"{d4 = }")
+    print(f"{d4=}")
+
+.. code:: python
+
+    print(f"(d1 == d2) = {d1 == d2}")
+
+.. code:: python
+
+    print(d1)
+    print(f"{(d1 == d2) = }   y   {(d1 == d3) = }")
+
+Como ocurre con otros tipos complejos, al realizar una asignación de un
+diccionario a otro, no se crea un nuevo objeto
+
+.. code:: python
+
+    d5 = d2
+    print(d5 == d2)
+    print(d5 is d2)
+
+y, por lo tanto, si modificamos uno de ellos también estamos modificando
+el otro.
+
+Para realizar una copia independiente utilizamos el método ``copy()``:
+
+.. code:: python
+
+    d6 = d2.copy()
+    print(d6 == d2)
+    print(d6 is d2)
+
+Selección de elementos
+~~~~~~~~~~~~~~~~~~~~~~
+
+Para seleccionar un elemento de un diccionario, se lo llama por su clave
+(``key``)
+
+.. code:: python
+
+    d1['A']
+
+.. code:: python
+
+    d1['M']
+
+.. code:: python
+
+    d1["S"]
+
+Un uso muy común de los diccionarios es la descripción de estructuras
+complejas, donde cada campo tiene un significado, como podría ser por
+ejemplo una agenda
+
+.. code:: python
+
+    entrada = {'nombre':'Juan', 
+          'apellido': 'García', 
+          'edad': 109, 
+          'dirección': '''Av Bustillo 9500,''', 
+          'cod':8400,  
+          'ciudad': "Bariloche"}
+
+.. code:: python
+
+    print ('Nombre: ', entrada['nombre'])
+    print ('\nDiccionario:')
+    print ((len("Diccionario:")*"-")+"\n")
+    print (entrada)
+
+.. code:: python
+
+    entrada['cod']
+
+Un diccionario puede tener elementos de distinto tipo, tanto en claves
+como en valores
+
+.. code:: python
+
+    entrada
+
+.. code:: python
+
+    entrada[1] = [2,3]         # Agregamos el campo `1`
+
+.. code:: python
+
+    entrada
+
+Acceso a claves y valores
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Los diccionarios pueden pensarse como pares *key*, *valor*. Para obtener
+todas las claves (*keys*), valores, o pares (clave, valor) usamos:
+
+.. code:: python
+
+    print ('\n\nKeys:')
+    print (list(entrada.keys()))
+    print ('\n\nValues:')
+    print (list(entrada.values()))
+    print ('\n\nItems:')
+    print (list(entrada.items()))
+
+.. code:: python
+
+    it = list(entrada.items())
+    it
+
+.. code:: python
+
+    dict(it)
+
+Modificación o adición de campos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Si queremos modificar un campo o agregar uno nuevo simplemente asignamos
+un nuevo valor como lo haríamos para una variable.
+
+.. code:: python
+
+    entrada['tel'] = {'cel':1213, 'fijo':23848}
+
+.. code:: python
+
+    entrada
+
+.. code:: python
+
+    print(entrada['tel']['cel'])
+    telefono = entrada['tel']
+    print(telefono)
+    print(telefono['cel'])
+
+En el siguiente ejemplo agregamos un nuevo campo indicando el “país” y
+modificamos el valor de la ciudad:
+
+.. code:: python
+
+    entrada['pais']= 'Argentina'
+    entrada['ciudad']= "San Carlos de Bariloche"
+    # imprimimos
+    print ('\n\nDatos:\n')
+    print (entrada['nombre'] + ' ' + entrada['apellido'])
+    print (entrada['dirección'])
+    print (entrada['ciudad'])
+    print (entrada['pais'])
+
+.. code:: python
+
+    d2 = {'provincia': 'Río Negro', 'nombre':'José'}
+    print (60*'*'+'\nOtro diccionario:')
+    print ('d2=',d2)
+    print (60*'*')
+
+Vimos que se pueden asignar campos a diccionarios. También se pueden
+completar utilizando otro diccionario, usando el método ``update()``
+
+.. code:: python
+
+    print (f'{entrada = }')
+
+.. code:: python
+
+    entrada.update(d2)  # Corregimos valores o agregamos nuevos si no existen
+    print ("\nNuevo valor:\n")
+    print (f'{entrada = }')
+
+.. code:: python
+
+    # Para borrar un campo de un diccionario usamos `del`
+    print (f"{'provincia' in entrada = }")
+    del entrada['provincia']
+    print (f"{'provincia' in entrada = }")
+
+El método ``pop`` nos devuelve un valor y lo borra del diccionario.
+
+.. code:: python
+
+    entrada
+
+.. code:: python
+
+    entrada.pop(1)
+
+.. code:: python
+
+    entrada
+
+Conjuntos
+---------
+
+Los conjuntos (``set()``) son grupos de claves únicas e inmutables.
+
+.. code:: python
+
+    mamiferos = {'perro', 'gato', 'león', 'perro'}
+    domesticos = {'perro', 'gato', 'gallina', 'ganso'}
+    aves = {"chimango", "bandurria", 'gallina', 'cóndor', 'ganso'}
+
+.. code:: python
+
+    mamiferos
+
+Para crear un conjunto vacío utilizamos la palabra ``set()``. Notar que:
+``conj = {}`` crearía un diccionario:
+
+.. code:: python
+
+    conj = set()
+    print(conj, type(conj))
+
+Operaciones entre conjuntos
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    mamiferos.intersection(domesticos)
+
+.. code:: python
+
+    # También se puede utilizar el operador "&" para la intersección
+    mamiferos & domesticos
+
+.. code:: python
+
+    mamiferos.union(domesticos)
+
+.. code:: python
+
+    # También se puede utilizar el operador "|" para la unión
+    mamiferos | domesticos
+
+.. code:: python
+
+    aves.difference(domesticos)
+
+.. code:: python
+
+    # También se puede utilizar el operador "-" para la diferencia
+    aves - domesticos
+
+.. code:: python
+
+    domesticos - aves
+
+Modificar conjuntos
+~~~~~~~~~~~~~~~~~~~
+
+Para agregar o borrar elementos a un conjunto usamos los métodos:
+``add``, ``update``, y ``remove``
+
+.. code:: python
+
+    c = set([1, 2, 2, 3, 5])
+    c
+
+.. code:: python
+
+    c.add(4)
+
+.. code:: python
+
+    c
+
+.. code:: python
+
+    c.add(4)
+    c
+
+.. code:: python
+
+    c.update((8,7,6))
+
+.. code:: python
+
+    c
+
+Para remover un elemento que pertenece al conjunto usamos ``remove()``
+
+.. code:: python
+
+    c.remove(2)
+
+.. code:: python
+
+    c
+
+.. code:: python
+
+    c.remove(2)
+
+pero da un error si el elemento que quermos remover no pertenece al
+conjunto. Si no sabemos si el elemento existe, podemos usar el método
+``discard()``
+
+.. code:: python
+
+    c.discard(2)
+
+.. code:: python
+
+    c
+
+--------------
+
+Ejercicios 03 (b)
+-----------------
+
+6. Escribir, utilizando conjuntos (``set``), funciones que tomen como
+   argumento un string y:
+
+   1. Retorne verdadero si el argumento tiene algún número, Falso en
+      otro caso,
+   2. Retorne verdadero si el argumento está formado por todos números,
+      Falso en otro caso.
 
 --------------
 
