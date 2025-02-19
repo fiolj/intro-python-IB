@@ -582,6 +582,10 @@ Ejercicios 4 (a)
    resultarle útil la función
    ```zip`` <https://docs.python.org/3.3/library/functions.html#zip>`__.
 
+--------------
+
+.
+
 
 Argumentos de las funciones
 ---------------------------
@@ -610,6 +614,21 @@ Consideremos la siguiente función
     print('Fuera de la función: Ahora x vale',x)  
     print('Id afuera después:',id(x))
 
+
+.. parsed-literal::
+
+    Id afuera antes: 140624857736656
+    Fuera de la función: Originalmente x vale 50
+    ----------------------------------------------- 
+    x entró a la función con el valor 50
+    Id adentro: 140624857736656
+    El nuevo valor de x es 2
+    Id adentro nuevo: 140624857735120 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale 50
+    Id afuera después: 140624857736656
+
+
 Vemos que la variable ``x`` que utilizamos como argumento de la función
 debe ser diferente a la variable ``x`` que se define fuera de la
 función, ya que su valor no cambia al salir. Además usamos la función
@@ -621,7 +640,6 @@ referencia al nuevo objeto. De este modo, no se afecta al objeto
 original.
 
 Consideremos ahora la siguiente función:
-
 
 .. code:: python
 
@@ -644,6 +662,21 @@ La función es muy parecida, sólo que le estamos dando a la variable
     print('Fuera de la función: Ahora x vale',x)  
     print('Id afuera después:',id(x))
 
+
+.. parsed-literal::
+
+    Id afuera antes: 140624857736656
+    Fuera de la función: Originalmente x vale 50
+    ----------------------------------------------- 
+    x entró a la función con el valor 50
+    Id adentro: 140624857736656
+    El nuevo valor de x es [2, 7]
+    Id adentro nuevo: 140624567783040 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale 50
+    Id afuera después: 140624857736656
+
+
 .. code:: python
 
     x = [50]
@@ -652,6 +685,20 @@ La función es muy parecida, sólo que le estamos dando a la variable
     func2(x)
     print('Fuera de la función: Ahora x vale',x)  
     print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624567781568
+    Fuera de la función: Originalmente x vale [50]
+    ----------------------------------------------- 
+    x entró a la función con el valor [50]
+    Id adentro: 140624567781568
+    El nuevo valor de x es [2, 7]
+    Id adentro nuevo: 140624567780544 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale [50]
+    Id afuera después: 140624567781568
 
 
 ¿Qué está pasando acá?
@@ -688,6 +735,21 @@ mutables e inmutables son diferentes:
     print('Fuera de la función: Ahora x vale',x)  
     print('Id afuera después:',id(x))
 
+
+.. parsed-literal::
+
+    Id afuera antes: 140624567742592
+    Fuera de la función: Originalmente x vale [50]
+    ----------------------------------------------- 
+    x entró a la función con el valor [50]
+    Id adentro: 140624567742592
+    El nuevo valor de x es [50, 2, 7]
+    Id adentro nuevo: 140624567742592 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale [50, 2, 7]
+    Id afuera después: 140624567742592
+
+
 En este caso, como no estamos redefiniendo la variable sino que la
 estamos modificando, el nuevo valor se mantiene al terminar la ejecución
 de la función. Otra variante:
@@ -709,6 +771,21 @@ de la función. Otra variante:
     func4(x)
     print('Fuera de la función: Ahora x vale',x)  
     print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624567782208
+    Fuera de la función: Originalmente x vale [50]
+    ----------------------------------------------- 
+    x entró a la función con el valor [50]
+    Id adentro: 140624567782208
+    El nuevo valor de x es [2]
+    Id adentro nuevo: 140624567782208 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale [2]
+    Id afuera después: 140624567782208
+
 
 Vemos que, cuando modificamos la variable (solo es posible para tipos
 mutables), asignando un valor a uno o más de sus elementos o
@@ -734,9 +811,23 @@ función:
 
     func2b(1)
 
+
+.. parsed-literal::
+
+    x entró a la función con el valor []
+    El nuevo valor de x es [1]
+
+
 .. code:: python
 
     func2b(2)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor [1]
+    El nuevo valor de x es [1, 2]
+
 
 El argumento opcional ``x`` tiene como valor por defecto una lista
 vacía, entonces esperaríamos que el valor de ``x`` sea igual a ``x1``, y
@@ -821,9 +912,17 @@ Ejercicios 4 (b)
    suponiendo que ``grid`` es el nombre de nuestra lista bidimensional,
    cuando ``i`` toma valores entre ``0`` y ``8``.
 
+..
+
+   **NOTA:** Enviar por correo electrónico con el archivo adjunto
+   nombrado en la forma ``04_Apellido.py`` donde “Apellido” es su
+   apellido.
+
 --------------
+
+
 Anotaciones de tipos
-====================
+--------------------
 
 El lenguaje Python provee tipos dinámicos de datos. Esto quiere decir
 que el intérprete define los tipos al momento de ejecutar código, por
@@ -946,7 +1045,7 @@ También se pueden crear alias de tipos
     print(f"{origen} de tipo {type(origen)}")
 
 Funciones
----------
+~~~~~~~~~
 
 La sintaxis para anotar los tipos de las funciones es la siguiente:
 
@@ -966,7 +1065,7 @@ La sintaxis para anotar los tipos de las funciones es la siguiente:
     print(producto_escalar(p1, p2))
 
 El tipo ``Union``
------------------
+~~~~~~~~~~~~~~~~~
 
 El tipo ``Union`` se utiliza para indicar que una variable puede aceptar
 dos o más tipos de datos:
@@ -993,7 +1092,7 @@ Es responsabilidad del programador observar y hacer observar que los
 tipos sean compatibles, o usar mypy para chequearlos
 
 El tipo ``Optional``
---------------------
+~~~~~~~~~~~~~~~~~~~~
 
 Como su nombre lo indica, ``Optional`` indica que una variable puede
 tener un determinado tipo, o puede ser ‘None’. Es muy útil para anotar

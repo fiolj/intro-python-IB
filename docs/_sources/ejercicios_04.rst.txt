@@ -20,164 +20,80 @@ Ejercicios de Clase 04
    resultarle útil la función
    ```zip`` <https://docs.python.org/3.3/library/functions.html#zip>`__.
 
+3. Escriba funciones para analizar la divisibilidad de enteros:
 
-Argumentos de las funciones
----------------------------
+   -  La función ``es_divisible`` que retorna ``True`` si el argumento
+      ``x`` es divisible por alguno de los elemntos del segundo
+      argumento: ``divisores``. El argumento ``divisores`` es opcional y
+      si está presente es una variable del tipo lista que contiene los
+      valores para los cuáles debemos examinar la divisibilidad.
 
-Ámbito de las variables en los argumentos
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   El valor por defecto de ``divisores`` es ``[2,3,5,7]``. Las
+   siguientes expresiones deben retornar el mismo valor:
+   ``python  es_divisible(x)   es_divisible(x, [2,3,5,7])``
 
-Consideremos la siguiente función
+   -  La función ``es_divisible_por`` cuyo primer argumento (mandatorio)
+      es ``x``, y luego puede aceptar un número indeterminado de
+      argumentos:
 
-.. code:: python
+   .. code:: python
 
-    sep = 47*'-'
-    def func1(x):
-      print(sep,'\nx entró a la función con el valor', x)
-      print('Id adentro:',id(x))
-      x = 2
-      print('El nuevo valor de x es', x)
-      print('Id adentro nuevo:',id(x),'\n', sep)
+      es_divisible_por(x)  # retorna verdadero siempre
+      es_divisible_por(x, 2) # verdadero si x es par
+      es_divisible_por(x, 2, 3, 5, 7) # igual resultado que es_divisible(x)
+      es_divisible_por(x, 2, 3, 5, 7, 9, 11, 13)  # o cualquier secuencia de argumentos debe funcionar
 
-.. code:: python
+4. **PARA ENTREGAR.** Describimos una grilla de **sudoku** como un
+   string de nueve líneas, cada una con 9 números, con números entre 1 y
+   9. Escribir un conjunto de funciones que permitan chequear si una
+   grilla de sudoku es correcta. Para que una grilla sea correcta deben
+   cumplirse las siguientes condiciones
 
-    x = 50
-    print('Id afuera antes:',id(x))
-    print('Fuera de la función: Originalmente x vale',x)
-    func1(x)
-    print('Fuera de la función: Ahora x vale',x)  
-    print('Id afuera después:',id(x))
+   -  Los números están entre 1 y 9
+   -  En cada fila no deben repetirse
+   -  En cada columna no deben repetirse
+   -  En todas las regiones de 3x3 que no se solapan, empezando de
+      cualquier esquina, no deben repetirse
 
-Vemos que la variable ``x`` que utilizamos como argumento de la función
-debe ser diferente a la variable ``x`` que se define fuera de la
-función, ya que su valor no cambia al salir. Además usamos la función
-``id()`` para obtener la identidad de la variable. Python pasa las
-variables como referencia al objeto que representa a la variable. En
-este caso el objeto que estamos pasando es un entero que es inmutable,
-con lo cual en la función misma se crea un nuevo objeto y se reasigna la
-referencia al nuevo objeto. De este modo, no se afecta al objeto
-original.
+   1. Escribir una función que convierta un string con formato a una
+      lista bidimensional. El string estará dado con nueve números por
+      línea, de la siguiente manera (los espacios en blanco en cada
+      línea pueden variar):
 
-Consideremos ahora la siguiente función:
+   .. code:: python
 
+      sudoku = """145327698
+              839654127
+              672918543
+              496185372
+              218473956
+              753296481
+              367542819
+              984761235
+              521839764"""
 
-.. code:: python
+   2. Escribir una función ``check_repetidos()`` que tome por argumento
+      una lista (unidimensional) y devuelva verdadero si la lista tiene
+      elementos repetidos y falso en caso contrario.
 
-    def func2(x):
-      print(sep,'\nx entró a la función con el valor', x)
-      print('Id adentro:',id(x))
-      x = [2,7]
-      print('El nuevo valor de x es', x)
-      print('Id adentro nuevo:',id(x),'\n', sep)
+   3. Escribir la función ``check_sudoku()`` que toma como argumento una
+      grilla (como una lista bidimensional de ``9x9``) y devuelva
+      verdadero si los números corresponden a la resolución correcta del
+      Sudoku y falso en caso contrario. Note que debe verificar que los
+      números no se repiten en filas, ni en columnas ni en recuadros de
+      ``3x3``. Para obtener la posición de los recuadros puede
+      investigar que hacen las líneas de código:
 
-La función es muy parecida, sólo que le estamos dando a la variable
-``x`` dentro de la función un nuevo valor del tipo ``lista``.
+   .. code:: python
 
-.. code:: python
+      j, k = (i // 3) * 3, (i % 3) * 3
+      r = [grid[a][b] for a in range(j, j+3) for b in range(k, k+3)]
 
-    x = 50
-    print('Id afuera antes:',id(x))
-    print('Fuera de la función: Originalmente x vale',x)
-    func2(x)
-    print('Fuera de la función: Ahora x vale',x)  
-    print('Id afuera después:',id(x))
+   suponiendo que ``grid`` es el nombre de nuestra lista bidimensional,
+   cuando ``i`` toma valores entre ``0`` y ``8``.
 
-.. code:: python
+..
 
-    x = [50]
-    print('Id afuera antes:',id(x))
-    print('Fuera de la función: Originalmente x vale',x)
-    func2(x)
-    print('Fuera de la función: Ahora x vale',x)  
-    print('Id afuera después:',id(x))
-
-
-¿Qué está pasando acá?
-
--  Cuando se realiza la llamada a la función, se le pasa una referencia
-   del nombre ``x``.
--  Cuando le damos un nuevo valor dentro de la función, como en el caso
-   ``x = [2, 7]``, entonces se crea una nueva variable y el nombre ``x``
-   queda asociado a la nueva variable.
--  La variable original –definida fuera de la función– no cambia.
-
-En el primer caso, como los escalares son inmutables (de la misma manera
-que los strings y tuplas) no puede ser modificada. Al reasignar el
-nombre siempre se crea una nueva variable (para cualquier tipo).
-
-Consideremos estas variantes, donde el comportamiento entre tipos
-mutables e inmutables son diferentes:
-
-.. code:: python
-
-    def func3(x):
-      print(sep,'\nx entró a la función con el valor', x)
-      print('Id adentro:',id(x))
-      x += [2,7]
-      print('El nuevo valor de x es', x)
-      print('Id adentro nuevo:',id(x),'\n', sep)
-
-.. code:: python
-
-    x = [50]
-    print('Id afuera antes:',id(x))
-    print('Fuera de la función: Originalmente x vale',x)
-    func3(x)
-    print('Fuera de la función: Ahora x vale',x)  
-    print('Id afuera después:',id(x))
-
-En este caso, como no estamos redefiniendo la variable sino que la
-estamos modificando, el nuevo valor se mantiene al terminar la ejecución
-de la función. Otra variante:
-
-.. code:: python
-
-    def func4(x):
-      print(sep,'\nx entró a la función con el valor', x)
-      print('Id adentro:',id(x))
-      x[0] = 2
-      print('El nuevo valor de x es', x)
-      print('Id adentro nuevo:',id(x),'\n', sep)
-
-.. code:: python
-
-    x = [50]
-    print('Id afuera antes:',id(x))
-    print('Fuera de la función: Originalmente x vale',x)
-    func4(x)
-    print('Fuera de la función: Ahora x vale',x)  
-    print('Id afuera después:',id(x))
-
-Vemos que, cuando modificamos la variable (solo es posible para tipos
-mutables), asignando un valor a uno o más de sus elementos o
-agregando/removiendo elementos, la copia sigue apuntando a la variable
-original y el valor de la variable, definida originalmente afuera,
-cambia.
-
-Tipos mutables en argumentos opcionales
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Hay que tener cuidado cuando usamos valores por defecto con tipos que
-pueden modificarse dentro de la función. Consideremos la siguiente
-función:
-
-.. code:: python
-
-    def func2b(x1, x=[]):
-      print('x entró a la función con el valor', x)
-      x.append(x1)
-      print('El nuevo valor de x es', x)
-
-.. code:: python
-
-    func2b(1)
-
-.. code:: python
-
-    func2b(2)
-
-El argumento opcional ``x`` tiene como valor por defecto una lista
-vacía, entonces esperaríamos que el valor de ``x`` sea igual a ``x1``, y
-en este caso imprima “El nuevo valor de x es [2]”. Sin embargo, entre
-llamadas mantiene el valor de ``x`` anterior. El valor por defecto se
-fija en la definición y en el caso de tipos mutables puede modificarse.
+   **NOTA:** Enviar por correo electrónico con el archivo adjunto
+   nombrado en la forma ``04_Apellido.py`` donde “Apellido” es su
+   apellido.

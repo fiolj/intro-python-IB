@@ -62,11 +62,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-02">Ejercicios de Clase 02</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-03">Ejercicios de Clase 03</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-04">Ejercicios de Clase 04</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#argumentos-de-las-funciones">Argumentos de las funciones</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ambito-de-las-variables-en-los-argumentos">Ámbito de las variables en los argumentos</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#tipos-mutables-en-argumentos-opcionales">Tipos mutables en argumentos opcionales</a></li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -402,144 +397,83 @@ cada instante.</p></li>
 la trayectoria <em>h(t)</em> en forma clara y bella. Para esto puede
 resultarle útil la función
 <code class="docutils literal notranslate"><span class="pre">`zip</span></code> &lt;<a class="reference external" href="https://docs.python.org/3.3/library/functions.html#zip">https://docs.python.org/3.3/library/functions.html#zip</a>&gt;`__.</p></li>
-</ol>
-</section>
-<section id="argumentos-de-las-funciones">
-<h2>Argumentos de las funciones<a class="headerlink" href="#argumentos-de-las-funciones" title="Link to this heading"></a></h2>
-<section id="ambito-de-las-variables-en-los-argumentos">
-<h3>Ámbito de las variables en los argumentos<a class="headerlink" href="#ambito-de-las-variables-en-los-argumentos" title="Link to this heading"></a></h3>
-<p>Consideremos la siguiente función</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sep</span> <span class="o">=</span> <span class="mi">47</span><span class="o">*</span><span class="s1">&#39;-&#39;</span>
-<span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-  <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="n">func1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Vemos que la variable <code class="docutils literal notranslate"><span class="pre">x</span></code> que utilizamos como argumento de la función
-debe ser diferente a la variable <code class="docutils literal notranslate"><span class="pre">x</span></code> que se define fuera de la
-función, ya que su valor no cambia al salir. Además usamos la función
-<code class="docutils literal notranslate"><span class="pre">id()</span></code> para obtener la identidad de la variable. Python pasa las
-variables como referencia al objeto que representa a la variable. En
-este caso el objeto que estamos pasando es un entero que es inmutable,
-con lo cual en la función misma se crea un nuevo objeto y se reasigna la
-referencia al nuevo objeto. De este modo, no se afecta al objeto
-original.</p>
-<p>Consideremos ahora la siguiente función:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-  <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>La función es muy parecida, sólo que le estamos dando a la variable
-<code class="docutils literal notranslate"><span class="pre">x</span></code> dentro de la función un nuevo valor del tipo <code class="docutils literal notranslate"><span class="pre">lista</span></code>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">50</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="n">func2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="n">func2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>¿Qué está pasando acá?</p>
+<li><p>Escriba funciones para analizar la divisibilidad de enteros:</p>
 <ul class="simple">
-<li><p>Cuando se realiza la llamada a la función, se le pasa una referencia
-del nombre <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
-<li><p>Cuando le damos un nuevo valor dentro de la función, como en el caso
-<code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">[2,</span> <span class="pre">7]</span></code>, entonces se crea una nueva variable y el nombre <code class="docutils literal notranslate"><span class="pre">x</span></code>
-queda asociado a la nueva variable.</p></li>
-<li><p>La variable original –definida fuera de la función– no cambia.</p></li>
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible</span></code> que retorna <code class="docutils literal notranslate"><span class="pre">True</span></code> si el argumento
+<code class="docutils literal notranslate"><span class="pre">x</span></code> es divisible por alguno de los elemntos del segundo
+argumento: <code class="docutils literal notranslate"><span class="pre">divisores</span></code>. El argumento <code class="docutils literal notranslate"><span class="pre">divisores</span></code> es opcional y
+si está presente es una variable del tipo lista que contiene los
+valores para los cuáles debemos examinar la divisibilidad.</p></li>
 </ul>
-<p>En el primer caso, como los escalares son inmutables (de la misma manera
-que los strings y tuplas) no puede ser modificada. Al reasignar el
-nombre siempre se crea una nueva variable (para cualquier tipo).</p>
-<p>Consideremos estas variantes, donde el comportamiento entre tipos
-mutables e inmutables son diferentes:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-  <span class="n">x</span> <span class="o">+=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+<p>El valor por defecto de <code class="docutils literal notranslate"><span class="pre">divisores</span></code> es <code class="docutils literal notranslate"><span class="pre">[2,3,5,7]</span></code>. Las
+siguientes expresiones deben retornar el mismo valor:
+<code class="docutils literal notranslate"><span class="pre">python</span>&#160; <span class="pre">es_divisible(x)</span>&#160;&#160; <span class="pre">es_divisible(x,</span> <span class="pre">[2,3,5,7])</span></code></p>
+<ul class="simple">
+<li><p>La función <code class="docutils literal notranslate"><span class="pre">es_divisible_por</span></code> cuyo primer argumento (mandatorio)
+es <code class="docutils literal notranslate"><span class="pre">x</span></code>, y luego puede aceptar un número indeterminado de
+argumentos:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>  <span class="c1"># retorna verdadero siempre</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># verdadero si x es par</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c1"># igual resultado que es_divisible(x)</span>
+<span class="n">es_divisible_por</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>  <span class="c1"># o cualquier secuencia de argumentos debe funcionar</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="n">func3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</li>
+<li><p><strong>PARA ENTREGAR.</strong> Describimos una grilla de <strong>sudoku</strong> como un
+string de nueve líneas, cada una con 9 números, con números entre 1 y
+9. Escribir un conjunto de funciones que permitan chequear si una
+grilla de sudoku es correcta. Para que una grilla sea correcta deben
+cumplirse las siguientes condiciones</p>
+<ul class="simple">
+<li><p>Los números están entre 1 y 9</p></li>
+<li><p>En cada fila no deben repetirse</p></li>
+<li><p>En cada columna no deben repetirse</p></li>
+<li><p>En todas las regiones de 3x3 que no se solapan, empezando de
+cualquier esquina, no deben repetirse</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Escribir una función que convierta un string con formato a una
+lista bidimensional. El string estará dado con nueve números por
+línea, de la siguiente manera (los espacios en blanco en cada
+línea pueden variar):</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudoku</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;145327698</span>
+<span class="s2">        839654127</span>
+<span class="s2">        672918543</span>
+<span class="s2">        496185372</span>
+<span class="s2">        218473956</span>
+<span class="s2">        753296481</span>
+<span class="s2">        367542819</span>
+<span class="s2">        984761235</span>
+<span class="s2">        521839764&quot;&quot;&quot;</span>
 </pre></div>
 </div>
-<p>En este caso, como no estamos redefiniendo la variable sino que la
-estamos modificando, el nuevo valor se mantiene al terminar la ejecución
-de la función. Otra variante:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func4</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="n">sep</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-  <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id adentro nuevo:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="p">)</span>
+<ol class="arabic simple" start="2">
+<li><p>Escribir una función <code class="docutils literal notranslate"><span class="pre">check_repetidos()</span></code> que tome por argumento
+una lista (unidimensional) y devuelva verdadero si la lista tiene
+elementos repetidos y falso en caso contrario.</p></li>
+<li><p>Escribir la función <code class="docutils literal notranslate"><span class="pre">check_sudoku()</span></code> que toma como argumento una
+grilla (como una lista bidimensional de <code class="docutils literal notranslate"><span class="pre">9x9</span></code>) y devuelva
+verdadero si los números corresponden a la resolución correcta del
+Sudoku y falso en caso contrario. Note que debe verificar que los
+números no se repiten en filas, ni en columnas ni en recuadros de
+<code class="docutils literal notranslate"><span class="pre">3x3</span></code>. Para obtener la posición de los recuadros puede
+investigar que hacen las líneas de código:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span> <span class="o">//</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span><span class="p">,</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span>
+<span class="n">r</span> <span class="o">=</span> <span class="p">[</span><span class="n">grid</span><span class="p">[</span><span class="n">a</span><span class="p">][</span><span class="n">b</span><span class="p">]</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">3</span><span class="p">)]</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera antes:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Originalmente x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="n">func4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Fuera de la función: Ahora x vale&#39;</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Id afuera después:&#39;</span><span class="p">,</span><span class="nb">id</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>Vemos que, cuando modificamos la variable (solo es posible para tipos
-mutables), asignando un valor a uno o más de sus elementos o
-agregando/removiendo elementos, la copia sigue apuntando a la variable
-original y el valor de la variable, definida originalmente afuera,
-cambia.</p>
-</section>
-<section id="tipos-mutables-en-argumentos-opcionales">
-<h3>Tipos mutables en argumentos opcionales<a class="headerlink" href="#tipos-mutables-en-argumentos-opcionales" title="Link to this heading"></a></h3>
-<p>Hay que tener cuidado cuando usamos valores por defecto con tipos que
-pueden modificarse dentro de la función. Consideremos la siguiente
-función:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func2b</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="p">[]):</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;x entró a la función con el valor&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-  <span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
-  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;El nuevo valor de x es&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">func2b</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">func2b</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>El argumento opcional <code class="docutils literal notranslate"><span class="pre">x</span></code> tiene como valor por defecto una lista
-vacía, entonces esperaríamos que el valor de <code class="docutils literal notranslate"><span class="pre">x</span></code> sea igual a <code class="docutils literal notranslate"><span class="pre">x1</span></code>, y
-en este caso imprima “El nuevo valor de x es [2]”. Sin embargo, entre
-llamadas mantiene el valor de <code class="docutils literal notranslate"><span class="pre">x</span></code> anterior. El valor por defecto se
-fija en la definición y en el caso de tipos mutables puede modificarse.</p>
-</section>
+<p>suponiendo que <code class="docutils literal notranslate"><span class="pre">grid</span></code> es el nombre de nuestra lista bidimensional,
+cuando <code class="docutils literal notranslate"><span class="pre">i</span></code> toma valores entre <code class="docutils literal notranslate"><span class="pre">0</span></code> y <code class="docutils literal notranslate"><span class="pre">8</span></code>.</p>
+</li>
+</ol>
+<blockquote>
+<div><p><strong>NOTA:</strong> Enviar por correo electrónico con el archivo adjunto
+nombrado en la forma <code class="docutils literal notranslate"><span class="pre">04_Apellido.py</span></code> donde “Apellido” es su
+apellido.</p>
+</div></blockquote>
 </section>
 </section>
 
