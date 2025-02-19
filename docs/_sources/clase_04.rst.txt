@@ -917,9 +917,11 @@ Ejercicios 4 (b)
 
 ..
 
-   **NOTA:** Enviar por correo electrónico con el archivo adjunto
-   nombrado en la forma ``04_Apellido.py`` donde “Apellido” es su
-   apellido.
+   .. note::  Enviar por correo electrónico con el archivo adjunto
+     nombrado en la forma ``04_Apellido.py`` donde “Apellido” es su
+     apellido.
+  
+     
 
 --------------
 
@@ -942,7 +944,7 @@ debemos introducir documentación exhaustiva para poder reutilizarlo.
 
 A partir de la versión 3.5 de Python, y con el objetivo de proveer
 claridad en el código y hacerlo menos propenso a errores, se introdujo
-el módulo ```typing`` <https://docs.python.org/3/library/typing.html>`__
+el módulo `typing <https://docs.python.org/3/library/typing.html>`__
 para poder anotar los tipos de datos. En versiones más nuevas (3.9+), la
 anotación de tipos está incorporada en el intérprete.
 
@@ -984,14 +986,29 @@ incompatibilidad entre los mismos en el código.
     print(f"{t} de tipo {type(t)}")
     print(f"{ti} de tipo {type(ti)}")
 
-   En versiones anteriores a Python 3.8 es necesario importar el módulo
-   ``typing``, y los tipos de datos son los mismos pero utilizando
-   mayúsculas.
 
-..
+.. parsed-literal::
 
-   En muchas bibliotecas y módulos se sigue utilizando ``typing`` para
-   proveer compatibilidad con versiones anteriores de Python
+    1 de tipo <class 'int'>
+    1.0 de tipo <class 'float'>
+    True de tipo <class 'bool'>
+    test de tipo <class 'str'>
+    b'test' de tipo <class 'bytes'>
+    [1] de tipo <class 'list'>
+    {1, -1} de tipo <class 'set'>
+    {'versión': 2.0} de tipo <class 'dict'>
+    (10, 'Messi', 7.5) de tipo <class 'tuple'>
+    (1, 2, 3) de tipo <class 'tuple'>
+
+
+.. note::  En versiones anteriores a Python 3.8 es necesario importar el
+  módulo ``typing``, y los tipos de datos son los mismos pero utilizando
+  mayúsculas.
+  
+  En muchas bibliotecas y módulos se sigue utilizando ``typing`` para
+  proveer compatibilidad con versiones anteriores de Python
+  
+  
 
 .. code:: python
 
@@ -1013,6 +1030,17 @@ incompatibilidad entre los mismos en el código.
     print(f"{mx} de tipo {type(mx)}")
 
 
+
+.. parsed-literal::
+
+    [1] de tipo <class 'list'>
+    {1, -1} de tipo <class 'set'>
+    {'versión': 2.0} de tipo <class 'dict'>
+    (10, 'Messi', 7.5) de tipo <class 'tuple'>
+    (1, 2, 3) de tipo <class 'tuple'>
+    [1, 1.0, True, 'test', b'test', [1], {1, -1}, {'versión': 2.0}, (10, 'Messi', 7.5), (1, 2, 3)] de tipo <class 'list'>
+
+
 La posibilidad de anotar tipos provee la facilidad de establecer nuevos
 tipos de datos propios:
 
@@ -1025,6 +1053,12 @@ tipos de datos propios:
     
     print(f"{user} de tipo {type(user)}")
 
+
+.. parsed-literal::
+
+    Messi de tipo <class 'str'>
+
+
 .. code:: python
 
     def hola_usuario(usuario: User) -> None:
@@ -1033,6 +1067,12 @@ tipos de datos propios:
 .. code:: python
 
     hola_usuario(4)  
+
+
+.. parsed-literal::
+
+    Hola 4
+
 
 También se pueden crear alias de tipos
 
@@ -1045,6 +1085,12 @@ También se pueden crear alias de tipos
     origen3D: Vector3D = (0.0, 0.0, 0.0)
     
     print(f"{origen} de tipo {type(origen)}")
+
+
+.. parsed-literal::
+
+    (0.0, 0.0) de tipo <class 'tuple'>
+
 
 Funciones
 ~~~~~~~~~
@@ -1066,6 +1112,13 @@ La sintaxis para anotar los tipos de las funciones es la siguiente:
     print(suma(p1, p2))
     print(producto_escalar(p1, p2))
 
+
+.. parsed-literal::
+
+    (3.0, 3.0)
+    4.0
+
+
 El tipo ``Union``
 ~~~~~~~~~~~~~~~~~
 
@@ -1084,11 +1137,25 @@ dos o más tipos de datos:
     print(suma_numeros(1, 2.0))
 
 
+
+.. parsed-literal::
+
+    3
+    3.0
+    3.0
+
+
 Pero recordemos que Python **NO** hace ningún chequeo de tipos!
 
 .. code:: python
 
     print(suma_numeros("1", "2"))
+
+
+.. parsed-literal::
+
+    12
+
 
 Es responsabilidad del programador observar y hacer observar que los
 tipos sean compatibles, o usar mypy para chequearlos
@@ -1126,6 +1193,15 @@ argumentos de funciones que pueden ser, digamos, opcionales.
     print(saluda("Messi"))
 
 
+
+.. parsed-literal::
+
+    None
+    Hola!
+    Hola Mundo
+    Hola Messi
+
+
 .. code:: python
 
     # En Python 3.10+
@@ -1142,3 +1218,12 @@ argumentos de funciones que pueden ser, digamos, opcionales.
         
     print(saluda())
     print(saluda("Messi"))
+
+
+.. parsed-literal::
+
+    None
+    Hola!
+    Hola Mundo
+    Hola Messi
+
