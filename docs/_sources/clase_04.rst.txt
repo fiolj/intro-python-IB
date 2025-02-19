@@ -13,9 +13,27 @@ Veamos en Python qué es una función:
 
     sum
 
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
 .. code:: python
 
     print
+
+
+
+
+.. parsed-literal::
+
+    <function print(*args, sep=' ', end='\n', file=None, flush=False)>
+
+
 
 En **Python** ``function`` es un objeto, con una operación importante:
 podemos llamarla (ejecutarla), en la forma:
@@ -49,6 +67,20 @@ Veamos algunos ejemplos sencillos:
     f = sum
     help(f)
 
+
+.. parsed-literal::
+
+    Help on built-in function sum in module builtins:
+    
+    sum(iterable, /, start=0)
+        Return the sum of a 'start' value (default: 0) plus an iterable of numbers
+    
+        When the iterable is empty, return the start value.
+        This function is intended specifically for use with numeric values and may
+        reject non-numeric types.
+    
+
+
 .. code:: python
 
     a = [1, 2, 3]
@@ -58,6 +90,14 @@ Veamos algunos ejemplos sencillos:
     print('¿f is sum? ', f is sum)
     print('f == sum? ', f == sum)
     print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+
+.. parsed-literal::
+
+    ¿f is sum?  True
+    f == sum?  True
+    f(a)= 6   sum(a)= 6
+
 
 Un uso bastante común es crear un diccionario donde los valores sean
 funciones:
@@ -70,19 +110,54 @@ funciones:
 
     funciones['suma']
 
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
 .. code:: python
 
     funciones['suma'](a)
 
+
+
+
+.. parsed-literal::
+
+    6
+
+
+
 .. code:: python
 
     print(list(funciones.items()))
+
+
+.. parsed-literal::
+
+    [('suma', <built-in function sum>), ('mínimo', <built-in function min>), ('máximo', <built-in function max>)]
+
 
 .. code:: python
 
     print('\n', 'a =', a,'\n')
     for k, v in funciones.items():
       print(k,"=", v(a))
+
+
+.. parsed-literal::
+
+    
+     a = [1, 2, 3] 
+    
+    suma = 6
+    mínimo = 1
+    máximo = 3
+
 
    En Python, se estila que las funciones así como las variables estén
    escritas en minúsculas y usando *snake case*, es decir, usando un
@@ -106,6 +181,15 @@ funciones:
         return v 
     
     promedio(primos)
+
+
+
+
+.. parsed-literal::
+
+    4.25
+
+
 
 Definición básica de funciones
 ------------------------------
@@ -132,6 +216,19 @@ de dar la posición y la velocidad iniciales como argumento:
 
     help(caida)
 
+
+.. parsed-literal::
+
+    Help on function caida in module __main__:
+    
+    caida(t, h_0, v_0)
+        Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+        h_0 es la altura inicial (en m)
+        v_0 es la velocidad inicial (en m/s)
+        Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+    
+
+
 .. code:: python
 
     t = 2.2
@@ -140,6 +237,13 @@ de dar la posición y la velocidad iniciales como argumento:
     v,h = caida(t, alt, v0)
     print(f'''Para caída desde {alt}m, con vel. inicial {v0}m/s, a t = {t}, 
     la velocidad será v={v:6.3}, y estará a una altura de {h:7.4}m''')
+
+
+.. parsed-literal::
+
+    Para caída desde 100m, con vel. inicial 12m/s, a t = 2.2, 
+    la velocidad será v= -9.56, y estará a una altura de   49.88m
+
 
 Notemos que podemos llamar a esta función de varias maneras. Podemos
 llamarla con la constante, o con una variable indistintamente. En este
@@ -152,12 +256,30 @@ a la velocidad inicial (v_0).
     v0 = 12
     caida(2.2, 100, v0)
 
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
 Pero en Python podemos usar el nombre de la variable en el llamado a la
 función. Por ejemplo:
 
 .. code:: python
 
     caida(v_0=v0,t=2.2, h_0=100)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
 
 Funciones con argumentos opcionales
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -213,9 +335,48 @@ libre:
     print( caida_libre(v0=0, h0=1000, t=14.2857137, g=1.625))
     print(caida_libre(14.2857137, 1000, 0, 1.625))
 
+
+.. parsed-literal::
+
+    (-19.6, 980.4)
+    (0.1999999999999993, 985.1)
+    (-19.6, 980.4)
+    (-139.99999426000002, 8.199999820135417e-05)
+    (-23.2142847625, 834.1836870663262)
+    (-23.2142847625, 834.1836870663262)
+
+
 .. code:: python
 
     help(caida_libre)
+
+
+.. parsed-literal::
+
+    Help on function caida_libre in module __main__:
+    
+    caida_libre(t, h0, v0=0.0, g=9.8)
+        Devuelve la velocidad y la posición de una partícula en
+        caída libre para condiciones iniciales dadas
+    
+        Parameters
+        ----------
+        t : float
+            el tiempo al que queremos realizar el cálculo
+        h0: float
+            la altura inicial
+        v0: float (opcional)
+            la velocidad inicial (default = 0.0)
+         g: float (opcional)
+            valor de la aceleración de la gravedad (default = 9.8)
+    
+        Returns
+        -------
+        (v,h):  tuple of floats
+             v= v0 - g*t
+             h= h0 - v0*t -g*t^2/2
+    
+
 
 .. note::  No se pueden usar argumentos con *nombre* antes de los
   argumentos requeridos (en este caso ``t``).
@@ -235,9 +396,31 @@ libre:
     caida_libre(t=2, 0.)
 
 
+
+::
+
+
+      Cell In[20], line 1
+        caida_libre(t=2, 0.)
+                           ^
+    SyntaxError: positional argument follows keyword argument
+
+
+
 .. code:: python
 
     caida_libre(2, v0=0., 1000)
+
+
+::
+
+
+      Cell In[21], line 1
+        caida_libre(2, v0=0., 1000)
+                                  ^
+    SyntaxError: positional argument follows keyword argument
+
+
 
 Número variable de argumentos y argumentos *keywords*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,13 +444,37 @@ que imprime sus argumentos:
 
     f(1)
 
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : (), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
 .. code:: python
 
     f(1,2,3)
 
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : (2, 3), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
 .. code:: python
 
     f(1,2,3,4,5,6)
+
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : (2, 3, 4, 5, 6), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
 
 En este ejemplo, el primer valor se asigna al argumento requerido ``p``,
 y los siguientes a una variable que se llama ``args``, que es del tipo
@@ -277,9 +484,25 @@ y los siguientes a una variable que se llama ``args``, que es del tipo
 
     f(1.5, 2, 3, 5, anteultimo = 9, ultimo = -1)
 
+
+.. parsed-literal::
+
+    p     : 1.5, tipo: <class 'float'>
+    args  : (2, 3, 5), tipo: <class 'tuple'>
+    kwargs: {'anteultimo': 9, 'ultimo': -1}, tipo: <class 'dict'>
+
+
 .. code:: python
 
     f(1, (1,2,3), 4, ultimo=-1)
+
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : ((1, 2, 3), 4), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
 
 En estas otras llamadas a la función, todos los argumentos que se pasan
 indicando el nombre se asignan a un diccionario.
@@ -314,9 +537,27 @@ función ``multiplica``:
 
     multiplica(2,5)
 
+
+
+
+.. parsed-literal::
+
+    10
+
+
+
 .. code:: python
 
     multiplica(2,3,5,9,4)
+
+
+
+
+.. parsed-literal::
+
+    1080
+
+
 
 --------------
 
