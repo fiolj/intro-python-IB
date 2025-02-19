@@ -1,0 +1,344 @@
+.. _clase_04:
+
+Clase 4: Funciones
+===================
+
+
+Las funciones son objetos
+-------------------------
+
+Veamos en Python qué es una función:
+
+.. code:: python
+
+    sum
+
+.. code:: python
+
+    print
+
+En **Python** ``function`` es un objeto, con una operación importante:
+podemos llamarla (ejecutarla), en la forma:
+``func(lista-de-argumentos)``
+
+Como con todos los objetos, podemos definir una variable y asignarle una
+función (algo así como lo que en C sería un puntero a funciones)
+
+En Python, las funciones son de *primera clase*, es decir que tienen las
+siguientes propiedades:
+
+-  Asignación a Variables: Se puede asignar la función a una variable,
+   lo cual permite referenciarla de manera similar a como se haría con
+   un número, cadena de texto u otro tipo de dato. Esto ocurre en Python
+   dado que todo elemento del lenguaje es un objeto.
+
+-  Pasaje como argumento: Se puede pasar la función como argumento a
+   otras funciones.
+
+-  Retorno de Funciones: Una función puede devolver otra función como
+   valor de retorno
+
+-  Almacenamiento en Estructuras de Datos: Se pueden almacenar funciones
+   en estructuras de datos como listas, diccionarios, y otros
+   contenedores.
+
+Veamos algunos ejemplos sencillos:
+
+.. code:: python
+
+    f = sum
+    help(f)
+
+.. code:: python
+
+    a = [1, 2, 3]
+
+.. code:: python
+
+    print('¿f is sum? ', f is sum)
+    print('f == sum? ', f == sum)
+    print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+Un uso bastante común es crear un diccionario donde los valores sean
+funciones:
+
+.. code:: python
+
+    funciones = {'suma': sum, 'mínimo': min, 'máximo': max}
+
+.. code:: python
+
+    funciones['suma']
+
+.. code:: python
+
+    funciones['suma'](a)
+
+.. code:: python
+
+    print(list(funciones.items()))
+
+.. code:: python
+
+    print('\n', 'a =', a,'\n')
+    for k, v in funciones.items():
+      print(k,"=", v(a))
+
+   En Python, se estila que las funciones así como las variables estén
+   escritas en minúsculas y usando *snake case*, es decir, usando un
+   guión bajo ’\_’ para separar las palabras que constituyen el nombre
+   de la función (o de la variable)
+
+.. code:: python
+
+   mi_variable = 3
+   primos = [2, 3, 5, 7]
+   def promedio(l):
+       v = sum(l)/len(l)
+       return v 
+
+.. code:: python
+
+    mi_variable = 3
+    primos = [2, 3, 5, 7]
+    def promedio(l):
+        v = sum(l)/len(l)
+        return v 
+    
+    promedio(primos)
+
+Definición básica de funciones
+------------------------------
+
+Ya vimos en la segunda clase como definir una función. Consideremos una
+función para calcular la velocidad y altura de una pelota en caída
+libre: Para dar mejor funcionalidad, le damos la posibilidad al usuario
+de dar la posición y la velocidad iniciales como argumento:
+
+.. code:: python
+
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida(t, h_0, v_0):
+        """Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+        h_0 es la altura inicial (en m)
+        v_0 es la velocidad inicial (en m/s)
+        Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+        """
+        v = v_0 - g*t
+        h = h_0 - v_0*t - g*t**2/2.
+        return v,h
+
+.. code:: python
+
+    help(caida)
+
+.. code:: python
+
+    t = 2.2
+    v0 = 12
+    alt = 100
+    v,h = caida(t, alt, v0)
+    print(f'''Para caída desde {alt}m, con vel. inicial {v0}m/s, a t = {t}, 
+    la velocidad será v={v:6.3}, y estará a una altura de {h:7.4}m''')
+
+Notemos que podemos llamar a esta función de varias maneras. Podemos
+llamarla con la constante, o con una variable indistintamente. En este
+caso, el argumento está definido por su posición. Luego siguen dos
+argumentos *nombrados*, la altura inicial (h_0) y el tercero corresponde
+a la velocidad inicial (v_0).
+
+.. code:: python
+
+    v0 = 12
+    caida(2.2, 100, v0)
+
+Pero en Python podemos usar el nombre de la variable en el llamado a la
+función. Por ejemplo:
+
+.. code:: python
+
+    caida(v_0=v0,t=2.2, h_0=100)
+
+Funciones con argumentos opcionales
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Las funciones pueden tener muchos argumentos. En **Python** pueden tener
+un número variable de argumentos y pueden tener valores por *default*
+para algunos de ellos. En el caso de la función de caída libre, vamos a
+extenderlo de manera que podamos usarlo fuera de la tierra (o en otras
+latitudes) permitiendo cambiar el valor de la gravedad y asumiendo que,
+a menos que lo pidamos explícitamente se trata de una simple caída
+libre:
+
+.. code:: python
+
+    def caida_libre(t, h0, v0=0., g=9.8):
+      """Devuelve la velocidad y la posición de una partícula en
+      caída libre para condiciones iniciales dadas
+    
+      Parameters
+      ----------
+      t : float
+          el tiempo al que queremos realizar el cálculo
+      h0: float 
+          la altura inicial
+      v0: float (opcional)
+          la velocidad inicial (default = 0.0)
+       g: float (opcional)
+          valor de la aceleración de la gravedad (default = 9.8)
+    
+      Returns
+      -------
+      (v,h):  tuple of floats
+           v= v0 - g*t
+           h= h0 - v0*t -g*t^2/2
+      
+      """
+      v = v0 - g*t
+      h = h0 - v0*t - g*t**2/2.
+      return v,h
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero
+    print( caida_libre(2, 1000))
+    # Desde 1000 metros con velocidad inicial hacia arriba
+    print(caida_libre(1, 1000, 10))
+    # Desde 1000 metros con velocidad inicial cero
+    print(caida_libre(h0=1000, t=2))
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre(v0=0, h0=1000, t=14.2857137))
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre(v0=0, h0=1000, t=14.2857137, g=1.625))
+    print(caida_libre(14.2857137, 1000, 0, 1.625))
+
+.. code:: python
+
+    help(caida_libre)
+
+.. note::  No se pueden usar argumentos con *nombre* antes de los
+  argumentos requeridos (en este caso ``t``).
+  
+  Tampoco se pueden usar argumentos sin su *nombre* después de haber
+  incluido alguno con su nombre. Por ejemplo no son válidas las llamadas:
+  
+  .. code:: python
+  
+     caida_libre(t=2, 0.)
+     caida_libre(2, v0=0., 1000)
+  
+  
+
+.. code:: python
+
+    caida_libre(t=2, 0.)
+
+
+.. code:: python
+
+    caida_libre(2, v0=0., 1000)
+
+Número variable de argumentos y argumentos *keywords*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Se pueden definir funciones que toman un número variable de argumentos
+(como una lista), o que aceptan un diccionario como argumento. Este tipo
+de argumentos se llaman argumentos *keyword* (``kwargs``). Una buena
+explicación se encuentra en el `Tutorial de la
+documentación <https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments>`__.
+Ahora vamos a dar una explicación rápida. Consideremos la función ``f``,
+que imprime sus argumentos:
+
+.. code:: python
+
+    def f(p, *args, **kwargs):
+      print( f"p     : {p}, tipo: {type(p)}")
+      print( f"args  : {args}, tipo: {type(args)}")
+      print( f"kwargs: {kwargs}, tipo: {type(kwargs)}")
+
+.. code:: python
+
+    f(1)
+
+.. code:: python
+
+    f(1,2,3)
+
+.. code:: python
+
+    f(1,2,3,4,5,6)
+
+En este ejemplo, el primer valor se asigna al argumento requerido ``p``,
+y los siguientes a una variable que se llama ``args``, que es del tipo
+``tuple``
+
+.. code:: python
+
+    f(1.5, 2, 3, 5, anteultimo = 9, ultimo = -1)
+
+.. code:: python
+
+    f(1, (1,2,3), 4, ultimo=-1)
+
+En estas otras llamadas a la función, todos los argumentos que se pasan
+indicando el nombre se asignan a un diccionario.
+
+Al definir una función, con la construcción ``*args`` se indica *“mapear
+todos los argumentos posicionales no explícitos a una tupla llamada
+``args``”*. Con ``**kwargs`` se indica “mapear todos los argumentos de
+palabra clave no explícitos a un diccionario llamado ``kwargs``”. Esta
+acción de convertir un conjunto de argumentos a una tuple o diccionario
+se conoce como *empacar* o *empaquetar* los datos.
+
+.. note::  Por supuesto, no es necesario utilizar los nombres “args” y
+  “kwargs”. Podemos llamarlas de cualquier otra manera! los simbolos que
+  indican cantidades arbitrarias de parametros son ``*`` y ``**``. Además
+  es posible poner parametros “comunes” antes de los parametros
+  arbitrarios, como se muestra en el ejemplo.
+  
+  
+
+Un ejemplo de una función con número variable de argumentos puede ser la
+función ``multiplica``:
+
+.. code:: python
+
+    def multiplica(*args):
+      s = 1
+      for a in args:
+        s *= a
+      return s
+
+.. code:: python
+
+    multiplica(2,5)
+
+.. code:: python
+
+    multiplica(2,3,5,9,4)
+
+--------------
+
+Ejercicios 4 (a)
+----------------
+
+1. Defina una función que dada una altura inicial ``h_0``, una velocidad
+   inicial ``v_0`` y un paso de tiempo ``delta_t``, devuelva:
+
+   -  una lista conteniendo los tiempos de cálculo,
+   -  otra lista con las posiciones *h(t)* (alturas) de la partícula en
+      función del tiempo.
+   -  una tercer lista con las velocidades *v(t)* de la partícula en
+      cada instante.
+
+   ..
+
+      Use las funciones definidas en la clase
+
+2. Escriba una función ``imprime_trayectoria`` que, obviamente, imprime
+   la trayectoria *h(t)* en forma clara y bella. Para esto puede
+   resultarle útil la función
+   ```zip`` <https://docs.python.org/3.3/library/functions.html#zip>`__.
+
+
