@@ -2,7 +2,7 @@
 
 
 ==========================================
-Clase 5: Más caracterícticas de Funciones
+Clase 5: Más características de Funciones
 ==========================================
 
 ================================
@@ -1359,6 +1359,13 @@ es el adecuado:
     print(f(3))
     print(g(3))
 
+
+.. parsed-literal::
+
+    20
+    16
+
+
 Los errores en notebooks
 ------------------------
 
@@ -1385,6 +1392,15 @@ recalcular otra celda. Veamos un
 
     prom(data)
 
+
+
+
+.. parsed-literal::
+
+    2.5
+
+
+
 .. figure::
    https://assets-global.website-files.com/5f3c19f18169b62a0d0bf387/60d33beacf4ba7263a23cd79_qh6ImC4NPdyPbvn-7ns8FYsgOskDPDWLnX31mLCOgSwpX_SQgmo8krqdg4e6XAnSbqRAtZMYqlf7UTvlHiXgt5YtMwbt9IRY1fAbOjyq5hARui-xEQUgI48EOjhJGuIsSFDg90L6.jpeg
    :alt: Más código
@@ -1395,6 +1411,12 @@ recalcular otra celda. Veamos un
 
     data = "Some data"
     print(len(data))
+
+
+.. parsed-literal::
+
+    9
+
 
 Mutabilidad
 -----------
@@ -1504,6 +1526,14 @@ acepta funciones de orden superior.
     print(b)
     print(c)
 
+
+.. parsed-literal::
+
+    4
+    5
+    6
+
+
 .. code:: python
 
     def h(x):
@@ -1512,6 +1542,12 @@ acepta funciones de orden superior.
 .. code:: python
 
     print(h(3))
+
+
+.. parsed-literal::
+
+    20
+
 
 Si se tiene funciones puras, es posible componerlas
 
@@ -1527,6 +1563,12 @@ Si se tiene funciones puras, es posible componerlas
 .. code:: python
 
     print(next2(a))
+
+
+.. parsed-literal::
+
+    6
+
 
 Inmutabilidad
 -------------
@@ -1551,6 +1593,12 @@ datos…**
 
     print(cube(2))
 
+
+.. parsed-literal::
+
+    8
+
+
 Nótese que Python NO chequea los tipos de datos, no tiene manera en
 forma nativa de hacerlo. Por eso puedo ejecutar la función ``cube`` con
 floats, por ejemplo:
@@ -1558,6 +1606,12 @@ floats, por ejemplo:
 .. code:: python
 
     print(cube(3.0))
+
+
+.. parsed-literal::
+
+    27.0
+
 
 
 
@@ -1586,16 +1640,37 @@ funciones recursivas, o se utilizan funciones de orden superior:
     print(pares)
 
 
+
+.. parsed-literal::
+
+    [2, 4, 6]
+
+
 .. code:: python
 
     # Filter usando list comprehension
     list(x for x in l if es_par(x))
+
+
+
+
+.. parsed-literal::
+
+    [2, 4, 6]
+
+
 
 .. code:: python
 
     # Map
     siguientes = list(map(next,l))
     print(siguientes)
+
+
+.. parsed-literal::
+
+    [2, 3, 4, 5, 6, 7]
+
 
 El módulo ``functools`` provee la función ``reduce``, que complementa a
 ``map`` y ``filter``.
@@ -1612,15 +1687,46 @@ El módulo ``functools`` provee la función ``reduce``, que complementa a
     
 
 
+
+.. parsed-literal::
+
+    21
+
+
 .. code:: python
 
     help(reduce)
+
+
+.. parsed-literal::
+
+    Help on built-in function reduce in module _functools:
+    
+    reduce(...)
+        reduce(function, iterable[, initial], /) -> value
+    
+        Apply a function of two arguments cumulatively to the items of an iterable, from left to right.
+    
+        This effectively reduces the iterable to a single value.  If initial is present,
+        it is placed before the items of the iterable in the calculation, and serves as
+        a default when the iterable is empty.
+    
+        For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5])
+        calculates ((((1 + 2) + 3) + 4) + 5).
+    
+
 
 .. code:: python
 
     # Suma usando el predicado como lambda
     otra_suma = reduce(lambda x,y: x+y, l)
     print(otra_suma)
+
+
+.. parsed-literal::
+
+    21
+
 
 .. code:: python
 
@@ -1631,12 +1737,24 @@ El módulo ``functools`` provee la función ``reduce``, que complementa a
     y_otra_suma = reduce(add,l)
     print(y_otra_suma)
 
+
+.. parsed-literal::
+
+    21
+
+
 La suma de los cuadrados de una lista:
 
 .. code:: python
 
     suma_cuadrados = reduce(lambda x,y: x+y, map(square,l))
     print(suma_cuadrados)
+
+
+.. parsed-literal::
+
+    91
+
 
 --------------
 
