@@ -1255,6 +1255,262 @@ La instalamos con
 
     !mypy --help
 
+
+.. parsed-literal::
+
+    usage: mypy [-h] [-v] [-V] [more options; see below]
+                [-m MODULE] [-p PACKAGE] [-c PROGRAM_TEXT] [files ...]
+    
+    Mypy is a program that will type check your Python code.
+    
+    Pass in any files or folders you want to type check. Mypy will
+    recursively traverse any provided folders to find .py files:
+    
+        $ mypy my_program.py my_src_folder
+    
+    For more information on getting started, see:
+    
+    - https://mypy.readthedocs.io/en/stable/getting_started.html
+    
+    For more details on both running mypy and using the flags below, see:
+    
+    - https://mypy.readthedocs.io/en/stable/running_mypy.html
+    - https://mypy.readthedocs.io/en/stable/command_line.html
+    
+    You can also use a config file to configure mypy instead of using
+    command line flags. For more details, see:
+    
+    - https://mypy.readthedocs.io/en/stable/config_file.html
+    
+    options:
+      --enable-incomplete-feature {InlineTypedDict,PreciseTupleTypes}
+                                Enable support of incomplete/experimental features for early preview
+    
+    Optional arguments:
+      -h, --help                Show this help message and exit
+      -v, --verbose             More verbose messages
+      -V, --version             Show program's version number and exit
+      -O, --output FORMAT       Set a custom output format
+    
+    Config file:
+      Use a config file instead of command line arguments. This is useful if you are using many flags or
+      want to set different options per each module.
+    
+      --config-file CONFIG_FILE
+                                Configuration file, must have a [mypy] section (defaults to mypy.ini,
+                                .mypy.ini, pyproject.toml, setup.cfg, ~/.config/mypy/config, ~/.mypy.ini)
+      --warn-unused-configs     Warn about unused '[mypy-<pattern>]' or '[[tool.mypy.overrides]]' config
+                                sections (inverse: --no-warn-unused-configs)
+    
+    Import discovery:
+      Configure how imports are discovered and followed.
+    
+      --no-namespace-packages   Disable support for namespace packages (PEP 420, __init__.py-less)
+                                (inverse: --namespace-packages)
+      --ignore-missing-imports  Silently ignore imports of missing modules
+      --follow-untyped-imports  Typecheck modules without stubs or py.typed marker
+      --follow-imports {normal,silent,skip,error}
+                                How to treat imports (default normal)
+      --python-executable EXECUTABLE
+                                Python executable used for finding PEP 561 compliant installed packages
+                                and stubs
+      --no-site-packages        Do not search for installed PEP 561 compliant packages
+      --no-silence-site-packages
+                                Do not silence errors in PEP 561 compliant installed packages
+      --junit-format {global,per_file}
+                                If --junit-xml is set, specifies format. global: single test with all
+                                errors; per_file: one test entry per file with failures
+    
+    Platform configuration:
+      Type check code assuming it will be run under certain runtime conditions. By default, mypy assumes
+      your code will be run using the same operating system and Python version you are using to run mypy
+      itself.
+    
+      --python-version x.y      Type check code assuming it will be running on Python x.y
+      --platform PLATFORM       Type check special-cased code for the given OS platform (defaults to
+                                sys.platform)
+      --always-true NAME        Additional variable to be considered True (may be repeated)
+      --always-false NAME       Additional variable to be considered False (may be repeated)
+    
+    Disallow dynamic typing:
+      Disallow the use of the dynamic 'Any' type under certain conditions.
+    
+      --disallow-any-expr       Disallow all expressions that have type Any
+      --disallow-any-decorated  Disallow functions that have Any in their signature after decorator
+                                transformation
+      --disallow-any-explicit   Disallow explicit Any in type positions
+      --disallow-any-generics   Disallow usage of generic types that do not specify explicit type
+                                parameters (inverse: --allow-any-generics)
+      --disallow-any-unimported
+                                Disallow Any types resulting from unfollowed imports (inverse: --allow-
+                                any-unimported)
+      --disallow-subclassing-any
+                                Disallow subclassing values of type 'Any' when defining classes (inverse:
+                                --allow-subclassing-any)
+    
+    Untyped definitions and calls:
+      Configure how untyped definitions and calls are handled. Note: by default, mypy ignores any
+      untyped function definitions and assumes any calls to such functions have a return type of 'Any'.
+    
+      --disallow-untyped-calls  Disallow calling functions without type annotations from functions with
+                                type annotations (inverse: --allow-untyped-calls)
+      --untyped-calls-exclude MODULE
+                                Disable --disallow-untyped-calls for functions/methods coming from
+                                specific package, module, or class
+      --disallow-untyped-defs   Disallow defining functions without type annotations or with incomplete
+                                type annotations (inverse: --allow-untyped-defs)
+      --disallow-incomplete-defs
+                                Disallow defining functions with incomplete type annotations (while still
+                                allowing entirely unannotated definitions) (inverse: --allow-incomplete-
+                                defs)
+      --check-untyped-defs      Type check the interior of functions without type annotations (inverse:
+                                --no-check-untyped-defs)
+      --disallow-untyped-decorators
+                                Disallow decorating typed functions with untyped decorators (inverse:
+                                --allow-untyped-decorators)
+    
+    None and Optional handling:
+      Adjust how values of type 'None' are handled. For more context on how mypy handles values of type
+      'None', see: https://mypy.readthedocs.io/en/stable/kinds_of_types.html#no-strict-optional
+    
+      --implicit-optional       Assume arguments with default values of None are Optional (inverse: --no-
+                                implicit-optional)
+      --no-strict-optional      Disable strict Optional checks (inverse: --strict-optional)
+    
+    Configuring warnings:
+      Detect code that is sound but redundant or problematic.
+    
+      --warn-redundant-casts    Warn about casting an expression to its inferred type (inverse: --no-warn-
+                                redundant-casts)
+      --warn-unused-ignores     Warn about unneeded '# type: ignore' comments (inverse: --no-warn-unused-
+                                ignores)
+      --no-warn-no-return       Do not warn about functions that end without returning (inverse: --warn-
+                                no-return)
+      --warn-return-any         Warn about returning values of type Any from non-Any typed functions
+                                (inverse: --no-warn-return-any)
+      --warn-unreachable        Warn about statements or expressions inferred to be unreachable (inverse:
+                                --no-warn-unreachable)
+      --report-deprecated-as-note
+                                Report importing or using deprecated features as notes instead of errors
+                                (inverse: --no-report-deprecated-as-note)
+    
+    Miscellaneous strictness flags:
+      --allow-untyped-globals   Suppress toplevel errors caused by missing annotations (inverse:
+                                --disallow-untyped-globals)
+      --allow-redefinition      Allow unconditional variable redefinition with a new type (inverse:
+                                --disallow-redefinition)
+      --no-implicit-reexport    Treat imports as private unless aliased (inverse: --implicit-reexport)
+      --strict-equality         Prohibit equality, identity, and container checks for non-overlapping
+                                types (inverse: --no-strict-equality)
+      --extra-checks            Enable additional checks that are technically correct but may be
+                                impractical in real code. For example, this prohibits partial overlap in
+                                TypedDict updates, and makes arguments prepended via Concatenate
+                                positional-only (inverse: --no-extra-checks)
+      --strict                  Strict mode; enables the following flags: --warn-unused-configs,
+                                --disallow-any-generics, --disallow-subclassing-any, --disallow-untyped-
+                                calls, --disallow-untyped-defs, --disallow-incomplete-defs, --check-
+                                untyped-defs, --disallow-untyped-decorators, --warn-redundant-casts,
+                                --warn-unused-ignores, --warn-return-any, --no-implicit-reexport,
+                                --strict-equality, --extra-checks
+      --disable-error-code NAME
+                                Disable a specific error code
+      --enable-error-code NAME  Enable a specific error code
+    
+    Configuring error messages:
+      Adjust the amount of detail shown in error messages.
+    
+      --show-error-context      Precede errors with "note:" messages explaining context (inverse: --hide-
+                                error-context)
+      --show-column-numbers     Show column numbers in error messages (inverse: --hide-column-numbers)
+      --show-error-end          Show end line/end column numbers in error messages. This implies --show-
+                                column-numbers (inverse: --hide-error-end)
+      --hide-error-codes        Hide error codes in error messages (inverse: --show-error-codes)
+      --show-error-code-links   Show links to error code documentation (inverse: --hide-error-code-links)
+      --pretty                  Use visually nicer output in error messages: Use soft word wrap, show
+                                source code snippets, and show error location markers (inverse: --no-
+                                pretty)
+      --no-color-output         Do not colorize error messages (inverse: --color-output)
+      --no-error-summary        Do not show error stats summary (inverse: --error-summary)
+      --show-absolute-path      Show absolute paths to files (inverse: --hide-absolute-path)
+    
+    Incremental mode:
+      Adjust how mypy incrementally type checks and caches modules. Mypy caches type information about
+      modules into a cache to let you speed up future invocations of mypy. Also see mypy's daemon mode:
+      mypy.readthedocs.io/en/stable/mypy_daemon.html#mypy-daemon
+    
+      --no-incremental          Disable module cache (inverse: --incremental)
+      --cache-dir DIR           Store module cache info in the given folder in incremental mode (defaults
+                                to '.mypy_cache')
+      --sqlite-cache            Use a sqlite database to store the cache (inverse: --no-sqlite-cache)
+      --cache-fine-grained      Include fine-grained dependency information in the cache for the mypy
+                                daemon
+      --skip-version-check      Allow using cache written by older mypy version
+      --skip-cache-mtime-checks
+                                Skip cache internal consistency checks based on mtime
+    
+    Advanced options:
+      Debug and customize mypy internals.
+    
+      --pdb                     Invoke pdb on fatal error
+      --show-traceback, --tb    Show traceback on fatal error
+      --raise-exceptions        Raise exception on fatal error
+      --custom-typing-module MODULE
+                                Use a custom typing module
+      --old-type-inference      Disable new experimental type inference algorithm
+      --custom-typeshed-dir DIR
+                                Use the custom typeshed in DIR
+      --warn-incomplete-stub    Warn if missing type annotation in typeshed, only relevant with
+                                --disallow-untyped-defs or --disallow-incomplete-defs enabled (inverse:
+                                --no-warn-incomplete-stub)
+      --shadow-file SOURCE_FILE SHADOW_FILE
+                                When encountering SOURCE_FILE, read and type check the contents of
+                                SHADOW_FILE instead.
+    
+    Report generation:
+      Generate a report in the specified format.
+    
+      --any-exprs-report DIR
+      --cobertura-xml-report DIR
+      --html-report DIR
+      --linecount-report DIR
+      --linecoverage-report DIR
+      --lineprecision-report DIR
+      --txt-report DIR
+      --xml-report DIR
+      --xslt-html-report DIR
+      --xslt-txt-report DIR
+    
+    Miscellaneous:
+      --junit-xml JUNIT_XML     Write junit.xml to the given file
+      --find-occurrences CLASS.MEMBER
+                                Print out all usages of a class member (experimental)
+      --scripts-are-modules     Script x becomes module x instead of __main__
+      --install-types           Install detected missing library stub packages using pip (inverse: --no-
+                                install-types)
+      --non-interactive         Install stubs without asking for confirmation and hide errors, with
+                                --install-types (inverse: --interactive)
+    
+    Running code:
+      Specify the code you want to type check. For more details, see
+      mypy.readthedocs.io/en/stable/running_mypy.html#running-mypy
+    
+      --explicit-package-bases  Use current directory and MYPYPATH to determine module names of files
+                                passed (inverse: --no-explicit-package-bases)
+      --exclude PATTERN         Regular expression to match file names, directory names or paths which
+                                mypy should ignore while recursively discovering files to check, e.g.
+                                --exclude '/setup\.py$'. May be specified more than once, eg. --exclude a
+                                --exclude b
+      -m, --module MODULE       Type-check module; can repeat for more modules
+      -p, --package PACKAGE     Type-check package recursively; can be repeated
+      -c, --command PROGRAM_TEXT
+                                Type-check program passed in as string
+      files                     Type-check given files or directories
+    
+    Environment variables:
+      Define MYPYPATH for additional module search path entries.
+      Define MYPY_CACHE_DIR to override configuration cache_dir path.
+
+
    Recuerde que uno puede acceder a todos los comandos de la terminal
    usando el símbolo de exclamación como hicimos arriba. También puede
    ejecutar el comando en una terminal como
@@ -1304,11 +1560,23 @@ en el que copió el código.
 
     !python ../scripts/mypy_example.py
 
+
+.. parsed-literal::
+
+    python: can't open file '/home/fiol/Clases/IntPython/clases-python/clases/../scripts/mypy_example.py': [Errno 2] No such file or directory
+
+
 Ahora hagamos lo mismo con ``mypy``:
 
 .. code:: python
 
     !mypy ../scripts/mypy_example.py
+
+
+.. parsed-literal::
+
+    mypy: can't read file '../scripts/mypy_example.py': No such file or directory
+
 
 ``MyPy`` y notebooks
 --------------------
@@ -1332,10 +1600,72 @@ Luego cargamos la extensión a nuestro notebook con el comando mágico
     %load_ext nb_mypy
 
 
-.. parsed-literal::
+::
 
-    The nb_mypy extension is already loaded. To reload it, use:
-      %reload_ext nb_mypy
+
+    ---------------------------------------------------------------------------
+
+    ModuleNotFoundError                       Traceback (most recent call last)
+
+    Cell In[4], line 1
+    ----> 1 get_ipython().run_line_magic('load_ext', 'nb_mypy')
+
+
+    File /usr/lib/python3.13/site-packages/IPython/core/interactiveshell.py:2480, in InteractiveShell.run_line_magic(self, magic_name, line, _stack_depth)
+       2478     kwargs['local_ns'] = self.get_local_scope(stack_depth)
+       2479 with self.builtin_trap:
+    -> 2480     result = fn(*args, **kwargs)
+       2482 # The code below prevents the output from being displayed
+       2483 # when using magics with decorator @output_can_be_silenced
+       2484 # when the last Python token in the expression is a ';'.
+       2485 if getattr(fn, magic.MAGIC_OUTPUT_CAN_BE_SILENCED, False):
+
+
+    File /usr/lib/python3.13/site-packages/IPython/core/magics/extension.py:33, in ExtensionMagics.load_ext(self, module_str)
+         31 if not module_str:
+         32     raise UsageError('Missing module name.')
+    ---> 33 res = self.shell.extension_manager.load_extension(module_str)
+         35 if res == 'already loaded':
+         36     print("The %s extension is already loaded. To reload it, use:" % module_str)
+
+
+    File /usr/lib/python3.13/site-packages/IPython/core/extensions.py:62, in ExtensionManager.load_extension(self, module_str)
+         55 """Load an IPython extension by its module name.
+         56 
+         57 Returns the string "already loaded" if the extension is already loaded,
+         58 "no load function" if the module doesn't have a load_ipython_extension
+         59 function, or None if it succeeded.
+         60 """
+         61 try:
+    ---> 62     return self._load_extension(module_str)
+         63 except ModuleNotFoundError:
+         64     if module_str in BUILTINS_EXTS:
+
+
+    File /usr/lib/python3.13/site-packages/IPython/core/extensions.py:77, in ExtensionManager._load_extension(self, module_str)
+         75 with self.shell.builtin_trap:
+         76     if module_str not in sys.modules:
+    ---> 77         mod = import_module(module_str)
+         78     mod = sys.modules[module_str]
+         79     if self._call_load_ipython_extension(mod):
+
+
+    File /usr/lib64/python3.13/importlib/__init__.py:88, in import_module(name, package)
+         86             break
+         87         level += 1
+    ---> 88 return _bootstrap._gcd_import(name[level:], package, level)
+
+
+    File <frozen importlib._bootstrap>:1387, in _gcd_import(name, package, level)
+
+
+    File <frozen importlib._bootstrap>:1360, in _find_and_load(name, import_)
+
+
+    File <frozen importlib._bootstrap>:1324, in _find_and_load_unlocked(name, import_)
+
+
+    ModuleNotFoundError: No module named 'nb_mypy'
 
 
 De esta forma, de ahora en más mypy estará chequeando los tipos de datos
@@ -1370,8 +1700,59 @@ anotados:
 
 .. parsed-literal::
 
-    <cell>5: [1m[31merror:[m Argument 1 to [m[1m"cube"[m has incompatible type [m[1m"float"[m; expected [m[1m"int"[m  [m[33m[arg-type][m
-    <cell>12: [1m[31merror:[m Argument 1 to [m[1m"Hola"[m has incompatible type [m[1m"int"[m; expected [m[1m"str"[m  [m[33m[arg-type][m
+    El cubo de 2 es: 8
+    El cubo de 3.0 es: 27.0
+    Hola('Juan'): Hola Juan
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[6], line 10
+          7 print(f"El cubo de 3.0 es: {b}")
+          9 print(f"Hola('Juan'): {Hola('Juan')}")
+    ---> 10 print(f"Hola2(3): {Hola2(3)}") # Esto da un error de concatenación
+         12 print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
+
+
+    Cell In[5], line 8, in Hola2(name)
+          7 def Hola2(name):
+    ----> 8     return 'Hola ' + name
+
+
+    TypeError: can only concatenate str (not "int") to str
+
+
+Podemos evitar el control de tipos con:
+
+.. code:: python
+
+    %nb_mypy Off
+
+
+.. parsed-literal::
+
+    UsageError: Line magic function `%nb_mypy` not found.
+
+
+.. code:: python
+
+    a = cube(2)
+    
+    print(f"El cubo de 2 es: {a}")
+    
+    b = cube(3.0)   # Esto no da error en Python, mypy si lo captura
+    
+    print(f"El cubo de 3.0 es: {b}")
+    
+    print(f"Hola('Juan'): {Hola('Juan')}")
+    print(f"Hola2(3): {Hola2(3)}") # Esto da un error de concatenación
+    
+    print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
 
 
 .. parsed-literal::
@@ -1395,34 +1776,13 @@ anotados:
          12 print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
 
 
-    Cell In[7], line 8, in Hola2(name)
+    Cell In[5], line 8, in Hola2(name)
           7 def Hola2(name):
     ----> 8     return 'Hola ' + name
 
 
     TypeError: can only concatenate str (not "int") to str
 
-
-Podemos evitar el control de tipos con:
-
-.. code:: python
-
-    %nb_mypy Off
-
-.. code:: python
-
-    a = cube(2)
-    
-    print(f"El cubo de 2 es: {a}")
-    
-    b = cube(3.0)   # Esto no da error en Python, mypy si lo captura
-    
-    print(f"El cubo de 3.0 es: {b}")
-    
-    print(f"Hola('Juan'): {Hola('Juan')}")
-    print(f"Hola2(3): {Hola2(3)}") # Esto da un error de concatenación
-    
-    print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
 
    El módulo ``nb_mypy`` puede utilizarse en cualquier editor de
    notebooks, ya sea Jupyter, Jupyterlabs, VS Code, etc.

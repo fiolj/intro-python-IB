@@ -14,7 +14,7 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=e2bb6099"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/translations.js?v=efdbd0b9"></script>
     <script src="_static/js/theme.js"></script>
@@ -1093,13 +1093,265 @@ tipos.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>install<span class="w"> </span>-c<span class="w"> </span>conda-forge<span class="w"> </span>mypy
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="err">!</span><span class="n">mypy</span> <span class="o">--</span><span class="n">help</span>
-
-<span class="n">Recuerde</span> <span class="n">que</span> <span class="n">uno</span> <span class="n">puede</span> <span class="n">acceder</span> <span class="n">a</span> <span class="n">todos</span> <span class="n">los</span> <span class="n">comandos</span> <span class="n">de</span> <span class="n">la</span> <span class="n">terminal</span>
-<span class="n">usando</span> <span class="n">el</span> <span class="n">símbolo</span> <span class="n">de</span> <span class="n">exclamación</span> <span class="n">como</span> <span class="n">hicimos</span> <span class="n">arriba</span><span class="o">.</span> <span class="n">También</span> <span class="n">puede</span>
-<span class="n">ejecutar</span> <span class="n">el</span> <span class="n">comando</span> <span class="n">en</span> <span class="n">una</span> <span class="n">terminal</span> <span class="n">como</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">mypy</span> <span class="o">--</span><span class="n">help</span>
 </pre></div>
 </div>
+<pre class="literal-block"> usage: mypy [-h] [-v] [-V] [more options; see below]
+             [-m MODULE] [-p PACKAGE] [-c PROGRAM_TEXT] [files ...]
+
+ Mypy is a program that will type check your Python code.
+
+ Pass in any files or folders you want to type check. Mypy will
+ recursively traverse any provided folders to find .py files:
+
+     $ mypy my_program.py my_src_folder
+
+ For more information on getting started, see:
+
+ - <a class="reference external" href="https://mypy.readthedocs.io/en/stable/getting_started.html">https://mypy.readthedocs.io/en/stable/getting_started.html</a>
+
+ For more details on both running mypy and using the flags below, see:
+
+ - <a class="reference external" href="https://mypy.readthedocs.io/en/stable/running_mypy.html">https://mypy.readthedocs.io/en/stable/running_mypy.html</a>
+ - <a class="reference external" href="https://mypy.readthedocs.io/en/stable/command_line.html">https://mypy.readthedocs.io/en/stable/command_line.html</a>
+
+ You can also use a config file to configure mypy instead of using
+ command line flags. For more details, see:
+
+ - <a class="reference external" href="https://mypy.readthedocs.io/en/stable/config_file.html">https://mypy.readthedocs.io/en/stable/config_file.html</a>
+
+ options:
+   --enable-incomplete-feature {InlineTypedDict,PreciseTupleTypes}
+                             Enable support of incomplete/experimental features for early preview
+
+ Optional arguments:
+   -h, --help                Show this help message and exit
+   -v, --verbose             More verbose messages
+   -V, --version             Show program's version number and exit
+   -O, --output FORMAT       Set a custom output format
+
+ Config file:
+   Use a config file instead of command line arguments. This is useful if you are using many flags or
+   want to set different options per each module.
+
+   --config-file CONFIG_FILE
+                             Configuration file, must have a [mypy] section (defaults to mypy.ini,
+                             .mypy.ini, pyproject.toml, setup.cfg, ~/.config/mypy/config, ~/.mypy.ini)
+   --warn-unused-configs     Warn about unused '[mypy-&lt;pattern&gt;]' or '[[tool.mypy.overrides]]' config
+                             sections (inverse: --no-warn-unused-configs)
+
+ Import discovery:
+   Configure how imports are discovered and followed.
+
+   --no-namespace-packages   Disable support for namespace packages (PEP 420, __init__.py-less)
+                             (inverse: --namespace-packages)
+   --ignore-missing-imports  Silently ignore imports of missing modules
+   --follow-untyped-imports  Typecheck modules without stubs or py.typed marker
+   --follow-imports {normal,silent,skip,error}
+                             How to treat imports (default normal)
+   --python-executable EXECUTABLE
+                             Python executable used for finding PEP 561 compliant installed packages
+                             and stubs
+   --no-site-packages        Do not search for installed PEP 561 compliant packages
+   --no-silence-site-packages
+                             Do not silence errors in PEP 561 compliant installed packages
+   --junit-format {global,per_file}
+                             If --junit-xml is set, specifies format. global: single test with all
+                             errors; per_file: one test entry per file with failures
+
+ Platform configuration:
+   Type check code assuming it will be run under certain runtime conditions. By default, mypy assumes
+   your code will be run using the same operating system and Python version you are using to run mypy
+   itself.
+
+   --python-version x.y      Type check code assuming it will be running on Python x.y
+   --platform PLATFORM       Type check special-cased code for the given OS platform (defaults to
+                             sys.platform)
+   --always-true NAME        Additional variable to be considered True (may be repeated)
+   --always-false NAME       Additional variable to be considered False (may be repeated)
+
+ Disallow dynamic typing:
+   Disallow the use of the dynamic 'Any' type under certain conditions.
+
+   --disallow-any-expr       Disallow all expressions that have type Any
+   --disallow-any-decorated  Disallow functions that have Any in their signature after decorator
+                             transformation
+   --disallow-any-explicit   Disallow explicit Any in type positions
+   --disallow-any-generics   Disallow usage of generic types that do not specify explicit type
+                             parameters (inverse: --allow-any-generics)
+   --disallow-any-unimported
+                             Disallow Any types resulting from unfollowed imports (inverse: --allow-
+                             any-unimported)
+   --disallow-subclassing-any
+                             Disallow subclassing values of type 'Any' when defining classes (inverse:
+                             --allow-subclassing-any)
+
+ Untyped definitions and calls:
+   Configure how untyped definitions and calls are handled. Note: by default, mypy ignores any
+   untyped function definitions and assumes any calls to such functions have a return type of 'Any'.
+
+   --disallow-untyped-calls  Disallow calling functions without type annotations from functions with
+                             type annotations (inverse: --allow-untyped-calls)
+   --untyped-calls-exclude MODULE
+                             Disable --disallow-untyped-calls for functions/methods coming from
+                             specific package, module, or class
+   --disallow-untyped-defs   Disallow defining functions without type annotations or with incomplete
+                             type annotations (inverse: --allow-untyped-defs)
+   --disallow-incomplete-defs
+                             Disallow defining functions with incomplete type annotations (while still
+                             allowing entirely unannotated definitions) (inverse: --allow-incomplete-
+                             defs)
+   --check-untyped-defs      Type check the interior of functions without type annotations (inverse:
+                             --no-check-untyped-defs)
+   --disallow-untyped-decorators
+                             Disallow decorating typed functions with untyped decorators (inverse:
+                             --allow-untyped-decorators)
+
+ None and Optional handling:
+   Adjust how values of type 'None' are handled. For more context on how mypy handles values of type
+   'None', see: <a class="reference external" href="https://mypy.readthedocs.io/en/stable/kinds_of_types.html#no-strict-optional">https://mypy.readthedocs.io/en/stable/kinds_of_types.html#no-strict-optional</a>
+
+   --implicit-optional       Assume arguments with default values of None are Optional (inverse: --no-
+                             implicit-optional)
+   --no-strict-optional      Disable strict Optional checks (inverse: --strict-optional)
+
+ Configuring warnings:
+   Detect code that is sound but redundant or problematic.
+
+   --warn-redundant-casts    Warn about casting an expression to its inferred type (inverse: --no-warn-
+                             redundant-casts)
+   --warn-unused-ignores     Warn about unneeded '# type: ignore' comments (inverse: --no-warn-unused-
+                             ignores)
+   --no-warn-no-return       Do not warn about functions that end without returning (inverse: --warn-
+                             no-return)
+   --warn-return-any         Warn about returning values of type Any from non-Any typed functions
+                             (inverse: --no-warn-return-any)
+   --warn-unreachable        Warn about statements or expressions inferred to be unreachable (inverse:
+                             --no-warn-unreachable)
+   --report-deprecated-as-note
+                             Report importing or using deprecated features as notes instead of errors
+                             (inverse: --no-report-deprecated-as-note)
+
+ Miscellaneous strictness flags:
+   --allow-untyped-globals   Suppress toplevel errors caused by missing annotations (inverse:
+                             --disallow-untyped-globals)
+   --allow-redefinition      Allow unconditional variable redefinition with a new type (inverse:
+                             --disallow-redefinition)
+   --no-implicit-reexport    Treat imports as private unless aliased (inverse: --implicit-reexport)
+   --strict-equality         Prohibit equality, identity, and container checks for non-overlapping
+                             types (inverse: --no-strict-equality)
+   --extra-checks            Enable additional checks that are technically correct but may be
+                             impractical in real code. For example, this prohibits partial overlap in
+                             TypedDict updates, and makes arguments prepended via Concatenate
+                             positional-only (inverse: --no-extra-checks)
+   --strict                  Strict mode; enables the following flags: --warn-unused-configs,
+                             --disallow-any-generics, --disallow-subclassing-any, --disallow-untyped-
+                             calls, --disallow-untyped-defs, --disallow-incomplete-defs, --check-
+                             untyped-defs, --disallow-untyped-decorators, --warn-redundant-casts,
+                             --warn-unused-ignores, --warn-return-any, --no-implicit-reexport,
+                             --strict-equality, --extra-checks
+   --disable-error-code NAME
+                             Disable a specific error code
+   --enable-error-code NAME  Enable a specific error code
+
+ Configuring error messages:
+   Adjust the amount of detail shown in error messages.
+
+   --show-error-context      Precede errors with &quot;note:&quot; messages explaining context (inverse: --hide-
+                             error-context)
+   --show-column-numbers     Show column numbers in error messages (inverse: --hide-column-numbers)
+   --show-error-end          Show end line/end column numbers in error messages. This implies --show-
+                             column-numbers (inverse: --hide-error-end)
+   --hide-error-codes        Hide error codes in error messages (inverse: --show-error-codes)
+   --show-error-code-links   Show links to error code documentation (inverse: --hide-error-code-links)
+   --pretty                  Use visually nicer output in error messages: Use soft word wrap, show
+                             source code snippets, and show error location markers (inverse: --no-
+                             pretty)
+   --no-color-output         Do not colorize error messages (inverse: --color-output)
+   --no-error-summary        Do not show error stats summary (inverse: --error-summary)
+   --show-absolute-path      Show absolute paths to files (inverse: --hide-absolute-path)
+
+ Incremental mode:
+   Adjust how mypy incrementally type checks and caches modules. Mypy caches type information about
+   modules into a cache to let you speed up future invocations of mypy. Also see mypy's daemon mode:
+   mypy.readthedocs.io/en/stable/mypy_daemon.html#mypy-daemon
+
+   --no-incremental          Disable module cache (inverse: --incremental)
+   --cache-dir DIR           Store module cache info in the given folder in incremental mode (defaults
+                             to '.mypy_cache')
+   --sqlite-cache            Use a sqlite database to store the cache (inverse: --no-sqlite-cache)
+   --cache-fine-grained      Include fine-grained dependency information in the cache for the mypy
+                             daemon
+   --skip-version-check      Allow using cache written by older mypy version
+   --skip-cache-mtime-checks
+                             Skip cache internal consistency checks based on mtime
+
+ Advanced options:
+   Debug and customize mypy internals.
+
+   --pdb                     Invoke pdb on fatal error
+   --show-traceback, --tb    Show traceback on fatal error
+   --raise-exceptions        Raise exception on fatal error
+   --custom-typing-module MODULE
+                             Use a custom typing module
+   --old-type-inference      Disable new experimental type inference algorithm
+   --custom-typeshed-dir DIR
+                             Use the custom typeshed in DIR
+   --warn-incomplete-stub    Warn if missing type annotation in typeshed, only relevant with
+                             --disallow-untyped-defs or --disallow-incomplete-defs enabled (inverse:
+                             --no-warn-incomplete-stub)
+   --shadow-file SOURCE_FILE SHADOW_FILE
+                             When encountering SOURCE_FILE, read and type check the contents of
+                             SHADOW_FILE instead.
+
+ Report generation:
+   Generate a report in the specified format.
+
+   --any-exprs-report DIR
+   --cobertura-xml-report DIR
+   --html-report DIR
+   --linecount-report DIR
+   --linecoverage-report DIR
+   --lineprecision-report DIR
+   --txt-report DIR
+   --xml-report DIR
+   --xslt-html-report DIR
+   --xslt-txt-report DIR
+
+ Miscellaneous:
+   --junit-xml JUNIT_XML     Write junit.xml to the given file
+   --find-occurrences CLASS.MEMBER
+                             Print out all usages of a class member (experimental)
+   --scripts-are-modules     Script x becomes module x instead of __main__
+   --install-types           Install detected missing library stub packages using pip (inverse: --no-
+                             install-types)
+   --non-interactive         Install stubs without asking for confirmation and hide errors, with
+                             --install-types (inverse: --interactive)
+
+ Running code:
+   Specify the code you want to type check. For more details, see
+   mypy.readthedocs.io/en/stable/running_mypy.html#running-mypy
+
+   --explicit-package-bases  Use current directory and MYPYPATH to determine module names of files
+                             passed (inverse: --no-explicit-package-bases)
+   --exclude PATTERN         Regular expression to match file names, directory names or paths which
+                             mypy should ignore while recursively discovering files to check, e.g.
+                             --exclude '/setup.py$'. May be specified more than once, eg. --exclude a
+                             --exclude b
+   -m, --module MODULE       Type-check module; can repeat for more modules
+   -p, --package PACKAGE     Type-check package recursively; can be repeated
+   -c, --command PROGRAM_TEXT
+                             Type-check program passed in as string
+   files                     Type-check given files or directories
+
+ Environment variables:
+   Define MYPYPATH for additional module search path entries.
+   Define MYPY_CACHE_DIR to override configuration cache_dir path.
+
+
+Recuerde que uno puede acceder a todos los comandos de la terminal
+usando el símbolo de exclamación como hicimos arriba. También puede
+ejecutar el comando en una terminal como</pre>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mypy<span class="w"> </span>--help
 </pre></div>
 </div>
@@ -1139,8 +1391,14 @@ en el que copió el código.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">python</span> <span class="o">../</span><span class="n">scripts</span><span class="o">/</span><span class="n">mypy_example</span><span class="o">.</span><span class="n">py</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t open file &#39;</span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fiol</span><span class="o">/</span><span class="n">Clases</span><span class="o">/</span><span class="n">IntPython</span><span class="o">/</span><span class="n">clases</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">clases</span><span class="o">/../</span><span class="n">scripts</span><span class="o">/</span><span class="n">mypy_example</span><span class="o">.</span><span class="n">py</span><span class="s1">&#39;: [Errno 2] No such file or directory</span>
+</pre></div>
+</div>
 <p>Ahora hagamos lo mismo con <code class="docutils literal notranslate"><span class="pre">mypy</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">mypy</span> <span class="o">../</span><span class="n">scripts</span><span class="o">/</span><span class="n">mypy_example</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mypy</span><span class="p">:</span> <span class="n">can</span><span class="s1">&#39;t read file &#39;</span><span class="o">../</span><span class="n">scripts</span><span class="o">/</span><span class="n">mypy_example</span><span class="o">.</span><span class="n">py</span><span class="s1">&#39;: No such file or directory</span>
 </pre></div>
 </div>
 <section id="mypy-y-notebooks">
@@ -1159,8 +1417,69 @@ podemos instalar con:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">nb_mypy</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">nb_mypy</span> <span class="n">extension</span> <span class="ow">is</span> <span class="n">already</span> <span class="n">loaded</span><span class="o">.</span> <span class="n">To</span> <span class="n">reload</span> <span class="n">it</span><span class="p">,</span> <span class="n">use</span><span class="p">:</span>
-  <span class="o">%</span><span class="n">reload_ext</span> <span class="n">nb_mypy</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ModuleNotFoundError</span>                       <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;load_ext&#39;</span><span class="p">,</span> <span class="s1">&#39;nb_mypy&#39;</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">IPython</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">interactiveshell</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">2480</span><span class="p">,</span> <span class="ow">in</span> <span class="n">InteractiveShell</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">magic_name</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">_stack_depth</span><span class="p">)</span>
+   <span class="mi">2478</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
+   <span class="mi">2479</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="o">-&gt;</span> <span class="mi">2480</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+   <span class="mi">2482</span> <span class="c1"># The code below prevents the output from being displayed</span>
+   <span class="mi">2483</span> <span class="c1"># when using magics with decorator @output_can_be_silenced</span>
+   <span class="mi">2484</span> <span class="c1"># when the last Python token in the expression is a &#39;;&#39;.</span>
+   <span class="mi">2485</span> <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">magic</span><span class="o">.</span><span class="n">MAGIC_OUTPUT_CAN_BE_SILENCED</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">IPython</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">magics</span><span class="o">/</span><span class="n">extension</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">33</span><span class="p">,</span> <span class="ow">in</span> <span class="n">ExtensionMagics</span><span class="o">.</span><span class="n">load_ext</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_str</span><span class="p">)</span>
+     <span class="mi">31</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">module_str</span><span class="p">:</span>
+     <span class="mi">32</span>     <span class="k">raise</span> <span class="n">UsageError</span><span class="p">(</span><span class="s1">&#39;Missing module name.&#39;</span><span class="p">)</span>
+<span class="o">---&gt;</span> <span class="mi">33</span> <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">extension_manager</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+     <span class="mi">35</span> <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="s1">&#39;already loaded&#39;</span><span class="p">:</span>
+     <span class="mi">36</span>     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The </span><span class="si">%s</span><span class="s2"> extension is already loaded. To reload it, use:&quot;</span> <span class="o">%</span> <span class="n">module_str</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">IPython</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">extensions</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">62</span><span class="p">,</span> <span class="ow">in</span> <span class="n">ExtensionManager</span><span class="o">.</span><span class="n">load_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_str</span><span class="p">)</span>
+     <span class="mi">55</span> <span class="s2">&quot;&quot;&quot;Load an IPython extension by its module name.</span>
+<span class="s2">     56</span>
+<span class="s2">     57 Returns the string &quot;already loaded&quot; if the extension is already loaded,</span>
+<span class="s2">     58 &quot;no load function&quot; if the module doesn&#39;t have a load_ipython_extension</span>
+<span class="s2">     59 function, or None if it succeeded.</span>
+<span class="s2">     60 &quot;&quot;&quot;</span>
+     <span class="mi">61</span> <span class="k">try</span><span class="p">:</span>
+<span class="o">---&gt;</span> <span class="mi">62</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_extension</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+     <span class="mi">63</span> <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+     <span class="mi">64</span>     <span class="k">if</span> <span class="n">module_str</span> <span class="ow">in</span> <span class="n">BUILTINS_EXTS</span><span class="p">:</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">IPython</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">extensions</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">77</span><span class="p">,</span> <span class="ow">in</span> <span class="n">ExtensionManager</span><span class="o">.</span><span class="n">_load_extension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module_str</span><span class="p">)</span>
+     <span class="mi">75</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+     <span class="mi">76</span>     <span class="k">if</span> <span class="n">module_str</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+<span class="o">---&gt;</span> <span class="mi">77</span>         <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">module_str</span><span class="p">)</span>
+     <span class="mi">78</span>     <span class="n">mod</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_str</span><span class="p">]</span>
+     <span class="mi">79</span>     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_load_ipython_extension</span><span class="p">(</span><span class="n">mod</span><span class="p">):</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">importlib</span><span class="o">/</span><span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">88</span><span class="p">,</span> <span class="ow">in</span> <span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
+     <span class="mi">86</span>             <span class="k">break</span>
+     <span class="mi">87</span>         <span class="n">level</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="o">---&gt;</span> <span class="mi">88</span> <span class="k">return</span> <span class="n">_bootstrap</span><span class="o">.</span><span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">[</span><span class="n">level</span><span class="p">:],</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">&lt;</span><span class="n">frozen</span> <span class="n">importlib</span><span class="o">.</span><span class="n">_bootstrap</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">1387</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_gcd_import</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">level</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">&lt;</span><span class="n">frozen</span> <span class="n">importlib</span><span class="o">.</span><span class="n">_bootstrap</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">1360</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_find_and_load</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">import_</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">&lt;</span><span class="n">frozen</span> <span class="n">importlib</span><span class="o">.</span><span class="n">_bootstrap</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">1324</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_find_and_load_unlocked</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">import_</span><span class="p">)</span>
+
+
+<span class="ne">ModuleNotFoundError</span><span class="p">:</span> <span class="n">No</span> <span class="n">module</span> <span class="n">named</span> <span class="s1">&#39;nb_mypy&#39;</span>
 </pre></div>
 </div>
 <p>De esta forma, de ahora en más mypy estará chequeando los tipos de datos
@@ -1189,10 +1508,6 @@ anotados:</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(3): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación, y además mypy lo captura</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;cell&gt;5: [1m[31merror:[m Argument 1 to [m[1m&quot;cube&quot;[m has incompatible type [m[1m&quot;float&quot;[m; expected [m[1m&quot;int&quot;[m  [m[33m[arg-type][m
-&lt;cell&gt;12: [1m[31merror:[m Argument 1 to [m[1m&quot;Hola&quot;[m has incompatible type [m[1m&quot;int&quot;[m; expected [m[1m&quot;str&quot;[m  [m[33m[arg-type][m
-</pre></div>
-</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">cubo</span> <span class="n">de</span> <span class="mi">2</span> <span class="n">es</span><span class="p">:</span> <span class="mi">8</span>
 <span class="n">El</span> <span class="n">cubo</span> <span class="n">de</span> <span class="mf">3.0</span> <span class="n">es</span><span class="p">:</span> <span class="mf">27.0</span>
 <span class="n">Hola</span><span class="p">(</span><span class="s1">&#39;Juan&#39;</span><span class="p">):</span> <span class="n">Hola</span> <span class="n">Juan</span>
@@ -1202,14 +1517,14 @@ anotados:</p>
 
 <span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
 
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">10</span>
       <span class="mi">7</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El cubo de 3.0 es: </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
       <span class="mi">9</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(&#39;Juan&#39;): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="s1">&#39;Juan&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="o">---&gt;</span> <span class="mi">10</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola2(3): </span><span class="si">{</span><span class="n">Hola2</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación</span>
      <span class="mi">12</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(3): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación, y además mypy lo captura</span>
 
 
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Hola2</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Hola2</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
       <span class="mi">7</span> <span class="k">def</span> <span class="nf">Hola2</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
 <span class="o">----&gt;</span> <span class="mi">8</span>     <span class="k">return</span> <span class="s1">&#39;Hola &#39;</span> <span class="o">+</span> <span class="n">name</span>
 
@@ -1221,21 +1536,47 @@ anotados:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">nb_mypy</span> <span class="n">Off</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">a</span> <span class="o">=</span> <span class="n">cube</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<pre class="literal-block">UsageError: Line magic function <cite>%nb_mypy</cite> not found.</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">cube</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
- <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El cubo de 2 es: </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El cubo de 2 es: </span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
- <span class="n">b</span> <span class="o">=</span> <span class="n">cube</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>   <span class="c1"># Esto no da error en Python, mypy si lo captura</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">cube</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>   <span class="c1"># Esto no da error en Python, mypy si lo captura</span>
 
- <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El cubo de 3.0 es: </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;El cubo de 3.0 es: </span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
- <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(&#39;Juan&#39;): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="s1">&#39;Juan&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
- <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola2(3): </span><span class="si">{</span><span class="n">Hola2</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(&#39;Juan&#39;): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="s1">&#39;Juan&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola2(3): </span><span class="si">{</span><span class="n">Hola2</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación</span>
 
- <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(3): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación, y además mypy lo captura</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hola(3): </span><span class="si">{</span><span class="n">Hola</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Esto da un error de concatenación, y además mypy lo captura</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">El</span> <span class="n">cubo</span> <span class="n">de</span> <span class="mi">2</span> <span class="n">es</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">El</span> <span class="n">cubo</span> <span class="n">de</span> <span class="mf">3.0</span> <span class="n">es</span><span class="p">:</span> <span class="mf">27.0</span>
+<span class="n">Hola</span><span class="p">(</span><span class="s1">&#39;Juan&#39;</span><span class="p">):</span> <span class="n">Hola</span> <span class="n">Juan</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> ---------------------------------------------------------------------------
 
-<span class="n">El</span> <span class="n">módulo</span> <span class="err">``</span><span class="n">nb_mypy</span><span class="err">``</span> <span class="n">puede</span> <span class="n">utilizarse</span> <span class="n">en</span> <span class="n">cualquier</span> <span class="n">editor</span> <span class="n">de</span>
-<span class="n">notebooks</span><span class="p">,</span> <span class="n">ya</span> <span class="n">sea</span> <span class="n">Jupyter</span><span class="p">,</span> <span class="n">Jupyterlabs</span><span class="p">,</span> <span class="n">VS</span> <span class="n">Code</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
+ TypeError                                 Traceback (most recent call last)
+
+ Cell In[8], line 10
+       7 print(f&quot;El cubo de 3.0 es: {b}&quot;)
+       9 print(f&quot;Hola(&#39;Juan&#39;): {Hola(&#39;Juan&#39;)}&quot;)
+ ---&gt; 10 print(f&quot;Hola2(3): {Hola2(3)}&quot;) # Esto da un error de concatenación
+      12 print(f&quot;Hola(3): {Hola(3)}&quot;) # Esto da un error de concatenación, y además mypy lo captura
+
+
+ Cell In[5], line 8, in Hola2(name)
+       7 def Hola2(name):
+ ----&gt; 8     return &#39;Hola &#39; + name
+
+
+ TypeError: can only concatenate str (not &quot;int&quot;) to str
+
+
+El módulo ``nb_mypy`` puede utilizarse en cualquier editor de
+notebooks, ya sea Jupyter, Jupyterlabs, VS Code, etc.
 </pre></div>
 </div>
 <section id="opciones-en-vscode">
