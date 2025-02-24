@@ -1,0 +1,1445 @@
+.. _clase_04:
+
+
+===================
+Clase 4: Funciones
+===================
+
+=========
+
+Las funciones son objetos
+=========================
+
+Veamos en Python qué es una función:
+
+.. code:: python
+
+    sum
+
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
+.. code:: python
+
+    print
+
+
+
+
+.. parsed-literal::
+
+    <function print(*args, sep=' ', end='\n', file=None, flush=False)>
+
+
+
+En **Python** ``function`` es un objeto, con una operación importante:
+podemos llamarla (ejecutarla), en la forma:
+``func(lista-de-argumentos)``
+
+Como con todos los objetos, podemos definir una variable y asignarle una
+función (algo así como lo que en C sería un puntero a funciones)
+
+En Python, las funciones son de *primera clase*, es decir que tienen las
+siguientes propiedades:
+
+-  Asignación a Variables: Se puede asignar la función a una variable,
+   lo cual permite referenciarla de manera similar a como se haría con
+   un número, cadena de texto u otro tipo de dato. Esto ocurre en Python
+   dado que todo elemento del lenguaje es un objeto.
+
+-  Pasaje como argumento: Se puede pasar la función como argumento a
+   otras funciones.
+
+-  Retorno de Funciones: Una función puede devolver otra función como
+   valor de retorno
+
+-  Almacenamiento en Estructuras de Datos: Se pueden almacenar funciones
+   en estructuras de datos como listas, diccionarios, y otros
+   contenedores.
+
+Veamos algunos ejemplos sencillos:
+
+.. code:: python
+
+    f = sum
+    help(f)
+
+
+.. parsed-literal::
+
+    Help on built-in function sum in module builtins:
+    
+    sum(iterable, /, start=0)
+        Return the sum of a 'start' value (default: 0) plus an iterable of numbers
+    
+        When the iterable is empty, return the start value.
+        This function is intended specifically for use with numeric values and may
+        reject non-numeric types.
+    
+
+
+.. code:: python
+
+    a = [1, 2, 3]
+
+.. code:: python
+
+    print('¿f is sum? ', f is sum)
+    print('f == sum? ', f == sum)
+    print('f(a)=', f(a), '  sum(a)=', sum(a))
+
+
+.. parsed-literal::
+
+    ¿f is sum?  True
+    f == sum?  True
+    f(a)= 6   sum(a)= 6
+
+
+Un uso bastante común es crear un diccionario donde los valores sean
+funciones:
+
+.. code:: python
+
+    funciones = {'suma': sum, 'mínimo': min, 'máximo': max}
+
+.. code:: python
+
+    funciones['suma']
+
+
+
+
+.. parsed-literal::
+
+    <function sum(iterable, /, start=0)>
+
+
+
+.. code:: python
+
+    funciones['suma'](a)
+
+
+
+
+.. parsed-literal::
+
+    6
+
+
+
+.. code:: python
+
+    print(list(funciones.items()))
+
+
+.. parsed-literal::
+
+    [('suma', <built-in function sum>), ('mínimo', <built-in function min>), ('máximo', <built-in function max>)]
+
+
+.. code:: python
+
+    print('\n', 'a =', a,'\n')
+    for k, v in funciones.items():
+      print(k,"=", v(a))
+
+
+.. parsed-literal::
+
+    
+     a = [1, 2, 3] 
+    
+    suma = 6
+    mínimo = 1
+    máximo = 3
+
+
+   En Python, se estila que las funciones así como las variables estén
+   escritas en minúsculas y usando *snake case*, es decir, usando un
+   guión bajo ’\_’ para separar las palabras que constituyen el nombre
+   de la función (o de la variable)
+
+.. code:: python
+
+   mi_variable = 3
+   primos = [2, 3, 5, 7]
+   def promedio(l):
+       v = sum(l)/len(l)
+       return v 
+
+.. code:: python
+
+    mi_variable = 3
+    primos = [2, 3, 5, 7]
+    def promedio(l):
+        v = sum(l)/len(l)
+        return v 
+    
+    promedio(primos)
+
+
+
+
+.. parsed-literal::
+
+    4.25
+
+
+
+Definición básica de funciones
+==============================
+
+Ya vimos en la segunda clase como definir una función. Consideremos una
+función para calcular la velocidad y altura de una pelota en caída
+libre: Para dar mejor funcionalidad, le damos la posibilidad al usuario
+de dar la posición y la velocidad iniciales como argumento:
+
+.. code:: python
+
+    g = 9.8                         # aceleración de la gravedad en m/s^2
+    def caida(t, h_0, v_0):
+        """Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+        h_0 es la altura inicial (en m)
+        v_0 es la velocidad inicial (en m/s)
+        Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+        """
+        v = v_0 - g*t
+        h = h_0 - v_0*t - g*t**2/2.
+        return v,h
+
+.. code:: python
+
+    help(caida)
+
+
+.. parsed-literal::
+
+    Help on function caida in module __main__:
+    
+    caida(t, h_0, v_0)
+        Calcula la velocidad y posición de una partícula a tiempo t, para condiciones iniciales dadas
+        h_0 es la altura inicial (en m)
+        v_0 es la velocidad inicial (en m/s)
+        Se utiliza el valor de aceleración de la gravedad g=9.8 m/s^2
+    
+
+
+.. code:: python
+
+    t = 2.2
+    v0 = 12
+    alt = 100
+    v,h = caida(t, alt, v0)
+    print(f'''Para caída desde {alt}m, con vel. inicial {v0}m/s, a t = {t}, 
+    la velocidad será v={v:6.3}, y estará a una altura de {h:7.4}m''')
+
+
+.. parsed-literal::
+
+    Para caída desde 100m, con vel. inicial 12m/s, a t = 2.2, 
+    la velocidad será v= -9.56, y estará a una altura de   49.88m
+
+
+Notemos que podemos llamar a esta función de varias maneras. Podemos
+llamarla con la constante, o con una variable indistintamente. En este
+caso, el argumento está definido por su posición. Luego siguen dos
+argumentos *nombrados*, la altura inicial (h_0) y el tercero corresponde
+a la velocidad inicial (v_0).
+
+.. code:: python
+
+    v0 = 12
+    caida(2.2, 100, v0)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+Pero en Python podemos usar el nombre de la variable en el llamado a la
+función. Por ejemplo:
+
+.. code:: python
+
+    caida(v_0=v0,t=2.2, h_0=100)
+
+
+
+
+.. parsed-literal::
+
+    (-9.560000000000002, 49.883999999999986)
+
+
+
+Funciones con argumentos opcionales
+-----------------------------------
+
+Las funciones pueden tener muchos argumentos. En **Python** pueden tener
+un número variable de argumentos y pueden tener valores por *default*
+para algunos de ellos. En el caso de la función de caída libre, vamos a
+extenderlo de manera que podamos usarlo fuera de la tierra (o en otras
+latitudes) permitiendo cambiar el valor de la gravedad y asumiendo que,
+a menos que lo pidamos explícitamente se trata de una simple caída
+libre:
+
+.. code:: python
+
+    def caida_libre(t, h0, v0=0., g=9.8):
+      """Devuelve la velocidad y la posición de una partícula en
+      caída libre para condiciones iniciales dadas
+    
+      Parameters
+      ----------
+      t : float
+          el tiempo al que queremos realizar el cálculo
+      h0: float 
+          la altura inicial
+      v0: float (opcional)
+          la velocidad inicial (default = 0.0)
+       g: float (opcional)
+          valor de la aceleración de la gravedad (default = 9.8)
+    
+      Returns
+      -------
+      (v,h):  tuple of floats
+           v= v0 - g*t
+           h= h0 - v0*t -g*t^2/2
+      
+      """
+      v = v0 - g*t
+      h = h0 - v0*t - g*t**2/2.
+      return v,h
+
+
+.. code:: python
+
+    # Desde 1000 metros con velocidad inicial cero
+    print( caida_libre(2, 1000))
+    # Desde 1000 metros con velocidad inicial hacia arriba
+    print(caida_libre(1, 1000, 10))
+    # Desde 1000 metros con velocidad inicial cero
+    print(caida_libre(h0=1000, t=2))
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre(v0=0, h0=1000, t=14.2857137))
+    # Desde 1000 metros con velocidad inicial cero en la luna
+    print( caida_libre(v0=0, h0=1000, t=14.2857137, g=1.625))
+    print(caida_libre(14.2857137, 1000, 0, 1.625))
+
+
+.. parsed-literal::
+
+    (-19.6, 980.4)
+    (0.1999999999999993, 985.1)
+    (-19.6, 980.4)
+    (-139.99999426000002, 8.199999820135417e-05)
+    (-23.2142847625, 834.1836870663262)
+    (-23.2142847625, 834.1836870663262)
+
+
+.. code:: python
+
+    help(caida_libre)
+
+
+.. parsed-literal::
+
+    Help on function caida_libre in module __main__:
+    
+    caida_libre(t, h0, v0=0.0, g=9.8)
+        Devuelve la velocidad y la posición de una partícula en
+        caída libre para condiciones iniciales dadas
+    
+        Parameters
+        ----------
+        t : float
+            el tiempo al que queremos realizar el cálculo
+        h0: float
+            la altura inicial
+        v0: float (opcional)
+            la velocidad inicial (default = 0.0)
+         g: float (opcional)
+            valor de la aceleración de la gravedad (default = 9.8)
+    
+        Returns
+        -------
+        (v,h):  tuple of floats
+             v= v0 - g*t
+             h= h0 - v0*t -g*t^2/2
+    
+
+
+.. note::  No se pueden usar argumentos con *nombre* antes de los
+  argumentos requeridos (en este caso ``t``).
+  
+  Tampoco se pueden usar argumentos sin su *nombre* después de haber
+  incluido alguno con su nombre. Por ejemplo no son válidas las llamadas:
+  
+  .. code:: python
+  
+     caida_libre(t=2, 0.)
+     caida_libre(2, v0=0., 1000)
+  
+  
+
+.. code:: python
+
+    caida_libre(t=2, 0.)
+
+
+
+::
+
+
+      Cell In[20], line 1
+        caida_libre(t=2, 0.)
+                           ^
+    SyntaxError: positional argument follows keyword argument
+
+
+
+.. code:: python
+
+    caida_libre(2, v0=0., 1000)
+
+
+::
+
+
+      Cell In[21], line 1
+        caida_libre(2, v0=0., 1000)
+                                  ^
+    SyntaxError: positional argument follows keyword argument
+
+
+
+Número variable de argumentos y argumentos *keywords*
+-----------------------------------------------------
+
+Se pueden definir funciones que toman un número variable de argumentos
+(como una lista), o que aceptan un diccionario como argumento. Este tipo
+de argumentos se llaman argumentos *keyword* (``kwargs``). Una buena
+explicación se encuentra en el `Tutorial de la
+documentación <https://docs.python.org/3/tutorial/controlflow.html#keyword-arguments>`__.
+Ahora vamos a dar una explicación rápida. Consideremos la función ``f``,
+que imprime sus argumentos:
+
+.. code:: python
+
+    def f(p, *args, **kwargs):
+      print( f"p     : {p}, tipo: {type(p)}")
+      print( f"args  : {args}, tipo: {type(args)}")
+      print( f"kwargs: {kwargs}, tipo: {type(kwargs)}")
+
+.. code:: python
+
+    f(1)
+
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : (), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1,2,3)
+
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : (2, 3), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1,2,3,4,5,6)
+
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : (2, 3, 4, 5, 6), tipo: <class 'tuple'>
+    kwargs: {}, tipo: <class 'dict'>
+
+
+En este ejemplo, el primer valor se asigna al argumento requerido ``p``,
+y los siguientes a una variable que se llama ``args``, que es del tipo
+``tuple``
+
+.. code:: python
+
+    f(1.5, 2, 3, 5, anteultimo = 9, ultimo = -1)
+
+
+.. parsed-literal::
+
+    p     : 1.5, tipo: <class 'float'>
+    args  : (2, 3, 5), tipo: <class 'tuple'>
+    kwargs: {'anteultimo': 9, 'ultimo': -1}, tipo: <class 'dict'>
+
+
+.. code:: python
+
+    f(1, (1,2,3), 4, ultimo=-1)
+
+
+.. parsed-literal::
+
+    p     : 1, tipo: <class 'int'>
+    args  : ((1, 2, 3), 4), tipo: <class 'tuple'>
+    kwargs: {'ultimo': -1}, tipo: <class 'dict'>
+
+
+En estas otras llamadas a la función, todos los argumentos que se pasan
+indicando el nombre se asignan a un diccionario.
+
+Al definir una función, con la construcción ``*args`` se indica *“mapear
+todos los argumentos posicionales no explícitos a una tupla llamada
+``args``”*. Con ``**kwargs`` se indica “mapear todos los argumentos de
+palabra clave no explícitos a un diccionario llamado ``kwargs``”. Esta
+acción de convertir un conjunto de argumentos a una tuple o diccionario
+se conoce como *empacar* o *empaquetar* los datos.
+
+.. note::  Por supuesto, no es necesario utilizar los nombres “args” y
+  “kwargs”. Podemos llamarlas de cualquier otra manera! los simbolos que
+  indican cantidades arbitrarias de parametros son ``*`` y ``**``. Además
+  es posible poner parametros “comunes” antes de los parametros
+  arbitrarios, como se muestra en el ejemplo.
+  
+  
+
+Un ejemplo de una función con número variable de argumentos puede ser la
+función ``multiplica``:
+
+.. code:: python
+
+    def multiplica(*args):
+      s = 1
+      for a in args:
+        s *= a
+      return s
+
+.. code:: python
+
+    multiplica(2,5)
+
+
+
+
+.. parsed-literal::
+
+    10
+
+
+
+.. code:: python
+
+    multiplica(2,3,5,9,4)
+
+
+
+
+.. parsed-literal::
+
+    1080
+
+
+
+--------------
+
+Ejercicios 4 (a)
+================
+
+1. Defina una función que dada una altura inicial ``h_0``, una velocidad
+   inicial ``v_0`` y un paso de tiempo ``delta_t``, devuelva:
+
+   -  una lista conteniendo los tiempos de cálculo,
+   -  otra lista con las posiciones *h(t)* (alturas) de la partícula en
+      función del tiempo.
+   -  una tercer lista con las velocidades *v(t)* de la partícula en
+      cada instante.
+
+   ..
+
+      Use las funciones definidas en la clase
+
+2. Escriba una función ``imprime_trayectoria`` que, obviamente, imprime
+   la trayectoria *h(t)* en forma clara y bella. Para esto puede
+   resultarle útil la función
+   ```zip`` <https://docs.python.org/3.3/library/functions.html#zip>`__.
+
+--------------
+
+
+
+Argumentos de las funciones
+===========================
+
+Ámbito de las variables en los argumentos
+-----------------------------------------
+
+Consideremos la siguiente función
+
+.. code:: python
+
+    sep = 47*'-'
+    def func1(x):
+      print(sep,'\nx entró a la función con el valor', x)
+      print('Id adentro:',id(x))
+      x = 2
+      print('El nuevo valor de x es', x)
+      print('Id adentro nuevo:',id(x),'\n', sep)
+
+.. code:: python
+
+    x = 50
+    print('Id afuera antes:',id(x))
+    print('Fuera de la función: Originalmente x vale',x)
+    func1(x)
+    print('Fuera de la función: Ahora x vale',x)  
+    print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624857736656
+    Fuera de la función: Originalmente x vale 50
+    ----------------------------------------------- 
+    x entró a la función con el valor 50
+    Id adentro: 140624857736656
+    El nuevo valor de x es 2
+    Id adentro nuevo: 140624857735120 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale 50
+    Id afuera después: 140624857736656
+
+
+Vemos que la variable ``x`` que utilizamos como argumento de la función
+debe ser diferente a la variable ``x`` que se define fuera de la
+función, ya que su valor no cambia al salir. Además usamos la función
+``id()`` para obtener la identidad de la variable. Python pasa las
+variables como referencia al objeto que representa a la variable. En
+este caso el objeto que estamos pasando es un entero que es inmutable,
+con lo cual en la función misma se crea un nuevo objeto y se reasigna la
+referencia al nuevo objeto. De este modo, no se afecta al objeto
+original.
+
+Consideremos ahora la siguiente función:
+
+.. code:: python
+
+    def func2(x):
+      print(sep,'\nx entró a la función con el valor', x)
+      print('Id adentro:',id(x))
+      x = [2,7]
+      print('El nuevo valor de x es', x)
+      print('Id adentro nuevo:',id(x),'\n', sep)
+
+La función es muy parecida, sólo que le estamos dando a la variable
+``x`` dentro de la función un nuevo valor del tipo ``lista``.
+
+.. code:: python
+
+    x = 50
+    print('Id afuera antes:',id(x))
+    print('Fuera de la función: Originalmente x vale',x)
+    func2(x)
+    print('Fuera de la función: Ahora x vale',x)  
+    print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624857736656
+    Fuera de la función: Originalmente x vale 50
+    ----------------------------------------------- 
+    x entró a la función con el valor 50
+    Id adentro: 140624857736656
+    El nuevo valor de x es [2, 7]
+    Id adentro nuevo: 140624567783040 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale 50
+    Id afuera después: 140624857736656
+
+
+.. code:: python
+
+    x = [50]
+    print('Id afuera antes:',id(x))
+    print('Fuera de la función: Originalmente x vale',x)
+    func2(x)
+    print('Fuera de la función: Ahora x vale',x)  
+    print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624567781568
+    Fuera de la función: Originalmente x vale [50]
+    ----------------------------------------------- 
+    x entró a la función con el valor [50]
+    Id adentro: 140624567781568
+    El nuevo valor de x es [2, 7]
+    Id adentro nuevo: 140624567780544 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale [50]
+    Id afuera después: 140624567781568
+
+
+¿Qué está pasando acá?
+
+-  Cuando se realiza la llamada a la función, se le pasa una referencia
+   del nombre ``x``.
+-  Cuando le damos un nuevo valor dentro de la función, como en el caso
+   ``x = [2, 7]``, entonces se crea una nueva variable y el nombre ``x``
+   queda asociado a la nueva variable.
+-  La variable original –definida fuera de la función– no cambia.
+
+En el primer caso, como los escalares son inmutables (de la misma manera
+que los strings y tuplas) no puede ser modificada. Al reasignar el
+nombre siempre se crea una nueva variable (para cualquier tipo).
+
+Consideremos estas variantes, donde el comportamiento entre tipos
+mutables e inmutables son diferentes:
+
+.. code:: python
+
+    def func3(x):
+      print(sep,'\nx entró a la función con el valor', x)
+      print('Id adentro:',id(x))
+      x += [2,7]
+      print('El nuevo valor de x es', x)
+      print('Id adentro nuevo:',id(x),'\n', sep)
+
+.. code:: python
+
+    x = [50]
+    print('Id afuera antes:',id(x))
+    print('Fuera de la función: Originalmente x vale',x)
+    func3(x)
+    print('Fuera de la función: Ahora x vale',x)  
+    print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624567742592
+    Fuera de la función: Originalmente x vale [50]
+    ----------------------------------------------- 
+    x entró a la función con el valor [50]
+    Id adentro: 140624567742592
+    El nuevo valor de x es [50, 2, 7]
+    Id adentro nuevo: 140624567742592 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale [50, 2, 7]
+    Id afuera después: 140624567742592
+
+
+En este caso, como no estamos redefiniendo la variable sino que la
+estamos modificando, el nuevo valor se mantiene al terminar la ejecución
+de la función. Otra variante:
+
+.. code:: python
+
+    def func4(x):
+      print(sep,'\nx entró a la función con el valor', x)
+      print('Id adentro:',id(x))
+      x[0] = 2
+      print('El nuevo valor de x es', x)
+      print('Id adentro nuevo:',id(x),'\n', sep)
+
+.. code:: python
+
+    x = [50]
+    print('Id afuera antes:',id(x))
+    print('Fuera de la función: Originalmente x vale',x)
+    func4(x)
+    print('Fuera de la función: Ahora x vale',x)  
+    print('Id afuera después:',id(x))
+
+
+.. parsed-literal::
+
+    Id afuera antes: 140624567782208
+    Fuera de la función: Originalmente x vale [50]
+    ----------------------------------------------- 
+    x entró a la función con el valor [50]
+    Id adentro: 140624567782208
+    El nuevo valor de x es [2]
+    Id adentro nuevo: 140624567782208 
+     -----------------------------------------------
+    Fuera de la función: Ahora x vale [2]
+    Id afuera después: 140624567782208
+
+
+Vemos que, cuando modificamos la variable (solo es posible para tipos
+mutables), asignando un valor a uno o más de sus elementos o
+agregando/removiendo elementos, la copia sigue apuntando a la variable
+original y el valor de la variable, definida originalmente afuera,
+cambia.
+
+Tipos mutables en argumentos opcionales
+---------------------------------------
+
+Hay que tener cuidado cuando usamos valores por defecto con tipos que
+pueden modificarse dentro de la función. Consideremos la siguiente
+función:
+
+.. code:: python
+
+    def func2b(x1, x=[]):
+      print('x entró a la función con el valor', x)
+      x.append(x1)
+      print('El nuevo valor de x es', x)
+
+.. code:: python
+
+    func2b(1)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor []
+    El nuevo valor de x es [1]
+
+
+.. code:: python
+
+    func2b(2)
+
+
+.. parsed-literal::
+
+    x entró a la función con el valor [1]
+    El nuevo valor de x es [1, 2]
+
+
+El argumento opcional ``x`` tiene como valor por defecto una lista
+vacía, entonces esperaríamos que el valor de ``x`` sea igual a ``x1``, y
+en este caso imprima “El nuevo valor de x es [2]”. Sin embargo, entre
+llamadas mantiene el valor de ``x`` anterior. El valor por defecto se
+fija en la definición y en el caso de tipos mutables puede modificarse.
+
+--------------
+
+Ejercicios 4 (b)
+================
+
+3. Escriba funciones para analizar la divisibilidad de enteros:
+
+   -  La función ``es_divisible`` que retorna ``True`` si el argumento
+      ``x`` es divisible por alguno de los elemntos del segundo
+      argumento: ``divisores``. El argumento ``divisores`` es opcional y
+      si está presente es una variable del tipo lista que contiene los
+      valores para los cuáles debemos examinar la divisibilidad.
+
+      El valor por defecto de ``divisores`` es ``[2,3,5,7]``. Las
+      siguientes expresiones deben retornar el mismo valor:
+
+      .. code:: python
+
+         es_divisible(x) 
+         es_divisible(x, [2,3,5,7])
+
+   -  La función ``es_divisible_por`` cuyo primer argumento (mandatorio)
+      es ``x``, y luego puede aceptar un número indeterminado de
+      argumentos:
+
+      .. code:: python
+
+         es_divisible_por(x)  # retorna verdadero siempre
+         es_divisible_por(x, 2) # verdadero si x es par
+         es_divisible_por(x, 2, 3, 5, 7) # igual resultado que es_divisible(x)
+         es_divisible_por(x, 2, 3, 5, 7, 9, 11, 13)  # o cualquier secuencia de argumentos debe funcionar
+
+4. **PARA ENTREGAR.** Describimos una grilla de **sudoku** como un
+   string de nueve líneas, cada una con 9 números, con números entre 1 y
+   9. Escribir un conjunto de funciones que permitan chequear si una
+   grilla de sudoku es correcta. Para que una grilla sea correcta deben
+   cumplirse las siguientes condiciones
+
+   -  Los números están entre 1 y 9
+   -  En cada fila no deben repetirse
+   -  En cada columna no deben repetirse
+   -  En todas las regiones de 3x3 que no se solapan, empezando de
+      cualquier esquina, no deben repetirse
+
+   1. Escribir una función que convierta un string con formato a una
+      lista bidimensional. El string estará dado con nueve números por
+      línea, de la siguiente manera (los espacios en blanco en cada
+      línea pueden variar):
+
+   .. code:: python
+
+      sudoku = """145327698
+              839654127
+              672918543
+              496185372
+              218473956
+              753296481
+              367542819
+              984761235
+              521839764"""
+
+   2. Escribir una función ``check_repetidos()`` que tome por argumento
+      una lista (unidimensional) y devuelva verdadero si la lista tiene
+      elementos repetidos y falso en caso contrario.
+
+   3. Escribir la función ``check_sudoku()`` que toma como argumento una
+      grilla (como una lista bidimensional de ``9x9``) y devuelva
+      verdadero si los números corresponden a la resolución correcta del
+      Sudoku y falso en caso contrario. Note que debe verificar que los
+      números no se repiten en filas, ni en columnas ni en recuadros de
+      ``3x3``. Para obtener la posición de los recuadros puede
+      investigar que hacen las líneas de código:
+
+   .. code:: python
+
+      j, k = (i // 3) * 3, (i % 3) * 3
+      r = [grid[a][b] for a in range(j, j+3) for b in range(k, k+3)]
+
+   suponiendo que ``grid`` es el nombre de nuestra lista bidimensional,
+   cuando ``i`` toma valores entre ``0`` y ``8``.
+
+..
+
+   .. note::  Enviar por correo electrónico con el archivo adjunto
+     nombrado en la forma ``04_Apellido.py`` donde “Apellido” es su
+     apellido.
+  
+     
+
+--------------
+
+Anotaciones de tipos
+====================
+
+El lenguaje Python provee tipos dinámicos de datos. Esto quiere decir
+que el intérprete define los tipos al momento de ejecutar código, por
+consiguiente, no soporta (ni requiere) la anotación de tipos en el
+código. Los tipos dinámicos otorgan al programador la facilidad de
+introducir variable y mutarlas de tipo sin inconvenientes. Por otra
+parte, hemos visto que las funciones definidas en Python pueden tener
+argumentos opcionales, característica del lenguaje que se usa
+extensivamente en los módulos y bibliotecas. La combinación de tipos
+dinámicos y argumentos opcionales implica la consulta frecuente a la
+documentación para poder encontrar las mejores alternativas para el uso
+de código ya establecido. La introducción de IDEs poderosos hace que uno
+pueda consultar dicha documentación mientras programa, pero, a su vez,
+debemos introducir documentación exhaustiva para poder reutilizarlo.
+
+A partir de la versión 3.5 de Python, y con el objetivo de proveer
+claridad en el código y hacerlo menos propenso a errores, se introdujo
+el módulo `typing <https://docs.python.org/3/library/typing.html>`__
+para poder anotar los tipos de datos. En versiones más nuevas (3.9+), la
+anotación de tipos está incorporada en el intérprete.
+
+   Atención!: La anotación de tipos no es usada por el intérprete de
+   Python, ni implica ninguna comprobación previa al momento de
+   ejecución del código. Los IDE actuales **sí** reconocen las
+   anotaciones e indican los posibles problemas, si se configuran
+   adecuadamente.
+
+La aplicación
+`MyPy <https://mypy.readthedocs.io/en/stable/index.html>`__ puede
+comprobar los tipos de datos de Python y declarar como error alguna
+incompatibilidad entre los mismos en el código.
+
+.. code:: python
+
+    i: int = 1
+    x: float = 1.0
+    b: bool = True
+    s: str = "test"
+    bt: bytes = b"test"
+    
+    print(f"{i} de tipo {type(i)}")
+    print(f"{x} de tipo {type(x)}")
+    print(f"{b} de tipo {type(b)}")
+    print(f"{s} de tipo {type(s)}")
+    print(f"{bt} de tipo {type(bt)}")
+    
+    
+    l: list[int] = [1]
+    st: set[int] = {-1,1}
+    d: dict[str, float] = {"versión": 2.0}
+    t: tuple[int, str, float] = (10, "Messi", 7.5)
+    ti: tuple[int, ...] = (1, 2, 3)
+    
+    print(f"{l} de tipo {type(l)}")
+    print(f"{st} de tipo {type(st)}")
+    print(f"{d} de tipo {type(d)}")
+    print(f"{t} de tipo {type(t)}")
+    print(f"{ti} de tipo {type(ti)}")
+
+
+.. parsed-literal::
+
+    1 de tipo <class 'int'>
+    1.0 de tipo <class 'float'>
+    True de tipo <class 'bool'>
+    test de tipo <class 'str'>
+    b'test' de tipo <class 'bytes'>
+    [1] de tipo <class 'list'>
+    {1, -1} de tipo <class 'set'>
+    {'versión': 2.0} de tipo <class 'dict'>
+    (10, 'Messi', 7.5) de tipo <class 'tuple'>
+    (1, 2, 3) de tipo <class 'tuple'>
+
+
+.. note::  En versiones anteriores a Python 3.8 es necesario importar el
+  módulo ``typing``, y los tipos de datos son los mismos pero utilizando
+  mayúsculas.
+  
+  En muchas bibliotecas y módulos se sigue utilizando ``typing`` para
+  proveer compatibilidad con versiones anteriores de Python
+  
+  
+
+.. code:: python
+
+    from typing import  List, Set, Dict, Tuple, Any   # Python 3.8 y anteriores
+    
+    # Para colecciones en versiones de Python 3.9 y posteriores, el tipo de colección a utilizar se escribe entre []
+    l: List[int] = [1]
+    st: Set[int] = {-1,1}
+    d: Dict[str, float] = {"versión": 2.0}
+    t: Tuple[int, str, float] = (10, "Messi", 7.5)
+    ti: Tuple[int, ...] = (1, 2, 3)
+    mx: List[Any] = [1, 1.0, True, "test", b"test", [1], {-1,1}, {"versión": 2.0}, (10, "Messi", 7.5), (1, 2, 3)]
+    
+    print(f"{l} de tipo {type(l)}")
+    print(f"{st} de tipo {type(st)}")
+    print(f"{d} de tipo {type(d)}")
+    print(f"{t} de tipo {type(t)}")
+    print(f"{ti} de tipo {type(ti)}")
+    print(f"{mx} de tipo {type(mx)}")
+
+
+
+.. parsed-literal::
+
+    [1] de tipo <class 'list'>
+    {1, -1} de tipo <class 'set'>
+    {'versión': 2.0} de tipo <class 'dict'>
+    (10, 'Messi', 7.5) de tipo <class 'tuple'>
+    (1, 2, 3) de tipo <class 'tuple'>
+    [1, 1.0, True, 'test', b'test', [1], {1, -1}, {'versión': 2.0}, (10, 'Messi', 7.5), (1, 2, 3)] de tipo <class 'list'>
+
+
+La posibilidad de anotar tipos provee la facilidad de establecer nuevos
+tipos de datos propios:
+
+.. code:: python
+
+    from typing import NewType
+    
+    User = NewType("User", str)
+    user: User = User("Messi")
+    
+    print(f"{user} de tipo {type(user)}")
+
+
+.. parsed-literal::
+
+    Messi de tipo <class 'str'>
+
+
+.. code:: python
+
+    def hola_usuario(usuario: User) -> None:
+        print(f"Hola {usuario}")
+
+.. code:: python
+
+    hola_usuario(4)  
+
+
+.. parsed-literal::
+
+    Hola 4
+
+
+También se pueden crear alias de tipos
+
+.. code:: python
+
+    Vector = Tuple[float, float]
+    Vector3D = Tuple[float, float, float]
+    
+    origen: Vector = (0.0, 0.0)
+    origen3D: Vector3D = (0.0, 0.0, 0.0)
+    
+    print(f"{origen} de tipo {type(origen)}")
+
+
+.. parsed-literal::
+
+    (0.0, 0.0) de tipo <class 'tuple'>
+
+
+Funciones
+---------
+
+La sintaxis para anotar los tipos de las funciones es la siguiente:
+
+.. code:: python
+
+    def suma(a: Vector, b: Vector) -> Vector:
+        return (a[0] + b[0], a[1] + b[1])
+    
+    def producto_escalar(a: Vector, b: Vector) -> float:
+        return a[0] * b[0] + a[1] * b[1]
+
+.. code:: python
+
+    p1 = (1.0, 2.0)
+    p2 = (2.0, 1.0)
+    print(suma(p1, p2))
+    print(producto_escalar(p1, p2))
+
+
+.. parsed-literal::
+
+    (3.0, 3.0)
+    4.0
+
+
+El tipo ``Union``
+-----------------
+
+El tipo ``Union`` se utiliza para indicar que una variable puede aceptar
+dos o más tipos de datos:
+
+.. code:: python
+
+    from typing import Union
+    
+    def suma_numeros(a: Union[int, float], b: Union[int, float]) -> Union[int, float]:
+        return a + b
+    
+    print(suma_numeros(1, 2))
+    print(suma_numeros(1.0, 2.0))
+    print(suma_numeros(1, 2.0))
+
+
+
+.. parsed-literal::
+
+    3
+    3.0
+    3.0
+
+
+Pero recordemos que Python **NO** hace ningún chequeo de tipos!
+
+.. code:: python
+
+    print(suma_numeros("1", "2"))
+
+
+.. parsed-literal::
+
+    12
+
+
+Es responsabilidad del programador observar y hacer observar que los
+tipos sean compatibles, o usar mypy para chequearlos
+
+El tipo ``Optional``
+--------------------
+
+Como su nombre lo indica, ``Optional`` indica que una variable puede
+tener un determinado tipo, o puede ser ‘None’. Es muy útil para anotar
+argumentos de funciones que pueden ser, digamos, opcionales.
+
+   ``Optional[<tipo>]`` es equivalente a ``Union[<tipo>,None]``
+
+..
+
+   En Python 3.10 y superiores, se puede usar el operador ‘\|’ para
+   indicar una unión
+
+.. code:: python
+
+    from typing import Optional
+    
+    s: Optional[str] = None
+    print(s)
+    s = "Hola!"
+    print(s)
+    
+    def saluda(nombre: Optional[str] = None) -> str:
+        if nombre:
+            return f"Hola {nombre}"
+        else:
+            return "Hola Mundo"
+        
+    print(saluda())
+    print(saluda("Messi"))
+
+
+
+.. parsed-literal::
+
+    None
+    Hola!
+    Hola Mundo
+    Hola Messi
+
+
+.. code:: python
+
+    # En Python 3.10+
+    s: str | None = None # Union[str, None]
+    print(s)
+    s = "Hola!"
+    print(s)
+    
+    def saluda(nombre: str | None = None) -> str:
+        if nombre:
+            return f"Hola {nombre}"
+        else:
+            return "Hola Mundo"
+        
+    print(saluda())
+    print(saluda("Messi"))
+
+
+.. parsed-literal::
+
+    None
+    Hola!
+    Hola Mundo
+    Hola Messi
+
+
+Control de tipos estáticos
+==========================
+
+Como vimos la clase anterior, es posible utilizar anotaciones de tipos
+para mejorar la legibilidad de nuestro código, proveer información sobre
+los tipos de las variables que usamos y los tipos de retorno de las
+funciones. Hemos remarcado también que el interprete de Python *per se*
+no controla los tipos de datos que estamos utilizando.
+
+Si se desea realizar este control, la herramienta adecuada es
+`MyPy <https://mypy.readthedocs.io/en/stable/index.html>`__. MyPy es una
+aplicación que corre **además** de python para realizar este chequeo de
+tipos.
+
+La instalamos con
+
+.. code:: bash
+
+   conda install -c conda-forge mypy
+
+.. code:: python
+
+    !mypy --help
+
+   Recuerde que uno puede acceder a todos los comandos de la terminal
+   usando el símbolo de exclamación como hicimos arriba. También puede
+   ejecutar el comando en una terminal como
+
+.. code:: bash
+
+   mypy --help
+
+Veamos cómo funciona ``mypy`` como aplicación. Para ello ejecutaremos el
+programa ``mypy_ejemplo.py`` que contiene este código:
+
+.. code:: python
+
+   def cube(x: int) -> int:
+       return x * x * x
+
+   def Hola(name: str) -> str:
+       return "Hola " + name
+
+   def Hola2(name):
+       return "Hola " + name
+
+   if __name__ == "__main__":
+       a = cube(2)
+
+       print(f"El cubo de 2 es: {a}")
+
+       b = cube(3.0)  # Esto no da error en Python, mypy si lo captura
+
+       print(f"El cubo de 3.0 es: {b}")
+
+       print(f"Hola('Juan'): {Hola('Juan')}")
+       print(f"Hola2(3): {Hola2(3)}")  # Esto da un error de concatenación
+
+       print(
+           f"Hola(3): {Hola(3)}"
+       )  # Esto da un error de concatenación, y además mypy lo captura
+
+Puede copiar el código de arriba y pegarlo en un archivo
+``mypy_ejemplo.py``, o descargarlo desde (acá)[].
+
+Probemos primero corriendo el código con ``python``. > Reemplace
+``../scripts/mypy_example.py`` por el nombre del directorio y el archivo
+en el que copió el código.
+
+.. code:: python
+
+    !python ../scripts/mypy_example.py
+
+Ahora hagamos lo mismo con ``mypy``:
+
+.. code:: python
+
+    !mypy ../scripts/mypy_example.py
+
+``MyPy`` y notebooks
+--------------------
+
+En el caso de los notebooks de Python el manejo de tipos estáticos puede
+ser más complejo, dado que de alguna forma, la aplicación ``mypy`` tiene
+que correr simultaneamente (o en segundo plano) con el intérprete
+interactivo. La mejor opción es el módulo
+```nb_mypy`` <https://gitlab.tue.nl/jupyter-projects/nb_mypy>`__ que
+podemos instalar con:
+
+.. code:: bash
+
+   pip install nb_mypy
+
+Luego cargamos la extensión a nuestro notebook con el comando mágico
+``%load_ext``:
+
+.. code:: python
+
+    %load_ext nb_mypy
+
+
+.. parsed-literal::
+
+    The nb_mypy extension is already loaded. To reload it, use:
+      %reload_ext nb_mypy
+
+
+De esta forma, de ahora en más mypy estará chequeando los tipos de datos
+anotados:
+
+.. code:: python
+
+    def cube(x: int) -> int:
+    	return x*x*x
+    
+    def Hola(name: str) -> str:
+        return 'Hola ' + name	
+    
+    def Hola2(name):
+        return 'Hola ' + name	
+
+.. code:: python
+
+    a = cube(2)
+    
+    print(f"El cubo de 2 es: {a}")
+    
+    b = cube(3.0)   # Esto no da error en Python, mypy si lo captura
+    
+    print(f"El cubo de 3.0 es: {b}")
+    
+    print(f"Hola('Juan'): {Hola('Juan')}")
+    print(f"Hola2(3): {Hola2(3)}") # Esto da un error de concatenación
+    
+    print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
+
+
+.. parsed-literal::
+
+    <cell>5: [1m[31merror:[m Argument 1 to [m[1m"cube"[m has incompatible type [m[1m"float"[m; expected [m[1m"int"[m  [m[33m[arg-type][m
+    <cell>12: [1m[31merror:[m Argument 1 to [m[1m"Hola"[m has incompatible type [m[1m"int"[m; expected [m[1m"str"[m  [m[33m[arg-type][m
+
+
+.. parsed-literal::
+
+    El cubo de 2 es: 8
+    El cubo de 3.0 es: 27.0
+    Hola('Juan'): Hola Juan
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[8], line 10
+          7 print(f"El cubo de 3.0 es: {b}")
+          9 print(f"Hola('Juan'): {Hola('Juan')}")
+    ---> 10 print(f"Hola2(3): {Hola2(3)}") # Esto da un error de concatenación
+         12 print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
+
+
+    Cell In[7], line 8, in Hola2(name)
+          7 def Hola2(name):
+    ----> 8     return 'Hola ' + name
+
+
+    TypeError: can only concatenate str (not "int") to str
+
+
+Podemos evitar el control de tipos con:
+
+.. code:: python
+
+    %nb_mypy Off
+
+.. code:: python
+
+    a = cube(2)
+    
+    print(f"El cubo de 2 es: {a}")
+    
+    b = cube(3.0)   # Esto no da error en Python, mypy si lo captura
+    
+    print(f"El cubo de 3.0 es: {b}")
+    
+    print(f"Hola('Juan'): {Hola('Juan')}")
+    print(f"Hola2(3): {Hola2(3)}") # Esto da un error de concatenación
+    
+    print(f"Hola(3): {Hola(3)}") # Esto da un error de concatenación, y además mypy lo captura
+
+   El módulo ``nb_mypy`` puede utilizarse en cualquier editor de
+   notebooks, ya sea Jupyter, Jupyterlabs, VS Code, etc.
+
+Opciones en VSCode
+~~~~~~~~~~~~~~~~~~
+
+Para los usuarios de VS Code, existen dos extensiones que permiten
+utilizar ``mypy``:
+
+-  `MyPy Type
+   Checker <https://marketplace.visualstudio.com/items?itemName=ms-python.mypy-type-checker>`__,
+   que muestra los errores directamente en el código, **pero no funciona
+   todavía con notebooks**
+-  `Mypy <https://marketplace.visualstudio.com/items?itemName=matangover.mypy>`__,
+   que funciona igual que la anterior, y tiene, *en forma experimental*
+   la opción de comprobar tipos en notebooks:
+
+   -  Ir a *Settings*, y buscar ``mypy.checkNotebooks``, y setearlo a
+      ``true``.

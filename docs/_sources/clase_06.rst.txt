@@ -1,0 +1,1475 @@
+.. _clase_06:
+
+Clase 6: Programación Orientada a Objetos 
+===========================================
+
+
+Breve introducción a Programación Orientada a Objetos
+-----------------------------------------------------
+
+Vimos como escribir funciones que realizan un trabajo específico y nos
+devuelven un resultado. La mayor parte de nuestros programas van a estar
+diseñados con un hilo conductor principal, que utiliza una serie de
+funciones para realizar el cálculo. De esta manera, el código es
+altamente reusable.
+
+Hay otras maneras de organizar el código, una de ellas es
+particularmente útil cuando un conjunto de rutinas comparte un dado
+conjunto de datos. En ese caso, puede ser adecuado utilizar un esquema
+de programación orientada a objetos. En esta modalidad programamos
+distintas entidades, donde cada una tiene un comportamiento, y
+determinamos una manera de interactuar entre ellas.
+
+Clases y Objetos
+----------------
+
+Una ``Clase`` define características que tienen los ``objetos`` de dicha
+clase. En general la clase tiene: un nombre y características (campos o
+atributos y métodos).
+
+Un Objeto, en programación, puede pensarse como la representación de un
+objeto real, de una dada clase. Un objeto real tiene una composición y
+características, y además puede realizar un conjunto de actividades
+(tiene un comportamiento). Cuando programamos, las “partes” son los
+datos, y el “comportamiento” son los métodos.
+
+Ejemplos de la vida diaria serían: Una clase *Bicicleta*, y muchos
+objetos del tipo bicicleta (mi bicicleta, la suya, etc). La definición
+de la clase debe contener la información de qué es una bicicleta (dos
+ruedas, manubrio, etc) y luego se realizan muchas copias del tipo
+bicicleta (los objetos).
+
+Se dice que los **objetos** son instancias de una **clase**, por ejemplo
+ya vimos los números enteros. Cuando definimos: ``a = 3`` estamos
+diciendo que ``a`` es una instancia (objeto) de la clase ``int``.
+
+Los objetos pueden guardar datos (en este caso ``a`` guarda el valor
+``3``). Las variables que contienen los datos de los objetos se llaman
+usualmente campos o atributos. Las acciones que tienen asociadas los
+objetos se realizan a través de funciones internas, que se llaman
+métodos.
+
+Las clases se definen con la palabra reservada ``class``, veamos un
+ejemplo simple:
+
+.. code:: python
+
+    class Clase:
+        pass
+
+.. code:: python
+
+    c1 = Clase()
+
+.. code:: python
+
+    c1
+
+
+
+
+.. parsed-literal::
+
+    <__main__.Clase at 0x10b028710>
+
+
+
+.. code:: python
+
+    help(c1)
+
+
+.. parsed-literal::
+
+    Help on Clase in module __main__ object:
+    
+    class Clase(builtins.object)
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+    
+
+
+.. code:: python
+
+    dir(c1)
+
+
+
+
+.. parsed-literal::
+
+    ['__class__',
+     '__delattr__',
+     '__dict__',
+     '__dir__',
+     '__doc__',
+     '__eq__',
+     '__format__',
+     '__ge__',
+     '__getattribute__',
+     '__getstate__',
+     '__gt__',
+     '__hash__',
+     '__init__',
+     '__init_subclass__',
+     '__le__',
+     '__lt__',
+     '__module__',
+     '__ne__',
+     '__new__',
+     '__reduce__',
+     '__reduce_ex__',
+     '__repr__',
+     '__setattr__',
+     '__sizeof__',
+     '__str__',
+     '__subclasshook__',
+     '__weakref__']
+
+
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+    
+
+
+.. code:: python
+
+    P1 = Punto(0.5, 0.5, 0)
+
+.. code:: python
+
+    P1
+
+
+
+
+.. parsed-literal::
+
+    <__main__.Punto at 0x10b1415e0>
+
+
+
+Vemos que ``P1`` es un objeto del tipo ``Punto`` que está alojado en una
+dada dirección de memoria (dada por ese número largo hexadecimal). Para
+referirnos a los *atributos* de ``P1`` se utiliza notación “de punto”:
+
+.. code:: python
+
+    P1.x, P1.z
+
+
+
+
+.. parsed-literal::
+
+    (0.5, 0)
+
+
+
+.. code:: python
+
+    print(P1)
+
+
+.. parsed-literal::
+
+    <__main__.Punto object at 0x10b1415e0>
+
+
+Como vemos, acabamos de definir una clase de tipo Punto. A continuación
+definimos un *método* ``__init__`` que hace el trabajo de inicializar el
+objeto.
+
+Algunos puntos a notar:
+
+-  La línea ``P1 = Punto(0.5, 0.5, 0)`` crea un nuevo objeto del tipo
+   ``Punto``. Notar que usamos paréntesis como cuando llamamos a una
+   función pero Python sabe que estamos “llamando” a una clase y creando
+   un objeto.
+
+-  El método ``__init__`` es especial y es el Constructor de objetos de
+   la clase. Es llamado automáticamente al definir un nuevo objeto de
+   esa clase. Por esa razón, le pasamos los dos argumentos al crear el
+   objeto.
+
+-  El primer argumento del método, ``self``, debe estar presente en la
+   definición de todos los métodos pero no lo pasamos como argumento
+   cuando hacemos una llamada a la función. **Python** se encarga de
+   pasarlo en forma automática. Lo único relevante de este argumento es
+   que es el primero para todos los métodos, el nombre ``self`` puede
+   cambiarse por cualquier otro **pero, por convención, no se hace**.
+
+.. code:: python
+
+    P2 = Punto()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[19], line 1
+    ----> 1 P2 = Punto()
+
+
+    TypeError: Punto.__init__() missing 3 required positional arguments: 'x', 'y', and 'z'
+
+
+Por supuesto la creación del objeto falla si no le damos ningún
+argumento porque los argumentos de ``__init__`` no son opcionales.
+Modifiquemos eso y aprovechamos para definir algunos otros métodos que
+pueden ser útiles:
+
+.. code:: python
+
+    from math import atan2, pi
+    
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        
+      def angulo_azimuthal(self):
+        "Devuelve el ángulo que forma con el eje x, en grados"
+        return 180/pi*(atan2(self.y, self.x))
+
+.. code:: python
+
+    P1 = Punto(0.5, 0.5)
+
+.. code:: python
+
+    P1.angulo_azimuthal()
+
+
+
+
+.. parsed-literal::
+
+    45.0
+
+
+
+.. code:: python
+
+    P2 = Punto()
+
+.. code:: python
+
+    P2.x
+
+
+
+
+.. parsed-literal::
+
+    0
+
+
+
+.. code:: python
+
+    help(P1)
+
+
+.. parsed-literal::
+
+    Help on Punto in module __main__ object:
+    
+    class Punto(builtins.object)
+     |  Punto(x=0, y=0, z=0)
+     |
+     |  Clase para describir un punto en el espacio
+     |
+     |  Methods defined here:
+     |
+     |  __init__(self, x=0, y=0, z=0)
+     |      Inicializa un punto en el espacio
+     |
+     |  angulo_azimuthal(self)
+     |      Devuelve el ángulo que forma con el eje x, en grados
+     |
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |
+     |  __dict__
+     |      dictionary for instance variables
+     |
+     |  __weakref__
+     |      list of weak references to the object
+    
+
+
+El objeto ``P1`` es del tipo ``Punto`` y tiene definidos los métodos
+``__init__()`` (el constructor) y el método ``angulo_azimuthal()`` que
+programamos para obtener el ángulo. Además tiene el método ``__dict__``
+que provee un diccionario con los datos del objeto:
+
+.. code:: python
+
+    P1.__dict__
+
+
+
+
+.. parsed-literal::
+
+    {'x': 0.5, 'y': 0.5, 'z': 0}
+
+
+
+Cuando ejecutamos uno de los métodos de un objeto, es equivalente a
+hacer la llamada al método de la clase, dando como primer argumento el
+objeto en cuestión:
+
+.. code:: python
+
+    pp = Punto(0.1, "s", [1,2])
+
+.. code:: python
+
+    pp
+
+
+
+
+.. parsed-literal::
+
+    <__main__.Punto at 0x10af92bd0>
+
+
+
+Evidentemente, al ser Python un lenguaje de tipos dinámicos, no hay
+forma de prevenir que se use la clase ``Punto`` con otros tipos de
+variables que no sean números, lo cual puede tener consecuencias:
+
+.. code:: python
+
+    pp.angulo_azimuthal()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[29], line 1
+    ----> 1 pp.angulo_azimuthal()
+
+
+    Cell In[20], line 14, in Punto.angulo_azimuthal(self)
+         12 def angulo_azimuthal(self):
+         13   "Devuelve el ángulo que forma con el eje x, en grados"
+    ---> 14   return 180/pi*(atan2(self.y, self.x))
+
+
+    TypeError: must be real number, not str
+
+
+.. code:: python
+
+    print(P1.angulo_azimuthal())
+    print(Punto.angulo_azimuthal(P1))
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Cell In[1], line 1
+    ----> 1 print(P1.angulo_azimuthal())
+          2 print(Punto.angulo_azimuthal(P1))
+
+
+    NameError: name 'P1' is not defined
+
+
+Al hacer la llamada a un método de una “instancia de la Clase” (o un
+objeto), omitimos el argumento ``self``. El lenguaje traduce nuestro
+llamado: ``P1.angulo_azimuthal()`` como ``Punto.angulo_azimuthal(P1)``
+ya que ``self`` se refiere al objeto que llama al método.
+
+   Es responsabilidad de quien programa establecer las restricciones de
+   los valores que se pueden asignar a los atributos de un objeto. Por
+   ejemplo, si se quiere que los valores de x, y, y z sean siempre
+   números reales, se puede hacer lo siguiente:
+
+.. code:: python
+
+    
+    class PuntoV:
+        "Clase para describir un punto en el espacio"
+        
+        def __init__(self, x=0, y=0, z=0):
+            "Inicializa un punto en el espacio"
+            if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+                raise TypeError("x, y, z deben ser números enteros o flotantes")
+            self.x = x
+            self.y = y
+            self.z = z
+            
+        def angulo_azimuthal(self):
+            "Devuelve el ángulo que forma con el eje x, en grados"
+            return 180/pi*(atan2(self.y, self.x))
+
+Acá usamos la función ``isinstance`` para chequear que la variable ``x``
+(que a su vez es un objeto) sea de alguna de las clases ``int`` o
+``float``.
+
+.. code:: python
+
+    pv = PuntoV(0.1, "s", [1,2])
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[36], line 1
+    ----> 1 pv = PuntoV(0.1, "s", [1,2])
+
+
+    Cell In[35], line 7, in PuntoV.__init__(self, x, y, z)
+          5 "Inicializa un punto en el espacio"
+          6 if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+    ----> 7     raise TypeError("x, y, z deben ser números")
+          8 self.x = x
+          9 self.y = y
+
+
+    TypeError: x, y, z deben ser números
+
+
+Métodos especiales
+~~~~~~~~~~~~~~~~~~
+
+Volviendo a mirar la definición de la clase, vemos que ``__init__()`` es
+un método “especial”. No necesitamos ejecutarlo explícitamente ya que
+Python lo hace automáticamente al crear cada objeto de la clase dada. En
+*Python* el usuario/programador tiene acceso a todos los métodos y
+atributos. Por convención los nombres que inician con guión bajo se
+presupone que no son para ser utilizados directamente. En particular,
+los que están rodeados por dos guiones bajos tienen significado especial
+y *Python* los va a utilizar en forma autómatica en distintas ocasiones.
+
+Herencia
+--------
+
+Una de las características de la programación orientada a objetos es la
+facilidad de reutilización de código. Uno de los mecanismos más
+importantes es a través de la herencia. Cuando definimos una nueva
+clase, podemos crearla a partir de un objeto que ya exista. Por ejemplo,
+utilizando la clase ``Punto`` podemos definir una nueva clase para
+describir un vector en el espacio:
+
+.. code:: python
+
+    class Vector(Punto):
+      "Representa un vector en el espacio"
+    
+      def suma(self, v2):
+        "Calcula un vector que contiene la suma de dos vectores"
+        print("Aún no implementada la suma de dos vectores") 
+        # código calculando v = suma de self + v2
+        # ...
+    
+      def producto(self, v2):
+        "Calcula el producto interno entre dos vectores"
+        print("Aún no implementado el producto interno de dos vectores") 
+        # código calculando el producto interno pr = v1 . v2
+    
+      def abs(self):
+        "Devuelve la distancia del punto al origen"
+        print("Aún no implementado la norma del vector") 
+        # código calculando el producto interno pr = v1 . v2
+    
+        
+
+Acá hemos definido un nuevo tipo de objeto, llamado ``Vector`` que se
+deriva de la clase ``Punto``. Veamos cómo funciona:
+
+.. code:: python
+
+    v1 = Vector(2,3.1)
+    v2 = Vector()
+
+.. code:: python
+
+    v1
+
+
+
+
+.. parsed-literal::
+
+    <__main__.Vector at 0x7f63a6037a10>
+
+
+
+.. code:: python
+
+    v1.x, v1.y, v1.z
+
+
+
+
+.. parsed-literal::
+
+    (2, 3.1, 0)
+
+
+
+.. code:: python
+
+    v2.x, v2.y, v2.z
+
+
+
+
+.. parsed-literal::
+
+    (0, 0, 0)
+
+
+
+.. code:: python
+
+    v1.angulo_azimuthal()
+
+
+
+
+.. parsed-literal::
+
+    57.171458208587474
+
+
+
+.. code:: python
+
+    v = v1.suma(v2)
+
+
+.. parsed-literal::
+
+    Aún no implementada la suma de dos vectores
+
+
+.. code:: python
+
+    print(v)
+
+
+.. parsed-literal::
+
+    None
+
+
+Volviendo a la definición de un objeto, vimos que ``__init__()`` es un
+método “especial”. Otro método especial es ``__add__()`` que nos permite
+definir la operación suma entre objetos:
+
+.. code:: python
+
+    class Vector(Punto):
+      "Representa un vector en el espacio"
+    
+      def __add__(self, v2):
+        "Calcula un vector que contiene la suma de dos vectores"
+        print("Aún no implementada la suma de dos vectores") 
+        # código calculando v = suma de self + v2
+        # ...
+    
+      def producto(self, v2):
+        "Calcula el producto interno entre dos vectores"
+        print("Aún no implementado el producto interno de dos vectores") 
+        # código calculando el producto interno pr = v1 . v2
+    
+      def abs(self):
+        "Devuelve la distancia del punto al origen"
+        print("Aún no implementado la norma del vector") 
+        # código calculando el producto interno pr = v1 . v2
+    
+        
+
+.. code:: python
+
+    v1 = Vector(1,2,3)
+    v2 = Vector(1,2,-3)
+
+.. code:: python
+
+    v1 + v2
+
+
+.. parsed-literal::
+
+    Aún no implementada la suma de dos vectores
+
+
+Los métodos que habíamos definido para los puntos del espacio, son
+accesibles para el nuevo objeto. Además podemos agregar (extender) el
+nuevo objeto con otros atributos y métodos.
+
+Como vemos, aún no está implementado el cálculo de las distintas
+funciones, eso forma parte del siguiente …
+
+--------------
+
+Ejercicios 06 (a)
+-----------------
+
+1. Implemente los métodos ``__add__``, ``producto`` y ``abs``
+
+   -  ``__add__()`` debe retornar un objeto del tipo ``Vector`` y
+      contener en cada componente la suma de las componentes de los dos
+      vectores que toma como argumento.
+
+   -  ``producto`` toma como argumentos dos vectores y retorna un número
+      real con el valor del producto interno
+
+   -  ``abs`` toma como argumentos el propio objeto y retorna el número
+      real correspondiente
+
+   Su uso será el siguiente:
+
+   .. code:: python
+
+      v1 = Vector(1,2,3)
+      v2 = Vector(3,2,1)
+      v = v1 + v2
+      pr = v1.producto(v2)
+      a = v1.abs()
+
+--------------
+
+
+Atributos de clases y de instancias
+-----------------------------------
+
+Las variables que hemos definido pertenecen a cada objeto. Por ejemplo
+cuando hacemos
+
+flavio.colavecchia@ib.edu.ar
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        return None
+    
+      def angulo_azimuthal(self):
+        "Devuelve el ángulo que forma con el eje x, en radianes"
+        return atan2(self.y, self.x)
+
+
+.. code:: python
+
+    p1 = Punto(1,2,3)
+    p2 = Punto(4,5,6)
+
+cada vez que creamos un objeto de una dada clase, tiene un dato que
+corresponde al objeto. En este caso tanto ``p1`` como ``p2`` tienen un
+atributo llamado ``x``, y cada uno de ellos tiene su propio valor:
+
+.. code:: python
+
+    print(p1.x, p2.x)
+
+
+.. parsed-literal::
+
+    1 4
+
+
+De la misma manera, en la definición de la clase nos referimos a estas
+variables como ``self.x``, indicando que pertenecen a una instancia de
+una clase (o, lo que es lo mismo: un objeto específico).
+
+También existe la posibilidad de asociar variables (datos) con la clase
+y no con una instancia de esa clase (objeto). En el siguiente ejemplo,
+la variable ``num_puntos`` no pertenece a un ``punto`` en particular
+sino a la clase del tipo ``Punto``
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+
+
+En este ejemplo estamos creando el objeto ``Punto`` y en la variable
+``num_puntos`` de la clase estamos llevando la cuenta de cuantos puntos
+hemos creado. Al crear un nuevo punto (con el método ``__init__()``)
+aumentamos el valor de la variable en uno.
+
+.. code:: python
+
+    print('Número de puntos:', Punto.num_puntos)
+    p1 = Punto(1,1,1)
+    p2 = Punto()
+    print(p1, p2)
+    print('Número de puntos:', Punto.num_puntos)
+
+
+.. parsed-literal::
+
+    Número de puntos: 0
+    <__main__.Punto object at 0x10caa0770> <__main__.Punto object at 0x10ca434a0>
+    Número de puntos: 2
+
+
+Si estamos contando el número de puntos que tenemos, podemos crear
+métodos para acceder a ellos y/o manipularlos. Estos métodos no se
+refieren a una instancia en particular (``p1`` o ``p2`` en este ejemplo)
+sino al tipo de objeto ``Punto`` (a la clase)
+
+.. code:: python
+
+    del p1
+    del p2
+
+.. code:: python
+
+    print(p1)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Cell In[12], line 1
+    ----> 1 print(p1)
+
+
+    NameError: name 'p1' is not defined
+
+
+.. code:: python
+
+    print(Punto.num_puntos)
+
+
+.. parsed-literal::
+
+    2
+
+
+Nuestra implementación tiene una falla, al borrar los objetos no
+actualiza el contador, descontando uno cada vez.
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def borrar(self):
+        "Borra el punto"
+        Punto.num_puntos -= 1
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+
+En esta versión agregamos un método para actualizar el contador
+(``borrar()``) y además agregamos un método para imprimir el número de
+puntos total definidos.
+
+Notar que utilizamos el decorador ``@classmethod`` antes de la
+definición, que convierte al método en un método de la clase en lugar de
+ser un método del objeto (la instancia). Los métodos de clase no reciben
+como argumento un objeto (como ``p1``) sino la clase (``Punto``).
+
+Como en otros casos, el uso del decorador es una conveniencia sintáctica
+en lugar de llamar a la función intrínseca ``classmethod()``.
+
+.. code:: python
+
+    print('Número de puntos:', Punto.num_puntos)
+    Punto.total()
+    p1 = Punto(1,1,1)
+    p2 = Punto()
+    print(p1, p2)
+    Punto.total()
+
+
+.. parsed-literal::
+
+    Número de puntos: 0
+    En total hay 0 puntos definidos
+    <__main__.Punto object at 0x10caa3e30> <__main__.Punto object at 0x10caa08f0>
+    En total hay 2 puntos definidos
+
+
+.. code:: python
+
+    Punto.total()
+    p1.borrar()
+    Punto.total()
+
+
+.. parsed-literal::
+
+    En total hay 2 puntos definidos
+    En total hay 1 puntos definidos
+
+
+Sin embargo, en esta implementación no estamos realmente removiendo
+``p1``, sólo estamos actualizando el contador:
+
+.. code:: python
+
+    print(f"{p1 = }")
+    print(f"{p1.x = }")
+
+
+.. parsed-literal::
+
+    p1 = <__main__.Punto object at 0x10caa3e30>
+    p1.x = 1
+
+
+Algunos métodos “especiales”
+----------------------------
+
+Hay algunos métodos que **Python** interpreta de manera especial. Ya
+vimos uno de ellos: ``__init__()``, que es llamado automáticamente
+cuando se crea una instancia de la clase.
+
+Método ``__del__()``
+~~~~~~~~~~~~~~~~~~~~
+
+Similarmente, existe un método ``__del__()`` que Python llama
+automáticamente cuando borramos un objeto.
+
+.. code:: python
+
+    del p1
+    del p2
+
+Podemos utilizar esto para implementar la actualización del contador de
+puntos
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+
+
+.. code:: python
+
+    p1 = Punto(1,1,1)
+    p2 = Punto()
+    Punto.total()
+    del p2
+    Punto.total()
+
+
+.. parsed-literal::
+
+    En total hay 2 puntos definidos
+    En total hay 1 puntos definidos
+
+
+.. code:: python
+
+    p1
+
+
+
+
+.. parsed-literal::
+
+    <__main__.Punto at 0x10cbb14f0>
+
+
+
+.. code:: python
+
+    p2
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Cell In[21], line 1
+    ----> 1 p2
+
+
+    NameError: name 'p2' is not defined
+
+
+.. code:: python
+
+    print(p1)
+
+
+.. parsed-literal::
+
+    <__main__.Punto object at 0x10cbb14f0>
+
+
+Como vemos, al borrar el objeto, automáticamente se actualiza el
+contador.
+
+Métodos ``__str__`` y ``__repr__``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+El método ``__str__`` también es especial, en el sentido en que puede
+ser utilizado aunque no lo llamemos explícitamente en nuestro código. En
+particular, es llamado cuando usamos expresiones del tipo
+``str(objeto)`` o automáticamente cuando se utilizan las funciones
+``format`` y ``print()``. El objetivo de este método es que sea legible
+para los usuarios.
+
+.. code:: python
+
+    p1 = Punto(1,1,1)
+
+.. code:: python
+
+    print(p1)
+
+
+.. parsed-literal::
+
+    <__main__.Punto object at 0x7f32582e39d0>
+
+
+Rehagamos la clase para definir puntos
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        s = f"Punto en el espacio con coordenadas: x = {self.x}, y = {self.y}, z = {self.z}"
+        return s
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+        
+
+.. code:: python
+
+    p1 = Punto(1,1,0)
+
+.. code:: python
+
+    print(p1)
+
+
+.. parsed-literal::
+
+    Punto en el espacio con coordenadas: x = 1, y = 1, z = 0
+
+
+.. code:: python
+
+    ss = 'p1 = {}'.format(p1)
+    ss
+
+
+
+
+.. parsed-literal::
+
+    'p1 = Punto en el espacio con coordenadas: x = 1, y = 1, z = 0'
+
+
+
+.. code:: python
+
+    p1
+
+
+
+
+.. parsed-literal::
+
+    <__main__.Punto at 0x10c9ed250>
+
+
+
+Como vemos, si no usamos la función ``print()`` o ``format()`` sigue
+mostrándonos el objeto (que no es muy informativo). Esto puede
+remediarse agregando el método especial ``__repr__``. Este método es el
+que se llama cuando queremos inspeccionar un objeto. El objetivo de este
+método es que de información sin ambigüedades.
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        return f"Punto en el espacio con coordenadas: x = {self.x}, y = {self.y}, z = {self.z}"
+    
+      def __repr__(self):
+        return f"Punto(x = {self.x}, y = {self.y}, z = {self.z})"
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+        
+
+.. code:: python
+
+    p2 = Punto(0.3, 0.3, 1)
+
+.. code:: python
+
+    p2
+
+
+
+
+.. parsed-literal::
+
+    Punto(x = 0.3, y = 0.3, z = 1)
+
+
+
+.. code:: python
+
+    p2.x = 5
+    p2
+
+
+
+
+.. parsed-literal::
+
+    Punto(x = 5, y = 0.3, z = 1)
+
+
+
+Como vemos ahora tenemos una representación del objeto, que nos da
+información precisa.
+
+Método ``__call__``
+~~~~~~~~~~~~~~~~~~~
+
+Este método, si existe es ejecutado cuando llamamos al objeto. Si no
+existe, es un error llamar al objeto:
+
+.. code:: python
+
+    p2()
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In [30], line 1
+    ----> 1 p2()
+
+
+    TypeError: 'Punto' object is not callable
+
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        return f"Punto en el espacio con coordenadas: x = {self.x}, y = {self.y}, z = {self.z}"
+    
+      def __repr__(self):
+        return f"Punto(x = {self.x}, y = {self.y}, z = {self.z})"
+    
+      def __call__(self):
+        return "Ejecuté el objeto: {}".format(self)
+    #    return str(self)
+    #    return "{}".format(self)
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+        
+
+.. code:: python
+
+    p3 = Punto(1,3,4)
+    p3
+
+
+
+
+.. parsed-literal::
+
+    Punto(x = 1, y = 3, z = 4)
+
+
+
+.. code:: python
+
+    p3()
+
+
+
+
+.. parsed-literal::
+
+    'Ejecuté el objeto: Punto en el espacio con coordenadas: x = 1, y = 3, z = 4'
+
+
+
+Métodos ``__add__``, ``__mul__``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Además del método ``__add__()`` visto anteriormente, que es llamado
+automáticamente cuando se utiliza la operación suma, existe el método
+``__mul__()`` que se ejecuta al utilizar la operación multiplicación.
+
+--------------
+
+Ejercicios 06 (b)
+-----------------
+
+2. Utilizando la definición de la clase ``Punto``
+
+.. code:: python
+
+   class Punto:
+     "Clase para describir un punto en el espacio"
+
+     num_puntos = 0
+
+     def __init__(self, x=0, y=0, z=0):
+       "Inicializa un punto en el espacio"
+       self.x = x
+       self.y = y
+       self.z = z
+       Punto.num_puntos += 1
+       return None
+
+     def __del__(self):
+       "Borra el punto y actualiza el contador"
+       Punto.num_puntos -= 1
+
+     def __str__(self):
+       return f"Punto en el espacio con coordenadas: x = {self.x}, y = {self.y}, z = {self.z}"
+
+     def __repr__(self):
+       return f"Punto(x = {self.x}, y = {self.y}, z = {self.z})"
+
+     def __call__(self):
+       return self.__str__()
+
+     @classmethod
+     def total(cls):
+       "Imprime el número total de puntos"
+       print(f"En total hay {cls.num_puntos} puntos definidos")
+
+Complete la implementación de la clase ``Vector`` con los métodos
+pedidos
+
+.. code:: python
+
+   class Vector(Punto):
+     "Representa un vector en el espacio"
+
+     def __add__(self, v2):
+       "Calcula un vector que contiene la suma de dos vectores"
+       print("Aún no implementada la suma de dos vectores") 
+       # código calculando v = suma de self + v2
+       # ...
+
+     def __mul__(self, v2):
+       "Calcula el producto interno entre dos vectores"
+       print("Aún no implementado el producto interno de dos vectores") 
+       # código calculando el producto interno pr = v1 . v2
+
+     def abs(self):
+       "Devuelve la distancia del punto al origen"
+       print("Aún no implementado la norma del vector") 
+       # código calculando la magnitud del vector
+
+     def angulo_entre_vectores(self, v2):
+       "Calcula el ángulo entre dos vectores"
+       print("Aún no implementado el ángulo entre dos vectores") 
+       angulo = 0
+       # código calculando angulo = arccos(v1 * v2 / (|v1||v2|))
+       return angulo
+
+     def coordenadas_cilindricas(self):
+       "Devuelve las coordenadas cilindricas del vector como una tupla (r, theta, z)"
+       print("No implementada")
+
+     def coordenadas_esfericas(self):
+       "Devuelve las coordenadas esféricas del vector como una tupla (r, theta, phi)"
+       print("No implementada")
+
+3. **PARA ENTREGAR:** Cree una clase ``Polinomio`` para representar
+   polinomios. La clase debe guardar los datos representando todos los
+   coeficientes. El grado del polinomio será *menor o igual a 9* (un
+   dígito).
+
+   .. note::  Utilice el archivo **06_polinomio.py** en el directorio
+     **data**, que renombrará de la forma usual ``06_Apellido.py``. Se le
+     pide que programe:
+  
+     
+
+-  Un método de inicialización ``__init__`` que acepte una lista de
+   coeficientes. Por ejemplo para el polinomio
+   :math:`4 x^3 + 3 x^2 + 2 x + 1` usaríamos:
+
+.. code:: python
+
+   >>> p = Polinomio([1,2,3,4])
+
+-  Un método ``grado`` que devuelva el orden del polinomio
+
+.. code:: python
+
+   >>> p = Polinomio([1,2,3,4])
+   >>> p.grado()
+   3
+
+-  Un método ``get_coeficientes``, que devuelva una lista con los
+   coeficientes:
+
+.. code:: python
+
+   >>> p.get_coeficientes()
+   [1, 2, 3, 4]
+
+-  Un método ``set_coeficientes``, que fije los coeficientes de la
+   lista:
+
+.. code:: python
+
+   >>> p1 = Polinomio()
+   >>> p1.get_coeficientes()
+   []
+   >>> p1.set_coeficientes([1, 2, 3, 4])
+   >>> p1.get_coeficientes()
+   [1, 2, 3, 4]
+
+-  El método ``suma_pol(pol2)`` que le sume otro polinomio y devuelva un
+   polinomio (objeto del mismo tipo)
+
+-  El método ``mul(pol2)`` que multiplica al polinomio por una constante
+   y devuelve un nuevo polinomio
+
+-  Un método, ``derivada(n)``, que devuelva la derivada de orden ``n``
+   del polinomio (otro polinomio):
+
+.. code:: python
+
+   >>> p1 = p.derivada()
+   >>> p1.get_coeficientes()
+   [2, 6, 12]
+   >>> p2 = p.derivada(n=2)
+   >>> p2.get_coeficientes()
+   [6, 24]
+
+-  Un método que devuelva la integral (antiderivada) del polinomio de
+   orden ``n``, con constante de integración ``cte`` (otro polinomio).
+
+.. code:: python
+
+   >>> p1 = p.integrada()
+   >>> p1.get_coeficientes()
+   [0, 1, 1, 1, 1]
+   >>>
+   >>> p2 = p.integrada(cte=2)
+   >>> p2.get_coeficientes()
+   [2, 1, 1, 1, 1]
+   >>>
+   >>> p3 = p.integrada(n=3, cte=1.5)
+   >>> p3.get_coeficientes()
+   [1.5, 1.5, 0.75, 0.16666666666666666, 0.08333333333333333, 0.05]
+
+-  Un método ``from_string(expr)`` (pida ayuda si se le complica) que
+   crea un polinomio desde un string en la forma:
+
+.. code:: python
+
+   >>> p = Polinomio()
+   >>> p.from_string('x^5 + 3x^3 - 2 x+x^2 + 3 - x')
+   >>> p.get_coeficientes()
+   [3, -3, 1, 3, 0, 1]
+   >>>
+   >>> p1 = Polinomio()
+   >>> p1.from_string('y^5 + 3y^3 - 2 y + y^2+3', var='y')
+   >>> p1.get_coeficientes()
+   [3, -2, 1, 3, 0, 1]
+
+-  Escriba un método llamado ``__str__``, que devuelva un string (que
+   define cómo se va a imprimir el polinomio). Un ejemplo de salida
+   será:
+
+.. code:: python
+
+   >>> p = Polinomio([1,2.1,3,4])
+   >>> print(p)
+   4 x^3 + 3 x^2 + 2.1 x + 1
+
+-  Escriba un método llamado ``__call__``, de manera tal que al llamar
+   al objeto, evalúe el polinomio en un dado valor de ``x``
+
+.. code:: python
+
+   >>> p = Polinomio([1,2,3,4])
+   >>> p(x=2)
+   49
+   >>>
+   >>> p(0.5)
+   3.25
+
+-  Escriba un método llamado ``__add__(self, p)``, que evalúe la suma de
+   polinomios usando el método ``suma_pol`` definido anteriormente. Eso
+   permitirá usar la operación de suma en la forma:
+
+.. code:: python
+
+   >>> p1 = Polinomio([1,2,3,4])
+   >>> p2 = Polinomio([1,2,3,4])
+   >>> p1 + p2
+
+-  Escriba los métodos llamados ``__mul__(self, value)`` y
+   ``__rmul__(self, value)``, que devuelvan el producto de un polinomio
+   por un valor constante, llamando al método ``mul`` definido
+   anteriormente. Eso permitirá usar la operación producto en la forma:
+
+.. code:: python
+
+   >>> p1 = Polinomio([1,2,3,4])
+   >>> k = 3.5
+   >>> p1 * k
+   >>> k * p1
+
+--------------

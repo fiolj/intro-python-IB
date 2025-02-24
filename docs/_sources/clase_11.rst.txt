@@ -1,0 +1,1160 @@
+.. _clase_11:
+
+Clase 11: Graficación usando Plotly
+====================================
+
+
+``Plotly`` es una biblioteca similar a ``Matplotlib``. Su origen es una
+biblioteca en JavaScript para utilizar en el desarrollo de aplicaciones
+web, pero con el tiempo fue extendida con distintos *bindings* para R,
+Julia, y, por supuesto, Python.
+
+Una de las características de ``Plotly`` es que tiene un mayor grado
+nativo de interactividad que Matplotlib.
+
+``Plotly`` viene en dos sabores: - ``plotly.express``, es una biblioteca
+orientada a trabajar con datos con algún tipo de formato (típicamente
+``csv``), y está orientada a poder usarse con ``pandas`` que es una
+biblioteca para procesar datos. ``pandas`` puede leer fácilmente tablas
+de datos, que se pueden graficar eficientemente con ``plotly.express``.
+- ``graph_objects``, es el submódulo para graficar más similar a
+``Matplotlib``.
+
+Finalmente, verán en la `documentación <https://plotly.com/python/>`__
+referencias a ``Dash``, que es otra biblioteca que permite directamente
+publicar gráficos en un servicio en la nube, que, por supuesto, provee
+la companía que produce ``Plotly``.
+
+Sin embargo, ``Plotly`` es completamente libre.
+
+``Plotly`` se instala usando ``pip``:
+
+``pip install plotly==5.6.0``
+
+o ``conda``:
+
+``conda install -c plotly plotly=5.6.0``
+
+.. code:: python
+
+    import plotly.graph_objects as go
+    import numpy as np
+    print(np.__version__)
+
+
+
+.. parsed-literal::
+
+    1.26.4
+
+
+Definimos un conjunto de 51 datos equiespaciados entre 0 y 4, y la
+función
+
+.. math::
+
+
+   y = f(x) = 2.5 e^{-1.3 x} + 0.5. e^{-1.6 x}
+
+Además, definimos un conjunto de datos *con ruido*, sumando a :math:`y`
+un ruido gaussiano de media 0 y dispersión 1 (ver
+``help(np.random.normal)``):
+
+.. code:: python
+
+    x = np.linspace(0,4,51)
+    y = 2.5 * np.exp(-1.3 * x) + 0.5 * np.exp(-1.6 * x)
+    ruido = 0.2 * np.random.normal(size=x.size)
+    medicion = y + ruido
+    
+    print(x.size)
+
+
+.. parsed-literal::
+
+    51
+
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(x=x,y=y))
+    fig.show() # Se muestra el gráfico en la pantalla
+
+
+
+
+.. code:: python
+
+    print(fig)
+
+
+.. parsed-literal::
+
+    Figure({
+        'data': [{'type': 'scatter',
+                  'x': array([0.  , 0.08, 0.16, 0.24, 0.32, 0.4 , 0.48, 0.56, 0.64, 0.72, 0.8 , 0.88,
+                              0.96, 1.04, 1.12, 1.2 , 1.28, 1.36, 1.44, 1.52, 1.6 , 1.68, 1.76, 1.84,
+                              1.92, 2.  , 2.08, 2.16, 2.24, 2.32, 2.4 , 2.48, 2.56, 2.64, 2.72, 2.8 ,
+                              2.88, 2.96, 3.04, 3.12, 3.2 , 3.28, 3.36, 3.44, 3.52, 3.6 , 3.68, 3.76,
+                              3.84, 3.92, 4.  ]),
+                  'y': array([3.        , 2.69298993, 2.41758858, 2.17051953, 1.94884857, 1.74994758,
+                              1.5714624 , 1.41128403, 1.26752287, 1.13848575, 1.02265536, 0.91867178,
+                              0.82531612, 0.74149572, 0.66623099, 0.59864366, 0.53794617, 0.48343229,
+                              0.43446861, 0.39048702, 0.3509779 , 0.31548409, 0.28359542, 0.25494386,
+                              0.22919919, 0.20606505, 0.18527545, 0.16659167, 0.14979943, 0.13470634,
+                              0.12113972, 0.1089445 , 0.09798146, 0.08812556, 0.07926454, 0.07129757,
+                              0.06413406, 0.05769268, 0.05190035, 0.04669142, 0.04200691, 0.03779383,
+                              0.03400457, 0.03059634, 0.0275307 , 0.02477309, 0.02229246, 0.0200609 ,
+                              0.01805333, 0.01624718, 0.01462219])}],
+        'layout': {'template': '...'}
+    })
+
+
+Para ``Plotly``, cualquier objeto gráfico es representado en un árbol de
+atributos. Los atributos se componen de una lista de diccionarios de
+Python que representan las distintas características del gráfico. Hay
+tres atributos básicos - ``data`` que, justamente, representa los datos
+a graficar - ``layout``, que describe la representación del gráfico -
+``frames``, que se utiliza para hacer animaciones.
+
+En el caso del atributo ``data``, tiene más de 40 tipos de diccionarios
+distintos, que se denominan ``trazos`` (*traces*). Cada uno de éstos
+representa un tipo de gráfico.
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=y))
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=medicion))
+    fig.show()
+
+
+
+
+.. code:: python
+
+    print(fig)
+
+
+.. parsed-literal::
+
+    Figure({
+        'data': [{'type': 'scatter',
+                  'x': array([0.  , 0.08, 0.16, 0.24, 0.32, 0.4 , 0.48, 0.56, 0.64, 0.72, 0.8 , 0.88,
+                              0.96, 1.04, 1.12, 1.2 , 1.28, 1.36, 1.44, 1.52, 1.6 , 1.68, 1.76, 1.84,
+                              1.92, 2.  , 2.08, 2.16, 2.24, 2.32, 2.4 , 2.48, 2.56, 2.64, 2.72, 2.8 ,
+                              2.88, 2.96, 3.04, 3.12, 3.2 , 3.28, 3.36, 3.44, 3.52, 3.6 , 3.68, 3.76,
+                              3.84, 3.92, 4.  ]),
+                  'y': array([3.        , 2.69298993, 2.41758858, 2.17051953, 1.94884857, 1.74994758,
+                              1.5714624 , 1.41128403, 1.26752287, 1.13848575, 1.02265536, 0.91867178,
+                              0.82531612, 0.74149572, 0.66623099, 0.59864366, 0.53794617, 0.48343229,
+                              0.43446861, 0.39048702, 0.3509779 , 0.31548409, 0.28359542, 0.25494386,
+                              0.22919919, 0.20606505, 0.18527545, 0.16659167, 0.14979943, 0.13470634,
+                              0.12113972, 0.1089445 , 0.09798146, 0.08812556, 0.07926454, 0.07129757,
+                              0.06413406, 0.05769268, 0.05190035, 0.04669142, 0.04200691, 0.03779383,
+                              0.03400457, 0.03059634, 0.0275307 , 0.02477309, 0.02229246, 0.0200609 ,
+                              0.01805333, 0.01624718, 0.01462219])},
+                 {'type': 'scatter',
+                  'x': array([0.  , 0.08, 0.16, 0.24, 0.32, 0.4 , 0.48, 0.56, 0.64, 0.72, 0.8 , 0.88,
+                              0.96, 1.04, 1.12, 1.2 , 1.28, 1.36, 1.44, 1.52, 1.6 , 1.68, 1.76, 1.84,
+                              1.92, 2.  , 2.08, 2.16, 2.24, 2.32, 2.4 , 2.48, 2.56, 2.64, 2.72, 2.8 ,
+                              2.88, 2.96, 3.04, 3.12, 3.2 , 3.28, 3.36, 3.44, 3.52, 3.6 , 3.68, 3.76,
+                              3.84, 3.92, 4.  ]),
+                  'y': array([ 2.82486790e+00,  2.67934530e+00,  2.56685855e+00,  2.29831438e+00,
+                               2.20408823e+00,  1.79559175e+00,  1.50754167e+00,  1.26790199e+00,
+                               1.95631111e+00,  1.29807475e+00,  1.10249829e+00,  1.09329565e+00,
+                               6.76296177e-01,  7.89794635e-01,  7.26652447e-01,  4.03545751e-01,
+                               9.00738392e-01,  4.94237741e-01,  4.25072026e-01,  4.50839348e-01,
+                               4.00022985e-01,  5.80405830e-01,  3.57971509e-01,  2.16595778e-01,
+                               1.29290552e-01,  2.55009385e-01,  3.18217356e-01, -1.62547763e-01,
+                              -6.59792798e-02,  3.39719876e-01,  1.51982019e-01, -6.53563761e-02,
+                               1.13313788e-01,  1.90815876e-01, -3.80674722e-01,  4.50989891e-01,
+                               4.40736499e-01,  1.36524572e-01,  3.09087487e-01, -8.28776650e-02,
+                               2.07269395e-01,  1.61108518e-02, -8.59526325e-04,  3.03510457e-02,
+                               6.94846756e-02,  1.68733365e-01, -2.27033583e-01, -1.18723178e-01,
+                               5.37281677e-02, -1.29708566e-01, -3.28273681e-01])}],
+        'layout': {'template': '...'}
+    })
+
+
+.. code:: python
+
+    fig = go.Figure()
+    datos = dict(type='scatter'
+                 ,x=x
+                 ,y=y)
+    datos_medidos = dict(type='scatter'
+                 ,x=x
+                 ,y=medicion)
+    fig.add_trace(datos)
+    fig.add_trace(datos_medidos)
+    fig.show()
+        
+
+
+
+
+.. code:: python
+
+    print(datos)
+
+
+.. parsed-literal::
+
+    {'x': array([0.  , 0.08, 0.16, 0.24, 0.32, 0.4 , 0.48, 0.56, 0.64, 0.72, 0.8 ,
+           0.88, 0.96, 1.04, 1.12, 1.2 , 1.28, 1.36, 1.44, 1.52, 1.6 , 1.68,
+           1.76, 1.84, 1.92, 2.  , 2.08, 2.16, 2.24, 2.32, 2.4 , 2.48, 2.56,
+           2.64, 2.72, 2.8 , 2.88, 2.96, 3.04, 3.12, 3.2 , 3.28, 3.36, 3.44,
+           3.52, 3.6 , 3.68, 3.76, 3.84, 3.92, 4.  ]), 'y': array([3.        , 2.69298993, 2.41758858, 2.17051953, 1.94884857,
+           1.74994758, 1.5714624 , 1.41128403, 1.26752287, 1.13848575,
+           1.02265536, 0.91867178, 0.82531612, 0.74149572, 0.66623099,
+           0.59864366, 0.53794617, 0.48343229, 0.43446861, 0.39048702,
+           0.3509779 , 0.31548409, 0.28359542, 0.25494386, 0.22919919,
+           0.20606505, 0.18527545, 0.16659167, 0.14979943, 0.13470634,
+           0.12113972, 0.1089445 , 0.09798146, 0.08812556, 0.07926454,
+           0.07129757, 0.06413406, 0.05769268, 0.05190035, 0.04669142,
+           0.04200691, 0.03779383, 0.03400457, 0.03059634, 0.0275307 ,
+           0.02477309, 0.02229246, 0.0200609 , 0.01805333, 0.01624718,
+           0.01462219]), 'type': 'scatter'}
+
+
+Líneas, símbolos y colores
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=y
+        ,line=dict(color='black',width=2)))
+    fig.add_trace(go.Scatter(x=x,y=medicion,
+                             line=dict(
+                                 color='royalblue'
+                                 ,width=4
+                                 ,dash='dash')))
+    fig.show()
+
+
+
+
+.. code:: python
+
+    help(go.Scatter())
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(x=x,y=y,line=dict(color='black',width=2)))
+    fig.add_trace(go.Scatter(x=x,y=medicion,mode='lines+markers',line=dict(color='red',width=2,dash='dot'),marker=dict(color='red',symbol='circle-open',size=10)))
+    fig.show()
+
+
+
+
+Nombres de ejes y leyendas
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vamos ahora a agregar nombres a los ejes y a las curvas.
+
+Para agregar nombres a las curvas, tenemos que agregar un ``label``, en
+este caso en el mismo comando ``plot()``, y luego mostrarlo con
+\`legend()
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(x=x,y=y,name='Teoría',line=dict(color='blue',width=2)))
+    fig.add_trace(go.Scatter(x=x,y=medicion,name='Medición',mode='lines+markers',
+                             line=dict(color='red',width=2,dash='dot'),
+                             marker=dict(color='red',symbol='circle',size=10,line_width=2,line_color="midnightblue")))
+    
+    
+    fig.show()
+
+
+
+
+Para agregar nombres a los ejes usamos ``xlabel`` y ``ylabel``: Los
+títulos a la figura se pueden agregar con ``title``:
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(
+        x=x
+        ,y=y
+        ,name='Teoría'
+        ,line=dict(
+             color='blue'
+            ,width=2)
+        ))
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=medicion
+        ,name='Medición'
+        ,mode='lines+markers'
+        ,line=dict(
+            color='red'
+            ,width=2
+            ,dash='dot')
+        ,marker=dict(
+            color='red'
+            ,symbol='circle'
+            ,size=10
+            ,line_width=2
+            ,line_color="midnightblue")))
+    
+    fig.update_layout(
+        title="Resultados",
+        xaxis_title="Tiempo [seg]",
+        yaxis_title="Valor [mV]",
+        legend_title="Referencias",
+        font=dict(
+            family="Courier New, monospace",
+            size=18,
+            color="RebeccaPurple"
+        ),
+        legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="left",
+        x=0.8)
+    )
+    
+    fig.show()
+
+
+
+
+Podemos tambien graficar lineas verticales y horizontales usando
+``axvline`` y ``axhline``
+
+.. code:: python
+
+    fig.add_hline(y=1.5)
+    fig.add_vline(x=2.5, line_width=3, line_dash="dash", line_color="green")
+    fig.show()
+
+
+
+
+Para pasar a escala logarítmica actualizamos los ejes con
+``update_xaxes`` o ``update_yaxes``:
+
+.. code:: python
+
+    fig.update_xaxes(type='log')
+    
+    fig.show()
+
+
+
+
+Dos gráficos en la misma figura
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Tenemos que importar el módulo ``subplots``:
+
+.. code:: python
+
+    from plotly.subplots import make_subplots
+
+
+.. code:: python
+
+    
+    fig = go.Figure()
+    
+    
+    fig = make_subplots(rows=1,cols=2,
+                       subplot_titles = ('Resultados escala logarítmica',
+                                         'Resultados escala lineal'))
+    
+    
+    fig.add_trace(go.Scatter(
+        x=x
+        ,y=y
+        ,name='Teoría'
+        ,line=dict(
+             color='blue'
+            ,width=2)
+        )
+        ,row=1,col=1)
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=medicion
+        ,name='Medición'
+        ,mode='lines+markers'
+        ,line=dict(
+            color='red'
+            ,width=2
+            ,dash='dot')
+        ,marker=dict(
+            color='red'
+            ,symbol='circle'
+            ,size=10
+            ,line_width=2
+            ,line_color="midnightblue"))
+        ,row=1,col=1)
+    
+    fig.add_trace(go.Scatter(
+        x=x
+        ,y=y
+        ,name='Teoría'
+        ,line=dict(
+             color='blue'
+            ,width=2)
+        )
+        ,row=1,col=2)
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=medicion
+        ,name='Medición'
+        ,mode='lines+markers'
+        ,line=dict(
+            color='red'
+            ,width=2
+            ,dash='dot')
+        ,marker=dict(
+            color='red'
+            ,symbol='circle'
+            ,size=10
+            ,line_width=2
+            ,line_color="midnightblue"))
+        ,row=1,col=2)
+    
+                        
+                        
+                        
+    fig.update_xaxes(type='log',
+                        row=1,col=1)                    
+                        
+                        
+                        
+
+
+
+
+
+Exportar las figuras
+~~~~~~~~~~~~~~~~~~~~
+
+El output sugerido de ``Plotly`` es un archivo ``.html``. > Estos
+archivos conservan la interactividad del gráfico!
+
+.. code:: python
+
+    fig.write_html('fig1.html')
+
+`Para obtener un gráfico
+estático <https://plotly.com/python/static-image-export/>`__, es
+necesario contar con el módulo ``Kaleido`` instalado en la distribución
+de python.
+
+``conda install -c conda-forge python-kaleido``
+
+.. code:: python
+
+    fig.write_image('fig1.jpg')
+
+.. code:: python
+
+    %ls
+
+Acá también se puede utilizar formato tipo LaTeX para parte del texto.
+Si utilizamos una expresión encerrada entre los símbolos ``$``,
+``Plotly`` interpreta que está escrito en (un subconjunto) de LaTeX.
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig.add_trace(go.Scatter(
+        x=x
+        ,y=y
+        ,name='Teoría'
+        ,line=dict(
+             color='blue'
+            ,width=2)
+        ))
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=medicion
+        ,name=r'$f(x) = 2.5 e^{-1.3 x} + 0.5. e^{-1.6 x}$'
+        ,mode='lines+markers'
+        ,line=dict(
+            color='red'
+            ,width=2
+            ,dash='dot')
+        ,marker=dict(
+            color='red'
+            ,symbol='circle'
+            ,size=10
+            ,line_width=2
+            ,line_color="midnightblue")))
+    
+    fig.update_layout(
+        title="Resultados",
+        xaxis_title="Tiempo [seg]",
+        yaxis_title="Valor [mV]",
+        legend_title="Referencias",
+        font=dict(
+            family="Times New Roman",
+            size=14,
+            color="RebeccaPurple"
+        ),
+        legend=dict(
+        yanchor="top",
+        y=0.99,
+        xanchor="left",
+        x=0.6)
+    )
+    
+    fig.show()
+
+
+
+
+.. code:: python
+
+    fig.write_html("fig_with_latex.html")
+
+Al momento hay un
+`bug <https://github.com/plotly/plotly.py/issues/3661>`__ que no muestra
+el texto en LaTeX en Visual Studio Code, pero sí funciona usando Jupyter
+notebooks en un navegador.
+
+Gráficos en coordenadas polares
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    r = np.arange(0, 2, 0.01)
+    theta = 2 * np.pi * r
+    
+    fig = go.Figure(
+        go.Scatterpolar(
+            theta = theta,
+            r = r,
+            thetaunit = 'radians',
+            mode = 'markers',
+        ))
+    fig.update_polars(radialaxis=dict(range=[0, 2]))
+    fig.update_polars(angularaxis_thetaunit='radians')
+    
+    fig.show()
+
+
+
+
+Otros gráficos
+~~~~~~~~~~~~~~
+
+.. code:: python
+
+    x = np.array([0,1,2,3,4,5])
+    
+    fig = go.Figure()
+    
+    
+    fig = make_subplots(rows=1,cols=4,
+                       subplot_titles = ('SCATTER','STEP','BAR','FILL BETWEEN'))
+    
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=x + 0.25*np.random.randn(len(x))
+        ,name='scatter'
+        ,mode='markers'
+        ,line=dict(
+            color='red'
+            ,width=2
+            ,dash='dot')
+        ,marker=dict(
+            color='red'
+            ,symbol='circle'
+            ,size=10
+            ,line_width=2
+            ,line_color="midnightblue"))
+        ,row=1,col=1)
+    
+    
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=x**2
+        ,name='step'    
+        ,line = dict(shape='hv')
+        ,mode='lines')
+        ,row=1,col=2)
+    
+    
+    fig.add_trace(go.Bar(
+         x=x
+        ,y=x**2
+        ,name='bar')
+        ,row=1,col=3)
+    
+    
+    fig.add_trace(go.Scatter(
+         x=x
+        ,y=x**2
+        ,mode='lines'
+        ,fill='tozeroy'
+        ,name='fill')
+        ,row=1,col=4)
+
+
+
+
+
+Histogramas
+~~~~~~~~~~~
+
+.. code:: python
+
+    n = np.random.randn(10000) #randn devuelve una distribucion normal
+    
+    fig = go.Figure()
+    
+    
+    fig = make_subplots(rows=1,cols=2,
+                       subplot_titles = ('Histograma','Acumulado'))
+    
+    fig.add_trace(go.Histogram(x=n),row=1,col=1)
+    fig.add_trace(go.Histogram(x=n, cumulative_enabled=True),row=1,col=2)
+
+
+
+
+
+.. code:: python
+
+    n = np.random.randn(10000) #randn devuelve una distribucion normal
+    
+    fig = go.Figure()
+    
+    
+    fig = make_subplots(rows=1,cols=2,
+                       subplot_titles = ('Histograma','Acumulado'))
+    
+    fig.add_trace(go.Histogram(x=n,nbinsx=20,texttemplate="%{x}"),row=1,col=1)
+    fig.add_trace(go.Histogram(x=n,nbinsx=20, cumulative_enabled=True),row=1,col=2)
+    fig.show()
+
+
+
+
+Ejercicio: Tasa de natalidad en Argentina
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+En el archivo (*../data/tasa-natalidad.csv*) se encuentra una tabla con
+la tasa de natalidad en la Argentina, entre los años 2000 y 2018. El
+archivo es de tipo ``.csv``, *comma separated values*, es decir que los
+datos están separados por comas. El objetivo de este ejercicio es
+realizar un gráfico represente estos datos. Para ello
+
+-  Abra el archivo con un editor de texto y familiarícese con su
+   estructura, para entender qué datos hay que leer.
+-  Abra el archivo con Python y organice la información con ``numpy``.
+-  Haga un gráfico claro y bello representando los datos del punto
+   anterior.
+-  Usando ``numpy``, obtenga las dos provincias de mayor tasa de
+   natalidad, y las dos provincias de menor tasa de natalidad en
+   promedio entre los años 2000-2018.
+-  Haga un gráfico claro y bello representando los datos del punto
+   anterior, comparándolos con la tasa de natalidad promedio del país.
+
+
+Leyendo una imagen
+------------------
+
+Además de realizar gráficos 2D, ``Plotly`` permite trabajar con imágenes
+(al igual que ``matplotlib``). Se pueden leer imágenes que son
+interpretadas como un array de ``numpy`` (al igual que ``matplotlib``).
+
+Usamos un submódulo de ``matplotlib`` para leer la imagen de archivo.
+Esto mismo se puede hacer con otros módulos de procesamiento de
+imágenes:
+
+.. code:: python
+
+    import matplotlib.image as mpimg
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+    import numpy as np
+    
+    grace = mpimg.imread('../data/grace_hopper.jpg')
+    print(grace.shape)
+    print(type(grace))
+    
+    
+    jean = mpimg.imread('../data/jean_sammet.jpg')
+    print(type(jean))
+    
+    cirs = mpimg.imread('../data/cirs_slice.png')
+
+Ambas imágenes tienen 3 canales, Rojo, Verde y Azul, que puede verse en
+el ``shape`` de cada una de ellas:
+
+.. code:: python
+
+    print(grace.shape)
+    print(jean.shape)
+
+.. code:: python
+
+    
+    fig = go.Figure()
+    
+    fig = make_subplots(rows=1,cols=2,
+                       subplot_titles = ('Grace Hopper','Jean Sammet'))
+    
+    
+    fig.add_trace(go.Image(z=grace),1,1)
+    fig.add_trace(go.Image(z=jean),1,2)
+    fig.show()
+
+
+Uno de los primeros procesamientos que uno puede hacer de una imagen es
+obtener el histograma por cada canal:
+
+.. code:: python
+
+    fig = go.Figure()
+    
+    fig = make_subplots(rows=1,cols=2,
+                       subplot_titles = ('Jean Sammet','Histograma'))
+    
+    fig.add_trace(go.Image(z=jean),1,1)
+    for channel, color in enumerate(['red', 'green', 'blue']):
+        fig.add_trace(go.Histogram(x=jean[..., channel].ravel(), opacity=0.5,
+                                   marker_color=color, name='%s channel' %color), 1, 2)
+        
+    fig.show()    
+        
+
+
+.. code:: python
+
+    ravel_grace = grace.ravel()
+    print(ravel_grace.shape)
+    print(ravel_grace)
+
+Algo a tener en cuenta es que las imágenes pueden venir definidas como
+RGB con enteros entre 0 y 255, como las imágenes anteriores; o entre 0 y
+1, como la siguiente:
+
+.. code:: python
+
+    cirs = mpimg.imread('../data/cirs_slice.png')
+    print(type(cirs))
+    print(cirs.shape)
+    print("Max image: ",np.max(cirs))
+    #
+    #  Puedo normalizar la imagen al rango 0-1
+    #
+    img_maximo = np.max(cirs)
+    cirs = cirs/img_maximo
+    #
+    #  Normalizo la imagen al rango 0-255
+    #
+    img_maximo = np.max(cirs)
+    cirs = cirs/img_maximo*255
+    cirs = cirs.astype(int) # Convierte el array de numpy de float a enteros
+    
+    fig = go.Figure()
+    
+    fig = make_subplots(rows=1,cols=2,
+                       subplot_titles = ('CIRS','Histograma'))
+    
+    fig.add_trace(go.Image(z=cirs),1,1)
+    fig.add_trace(go.Histogram(x=cirs[..., 0].ravel(), opacity=0.5,
+                                   marker_color=color, name='BW channel'), 1, 2)
+        
+    fig.show()    
+
+
+.. code:: python
+
+    print(cirs)
+
+También se puede calcular el histograma en ``numpy``:
+
+.. code:: python
+
+    #
+    #  Puedo normalizar la imagen al rango 0-1
+    #
+    img_maximo = np.max(cirs)
+    cirs = cirs/img_maximo
+    
+    
+    nbins = 20
+    c = cirs.ravel()
+    h = np.histogram(c,bins=nbins) # np.histogram devuelve una tupla con dos arrays, el primero
+                                # es el histograma, el segundo corresponde a los límites de los bines
+    print(type(h[0]))
+    print(h[0])
+    print(h[0].shape)
+    print(h[1].shape)
+
+Pero es más trabajoso hacer el histograma a mano: - Hay que notar la
+diferencia en el tamaño entre el histograma en ``h[0]`` y los límites de
+los bines en ``h[1]``. Por eso es necesario seleccionar todos los
+elementos de ``h[1]`` excepto el último con ``h[1][:-1]``. - Además
+usamos ``align='edge'`` para que las barras queden alineadas a la
+izquierda de cada intervalo.
+
+Siguiendo con imágenes
+----------------------
+
+El paquete ```scikit-image`` <https://scikit-image.org/>`__ que se
+instala con
+
+::
+
+   conda install scikit-image
+
+tiene un excelente tutorial para seguir aprendiendo el procesamiento
+básico de imágenes, en particular, el tutorial sobre `filtrado de
+imágenes <https://scikit-image.org/skimage-tutorials/lectures/1_image_filters.html>`__
+y se puede bajar como `un
+notebook <https://scikit-image.org/skimage-tutorials/_sources/lectures/1_image_filters.ipynb>`__.
+Un poco de graficación 3D
+=========================
+
+.. code:: python
+
+    import numpy as np
+    import plotly.graph_objects as go
+
+Gráficos y procesamiento sencillo en 2D
+---------------------------------------
+
+Histogramas en 2D
+~~~~~~~~~~~~~~~~~
+
+Así como trabajamos con histogramas de arrays unidimensionales en forma
+sencilla usando ``plt.hist()`` o ``np.histogram()``, podemos hacerlo de
+una manera similar trabajando en el plano. Empecemos creando algunos
+datos
+
+.. code:: python
+
+    np.random.seed(0)
+    n = 10000
+    x = np.r_[np.random.normal(size=n), np.random.normal(loc=3, size=n)]
+    y = 2.0 + 4.0 * x - x**2 / 5 + 2.0 * np.r_[np.random.normal(size=n), np.random.normal(loc=-3, size=n)]
+
+Acá la notación ``r_[]`` hace concatenación por filas. Veamos que forma
+tienen ``x`` e ``y``
+
+.. code:: python
+
+    x.shape
+
+Para crear el histograma usamos simplemente la función ``Histogram2d``.
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+         x = x
+        ,y = y))
+    H.show()
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,nbinsx = 60
+        ,y = y
+        ,nbinsy = 60))
+    H.show()
+
+Aquí pusimos igual número de “cajas” en cada dimensión. También podemos
+pasarle un array con distinto número de cajas
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,nbinsx = 60    
+        ,y = y
+        ,nbinsy = 150))
+    H.show()
+
+Se puede definir el número de bins de esta otra forma:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,autobinx=False
+        ,xbins=dict(start=-5, end=7.5, size=0.5)
+        ,y = y
+        ,nbinsy = 60))
+    H.show()
+
+Por supuesto podemos cambiar el esquema de colores utilizado. Para ello
+le damos explícitamente el argumento ``cmap`` especificando el
+“colormap” deseado:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,autobinx=False
+        ,xbins=dict(start=-5, end=7.5, size=0.5)
+        ,y = y
+        ,nbinsy = 60
+        ,    colorscale='YlGnBu'
+        ))
+    H.show()
+
+Se puede elegir el valor máximo de Z:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,autobinx=False
+        ,xbins=dict(start=-5, end=7.5, size=0.5)
+        ,y = y
+        ,nbinsy = 60
+        ,zmax = 200
+        ,zauto = False
+        ,    colorscale='YlGnBu'
+        ))
+    H.show()
+
+O por ejemplo, se puede agregar el valor de cada bin:
+
+.. code:: python
+
+    H = go.Figure(go.Histogram2d(
+        x = x
+        ,nbinsx = 30
+        ,y = y
+        ,nbinsy = 30
+        ,colorscale='YlGnBu'
+        ,texttemplate= "%{z}"
+        ))
+    H.show()
+
+Gráficos de contornos
+~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: python
+
+    Z,xedges,yedges = np.histogram2d(x,y,bins=20)
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Contour(
+             x = xedges
+            ,y = yedges
+            ,z = Z))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Contour(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,colorscale='rainbow'))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Contour(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,contours = dict(
+                coloring='lines'
+                ,showlabels=True
+                ,labelfont = dict( 
+                    size = 11,
+    #                 color = 'white',
+                ))
+    #          ,line_smoothing=0.5
+            ,contours_coloring='heatmap' # can also be 'lines', or 'none'
+    
+             ))
+    fig1.show()
+
+También podemos mostrar la imagen con los contornos superpuestos:
+
+Superficies y contornos
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Superficies
+^^^^^^^^^^^
+
+Realizar gráficos “realmente” en 3D es tan simple como cambiar
+``Contour`` por ``Surface``
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(
+             x = xedges
+            ,y = yedges
+            ,z = Z))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,opacity=0.7))
+    fig1.show()
+
+.. code:: python
+
+    fig1.write_html('3dplot.html')
+
+Contornos en 3D
+^^^^^^^^^^^^^^^
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,contours = {
+                "z": {"show": True}
+               ,"x": {"show": True, "color": "white"}
+             }))
+    fig1.show()
+
+.. code:: python
+
+    fig1= go.Figure(data =
+         go.Surface(         
+             x = xedges
+            ,y = yedges
+            ,z = Z
+            ,contours = {
+                "z": {"show": True, "start": 0, "end": 600, "size":50}
+               ,"x": {"show": True, "color": "white"}
+             }))
+    fig1.update_traces(contours_z=dict(show=True, usecolormap=True,
+                                      highlightcolor="limegreen", project_z=True))
+    fig1.show()
+
+Gráficos de campos vectoriales
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Para realizar gráficos de campos (de velocidades, fuerzas, etc) podemos
+utilizar la función ``quiver()``, que grafica flechas en cada punto, con
+una dirección y longitud dada
+
+Veamos un ejemplo de la documentación de **Plotly**
+
+.. code:: python
+
+    
+    x,y,z,u,v,w = np.loadtxt("https://raw.githubusercontent.com/plotly/datasets/master/vortex.csv",skiprows=1,unpack=True,delimiter=',')
+    
+    fig = go.Figure(data = go.Cone(
+        x=x,
+        y=y,
+        z=z,
+        u=u,
+        v=v,
+        w=w,
+        colorscale='Blues',
+        sizemode="absolute",
+        sizeref=40))
+    
+    
+    fig.update_layout(scene=dict(aspectratio=dict(x=1, y=1, z=0.8),
+                                 camera_eye=dict(x=1.2, y=1.2, z=0.6)))
+    
+    fig.show()
+
+.. code:: python
+
+    
+    # Make the grid
+    x = np.arange(0, 1, 0.1)
+    y = np.arange(0, 1, 0.1)
+    z = np.arange(0, 1, 0.1)
+    
+    # Make the direction data for the arrows
+    u = np.sin(np.pi * x)* np.cos(np.pi * y) * np.cos(np.pi * z)
+    v = -np.cos(np.pi * y)* np.sin(np.pi * y) * np.cos(np.pi * z)
+    w = (np.sqrt(2.0 / 3.0)* np.sin(np.pi * z)) * np.cos(np.pi * x) * np.cos(np.pi * y) 
+         
+    
+    fig = go.Figure(
+            go.Cone(
+            x = x
+            ,y = y
+            ,z = z
+            ,u = u
+            ,v = v
+            ,w = w
+            ,sizemode="absolute"
+            ,sizeref=2
+            ,anchor="tip"
+            ))
+    fig.show()
+
+`Streamtubes of the ABC Flow: Flowing from
+Y-Plane <https://blog.plotly.com/post/178123311802/streamtubes-in-plotly-with-python>`__
+
+.. code:: python
+
+    def vector_field(x, y, z, A=1, B=np.sqrt(2./3), C=np.sqrt(1./3)):
+        return A*np.sin(z) + C*np.cos(y), B*np.sin(x) + A*np.cos(z), C*np.sin(y) + B*np.cos(x)
+
+.. code:: python
+
+    x, y, z=np.mgrid[0: 2*np.pi:30j, 0:2*np.pi:30j, 0:2*np.pi:30j]
+    u, v, w=vector_field(x, y, z)
+
+.. code:: python
+
+    x.shape
+    u.shape
+
+.. code:: python
+
+    fig = go.Figure(
+            go.Streamtube(
+            x=x.flatten(),
+            y=y.flatten(), 
+            z=z.flatten(), 
+            u=u.flatten(), 
+            v=v.flatten(), 
+            w=w.flatten(),
+                     maxdisplayed=3500,
+                     sizeref=0.3,
+                     reversescale=True, 
+                     showscale=True,
+                
+            ))
+    fig.show()

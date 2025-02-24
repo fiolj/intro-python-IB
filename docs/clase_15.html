@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 15: Módulos, Pandas y Animaciones &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html#control-de-tipos-estaticos">Control de tipos estáticos</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 15: Módulos, Pandas y Animaciones</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_15.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-15-modulos-pandas-y-animaciones">
+<span id="clase-15"></span><h1>Clase 15: Módulos, Pandas y Animaciones<a class="headerlink" href="#clase-15-modulos-pandas-y-animaciones" title="Link to this heading"></a></h1>
+<section id="importando-modulos">
+<h2>Importando módulos<a class="headerlink" href="#importando-modulos" title="Link to this heading"></a></h2>
+<p>Python tiene reglas para la importación de módulos a nuestro código.
+Recordemos que un módulo es un archivo cuya extensión es <code class="docutils literal notranslate"><span class="pre">.py</span></code>.
+Volviendo a usar el ejemplo de la clase anterior, tenemos un módulo
+<code class="docutils literal notranslate"><span class="pre">rotacion_p.py</span></code>.</p>
+<ol class="arabic simple">
+<li><p>En primer lugar, el intérprete busca un módulo denominado
+<code class="docutils literal notranslate"><span class="pre">rotación_p</span></code> dentro de los módulos incorporados automáticamente. La
+lista de dichos módulos se encuentra usando el método
+<code class="docutils literal notranslate"><span class="pre">sys.builtin_module_names</span></code>:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s1">&#39;_abc&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_ast&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_codecs&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_collections&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_functools&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_imp&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_io&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_locale&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_operator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_signal&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_sre&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_stat&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_string&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_symtable&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_thread&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_tokenize&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_tracemalloc&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_typing&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_warnings&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_weakref&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;atexit&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;builtins&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;errno&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;faulthandler&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;gc&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;itertools&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;marshal&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;posix&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;pwd&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;sys&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;time&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;rotacion_p&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>En segundo lugar, busca un archivo <code class="docutils literal notranslate"><span class="pre">rotacion_p.py</span></code> en una lista de
+directorios dada por el atributo <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;/Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/Python/GitLab/clase-python/clases&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;/Users/flavioc/miniconda3/envs/clases/lib/python312.zip&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;/Users/flavioc/miniconda3/envs/clases/lib/python3.12&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;/Users/flavioc/miniconda3/envs/clases/lib/python3.12/lib-dynload&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;/Users/flavioc/miniconda3/envs/clases/lib/python3.12/site-packages&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Este atributo contiene el directorio local (el primero que aparece en la
+lista de arriba), y una serie de directorios que provienen de - La
+variable de entorno <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> - Un directorio dependiente de la
+instalación (en este caso,
+’/Users/flavioc/miniconda3/envs/clases/lib/python3.12`).</p>
+<p>La manera pythonística de chequear si la variable de entorno
+<code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> existe es utilizar el método <code class="docutils literal notranslate"><span class="pre">get</span></code> de <code class="docutils literal notranslate"><span class="pre">os.environ</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En nuestro caso no imprime nada, pero de la misma forma se puede setear
+dicha variable de entorno:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;..&#39;</span> <span class="c1"># seteo la variable PYTHONPATH al directorio padre del directorio actual</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;..&#39;</span>
+</pre></div>
+</div>
+<p>Por supuesto, todo va a depender de cómo tenemos estructurado nuestro
+código. En principio, aún cuando uno no utilice completamente las
+facilidades de Python como lenguaje orientado a objeto, agrupamos
+funciones que están relacionadas entre sí en distintos módulos. A medida
+que el código crece, es posible organizar los distintos módulos
+distribuyéndolos en directorios.</p>
+</section>
+<section id="importando-modulos-de-directorios-hijos">
+<h2>Importando módulos de directorios hijos<a class="headerlink" href="#importando-modulos-de-directorios-hijos" title="Link to this heading"></a></h2>
+<p>Imaginemos que tenemos la siguente estructura de código:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">miproyecto</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">lib</span>
+        <span class="n">rotacion</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">graficos</span>
+        <span class="n">simple</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">complejo</span><span class="o">.</span><span class="n">py</span>
+        <span class="o">/</span><span class="n">tresd</span>
+        <span class="n">vector</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Es sencillo importar los módulos en los directorios hijos (<code class="docutils literal notranslate"><span class="pre">lib</span></code>,
+<code class="docutils literal notranslate"><span class="pre">graficos</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">graficos.simple</span> <span class="kn">import</span> <span class="n">plot_data</span>
+<span class="kn">from</span> <span class="nn">graficos.complejo</span> <span class="kn">import</span> <span class="n">plot_data_complejo</span> <span class="k">as</span> <span class="n">plot_complejo</span>
+<span class="kn">from</span> <span class="nn">graficos.tresd.vector</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">lib.rotacion</span> <span class="kn">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<p>Básicamente exponemos el módulo usando el operador <code class="docutils literal notranslate"><span class="pre">.</span></code> para ir
+incorporando los hijos. Por ejemplo, <code class="docutils literal notranslate"><span class="pre">graficos.tresd.vector</span></code> refiere
+al módulo que se encuentra en el archivo <code class="docutils literal notranslate"><span class="pre">vector.py</span></code> en el directorio
+<code class="docutils literal notranslate"><span class="pre">graficos.tresd</span></code>.</p>
+</section>
+<section id="importando-modulos-desde-padres-o-hermanos">
+<h2>Importando módulos desde padres o hermanos<a class="headerlink" href="#importando-modulos-desde-padres-o-hermanos" title="Link to this heading"></a></h2>
+<section id="imports-relativos">
+<h3>Imports relativos<a class="headerlink" href="#imports-relativos" title="Link to this heading"></a></h3>
+<p>Para importar módulos que están en directorios padres o hermanos (estos
+últimos son directorios al mismo nivel del directorio desde el cual
+quiero importar) podemos diferentes estrategias. La primera de ellas es
+usar la importación de paquetes relativos. Para ello, cada directorio
+desde el que quiera importar debe poseer un archivo (en principio vacío)
+denominado <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>. Esto permite a Python reconocer los
+directorios que contienen módulos aún cuando sean padres o hermanos.</p>
+<p>Veamos ahora la estructura de directorios de <code class="docutils literal notranslate"><span class="pre">miproyecto_relativo</span></code> con
+los archivos <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> agregados:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">miproyecto</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">lib</span>
+        <span class="n">rotacion</span><span class="o">.</span><span class="n">py</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">graficos</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">simple</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">complejo</span><span class="o">.</span><span class="n">py</span>
+        <span class="o">/</span><span class="n">tresd</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">vector</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">tests</span>
+        <span class="n">test_rotacion</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Notemos que <code class="docutils literal notranslate"><span class="pre">tests/test_rotacion.py</span></code> tiene también un <code class="docutils literal notranslate"><span class="pre">main</span></code>, que
+corre un test:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_rotacion</span><span class="p">():</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+  <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
+  <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">test_rotacion</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All tests passed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Esta es una estructura típica de Python, donde tengo tests que prueban
+funciones en un módulo dado. Notemos cómo se importa el módulo
+<code class="docutils literal notranslate"><span class="pre">rotacion</span></code> desde <code class="docutils literal notranslate"><span class="pre">test_rotacion.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">..lib.rotacion</span> <span class="kn">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<p>Al igual que con directorios, <code class="docutils literal notranslate"><span class="pre">..</span></code> se refiere al directorio padre
+relativo al directorio actual.</p>
+<p>Si probamos <strong>desde el directorio</strong> <code class="docutils literal notranslate"><span class="pre">miproyecto/tests</span></code> lo siguiente:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test_rotacion.py
+</pre></div>
+</div>
+<p>Nos encontraremos con el error:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ne">ImportError</span><span class="p">:</span> <span class="n">attempted</span> <span class="n">relative</span> <span class="kn">import</span> <span class="nn">with</span> <span class="n">no</span> <span class="n">known</span> <span class="n">parent</span> <span class="n">package</span>
+</pre></div>
+</div>
+<p>Para correr el test, tenemos que ir al directorio <strong>padre</strong> del proyecto
+y correr el main del módulo explícitamente:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>miproyecto_relativo.tests.test_rotacion
+All<span class="w"> </span>tests<span class="w"> </span>passed
+</pre></div>
+</div>
+</section>
+<section id="modificando-sys-path">
+<h3>Modificando <code class="docutils literal notranslate"><span class="pre">sys.path</span></code><a class="headerlink" href="#modificando-sys-path" title="Link to this heading"></a></h3>
+<p>La forma anterior puede ser engorrosa en el caso en que se tengan muchos
+módulos en archivos distribuidos en una estructura de directorios
+complicada. Por otra parte, es posible modificar el atributo
+<code class="docutils literal notranslate"><span class="pre">sys.path</span></code> para incluir el directorio que sea de interés. En este
+caso, modificamos <code class="docutils literal notranslate"><span class="pre">test_rotacion.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">lib.rotacion</span> <span class="kn">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<p>Entonces, podemos correr desde el directorio <code class="docutils literal notranslate"><span class="pre">tests</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test_rotacion.py
+All<span class="w"> </span>tests<span class="w"> </span>passed
+</pre></div>
+</div>
+<p>o desde su padre como</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>tests.test_rotacion
+</pre></div>
+</div>
+<p>o</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tests/test_rotacion.py
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pandas">
+<h2>Pandas<a class="headerlink" href="#pandas" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Pandas</span></code> es una biblioteca de Python ampliamente utilizada para
+análisis de datos y manipulación de datos tabulares. Proporciona
+estructuras de datos potentes y flexibles, como DataFrame y Series, que
+son fundamentales para trabajar con conjuntos de datos.</p>
+<blockquote>
+<div><p>No es la única biblioteca de Python para manejar tablas de datos,
+pueden consultar otras como <a class="reference external" href="https://pola.rs/">Polars</a>,
+<a class="reference external" href="https://duckdb.org/">DuckDB</a>, etc. Pero se ha convertido en un
+módulo muy popular.</p>
+</div></blockquote>
+<p>La instalamos como siempre</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>pandas
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p>Pandas tiene dos tipos fundamentales de estructuras de datos:</p>
+<ol class="loweralpha simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>: Una estructura de datos tabular bidimensional con
+etiquetas en filas y columnas.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Series</span></code>: Un arreglo unidimensional etiquetado capaz de contener
+cualquier tipo de datos.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear una Serie a partir de una lista</span>
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mi">1</span>
+<span class="mi">1</span>    <span class="mi">2</span>
+<span class="mi">2</span>    <span class="mi">3</span>
+<span class="mi">3</span>    <span class="mi">4</span>
+<span class="mi">4</span>    <span class="mi">5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
+<p>Notar que el <code class="docutils literal notranslate"><span class="pre">print</span></code> ya muestra los datos en forma adecuada, indicando
+los índices (columna de la izquierda) y el tipo de dato de la serie.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">RangeIndex</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">s_np</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">array</span> <span class="c1"># cast de la serie a un arreglo de numpy.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s_np</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s_np</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">PandasArray</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="n">Length</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">15</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear un DataFrame a partir de un diccionario</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Nombre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Juan&#39;</span><span class="p">,</span> <span class="s1">&#39;María&#39;</span><span class="p">,</span> <span class="s1">&#39;Pedro&#39;</span><span class="p">,</span> <span class="s1">&#39;Ana&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;Edad&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">40</span><span class="p">]}</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Nombre</span>  <span class="n">Edad</span>
+<span class="mi">0</span>   <span class="n">Juan</span>    <span class="mi">25</span>
+<span class="mi">1</span>  <span class="n">María</span>    <span class="mi">30</span>
+<span class="mi">2</span>  <span class="n">Pedro</span>    <span class="mi">35</span>
+<span class="mi">3</span>    <span class="n">Ana</span>    <span class="mi">40</span>
+</pre></div>
+</div>
+<p>Podemos agregar columnas como</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Ocupacion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Estudiante&#39;</span><span class="p">,</span> <span class="s1">&#39;Ingeniera&#39;</span><span class="p">,</span> <span class="s1">&#39;Doctor&#39;</span><span class="p">,</span> <span class="s1">&#39;Profesora&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Nombre</span>  <span class="n">Edad</span>   <span class="n">Ocupacion</span>
+<span class="mi">0</span>   <span class="n">Juan</span>    <span class="mi">25</span>  <span class="n">Estudiante</span>
+<span class="mi">1</span>  <span class="n">María</span>    <span class="mi">30</span>   <span class="n">Ingeniera</span>
+<span class="mi">2</span>  <span class="n">Pedro</span>    <span class="mi">35</span>      <span class="n">Doctor</span>
+<span class="mi">3</span>    <span class="n">Ana</span>    <span class="mi">40</span>   <span class="n">Profesora</span>
+</pre></div>
+</div>
+<p>Y podemos agregar una nueva fila:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">eva</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Nombre&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Eva&#39;</span><span class="p">],</span> <span class="s1">&#39;Edad&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">28</span><span class="p">],</span> <span class="s1">&#39;Ocupacion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ingeniera&#39;</span><span class="p">]})</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">eva</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Nombre</span>  <span class="n">Edad</span>   <span class="n">Ocupacion</span>
+<span class="mi">0</span>   <span class="n">Juan</span>    <span class="mi">25</span>  <span class="n">Estudiante</span>
+<span class="mi">1</span>  <span class="n">María</span>    <span class="mi">30</span>   <span class="n">Ingeniera</span>
+<span class="mi">2</span>  <span class="n">Pedro</span>    <span class="mi">35</span>      <span class="n">Doctor</span>
+<span class="mi">3</span>    <span class="n">Ana</span>    <span class="mi">40</span>   <span class="n">Profesora</span>
+<span class="mi">4</span>    <span class="n">Eva</span>    <span class="mi">28</span>   <span class="n">Ingeniera</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<blockquote>
+<div><p>En versiones anteriores de pandas a 2.0, existe una método
+<code class="docutils literal notranslate"><span class="pre">.append</span></code>. Sin embargo, ese método ya no está visible en la clase.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Notar también que cada valor del diccionario es una lista. Si se
+eligiera usar los correspondientes valores escalares, es necesario
+indicar el índice en el cual se quiere concatenar la fila:</p>
+</div></blockquote>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lio</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Lionel&#39;</span><span class="p">,</span> <span class="s1">&#39;Edad&#39;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="s1">&#39;Ocupacion&#39;</span><span class="p">:</span> <span class="s1">&#39;Futbolista&#39;</span><span class="p">})</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">eva</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">ValueError</span>                                <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">lio</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Lionel&#39;</span><span class="p">,</span> <span class="s1">&#39;Edad&#39;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="s1">&#39;Ocupacion&#39;</span><span class="p">:</span> <span class="s1">&#39;Futbolista&#39;</span><span class="p">})</span>
+      <span class="mi">2</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">eva</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+      <span class="mi">3</span> <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">frame</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">664</span><span class="p">,</span> <span class="ow">in</span> <span class="n">DataFrame</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span>
+    <span class="mi">658</span>     <span class="n">mgr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_mgr</span><span class="p">(</span>
+    <span class="mi">659</span>         <span class="n">data</span><span class="p">,</span> <span class="n">axes</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span> <span class="s2">&quot;columns&quot;</span><span class="p">:</span> <span class="n">columns</span><span class="p">},</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="n">copy</span>
+    <span class="mi">660</span>     <span class="p">)</span>
+    <span class="mi">662</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+    <span class="mi">663</span>     <span class="c1"># GH#38939 de facto copy defaults to False only in non-dict cases</span>
+<span class="o">--&gt;</span> <span class="mi">664</span>     <span class="n">mgr</span> <span class="o">=</span> <span class="n">dict_to_mgr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="n">copy</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="n">manager</span><span class="p">)</span>
+    <span class="mi">665</span> <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">ma</span><span class="o">.</span><span class="n">MaskedArray</span><span class="p">):</span>
+    <span class="mi">666</span>     <span class="kn">import</span> <span class="nn">numpy.ma.mrecords</span> <span class="k">as</span> <span class="nn">mrecords</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">internals</span><span class="o">/</span><span class="n">construction</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">493</span><span class="p">,</span> <span class="ow">in</span> <span class="n">dict_to_mgr</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">copy</span><span class="p">)</span>
+    <span class="mi">489</span>     <span class="k">else</span><span class="p">:</span>
+    <span class="mi">490</span>         <span class="c1"># dtype check to exclude e.g. range objects, scalars</span>
+    <span class="mi">491</span>         <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s2">&quot;dtype&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">]</span>
+<span class="o">--&gt;</span> <span class="mi">493</span> <span class="k">return</span> <span class="n">arrays_to_mgr</span><span class="p">(</span><span class="n">arrays</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span> <span class="n">typ</span><span class="o">=</span><span class="n">typ</span><span class="p">,</span> <span class="n">consolidate</span><span class="o">=</span><span class="n">copy</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">internals</span><span class="o">/</span><span class="n">construction</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">118</span><span class="p">,</span> <span class="ow">in</span> <span class="n">arrays_to_mgr</span><span class="p">(</span><span class="n">arrays</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">dtype</span><span class="p">,</span> <span class="n">verify_integrity</span><span class="p">,</span> <span class="n">typ</span><span class="p">,</span> <span class="n">consolidate</span><span class="p">)</span>
+    <span class="mi">115</span> <span class="k">if</span> <span class="n">verify_integrity</span><span class="p">:</span>
+    <span class="mi">116</span>     <span class="c1"># figure out the index, if necessary</span>
+    <span class="mi">117</span>     <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="o">--&gt;</span> <span class="mi">118</span>         <span class="n">index</span> <span class="o">=</span> <span class="n">_extract_index</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
+    <span class="mi">119</span>     <span class="k">else</span><span class="p">:</span>
+    <span class="mi">120</span>         <span class="n">index</span> <span class="o">=</span> <span class="n">ensure_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.11</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">internals</span><span class="o">/</span><span class="n">construction</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">656</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_extract_index</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="mi">653</span>         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Per-column arrays must each be 1-dimensional&quot;</span><span class="p">)</span>
+    <span class="mi">655</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">indexes</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">raw_lengths</span><span class="p">:</span>
+<span class="o">--&gt;</span> <span class="mi">656</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;If using all scalar values, you must pass an index&quot;</span><span class="p">)</span>
+    <span class="mi">658</span> <span class="k">elif</span> <span class="n">have_series</span><span class="p">:</span>
+    <span class="mi">659</span>     <span class="n">index</span> <span class="o">=</span> <span class="n">union_indexes</span><span class="p">(</span><span class="n">indexes</span><span class="p">)</span>
+
+
+<span class="ne">ValueError</span><span class="p">:</span> <span class="n">If</span> <span class="n">using</span> <span class="nb">all</span> <span class="n">scalar</span> <span class="n">values</span><span class="p">,</span> <span class="n">you</span> <span class="n">must</span> <span class="k">pass</span> <span class="n">an</span> <span class="n">index</span>
+</pre></div>
+</div>
+<p>Si en lugar de la lista, utilizamos un valor escalar tenemos que decirle
+en qué lugar (índice) queremos agregar el elemento</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lio</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Nombre&#39;</span><span class="p">:</span> <span class="s1">&#39;Lionel&#39;</span><span class="p">,</span> <span class="s1">&#39;Edad&#39;</span><span class="p">:</span> <span class="mi">37</span><span class="p">,</span> <span class="s1">&#39;Ocupacion&#39;</span><span class="p">:</span> <span class="s1">&#39;Futbolista&#39;</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">14</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df</span><span class="p">,</span><span class="n">lio</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Nombre</span>  <span class="n">Edad</span>   <span class="n">Ocupacion</span>
+<span class="mi">0</span>     <span class="n">Juan</span>    <span class="mi">25</span>  <span class="n">Estudiante</span>
+<span class="mi">1</span>    <span class="n">María</span>    <span class="mi">30</span>   <span class="n">Ingeniera</span>
+<span class="mi">2</span>    <span class="n">Pedro</span>    <span class="mi">35</span>      <span class="n">Doctor</span>
+<span class="mi">3</span>      <span class="n">Ana</span>    <span class="mi">40</span>   <span class="n">Profesora</span>
+<span class="mi">4</span>      <span class="n">Eva</span>    <span class="mi">28</span>   <span class="n">Ingeniera</span>
+<span class="mi">14</span>  <span class="n">Lionel</span>    <span class="mi">37</span>  <span class="n">Futbolista</span>
+</pre></div>
+</div>
+<p>Notemos que si usamos <code class="docutils literal notranslate"><span class="pre">ignore_index=True</span></code>, la fila se agrega al final
+del <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, mientras que si no lo usamos
+(<code class="docutils literal notranslate"><span class="pre">ignore_index=False</span></code>), se mantiene el indice provisto por el
+dataframe particular (en este caso, <code class="docutils literal notranslate"><span class="pre">14</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="n">Nombre</span>  <span class="n">Edad</span>   <span class="n">Ocupacion</span>
+<span class="mi">0</span>   <span class="n">Juan</span>    <span class="mi">25</span>  <span class="n">Estudiante</span>
+<span class="mi">1</span>  <span class="n">María</span>    <span class="mi">30</span>   <span class="n">Ingeniera</span>
+</pre></div>
+</div>
+<p>Es fácil guardar los datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;../data/lista_gente.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">cat</span> <span class="o">../</span><span class="n">data</span><span class="o">/</span><span class="n">lista_gente</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Nombre</span><span class="p">,</span><span class="n">Edad</span><span class="p">,</span><span class="n">Ocupacion</span>
+<span class="n">Juan</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="n">Estudiante</span>
+<span class="n">María</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="n">Ingeniera</span>
+<span class="n">Pedro</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="n">Doctor</span>
+<span class="n">Ana</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="n">Profesora</span>
+<span class="n">Eva</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="n">Ingeniera</span>
+<span class="n">Lionel</span><span class="p">,</span><span class="mi">37</span><span class="p">,</span><span class="n">Futbolista</span>
+</pre></div>
+</div>
+<p>Del mismo modo, se puede leer un csv:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;../data/tasa-natalidad.csv&#39;</span><span class="p">)</span>
+<span class="c1"># print(tasa_natalidad)</span>
+<span class="n">tasa_natalidad</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>indice_tiempo</th>
+      <th>natalidad_argentina</th>
+      <th>natalidad_ciudad_autonoma_de_buenos_aires</th>
+      <th>natalidad_buenos_aires</th>
+      <th>natalidad_catamarca</th>
+      <th>natalidad_cordoba</th>
+      <th>natalidad_corrientes</th>
+      <th>natalidad_chaco</th>
+      <th>natalidad_chubut</th>
+      <th>natalidad_entre_rios</th>
+      <th>...</th>
+      <th>natalidad_neuquen</th>
+      <th>natalidad_rio_negro</th>
+      <th>natalidad_salta</th>
+      <th>natalidad_san_juan</th>
+      <th>natalidad_san_luis</th>
+      <th>natalidad_santa_cruz</th>
+      <th>natalidad_santa_fe</th>
+      <th>natalidad_santiago_del_estero</th>
+      <th>natalidad_tucuman</th>
+      <th>natalidad_tierra_del_fuego</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>19.0</td>
+      <td>14.3</td>
+      <td>17.5</td>
+      <td>25.8</td>
+      <td>17.2</td>
+      <td>22.7</td>
+      <td>25.8</td>
+      <td>19.4</td>
+      <td>21.3</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>18.9</td>
+      <td>24.0</td>
+      <td>22.7</td>
+      <td>22.3</td>
+      <td>19.6</td>
+      <td>16.9</td>
+      <td>21.6</td>
+      <td>22.6</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>18.2</td>
+      <td>13.9</td>
+      <td>16.9</td>
+      <td>24.9</td>
+      <td>15.9</td>
+      <td>21.9</td>
+      <td>22.2</td>
+      <td>18.4</td>
+      <td>20.5</td>
+      <td>...</td>
+      <td>16.8</td>
+      <td>17.8</td>
+      <td>24.2</td>
+      <td>23.7</td>
+      <td>22.3</td>
+      <td>19.8</td>
+      <td>16.2</td>
+      <td>21.1</td>
+      <td>21.1</td>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>18.3</td>
+      <td>13.6</td>
+      <td>17.0</td>
+      <td>24.4</td>
+      <td>16.6</td>
+      <td>23.3</td>
+      <td>24.9</td>
+      <td>17.1</td>
+      <td>19.5</td>
+      <td>...</td>
+      <td>16.1</td>
+      <td>17.3</td>
+      <td>24.7</td>
+      <td>22.3</td>
+      <td>22.0</td>
+      <td>19.2</td>
+      <td>16.7</td>
+      <td>22.1</td>
+      <td>22.6</td>
+      <td>17.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2003</td>
+      <td>18.4</td>
+      <td>14.2</td>
+      <td>17.3</td>
+      <td>22.5</td>
+      <td>17.5</td>
+      <td>22.2</td>
+      <td>20.9</td>
+      <td>18.7</td>
+      <td>19.8</td>
+      <td>...</td>
+      <td>19.4</td>
+      <td>18.6</td>
+      <td>22.0</td>
+      <td>22.2</td>
+      <td>21.7</td>
+      <td>21.9</td>
+      <td>17.3</td>
+      <td>17.8</td>
+      <td>21.8</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2004</td>
+      <td>19.3</td>
+      <td>14.9</td>
+      <td>18.5</td>
+      <td>20.6</td>
+      <td>17.8</td>
+      <td>22.7</td>
+      <td>25.1</td>
+      <td>19.3</td>
+      <td>19.5</td>
+      <td>...</td>
+      <td>19.8</td>
+      <td>18.3</td>
+      <td>23.9</td>
+      <td>22.5</td>
+      <td>21.9</td>
+      <td>22.4</td>
+      <td>17.6</td>
+      <td>19.7</td>
+      <td>21.0</td>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2005</td>
+      <td>18.5</td>
+      <td>14.5</td>
+      <td>17.9</td>
+      <td>19.7</td>
+      <td>17.1</td>
+      <td>20.2</td>
+      <td>22.6</td>
+      <td>19.2</td>
+      <td>19.0</td>
+      <td>...</td>
+      <td>20.0</td>
+      <td>18.7</td>
+      <td>22.5</td>
+      <td>21.4</td>
+      <td>19.9</td>
+      <td>22.9</td>
+      <td>16.3</td>
+      <td>21.0</td>
+      <td>19.9</td>
+      <td>20.7</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2006</td>
+      <td>17.9</td>
+      <td>14.6</td>
+      <td>17.7</td>
+      <td>18.3</td>
+      <td>16.5</td>
+      <td>18.7</td>
+      <td>19.6</td>
+      <td>20.0</td>
+      <td>17.2</td>
+      <td>...</td>
+      <td>20.5</td>
+      <td>18.6</td>
+      <td>21.0</td>
+      <td>20.7</td>
+      <td>20.2</td>
+      <td>23.5</td>
+      <td>15.8</td>
+      <td>20.0</td>
+      <td>18.5</td>
+      <td>20.1</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2007</td>
+      <td>17.8</td>
+      <td>14.1</td>
+      <td>17.7</td>
+      <td>18.3</td>
+      <td>16.3</td>
+      <td>18.9</td>
+      <td>18.4</td>
+      <td>20.2</td>
+      <td>16.9</td>
+      <td>...</td>
+      <td>20.5</td>
+      <td>18.9</td>
+      <td>20.6</td>
+      <td>20.8</td>
+      <td>19.3</td>
+      <td>23.8</td>
+      <td>15.7</td>
+      <td>19.4</td>
+      <td>19.7</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2008</td>
+      <td>18.8</td>
+      <td>15.1</td>
+      <td>18.6</td>
+      <td>18.6</td>
+      <td>17.4</td>
+      <td>19.7</td>
+      <td>20.8</td>
+      <td>21.4</td>
+      <td>17.2</td>
+      <td>...</td>
+      <td>21.0</td>
+      <td>19.9</td>
+      <td>21.4</td>
+      <td>20.7</td>
+      <td>19.3</td>
+      <td>25.0</td>
+      <td>16.9</td>
+      <td>20.5</td>
+      <td>19.9</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2009</td>
+      <td>18.6</td>
+      <td>14.6</td>
+      <td>18.4</td>
+      <td>17.4</td>
+      <td>17.4</td>
+      <td>19.9</td>
+      <td>20.4</td>
+      <td>21.3</td>
+      <td>17.5</td>
+      <td>...</td>
+      <td>20.9</td>
+      <td>19.6</td>
+      <td>21.0</td>
+      <td>20.6</td>
+      <td>18.2</td>
+      <td>25.2</td>
+      <td>16.5</td>
+      <td>21.9</td>
+      <td>19.1</td>
+      <td>20.2</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2010</td>
+      <td>18.7</td>
+      <td>14.9</td>
+      <td>18.9</td>
+      <td>16.9</td>
+      <td>17.2</td>
+      <td>19.8</td>
+      <td>21.2</td>
+      <td>21.2</td>
+      <td>17.4</td>
+      <td>...</td>
+      <td>21.6</td>
+      <td>20.0</td>
+      <td>21.9</td>
+      <td>19.8</td>
+      <td>17.4</td>
+      <td>26.0</td>
+      <td>16.2</td>
+      <td>19.9</td>
+      <td>20.1</td>
+      <td>18.8</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2011</td>
+      <td>18.5</td>
+      <td>14.8</td>
+      <td>18.8</td>
+      <td>16.0</td>
+      <td>16.9</td>
+      <td>19.9</td>
+      <td>22.6</td>
+      <td>20.7</td>
+      <td>17.2</td>
+      <td>...</td>
+      <td>19.6</td>
+      <td>19.8</td>
+      <td>21.7</td>
+      <td>19.9</td>
+      <td>16.7</td>
+      <td>25.0</td>
+      <td>16.4</td>
+      <td>20.2</td>
+      <td>19.5</td>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2012</td>
+      <td>17.9</td>
+      <td>14.2</td>
+      <td>18.1</td>
+      <td>15.0</td>
+      <td>16.5</td>
+      <td>18.6</td>
+      <td>20.2</td>
+      <td>20.2</td>
+      <td>16.7</td>
+      <td>...</td>
+      <td>19.1</td>
+      <td>19.4</td>
+      <td>20.2</td>
+      <td>19.6</td>
+      <td>16.0</td>
+      <td>24.0</td>
+      <td>16.3</td>
+      <td>17.9</td>
+      <td>18.7</td>
+      <td>19.2</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2013</td>
+      <td>17.9</td>
+      <td>14.3</td>
+      <td>17.8</td>
+      <td>16.9</td>
+      <td>16.0</td>
+      <td>19.0</td>
+      <td>19.9</td>
+      <td>18.5</td>
+      <td>17.3</td>
+      <td>...</td>
+      <td>18.7</td>
+      <td>17.9</td>
+      <td>21.1</td>
+      <td>20.6</td>
+      <td>16.7</td>
+      <td>19.7</td>
+      <td>16.9</td>
+      <td>18.8</td>
+      <td>18.9</td>
+      <td>19.8</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2014</td>
+      <td>18.2</td>
+      <td>14.3</td>
+      <td>17.9</td>
+      <td>17.4</td>
+      <td>16.8</td>
+      <td>19.8</td>
+      <td>20.2</td>
+      <td>17.8</td>
+      <td>17.8</td>
+      <td>...</td>
+      <td>19.5</td>
+      <td>17.9</td>
+      <td>21.6</td>
+      <td>21.3</td>
+      <td>16.9</td>
+      <td>19.8</td>
+      <td>17.2</td>
+      <td>19.8</td>
+      <td>19.3</td>
+      <td>20.5</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2015</td>
+      <td>17.9</td>
+      <td>13.7</td>
+      <td>17.3</td>
+      <td>17.2</td>
+      <td>16.4</td>
+      <td>19.3</td>
+      <td>22.7</td>
+      <td>17.4</td>
+      <td>17.8</td>
+      <td>...</td>
+      <td>19.1</td>
+      <td>18.2</td>
+      <td>21.3</td>
+      <td>20.5</td>
+      <td>17.0</td>
+      <td>19.8</td>
+      <td>16.9</td>
+      <td>20.5</td>
+      <td>19.0</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2016</td>
+      <td>16.7</td>
+      <td>13.1</td>
+      <td>16.2</td>
+      <td>16.7</td>
+      <td>15.7</td>
+      <td>18.5</td>
+      <td>19.1</td>
+      <td>16.6</td>
+      <td>16.6</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>16.8</td>
+      <td>19.4</td>
+      <td>18.8</td>
+      <td>15.5</td>
+      <td>18.6</td>
+      <td>16.3</td>
+      <td>18.7</td>
+      <td>17.5</td>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2017</td>
+      <td>16.0</td>
+      <td>11.7</td>
+      <td>15.4</td>
+      <td>15.8</td>
+      <td>15.0</td>
+      <td>18.3</td>
+      <td>19.8</td>
+      <td>15.3</td>
+      <td>16.3</td>
+      <td>...</td>
+      <td>16.3</td>
+      <td>16.0</td>
+      <td>19.7</td>
+      <td>18.1</td>
+      <td>14.8</td>
+      <td>17.0</td>
+      <td>15.4</td>
+      <td>18.8</td>
+      <td>16.7</td>
+      <td>16.9</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2018</td>
+      <td>15.4</td>
+      <td>11.6</td>
+      <td>14.6</td>
+      <td>16.4</td>
+      <td>14.5</td>
+      <td>18.0</td>
+      <td>21.0</td>
+      <td>14.3</td>
+      <td>15.6</td>
+      <td>...</td>
+      <td>15.6</td>
+      <td>14.6</td>
+      <td>18.2</td>
+      <td>17.7</td>
+      <td>14.2</td>
+      <td>14.7</td>
+      <td>14.8</td>
+      <td>18.9</td>
+      <td>16.9</td>
+      <td>16.3</td>
+    </tr>
+  </tbody>
+</table>
+<p>19 rows × 26 columns</p>
+</div><section id="operaciones">
+<h3>Operaciones<a class="headerlink" href="#operaciones" title="Link to this heading"></a></h3>
+<p>Pandas provee de numerosos métodos para realizar operaciones sobre los
+datos de un DataFrame.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>indice_tiempo</th>
+      <th>natalidad_argentina</th>
+      <th>natalidad_ciudad_autonoma_de_buenos_aires</th>
+      <th>natalidad_buenos_aires</th>
+      <th>natalidad_catamarca</th>
+      <th>natalidad_cordoba</th>
+      <th>natalidad_corrientes</th>
+      <th>natalidad_chaco</th>
+      <th>natalidad_chubut</th>
+      <th>natalidad_entre_rios</th>
+      <th>...</th>
+      <th>natalidad_neuquen</th>
+      <th>natalidad_rio_negro</th>
+      <th>natalidad_salta</th>
+      <th>natalidad_san_juan</th>
+      <th>natalidad_san_luis</th>
+      <th>natalidad_santa_cruz</th>
+      <th>natalidad_santa_fe</th>
+      <th>natalidad_santiago_del_estero</th>
+      <th>natalidad_tucuman</th>
+      <th>natalidad_tierra_del_fuego</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>19.0</td>
+      <td>14.3</td>
+      <td>17.5</td>
+      <td>25.8</td>
+      <td>17.2</td>
+      <td>22.7</td>
+      <td>25.8</td>
+      <td>19.4</td>
+      <td>21.3</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>18.9</td>
+      <td>24.0</td>
+      <td>22.7</td>
+      <td>22.3</td>
+      <td>19.6</td>
+      <td>16.9</td>
+      <td>21.6</td>
+      <td>22.6</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>18.2</td>
+      <td>13.9</td>
+      <td>16.9</td>
+      <td>24.9</td>
+      <td>15.9</td>
+      <td>21.9</td>
+      <td>22.2</td>
+      <td>18.4</td>
+      <td>20.5</td>
+      <td>...</td>
+      <td>16.8</td>
+      <td>17.8</td>
+      <td>24.2</td>
+      <td>23.7</td>
+      <td>22.3</td>
+      <td>19.8</td>
+      <td>16.2</td>
+      <td>21.1</td>
+      <td>21.1</td>
+      <td>17.9</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 26 columns</p>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span><span class="p">[</span><span class="s2">&quot;natalidad_rio_negro&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">18.273684210526316</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">v</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">i</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()):</span>
+    <span class="n">provincia</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;la tasa máxima </span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2"> de </span><span class="si">{</span><span class="n">provincia</span><span class="si">}</span><span class="s2"> ocurrió en </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">2018.0</span> <span class="n">de</span> <span class="n">tiempo</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">18</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">19.3</span> <span class="n">de</span> <span class="n">argentina</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">4</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">15.1</span> <span class="n">de</span> <span class="n">ciudad</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">8</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">18.9</span> <span class="n">de</span> <span class="n">buenos</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">10</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">25.8</span> <span class="n">de</span> <span class="n">catamarca</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">0</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">17.8</span> <span class="n">de</span> <span class="n">cordoba</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">4</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">23.3</span> <span class="n">de</span> <span class="n">corrientes</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">2</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">25.8</span> <span class="n">de</span> <span class="n">chaco</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">0</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">21.4</span> <span class="n">de</span> <span class="n">chubut</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">8</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">21.3</span> <span class="n">de</span> <span class="n">entre</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">0</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">26.5</span> <span class="n">de</span> <span class="n">formosa</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">4</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">23.1</span> <span class="n">de</span> <span class="n">jujuy</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">1</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">18.3</span> <span class="n">de</span> <span class="n">la</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">3</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">22.6</span> <span class="n">de</span> <span class="n">la</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">0</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">20.2</span> <span class="n">de</span> <span class="n">mendoza</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">8</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">26.4</span> <span class="n">de</span> <span class="n">misiones</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">4</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">21.6</span> <span class="n">de</span> <span class="n">neuquen</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">10</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">20.0</span> <span class="n">de</span> <span class="n">rio</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">10</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">24.7</span> <span class="n">de</span> <span class="n">salta</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">2</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">23.7</span> <span class="n">de</span> <span class="n">san</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">1</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">22.3</span> <span class="n">de</span> <span class="n">san</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">0</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">26.0</span> <span class="n">de</span> <span class="n">santa</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">10</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">17.6</span> <span class="n">de</span> <span class="n">santa</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">4</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">22.1</span> <span class="n">de</span> <span class="n">santiago</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">2</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">22.6</span> <span class="n">de</span> <span class="n">tucuman</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">0</span>
+<span class="n">la</span> <span class="n">tasa</span> <span class="n">máxima</span> <span class="mf">20.8</span> <span class="n">de</span> <span class="n">tierra</span> <span class="n">ocurrió</span> <span class="n">en</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<p>Nótese que la primer columna ‘indice_tiempo’ también la toma como una
+columna de datos, cuando en realidad, en este caso convendría que fuera
+efectivamente la columna que indexa la tabla. Para eso, tenemos
+<code class="docutils literal notranslate"><span class="pre">set_index</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;indice_tiempo&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>natalidad_argentina</th>
+      <th>natalidad_ciudad_autonoma_de_buenos_aires</th>
+      <th>natalidad_buenos_aires</th>
+      <th>natalidad_catamarca</th>
+      <th>natalidad_cordoba</th>
+      <th>natalidad_corrientes</th>
+      <th>natalidad_chaco</th>
+      <th>natalidad_chubut</th>
+      <th>natalidad_entre_rios</th>
+      <th>natalidad_formosa</th>
+      <th>...</th>
+      <th>natalidad_neuquen</th>
+      <th>natalidad_rio_negro</th>
+      <th>natalidad_salta</th>
+      <th>natalidad_san_juan</th>
+      <th>natalidad_san_luis</th>
+      <th>natalidad_santa_cruz</th>
+      <th>natalidad_santa_fe</th>
+      <th>natalidad_santiago_del_estero</th>
+      <th>natalidad_tucuman</th>
+      <th>natalidad_tierra_del_fuego</th>
+    </tr>
+    <tr>
+      <th>indice_tiempo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>19.0</td>
+      <td>14.3</td>
+      <td>17.5</td>
+      <td>25.8</td>
+      <td>17.2</td>
+      <td>22.7</td>
+      <td>25.8</td>
+      <td>19.4</td>
+      <td>21.3</td>
+      <td>25.7</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>18.9</td>
+      <td>24.0</td>
+      <td>22.7</td>
+      <td>22.3</td>
+      <td>19.6</td>
+      <td>16.9</td>
+      <td>21.6</td>
+      <td>22.6</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>18.2</td>
+      <td>13.9</td>
+      <td>16.9</td>
+      <td>24.9</td>
+      <td>15.9</td>
+      <td>21.9</td>
+      <td>22.2</td>
+      <td>18.4</td>
+      <td>20.5</td>
+      <td>22.4</td>
+      <td>...</td>
+      <td>16.8</td>
+      <td>17.8</td>
+      <td>24.2</td>
+      <td>23.7</td>
+      <td>22.3</td>
+      <td>19.8</td>
+      <td>16.2</td>
+      <td>21.1</td>
+      <td>21.1</td>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>18.3</td>
+      <td>13.6</td>
+      <td>17.0</td>
+      <td>24.4</td>
+      <td>16.6</td>
+      <td>23.3</td>
+      <td>24.9</td>
+      <td>17.1</td>
+      <td>19.5</td>
+      <td>25.1</td>
+      <td>...</td>
+      <td>16.1</td>
+      <td>17.3</td>
+      <td>24.7</td>
+      <td>22.3</td>
+      <td>22.0</td>
+      <td>19.2</td>
+      <td>16.7</td>
+      <td>22.1</td>
+      <td>22.6</td>
+      <td>17.2</td>
+    </tr>
+  </tbody>
+</table>
+<p>3 rows × 25 columns</p>
+</div><p>También se pueden hacer otras operaciones, como ordenar por columnas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;natalidad_argentina&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>natalidad_argentina</th>
+      <th>natalidad_ciudad_autonoma_de_buenos_aires</th>
+      <th>natalidad_buenos_aires</th>
+      <th>natalidad_catamarca</th>
+      <th>natalidad_cordoba</th>
+      <th>natalidad_corrientes</th>
+      <th>natalidad_chaco</th>
+      <th>natalidad_chubut</th>
+      <th>natalidad_entre_rios</th>
+      <th>natalidad_formosa</th>
+      <th>...</th>
+      <th>natalidad_neuquen</th>
+      <th>natalidad_rio_negro</th>
+      <th>natalidad_salta</th>
+      <th>natalidad_san_juan</th>
+      <th>natalidad_san_luis</th>
+      <th>natalidad_santa_cruz</th>
+      <th>natalidad_santa_fe</th>
+      <th>natalidad_santiago_del_estero</th>
+      <th>natalidad_tucuman</th>
+      <th>natalidad_tierra_del_fuego</th>
+    </tr>
+    <tr>
+      <th>indice_tiempo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2018</th>
+      <td>15.4</td>
+      <td>11.6</td>
+      <td>14.6</td>
+      <td>16.4</td>
+      <td>14.5</td>
+      <td>18.0</td>
+      <td>21.0</td>
+      <td>14.3</td>
+      <td>15.6</td>
+      <td>19.8</td>
+      <td>...</td>
+      <td>15.6</td>
+      <td>14.6</td>
+      <td>18.2</td>
+      <td>17.7</td>
+      <td>14.2</td>
+      <td>14.7</td>
+      <td>14.8</td>
+      <td>18.9</td>
+      <td>16.9</td>
+      <td>16.3</td>
+    </tr>
+    <tr>
+      <th>2017</th>
+      <td>16.0</td>
+      <td>11.7</td>
+      <td>15.4</td>
+      <td>15.8</td>
+      <td>15.0</td>
+      <td>18.3</td>
+      <td>19.8</td>
+      <td>15.3</td>
+      <td>16.3</td>
+      <td>19.6</td>
+      <td>...</td>
+      <td>16.3</td>
+      <td>16.0</td>
+      <td>19.7</td>
+      <td>18.1</td>
+      <td>14.8</td>
+      <td>17.0</td>
+      <td>15.4</td>
+      <td>18.8</td>
+      <td>16.7</td>
+      <td>16.9</td>
+    </tr>
+    <tr>
+      <th>2016</th>
+      <td>16.7</td>
+      <td>13.1</td>
+      <td>16.2</td>
+      <td>16.7</td>
+      <td>15.7</td>
+      <td>18.5</td>
+      <td>19.1</td>
+      <td>16.6</td>
+      <td>16.6</td>
+      <td>19.4</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>16.8</td>
+      <td>19.4</td>
+      <td>18.8</td>
+      <td>15.5</td>
+      <td>18.6</td>
+      <td>16.3</td>
+      <td>18.7</td>
+      <td>17.5</td>
+      <td>18.1</td>
+    </tr>
+    <tr>
+      <th>2007</th>
+      <td>17.8</td>
+      <td>14.1</td>
+      <td>17.7</td>
+      <td>18.3</td>
+      <td>16.3</td>
+      <td>18.9</td>
+      <td>18.4</td>
+      <td>20.2</td>
+      <td>16.9</td>
+      <td>21.1</td>
+      <td>...</td>
+      <td>20.5</td>
+      <td>18.9</td>
+      <td>20.6</td>
+      <td>20.8</td>
+      <td>19.3</td>
+      <td>23.8</td>
+      <td>15.7</td>
+      <td>19.4</td>
+      <td>19.7</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>2006</th>
+      <td>17.9</td>
+      <td>14.6</td>
+      <td>17.7</td>
+      <td>18.3</td>
+      <td>16.5</td>
+      <td>18.7</td>
+      <td>19.6</td>
+      <td>20.0</td>
+      <td>17.2</td>
+      <td>21.4</td>
+      <td>...</td>
+      <td>20.5</td>
+      <td>18.6</td>
+      <td>21.0</td>
+      <td>20.7</td>
+      <td>20.2</td>
+      <td>23.5</td>
+      <td>15.8</td>
+      <td>20.0</td>
+      <td>18.5</td>
+      <td>20.1</td>
+    </tr>
+    <tr>
+      <th>2015</th>
+      <td>17.9</td>
+      <td>13.7</td>
+      <td>17.3</td>
+      <td>17.2</td>
+      <td>16.4</td>
+      <td>19.3</td>
+      <td>22.7</td>
+      <td>17.4</td>
+      <td>17.8</td>
+      <td>21.3</td>
+      <td>...</td>
+      <td>19.1</td>
+      <td>18.2</td>
+      <td>21.3</td>
+      <td>20.5</td>
+      <td>17.0</td>
+      <td>19.8</td>
+      <td>16.9</td>
+      <td>20.5</td>
+      <td>19.0</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>2012</th>
+      <td>17.9</td>
+      <td>14.2</td>
+      <td>18.1</td>
+      <td>15.0</td>
+      <td>16.5</td>
+      <td>18.6</td>
+      <td>20.2</td>
+      <td>20.2</td>
+      <td>16.7</td>
+      <td>21.0</td>
+      <td>...</td>
+      <td>19.1</td>
+      <td>19.4</td>
+      <td>20.2</td>
+      <td>19.6</td>
+      <td>16.0</td>
+      <td>24.0</td>
+      <td>16.3</td>
+      <td>17.9</td>
+      <td>18.7</td>
+      <td>19.2</td>
+    </tr>
+    <tr>
+      <th>2013</th>
+      <td>17.9</td>
+      <td>14.3</td>
+      <td>17.8</td>
+      <td>16.9</td>
+      <td>16.0</td>
+      <td>19.0</td>
+      <td>19.9</td>
+      <td>18.5</td>
+      <td>17.3</td>
+      <td>21.0</td>
+      <td>...</td>
+      <td>18.7</td>
+      <td>17.9</td>
+      <td>21.1</td>
+      <td>20.6</td>
+      <td>16.7</td>
+      <td>19.7</td>
+      <td>16.9</td>
+      <td>18.8</td>
+      <td>18.9</td>
+      <td>19.8</td>
+    </tr>
+    <tr>
+      <th>2001</th>
+      <td>18.2</td>
+      <td>13.9</td>
+      <td>16.9</td>
+      <td>24.9</td>
+      <td>15.9</td>
+      <td>21.9</td>
+      <td>22.2</td>
+      <td>18.4</td>
+      <td>20.5</td>
+      <td>22.4</td>
+      <td>...</td>
+      <td>16.8</td>
+      <td>17.8</td>
+      <td>24.2</td>
+      <td>23.7</td>
+      <td>22.3</td>
+      <td>19.8</td>
+      <td>16.2</td>
+      <td>21.1</td>
+      <td>21.1</td>
+      <td>17.9</td>
+    </tr>
+    <tr>
+      <th>2014</th>
+      <td>18.2</td>
+      <td>14.3</td>
+      <td>17.9</td>
+      <td>17.4</td>
+      <td>16.8</td>
+      <td>19.8</td>
+      <td>20.2</td>
+      <td>17.8</td>
+      <td>17.8</td>
+      <td>21.8</td>
+      <td>...</td>
+      <td>19.5</td>
+      <td>17.9</td>
+      <td>21.6</td>
+      <td>21.3</td>
+      <td>16.9</td>
+      <td>19.8</td>
+      <td>17.2</td>
+      <td>19.8</td>
+      <td>19.3</td>
+      <td>20.5</td>
+    </tr>
+    <tr>
+      <th>2002</th>
+      <td>18.3</td>
+      <td>13.6</td>
+      <td>17.0</td>
+      <td>24.4</td>
+      <td>16.6</td>
+      <td>23.3</td>
+      <td>24.9</td>
+      <td>17.1</td>
+      <td>19.5</td>
+      <td>25.1</td>
+      <td>...</td>
+      <td>16.1</td>
+      <td>17.3</td>
+      <td>24.7</td>
+      <td>22.3</td>
+      <td>22.0</td>
+      <td>19.2</td>
+      <td>16.7</td>
+      <td>22.1</td>
+      <td>22.6</td>
+      <td>17.2</td>
+    </tr>
+    <tr>
+      <th>2003</th>
+      <td>18.4</td>
+      <td>14.2</td>
+      <td>17.3</td>
+      <td>22.5</td>
+      <td>17.5</td>
+      <td>22.2</td>
+      <td>20.9</td>
+      <td>18.7</td>
+      <td>19.8</td>
+      <td>25.0</td>
+      <td>...</td>
+      <td>19.4</td>
+      <td>18.6</td>
+      <td>22.0</td>
+      <td>22.2</td>
+      <td>21.7</td>
+      <td>21.9</td>
+      <td>17.3</td>
+      <td>17.8</td>
+      <td>21.8</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>2005</th>
+      <td>18.5</td>
+      <td>14.5</td>
+      <td>17.9</td>
+      <td>19.7</td>
+      <td>17.1</td>
+      <td>20.2</td>
+      <td>22.6</td>
+      <td>19.2</td>
+      <td>19.0</td>
+      <td>23.5</td>
+      <td>...</td>
+      <td>20.0</td>
+      <td>18.7</td>
+      <td>22.5</td>
+      <td>21.4</td>
+      <td>19.9</td>
+      <td>22.9</td>
+      <td>16.3</td>
+      <td>21.0</td>
+      <td>19.9</td>
+      <td>20.7</td>
+    </tr>
+    <tr>
+      <th>2011</th>
+      <td>18.5</td>
+      <td>14.8</td>
+      <td>18.8</td>
+      <td>16.0</td>
+      <td>16.9</td>
+      <td>19.9</td>
+      <td>22.6</td>
+      <td>20.7</td>
+      <td>17.2</td>
+      <td>21.6</td>
+      <td>...</td>
+      <td>19.6</td>
+      <td>19.8</td>
+      <td>21.7</td>
+      <td>19.9</td>
+      <td>16.7</td>
+      <td>25.0</td>
+      <td>16.4</td>
+      <td>20.2</td>
+      <td>19.5</td>
+      <td>18.6</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>18.6</td>
+      <td>14.6</td>
+      <td>18.4</td>
+      <td>17.4</td>
+      <td>17.4</td>
+      <td>19.9</td>
+      <td>20.4</td>
+      <td>21.3</td>
+      <td>17.5</td>
+      <td>21.9</td>
+      <td>...</td>
+      <td>20.9</td>
+      <td>19.6</td>
+      <td>21.0</td>
+      <td>20.6</td>
+      <td>18.2</td>
+      <td>25.2</td>
+      <td>16.5</td>
+      <td>21.9</td>
+      <td>19.1</td>
+      <td>20.2</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>18.7</td>
+      <td>14.9</td>
+      <td>18.9</td>
+      <td>16.9</td>
+      <td>17.2</td>
+      <td>19.8</td>
+      <td>21.2</td>
+      <td>21.2</td>
+      <td>17.4</td>
+      <td>21.1</td>
+      <td>...</td>
+      <td>21.6</td>
+      <td>20.0</td>
+      <td>21.9</td>
+      <td>19.8</td>
+      <td>17.4</td>
+      <td>26.0</td>
+      <td>16.2</td>
+      <td>19.9</td>
+      <td>20.1</td>
+      <td>18.8</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>18.8</td>
+      <td>15.1</td>
+      <td>18.6</td>
+      <td>18.6</td>
+      <td>17.4</td>
+      <td>19.7</td>
+      <td>20.8</td>
+      <td>21.4</td>
+      <td>17.2</td>
+      <td>22.6</td>
+      <td>...</td>
+      <td>21.0</td>
+      <td>19.9</td>
+      <td>21.4</td>
+      <td>20.7</td>
+      <td>19.3</td>
+      <td>25.0</td>
+      <td>16.9</td>
+      <td>20.5</td>
+      <td>19.9</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>2000</th>
+      <td>19.0</td>
+      <td>14.3</td>
+      <td>17.5</td>
+      <td>25.8</td>
+      <td>17.2</td>
+      <td>22.7</td>
+      <td>25.8</td>
+      <td>19.4</td>
+      <td>21.3</td>
+      <td>25.7</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>18.9</td>
+      <td>24.0</td>
+      <td>22.7</td>
+      <td>22.3</td>
+      <td>19.6</td>
+      <td>16.9</td>
+      <td>21.6</td>
+      <td>22.6</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>19.3</td>
+      <td>14.9</td>
+      <td>18.5</td>
+      <td>20.6</td>
+      <td>17.8</td>
+      <td>22.7</td>
+      <td>25.1</td>
+      <td>19.3</td>
+      <td>19.5</td>
+      <td>26.5</td>
+      <td>...</td>
+      <td>19.8</td>
+      <td>18.3</td>
+      <td>23.9</td>
+      <td>22.5</td>
+      <td>21.9</td>
+      <td>22.4</td>
+      <td>17.6</td>
+      <td>19.7</td>
+      <td>21.0</td>
+      <td>19.5</td>
+    </tr>
+  </tbody>
+</table>
+<p>19 rows × 25 columns</p>
+</div><p>También se pueden filtrar los datos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span><span class="p">[</span><span class="n">tasa_natalidad</span><span class="p">[</span><span class="s1">&#39;natalidad_argentina&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">18.5</span><span class="p">]</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>natalidad_argentina</th>
+      <th>natalidad_ciudad_autonoma_de_buenos_aires</th>
+      <th>natalidad_buenos_aires</th>
+      <th>natalidad_catamarca</th>
+      <th>natalidad_cordoba</th>
+      <th>natalidad_corrientes</th>
+      <th>natalidad_chaco</th>
+      <th>natalidad_chubut</th>
+      <th>natalidad_entre_rios</th>
+      <th>natalidad_formosa</th>
+      <th>...</th>
+      <th>natalidad_neuquen</th>
+      <th>natalidad_rio_negro</th>
+      <th>natalidad_salta</th>
+      <th>natalidad_san_juan</th>
+      <th>natalidad_san_luis</th>
+      <th>natalidad_santa_cruz</th>
+      <th>natalidad_santa_fe</th>
+      <th>natalidad_santiago_del_estero</th>
+      <th>natalidad_tucuman</th>
+      <th>natalidad_tierra_del_fuego</th>
+    </tr>
+    <tr>
+      <th>indice_tiempo</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2000</th>
+      <td>19.0</td>
+      <td>14.3</td>
+      <td>17.5</td>
+      <td>25.8</td>
+      <td>17.2</td>
+      <td>22.7</td>
+      <td>25.8</td>
+      <td>19.4</td>
+      <td>21.3</td>
+      <td>25.7</td>
+      <td>...</td>
+      <td>17.9</td>
+      <td>18.9</td>
+      <td>24.0</td>
+      <td>22.7</td>
+      <td>22.3</td>
+      <td>19.6</td>
+      <td>16.9</td>
+      <td>21.6</td>
+      <td>22.6</td>
+      <td>19.9</td>
+    </tr>
+    <tr>
+      <th>2004</th>
+      <td>19.3</td>
+      <td>14.9</td>
+      <td>18.5</td>
+      <td>20.6</td>
+      <td>17.8</td>
+      <td>22.7</td>
+      <td>25.1</td>
+      <td>19.3</td>
+      <td>19.5</td>
+      <td>26.5</td>
+      <td>...</td>
+      <td>19.8</td>
+      <td>18.3</td>
+      <td>23.9</td>
+      <td>22.5</td>
+      <td>21.9</td>
+      <td>22.4</td>
+      <td>17.6</td>
+      <td>19.7</td>
+      <td>21.0</td>
+      <td>19.5</td>
+    </tr>
+    <tr>
+      <th>2008</th>
+      <td>18.8</td>
+      <td>15.1</td>
+      <td>18.6</td>
+      <td>18.6</td>
+      <td>17.4</td>
+      <td>19.7</td>
+      <td>20.8</td>
+      <td>21.4</td>
+      <td>17.2</td>
+      <td>22.6</td>
+      <td>...</td>
+      <td>21.0</td>
+      <td>19.9</td>
+      <td>21.4</td>
+      <td>20.7</td>
+      <td>19.3</td>
+      <td>25.0</td>
+      <td>16.9</td>
+      <td>20.5</td>
+      <td>19.9</td>
+      <td>20.8</td>
+    </tr>
+    <tr>
+      <th>2009</th>
+      <td>18.6</td>
+      <td>14.6</td>
+      <td>18.4</td>
+      <td>17.4</td>
+      <td>17.4</td>
+      <td>19.9</td>
+      <td>20.4</td>
+      <td>21.3</td>
+      <td>17.5</td>
+      <td>21.9</td>
+      <td>...</td>
+      <td>20.9</td>
+      <td>19.6</td>
+      <td>21.0</td>
+      <td>20.6</td>
+      <td>18.2</td>
+      <td>25.2</td>
+      <td>16.5</td>
+      <td>21.9</td>
+      <td>19.1</td>
+      <td>20.2</td>
+    </tr>
+    <tr>
+      <th>2010</th>
+      <td>18.7</td>
+      <td>14.9</td>
+      <td>18.9</td>
+      <td>16.9</td>
+      <td>17.2</td>
+      <td>19.8</td>
+      <td>21.2</td>
+      <td>21.2</td>
+      <td>17.4</td>
+      <td>21.1</td>
+      <td>...</td>
+      <td>21.6</td>
+      <td>20.0</td>
+      <td>21.9</td>
+      <td>19.8</td>
+      <td>17.4</td>
+      <td>26.0</td>
+      <td>16.2</td>
+      <td>19.9</td>
+      <td>20.1</td>
+      <td>18.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 25 columns</p>
+</div><p>y contabilizarlos con el método <code class="docutils literal notranslate"><span class="pre">.count()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tasa_natalidad</span><span class="p">[</span><span class="n">tasa_natalidad</span><span class="p">[</span><span class="s1">&#39;natalidad_argentina&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">18.5</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">natalidad_argentina</span>                          <span class="mi">5</span>
+<span class="n">natalidad_ciudad_autonoma_de_buenos_aires</span>    <span class="mi">5</span>
+<span class="n">natalidad_buenos_aires</span>                       <span class="mi">5</span>
+<span class="n">natalidad_catamarca</span>                          <span class="mi">5</span>
+<span class="n">natalidad_cordoba</span>                            <span class="mi">5</span>
+<span class="n">natalidad_corrientes</span>                         <span class="mi">5</span>
+<span class="n">natalidad_chaco</span>                              <span class="mi">5</span>
+<span class="n">natalidad_chubut</span>                             <span class="mi">5</span>
+<span class="n">natalidad_entre_rios</span>                         <span class="mi">5</span>
+<span class="n">natalidad_formosa</span>                            <span class="mi">5</span>
+<span class="n">natalidad_jujuy</span>                              <span class="mi">5</span>
+<span class="n">natalidad_la_pampa</span>                           <span class="mi">5</span>
+<span class="n">natalidad_la_rioja</span>                           <span class="mi">5</span>
+<span class="n">natalidad_mendoza</span>                            <span class="mi">5</span>
+<span class="n">natalidad_misiones</span>                           <span class="mi">5</span>
+<span class="n">natalidad_neuquen</span>                            <span class="mi">5</span>
+<span class="n">natalidad_rio_negro</span>                          <span class="mi">5</span>
+<span class="n">natalidad_salta</span>                              <span class="mi">5</span>
+<span class="n">natalidad_san_juan</span>                           <span class="mi">5</span>
+<span class="n">natalidad_san_luis</span>                           <span class="mi">5</span>
+<span class="n">natalidad_santa_cruz</span>                         <span class="mi">5</span>
+<span class="n">natalidad_santa_fe</span>                           <span class="mi">5</span>
+<span class="n">natalidad_santiago_del_estero</span>                <span class="mi">5</span>
+<span class="n">natalidad_tucuman</span>                            <span class="mi">5</span>
+<span class="n">natalidad_tierra_del_fuego</span>                   <span class="mi">5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
+</section>
+<section id="graficando">
+<h3>Graficando<a class="headerlink" href="#graficando" title="Link to this heading"></a></h3>
+<p>Los DataFrames de Pandas tienen integrados la funcionalidad para
+graficar de <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, de modo tal que se pueden graficar los datos
+rápidamente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">tasa_natalidad</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_36_0.png" src="_images/15_2_pandas_36_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">tasa_natalidad</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>                            <div id="f70d7965-66c0-46cb-bbe3-f903d2f218ac" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("f70d7965-66c0-46cb-bbe3-f903d2f218ac")) {                    Plotly.newPlot(                        "f70d7965-66c0-46cb-bbe3-f903d2f218ac",                        [{"hovertemplate":"variable=natalidad_argentina\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_argentina","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_argentina","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[19.0,18.2,18.3,18.4,19.3,18.5,17.9,17.8,18.8,18.6,18.7,18.5,17.9,17.9,18.2,17.9,16.7,16.0,15.4],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_ciudad_autonoma_de_buenos_aires\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_ciudad_autonoma_de_buenos_aires","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_ciudad_autonoma_de_buenos_aires","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[14.3,13.9,13.6,14.2,14.9,14.5,14.6,14.1,15.1,14.6,14.9,14.8,14.2,14.3,14.3,13.7,13.1,11.7,11.6],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_buenos_aires\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_buenos_aires","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_buenos_aires","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[17.5,16.9,17.0,17.3,18.5,17.9,17.7,17.7,18.6,18.4,18.9,18.8,18.1,17.8,17.9,17.3,16.2,15.4,14.6],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_catamarca\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_catamarca","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_catamarca","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[25.8,24.9,24.4,22.5,20.6,19.7,18.3,18.3,18.6,17.4,16.9,16.0,15.0,16.9,17.4,17.2,16.7,15.8,16.4],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_cordoba\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_cordoba","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_cordoba","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[17.2,15.9,16.6,17.5,17.8,17.1,16.5,16.3,17.4,17.4,17.2,16.9,16.5,16.0,16.8,16.4,15.7,15.0,14.5],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_corrientes\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_corrientes","line":{"color":"#19d3f3","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_corrientes","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[22.7,21.9,23.3,22.2,22.7,20.2,18.7,18.9,19.7,19.9,19.8,19.9,18.6,19.0,19.8,19.3,18.5,18.3,18.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_chaco\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_chaco","line":{"color":"#FF6692","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_chaco","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[25.8,22.2,24.9,20.9,25.1,22.6,19.6,18.4,20.8,20.4,21.2,22.6,20.2,19.9,20.2,22.7,19.1,19.8,21.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_chubut\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_chubut","line":{"color":"#B6E880","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_chubut","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[19.4,18.4,17.1,18.7,19.3,19.2,20.0,20.2,21.4,21.3,21.2,20.7,20.2,18.5,17.8,17.4,16.6,15.3,14.3],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_entre_rios\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_entre_rios","line":{"color":"#FF97FF","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_entre_rios","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[21.3,20.5,19.5,19.8,19.5,19.0,17.2,16.9,17.2,17.5,17.4,17.2,16.7,17.3,17.8,17.8,16.6,16.3,15.6],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_formosa\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_formosa","line":{"color":"#FECB52","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_formosa","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[25.7,22.4,25.1,25.0,26.5,23.5,21.4,21.1,22.6,21.9,21.1,21.6,21.0,21.0,21.8,21.3,19.4,19.6,19.8],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_jujuy\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_jujuy","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_jujuy","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[22.6,23.1,22.1,20.3,21.3,19.9,18.4,18.6,19.1,19.2,19.2,19.6,18.0,18.5,19.5,18.2,16.8,15.8,15.7],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_la_pampa\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_la_pampa","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_la_pampa","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[18.1,17.2,16.7,18.3,17.4,16.9,16.5,16.2,16.5,16.3,16.2,15.6,15.4,16.8,16.5,15.17,15.1,14.3,13.5],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_la_rioja\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_la_rioja","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_la_rioja","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[22.6,20.5,21.4,21.2,21.1,20.8,19.0,18.4,19.0,17.9,17.2,17.4,17.0,17.5,17.3,17.1,16.6,15.6,14.8],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_mendoza\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_mendoza","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_mendoza","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[19.2,19.1,16.9,17.5,18.4,18.8,19.0,19.3,20.2,19.7,19.3,19.2,18.4,18.7,19.4,18.8,17.5,16.3,15.4],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_misiones\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_misiones","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_misiones","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[25.8,24.2,22.9,24.1,26.4,23.0,19.9,20.4,23.1,23.7,22.2,19.3,22.3,22.0,23.4,22.8,21.0,21.1,20.2],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_neuquen\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_neuquen","line":{"color":"#19d3f3","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_neuquen","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[17.9,16.8,16.1,19.4,19.8,20.0,20.5,20.5,21.0,20.9,21.6,19.6,19.1,18.7,19.5,19.1,17.9,16.3,15.6],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_rio_negro\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_rio_negro","line":{"color":"#FF6692","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_rio_negro","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[18.9,17.8,17.3,18.6,18.3,18.7,18.6,18.9,19.9,19.6,20.0,19.8,19.4,17.9,17.9,18.2,16.8,16.0,14.6],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_salta\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_salta","line":{"color":"#B6E880","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_salta","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[24.0,24.2,24.7,22.0,23.9,22.5,21.0,20.6,21.4,21.0,21.9,21.7,20.2,21.1,21.6,21.3,19.4,19.7,18.2],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_san_juan\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_san_juan","line":{"color":"#FF97FF","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_san_juan","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[22.7,23.7,22.3,22.2,22.5,21.4,20.7,20.8,20.7,20.6,19.8,19.9,19.6,20.6,21.3,20.5,18.8,18.1,17.7],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_san_luis\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_san_luis","line":{"color":"#FECB52","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_san_luis","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[22.3,22.3,22.0,21.7,21.9,19.9,20.2,19.3,19.3,18.2,17.4,16.7,16.0,16.7,16.9,17.0,15.5,14.8,14.2],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_santa_cruz\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_santa_cruz","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_santa_cruz","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[19.6,19.8,19.2,21.9,22.4,22.9,23.5,23.8,25.0,25.2,26.0,25.0,24.0,19.7,19.8,19.8,18.6,17.0,14.7],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_santa_fe\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_santa_fe","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_santa_fe","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[16.9,16.2,16.7,17.3,17.6,16.3,15.8,15.7,16.9,16.5,16.2,16.4,16.3,16.9,17.2,16.9,16.3,15.4,14.8],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_santiago_del_estero\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_santiago_del_estero","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_santiago_del_estero","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[21.6,21.1,22.1,17.8,19.7,21.0,20.0,19.4,20.5,21.9,19.9,20.2,17.9,18.8,19.8,20.5,18.7,18.8,18.9],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_tucuman\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_tucuman","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_tucuman","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[22.6,21.1,22.6,21.8,21.0,19.9,18.5,19.7,19.9,19.1,20.1,19.5,18.7,18.9,19.3,19.0,17.5,16.7,16.9],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=natalidad_tierra_del_fuego\u003cbr\u003eindice_tiempo=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"natalidad_tierra_del_fuego","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"natalidad_tierra_del_fuego","orientation":"v","showlegend":true,"x":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018],"xaxis":"x","y":[19.9,17.9,17.2,20.8,19.5,20.7,20.1,20.8,20.8,20.2,18.8,18.6,19.2,19.8,20.5,19.9,18.1,16.9,16.3],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"indice_tiempo"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"}},"legend":{"title":{"text":"variable"},"tracegroupgap":0},"margin":{"t":60}},                        {"responsive": true}                    ).then(function(){
+
+var gd = document.getElementById('f70d7965-66c0-46cb-bbe3-f903d2f218ac');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div></section>
+</section>
+<section id="ejercicios-15-a">
+<h2>Ejercicios 15 (a)<a class="headerlink" href="#ejercicios-15-a" title="Link to this heading"></a></h2>
+<p>En el archivo <code class="docutils literal notranslate"><span class="pre">data/imdb_top_1000.csv</span></code> está la lista de las 1000
+‘mejores’ peliculas de acuerdo a lo que refiere dicha plataforma.</p>
+<ul class="simple">
+<li><p>Lea el archivo con Pandas.</p></li>
+<li><p>Inspeccione el <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> con funciones de pandas (<code class="docutils literal notranslate"><span class="pre">head</span></code>,
+<code class="docutils literal notranslate"><span class="pre">columns</span></code> pueden ser métodos útiles).</p></li>
+<li><p>¿Cuál es la película más antigua que figura en este ranking?</p></li>
+<li><p>Encuentre la ‘mejor’ película de acuerdo al índice <code class="docutils literal notranslate"><span class="pre">Meta_score</span></code>.
+(Busque la documentación del método <code class="docutils literal notranslate"><span class="pre">iloc</span></code> de la clase
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> de pandas)</p></li>
+<li><p>Encuentre la película más larga en la tabla (recuerde que el método
+<code class="docutils literal notranslate"><span class="pre">max</span></code> opera sobre números. Busque información sobre el método
+<code class="docutils literal notranslate"><span class="pre">str</span></code> de un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>)</p></li>
+<li><p>Construya una función <code class="docutils literal notranslate"><span class="pre">del_director</span></code> que recibe un string con el
+nombre (posiblemente parcial) de un director y devuelve una lista de
+sus películas (<code class="docutils literal notranslate"><span class="pre">str</span></code> puede serle también aquí útil).</p></li>
+</ul>
+</section>
+<section id="animaciones-con-matploblib">
+<h2>Animaciones con <strong>Matploblib</strong><a class="headerlink" href="#animaciones-con-matploblib" title="Link to this heading"></a></h2>
+<p><strong>Matplotlib</strong> tiene funciones para hacer animaciones de una manera
+conveniente. Hay excelente información sobre el tema en:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://matplotlib.org/api/animation_api.html">La documentación (con
+ejemplos)</a></p></li>
+<li><p><a class="reference external" href="http://jakevdp.github.io/blog/2012/08/18/matplotlib-animation-tutorial/">Tutorial en Pythonic
+Perambulations</a></p></li>
+</ul>
+<p>Vamos a ver brevemente cómo hacer animaciones, en pocos Pasos</p>
+<section id="una-animacion-simple-en-pocos-pasos">
+<h3>Una animación simple en pocos pasos<a class="headerlink" href="#una-animacion-simple-en-pocos-pasos" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pwd</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;/home/fiol/Clases/IntPython/clases-python/clases&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">cd</span> <span class="s2">&quot;./scripts/animaciones&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fiol</span><span class="o">/</span><span class="n">Clases</span><span class="o">/</span><span class="n">IntPython</span><span class="o">/</span><span class="n">clases</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">clases</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">animaciones</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">tk</span>
+<span class="o">%</span><span class="n">run</span> <span class="n">ejemplo_animation_1</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+<span class="c1"># Creamos los datos</span>
+<span class="n">xmax</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">Npts</span><span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">Npts</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+
+<span class="k">def</span> <span class="nf">update_line</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">num</span><span class="p">])</span>
+  <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,)</span>
+
+<span class="c1"># Creamos la figura e inicializamos</span>
+<span class="c1"># Graficamos una línea sin ningún punto</span>
+<span class="c1"># Fijamos las condiciones de graficación</span>
+<span class="n">fig1</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">L</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="s1">&#39;-o&#39;</span><span class="p">)</span> <span class="c1"># equivalente a la siguiente</span>
+<span class="c1"># L = plt.plot([],[] , &#39;-o&#39;)[0]</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Animación de una oscilación&#39;</span><span class="p">)</span>
+
+
+<span class="c1">#</span>
+<span class="n">line_ani</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig1</span><span class="p">,</span> <span class="n">update_line</span><span class="p">,</span> <span class="n">Npts</span><span class="p">,</span> <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Este código da como resultado una función oscilante que se va creando.
+Este es un ejemplo simple que puede ser útil para graficar datos de una
+medición o de un cálculo más o menos largo.</p>
+<img alt="_images/line.gif" src="_images/line.gif" />
+<section id="preparacion-general">
+<h4>Preparación general<a class="headerlink" href="#preparacion-general" title="Link to this heading"></a></h4>
+<p>Como vemos, después de importar el submódulo <code class="docutils literal notranslate"><span class="pre">animation</span></code> (además de lo
+usual):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>nos aseguramos que estamos trabajando en modo <strong>no</strong> interactivo (con
+<code class="docutils literal notranslate"><span class="pre">plt.ioff()</span></code>).</p>
+</section>
+<section id="creamos-los-datos-para-graficar">
+<h4>Creamos los datos para graficar<a class="headerlink" href="#creamos-los-datos-para-graficar" title="Link to this heading"></a></h4>
+<p>Creación de datos para graficar</p>
+<p>Creamos los datos para mostrar en la animación.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">xmax</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">Npts</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">Npts</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)])</span>
+</pre></div>
+</div>
+<p>Acá <code class="docutils literal notranslate"><span class="pre">data</span></code> es un array 2D, con los datos <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span>.</p>
+</section>
+<section id="preparacion-de-la-figura">
+<h4>Preparación de la figura<a class="headerlink" href="#preparacion-de-la-figura" title="Link to this heading"></a></h4>
+<p>A continuación preparamos la zona de graficación:</p>
+<ol class="arabic simple">
+<li><p>Creamos la figura y eje</p></li>
+<li><p>Creamos las líneas de graficación (una en este caso)</p></li>
+<li><p>Fijamos los límites de graficación</p></li>
+<li><p>Agregamos el texto, que va a ser invariante durante la animación</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig1</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">L</span><span class="p">,</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;-o&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Animación de una oscilación&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como sabemos, el llamado a <code class="docutils literal notranslate"><span class="pre">plot()</span></code> devuelve una lista de líneas (de
+un solo elemento). A este elemento lo llamamos <code class="docutils literal notranslate"><span class="pre">L</span></code>, y ya le damos las
+características que queremos que tenga. En este caso, fijamos el símbolo
+(círculos), con líneas de ancho 3. Vamos a modificar esta línea <code class="docutils literal notranslate"><span class="pre">L</span></code> en
+cada cuadro de la animación.</p>
+</section>
+<section id="funcion-para-actualizar-la-linea">
+<h4>Función para actualizar la línea<a class="headerlink" href="#funcion-para-actualizar-la-linea" title="Link to this heading"></a></h4>
+<p>Debemos crear una función que modifique las curvas en cada cuadro.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">update_line</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="n">num</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>Esta función debe recibir como argumento el número de cuadro, que acá
+llamamos <code class="docutils literal notranslate"><span class="pre">num</span></code>. Además, en este caso recibe los datos a graficar, y la
+línea a modificar.</p>
+<p>Esta función devuelve una línea <code class="docutils literal notranslate"><span class="pre">L</span></code>, que es la parte del gráfico que
+queremos que se actualice en cada frame.</p>
+<p>Notemos acá que no es necesario que tome como argumento los datos
+guardados en <code class="docutils literal notranslate"><span class="pre">data</span></code> y la línea <code class="docutils literal notranslate"><span class="pre">line</span></code>, ya que son variables globales
+a las que hay acceso dentro del <em>script</em>. De la misma manera no es
+necesario que devuelva la línea, por la misma razón.</p>
+</section>
+<section id="animacion-de-la-figura">
+<h4>Animación de la figura<a class="headerlink" href="#animacion-de-la-figura" title="Link to this heading"></a></h4>
+<p>Finalmente llamamos a la función que hace la animación:
+<code class="docutils literal notranslate"><span class="pre">animation.FuncAnimation()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">np</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block"> FuncAnimation(fig, func, frames=None, init_func=None, fargs=None,
+               save_count=None, <em>, cache_frame_data=True, **kwargs)
+
+Makes an animation by repeatedly calling a function *func</em>.
+
+.. note::
+
+    You must store the created Animation in a variable that lives as long
+    as the animation should run. Otherwise, the Animation object will be
+    garbage-collected and the animation stops.
+
+Parameters
+----------
+fig : <cite>~matplotlib.figure.Figure</cite>
+    The figure object used to get needed events, such as draw or resize.
+
+func : callable
+    The function to call at each frame.  The first argument will
+    be the next value in <em>frames</em>.   Any additional positional
+    arguments can be supplied via the <em>fargs</em> parameter.
+
+    The required signature is::
+
+        def func(frame, <em>fargs) -&gt; iterable_of_artists
+
+    If ``blit == True``, *func</em> must return an iterable of all artists
+    that were modified or created. This information is used by the blitting
+    algorithm to determine which parts of the figure have to be updated.
+    The return value is unused if <code class="docutils literal notranslate"><span class="pre">blit</span> <span class="pre">==</span> <span class="pre">False</span></code> and may be omitted in
+    that case.
+
+frames : iterable, int, generator function, or None, optional
+    Source of data to pass <em>func</em> and each frame of the animation
+
+    - If an iterable, then simply use the values provided.  If the
+      iterable has a length, it will override the <em>save_count</em> kwarg.
+
+    - If an integer, then equivalent to passing <code class="docutils literal notranslate"><span class="pre">range(frames)</span></code>
+
+    - If a generator function, then must have the signature::
+
+         def gen_function() -&gt; obj
+
+    - If <em>None</em>, then equivalent to passing <code class="docutils literal notranslate"><span class="pre">itertools.count</span></code>.
+
+    In all of these cases, the values in <em>frames</em> is simply passed through
+    to the user-supplied <em>func</em> and thus can be of any type.
+
+init_func : callable, optional
+    A function used to draw a clear frame. If not given, the results of
+    drawing from the first item in the frames sequence will be used. This
+    function will be called once before the first frame.
+
+    The required signature is::
+
+        def init_func() -&gt; iterable_of_artists
+
+    If <code class="docutils literal notranslate"><span class="pre">blit</span> <span class="pre">==</span> <span class="pre">True</span></code>, <em>init_func</em> must return an iterable of artists
+    to be re-drawn. This information is used by the blitting algorithm to
+    determine which parts of the figure have to be updated.  The return
+    value is unused if <code class="docutils literal notranslate"><span class="pre">blit</span> <span class="pre">==</span> <span class="pre">False</span></code> and may be omitted in that case.
+
+fargs : tuple or None, optional
+    Additional arguments to pass to each call to <em>func</em>.
+
+save_count : int, default: 100
+    Fallback for the number of values from <em>frames</em> to cache. This is
+    only used if the number of frames cannot be inferred from <em>frames</em>,
+    i.e. when it's an iterator without length or a generator.
+
+interval : int, default: 200
+    Delay between frames in milliseconds.
+
+repeat_delay : int, default: 0
+    The delay in milliseconds between consecutive animation runs, if
+    <em>repeat</em> is True.
+
+repeat : bool, default: True
+    Whether the animation repeats when the sequence of frames is completed.
+
+blit : bool, default: False
+    Whether blitting is used to optimize drawing.  Note: when using
+    blitting, any animated artists will be drawn according to their zorder;
+    however, they will be drawn on top of any previous artists, regardless
+    of their zorder.
+
+cache_frame_data : bool, default: True
+    Whether frame data is cached.  Disabling cache might be helpful when
+    frames contain large objects.
+
+
+Methods:
+
+  new_frame_seq  --  Return a new sequence of frame information.
+  new_saved_frame_seq  --  Return a new sequence of saved/cached frame information.
+  pause  --  Pause the animation.
+  resume  --  Resume the animation.
+  save  --  Save the animation as a movie file by drawing every frame.
+  to_html5_video  --  Convert the animation to an HTML5 <code class="docutils literal notranslate"><span class="pre">&lt;video&gt;</span></code> tag.
+  to_jshtml  --  Generate HTML representation of the animation.</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">line_anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig1</span><span class="p">,</span> <span class="n">update_line</span><span class="p">,</span> <span class="n">Npts</span><span class="p">,</span>
+                   <span class="n">fargs</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="p">),</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">FuncAnimation()</span></code> toma como argumentos:</p>
+<ul class="simple">
+<li><p>la figura (<code class="docutils literal notranslate"><span class="pre">fig1</span></code>) donde se realiza el gráfico.</p></li>
+<li><p>Una función a la que llama antes de dibujar cada <em>frame</em>
+(<code class="docutils literal notranslate"><span class="pre">update_line</span></code>),</p></li>
+<li><p>El argumento <code class="docutils literal notranslate"><span class="pre">interval</span></code> da el tiempo entre cuadros, en
+milisegundos.</p></li>
+<li><p>El argumento <code class="docutils literal notranslate"><span class="pre">fargs</span></code> es una tuple con los argumentos que necesita
+la función <code class="docutils literal notranslate"><span class="pre">update_line()</span></code>. En este caso <code class="docutils literal notranslate"><span class="pre">(data,</span> <span class="pre">L)</span></code>.</p></li>
+<li><p>El argumento <code class="docutils literal notranslate"><span class="pre">blit=True</span></code> hace que sólo se actualicen las partes que
+cambian en la animación, mientras que las partes estáticas no se
+dibujan en cada cuadro.</p></li>
+</ul>
+<p>Es importante que el objeto creado por <code class="docutils literal notranslate"><span class="pre">FuncAnimation()</span></code> no se
+destruya. Esto lo podemos asegurar asignando el objeto resultante a una
+variable, en este caso line_anim.</p>
+</section>
+<section id="opcional-grabar-la-animacion-a-un-archivo">
+<h4>Opcional: grabar la animación a un archivo<a class="headerlink" href="#opcional-grabar-la-animacion-a-un-archivo" title="Link to this heading"></a></h4>
+<p>Podemos grabar la animación a un archivo usando el método <code class="docutils literal notranslate"><span class="pre">save()</span></code> o
+el método <code class="docutils literal notranslate"><span class="pre">to_html5_video()</span></code> del objeto (<code class="docutils literal notranslate"><span class="pre">anim</span></code>) que devuelve la
+función <code class="docutils literal notranslate"><span class="pre">FuncAnimation()</span></code>.</p>
+<p>Para poder grabar a archivo las animaciones se necesita tener instalados
+programas externos (alguno de <em>ffmpeg</em>, <em>avconv</em>, <em>imagemagick</em>). Ver
+<a class="reference external" href="https://matplotlib.org/api/animation_api.html">https://matplotlib.org/api/animation_api.html</a> para más información.</p>
+</section>
+</section>
+<section id="segundo-ejemplo">
+<h3>Segundo ejemplo<a class="headerlink" href="#segundo-ejemplo" title="Link to this heading"></a></h3>
+<p>Veamos un ejemplo similar al primero, pero donde vamos cambiando los
+límites de los ejes en forma manual, a medida que los datos lo requieren</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+
+<span class="c1"># Calcula los datos en tiempo real.</span>
+<span class="k">def</span> <span class="nf">data_gen</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+  <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">cnt</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+    <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">t</span> <span class="o">+=</span> <span class="mf">0.1</span>
+    <span class="k">yield</span> <span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">t</span> <span class="o">/</span> <span class="mf">10.</span><span class="p">)</span>
+
+
+<span class="c1"># Necesitamos que se puede acceder a estas variables</span>
+<span class="c1"># desde varias funciones -&gt; globales</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">line</span><span class="p">,</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([],</span> <span class="p">[],</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+  <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="k">del</span> <span class="n">xdata</span><span class="p">[:]</span>
+  <span class="k">del</span> <span class="n">ydata</span><span class="p">[:]</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+  <span class="c1"># update the data</span>
+  <span class="n">t</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">data</span>
+  <span class="n">xdata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+  <span class="n">ydata</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+  <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+
+  <span class="c1"># Si los datos salen del eje, agrandamos el eje</span>
+  <span class="c1"># Después tenemos que redibujar el canvas manualmente</span>
+  <span class="k">if</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="n">xmax</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xmax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+  <span class="n">line</span><span class="o">.</span><span class="n">set_data</span><span class="p">(</span><span class="n">xdata</span><span class="p">,</span> <span class="n">ydata</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">line</span><span class="p">,</span>
+
+<span class="n">ani</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">data_gen</span><span class="p">,</span> <span class="n">blit</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                              <span class="n">interval</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span><span class="n">repeat</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">init_func</span><span class="o">=</span><span class="n">init</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">animate_decay</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<pre class="literal-block">/home/fiol/Clases/IntPython/clases-python/clases/scripts/animaciones/animate_decay.py:46: UserWarning: frames=&lt;function data_gen at 0x7ff058744900&gt; which we can infer the length of, did not pass an explicit <em>save_count</em> and passed cache_frame_data=True.  To avoid a possibly unbounded cache, frame data caching has been disabled. To suppress this warning either pass <cite>cache_frame_data=False</cite> or <cite>save_count=MAX_FRAMES</cite>.
+  ani = animation.FuncAnimation(fig, run, data_gen, blit=False, interval=30,</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">reload_library</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="tercer-ejemplo-quiver">
+<h3>Tercer ejemplo: Quiver<a class="headerlink" href="#tercer-ejemplo-quiver" title="Link to this heading"></a></h3>
+<p>Para hacer una animación de un campo de fuerzas o velocidades
+necesitamos datos en tres dimensiones. El siguiente ejemplo sigue los
+pasos de la animación anterior, excepto en la creación de datos y la
+graficación, que en lugar de usar <code class="docutils literal notranslate"><span class="pre">plot()</span></code> usa <code class="docutils literal notranslate"><span class="pre">quiver()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.animation</span> <span class="k">as</span> <span class="nn">animation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ioff</span><span class="p">()</span>
+
+<span class="c1"># ############################################################</span>
+<span class="c1"># Creación de datos</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">91</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">91</span><span class="p">)</span>
+<span class="n">X3</span><span class="p">,</span> <span class="n">Y3</span><span class="p">,</span> <span class="n">T3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+<span class="n">sinT3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">T3</span> <span class="o">/</span>
+               <span class="n">T3</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="p">(</span><span class="n">X3</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Y3</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">sinT3</span>
+<span class="c1"># Graficar una flecha cada step puntos</span>
+<span class="n">step</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">x_q</span><span class="p">,</span> <span class="n">y_q</span> <span class="o">=</span> <span class="n">x</span><span class="p">[::</span><span class="n">step</span><span class="p">],</span> <span class="n">y</span><span class="p">[::</span><span class="n">step</span><span class="p">]</span>
+
+<span class="c1"># Create U and V vectors to plot</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">G</span><span class="p">[::</span><span class="n">step</span><span class="p">,</span> <span class="p">::</span><span class="n">step</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># ############################################################</span>
+<span class="c1"># Figura y ejes.</span>
+<span class="n">fig1</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+
+
+<span class="n">qax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">x_q</span><span class="p">,</span> <span class="n">y_q</span><span class="p">,</span> <span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">V</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">scale</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">animate</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+  <span class="n">qax</span><span class="o">.</span><span class="n">set_UVC</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">V</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+
+<span class="n">anim</span> <span class="o">=</span> <span class="n">animation</span><span class="o">.</span><span class="n">FuncAnimation</span><span class="p">(</span><span class="n">fig1</span><span class="p">,</span> <span class="n">animate</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">frames</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">repeat</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># anim.save(&#39;quiver.gif&#39;, writer=&#39;imagemagick&#39;)</span>
+<span class="n">anim</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;quiver.mp4&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">run</span> <span class="n">ejemplo_quiver</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<img alt="_images/quiver.gif" src="_images/quiver.gif" />
+<section id="comentarios">
+<h4>Comentarios:<a class="headerlink" href="#comentarios" title="Link to this heading"></a></h4>
+<ul>
+<li><p>Se utilizó la función <code class="docutils literal notranslate"><span class="pre">quiver()</span></code> para generar un campo vectorial.
+La forma de esta función es:</p>
+<p>quiver([X, Y], U, V, [C], **kw)</p>
+<p><em>X</em>, <em>Y</em> define the arrow locations, <em>U</em>, <em>V</em> define the arrow
+directions, and <em>C</em> optionally sets the color.</p>
+</li>
+<li><p>Se utilizaron <em>Ellipsis</em>, por ejemplo en casos como:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Las elipsis (tres puntos o la palabra <code class="docutils literal notranslate"><span class="pre">Ellipsis</span></code>) indican todo el
+rango para todas las dimensiones que no se dan explícitamente. En
+este ejemplo el <em>array</em> <code class="docutils literal notranslate"><span class="pre">U</span></code> tiene tres dimensiones, por lo que
+tendremos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">U</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">U</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>En general, las elipses reemplazan a los dos puntos en todas las
+dimensiones no dadas explícitamente</p>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">36</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">a4</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a2</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="mi">0</span>  <span class="mi">6</span> <span class="mi">12</span> <span class="mi">18</span> <span class="mi">24</span> <span class="mi">30</span><span class="p">]</span>
+<span class="p">[</span> <span class="mi">0</span>  <span class="mi">6</span> <span class="mi">12</span> <span class="mi">18</span> <span class="mi">24</span> <span class="mi">30</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a4</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a4</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mi">0</span>  <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">6</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">12</span> <span class="mi">15</span><span class="p">]]</span>
+<span class="p">[[</span> <span class="mi">0</span>  <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">6</span>  <span class="mi">9</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">12</span> <span class="mi">15</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">a4</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">a4</span><span class="p">[:,:,:,</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Uso de <code class="docutils literal notranslate"><span class="pre">np.roll(a,</span> <span class="pre">shift,</span> <span class="pre">axis=None)</span></code> que mueve elementos una
+distancia <code class="docutils literal notranslate"><span class="pre">shift</span></code> a lo largo del eje <code class="docutils literal notranslate"><span class="pre">axis</span></code>, y cuando pasan la
+última posición los reintroduce al principio. Por ejemplo, en una
+dimensión:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span> <span class="mi">9</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">8</span> <span class="mi">9</span> <span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-15-b">
+<h2>Ejercicios 15 (b)<a class="headerlink" href="#ejercicios-15-b" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Utilizando <strong>Matplotlib</strong>:</p>
+<ul class="simple">
+<li><p>Hacer un gráfico donde dibuje una parábola <span class="math notranslate nohighlight">\(y = x^{2}\)</span> en el
+rango <span class="math notranslate nohighlight">\([-5,5]\)</span>.</p></li>
+<li><p>En el mismo gráfico, agregar un círculo en <span class="math notranslate nohighlight">\(x=-5\)</span>.</p></li>
+<li><p>El círculo debe moverse siguiendo la curva, como se muestra en la
+figura</p></li>
+</ul>
+<img alt="_images/pelota.gif" src="_images/pelota.gif" />
+</li>
+<li><p><strong>Caída libre 2:</strong> Realizar animaciones del ejercicio de caída libre,
+de forma tal que:</p>
+<ul class="simple">
+<li><p>La animación tenga un cartel indicando el tiempo, y la velocidad y
+altura correspondiente a ese tiempo.</p></li>
+<li><p>Agregar una “cola fantasma” a la partícula, que muestre posiciones
+anteriores.</p></li>
+</ul>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
