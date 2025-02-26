@@ -1,11 +1,14 @@
 .. _clase_06:
 
 
-=======================================
-Clase 6: Atrapar y administrar errores
-=======================================
+=============================================
+Clase 6: Objetos y administración de errores
+=============================================
 
------------------------------
+===================================
+
+Atrapar y administrar errores
+=============================
 
 **Python** tiene incorporado un mecanismo para atrapar errores de
 distintos tipos, así como para generar errores que den información al
@@ -100,7 +103,7 @@ en la documentación de `Built-in
 Exceptions <https://docs.python.org/3/library/exceptions.html#bltin-exceptions>`__.
 
 Administración de excepciones
-=============================
+-----------------------------
 
 Cuando nuestro programa aumenta en complejidad, aumenta la posibilidad
 de encontrar errores. Esto se incrementa si se tiene que interactuar con
@@ -321,7 +324,7 @@ El mecanismo es un poco más complejo, y contiene otros elementos que
 permiten un control más fino que lo descripto aquí.
 
 “Crear” excepciones
-===================
+-------------------
 
 Podemos forzar a que nuestro código cree una excepción usando ``raise``.
 Por ejemplo:
@@ -1213,7 +1216,7 @@ aumentamos el valor de la variable en uno.
 .. parsed-literal::
 
     Número de puntos: 0
-    <__main__.Punto object at 0x7fe5dc2782f0> <__main__.Punto object at 0x7fe5c24f5590>
+    <__main__.Punto object at 0x7f019471fe00> <__main__.Punto object at 0x7f01946c3610>
     Número de puntos: 2
 
 
@@ -1238,7 +1241,7 @@ sino al tipo de objeto ``Punto`` (a la clase)
 
     NameError                                 Traceback (most recent call last)
 
-    Cell In[15], line 1
+    Cell In[7], line 1
     ----> 1 print(p1)
 
 
@@ -1309,7 +1312,7 @@ puntos total definidos.
 .. parsed-literal::
 
     Número de puntos: 0
-    <__main__.Punto object at 0x7fe5dc2797f0> <__main__.Punto object at 0x7fe5dc1f7390>
+    <__main__.Punto object at 0x7f0194749010> <__main__.Punto object at 0x7f01946c3610>
     Número de puntos: 2
 
 
@@ -1336,7 +1339,7 @@ puntos total definidos.
 
 .. parsed-literal::
 
-    (<__main__.Punto at 0x7fe5dc2797f0>, <__main__.Punto at 0x7fe5dc1f7390>)
+    (<__main__.Punto at 0x7f0194749010>, <__main__.Punto at 0x7f01946c3610>)
 
 
 
@@ -1351,7 +1354,7 @@ Sin embargo, en esta implementación no estamos realmente removiendo
 
 .. parsed-literal::
 
-    p1 = <__main__.Punto object at 0x7fe5dc2797f0>
+    p1 = <__main__.Punto object at 0x7f0194749010>
     p1.x = 1
 
 
@@ -1420,7 +1423,7 @@ puntos
 
 .. parsed-literal::
 
-    <__main__.Punto at 0x7fe5dc27a900>
+    <__main__.Punto at 0x7f019474a120>
 
 
 
@@ -1436,7 +1439,7 @@ puntos
 
     NameError                                 Traceback (most recent call last)
 
-    Cell In[32], line 1
+    Cell In[20], line 1
     ----> 1 p2
 
 
@@ -1450,7 +1453,7 @@ puntos
 
 .. parsed-literal::
 
-    <__main__.Punto object at 0x7fe5dc27a900>
+    <__main__.Punto object at 0x7f019474a120>
 
 
 Como vemos, al borrar el objeto, automáticamente se actualiza el
@@ -1477,7 +1480,7 @@ para los usuarios.
 
 .. parsed-literal::
 
-    <__main__.Punto object at 0x7fe5c24f5950>
+    <__main__.Punto object at 0x7f01946c39d0>
 
 
 Rehagamos la clase para definir puntos
@@ -1555,7 +1558,7 @@ Rehagamos la clase para definir puntos
 
 .. parsed-literal::
 
-    <__main__.Punto at 0x7fe5dc27aba0>
+    <__main__.Punto at 0x7f019474a270>
 
 
 
@@ -1656,7 +1659,7 @@ existe, es un error llamar al objeto:
 
     TypeError                                 Traceback (most recent call last)
 
-    Cell In[49], line 1
+    Cell In[35], line 1
     ----> 1 p2()
 
 
@@ -1820,12 +1823,15 @@ métodos ``suma`` y ``producto``
 Comparación
 -----------
 
-Para comparar igualdad usamos el método ``__eq__``
+Para comparar dos objetos usamos el método ``__eq__()`` para igualdad,
+``__gt__()`` para ver si uno es mayor que otro, etc. En el siguiente
+ejemplo implementamos el método ``__eq__()`` y vemos su efecto. Antes de
+implementarlo tendremos
 
 .. code:: python
 
-    v3 = Punto(1,2,3)
-    v4 = Punto(1,2,3)
+    v3 = Vector(1,2,3)
+    v4 = Vector(1,2,3)
     print(v3 == v4)
 
 
