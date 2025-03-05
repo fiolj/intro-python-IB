@@ -23,6 +23,15 @@ abrirlo, utilizando la función ``open()``
 
     f
 
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
 .. code:: python
 
     s = f.read()                    # Leemos el archivo
@@ -35,6 +44,42 @@ abrirlo, utilizando la función ``open()``
 
     print(s[:100])
 
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adrienne
+    Agatha
+    Agnetha
+    Ahmed
+    Ahmet
+    Aimee
+    Al
+    Ala
+    Alain
+
+
+.. code:: python
+
+    s[:20]
+
+
+
+
+.. parsed-literal::
+
+    'Aaa\nAaron\nAba\nAbaba\n'
+
+
+
 Esta secuencia básica de trabajo en adecuada y muy común en el trabajo
 con archivos. Sin embargo, hay un potencial problema, que ocurrirá si
 hay algún error entre la apertura y el cierre del archivo. Para ello
@@ -46,14 +91,47 @@ existe una sintaxis alternativa
       s = fi.read()
     print(s[:50])
 
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adri
+
+
 .. code:: python
 
     # fi todavía existe pero está cerrado
     fi
 
+
+
+
+.. parsed-literal::
+
+    <_io.TextIOWrapper name='data/names.txt' mode='r' encoding='UTF-8'>
+
+
+
 .. code:: python
 
     type(fi)
+
+
+
+
+.. parsed-literal::
+
+    _io.TextIOWrapper
+
+
 
 La palabra ``with`` es una palabra reservada del lenguaje y la
 construcción se conoce como *contexto*. Básicamente dice que todo lo que
@@ -82,9 +160,25 @@ Ejemplo 05-1
     print(type(lines))
     print(len(lines))
 
+
+.. parsed-literal::
+
+    <class 'list'>
+    1585
+
+
 .. code:: python
 
     lines[:3]
+
+
+
+
+.. parsed-literal::
+
+    ['Aaa\n', 'Aaron\n', 'Aba\n']
+
+
 
 .. code:: python
 
@@ -108,6 +202,14 @@ Ejemplo 05-1
       mensaje = f"Encontramos {n} palabras que tienen entre {minlen} y {maxlen} letras"
     
     print(mensaje)
+
+
+
+.. parsed-literal::
+
+    Aaa, Aba, Ada, Ada, Adam, Ala, Alan, Alex, Alf, Ama, Ami, Amir, Amos, Amy, Ana, Andy, Ann, Anna, Anna, Anne, Anya, Arne, Art, Axel, Bart, Bea, Ben, Bert, Beth, Bib, Bill, Bob, Bob, Boob, Boyd, Brad, Bret, Bub, Buck, Bud, Carl, Cary, Case, Cdc, Chet, Chip, Clay, Clem, Cody, Cole, Cory, Cris, Curt, Dad, Dale, Dan, Dana, Dani, Dave, Dawn, Dean, Deb, Debi, Deed, Del, Dick, Did, Dion, Dirk, Dod, Don, Donn, Dora, Dori, Dory, Doug, Drew, Dud, Duke, Earl, Eddy, Eke, Eli, Elsa, Emil, Emma, Enya, Ere, Eric, Erik, Esme, Eva, Evan, Eve, Eve, Ewe, Eye, Fay, Fred, Gag, Gaia, Gail, Gale, Gary, Gay, Gene, Gig, Gigi, Gil, Gill, Glen, Gog, Greg, Guy, Hal, Hank, Hans, Harv, Hein, Herb, Hohn, Hon, Hope, Hsi, Huey, Hugh, Huh, Hui, Hume, Hurf, Hwa, Iain, Ian, Igor, Iii, Ilya, Ima, Imad, Ira, Isis, Izzy, Jack, Jade, Jan, Jane, Jarl, Jay, Jean, Jef, Jeff, Jem, Jen, Jenn, Jess, Jill, Jim, Jin, Jiri, Joan, Job, Jock, Joe, Joel, John, Jon, Jong, Joni, Joon, Jos, Jose, Josh, Juan, Judy, Juha, Jun, June, Juri, Kaj, Kari, Karl, Kate, Kay, Kee, Kees, Ken, Kenn, Kent, Kiki, Kim, King, Kirk, Kit, Knut, Kory, Kris, Kurt, Kyle, Kylo, Kyu, Lana, Lar, Lara, Lars, Lea, Leah, Lee, Leif, Len, Leo, Leon, Les, Lex, Liam, Lila, Lin, Lisa, List, Liz, Liza, Lois, Lola, Lord, Lori, Lou, Loyd, Luc, Lucy, Lui, Luis, Luke, Lum, Lynn, Mac, Mah, Mann, Mara, Marc, Mark, Mary, Mat, Mats, Matt, Max, May, Mayo, Meg, Mick, Miek, Mike, Miki, Milo, Moe, Mott, Mum, Mwa, Naim, Nan, Nate, Neal, Ned, Neil, Nhan, Nici, Nick, Nils, Ning, Noam, Noel, Non, Noon, Nora, Norm, Nou, Novo, Nun, Ofer, Olaf, Old, Ole, Oleg, Olof, Omar, Otto, Owen, Ozan, Page, Pam, Pap, Part, Pat, Paul, Pdp, Peep, Pep, Per, Pete, Petr, Phil, Pia, Piet, Pim, Ping, Pip, Poop, Pop, Pria, Pup, Raif, Raj, Raja, Ralf, Ram, Rand, Raul, Ravi, Ray, Real, Rees, Reg, Reid, Rene, Renu, Rex, Ric, Rich, Rick, Rik, Rob, Rod, Rolf, Ron, Root, Rose, Ross, Roy, Rudy, Russ, Ruth, S's, Saad, Sal, Sam, Sara, Saul, Scot, Sean, Sees, Seth, Shai, Shaw, Shel, Sho, Sid, Sir, Sis, Skef, Skip, Son, Spy, Sri, Ssi, Stan, Stu, Sue, Sus, Suu, Syd, Syed, Syun, Tad, Tai, Tait, Tal, Tao, Tara, Tat, Ted, Teet, Teri, Tex, Thad, The, Theo, Tim, Timo, Tip, Tit, Tnt, Toby, Todd, Toft, Tom, Tony, Toot, Tor, Tot, Tran, Trey, Troy, Tuan, Tuna, Uma, Una, Uri, Urs, Val, Van, Vern, Vic, Vice, Vick, Wade, Walt, Wes, Will, Win, Wolf, Wow, Zoe, Zon, 
+    
+    Encontramos 420 palabras que tienen entre 3 y 4 letras
 
 
 Hemos utilizado aquí:
@@ -161,6 +263,14 @@ Ejemplo 05-2
     print(mensaje)
 
 
+
+.. parsed-literal::
+
+    (01): aaa, (02): aba, (03): ada, (04): ada, (05): ala, (06): ama, (07): ana, (08): anna, (09): anna, (10): bib, (11): bob, (12): bob, (13): boob, (14): bub, (15): cdc, (16): dad, (17): deed, (18): did, (19): dod, (20): dud, (21): eke, (22): ere, (23): eve, (24): eve, (25): ewe, (26): eye, (27): gag, (28): gig, (29): gog, (30): huh, (31): iii, (32): mum, (33): nan, (34): non, (35): noon, (36): nun, (37): otto, (38): pap, (39): pdp, (40): peep, (41): pep, (42): pip, (43): poop, (44): pop, (45): pup, (46): s's, (47): sees, (48): sis, (49): sus, (50): tat, (51): teet, (52): tit, (53): tnt, (54): toot, (55): tot, (56): wow, 
+    
+    Encontramos un total de 56 palabras capicúa que tienen entre 3 y 4 letras
+
+
 Aquí en lugar de leer todas las líneas e iterar sobre las líneas
 resultantes, iteramos directamente sobre el archivo abierto.
 
@@ -190,7 +300,7 @@ como ``02`` le pedimos que complete los vacíos con ceros.
           n += 1
           #ss += f"\n{p}"  # ss += "\n" + p
           L.append(p)  # L += [p]
-    ss = " ".join(L)
+    ss = ", ".join(L)
     if minlen == maxlen:
       mensaje = f"Encontramos un total de {n} palabras capicúa que tienen {minlen} letras"
     else:
@@ -200,6 +310,12 @@ como ``02`` le pedimos que complete los vacíos con ceros.
     
     with open('data/tmp.txt','w') as fo:
         fo.write(ss)
+
+
+
+.. parsed-literal::
+
+    Encontramos un total de 56 palabras capicúa que tienen entre 3 y 4 letras
 
 
 Módulo Pathlib
@@ -212,10 +328,18 @@ los distintos *filesystems*.
 .. code:: python
 
     from pathlib import Path
-    home = Path().home()
+    mi_path = Path()
+    home = mi_path.home()
     here = Path(".")
     print(home)
     print(here)
+
+
+.. parsed-literal::
+
+    /home/fiol
+    .
+
 
 .. code:: python
 
@@ -225,13 +349,34 @@ los distintos *filesystems*.
 
     print(parent)
 
+
+.. parsed-literal::
+
+    ..
+
+
 .. code:: python
 
     type(parent)
 
+
+
+
+.. parsed-literal::
+
+    pathlib._local.PosixPath
+
+
+
 .. code:: python
 
     print(parent.resolve())
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python
+
 
 Métodos y propiedades
 ---------------------
@@ -249,13 +394,40 @@ Veamos algunos otros:
 
     here
 
+
+
+
+.. parsed-literal::
+
+    PosixPath('/home/fiol/Clases/IntPython/clases-python/clases')
+
+
+
 .. code:: python
 
     parent
 
+
+
+
+.. parsed-literal::
+
+    PosixPath('/home/fiol/Clases/IntPython/clases-python')
+
+
+
 .. code:: python
 
     here.parent  # Propiedad
+
+
+
+
+.. parsed-literal::
+
+    PosixPath('/home/fiol/Clases/IntPython/clases-python')
+
+
 
 Partes del *path*
 -----------------
@@ -263,6 +435,15 @@ Partes del *path*
 .. code:: python
 
     here.parts
+
+
+
+
+.. parsed-literal::
+
+    ('/', 'home', 'fiol', 'Clases', 'IntPython', 'clases-python', 'clases')
+
+
 
 Podemos acceder a todas las carpetas que contienen el *path* actual
 simplemente iterando
@@ -272,14 +453,35 @@ simplemente iterando
     for up in here.parents:
         print(up)
 
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python
+    /home/fiol/Clases/IntPython
+    /home/fiol/Clases
+    /home/fiol
+    /home
+    /
+
+
 .. code:: python
 
-    p = here / "05_1_inout.ipynb"
+    p = here / "07_1_inout.ipynb"
     print(f'pathname : {p}')
     print(f'path     : {p.parent}')
     print(f'name     : {p.name}')
     print(f'stem     : {p.stem}')
     print(f'suffix   : {p.suffix}')
+
+
+.. parsed-literal::
+
+    pathname : /home/fiol/Clases/IntPython/clases-python/clases/07_1_inout.ipynb
+    path     : /home/fiol/Clases/IntPython/clases-python/clases
+    name     : 07_1_inout.ipynb
+    stem     : 07_1_inout
+    suffix   : .ipynb
+
 
 Contenido de directorios
 ------------------------
@@ -288,14 +490,15 @@ Contenido de directorios
 
     print(here)
 
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases
+
+
 .. code:: python
 
-    for f in here.iterdir():
-        print(f)
-
-.. code:: python
-
-    for f in here.glob('*.ipynb'):
+    for f in here.glob('0?_*.ipynb'):
         print(f)
 
 El objeto tiene un iterador que nos permite recorrer todo el directorio.
@@ -303,33 +506,75 @@ Por ejemplo si queremos listar todos los subdirectorios:
 
 .. code:: python
 
-    [x for x in direct.iterdir() if x.is_dir()]
+    direct = heredd
+
+.. code:: python
+
+    [x for x in here.iterdir() if x.is_dir()]
 
 Trabajo con rutas de archivos
 
 .. code:: python
 
-    print(direct.absolute())
+    print(here.absolute())
 
-.. code:: python
 
-    p = direct / ".."
-    print(p)
-    print(p.resolve())
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases
+
 
 Podemos reemplazar el módulo ``glob`` utilizando este objeto:
 
 .. code:: python
 
-    for fi in sorted(direct.glob("0[1-7]*.ipynb") ):
+    for fi in sorted(here.glob("0[1-7]_1*.ipynb") ):
         print(fi)
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases/01_1_instala_y_uso.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/02_1_modular.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/03_1_maslistas.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/04_1_funciones.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/04_1_iteraciones_func.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/05_1_func_func.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/06_1_excepciones.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/07_1_decoradores_old.ipynb
+    /home/fiol/Clases/IntPython/clases-python/clases/07_1_inout.ipynb
+
 
 .. code:: python
 
-    fi = direct / "programa_detalle.rst"
+    fi = here / "01_1_instala_y_uso.rst"
     if fi.exists():
         s= fi.read_text()
-        print(s)
+        print(s[:300])
+
+
+.. parsed-literal::
+
+    Introducción al lenguaje
+    ========================
+    
+    Cómo empezar: Instalación y uso
+    -------------------------------
+    
+    **Python** es un lenguaje de programación interpretado, que se puede
+    ejecutar sobre distintos sistemas operativos, es decir, es
+    multiplataforma (suele usarse el término *cross-platform
+
+
+.. code:: python
+
+    print(fi.exists())
+
+
+.. parsed-literal::
+
+    True
+
 
 Leer un archivo
 ---------------
@@ -342,9 +587,27 @@ Leer un archivo
 
     type(datos)
 
+
+
+
+.. parsed-literal::
+
+    pathlib._local.PosixPath
+
+
+
 .. code:: python
 
     datos.exists()
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
 
 .. code:: python
 
@@ -353,6 +616,21 @@ Leer un archivo
 .. code:: python
 
     print(s[:50])
+
+
+.. parsed-literal::
+
+    Aaa
+    Aaron
+    Aba
+    Ababa
+    Ada
+    Ada
+    Adam
+    Adlai
+    Adrian
+    Adri
+
 
 En este ejemplo leímos todo el archivo con un comando. En algunas
 ocasiones, por ejemplo si el archivo es muy largo, es preferible cada
@@ -369,7 +647,8 @@ puede escribirse utilizando este módulo de una manera muy similar:
     minlen = 3                      # longitud mínima
     maxlen = 4                      # longitud máxima
     L = []
-    with fname.open('r') as fi:
+    # with fname.open('r') as fi:
+    with open(fname, 'r') as fi:
       for line in fi:
         p = line.strip().lower()
         if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
@@ -384,8 +663,22 @@ puede escribirse utilizando este módulo de una manera muy similar:
     
     print(mensaje)
     
-    with output.open(mode='w') as fo:
-        fo.write(ss)
+    #with output.open(mode='w') as fo:
+    #    fo.write(ss)
+    output.write_text(ss)
+
+
+.. parsed-literal::
+
+    Encontramos un total de 56 palabras capicúa que tienen entre 3 y 4 letras
+
+
+
+
+.. parsed-literal::
+
+    234
+
 
 
 Archivos comprimidos
@@ -409,12 +702,27 @@ los siguientes formatos: **zip, gzip, bz2**
 
 .. code:: python
 
-    l= a.splitlines()
+    l = a.splitlines()
     print(l[:10])
+
+
+.. parsed-literal::
+
+    [b'\xc3\x81frica', b'\xc3\x81ngela', b'\xc3\xa1baco', b'\xc3\xa1bsida', b'\xc3\xa1bside', b'\xc3\xa1cana', b'\xc3\xa1caro', b'\xc3\xa1cates', b'\xc3\xa1cido', b'\xc3\xa1cigos']
+
 
 .. code:: python
 
     l[0]
+
+
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica'
+
+
 
 Con todo esto podríamos escribir (si tuviéramos necesidad) una función
 que puede leer un archivo en cualquiera de estos formatos
@@ -423,7 +731,6 @@ que puede leer un archivo en cualquiera de estos formatos
 
     import gzip
     import bz2
-    from os.path import splitext
     import zipfile
     
     def abrir(fname, modo='r'):
@@ -452,7 +759,7 @@ interpretar. Por ejemplo:
 .. code:: python
 
 
-   l[0] = "b'\\xc3\\x81frica'"
+   l[0] = b'\xc3\x81frica'
 
 Esto indica que la variable es del tipo “bytes”.
 
@@ -498,6 +805,15 @@ convenciones, entre ellas ASCII o UTF-8.
 
     str(l[0], encoding='utf-8')
 
+
+
+
+.. parsed-literal::
+
+    'África'
+
+
+
 El *encoding* es entonces nada más (y nada menos) que la convención que
 vamos a utilizar para interpretar una cadena de bytes. Entonces, si
 utilizamos dos convenciones diferentes para la misma cadena de bytes
@@ -511,25 +827,79 @@ podemos obtener diferentes palabras
 
     type(mis_bytes)
 
+
+
+
+.. parsed-literal::
+
+    bytes
+
+
+
 .. code:: python
 
     list(mis_bytes)
+
+
+
+
+.. parsed-literal::
+
+    [207, 132, 111, 207, 129, 206, 189, 111, 207, 131]
+
+
 
 .. code:: python
 
     mis_bytes.decode('utf-16')
 
+
+
+
+.. parsed-literal::
+
+    '蓏콯캁澽菏'
+
+
+
 .. code:: python
 
     mis_bytes.decode('utf-8')
+
+
+
+
+.. parsed-literal::
+
+    'τoρνoσ'
+
+
 
 .. code:: python
 
     list(mis_bytes.decode('utf-8'))
 
+
+
+
+.. parsed-literal::
+
+    ['τ', 'o', 'ρ', 'ν', 'o', 'σ']
+
+
+
 .. code:: python
 
     type(mis_bytes.decode('utf-8'))
+
+
+
+
+.. parsed-literal::
+
+    str
+
+
 
 Volviendo a la lista de palabras que leemos del archivo, para convertir
 de *bytes* a *string* utilizamos el método ``decode()`` con la
@@ -539,13 +909,53 @@ codificación adecuada:
 
     l[0]
 
+
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica'
+
+
+
 .. code:: python
 
     list(l[0])
 
+
+
+
+.. parsed-literal::
+
+    [195, 129, 102, 114, 105, 99, 97]
+
+
+
 .. code:: python
 
-    l[0].decode('utf-8')
+    l[0].decode('utf-8').encode()
+
+
+
+
+.. parsed-literal::
+
+    b'\xc3\x81frica'
+
+
+
+.. code:: python
+
+    l[0].decode('utf-8').encode('utf-16')
+
+
+
+
+.. parsed-literal::
+
+    b'\xff\xfe\xc1\x00f\x00r\x00i\x00c\x00a\x00'
+
+
 
 --------------
 
@@ -604,7 +1014,7 @@ Note que la masa sólo debe contener 5 números decimales
 
 --------------
 
-.. note::  Los archivos de texto “names.txt” y “aluminio.txt” (así
+.. note::  Los archivos de texto “names.txt” y “aluminio.dat” (así
      como otros archivos usados en las clases) pueden encontrarse en la
      carpeta
      `intro-python <https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing>`__
@@ -613,8 +1023,8 @@ Note que la masa sólo debe contener 5 números decimales
 
 
 
-Algunos módulos (biblioteca standard) 
-======================================
+Algunos módulos (biblioteca standard)
+=====================================
 
 Los módulos pueden pensarse como bibliotecas de objetos (funciones,
 datos, etc) que pueden usarse según la necesidad. Hay una biblioteca
