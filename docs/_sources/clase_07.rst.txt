@@ -1,0 +1,1055 @@
+.. _clase_07:
+
+
+================================================================
+Clase 7: Persistencia de datos y módulos de biblioteca standard
+================================================================
+
+======================================================
+
+Escritura y lectura a archivos
+==============================
+
+Nuestros programas necesitan interactuar con el mundo exterior. Hasta
+ahora utilizamos la función ``print()`` para imprimir por pantalla
+mensajes y resultados. Para leer o escribir un archivo primero debemos
+abrirlo, utilizando la función ``open()``
+
+.. code:: python
+
+    f = open('data/names.txt')      # Abrimos el archivo (para leer)
+
+.. code:: python
+
+    f
+
+.. code:: python
+
+    s = f.read()                    # Leemos el archivo
+
+.. code:: python
+
+    f.close()                       # Cerramos el archivo
+
+.. code:: python
+
+    print(s[:100])
+
+Esta secuencia básica de trabajo en adecuada y muy común en el trabajo
+con archivos. Sin embargo, hay un potencial problema, que ocurrirá si
+hay algún error entre la apertura y el cierre del archivo. Para ello
+existe una sintaxis alternativa
+
+.. code:: python
+
+    with open('data/names.txt') as fi:
+      s = fi.read()
+    print(s[:50])
+
+.. code:: python
+
+    # fi todavía existe pero está cerrado
+    fi
+
+.. code:: python
+
+    type(fi)
+
+La palabra ``with`` es una palabra reservada del lenguaje y la
+construcción se conoce como *contexto*. Básicamente dice que todo lo que
+está dentro del bloque se realizará en el contexto en que ``f`` es el
+objeto de archivo abierto para lectura.
+
+Ejemplos
+--------
+
+Vamos a repasar algunos de los conceptos discutidos las clases
+anteriores e introducir algunas nuevas funcionalidades con ejemplos
+
+Ejemplo 05-1
+~~~~~~~~~~~~
+
+.. code:: python
+
+    fname = 'data/names.txt'
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    
+    with open(fname, 'r') as fi:
+      lines = fi.readlines()        # El resultado es una lista
+    
+    print(type(lines))
+    print(len(lines))
+
+.. code:: python
+
+    lines[:3]
+
+.. code:: python
+
+    fname = 'data/names.txt'
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    
+    with open(fname, 'r') as fi:
+      lines = fi.readlines()        # El resultado es una lista
+    
+    for line in lines:
+      if minlen <= len(line.strip()) <= maxlen:
+        n += 1
+        print(line.strip(), end=', ')  # No Newline
+    
+    print('\n')
+    if minlen == maxlen:
+      mensaje = f"Encontramos {n} palabras que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos {n} palabras que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+
+
+Hemos utilizado aquí:
+
+-  Apertura, lectura, y cerrado de archivos
+-  Iteración en un loop ``for``
+-  Bloques condicionales (if/else)
+-  Formato de cadenas de caracteres con reemplazo
+-  Impresión por pantalla
+
+La apertura de archivos se realiza utilizando la función ``open`` (este
+es un buen momento para mirar su documentación) con dos argumentos: el
+primero es el nombre del archivo y el segundo el modo en que queremos
+abrirlo (en este caso la ``r`` indica lectura).
+
+Con el archivo abierto, en la línea 9 leemos línea por línea todo el
+archivo. El resultado es una lista, donde cada elemento es una línea.
+
+Recorremos la lista, y en cada elemento comparamos la longitud de la
+línea con ciertos valores. Imprimimos las líneas seleccionadas
+
+Finalmente, escribimos el número total de líneas.
+
+Veamos una leve modificación de este programa
+
+Ejemplo 05-2
+~~~~~~~~~~~~
+
+.. code:: python
+
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    
+    fname = 'data/names.txt'
+    
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    
+    with open(fname, 'r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          print(f"({n:02d}): {p}", end=', ')  # Vamos numerando las coincidencias
+    print('\n')
+    if minlen == maxlen:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+
+
+Aquí en lugar de leer todas las líneas e iterar sobre las líneas
+resultantes, iteramos directamente sobre el archivo abierto.
+
+Además incluimos un string al principio del archivo, que servirá de
+documentación, y puede accederse mediante los mecanismos usuales de
+ayuda de Python.
+
+Imprimimos el número de palabra junto con la palabra, usamos ``02d``,
+indicando que es un entero (``d``), que queremos que el campo sea de un
+mínimo número de caracteres de ancho (en este caso 2). Al escribirlo
+como ``02`` le pedimos que complete los vacíos con ceros.
+
+.. code:: python
+
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    
+    fname = 'data/names.txt'
+    
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    L = []
+    with  open(fname, 'r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          #ss += f"\n{p}"  # ss += "\n" + p
+          L.append(p)  # L += [p]
+    ss = " ".join(L)
+    if minlen == maxlen:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+    
+    with open('data/tmp.txt','w') as fo:
+        fo.write(ss)
+
+
+Módulo Pathlib
+==============
+
+En la versión de Python 3.4 se agregó un módulo con definiciones de
+clases para representar *paths* y archivos, con representaciones para
+los distintos *filesystems*.
+
+.. code:: python
+
+    from pathlib import Path
+    home = Path().home()
+    here = Path(".")
+    print(home)
+    print(here)
+
+.. code:: python
+
+    parent = here / ".."
+
+.. code:: python
+
+    print(parent)
+
+.. code:: python
+
+    type(parent)
+
+.. code:: python
+
+    print(parent.resolve())
+
+Métodos y propiedades
+---------------------
+
+El ejemplo anterior usa el método ``resolve()`` del objeto ``Path()``.
+Veamos algunos otros:
+
+.. code:: python
+
+    # here y parent son ahora path completos
+    here = here.resolve()           
+    parent = parent.resolve()
+
+.. code:: python
+
+    here
+
+.. code:: python
+
+    parent
+
+.. code:: python
+
+    here.parent  # Propiedad
+
+Partes del *path*
+-----------------
+
+.. code:: python
+
+    here.parts
+
+Podemos acceder a todas las carpetas que contienen el *path* actual
+simplemente iterando
+
+.. code:: python
+
+    for up in here.parents:
+        print(up)
+
+.. code:: python
+
+    p = here / "05_1_inout.ipynb"
+    print(f'pathname : {p}')
+    print(f'path     : {p.parent}')
+    print(f'name     : {p.name}')
+    print(f'stem     : {p.stem}')
+    print(f'suffix   : {p.suffix}')
+
+Contenido de directorios
+------------------------
+
+.. code:: python
+
+    print(here)
+
+.. code:: python
+
+    for f in here.iterdir():
+        print(f)
+
+.. code:: python
+
+    for f in here.glob('*.ipynb'):
+        print(f)
+
+El objeto tiene un iterador que nos permite recorrer todo el directorio.
+Por ejemplo si queremos listar todos los subdirectorios:
+
+.. code:: python
+
+    [x for x in direct.iterdir() if x.is_dir()]
+
+Trabajo con rutas de archivos
+
+.. code:: python
+
+    print(direct.absolute())
+
+.. code:: python
+
+    p = direct / ".."
+    print(p)
+    print(p.resolve())
+
+Podemos reemplazar el módulo ``glob`` utilizando este objeto:
+
+.. code:: python
+
+    for fi in sorted(direct.glob("0[1-7]*.ipynb") ):
+        print(fi)
+
+.. code:: python
+
+    fi = direct / "programa_detalle.rst"
+    if fi.exists():
+        s= fi.read_text()
+        print(s)
+
+Leer un archivo
+---------------
+
+.. code:: python
+
+    datos = here / 'data' / "names.txt"
+
+.. code:: python
+
+    type(datos)
+
+.. code:: python
+
+    datos.exists()
+
+.. code:: python
+
+    s = datos.read_text()
+
+.. code:: python
+
+    print(s[:50])
+
+En este ejemplo leímos todo el archivo con un comando. En algunas
+ocasiones, por ejemplo si el archivo es muy largo, es preferible cada
+línea y procesarla antes de pasar a la siguiente. El ejemplo anterior
+puede escribirse utilizando este módulo de una manera muy similar:
+
+.. code:: python
+
+    """Programa para contar e imprimir las palabras de una longitud dada"""
+    from pathlib import Path
+    fname = Path(".")/ 'data'/'names.txt'
+    output = fname.parent / f"{fname.stem}_palindromo{fname.suffix}"
+    n = 0                           # contador
+    minlen = 3                      # longitud mínima
+    maxlen = 4                      # longitud máxima
+    L = []
+    with fname.open('r') as fi:
+      for line in fi:
+        p = line.strip().lower()
+        if (minlen <= len(p) <= maxlen) and (p == p[::-1]):
+          n += 1
+          #ss += f"\n{p}"  # ss += "\n" + p
+          L.append(p)  # L += [p]
+    ss = " ".join(L)
+    if minlen == maxlen:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen {minlen} letras"
+    else:
+      mensaje = f"Encontramos un total de {n} palabras capicúa que tienen entre {minlen} y {maxlen} letras"
+    
+    print(mensaje)
+    
+    with output.open(mode='w') as fo:
+        fo.write(ss)
+
+
+Archivos comprimidos
+====================
+
+Existen varias formas de reducir el tamaño de los archivos de datos.
+Varios factores, tales como el sistema operativo, nuestra familiaridad
+con cada uno de ellos, le da una cierta preferencia a algunos de los
+métodos disponibles. Veamos cómo hacer para leer y escribir algunos de
+los siguientes formatos: **zip, gzip, bz2**
+
+.. code:: python
+
+    import gzip
+    import bz2
+
+.. code:: python
+
+    with gzip.open('data/palabras.words.gz', 'rb') as fi:
+      a = fi.read()
+
+.. code:: python
+
+    l= a.splitlines()
+    print(l[:10])
+
+.. code:: python
+
+    l[0]
+
+Con todo esto podríamos escribir (si tuviéramos necesidad) una función
+que puede leer un archivo en cualquiera de estos formatos
+
+.. code:: python
+
+    import gzip
+    import bz2
+    from os.path import splitext
+    import zipfile
+    
+    def abrir(fname, modo='r'):
+      if fname.endswith('gz'):
+        fi= gzip.open(fname, mode=modo)
+      elif fname.endswith('bz2'):
+        fi= bz2.open(fname, mode=modo)    
+      elif fname.endswith('zip'):
+        fi= zipfile.ZipFile(fname, mode=modo)
+      else:
+        fi = open(fname, mode=modo)
+      return fi
+
+.. code:: python
+
+    ff = abrir('data/palabras.words.gz')
+    a = ff.read()
+    ff.close()
+
+String, bytes y codificaciones
+==============================
+
+Vemos que el archivo tiene algunos caracteres que no podemos
+interpretar. Por ejemplo:
+
+.. code:: python
+
+
+   l[0] = "b'\\xc3\\x81frica'"
+
+Esto indica que la variable es del tipo “bytes”.
+
+Para todo tipo de variables, y en todos los lenguajes de programación,
+tenemos -por necesidad- dos representaciones:
+
+1. La representación que se hace en memoria, que consiste en una cadena
+   de unos y ceros
+2. La representación que vemos nosotros, que depende del tipo de
+   variable.
+
+Para cada tipo de variable existe una convención de qué significa la
+cadena de 1s y 0s. Por ejemplo, para un número entero como el ``3``, la
+representación interna es ``11``.
+
+En la memoria solamente se pueden guardar bytes, entonces para guardar
+cualquier tipo de dato debemos además de guardar la cadena de unos y
+ceros, tener la información de cual es la convención para codificarlo
+(codificación o *encoding*). Esto ocurre por ejemplo si queremos guardar
+una imagen, debemos convertirlo a una cadena de bytes utilizando algún
+tipo de *encoding* usando una convención (de ``jpg``, o ``png``, o …).
+
+En el caso de los números, enteros o punto flotante, la codificación que
+suelen utilizar los lenguajes de programación es bastante standard
+(IEEE), pero en el caso de lenguaje, ha ido evolucionando a lo largo del
+tiempo y las diferencias en las distintas convenciones son un poco más
+visibles.
+
+Históricamente, los lenguajes de programación borronearon la distinción
+entre los caracteres y la manera de guardar estos caracteres, igualando
+implícita o explícitamente la secuencia de bytes con un caracter en la
+codificación ASCII.
+
+En Python 3, existen las dos representaciones de un caracter: - Un *byte
+string* es una secuencia de bytes, necesario para guardar en una
+computadora y no para leer por personas. - Un *character string*,
+llamado usualmente “*string*”, es una secuencia de caracteres que
+podemos leer pero que para guardar en memoria tiene que ser convertido a
+*byte string* utilizando una convención (*encoding*). Hay muchas
+convenciones, entre ellas ASCII o UTF-8.
+
+.. code:: python
+
+    str(l[0], encoding='utf-8')
+
+El *encoding* es entonces nada más (y nada menos) que la convención que
+vamos a utilizar para interpretar una cadena de bytes. Entonces, si
+utilizamos dos convenciones diferentes para la misma cadena de bytes
+podemos obtener diferentes palabras
+
+.. code:: python
+
+    mis_bytes = b'\xcf\x84o\xcf\x81\xce\xbdo\xcf\x83'
+
+.. code:: python
+
+    type(mis_bytes)
+
+.. code:: python
+
+    list(mis_bytes)
+
+.. code:: python
+
+    mis_bytes.decode('utf-16')
+
+.. code:: python
+
+    mis_bytes.decode('utf-8')
+
+.. code:: python
+
+    list(mis_bytes.decode('utf-8'))
+
+.. code:: python
+
+    type(mis_bytes.decode('utf-8'))
+
+Volviendo a la lista de palabras que leemos del archivo, para convertir
+de *bytes* a *string* utilizamos el método ``decode()`` con la
+codificación adecuada:
+
+.. code:: python
+
+    l[0]
+
+.. code:: python
+
+    list(l[0])
+
+.. code:: python
+
+    l[0].decode('utf-8')
+
+--------------
+
+Ejercicios 07 (a)
+=================
+
+1. Realice un programa que:
+
+-  Lea el archivo **names.txt**
+-  Guarde en un nuevo archivo (llamado “pares.txt”) palabra por medio
+   del archivo original (la primera, tercera, …) una por línea, pero en
+   el orden inverso al leído
+-  Agregue al final de dicho archivo, las palabras pares pero separadas
+   por un punto y coma (;)
+-  En un archivo llamado “longitudes.txt” guarde las palabras ordenadas
+   por su longitud, y para cada longitud ordenadas alfabéticamente.
+-  En un archivo llamado “letras.txt” guarde sólo aquellas palabras que
+   contienen las letras ``w,x,y,z``, con el formato:
+
+   -  w: Walter, ….
+   -  x: Xilofón, …
+   -  y: ….
+   -  z: ….
+
+-  Cree un diccionario, donde cada *key* es la primera letra y cada
+   valor es una lista, cuyo elemento es una tuple (palabra, longitud).
+   Por ejemplo:
+
+.. code:: python
+
+   d['a'] = [('Aaa',3),('Anna', 4), ...]
+
+2. Realice un programa para:
+
+   -  Leer los datos del archivo **aluminio.dat** y poner los datos del
+      elemento en un diccionario de la forma:
+
+   .. code:: python
+
+      d = {'S': 'Al', 'Z':13, 'A':27, 'M': '26.98153863(12)', 'P': 1.0000, 'MS':'26.9815386(8)'}
+
+   -  Modifique el programa anterior para que las masas sean números
+      (``float``) y descarte el valor de la incerteza (el número entre
+      paréntesis)
+   -  Agregue el código necesario para obtener una impresión de la
+      forma:
+
+   ::
+
+      Elemento: Al
+      Número Atómico: 13
+      Número de Masa: 27
+      Masa: 26.98154
+
+Note que la masa sólo debe contener 5 números decimales
+
+--------------
+
+.. note::  Los archivos de texto “names.txt” y “aluminio.txt” (así
+     como otros archivos usados en las clases) pueden encontrarse en la
+     carpeta
+     `intro-python <https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing>`__
+  
+  
+
+
+
+Algunos módulos (biblioteca standard) 
+======================================
+
+Los módulos pueden pensarse como bibliotecas de objetos (funciones,
+datos, etc) que pueden usarse según la necesidad. Hay una biblioteca
+standard con rutinas para muchas operaciones comunes, y además existen
+muchos paquetes específicos para distintas tareas. Veamos algunos
+ejemplos:
+
+Módulo sys
+----------
+
+Este módulo da acceso a variables que usa o mantiene el intérprete
+Python
+
+.. code:: python
+
+    import sys
+
+.. code:: python
+
+    sys.path
+
+.. code:: python
+
+    sys.getfilesystemencoding()
+
+.. code:: python
+
+    sys.getsizeof(1)
+
+.. code:: python
+
+    sys.getsizeof("hola")
+
+.. code:: python
+
+    help(sys.getsizeof)
+
+Vemos que para utilizar las variables (path) o funciones (getsizeof)
+debemos referirlo anteponiendo el módulo en el cuál está definido (sys)
+y separado por un punto.
+
+Cuando hacemos un programa, con definición de variables y funciones.
+Podemos utilizarlo como un módulo, de la misma manera que los que ya
+vienen definidos en la biblioteca standard o en los paquetes que
+instalamos.
+
+Módulo ``os``
+-------------
+
+El módulo ``os`` tiene utilidades para operar sobre nombres de archivos
+y directorios de manera segura y portable, de manera que pueda
+utilizarse en distintos sistemas operativos. Vamos a ver ejemplos de uso
+de algunas facilidades que brinda:
+
+.. code:: python
+
+    import os
+    
+    print(os.curdir)
+    print(os.pardir)
+    print (os.getcwd())
+
+.. code:: python
+
+    cur = os.getcwd()
+    par = os.path.abspath("..")
+    print(cur)
+    print(par)
+
+
+.. code:: python
+
+    print(os.path.abspath(os.curdir))
+    print(os.getcwd())
+
+.. code:: python
+
+    print(os.path.basename(cur))
+    print(os.path.splitdrive(cur)) # Útil en Windows donde hay letras que identifican las unidades de disco
+
+.. code:: python
+
+    print(os.path.commonprefix((cur, par)))
+    archivo = os.path.join(par,'este' , 'otro.dat')
+    print (archivo)
+    print (os.path.split(archivo))
+    print (os.path.splitext(archivo))
+    print (os.path.exists(archivo))
+    print (os.path.exists(cur))
+
+
+Como es aparente de estos ejemplos, se puede acceder a todos los objetos
+(funciones, variables) de un módulo utilizando simplemente la línea
+``import <modulo>`` pero puede ser tedioso escribir todo con prefijos
+(como ``os.path.abspath``) por lo que existen dos alternativas que
+pueden ser más convenientes. La primera corresponde a importar todas las
+definiciones de un módulo en forma implícita:
+
+.. code:: python
+
+    from os import *
+
+Después de esta declaración usamos los objetos de la misma manera que
+antes pero obviando la parte de ``os.``
+
+.. code:: python
+
+    path.abspath(curdir)
+
+Esto es conveniente en algunos casos pero no suele ser una buena idea en
+programas largos ya que distintos módulos pueden definir el mismo
+nombre, y se pierde información sobre su origen. Una alternativa que es
+conveniente y permite mantener mejor control es importar explícitamente
+lo que vamos a usar:
+
+.. code:: python
+
+    from os import curdir, pardir, getcwd
+    from os.path import abspath
+    print(abspath(pardir))
+    print(abspath(curdir))
+    print(abspath(getcwd()))
+
+
+Además podemos darle un nombre diferente al importar módulos u objetos
+
+.. code:: python
+
+    import os.path as path
+    from os import getenv as ge
+
+
+.. code:: python
+
+    help(ge)
+
+.. code:: python
+
+    ge('HOME')
+
+.. code:: python
+
+    path.realpath(curdir)
+
+Acá hemos importado el módulo ``os.path`` (es un sub-módulo) como
+``path`` y la función ``getenv`` del módulo ``os`` y la hemos renombrado
+``ge``.
+
+.. code:: python
+
+    curdir
+
+.. code:: python
+
+    [a for a in os.walk(curdir)]
+
+.. code:: python
+
+    help(os.walk)
+
+.. code:: python
+
+    import os
+    from os.path import join, getsize
+    for root, dirs, files in os.walk('./'):
+        print(root, "consume ", end="")
+        print(sum([getsize(join(root, name)) for name in files])/1024, end="")
+        print(" kbytes en ", len(files), "non-directory files")
+        if '.ipynb_checkpoints' in dirs:
+            dirs.remove('.ipynb_checkpoints')  # don't visit CVS directories
+
+Módulo ``glob``
+---------------
+
+El módulo ``glob`` encuentra nombres de archivos (o directorios)
+utilizando patrones similares a los de la consola. La función más
+utilizada es ``glob.glob()`` Veamos algunos ejemplos de uso:
+
+.. code:: python
+
+    import glob
+
+.. code:: python
+
+    nb_clase4= glob.glob('04*.ipynb')
+
+.. code:: python
+
+    nb_clase4
+
+.. code:: python
+
+    nb_clase4.sort()
+
+.. code:: python
+
+    nb_clase4
+
+.. code:: python
+
+    nb_clases1a4 = glob.glob('0[0-4]*.ipynb')
+
+.. code:: python
+
+    nb_clases1a4.sort()
+
+.. code:: python
+
+    for f in sorted(nb_clases1a4):
+      print('Clase en archivo {}'.format(f))
+
+Módulo ``Argparse``
+-------------------
+
+Este módulo tiene lo necesario para hacer rápidamente un programa para
+utilizar por línea de comandos, aceptando todo tipo de argumentos y
+dando información sobre su uso.
+
+.. code:: python
+
+   import argparse
+   VERSION = 1.0
+
+   parser = argparse.ArgumentParser(
+         description='"Mi programa que acepta argumentos por línea de comandos"')
+
+   parser.add_argument('-V', '--version', action='version',
+                         version='%(prog)s version {}'.format(VERSION))
+     
+   parser.add_argument('-n', '--entero', action=store, dest='n', default=1)
+
+   args = parser.parse_args()
+
+Más información en la `biblioteca
+standard <https://docs.python.org/3.6/library/argparse.html>`__ y en
+`Argparse en Python Module of the
+week <https://pymotw.com/3/argparse/index.html>`__
+
+Módulo ``re``
+-------------
+
+Este módulo provee la infraestructura para trabajar con *regular
+expressions*, es decir para encontrar expresiones que verifican “cierta
+forma general”. Veamos algunos conceptos básicos y casos más comunes de
+uso.
+
+Búsqueda de un patrón en un texto
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Empecemos con un ejemplo bastante común. Para encontrar un patrón en un
+texto podemos utilizar el método ``search()``
+
+.. code:: python
+
+    import re
+
+.. code:: python
+
+    busca = 'un'
+    texto = 'Otra vez vamos a usar "Hola Mundo"'
+    
+    match = re.search(busca, texto)
+    
+    print('Encontré "{}"\nen:\n  "{}"'.format(match.re.pattern, match.string))
+    print('En las posiciones {} a {}'.format(match.start(), match.end()))
+
+Acá buscamos una expresión (el substring “un”). Esto es útil pero no muy
+diferente a utilizar los métodos de strings. Veamos como se definen los
+patrones.
+
+Definición de expresiones
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vamos a buscar un patrón en un texto. Veamos cómo se definen los
+patrones a buscar.
+
+-  La mayoría de los caracteres se identifican consigo mismo (si quiero
+   encontrar “gato”, uso como patrón “gato”)
+
+-  Hay unos pocos caracteres especiales (metacaracteres) que tienen un
+   significado especial, estos son:
+
+   ::
+
+      . ^ $ * + ? { } [ ] \ | ( )
+
+-  Si queremos encontrar uno de los metacaracteres, tenemos que
+   precederlos de ``\``. Por ejemplo si queremos encontrar un corchete
+   usamos ``\[``
+
+-  Los corchetes “[” y ”]” se usan para definir una clase de caracteres,
+   que es un conjunto de caracteres que uno quiere encontrar.
+
+   -  Los caracteres a encontrar se pueden dar individualmente. Por
+      ejemplo ``[gato]`` encontrará cualquiera de ``g``, ``a``, ``t``,
+      ``o``.
+   -  Un rango de caracteres se puede dar dando dos caracteres separados
+      por un guión. Por ejemplo ``[a-z]`` dará cualquier letra entre “a”
+      y “z”. Similarmente ``[0-5][0-9]`` dará cualquier número entre
+      “00” y “59”.
+   -  Los metacaracteres pierden su significado especial dentro de los
+      corchetes. Por ejemplo ``[.*)]`` encontrará cualquiera de “.”,
+      “\*“,”)“.
+
+-  El punto ``.`` indica *cualquier caracter*
+
+-  Los símbolos ``*``, ``+``, ``?`` indican repetición:
+
+   -  ``?``: Indica 0 o 1 aparición de lo anterior
+   -  ``*``: Indica 0 o más apariciones de lo anterior
+   -  ``+``: Indica 1 o más apariciones de lo anterior
+
+-  Para encontrar una cantidad determinada de caracteres, se puede
+   agregar dicha cantidad entre llaves ``{}``. Por ejemplo, ``[a-z]{3}``
+   resultará en cualquier string de exactamente tres letras minúsculas.
+
+.. code:: python
+
+    busca = "[a-z]+@[a-z]+\.[a-z]+" # Un patrón para buscar direcciones de email
+    texto = "nombre@server.com, apellido@server1.com, nombre1995@server.com, UnNombreyApellido, nombre.apellido82@servidor.com.ar, Nombre.Apellido82@servidor.com.ar".split(',')
+    print(texto,'\n')
+    
+    for direc in texto:
+      m= re.search(busca, direc)
+      print('Para la línea:', direc)
+      if m is None:
+        print('   No encontré dirección de correo!')
+      else:
+        print('   Encontré la dirección de correo:', m.string)
+    
+
+
+-  Acá la expresión ``[a-z]`` significa todos los caracteres en el rango
+   “a” hasta “z”.
+
+-  ``[a-z]+`` significa cualquier secuencia de una letra o más.
+
+-  Los corchetes también se pueden usar en la forma ``[abc]`` y entonces
+   encuentra *cualquiera* de ``a``, ``b``, o ``c``.
+
+Vemos que no encontró todas las direcciones posibles. Porque el patrón
+no está bien diseñado. Un poco mejor sería:
+
+.. code:: python
+
+    busca = "[a-zA-Z0-9.]+@[a-z.]+" # Un patrón para buscar direcciones de email
+    
+    print(texto,'\n')
+    
+    for direc in texto:
+      m= re.search(busca, direc)
+      print('Para la línea:', direc)
+      if m is None:
+        print('   No encontré dirección de correo:')
+      else:
+        print('   Encontré la dirección de correo:', m.group())
+    
+
+
+Los metacaracteres no se activan dentro de clases (adentro de
+corchetes). En el ejemplo anterior el punto ``.`` actúa como un punto y
+no como un metacaracter. En este caso, la primera parte:
+``[a-zA-Z0-9.]+`` significa: “Encontrar cualquier letra minúscula,
+mayúscula, número o punto, una o más veces cualquiera de ellos”
+
+Repetición de un patrón
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Si queremos encontrar strings que presentan la secuencia una o más veces
+podemos usar ``findall()`` que devuelve todas las ocurrencias del patrón
+que no se superponen. Por ejemplo:
+
+.. code:: python
+
+    texto = 'abbaaabbbbaaaaa'
+    
+    busca = 'ab'
+    
+    mm =  re.findall(busca, texto)
+    print(mm)    
+    print(type(mm[0]))
+    for m in mm:
+        print('Encontré {}'.format(m))
+
+
+.. code:: python
+
+    p = re.compile('abc*')
+    m= p.findall('acholaboy')
+    print(m)
+    m= p.findall('acholabcoynd sabcccs slabc labdc abc')
+    print(m)
+
+Si va a utilizar expresiones regulares es recomendable que lea más
+información en la `biblioteca
+standard <https://docs.python.org/3.6/library/re.html>`__, en `el
+HOWTO <https://docs.python.org/3.6/howto/regex.html>`__, en `Python
+Module of the week <https://pymotw.com/3/re/index.html>`__ o
+`acá <https://pynative.com/python/regex/>`__.
+
+Para practicar RegEx, `ésta es una buena
+página <https://regexone.com/>`__.
+
+Si efectivamente tiene que diseñar una expresión regular, `esta página
+puede ser útil <https://regex101.com/>`__.
+
+Ejercicios 07 (b)
+=================
+
+1. Una manera de representar un sudoku es a través de un ``string`` de
+   exactamente 81 caracteres. Si el sudoku ha sido resuelto, ese string
+   contendrá sólo los números que resuelven el sudoku. Sin embargo, si
+   el sudoku no está resuelto, se representan los casilleros vacíos por
+   el caracter ``.``. Por ejemplo:
+
+   .. code:: python
+
+      sudoku_facil = "....71............1346.......3.17....27.8..4.5..24.........3.7..4..2...1.61.58.3."
+
+   sería una representación válida de un sudoku.
+
+   Usando expresiones regulares, encuentre los sudokus perdidos en el
+   directorio de archivos corruptos usado antes.
+
+2. Un ejercicio interesante es encontrar los coeficientes y las
+   potencias de un polinomio que viene descripto como un string:
+
+   .. code:: python
+
+      polinomio = "5x^4 + 3x^2 - 2x + 7"
+
+   Este no es un ejercicio fácil, y además, para extraer la información
+   requerida, es necesario poder capturar `grupos de expresiones
+   regulares <https://regexone.com/lesson/capturing_groups>`__.
+
+--------------
+
+.

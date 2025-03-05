@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 7: Persistencia de datos y módulos de biblioteca standard &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 6: Objetos y administración de errores" href="clase_06.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 7: Persistencia de datos y módulos de biblioteca standard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#escritura-y-lectura-a-archivos">Escritura y lectura a archivos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejemplos">Ejemplos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ejemplo-05-1">Ejemplo 05-1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ejemplo-05-2">Ejemplo 05-2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#modulo-pathlib">Módulo Pathlib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#metodos-y-propiedades">Métodos y propiedades</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#partes-del-path">Partes del <em>path</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#contenido-de-directorios">Contenido de directorios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#leer-un-archivo">Leer un archivo</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#archivos-comprimidos">Archivos comprimidos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#string-bytes-y-codificaciones">String, bytes y codificaciones</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-07-a">Ejercicios 07 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#algunos-modulos-biblioteca-standard">Algunos módulos (biblioteca standard)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-sys">Módulo sys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-os">Módulo <code class="docutils literal notranslate"><span class="pre">os</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-glob">Módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-argparse">Módulo <code class="docutils literal notranslate"><span class="pre">Argparse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-re">Módulo <code class="docutils literal notranslate"><span class="pre">re</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#busqueda-de-un-patron-en-un-texto">Búsqueda de un patrón en un texto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#definicion-de-expresiones">Definición de expresiones</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repeticion-de-un-patron">Repetición de un patrón</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-07-b">Ejercicios 07 (b)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 7: Persistencia de datos y módulos de biblioteca standard</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_07.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-7-persistencia-de-datos-y-modulos-de-biblioteca-standard">
+<span id="clase-07"></span><h1>Clase 7: Persistencia de datos y módulos de biblioteca standard<a class="headerlink" href="#clase-7-persistencia-de-datos-y-modulos-de-biblioteca-standard" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<section id="escritura-y-lectura-a-archivos">
+<h2>Escritura y lectura a archivos<a class="headerlink" href="#escritura-y-lectura-a-archivos" title="Link to this heading"></a></h2>
+<p>Nuestros programas necesitan interactuar con el mundo exterior. Hasta
+ahora utilizamos la función <code class="docutils literal notranslate"><span class="pre">print()</span></code> para imprimir por pantalla
+mensajes y resultados. Para leer o escribir un archivo primero debemos
+abrirlo, utilizando la función <code class="docutils literal notranslate"><span class="pre">open()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data/names.txt&#39;</span><span class="p">)</span>      <span class="c1"># Abrimos el archivo (para leer)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>                    <span class="c1"># Leemos el archivo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>                       <span class="c1"># Cerramos el archivo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">100</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Esta secuencia básica de trabajo en adecuada y muy común en el trabajo
+con archivos. Sin embargo, hay un potencial problema, que ocurrirá si
+hay algún error entre la apertura y el cierre del archivo. Para ello
+existe una sintaxis alternativa</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data/names.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">s</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fi todavía existe pero está cerrado</span>
+<span class="n">fi</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">fi</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La palabra <code class="docutils literal notranslate"><span class="pre">with</span></code> es una palabra reservada del lenguaje y la
+construcción se conoce como <em>contexto</em>. Básicamente dice que todo lo que
+está dentro del bloque se realizará en el contexto en que <code class="docutils literal notranslate"><span class="pre">f</span></code> es el
+objeto de archivo abierto para lectura.</p>
+<section id="ejemplos">
+<h3>Ejemplos<a class="headerlink" href="#ejemplos" title="Link to this heading"></a></h3>
+<p>Vamos a repasar algunos de los conceptos discutidos las clases
+anteriores e introducir algunas nuevas funcionalidades con ejemplos</p>
+<section id="ejemplo-05-1">
+<h4>Ejemplo 05-1<a class="headerlink" href="#ejemplo-05-1" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;data/names.txt&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">lines</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>        <span class="c1"># El resultado es una lista</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lines</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;data/names.txt&#39;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">lines</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>        <span class="c1"># El resultado es una lista</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+  <span class="k">if</span> <span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>  <span class="c1"># No Newline</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Hemos utilizado aquí:</p>
+<ul class="simple">
+<li><p>Apertura, lectura, y cerrado de archivos</p></li>
+<li><p>Iteración en un loop <code class="docutils literal notranslate"><span class="pre">for</span></code></p></li>
+<li><p>Bloques condicionales (if/else)</p></li>
+<li><p>Formato de cadenas de caracteres con reemplazo</p></li>
+<li><p>Impresión por pantalla</p></li>
+</ul>
+<p>La apertura de archivos se realiza utilizando la función <code class="docutils literal notranslate"><span class="pre">open</span></code> (este
+es un buen momento para mirar su documentación) con dos argumentos: el
+primero es el nombre del archivo y el segundo el modo en que queremos
+abrirlo (en este caso la <code class="docutils literal notranslate"><span class="pre">r</span></code> indica lectura).</p>
+<p>Con el archivo abierto, en la línea 9 leemos línea por línea todo el
+archivo. El resultado es una lista, donde cada elemento es una línea.</p>
+<p>Recorremos la lista, y en cada elemento comparamos la longitud de la
+línea con ciertos valores. Imprimimos las líneas seleccionadas</p>
+<p>Finalmente, escribimos el número total de líneas.</p>
+<p>Veamos una leve modificación de este programa</p>
+</section>
+<section id="ejemplo-05-2">
+<h4>Ejemplo 05-2<a class="headerlink" href="#ejemplo-05-2" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Programa para contar e imprimir las palabras de una longitud dada&quot;&quot;&quot;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;data/names.txt&#39;</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">p</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+      <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">n</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">): </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;, &#39;</span><span class="p">)</span>  <span class="c1"># Vamos numerando las coincidencias</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Aquí en lugar de leer todas las líneas e iterar sobre las líneas
+resultantes, iteramos directamente sobre el archivo abierto.</p>
+<p>Además incluimos un string al principio del archivo, que servirá de
+documentación, y puede accederse mediante los mecanismos usuales de
+ayuda de Python.</p>
+<p>Imprimimos el número de palabra junto con la palabra, usamos <code class="docutils literal notranslate"><span class="pre">02d</span></code>,
+indicando que es un entero (<code class="docutils literal notranslate"><span class="pre">d</span></code>), que queremos que el campo sea de un
+mínimo número de caracteres de ancho (en este caso 2). Al escribirlo
+como <code class="docutils literal notranslate"><span class="pre">02</span></code> le pedimos que complete los vacíos con ceros.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Programa para contar e imprimir las palabras de una longitud dada&quot;&quot;&quot;</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;data/names.txt&#39;</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span>  <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">p</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+      <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="c1">#ss += f&quot;\n{p}&quot;  # ss += &quot;\n&quot; + p</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># L += [p]</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;data/tmp.txt&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
+    <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="modulo-pathlib">
+<h2>Módulo Pathlib<a class="headerlink" href="#modulo-pathlib" title="Link to this heading"></a></h2>
+<p>En la versión de Python 3.4 se agregó un módulo con definiciones de
+clases para representar <em>paths</em> y archivos, con representaciones para
+los distintos <em>filesystems</em>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">home</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+<span class="n">here</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">home</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">here</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parent</span> <span class="o">=</span> <span class="n">here</span> <span class="o">/</span> <span class="s2">&quot;..&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">parent</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+</pre></div>
+</div>
+<section id="metodos-y-propiedades">
+<h3>Métodos y propiedades<a class="headerlink" href="#metodos-y-propiedades" title="Link to this heading"></a></h3>
+<p>El ejemplo anterior usa el método <code class="docutils literal notranslate"><span class="pre">resolve()</span></code> del objeto <code class="docutils literal notranslate"><span class="pre">Path()</span></code>.
+Veamos algunos otros:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># here y parent son ahora path completos</span>
+<span class="n">here</span> <span class="o">=</span> <span class="n">here</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">here</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">parent</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">here</span><span class="o">.</span><span class="n">parent</span>  <span class="c1"># Propiedad</span>
+</pre></div>
+</div>
+</section>
+<section id="partes-del-path">
+<h3>Partes del <em>path</em><a class="headerlink" href="#partes-del-path" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">here</span><span class="o">.</span><span class="n">parts</span>
+</pre></div>
+</div>
+<p>Podemos acceder a todas las carpetas que contienen el <em>path</em> actual
+simplemente iterando</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">up</span> <span class="ow">in</span> <span class="n">here</span><span class="o">.</span><span class="n">parents</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">up</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">here</span> <span class="o">/</span> <span class="s2">&quot;05_1_inout.ipynb&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;pathname : </span><span class="si">{</span><span class="n">p</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;path     : </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">parent</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;name     : </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;stem     : </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;suffix   : </span><span class="si">{</span><span class="n">p</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="contenido-de-directorios">
+<h3>Contenido de directorios<a class="headerlink" href="#contenido-de-directorios" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">here</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">here</span><span class="o">.</span><span class="n">iterdir</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">here</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.ipynb&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>El objeto tiene un iterador que nos permite recorrer todo el directorio.
+Por ejemplo si queremos listar todos los subdirectorios:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">direct</span><span class="o">.</span><span class="n">iterdir</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_dir</span><span class="p">()]</span>
+</pre></div>
+</div>
+<p>Trabajo con rutas de archivos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">direct</span><span class="o">.</span><span class="n">absolute</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">direct</span> <span class="o">/</span> <span class="s2">&quot;..&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">resolve</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Podemos reemplazar el módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code> utilizando este objeto:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">fi</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">direct</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;0[1-7]*.ipynb&quot;</span><span class="p">)</span> <span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">fi</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fi</span> <span class="o">=</span> <span class="n">direct</span> <span class="o">/</span> <span class="s2">&quot;programa_detalle.rst&quot;</span>
+<span class="k">if</span> <span class="n">fi</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">s</span><span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="leer-un-archivo">
+<h3>Leer un archivo<a class="headerlink" href="#leer-un-archivo" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">datos</span> <span class="o">=</span> <span class="n">here</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s2">&quot;names.txt&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">datos</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">datos</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[:</span><span class="mi">50</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>En este ejemplo leímos todo el archivo con un comando. En algunas
+ocasiones, por ejemplo si el archivo es muy largo, es preferible cada
+línea y procesarla antes de pasar a la siguiente. El ejemplo anterior
+puede escribirse utilizando este módulo de una manera muy similar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Programa para contar e imprimir las palabras de una longitud dada&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span><span class="o">/</span> <span class="s1">&#39;data&#39;</span><span class="o">/</span><span class="s1">&#39;names.txt&#39;</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fname</span><span class="o">.</span><span class="n">stem</span><span class="si">}</span><span class="s2">_palindromo</span><span class="si">{</span><span class="n">fname</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">0</span>                           <span class="c1"># contador</span>
+<span class="n">minlen</span> <span class="o">=</span> <span class="mi">3</span>                      <span class="c1"># longitud mínima</span>
+<span class="n">maxlen</span> <span class="o">=</span> <span class="mi">4</span>                      <span class="c1"># longitud máxima</span>
+<span class="n">L</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">with</span> <span class="n">fname</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">minlen</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">maxlen</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">p</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+      <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="c1">#ss += f&quot;\n{p}&quot;  # ss += &quot;\n&quot; + p</span>
+      <span class="n">L</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>  <span class="c1"># L += [p]</span>
+<span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">minlen</span> <span class="o">==</span> <span class="n">maxlen</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="n">mensaje</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Encontramos un total de </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2"> palabras capicúa que tienen entre </span><span class="si">{</span><span class="n">minlen</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">maxlen</span><span class="si">}</span><span class="s2"> letras&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mensaje</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">output</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
+    <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="archivos-comprimidos">
+<h2>Archivos comprimidos<a class="headerlink" href="#archivos-comprimidos" title="Link to this heading"></a></h2>
+<p>Existen varias formas de reducir el tamaño de los archivos de datos.
+Varios factores, tales como el sistema operativo, nuestra familiaridad
+con cada uno de ellos, le da una cierta preferencia a algunos de los
+métodos disponibles. Veamos cómo hacer para leer y escribir algunos de
+los siguientes formatos: <strong>zip, gzip, bz2</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;data/palabras.words.gz&#39;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+  <span class="n">a</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Con todo esto podríamos escribir (si tuviéramos necesidad) una función
+que puede leer un archivo en cualquiera de estos formatos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">splitext</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+
+<span class="k">def</span> <span class="nf">abrir</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">modo</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">):</span>
+  <span class="k">if</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;gz&#39;</span><span class="p">):</span>
+    <span class="n">fi</span><span class="o">=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;bz2&#39;</span><span class="p">):</span>
+    <span class="n">fi</span><span class="o">=</span> <span class="n">bz2</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">elif</span> <span class="n">fname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;zip&#39;</span><span class="p">):</span>
+    <span class="n">fi</span><span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">fi</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">modo</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">fi</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ff</span> <span class="o">=</span> <span class="n">abrir</span><span class="p">(</span><span class="s1">&#39;data/palabras.words.gz&#39;</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">ff</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">ff</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="string-bytes-y-codificaciones">
+<h2>String, bytes y codificaciones<a class="headerlink" href="#string-bytes-y-codificaciones" title="Link to this heading"></a></h2>
+<p>Vemos que el archivo tiene algunos caracteres que no podemos
+interpretar. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;b&#39;</span><span class="se">\\</span><span class="s2">xc3</span><span class="se">\\</span><span class="s2">x81frica&#39;&quot;</span>
+</pre></div>
+</div>
+<p>Esto indica que la variable es del tipo “bytes”.</p>
+<p>Para todo tipo de variables, y en todos los lenguajes de programación,
+tenemos -por necesidad- dos representaciones:</p>
+<ol class="arabic simple">
+<li><p>La representación que se hace en memoria, que consiste en una cadena
+de unos y ceros</p></li>
+<li><p>La representación que vemos nosotros, que depende del tipo de
+variable.</p></li>
+</ol>
+<p>Para cada tipo de variable existe una convención de qué significa la
+cadena de 1s y 0s. Por ejemplo, para un número entero como el <code class="docutils literal notranslate"><span class="pre">3</span></code>, la
+representación interna es <code class="docutils literal notranslate"><span class="pre">11</span></code>.</p>
+<p>En la memoria solamente se pueden guardar bytes, entonces para guardar
+cualquier tipo de dato debemos además de guardar la cadena de unos y
+ceros, tener la información de cual es la convención para codificarlo
+(codificación o <em>encoding</em>). Esto ocurre por ejemplo si queremos guardar
+una imagen, debemos convertirlo a una cadena de bytes utilizando algún
+tipo de <em>encoding</em> usando una convención (de <code class="docutils literal notranslate"><span class="pre">jpg</span></code>, o <code class="docutils literal notranslate"><span class="pre">png</span></code>, o …).</p>
+<p>En el caso de los números, enteros o punto flotante, la codificación que
+suelen utilizar los lenguajes de programación es bastante standard
+(IEEE), pero en el caso de lenguaje, ha ido evolucionando a lo largo del
+tiempo y las diferencias en las distintas convenciones son un poco más
+visibles.</p>
+<p>Históricamente, los lenguajes de programación borronearon la distinción
+entre los caracteres y la manera de guardar estos caracteres, igualando
+implícita o explícitamente la secuencia de bytes con un caracter en la
+codificación ASCII.</p>
+<p>En Python 3, existen las dos representaciones de un caracter: - Un <em>byte
+string</em> es una secuencia de bytes, necesario para guardar en una
+computadora y no para leer por personas. - Un <em>character string</em>,
+llamado usualmente “<em>string</em>”, es una secuencia de caracteres que
+podemos leer pero que para guardar en memoria tiene que ser convertido a
+<em>byte string</em> utilizando una convención (<em>encoding</em>). Hay muchas
+convenciones, entre ellas ASCII o UTF-8.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>El <em>encoding</em> es entonces nada más (y nada menos) que la convención que
+vamos a utilizar para interpretar una cadena de bytes. Entonces, si
+utilizamos dos convenciones diferentes para la misma cadena de bytes
+podemos obtener diferentes palabras</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mis_bytes</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\xcf\x84</span><span class="s1">o</span><span class="se">\xcf\x81\xce\xbd</span><span class="s1">o</span><span class="se">\xcf\x83</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">mis_bytes</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">mis_bytes</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mis_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-16&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">mis_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">mis_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">mis_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Volviendo a la lista de palabras que leemos del archivo, para convertir
+de <em>bytes</em> a <em>string</em> utilizamos el método <code class="docutils literal notranslate"><span class="pre">decode()</span></code> con la
+codificación adecuada:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-07-a">
+<h2>Ejercicios 07 (a)<a class="headerlink" href="#ejercicios-07-a" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Realice un programa que:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Lea el archivo <strong>names.txt</strong></p></li>
+<li><p>Guarde en un nuevo archivo (llamado “pares.txt”) palabra por medio
+del archivo original (la primera, tercera, …) una por línea, pero en
+el orden inverso al leído</p></li>
+<li><p>Agregue al final de dicho archivo, las palabras pares pero separadas
+por un punto y coma (;)</p></li>
+<li><p>En un archivo llamado “longitudes.txt” guarde las palabras ordenadas
+por su longitud, y para cada longitud ordenadas alfabéticamente.</p></li>
+<li><p>En un archivo llamado “letras.txt” guarde sólo aquellas palabras que
+contienen las letras <code class="docutils literal notranslate"><span class="pre">w,x,y,z</span></code>, con el formato:</p>
+<ul>
+<li><p>w: Walter, ….</p></li>
+<li><p>x: Xilofón, …</p></li>
+<li><p>y: ….</p></li>
+<li><p>z: ….</p></li>
+</ul>
+</li>
+<li><p>Cree un diccionario, donde cada <em>key</em> es la primera letra y cada
+valor es una lista, cuyo elemento es una tuple (palabra, longitud).
+Por ejemplo:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Aaa&#39;</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="s1">&#39;Anna&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic" start="2">
+<li><p>Realice un programa para:</p>
+<ul class="simple">
+<li><p>Leer los datos del archivo <strong>aluminio.dat</strong> y poner los datos del
+elemento en un diccionario de la forma:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;S&#39;</span><span class="p">:</span> <span class="s1">&#39;Al&#39;</span><span class="p">,</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">:</span> <span class="s1">&#39;26.98153863(12)&#39;</span><span class="p">,</span> <span class="s1">&#39;P&#39;</span><span class="p">:</span> <span class="mf">1.0000</span><span class="p">,</span> <span class="s1">&#39;MS&#39;</span><span class="p">:</span><span class="s1">&#39;26.9815386(8)&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Modifique el programa anterior para que las masas sean números
+(<code class="docutils literal notranslate"><span class="pre">float</span></code>) y descarte el valor de la incerteza (el número entre
+paréntesis)</p></li>
+<li><p>Agregue el código necesario para obtener una impresión de la
+forma:</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Elemento</span><span class="p">:</span> <span class="n">Al</span>
+<span class="n">Número</span> <span class="n">Atómico</span><span class="p">:</span> <span class="mi">13</span>
+<span class="n">Número</span> <span class="n">de</span> <span class="n">Masa</span><span class="p">:</span> <span class="mi">27</span>
+<span class="n">Masa</span><span class="p">:</span> <span class="mf">26.98154</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>Note que la masa sólo debe contener 5 números decimales</p>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Los archivos de texto “names.txt” y “aluminio.txt” (así
+como otros archivos usados en las clases) pueden encontrarse en la
+carpeta
+<a class="reference external" href="https://drive.google.com/drive/folders/1jv8qxgY9vVBw-3pBtFwjuQUH-C9aVGSR?usp=sharing">intro-python</a></p>
+</div>
+</section>
+<section id="algunos-modulos-biblioteca-standard">
+<h2>Algunos módulos (biblioteca standard)<a class="headerlink" href="#algunos-modulos-biblioteca-standard" title="Link to this heading"></a></h2>
+<p>Los módulos pueden pensarse como bibliotecas de objetos (funciones,
+datos, etc) que pueden usarse según la necesidad. Hay una biblioteca
+standard con rutinas para muchas operaciones comunes, y además existen
+muchos paquetes específicos para distintas tareas. Veamos algunos
+ejemplos:</p>
+<section id="modulo-sys">
+<h3>Módulo sys<a class="headerlink" href="#modulo-sys" title="Link to this heading"></a></h3>
+<p>Este módulo da acceso a variables que usa o mantiene el intérprete
+Python</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Vemos que para utilizar las variables (path) o funciones (getsizeof)
+debemos referirlo anteponiendo el módulo en el cuál está definido (sys)
+y separado por un punto.</p>
+<p>Cuando hacemos un programa, con definición de variables y funciones.
+Podemos utilizarlo como un módulo, de la misma manera que los que ya
+vienen definidos en la biblioteca standard o en los paquetes que
+instalamos.</p>
+</section>
+<section id="modulo-os">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">os</span></code><a class="headerlink" href="#modulo-os" title="Link to this heading"></a></h3>
+<p>El módulo <code class="docutils literal notranslate"><span class="pre">os</span></code> tiene utilidades para operar sobre nombres de archivos
+y directorios de manera segura y portable, de manera que pueda
+utilizarse en distintos sistemas operativos. Vamos a ver ejemplos de uso
+de algunas facilidades que brinda:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">par</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">cur</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitdrive</span><span class="p">(</span><span class="n">cur</span><span class="p">))</span> <span class="c1"># Útil en Windows donde hay letras que identifican las unidades de disco</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">((</span><span class="n">cur</span><span class="p">,</span> <span class="n">par</span><span class="p">)))</span>
+<span class="n">archivo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par</span><span class="p">,</span><span class="s1">&#39;este&#39;</span> <span class="p">,</span> <span class="s1">&#39;otro.dat&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">archivo</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">archivo</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">archivo</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">archivo</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cur</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Como es aparente de estos ejemplos, se puede acceder a todos los objetos
+(funciones, variables) de un módulo utilizando simplemente la línea
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">&lt;modulo&gt;</span></code> pero puede ser tedioso escribir todo con prefijos
+(como <code class="docutils literal notranslate"><span class="pre">os.path.abspath</span></code>) por lo que existen dos alternativas que
+pueden ser más convenientes. La primera corresponde a importar todas las
+definiciones de un módulo en forma implícita:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Después de esta declaración usamos los objetos de la misma manera que
+antes pero obviando la parte de <code class="docutils literal notranslate"><span class="pre">os.</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">curdir</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Esto es conveniente en algunos casos pero no suele ser una buena idea en
+programas largos ya que distintos módulos pueden definir el mismo
+nombre, y se pierde información sobre su origen. Una alternativa que es
+conveniente y permite mantener mejor control es importar explícitamente
+lo que vamos a usar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">curdir</span><span class="p">,</span> <span class="n">pardir</span><span class="p">,</span> <span class="n">getcwd</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">abspath</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">pardir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">curdir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">getcwd</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>Además podemos darle un nombre diferente al importar módulos u objetos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">path</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span> <span class="k">as</span> <span class="n">ge</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">ge</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ge</span><span class="p">(</span><span class="s1">&#39;HOME&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">curdir</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Acá hemos importado el módulo <code class="docutils literal notranslate"><span class="pre">os.path</span></code> (es un sub-módulo) como
+<code class="docutils literal notranslate"><span class="pre">path</span></code> y la función <code class="docutils literal notranslate"><span class="pre">getenv</span></code> del módulo <code class="docutils literal notranslate"><span class="pre">os</span></code> y la hemos renombrado
+<code class="docutils literal notranslate"><span class="pre">ge</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">curdir</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">curdir</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">getsize</span>
+<span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;consume &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">getsize</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">])</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; kbytes en &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">),</span> <span class="s2">&quot;non-directory files&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;.ipynb_checkpoints&#39;</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="n">dirs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;.ipynb_checkpoints&#39;</span><span class="p">)</span>  <span class="c1"># don&#39;t visit CVS directories</span>
+</pre></div>
+</div>
+</section>
+<section id="modulo-glob">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code><a class="headerlink" href="#modulo-glob" title="Link to this heading"></a></h3>
+<p>El módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code> encuentra nombres de archivos (o directorios)
+utilizando patrones similares a los de la consola. La función más
+utilizada es <code class="docutils literal notranslate"><span class="pre">glob.glob()</span></code> Veamos algunos ejemplos de uso:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span><span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;04*.ipynb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clases1a4</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;0[0-4]*.ipynb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clases1a4</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">nb_clases1a4</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Clase en archivo </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="modulo-argparse">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">Argparse</span></code><a class="headerlink" href="#modulo-argparse" title="Link to this heading"></a></h3>
+<p>Este módulo tiene lo necesario para hacer rápidamente un programa para
+utilizar por línea de comandos, aceptando todo tipo de argumentos y
+dando información sobre su uso.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="n">VERSION</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+      <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&quot;Mi programa que acepta argumentos por línea de comandos&quot;&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                      <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1"> version </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">VERSION</span><span class="p">))</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--entero&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">store</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Más información en la <a class="reference external" href="https://docs.python.org/3.6/library/argparse.html">biblioteca
+standard</a> y en
+<a class="reference external" href="https://pymotw.com/3/argparse/index.html">Argparse en Python Module of the
+week</a></p>
+</section>
+<section id="modulo-re">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">re</span></code><a class="headerlink" href="#modulo-re" title="Link to this heading"></a></h3>
+<p>Este módulo provee la infraestructura para trabajar con <em>regular
+expressions</em>, es decir para encontrar expresiones que verifican “cierta
+forma general”. Veamos algunos conceptos básicos y casos más comunes de
+uso.</p>
+<section id="busqueda-de-un-patron-en-un-texto">
+<h4>Búsqueda de un patrón en un texto<a class="headerlink" href="#busqueda-de-un-patron-en-un-texto" title="Link to this heading"></a></h4>
+<p>Empecemos con un ejemplo bastante común. Para encontrar un patrón en un
+texto podemos utilizar el método <code class="docutils literal notranslate"><span class="pre">search()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">busca</span> <span class="o">=</span> <span class="s1">&#39;un&#39;</span>
+<span class="n">texto</span> <span class="o">=</span> <span class="s1">&#39;Otra vez vamos a usar &quot;Hola Mundo&quot;&#39;</span>
+
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">texto</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encontré &quot;</span><span class="si">{}</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">en:</span><span class="se">\n</span><span class="s1">  &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">re</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">string</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;En las posiciones </span><span class="si">{}</span><span class="s1"> a </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>Acá buscamos una expresión (el substring “un”). Esto es útil pero no muy
+diferente a utilizar los métodos de strings. Veamos como se definen los
+patrones.</p>
+</section>
+<section id="definicion-de-expresiones">
+<h4>Definición de expresiones<a class="headerlink" href="#definicion-de-expresiones" title="Link to this heading"></a></h4>
+<p>Vamos a buscar un patrón en un texto. Veamos cómo se definen los
+patrones a buscar.</p>
+<ul>
+<li><p>La mayoría de los caracteres se identifican consigo mismo (si quiero
+encontrar “gato”, uso como patrón “gato”)</p></li>
+<li><p>Hay unos pocos caracteres especiales (metacaracteres) que tienen un
+significado especial, estos son:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>. ^ $ * + ? { } [ ] \ | ( )
+</pre></div>
+</div>
+</li>
+<li><p>Si queremos encontrar uno de los metacaracteres, tenemos que
+precederlos de <code class="docutils literal notranslate"><span class="pre">\</span></code>. Por ejemplo si queremos encontrar un corchete
+usamos <code class="docutils literal notranslate"><span class="pre">\[</span></code></p></li>
+<li><p>Los corchetes “[” y ”]” se usan para definir una clase de caracteres,
+que es un conjunto de caracteres que uno quiere encontrar.</p>
+<ul class="simple">
+<li><p>Los caracteres a encontrar se pueden dar individualmente. Por
+ejemplo <code class="docutils literal notranslate"><span class="pre">[gato]</span></code> encontrará cualquiera de <code class="docutils literal notranslate"><span class="pre">g</span></code>, <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>,
+<code class="docutils literal notranslate"><span class="pre">o</span></code>.</p></li>
+<li><p>Un rango de caracteres se puede dar dando dos caracteres separados
+por un guión. Por ejemplo <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> dará cualquier letra entre “a”
+y “z”. Similarmente <code class="docutils literal notranslate"><span class="pre">[0-5][0-9]</span></code> dará cualquier número entre
+“00” y “59”.</p></li>
+<li><p>Los metacaracteres pierden su significado especial dentro de los
+corchetes. Por ejemplo <code class="docutils literal notranslate"><span class="pre">[.*)]</span></code> encontrará cualquiera de “.”,
+“*“,”)“.</p></li>
+</ul>
+</li>
+<li><p>El punto <code class="docutils literal notranslate"><span class="pre">.</span></code> indica <em>cualquier caracter</em></p></li>
+<li><p>Los símbolos <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">?</span></code> indican repetición:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">?</span></code>: Indica 0 o 1 aparición de lo anterior</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code>: Indica 0 o más apariciones de lo anterior</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>: Indica 1 o más apariciones de lo anterior</p></li>
+</ul>
+</li>
+<li><p>Para encontrar una cantidad determinada de caracteres, se puede
+agregar dicha cantidad entre llaves <code class="docutils literal notranslate"><span class="pre">{}</span></code>. Por ejemplo, <code class="docutils literal notranslate"><span class="pre">[a-z]{3}</span></code>
+resultará en cualquier string de exactamente tres letras minúsculas.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">busca</span> <span class="o">=</span> <span class="s2">&quot;[a-z]+@[a-z]+\.[a-z]+&quot;</span> <span class="c1"># Un patrón para buscar direcciones de email</span>
+<span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;nombre@server.com, apellido@server1.com, nombre1995@server.com, UnNombreyApellido, nombre.apellido82@servidor.com.ar, Nombre.Apellido82@servidor.com.ar&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">direc</span> <span class="ow">in</span> <span class="n">texto</span><span class="p">:</span>
+  <span class="n">m</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Para la línea:&#39;</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   No encontré dirección de correo!&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   Encontré la dirección de correo:&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Acá la expresión <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> significa todos los caracteres en el rango
+“a” hasta “z”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[a-z]+</span></code> significa cualquier secuencia de una letra o más.</p></li>
+<li><p>Los corchetes también se pueden usar en la forma <code class="docutils literal notranslate"><span class="pre">[abc]</span></code> y entonces
+encuentra <em>cualquiera</em> de <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, o <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p></li>
+</ul>
+<p>Vemos que no encontró todas las direcciones posibles. Porque el patrón
+no está bien diseñado. Un poco mejor sería:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">busca</span> <span class="o">=</span> <span class="s2">&quot;[a-zA-Z0-9.]+@[a-z.]+&quot;</span> <span class="c1"># Un patrón para buscar direcciones de email</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">direc</span> <span class="ow">in</span> <span class="n">texto</span><span class="p">:</span>
+  <span class="n">m</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Para la línea:&#39;</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   No encontré dirección de correo:&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   Encontré la dirección de correo:&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Los metacaracteres no se activan dentro de clases (adentro de
+corchetes). En el ejemplo anterior el punto <code class="docutils literal notranslate"><span class="pre">.</span></code> actúa como un punto y
+no como un metacaracter. En este caso, la primera parte:
+<code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9.]+</span></code> significa: “Encontrar cualquier letra minúscula,
+mayúscula, número o punto, una o más veces cualquiera de ellos”</p>
+</section>
+<section id="repeticion-de-un-patron">
+<h4>Repetición de un patrón<a class="headerlink" href="#repeticion-de-un-patron" title="Link to this heading"></a></h4>
+<p>Si queremos encontrar strings que presentan la secuencia una o más veces
+podemos usar <code class="docutils literal notranslate"><span class="pre">findall()</span></code> que devuelve todas las ocurrencias del patrón
+que no se superponen. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">texto</span> <span class="o">=</span> <span class="s1">&#39;abbaaabbbbaaaaa&#39;</span>
+
+<span class="n">busca</span> <span class="o">=</span> <span class="s1">&#39;ab&#39;</span>
+
+<span class="n">mm</span> <span class="o">=</span>  <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">texto</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mm</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mm</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encontré </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;abc*&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;acholaboy&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;acholabcoynd sabcccs slabc labdc abc&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si va a utilizar expresiones regulares es recomendable que lea más
+información en la <a class="reference external" href="https://docs.python.org/3.6/library/re.html">biblioteca
+standard</a>, en <a class="reference external" href="https://docs.python.org/3.6/howto/regex.html">el
+HOWTO</a>, en <a class="reference external" href="https://pymotw.com/3/re/index.html">Python
+Module of the week</a> o
+<a class="reference external" href="https://pynative.com/python/regex/">acá</a>.</p>
+<p>Para practicar RegEx, <a class="reference external" href="https://regexone.com/">ésta es una buena
+página</a>.</p>
+<p>Si efectivamente tiene que diseñar una expresión regular, <a class="reference external" href="https://regex101.com/">esta página
+puede ser útil</a>.</p>
+</section>
+</section>
+</section>
+<section id="ejercicios-07-b">
+<h2>Ejercicios 07 (b)<a class="headerlink" href="#ejercicios-07-b" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Una manera de representar un sudoku es a través de un <code class="docutils literal notranslate"><span class="pre">string</span></code> de
+exactamente 81 caracteres. Si el sudoku ha sido resuelto, ese string
+contendrá sólo los números que resuelven el sudoku. Sin embargo, si
+el sudoku no está resuelto, se representan los casilleros vacíos por
+el caracter <code class="docutils literal notranslate"><span class="pre">.</span></code>. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sudoku_facil</span> <span class="o">=</span> <span class="s2">&quot;....71............1346.......3.17....27.8..4.5..24.........3.7..4..2...1.61.58.3.&quot;</span>
+</pre></div>
+</div>
+<p>sería una representación válida de un sudoku.</p>
+<p>Usando expresiones regulares, encuentre los sudokus perdidos en el
+directorio de archivos corruptos usado antes.</p>
+</li>
+<li><p>Un ejercicio interesante es encontrar los coeficientes y las
+potencias de un polinomio que viene descripto como un string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">polinomio</span> <span class="o">=</span> <span class="s2">&quot;5x^4 + 3x^2 - 2x + 7&quot;</span>
+</pre></div>
+</div>
+<p>Este no es un ejercicio fácil, y además, para extraer la información
+requerida, es necesario poder capturar <a class="reference external" href="https://regexone.com/lesson/capturing_groups">grupos de expresiones
+regulares</a>.</p>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_06.html" class="btn btn-neutral float-left" title="Clase 6: Objetos y administración de errores" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
