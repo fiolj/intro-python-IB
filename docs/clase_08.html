@@ -148,6 +148,10 @@ registrando el número de puntos que se van inicializando,</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número de puntos:&#39;</span><span class="p">,</span> <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Número</span> <span class="n">de</span> <span class="n">puntos</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">Número</span> <span class="n">de</span> <span class="n">puntos</span><span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
 <p>Claramente la variable <code class="docutils literal notranslate"><span class="pre">num_puntos</span></code> es un dato de la clase <code class="docutils literal notranslate"><span class="pre">Punto</span></code>,
 y no de una instancia particular de la misma. Para mejorar la
 organización de este tipo de datos o métodos asociados a una clase,
@@ -187,6 +191,10 @@ cualquier otra siempre que se mantenga la consistencia interna.</p>
 <span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">1</span> <span class="n">puntos</span> <span class="n">definidos</span>
+<span class="n">En</span> <span class="n">total</span> <span class="n">hay</span> <span class="mi">0</span> <span class="n">puntos</span> <span class="n">definidos</span>
+</pre></div>
+</div>
 <p>Otro ejemplo interesante es crear constructores alternativos:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
@@ -202,15 +210,18 @@ cualquier otra siempre que se mantenga la consistencia interna.</p>
 <span class="n">p3</span> <span class="o">=</span> <span class="n">Persona</span><span class="o">.</span><span class="n">desde_cadena</span><span class="p">(</span><span class="s2">&quot;Lionel, 37&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
- <span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">edad</span><span class="p">)</span>
-
-<span class="n">En</span> <span class="n">el</span> <span class="n">ejercicio</span> <span class="n">de</span> <span class="err">``</span><span class="n">Polinomio</span><span class="err">``</span><span class="p">,</span> <span class="n">puede</span> <span class="n">transformar</span> <span class="n">la</span> <span class="n">función</span>
-<span class="err">``</span><span class="n">from_string</span><span class="err">``</span> <span class="n">requerida</span> <span class="n">a</span> <span class="n">un</span> <span class="n">método</span> <span class="n">de</span> <span class="n">clase</span><span class="p">,</span> <span class="n">de</span> <span class="n">forma</span> <span class="n">tal</span> <span class="n">que</span> <span class="n">se</span>
-<span class="n">pueda</span> <span class="n">crear</span> <span class="n">un</span> <span class="n">polinomio</span> <span class="n">como</span><span class="p">:</span> \<span class="err">```</span><span class="n">python</span> <span class="n">p1</span> <span class="o">=</span>
-<span class="n">Polinomio</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="err">“</span><span class="mi">4</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.1</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="err">”</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">edad</span><span class="p">)</span>
 </pre></div>
 </div>
+<pre class="literal-block"> Lionel
+ 37
+
+
+En el ejercicio de <code class="docutils literal notranslate"><span class="pre">Polinomio</span></code>, puede transformar la función
+<code class="docutils literal notranslate"><span class="pre">from_string</span></code> requerida a un método de clase, de forma tal que se
+pueda crear un polinomio como: ```python p1 =
+Polinomio.from_string(“4 x^3 + 3 x^2 + 2.1 x + 1”)</pre>
 </section>
 <section id="getters-y-setters">
 <h2><em>Getters</em> y <em>Setters</em><a class="headerlink" href="#getters-y-setters" title="Link to this heading"></a></h2>
@@ -257,6 +268,12 @@ no incurrir en posibles errores.</p>
 <span class="n">P1</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span> <span class="n">en</span> <span class="n">el</span> <span class="n">espacio</span> <span class="n">con</span> <span class="n">coordenadas</span><span class="p">:</span> <span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">2.0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">a</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Esto ocurrió porque nos olvidamos de verificar que los argumentos son
 del tipo correcto. Una manera de solucionarlo es chequear que los
 valores son del tipo correcto al crear el objeto, como hicimos
@@ -295,6 +312,25 @@ anteriormente:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">Punto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.</span><span class="p">)</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+      <span class="mi">7</span> <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+      <span class="mi">8</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))):</span>
+<span class="o">----&gt;</span> <span class="mi">9</span>   <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x, y, z deben ser números enteros o flotantes&quot;</span><span class="p">)</span>
+     <span class="mi">10</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+     <span class="mi">11</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="n">deben</span> <span class="n">ser</span> <span class="n">números</span> <span class="n">enteros</span> <span class="n">o</span> <span class="n">flotantes</span>
+</pre></div>
+</div>
 <p>Sin embargo aún tendremos problemas si los usuarios lo modifican luego
 de crearlo:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
@@ -302,6 +338,9 @@ de crearlo:</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
 <span class="n">P1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Una solución a esto es hacer las componentes “privadas” (por convención)
@@ -354,18 +393,65 @@ crear métodos para darle valores (<em>setter</em>) y tomarlos (<em>getter</em>)
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">line</span> <span class="mi">9</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+      <span class="mi">7</span> <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+      <span class="mi">8</span> <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">9</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+     <span class="mi">10</span> <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">13</span><span class="p">],</span> <span class="n">line</span> <span class="mi">17</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+     <span class="mi">15</span> <span class="k">def</span> <span class="nf">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+     <span class="mi">16</span>   <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))):</span>
+<span class="o">---&gt;</span> <span class="mi">17</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x, y, z deben ser números enteros o flotantes&quot;</span><span class="p">)</span>
+     <span class="mi">18</span>   <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+     <span class="mi">19</span>   <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="n">deben</span> <span class="n">ser</span> <span class="n">números</span> <span class="n">enteros</span> <span class="n">o</span> <span class="n">flotantes</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">get_coordenadas</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tomemos el valor de la componente x</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">AttributeError</span>                            <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">17</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+      <span class="mi">1</span> <span class="c1"># Tomemos el valor de la componente x</span>
+<span class="o">----&gt;</span> <span class="mi">2</span> <span class="n">a</span> <span class="o">=</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span>
+
+
+<span class="ne">AttributeError</span><span class="p">:</span> <span class="s1">&#39;Punto&#39;</span> <span class="nb">object</span> <span class="n">has</span> <span class="n">no</span> <span class="n">attribute</span> <span class="s1">&#39;x&#39;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;_x&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;_y&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;_z&#39;</span><span class="p">:</span> <span class="mf">4.5</span><span class="p">}</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Se puede hacer, pero no queremos que se haga!</span>
 <span class="n">P1</span><span class="o">.</span><span class="n">_x</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
 </pre></div>
 </div>
 <p>Esto es un problema! Cambiamos la clase haciendo las variables x,y,z
@@ -455,16 +541,43 @@ todos (asumiendo que son nuestros). Para ello existe la función
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span> <span class="mi">4</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">26</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span> <span class="mi">31</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+     <span class="mi">29</span> <span class="k">def</span> <span class="nf">set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+     <span class="mi">30</span>   <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+<span class="o">---&gt;</span> <span class="mi">31</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y debe ser número entero o flotante&quot;</span><span class="p">)</span>
+     <span class="mi">32</span>   <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">y</span> <span class="n">debe</span> <span class="n">ser</span> <span class="n">número</span> <span class="n">entero</span> <span class="n">o</span> <span class="n">flotante</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;_x&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;_y&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;_z&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -501,6 +614,9 @@ constructor de la clase base <code class="docutils literal notranslate"><span cl
 <span class="n">pedro</span><span class="o">.</span><span class="n">presentarse</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Hola, soy Pedro, tengo 25 años y estudio Física.&#39;</span>
+</pre></div>
+</div>
 <p>Otra posibilidad que brinda Python para referirse a los constructores de
 la clase base es utilizar la función <code class="docutils literal notranslate"><span class="pre">super()</span></code>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
@@ -532,6 +648,10 @@ la clase base es utilizar la función <code class="docutils literal notranslate"
 <span class="nb">print</span><span class="p">(</span><span class="n">maria</span><span class="o">.</span><span class="n">presentarse</span><span class="p">())</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hola</span><span class="p">,</span> <span class="n">soy</span> <span class="n">Carlos</span> <span class="n">y</span> <span class="n">tengo</span> <span class="mi">20</span> <span class="n">años</span><span class="o">.</span>
+<span class="n">Hola</span><span class="p">,</span> <span class="n">soy</span> <span class="n">María</span> <span class="n">y</span> <span class="n">tengo</span> <span class="mi">20</span> <span class="n">años</span><span class="o">.</span> <span class="n">Estoy</span> <span class="n">estudiando</span> <span class="n">Ingeniería</span><span class="o">.</span>
+</pre></div>
+</div>
 </section>
 <hr class="docutils" />
 <section id="ejercicios-08-a">
@@ -541,13 +661,14 @@ la clase base es utilizar la función <code class="docutils literal notranslate"
 dicta en el IB. La clase debe contener información sobre el nombre de
 la materia, los alumnos que la cursan, y los docentes que la dictan.
 Utilice las clases <code class="docutils literal notranslate"><span class="pre">Persona</span></code> y <code class="docutils literal notranslate"><span class="pre">Estudiante</span></code> y, si es necesario,
-cree nuevas clases. Además debe proveer los siguientes métodos:</p></li>
-</ol>
+cree nuevas clases. Además debe proveer los siguientes métodos:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">agrega_estudiante</span></code> que agrega un estudiante al curso</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">agrega_docente</span></code> que agrega un docente al curso</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">imprime_estudiantes</span></code> que lista los estudiantes del curso</p></li>
 </ul>
+</li>
+</ol>
 </section>
 <hr class="docutils" />
 <section id="enum-y-dataclasses">
@@ -914,33 +1035,33 @@ objeto <code class="docutils literal notranslate"><span class="pre">frozen</span
 <hr class="docutils" />
 <section id="ejercicios-08-b">
 <h2>Ejercicios 08 (b)<a class="headerlink" href="#ejercicios-08-b" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
+<ol class="arabic" start="2">
 <li><p>El archivo <code class="docutils literal notranslate"><span class="pre">atomos_t.json</span></code> contiene datos atómicos y físicos de los
 primeros átomos de la tabla periódica. Se puede usar el módulo
-<code class="docutils literal notranslate"><span class="pre">json</span></code> para leer este archivo de la siguiente manera</p></li>
-</ol>
+<code class="docutils literal notranslate"><span class="pre">json</span></code> para leer este archivo de la siguiente manera</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
-
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;atomos_t.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># Verifique que el path al archivo sea el correcto en su caso</span>
     <span class="n">atomos</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>De esta manera se crea un diccionario <code class="docutils literal notranslate"><span class="pre">atomos</span></code> con la información del
-archivo.</p>
+<p>De esta manera se crea un diccionario <code class="docutils literal notranslate"><span class="pre">atomos</span></code> con la información
+del archivo.</p>
 <ul class="simple">
-<li><p>Cree una <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> para manejar los datos atómicos, que incluya
-el nombre del elemento, el símbolo, el número atómico y la masa
-atómica.</p></li>
-<li><p>Extienda la clase anterior para poder manejar el estado del material
-a temperatura ambiente (‘State at Room Temp’). Para ello cree un
-<code class="docutils literal notranslate"><span class="pre">enum</span></code> adecuado para representarlo y construya una nueva
+<li><p>Cree una <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> para manejar los datos atómicos, que
+incluya el nombre del elemento, el símbolo, el número atómico y la
+masa atómica.</p></li>
+<li><p>Extienda la clase anterior para poder manejar el estado del
+material a temperatura ambiente (‘State at Room Temp’). Para ello
+cree un <code class="docutils literal notranslate"><span class="pre">enum</span></code> adecuado para representarlo y construya una nueva
 <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> adecuada.</p></li>
 <li><p>Modifique <code class="docutils literal notranslate"><span class="pre">__repr__</span></code> y <code class="docutils literal notranslate"><span class="pre">__str__</span></code> para que se imprima la
 información de cada átomo en forma clara y bella.</p></li>
-<li><p>¿Qué estrategia/s usaría para incorporar las temperaturas de fusión
-(‘Melting Point’) y de ebullición (‘Boiling Point’) de los átomos de
-la lista?</p></li>
+<li><p>¿Qué estrategia/s usaría para incorporar las temperaturas de
+fusión (‘Melting Point’) y de ebullición (‘Boiling Point’) de los
+átomos de la lista?</p></li>
 </ul>
+</li>
+</ol>
 <hr class="docutils" />
 </section>
 </section>

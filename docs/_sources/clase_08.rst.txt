@@ -48,6 +48,13 @@ registrando el número de puntos que se van inicializando,
     del p2
     print('Número de puntos:', Punto.num_puntos)
 
+
+.. parsed-literal::
+
+    Número de puntos: 2
+    Número de puntos: 1
+
+
 Claramente la variable ``num_puntos`` es un dato de la clase ``Punto``,
 y no de una instancia particular de la misma. Para mejorar la
 organización de este tipo de datos o métodos asociados a una clase,
@@ -92,6 +99,13 @@ cualquier otra siempre que se mantenga la consistencia interna.
     del p2
     Punto.total()
 
+
+.. parsed-literal::
+
+    En total hay 1 puntos definidos
+    En total hay 0 puntos definidos
+
+
 Otro ejemplo interesante es crear constructores alternativos:
 
 .. code:: python
@@ -114,6 +128,13 @@ Otro ejemplo interesante es crear constructores alternativos:
 
     print(p3.nombre)  
     print(p3.edad)    
+
+
+.. parsed-literal::
+
+    Lionel
+    37
+
 
    En el ejercicio de ``Polinomio``, puede transformar la función
    ``from_string`` requerida a un método de clase, de forma tal que se
@@ -171,6 +192,20 @@ no incurrir en posibles errores.
     print(P1)
     P1
 
+
+.. parsed-literal::
+
+    Punto en el espacio con coordenadas: x = a, y = 1, z = 2.0
+
+
+
+
+.. parsed-literal::
+
+    Punto(x = a, y = 1, z = 2.0)
+
+
+
 Esto ocurrió porque nos olvidamos de verificar que los argumentos son
 del tipo correcto. Una manera de solucionarlo es chequear que los
 valores son del tipo correcto al crear el objeto, como hicimos
@@ -213,6 +248,29 @@ anteriormente:
 
     Punto('a',1,2.)
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[10], line 1
+    ----> 1 Punto('a',1,2.)
+
+
+    Cell In[9], line 9, in Punto.__init__(self, x, y, z)
+          7 "Inicializa un punto en el espacio"
+          8 if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+    ----> 9   raise TypeError("x, y, z deben ser números enteros o flotantes")
+         10 self.x = x
+         11 self.y = y
+
+
+    TypeError: x, y, z deben ser números enteros o flotantes
+
+
 Sin embargo aún tendremos problemas si los usuarios lo modifican luego
 de crearlo:
 
@@ -224,6 +282,15 @@ de crearlo:
 
     P1.x = 'b'
     P1
+
+
+
+
+.. parsed-literal::
+
+    Punto(x = b, y = 2, z = 3)
+
+
 
 Una solución a esto es hacer las componentes “privadas” (por convención)
 para que los usuarios no la modifiquen directamente. El problema es que
@@ -279,23 +346,93 @@ crear métodos para darle valores (*setter*) y tomarlos (*getter*)
 
     P2 = Punto(3,2,"hola")
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[15], line 1
+    ----> 1 P2 = Punto(3,2,"hola")
+
+
+    Cell In[13], line 9, in Punto.__init__(self, x, y, z)
+          7 "Inicializa un punto en el espacio"
+          8 Punto.num_puntos += 1
+    ----> 9 self.set_coordenadas(x,y,z)
+         10 return None
+
+
+    Cell In[13], line 17, in Punto.set_coordenadas(self, x, y, z)
+         15 def set_coordenadas(self, x=0, y=0, z=0):
+         16   if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+    ---> 17     raise TypeError("x, y, z deben ser números enteros o flotantes")
+         18   self._x = x
+         19   self._y = y
+
+
+    TypeError: x, y, z deben ser números enteros o flotantes
+
+
 .. code:: python
 
     print(P1.get_coordenadas())
+
+
+.. parsed-literal::
+
+    (3, 2, 4.5)
+
 
 .. code:: python
 
     # Tomemos el valor de la componente x
     a = P1.x
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    Cell In[17], line 2
+          1 # Tomemos el valor de la componente x
+    ----> 2 a = P1.x
+
+
+    AttributeError: 'Punto' object has no attribute 'x'
+
+
 .. code:: python
 
     P1.__dict__
+
+
+
+
+.. parsed-literal::
+
+    {'_x': 3, '_y': 2, '_z': 4.5}
+
+
 
 .. code:: python
 
     # Se puede hacer, pero no queremos que se haga!
     P1._x
+
+
+
+
+.. parsed-literal::
+
+    3
+
+
 
 Esto es un problema! Cambiamos la clase haciendo las variables x,y,z
 ‘privadas’, pero eso implicó cambiarles el nombre a ``_x,_y,_z``, si ya
@@ -390,6 +527,12 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
     print(a, P1.y)
 
+
+.. parsed-literal::
+
+    2 4
+
+
 .. code:: python
 
     P1.x = 3
@@ -398,13 +541,53 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
     P1
 
+
+
+
+.. parsed-literal::
+
+    Punto(x = 3, y = 4, z = 6)
+
+
+
 .. code:: python
 
     P1.y = '5'
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[26], line 1
+    ----> 1 P1.y = '5'
+
+
+    Cell In[20], line 31, in Punto.set_y(self, y)
+         29 def set_y(self, y):
+         30   if not isinstance(y, (int, float)):
+    ---> 31     raise TypeError("y debe ser número entero o flotante")        
+         32   self._y = y
+
+
+    TypeError: y debe ser número entero o flotante
+
+
 .. code:: python
 
     P1.__dict__
+
+
+
+
+.. parsed-literal::
+
+    {'_x': 3, '_y': 4, '_z': 6}
+
+
 
 Más sobre herencia
 ==================
@@ -444,6 +627,15 @@ constructor de la clase base ``Persona``:
     pedro = Estudiante('Pedro', 25, 'Física')
     pedro.presentarse()                
 
+
+
+
+.. parsed-literal::
+
+    'Hola, soy Pedro, tengo 25 años y estudio Física.'
+
+
+
 Otra posibilidad que brinda Python para referirse a los constructores de
 la clase base es utilizar la función ``super()``:
 
@@ -481,6 +673,13 @@ la clase base es utilizar la función ``super()``:
     print(carlos.presentarse())
     print(maria.presentarse())
 
+
+.. parsed-literal::
+
+    Hola, soy Carlos y tengo 20 años.
+    Hola, soy María y tengo 20 años. Estoy estudiando Ingeniería.
+
+
 --------------
 
 Ejercicios 08 (a)
@@ -492,9 +691,9 @@ Ejercicios 08 (a)
    Utilice las clases ``Persona`` y ``Estudiante`` y, si es necesario,
    cree nuevas clases. Además debe proveer los siguientes métodos:
 
--  ``agrega_estudiante`` que agrega un estudiante al curso
--  ``agrega_docente`` que agrega un docente al curso
--  ``imprime_estudiantes`` que lista los estudiantes del curso
+   -  ``agrega_estudiante`` que agrega un estudiante al curso
+   -  ``agrega_docente`` que agrega un docente al curso
+   -  ``imprime_estudiantes`` que lista los estudiantes del curso
 
 --------------
 
@@ -918,31 +1117,30 @@ objeto ``frozen``, se lanzará una excepción ``FrozenInstanceError``.
 Ejercicios 08 (b)
 =================
 
-1. El archivo ``atomos_t.json`` contiene datos atómicos y físicos de los
+2. El archivo ``atomos_t.json`` contiene datos atómicos y físicos de los
    primeros átomos de la tabla periódica. Se puede usar el módulo
    ``json`` para leer este archivo de la siguiente manera
 
-.. code:: python
+   .. code:: python
 
-   import json
+      import json
+      with open('atomos_t.json', 'r') as file:  # Verifique que el path al archivo sea el correcto en su caso
+          atomos = json.load(file)
 
-   with open('atomos_t.json', 'r') as file:  # Verifique que el path al archivo sea el correcto en su caso
-       atomos = json.load(file)
+   De esta manera se crea un diccionario ``atomos`` con la información
+   del archivo.
 
-De esta manera se crea un diccionario ``atomos`` con la información del
-archivo.
-
--  Cree una ``dataclass`` para manejar los datos atómicos, que incluya
-   el nombre del elemento, el símbolo, el número atómico y la masa
-   atómica.
--  Extienda la clase anterior para poder manejar el estado del material
-   a temperatura ambiente (‘State at Room Temp’). Para ello cree un
-   ``enum`` adecuado para representarlo y construya una nueva
-   ``dataclass`` adecuada.
--  Modifique ``__repr__`` y ``__str__`` para que se imprima la
-   información de cada átomo en forma clara y bella.
--  ¿Qué estrategia/s usaría para incorporar las temperaturas de fusión
-   (‘Melting Point’) y de ebullición (‘Boiling Point’) de los átomos de
-   la lista?
+   -  Cree una ``dataclass`` para manejar los datos atómicos, que
+      incluya el nombre del elemento, el símbolo, el número atómico y la
+      masa atómica.
+   -  Extienda la clase anterior para poder manejar el estado del
+      material a temperatura ambiente (‘State at Room Temp’). Para ello
+      cree un ``enum`` adecuado para representarlo y construya una nueva
+      ``dataclass`` adecuada.
+   -  Modifique ``__repr__`` y ``__str__`` para que se imprima la
+      información de cada átomo en forma clara y bella.
+   -  ¿Qué estrategia/s usaría para incorporar las temperaturas de
+      fusión (‘Melting Point’) y de ebullición (‘Boiling Point’) de los
+      átomos de la lista?
 
 --------------
