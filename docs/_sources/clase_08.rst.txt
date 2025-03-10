@@ -306,8 +306,8 @@ crear métodos para darle valores (*setter*) y tomarlos (*getter*)
       
       def __init__(self, x=0, y=0, z=0):
         "Inicializa un punto en el espacio"
-        Punto.num_puntos += 1
         self.set_coordenadas(x,y,z)
+        Punto.num_puntos += 1
         return None
     
       def get_coordenadas(self):
@@ -452,8 +452,8 @@ todos (asumiendo que son nuestros). Para ello existe la función
       
       def __init__(self, x=0, y=0, z=0):
         "Inicializa un punto en el espacio"
-        Punto.num_puntos += 1
         self.set_coordenadas(x,y,z)
+        Punto.num_puntos += 1
         return None
     
       def get_coordenadas(self):
@@ -484,11 +484,11 @@ todos (asumiendo que son nuestros). Para ello existe la función
         self._z = z
         
       def set_coordenadas(self, x=0, y=0, z=0):
-        if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
-          raise TypeError("x, y, z deben ser números enteros o flotantes")
-        self._x = x
-        self._y = y
-        self._z = z
+        #if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+        #  raise TypeError("x, y, z deben ser números enteros o flotantes")
+        self.set_x(x)
+        self.set_y(y)
+        self.set_z(z)
           
       def __del__(self):
         "Borra el punto y actualiza el contador"
@@ -562,11 +562,11 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
     TypeError                                 Traceback (most recent call last)
 
-    Cell In[26], line 1
+    Cell In[47], line 1
     ----> 1 P1.y = '5'
 
 
-    Cell In[20], line 31, in Punto.set_y(self, y)
+    Cell In[41], line 31, in Punto.set_y(self, y)
          29 def set_y(self, y):
          30   if not isinstance(y, (int, float)):
     ---> 31     raise TypeError("y debe ser número entero o flotante")        
@@ -574,6 +574,49 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
 
     TypeError: y debe ser número entero o flotante
+
+
+.. code:: python
+
+    P2 = Punto('a',1,32)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[48], line 1
+    ----> 1 P2 = Punto('a',1,32)
+
+
+    Cell In[41], line 8, in Punto.__init__(self, x, y, z)
+          6 def __init__(self, x=0, y=0, z=0):
+          7   "Inicializa un punto en el espacio"
+    ----> 8   self.set_coordenadas(x,y,z)
+          9   Punto.num_puntos += 1
+         10   return None
+
+
+    Cell In[41], line 42, in Punto.set_coordenadas(self, x, y, z)
+         39 def set_coordenadas(self, x=0, y=0, z=0):
+         40   #if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+         41   #  raise TypeError("x, y, z deben ser números enteros o flotantes")
+    ---> 42   self.set_x(x)
+         43   self.set_y(y)
+         44   self.set_z(z)
+
+
+    Cell In[41], line 26, in Punto.set_x(self, x)
+         24 def set_x(self, x):
+         25   if not isinstance(x, (int, float)):
+    ---> 26     raise TypeError("x debe ser número entero o flotante")        
+         27   self._x = x
+
+
+    TypeError: x debe ser número entero o flotante
 
 
 .. code:: python
@@ -748,6 +791,14 @@ correspondientes a cuatro colores.
 
     print_color(ColorCMYK.YELLOW)
 
+
+.. parsed-literal::
+
+    Color  : ColorCMYK.YELLOW
+    Nombre : YELLOW
+    Valor  : 1
+
+
    Atención: Por **convención** se usan MAYÚSCULAS para las opciones que
    puede tener un Enum, al igual que en otros lenguajes de programación
    donde también se estila usarlas para las constantes.
@@ -759,9 +810,54 @@ reasignarlos:
 
     ColorCMYK.YELLOW = 42
 
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    Cell In[5], line 1
+    ----> 1 ColorCMYK.YELLOW = 42
+
+
+    File /usr/lib64/python3.13/enum.py:835, in EnumType.__setattr__(cls, name, value)
+        833 member_map = cls.__dict__.get('_member_map_', {})
+        834 if name in member_map:
+    --> 835     raise AttributeError('cannot reassign member %r' % (name, ))
+        836 super().__setattr__(name, value)
+
+
+    AttributeError: cannot reassign member 'YELLOW'
+
+
 .. code:: python
 
     ColorCMYK.YELLOW.value = 4
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    Cell In[6], line 1
+    ----> 1 ColorCMYK.YELLOW.value = 4
+
+
+    File /usr/lib64/python3.13/enum.py:227, in property.__set__(self, instance, value)
+        225 if self.fset is not None:
+        226     return self.fset(instance, value)
+    --> 227 raise AttributeError(
+        228         "<enum %r> cannot set attribute %r" % (self.clsname, self.name)
+        229         )
+
+
+    AttributeError: <enum 'Enum'> cannot set attribute 'value'
+
 
 .. code:: python
 
@@ -778,20 +874,56 @@ reasignarlos:
 
     ColorRGB.RED
 
+
+
+
+.. parsed-literal::
+
+    Color  : ColorRGB.RED
+    Nombre : RED
+    Valor  : 1
+
+
+
 Se pueden comparar distintos enums:
 
 .. code:: python
 
     ColorRGB.RED == ColorCMYK.YELLOW
 
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
 .. code:: python
 
     ColorRGB.RED.value == ColorCMYK.YELLOW.value
+
+
+
+
+.. parsed-literal::
+
+    True
+
+
 
 .. code:: python
 
     print(ColorRGB.RED == ColorCMYK.YELLOW)
     print(ColorRGB.RED is ColorCMYK.YELLOW)
+
+
+.. parsed-literal::
+
+    False
+    False
+
 
 Enums y ``match``
 ~~~~~~~~~~~~~~~~~
@@ -840,6 +972,15 @@ Por ejemplo:
     print(describe_color(ColorRGB.GREEN))
     print(describe_color("Negro"))
 
+
+.. parsed-literal::
+
+    Amarillo
+    Rojo
+    Verde
+    Color no reconocido
+
+
 La estructura ``match-case`` acepta patrones avanzados, comparando
 estructuras más complejas:
 
@@ -860,6 +1001,13 @@ estructuras más complejas:
             
     print(detecta_coordenadas((0, 5)))  # "En el eje Y, en 5"
     print(detecta_coordenadas("cero, cero"))
+
+
+.. parsed-literal::
+
+    En el eje Y, en 5
+    Coordenada no válida
+
 
 .. code:: python
 
@@ -890,6 +1038,17 @@ estructuras más complejas:
     clasifica_lista("Hola")     
 
 
+
+.. parsed-literal::
+
+    Lista con un solo elemento: 10
+    Lista con dos elementos: 10 y 20
+    Lista con tres o más elementos: 10, 20, y otros 1 elementos
+    Lista con tres o más elementos: 10, 20, y otros 2 elementos
+    Lista vacía
+    Lista vacía o no reconocida
+
+
 .. code:: python
 
     v = clasifica_lista([10, 20, 30, 40])
@@ -897,6 +1056,18 @@ estructuras más complejas:
     
     v = clasifica_lista([ColorCMYK.BLACK, ColorRGB.RED])
     print(v,type(v))
+
+
+.. parsed-literal::
+
+    Lista con tres o más elementos: 10, 20, y otros 2 elementos
+    [30, 40] <class 'list'>
+    Lista con dos elementos: ColorCMYK.BLACK y ColorRGB.RED
+    (<ColorCMYK.BLACK: 4>, Color  : ColorRGB.RED
+    Nombre : RED
+    Valor  : 1
+    ) <class 'tuple'>
+
 
 Los distintos casos posibles aceptan el operador ``|`` que se usa para
 agruparlos:
@@ -933,6 +1104,14 @@ agruparlos:
     print(Dia.MIERCOLES.es_dia_laboral())
 
 
+
+.. parsed-literal::
+
+    Tengo clases de Python 🥳
+    Es fin de semana 😆
+    Tengo clases de Python 🥳
+
+
 O comparar tipos de datos
 
 .. code:: python
@@ -949,6 +1128,17 @@ O comparar tipos de datos
     printer_color(ColorRGB.RED)
     printer_color(ColorCMYK.YELLOW)
     printer_color("Negro")
+
+
+.. parsed-literal::
+
+    Usando RGB: ColorRGB.RED
+    
+    Usando YMgCy: ColorCMYK.YELLOW
+    
+    Color no reconocido
+    
+
 
 Es posible hacer comparaciones más complejas todavía, por ejemplo,
 usando clases:
@@ -975,6 +1165,15 @@ usando clases:
     print(saluda_a(Persona("Ana",19)))  
     print(saluda_a(Persona("Mabel",17)))
     print(saluda_a("Chewbacca"))
+
+
+.. parsed-literal::
+
+    Hola Juan, eres menor de edad.
+    Hola Ana, eres mayor de edad.
+    Hola Mabel, podés manejar pero no comprar alcohol
+    Eres un alien
+
 
 Otra forma de hacerlo es a través del denominado match *posicional*.
 Para ello se agrega el atributo **match_args** a la clase, que contiene
@@ -1010,6 +1209,15 @@ figuran en el ``__init__``.
     print(saluda_a(Persona("Mabel",17)))
     print(saluda_a("Chewbacca"))
 
+
+.. parsed-literal::
+
+    Hola Juan, eres menor de edad.
+    Hola Ana, eres mayor de edad.
+    Hola Mabel, podés manejar pero no comprar alcohol
+    Eres un alien
+
+
 Dataclasses
 -----------
 
@@ -1037,6 +1245,20 @@ un módulo que define un decorador ``@dataclass`` que los genera.
     print(hidrogeno)
     hidrogeno
 
+
+.. parsed-literal::
+
+    Atomo(nombre='Hidrógeno', simbolo='H', N=1, A=1)
+
+
+
+
+.. parsed-literal::
+
+    Atomo(nombre='Hidrógeno', simbolo='H', N=1, A=1)
+
+
+
 Entre los métodos que el decorador genera automáticamente están el
 constructor ``__init__``, los métodos ``__repr__`` y ``__str__`` y el
 método ``__eq__`` que provee igualdad estructural:
@@ -1046,6 +1268,13 @@ método ``__eq__`` que provee igualdad estructural:
     h = Atomo("Hidrógeno", "H", 1, 1)
     print(h==hidrogeno)
     print(h is hidrogeno)
+
+
+.. parsed-literal::
+
+    True
+    False
+
 
 Además de la sintaxis sencilla, se pueden crear dataclasses con
 argumentos default:
@@ -1070,6 +1299,13 @@ argumentos default:
     b = Producto("Cerveza",2.5, StockStatus.DISPONIBLE)
     print(b)
 
+
+.. parsed-literal::
+
+    Producto(nombre='Laptop', precio=1000.0, stock=<StockStatus.AGOTADO: 'Sin stock'>)
+    Producto(nombre='Cerveza', precio=2.5, stock=<StockStatus.DISPONIBLE: 'En stock'>)
+
+
 Para finalizar, es posible poblar una ``dataclass`` a partir de un
 diccionario en forma sencilla, siempre y cuando las claves del
 diccionario se correspondan unívocamente con los campos de la estructura
@@ -1082,10 +1318,22 @@ de la ``dataclass``
     b = Producto(**cerveza)
     print(b)
 
+
+.. parsed-literal::
+
+    Producto(nombre='Cerveza', precio=2.5, stock=<StockStatus.DISPONIBLE: 'En stock'>)
+
+
 .. code:: python
 
     b.nombre = "Cerveza artesanal"
     print(b)
+
+
+.. parsed-literal::
+
+    Producto(nombre='Cerveza artesanal', precio=2.5, stock=<StockStatus.DISPONIBLE: 'En stock'>)
+
 
 .. code:: python
 
@@ -1111,6 +1359,31 @@ objeto ``frozen``, se lanzará una excepción ``FrozenInstanceError``.
     Ca = Atomo("Calcio", "Ca", 20, 40)
     print(Ca)
     Ca.A = 14
+
+
+.. parsed-literal::
+
+    Atomo(nombre='Calcio', simbolo='Ca', N=20, A=40)
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    FrozenInstanceError                       Traceback (most recent call last)
+
+    Cell In[28], line 3
+          1 Ca = Atomo("Calcio", "Ca", 20, 40)
+          2 print(Ca)
+    ----> 3 Ca.A = 14
+
+
+    File <string>:18, in __setattr__(self, name, value)
+
+
+    FrozenInstanceError: cannot assign to field 'A'
+
 
 --------------
 

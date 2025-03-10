@@ -354,8 +354,8 @@ crear métodos para darle valores (<em>setter</em>) y tomarlos (<em>getter</em>)
 
    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
      <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
-     <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
      <span class="bp">self</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+     <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
      <span class="k">return</span> <span class="kc">None</span>
 
    <span class="k">def</span> <span class="nf">get_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -469,8 +469,8 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
-    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
     <span class="k">return</span> <span class="kc">None</span>
 
   <span class="k">def</span> <span class="nf">get_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -501,11 +501,11 @@ todos (asumiendo que son nuestros). Para ello existe la función
     <span class="bp">self</span><span class="o">.</span><span class="n">_z</span> <span class="o">=</span> <span class="n">z</span>
 
   <span class="k">def</span> <span class="nf">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))):</span>
-      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x, y, z deben ser números enteros o flotantes&quot;</span><span class="p">)</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_z</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="c1">#if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):</span>
+    <span class="c1">#  raise TypeError(&quot;x, y, z deben ser números enteros o flotantes&quot;)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_z</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
 
   <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
     <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
@@ -560,11 +560,11 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
 <span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
 
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">26</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">47</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
 
 
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span> <span class="mi">31</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">41</span><span class="p">],</span> <span class="n">line</span> <span class="mi">31</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
      <span class="mi">29</span> <span class="k">def</span> <span class="nf">set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
      <span class="mi">30</span>   <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
 <span class="o">---&gt;</span> <span class="mi">31</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y debe ser número entero o flotante&quot;</span><span class="p">)</span>
@@ -572,6 +572,44 @@ todos (asumiendo que son nuestros). Para ello existe la función
 
 
 <span class="ne">TypeError</span><span class="p">:</span> <span class="n">y</span> <span class="n">debe</span> <span class="n">ser</span> <span class="n">número</span> <span class="n">entero</span> <span class="n">o</span> <span class="n">flotante</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">48</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">32</span><span class="p">)</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">41</span><span class="p">],</span> <span class="n">line</span> <span class="mi">8</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+      <span class="mi">6</span> <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+      <span class="mi">7</span>   <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+<span class="o">----&gt;</span> <span class="mi">8</span>   <span class="bp">self</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+      <span class="mi">9</span>   <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+     <span class="mi">10</span>   <span class="k">return</span> <span class="kc">None</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">41</span><span class="p">],</span> <span class="n">line</span> <span class="mi">42</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span>
+     <span class="mi">39</span> <span class="k">def</span> <span class="nf">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+     <span class="mi">40</span>   <span class="c1">#if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):</span>
+     <span class="mi">41</span>   <span class="c1">#  raise TypeError(&quot;x, y, z deben ser números enteros o flotantes&quot;)</span>
+<span class="o">---&gt;</span> <span class="mi">42</span>   <span class="bp">self</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+     <span class="mi">43</span>   <span class="bp">self</span><span class="o">.</span><span class="n">set_y</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+     <span class="mi">44</span>   <span class="bp">self</span><span class="o">.</span><span class="n">set_z</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">41</span><span class="p">],</span> <span class="n">line</span> <span class="mi">26</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Punto</span><span class="o">.</span><span class="n">set_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+     <span class="mi">24</span> <span class="k">def</span> <span class="nf">set_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+     <span class="mi">25</span>   <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+<span class="o">---&gt;</span> <span class="mi">26</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x debe ser número entero o flotante&quot;</span><span class="p">)</span>
+     <span class="mi">27</span>   <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">x</span> <span class="n">debe</span> <span class="n">ser</span> <span class="n">número</span> <span class="n">entero</span> <span class="n">o</span> <span class="n">flotante</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
@@ -706,19 +744,60 @@ correspondientes a cuatro colores.</p>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valor  : </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">print_color</span><span class="p">(</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
-
-<span class="n">Atención</span><span class="p">:</span> <span class="n">Por</span> <span class="o">**</span><span class="n">convención</span><span class="o">**</span> <span class="n">se</span> <span class="n">usan</span> <span class="n">MAYÚSCULAS</span> <span class="n">para</span> <span class="n">las</span> <span class="n">opciones</span> <span class="n">que</span>
-<span class="n">puede</span> <span class="n">tener</span> <span class="n">un</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">al</span> <span class="n">igual</span> <span class="n">que</span> <span class="n">en</span> <span class="n">otros</span> <span class="n">lenguajes</span> <span class="n">de</span> <span class="n">programación</span>
-<span class="n">donde</span> <span class="n">también</span> <span class="n">se</span> <span class="n">estila</span> <span class="n">usarlas</span> <span class="n">para</span> <span class="n">las</span> <span class="n">constantes</span><span class="o">.</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">print_color</span><span class="p">(</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
 </pre></div>
 </div>
+<pre class="literal-block"> Color  : ColorCMYK.YELLOW
+ Nombre : YELLOW
+ Valor  : 1
+
+
+Atención: Por <strong>convención</strong> se usan MAYÚSCULAS para las opciones que
+puede tener un Enum, al igual que en otros lenguajes de programación
+donde también se estila usarlas para las constantes.</pre>
 <p>Efectivamente los valores del Enum son constantes y no es posible
 reasignarlos:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">42</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">AttributeError</span>                            <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">42</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">enum</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">835</span><span class="p">,</span> <span class="ow">in</span> <span class="n">EnumType</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="mi">833</span> <span class="n">member_map</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_member_map_&#39;</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="mi">834</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">member_map</span><span class="p">:</span>
+<span class="o">--&gt;</span> <span class="mi">835</span>     <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span><span class="s1">&#39;cannot reassign member </span><span class="si">%r</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">))</span>
+    <span class="mi">836</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="ne">AttributeError</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">reassign</span> <span class="n">member</span> <span class="s1">&#39;YELLOW&#39;</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">AttributeError</span>                            <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">enum</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">227</span><span class="p">,</span> <span class="ow">in</span> <span class="nb">property</span><span class="o">.</span><span class="fm">__set__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+    <span class="mi">225</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="mi">226</span>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fset</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+<span class="o">--&gt;</span> <span class="mi">227</span> <span class="k">raise</span> <span class="ne">AttributeError</span><span class="p">(</span>
+    <span class="mi">228</span>         <span class="s2">&quot;&lt;enum </span><span class="si">%r</span><span class="s2">&gt; cannot set attribute </span><span class="si">%r</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clsname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+    <span class="mi">229</span>         <span class="p">)</span>
+
+
+<span class="ne">AttributeError</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">enum</span> <span class="s1">&#39;Enum&#39;</span><span class="o">&gt;</span> <span class="n">cannot</span> <span class="nb">set</span> <span class="n">attribute</span> <span class="s1">&#39;value&#39;</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ColorRGB</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
@@ -733,15 +812,30 @@ reasignarlos:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Color</span>  <span class="p">:</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span>
+<span class="n">Nombre</span> <span class="p">:</span> <span class="n">RED</span>
+<span class="n">Valor</span>  <span class="p">:</span> <span class="mi">1</span>
+</pre></div>
+</div>
 <p>Se pueden comparar distintos enums:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="o">.</span><span class="n">value</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span> <span class="ow">is</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
+<span class="kc">False</span>
 </pre></div>
 </div>
 <section id="enums-y-match">
@@ -786,6 +880,12 @@ programación. La estructura que tiene es la siguiente:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">describe_color</span><span class="p">(</span><span class="s2">&quot;Negro&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Amarillo</span>
+<span class="n">Rojo</span>
+<span class="n">Verde</span>
+<span class="n">Color</span> <span class="n">no</span> <span class="n">reconocido</span>
+</pre></div>
+</div>
 <p>La estructura <code class="docutils literal notranslate"><span class="pre">match-case</span></code> acepta patrones avanzados, comparando
 estructuras más complejas:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">detecta_coordenadas</span><span class="p">(</span><span class="n">coord</span><span class="p">):</span>
@@ -803,6 +903,10 @@ estructuras más complejas:</p>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">detecta_coordenadas</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>  <span class="c1"># &quot;En el eje Y, en 5&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">detecta_coordenadas</span><span class="p">(</span><span class="s2">&quot;cero, cero&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">En</span> <span class="n">el</span> <span class="n">eje</span> <span class="n">Y</span><span class="p">,</span> <span class="n">en</span> <span class="mi">5</span>
+<span class="n">Coordenada</span> <span class="n">no</span> <span class="n">válida</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">clasifica_lista</span><span class="p">(</span><span class="n">lista</span><span class="p">):</span>
@@ -832,11 +936,28 @@ estructuras más complejas:</p>
 <span class="n">clasifica_lista</span><span class="p">(</span><span class="s2">&quot;Hola&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Lista</span> <span class="n">con</span> <span class="n">un</span> <span class="n">solo</span> <span class="n">elemento</span><span class="p">:</span> <span class="mi">10</span>
+<span class="n">Lista</span> <span class="n">con</span> <span class="n">dos</span> <span class="n">elementos</span><span class="p">:</span> <span class="mi">10</span> <span class="n">y</span> <span class="mi">20</span>
+<span class="n">Lista</span> <span class="n">con</span> <span class="n">tres</span> <span class="n">o</span> <span class="n">más</span> <span class="n">elementos</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">y</span> <span class="n">otros</span> <span class="mi">1</span> <span class="n">elementos</span>
+<span class="n">Lista</span> <span class="n">con</span> <span class="n">tres</span> <span class="n">o</span> <span class="n">más</span> <span class="n">elementos</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="n">y</span> <span class="n">otros</span> <span class="mi">2</span> <span class="n">elementos</span>
+<span class="n">Lista</span> <span class="n">vacía</span>
+<span class="n">Lista</span> <span class="n">vacía</span> <span class="n">o</span> <span class="n">no</span> <span class="n">reconocida</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">clasifica_lista</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
 
 <span class="n">v</span> <span class="o">=</span> <span class="n">clasifica_lista</span><span class="p">([</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">BLACK</span><span class="p">,</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Lista con tres o más elementos: 10, 20, y otros 2 elementos
+[30, 40] &lt;class &#39;list&#39;&gt;
+Lista con dos elementos: ColorCMYK.BLACK y ColorRGB.RED
+(&lt;ColorCMYK.BLACK: 4&gt;, Color  : ColorRGB.RED
+Nombre : RED
+Valor  : 1
+) &lt;class &#39;tuple&#39;&gt;
 </pre></div>
 </div>
 <p>Los distintos casos posibles aceptan el operador <code class="docutils literal notranslate"><span class="pre">|</span></code> que se usa para
@@ -871,6 +992,11 @@ agruparlos:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">Dia</span><span class="o">.</span><span class="n">MIERCOLES</span><span class="o">.</span><span class="n">es_dia_laboral</span><span class="p">())</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Tengo clases de Python 🥳
+Es fin de semana 😆
+Tengo clases de Python 🥳
+</pre></div>
+</div>
 <p>O comparar tipos de datos</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">printer_color</span><span class="p">(</span><span class="n">color</span><span class="p">:</span> <span class="n">ColorRGB</span> <span class="o">|</span> <span class="n">ColorCMYK</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="k">match</span> <span class="n">color</span><span class="p">:</span>
@@ -884,6 +1010,13 @@ agruparlos:</p>
 <span class="n">printer_color</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
 <span class="n">printer_color</span><span class="p">(</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
 <span class="n">printer_color</span><span class="p">(</span><span class="s2">&quot;Negro&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usando</span> <span class="n">RGB</span><span class="p">:</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span>
+
+<span class="n">Usando</span> <span class="n">YMgCy</span><span class="p">:</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span>
+
+<span class="n">Color</span> <span class="n">no</span> <span class="n">reconocido</span>
 </pre></div>
 </div>
 <p>Es posible hacer comparaciones más complejas todavía, por ejemplo,
@@ -908,6 +1041,12 @@ usando clases:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span><span class="mi">19</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Mabel&quot;</span><span class="p">,</span><span class="mi">17</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Chewbacca&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hola</span> <span class="n">Juan</span><span class="p">,</span> <span class="n">eres</span> <span class="n">menor</span> <span class="n">de</span> <span class="n">edad</span><span class="o">.</span>
+<span class="n">Hola</span> <span class="n">Ana</span><span class="p">,</span> <span class="n">eres</span> <span class="n">mayor</span> <span class="n">de</span> <span class="n">edad</span><span class="o">.</span>
+<span class="n">Hola</span> <span class="n">Mabel</span><span class="p">,</span> <span class="n">podés</span> <span class="n">manejar</span> <span class="n">pero</span> <span class="n">no</span> <span class="n">comprar</span> <span class="n">alcohol</span>
+<span class="n">Eres</span> <span class="n">un</span> <span class="n">alien</span>
 </pre></div>
 </div>
 <p>Otra forma de hacerlo es a través del denominado match <em>posicional</em>.
@@ -943,6 +1082,12 @@ se comparan estructuras de datos complejas como las clases.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Chewbacca&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Hola</span> <span class="n">Juan</span><span class="p">,</span> <span class="n">eres</span> <span class="n">menor</span> <span class="n">de</span> <span class="n">edad</span><span class="o">.</span>
+<span class="n">Hola</span> <span class="n">Ana</span><span class="p">,</span> <span class="n">eres</span> <span class="n">mayor</span> <span class="n">de</span> <span class="n">edad</span><span class="o">.</span>
+<span class="n">Hola</span> <span class="n">Mabel</span><span class="p">,</span> <span class="n">podés</span> <span class="n">manejar</span> <span class="n">pero</span> <span class="n">no</span> <span class="n">comprar</span> <span class="n">alcohol</span>
+<span class="n">Eres</span> <span class="n">un</span> <span class="n">alien</span>
+</pre></div>
+</div>
 </section>
 </section>
 <section id="dataclasses">
@@ -967,12 +1112,22 @@ un módulo que define un decorador <code class="docutils literal notranslate"><s
 <span class="n">hidrogeno</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Atomo</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Hidrógeno&#39;</span><span class="p">,</span> <span class="n">simbolo</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Atomo</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Hidrógeno&#39;</span><span class="p">,</span> <span class="n">simbolo</span><span class="o">=</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Entre los métodos que el decorador genera automáticamente están el
 constructor <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, los métodos <code class="docutils literal notranslate"><span class="pre">__repr__</span></code> y <code class="docutils literal notranslate"><span class="pre">__str__</span></code> y el
 método <code class="docutils literal notranslate"><span class="pre">__eq__</span></code> que provee igualdad estructural:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Hidrógeno&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">==</span><span class="n">hidrogeno</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">h</span> <span class="ow">is</span> <span class="n">hidrogeno</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+<span class="kc">False</span>
 </pre></div>
 </div>
 <p>Además de la sintaxis sencilla, se pueden crear dataclasses con
@@ -996,6 +1151,10 @@ argumentos default:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Producto</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Laptop&#39;</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">,</span> <span class="n">stock</span><span class="o">=&lt;</span><span class="n">StockStatus</span><span class="o">.</span><span class="n">AGOTADO</span><span class="p">:</span> <span class="s1">&#39;Sin stock&#39;</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="n">Producto</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Cerveza&#39;</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">stock</span><span class="o">=&lt;</span><span class="n">StockStatus</span><span class="o">.</span><span class="n">DISPONIBLE</span><span class="p">:</span> <span class="s1">&#39;En stock&#39;</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Para finalizar, es posible poblar una <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> a partir de un
 diccionario en forma sencilla, siempre y cuando las claves del
 diccionario se correspondan unívocamente con los campos de la estructura
@@ -1006,8 +1165,14 @@ de la <code class="docutils literal notranslate"><span class="pre">dataclass</sp
 <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Producto</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Cerveza&#39;</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">stock</span><span class="o">=&lt;</span><span class="n">StockStatus</span><span class="o">.</span><span class="n">DISPONIBLE</span><span class="p">:</span> <span class="s1">&#39;En stock&#39;</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="s2">&quot;Cerveza artesanal&quot;</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Producto</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Cerveza artesanal&#39;</span><span class="p">,</span> <span class="n">precio</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">stock</span><span class="o">=&lt;</span><span class="n">StockStatus</span><span class="o">.</span><span class="n">DISPONIBLE</span><span class="p">:</span> <span class="s1">&#39;En stock&#39;</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="mi">4</span>
@@ -1028,6 +1193,25 @@ objeto <code class="docutils literal notranslate"><span class="pre">frozen</span
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Ca</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Calcio&quot;</span><span class="p">,</span> <span class="s2">&quot;Ca&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Ca</span><span class="p">)</span>
 <span class="n">Ca</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="mi">14</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Atomo</span><span class="p">(</span><span class="n">nombre</span><span class="o">=</span><span class="s1">&#39;Calcio&#39;</span><span class="p">,</span> <span class="n">simbolo</span><span class="o">=</span><span class="s1">&#39;Ca&#39;</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">A</span><span class="o">=</span><span class="mi">40</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="n">FrozenInstanceError</span>                       <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">28</span><span class="p">],</span> <span class="n">line</span> <span class="mi">3</span>
+      <span class="mi">1</span> <span class="n">Ca</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Calcio&quot;</span><span class="p">,</span> <span class="s2">&quot;Ca&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+      <span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="n">Ca</span><span class="p">)</span>
+<span class="o">----&gt;</span> <span class="mi">3</span> <span class="n">Ca</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="mi">14</span>
+
+
+<span class="n">File</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">18</span><span class="p">,</span> <span class="ow">in</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+
+
+<span class="n">FrozenInstanceError</span><span class="p">:</span> <span class="n">cannot</span> <span class="n">assign</span> <span class="n">to</span> <span class="n">field</span> <span class="s1">&#39;A&#39;</span>
 </pre></div>
 </div>
 </section>
