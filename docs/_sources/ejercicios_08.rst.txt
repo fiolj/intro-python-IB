@@ -1,0 +1,40 @@
+Ejercicios de Clase 08
+----------------------
+
+
+1. Cree una nueva clase ``Materia`` que describa una materia que se
+   dicta en el IB. La clase debe contener información sobre el nombre de
+   la materia, los alumnos que la cursan, y los docentes que la dictan.
+   Utilice las clases ``Persona`` y ``Estudiante`` y, si es necesario,
+   cree nuevas clases. Además debe proveer los siguientes métodos:
+
+-  ``agrega_estudiante`` que agrega un estudiante al curso
+-  ``agrega_docente`` que agrega un docente al curso
+-  ``imprime_estudiantes`` que lista los estudiantes del curso
+
+1. El archivo ``atomos_t.json`` contiene datos atómicos y físicos de los
+   primeros átomos de la tabla periódica. Se puede usar el módulo
+   ``json`` para leer este archivo de la siguiente manera
+
+.. code:: python
+
+   import json
+
+   with open('atomos_t.json', 'r') as file:  # Verifique que el path al archivo sea el correcto en su caso
+       atomos = json.load(file)
+
+De esta manera se crea un diccionario ``atomos`` con la información del
+archivo.
+
+-  Cree una ``dataclass`` para manejar los datos atómicos, que incluya
+   el nombre del elemento, el símbolo, el número atómico y la masa
+   atómica.
+-  Extienda la clase anterior para poder manejar el estado del material
+   a temperatura ambiente (‘State at Room Temp’). Para ello cree un
+   ``enum`` adecuado para representarlo y construya una nueva
+   ``dataclass`` adecuada.
+-  Modifique ``__repr__`` y ``__str__`` para que se imprima la
+   información de cada átomo en forma clara y bella.
+-  ¿Qué estrategia/s usaría para incorporar las temperaturas de fusión
+   (‘Melting Point’) y de ebullición (‘Boiling Point’) de los átomos de
+   la lista?

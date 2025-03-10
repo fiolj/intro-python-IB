@@ -1,0 +1,948 @@
+.. _clase_08:
+
+
+===========================
+Clase 8: Más sobre objetos
+===========================
+
+=================
+
+Hemos visto que si bien en Python todo es un objeto, esto es, una
+instancia de alguna clase con sus atributos y métodos, los mismos son
+públicos. Esto otorga gran versatilidad a la programación, pero puede
+ser un inconveniente a la hora de mantener código, debido a que el
+pretendido encapsulamiento de datos y funciones en una clase es pura
+responsabilidad del programador. Aquí veremos algunas facilidades que
+otorga Python para ayudar a crear clases robustas.
+
+El decorador ``@classmethod``
+=============================
+
+En nuestra versión de la clase ``Punto``, teníamos la capacidad de ir
+registrando el número de puntos que se van inicializando,
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+    
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+
+.. code:: python
+
+    p1 = Punto(1,1,1)
+    p2 = Punto()
+    print('Número de puntos:', Punto.num_puntos)
+    del p2
+    print('Número de puntos:', Punto.num_puntos)
+
+Claramente la variable ``num_puntos`` es un dato de la clase ``Punto``,
+y no de una instancia particular de la misma. Para mejorar la
+organización de este tipo de datos o métodos asociados a una clase,
+Python provee el decorador ``@classmethod``:
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+
+
+Así como ``self`` debe ser el primer argumento de los métodos de
+instancia, ``cls`` se refiere a la propia clase y debe ser el primer
+argumento del método de clase decorado por ``@classmethod``. De la misma
+forma, se utiliza la palabra ``cls`` por convención, podría ser
+cualquier otra siempre que se mantenga la consistencia interna.
+
+.. code:: python
+
+    p1 = Punto(1,1,1)
+    p2 = Punto()
+    Punto.total()
+    del p2
+    Punto.total()
+
+Otro ejemplo interesante es crear constructores alternativos:
+
+.. code:: python
+
+    class Persona:
+        def __init__(self, nombre, edad):
+            self.nombre = nombre
+            self.edad = edad
+    
+        @classmethod
+        def desde_cadena(cls, cadena):
+            nombre, edad = cadena.split(", ")
+            return cls(nombre, int(edad))  # Devuelve una nueva instancia
+    
+    # Crear una instancia desde una cadena
+    p3 = Persona.desde_cadena("Lionel, 37")
+
+
+.. code:: python
+
+    print(p3.nombre)  
+    print(p3.edad)    
+
+   En el ejercicio de ``Polinomio``, puede transformar la función
+   ``from_string`` requerida a un método de clase, de forma tal que se
+   pueda crear un polinomio como: \```python p1 =
+   Polinomio.from_string(“4 x^3 + 3 x^2 + 2.1 x + 1”)
+
+*Getters* y *Setters*
+=====================
+
+Función ``property``
+--------------------
+
+Volvamos a nuestra clase ``Punto`` y veamos cómo podemos mejorarla para
+no incurrir en posibles errores.
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        return None
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        return f"Punto en el espacio con coordenadas: x = {self.x}, y = {self.y}, z = {self.z}"
+    
+      def __repr__(self):
+        return f"Punto(x = {self.x}, y = {self.y}, z = {self.z})"
+    
+      def __call__(self):
+        return "Ejecuté el objeto: {}".format(self)
+    #    return str(self)
+    #    return "{}".format(self)
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+        
+
+.. code:: python
+
+    P1 = Punto('a',1,2.) 
+    print(P1)
+    P1
+
+Esto ocurrió porque nos olvidamos de verificar que los argumentos son
+del tipo correcto. Una manera de solucionarlo es chequear que los
+valores son del tipo correcto al crear el objeto, como hicimos
+anteriormente:
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+          raise TypeError("x, y, z deben ser números enteros o flotantes")
+        self.x = x
+        self.y = y
+        self.z = z
+        Punto.num_puntos += 1
+        
+    
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        return f"Punto en el espacio con coordenadas: x = {self.x}, y = {self.y}, z = {self.z}"
+    
+      def __repr__(self):
+        return f"Punto(x = {self.x}, y = {self.y}, z = {self.z})"
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+        
+
+.. code:: python
+
+    Punto('a',1,2.)
+
+Sin embargo aún tendremos problemas si los usuarios lo modifican luego
+de crearlo:
+
+.. code:: python
+
+    P1 = Punto(1,2,3)
+
+.. code:: python
+
+    P1.x = 'b'
+    P1
+
+Una solución a esto es hacer las componentes “privadas” (por convención)
+para que los usuarios no la modifiquen directamente. El problema es que
+los usuarios tienen que poder acceder y modificarla. Una solución es
+crear métodos para darle valores (*setter*) y tomarlos (*getter*)
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        Punto.num_puntos += 1
+        self.set_coordenadas(x,y,z)
+        return None
+    
+      def get_coordenadas(self):
+        return self._x, self._y, self._z
+    
+      def set_coordenadas(self, x=0, y=0, z=0):
+        if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+          raise TypeError("x, y, z deben ser números enteros o flotantes")
+        self._x = x
+        self._y = y
+        self._z = z
+          
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        return f"Punto en el espacio con coordenadas: x = {self._x}, y = {self._y}, z = {self._z}"
+    
+      def __repr__(self):
+        return f"Punto(x = {self._x}, y = {self._y}, z = {self._z})"
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+
+   *Por convención* se denota a las variables privadas con un guión bajo
+   antes del nombre, ej, ``_x``.
+
+.. code:: python
+
+    P1 = Punto(3,2,4.5)
+
+.. code:: python
+
+    P2 = Punto(3,2,"hola")
+
+.. code:: python
+
+    print(P1.get_coordenadas())
+
+.. code:: python
+
+    # Tomemos el valor de la componente x
+    a = P1.x
+
+.. code:: python
+
+    P1.__dict__
+
+.. code:: python
+
+    # Se puede hacer, pero no queremos que se haga!
+    P1._x
+
+Esto es un problema! Cambiamos la clase haciendo las variables x,y,z
+‘privadas’, pero eso implicó cambiarles el nombre a ``_x,_y,_z``, si ya
+hay una versión de esta clase utilizada en otros programas y acceden a
+``x,y,z`` ( es un comportamiento muy razonable querer modificar las
+coordenadas del punto…). Hicimos un cambio necesario, pero que puede
+afectar uno o más programas existentes y habría que rastrear y modificar
+todos (asumiendo que son nuestros). Para ello existe la función
+``property()`` y el decorador correspondiente ``@property``
+
+.. code:: python
+
+    class Punto:
+      "Clase para describir un punto en el espacio"
+    
+      num_puntos = 0
+      
+      def __init__(self, x=0, y=0, z=0):
+        "Inicializa un punto en el espacio"
+        Punto.num_puntos += 1
+        self.set_coordenadas(x,y,z)
+        return None
+    
+      def get_coordenadas(self):
+        return self._x, self._y, self._z
+    
+      def get_x(self):
+        return self._x
+          
+      def get_y(self):
+        return self._y
+          
+      def get_z(self):
+        return self._z
+    
+      def set_x(self, x):
+        if not isinstance(x, (int, float)):
+          raise TypeError("x debe ser número entero o flotante")        
+        self._x = x
+            
+      def set_y(self, y):
+        if not isinstance(y, (int, float)):
+          raise TypeError("y debe ser número entero o flotante")        
+        self._y = y
+            
+      def set_z(self, z):
+        if not isinstance(z, (int, float)):
+          raise TypeError("z debe ser número entero o flotante")        
+        self._z = z
+        
+      def set_coordenadas(self, x=0, y=0, z=0):
+        if not (isinstance(x, (int, float)) and isinstance(y, (int, float)) and isinstance(z, (int, float))):
+          raise TypeError("x, y, z deben ser números enteros o flotantes")
+        self._x = x
+        self._y = y
+        self._z = z
+          
+      def __del__(self):
+        "Borra el punto y actualiza el contador"
+        Punto.num_puntos -= 1
+    
+      def __str__(self):
+        return f"Punto en el espacio con coordenadas: x = {self._x}, y = {self._y}, z = {self._z}"
+    
+      def __repr__(self):
+        return f"Punto(x = {self._x}, y = {self._y}, z = {self._z})"
+    
+      def __call__(self):
+        return "Ejecuté el objeto: {}".format(self)
+    #    return str(self)
+    #    return "{}".format(self)
+    
+      @classmethod
+      def total(cls):
+        "Imprime el número total de puntos"
+        print(f"En total hay {cls.num_puntos} puntos definidos")
+    
+      x = property(get_x, set_x)
+      y = property(get_y, set_y)
+      z = property(get_z, set_z)
+      
+
+.. code:: python
+
+    P1 = Punto(2,4,6)
+
+.. code:: python
+
+    a = P1.x
+
+.. code:: python
+
+    print(a, P1.y)
+
+.. code:: python
+
+    P1.x = 3
+
+.. code:: python
+
+    P1
+
+.. code:: python
+
+    P1.y = '5'
+
+.. code:: python
+
+    P1.__dict__
+
+Más sobre herencia
+==================
+
+Vimos cómo usar herencia para que una clase pueda derivarse desde otra,
+en nuestro caso, ``Vector`` era derivado de la clase ``Punto``. Otro
+ejemplo sencillo podría ser el siguiente:
+
+.. code:: python
+
+    class Persona:
+        def __init__(self, nombre, edad):
+            self.nombre = nombre
+            self.edad = edad
+    
+        def presentarse(self):
+            return f"Hola, soy {self.nombre} y tengo {self.edad} años."
+    
+    # Clase derivada: Estudiante
+    class Estudiante(Persona):
+    
+        def __init__(self, nombre, edad, carrera):
+            # Se llama al constructor de Persona directamente
+            Persona.__init__(self, nombre, edad)
+            self.carrera = carrera
+    
+        def presentarse(self):
+            return f"Hola, soy {self.nombre}, tengo {self.edad} años y estudio {self.carrera}."
+
+
+Aquí la clase ``Estudiante`` deriva de la clase ``Persona``, y en el
+constructor (``__init__``) de la clase estudiante, utilizamos el
+constructor de la clase base ``Persona``:
+
+.. code:: python
+
+    pedro = Estudiante('Pedro', 25, 'Física')
+    pedro.presentarse()                
+
+Otra posibilidad que brinda Python para referirse a los constructores de
+la clase base es utilizar la función ``super()``:
+
+.. code:: python
+
+    class Persona:
+        def __init__(self, nombre, edad):
+            self.nombre = nombre
+            self.edad = edad
+    
+        def presentarse(self):
+            return f"Hola, soy {self.nombre} y tengo {self.edad} años."
+    
+    # Clase derivada: Estudiante
+    class Estudiante(Persona):
+        def __init__(self, nombre, edad, carrera):
+            # Llamamos al constructor de la clase base con super()
+            super().__init__(nombre, edad)
+            self.carrera = carrera  # Nuevo atributo para Estudiante
+    
+        def presentarse(self):
+            # Reutilizamos el método de la clase base y agregamos más información
+            return f"{super().presentarse()} Estoy estudiando {self.carrera}."
+
+
+.. code:: python
+
+    
+    # Uso de las clases
+    carlos = Persona("Carlos", 20)
+    maria = Estudiante("María", 20, "Ingeniería")
+
+.. code:: python
+
+    print(carlos.presentarse())
+    print(maria.presentarse())
+
+--------------
+
+Ejercicios 08 (a)
+=================
+
+1. Cree una nueva clase ``Materia`` que describa una materia que se
+   dicta en el IB. La clase debe contener información sobre el nombre de
+   la materia, los alumnos que la cursan, y los docentes que la dictan.
+   Utilice las clases ``Persona`` y ``Estudiante`` y, si es necesario,
+   cree nuevas clases. Además debe proveer los siguientes métodos:
+
+-  ``agrega_estudiante`` que agrega un estudiante al curso
+-  ``agrega_docente`` que agrega un docente al curso
+-  ``imprime_estudiantes`` que lista los estudiantes del curso
+
+--------------
+
+
+
+``Enum`` y ``dataclass``\ es
+============================
+
+Vamos a ver ahora dos tipos de datos que pueden ser útiles más allá de
+los objetos que uno pueda definir en Python mediante clases. Ambos tipos
+de datos se relacionan con la *inmutabilidad*, propiedad que tiene
+muchos casos de uso relevantes y es de mucha ayuda para crear código
+robusto.
+
+``Enum``\ s
+-----------
+
+Los ``enum``\ s (enumeraciones) son una forma de asociar simbólicamente
+un conjunto de etiquetas a un conjunto de valores constantes, y se
+introducen en Python con la versión 3.4. Los ``enum`` modelan un
+conjunto *limitado* de valores que una variable puede tomar, y donde
+cada valor tiene un nombre descriptivo.
+
+Para definir un ``enum``, es necesario importar la clase ``Enum`` del
+módulo correspondiente
+
+.. code:: python
+
+    from enum import Enum 
+
+.. code:: python
+
+    class ColorCMYK(Enum):
+        YELLOW = 1
+        CYAN = 2
+        MAGENTA = 3
+        BLACK = 4
+
+En este caso hemos definido un ``enum`` con tres elementos
+correspondientes a cuatro colores.
+
+.. code:: python
+
+    def print_color(color: ColorCMYK) -> None:        
+    
+        print(f"Color  : {color}")    
+        print(f"Nombre : {color.name}" )
+        print(f"Valor  : {color.value}" )
+
+
+.. code:: python
+
+    print_color(ColorCMYK.YELLOW)
+
+   Atención: Por **convención** se usan MAYÚSCULAS para las opciones que
+   puede tener un Enum, al igual que en otros lenguajes de programación
+   donde también se estila usarlas para las constantes.
+
+Efectivamente los valores del Enum son constantes y no es posible
+reasignarlos:
+
+.. code:: python
+
+    ColorCMYK.YELLOW = 42
+
+.. code:: python
+
+    ColorCMYK.YELLOW.value = 4
+
+.. code:: python
+
+    class ColorRGB(Enum):
+        RED = 1
+        GREEN = 2
+        BLUE = 3
+        
+        def __repr__(self):        
+            return f"Color  : {self}\nNombre : {self.name}\nValor  : {self.value}\n"
+
+
+.. code:: python
+
+    ColorRGB.RED
+
+Se pueden comparar distintos enums:
+
+.. code:: python
+
+    ColorRGB.RED == ColorCMYK.YELLOW
+
+.. code:: python
+
+    ColorRGB.RED.value == ColorCMYK.YELLOW.value
+
+.. code:: python
+
+    print(ColorRGB.RED == ColorCMYK.YELLOW)
+    print(ColorRGB.RED is ColorCMYK.YELLOW)
+
+Enums y ``match``
+~~~~~~~~~~~~~~~~~
+
+Una estructura de control introducida en Python 3.10 es ``match-case``,
+y puede ser interesante de usar junto con Enums. El ``match-case`` fue
+un pedido recurrente de la comunidad para poseer una estructura de
+control de flujo múltiple más clara que el ``if-elif-else``. Se comporta
+en forma similar a los ``switch`` que usan otros lenguajes de
+programación. La estructura que tiene es la siguiente:
+
+.. code:: python
+
+   match variable:
+       case patrón1:
+           # Código para patrón1
+       case patrón2:
+           # Código para patrón2
+       ...        
+       case _:
+           # Código para el caso por defecto
+
+Por ejemplo:
+
+.. code:: python
+
+    def describe_color(color):
+        match color:
+            case ColorCMYK.YELLOW:
+                return "Amarillo"
+            case ColorCMYK.CYAN:
+                return "Cian"
+            case ColorCMYK.MAGENTA:
+                return "Magenta"
+            case ColorRGB.RED:
+                return "Rojo"
+            case ColorRGB.GREEN:
+                return "Verde"
+            case ColorRGB.BLUE:
+                return "Azul"
+            case _:
+                return "Color no reconocido"
+    
+    print(describe_color(ColorCMYK.YELLOW))
+    print(describe_color(ColorRGB.RED))
+    print(describe_color(ColorRGB.GREEN))
+    print(describe_color("Negro"))
+
+La estructura ``match-case`` acepta patrones avanzados, comparando
+estructuras más complejas:
+
+.. code:: python
+
+    def detecta_coordenadas(coord):
+        match coord:
+            case (0, 0):
+                return "Origen"
+            case (x, 0):
+                return f"En el eje X, en {x}"
+            case (0, y):
+                return f"En el eje Y, en {y}"
+            case (x, y):
+                return f"En el plano: ({x}, {y})"
+            case _:
+                return "Coordenada no válida"
+            
+    print(detecta_coordenadas((0, 5)))  # "En el eje Y, en 5"
+    print(detecta_coordenadas("cero, cero"))
+
+.. code:: python
+
+    def clasifica_lista(lista):
+        match lista:
+            case []: 
+                print("Lista vacía")
+                return None 
+            case [x]:  # Coincide con una lista de un solo elemento
+                print (f"Lista con un solo elemento: {x}")
+                return x
+            case [x, y]:  # Coincide con una lista de dos elementos
+                print (f"Lista con dos elementos: {x} y {y}")
+                return (x,y)
+            case [x, y, *resto]:  # Coincide con una lista de tres o más elementos
+                print (f"Lista con tres o más elementos: {x}, {y}, y otros {len(resto)} elementos")
+                return resto
+            case _:  # Coincide con cualquier otro caso
+                print ("Lista vacía o no reconocida")
+                return
+    
+    # Probar con diferentes listas
+    clasifica_lista([10])         
+    clasifica_lista([10, 20])     
+    clasifica_lista([10, 20, 30]) 
+    clasifica_lista([10, 20, 30, 40]) 
+    clasifica_lista([])      
+    clasifica_lista("Hola")     
+
+
+.. code:: python
+
+    v = clasifica_lista([10, 20, 30, 40])
+    print(v,type(v))
+    
+    v = clasifica_lista([ColorCMYK.BLACK, ColorRGB.RED])
+    print(v,type(v))
+
+Los distintos casos posibles aceptan el operador ``|`` que se usa para
+agruparlos:
+
+.. code:: python
+
+    from enum import Enum
+    
+    # Definimos un Enum para los días de la semana
+    class Dia(Enum):
+        LUNES = 1
+        MARTES = 2
+        MIERCOLES = 3
+        JUEVES = 4
+        VIERNES = 5
+        SABADO = 6
+        DOMINGO = 7
+    
+        # Función para determinar si es día laboral o fin de semana
+        def es_dia_laboral(self):
+            match self:
+                case Dia.LUNES | Dia.MIERCOLES:
+                    return "Tengo clases de Python 🥳"
+                case  Dia.MARTES | Dia.JUEVES | Dia.VIERNES :
+                    return "Es un día laboral 🧐"
+                case Dia.SABADO | Dia.DOMINGO:
+                    return "Es fin de semana 😆"
+                case _:
+                    return "Día no válido"
+    
+    # Probar con diferentes días
+    print(Dia.LUNES.es_dia_laboral())   
+    print(Dia.SABADO.es_dia_laboral())  
+    print(Dia.MIERCOLES.es_dia_laboral())
+
+
+O comparar tipos de datos
+
+.. code:: python
+
+    def printer_color(color: ColorRGB | ColorCMYK) -> None:
+        match color:
+            case ColorRGB():
+                print(f"Usando RGB: {color}\n")
+            case ColorCMYK():
+                print(f"Usando YMgCy: {color}\n")
+            case _:
+                print("Color no reconocido\n")
+    
+    printer_color(ColorRGB.RED)
+    printer_color(ColorCMYK.YELLOW)
+    printer_color("Negro")
+
+Es posible hacer comparaciones más complejas todavía, por ejemplo,
+usando clases:
+
+.. code:: python
+
+    class Persona:
+        def __init__(self, nombre, edad):
+            self.nombre = nombre
+            self.edad = edad
+    
+    def saluda_a(persona):
+        match persona:
+            case Persona() if persona.edad >= 18:
+                return f"Hola {persona.nombre}, eres mayor de edad."
+            case Persona() if 16 <= persona.edad < 18:
+                return f"Hola {persona.nombre}, podés manejar pero no comprar alcohol"
+            case Persona():
+                return f"Hola {persona.nombre}, eres menor de edad."
+            case _:
+                return "Eres un alien"
+            
+    print(saluda_a(Persona("Juan",12))) 
+    print(saluda_a(Persona("Ana",19)))  
+    print(saluda_a(Persona("Mabel",17)))
+    print(saluda_a("Chewbacca"))
+
+Otra forma de hacerlo es a través del denominado match *posicional*.
+Para ello se agrega el atributo **match_args** a la clase, que contiene
+una tupla que representa los argumentos de creación de la clase tal como
+figuran en el ``__init__``.
+
+   Atención: consultar `la ayuda <https://peps.python.org/pep-0636/>`__
+   para comprender en profundidad cómo funciona el ``match-case`` cuando
+   se comparan estructuras de datos complejas como las clases.
+
+.. code:: python
+
+    class Persona:
+        __match_args__ = ("nombre","edad")
+    
+        def __init__(self, nombre, edad):
+            self.nombre = nombre
+            self.edad = edad
+    
+    def saluda_a(persona):
+        match persona:
+            case Persona(nombre, edad) if edad >= 18:
+                return f"Hola {nombre}, eres mayor de edad."
+            case Persona(nombre, edad) if 16 <= edad < 18:
+                return f"Hola {nombre}, podés manejar pero no comprar alcohol"
+            case Persona(nombre, edad):
+                return f"Hola {nombre}, eres menor de edad."
+            case _:
+                return "Eres un alien"
+            
+    print(saluda_a(Persona("Juan",12))) 
+    print(saluda_a(Persona("Ana",19)))  
+    print(saluda_a(Persona("Mabel",17)))
+    print(saluda_a("Chewbacca"))
+
+Dataclasses
+-----------
+
+En muchísimas situaciones uno necesita utilizar una clase con ciertos
+métodos habituales, como un constructor default. Para ello Python provee
+un módulo que define un decorador ``@dataclass`` que los genera.
+
+.. code:: python
+
+    from dataclasses import dataclass
+    
+    @dataclass
+    class Atomo:
+        nombre: str    
+        simbolo: str
+        N: int # número atómico
+        A: int # número de masa
+
+
+.. code:: python
+
+    hidrogeno = Atomo("Hidrógeno", "H", 1, 1)
+    helio = Atomo("Helio", "He", 2, 4)
+    
+    print(hidrogeno)
+    hidrogeno
+
+Entre los métodos que el decorador genera automáticamente están el
+constructor ``__init__``, los métodos ``__repr__`` y ``__str__`` y el
+método ``__eq__`` que provee igualdad estructural:
+
+.. code:: python
+
+    h = Atomo("Hidrógeno", "H", 1, 1)
+    print(h==hidrogeno)
+    print(h is hidrogeno)
+
+Además de la sintaxis sencilla, se pueden crear dataclasses con
+argumentos default:
+
+.. code:: python
+
+    class StockStatus(Enum):
+        DISPONIBLE = "En stock"
+        AGOTADO = "Sin stock"
+        QUEDAN_POCOS = "Stock bajo!" 
+    
+    
+    @dataclass
+    class Producto:
+        nombre: str
+        precio: float
+        stock: StockStatus = StockStatus.AGOTADO 
+    
+    p = Producto("Laptop", 1000.0)
+    print(p)    
+    
+    b = Producto("Cerveza",2.5, StockStatus.DISPONIBLE)
+    print(b)
+
+Para finalizar, es posible poblar una ``dataclass`` a partir de un
+diccionario en forma sencilla, siempre y cuando las claves del
+diccionario se correspondan unívocamente con los campos de la estructura
+de la ``dataclass``
+
+.. code:: python
+
+    cerveza = { "nombre": "Cerveza", "precio": 2.5, "stock": StockStatus.DISPONIBLE } 
+    
+    b = Producto(**cerveza)
+    print(b)
+
+.. code:: python
+
+    b.nombre = "Cerveza artesanal"
+    print(b)
+
+.. code:: python
+
+    b.nombre = 4
+
+Otra propiedad interesante que poseen las ``dataclass``\ es consiste en
+utilizar el argumento ``frozen`` para evitar que los objetos sean
+modificados una vez creados. Si intentamos modificar un atributo de un
+objeto ``frozen``, se lanzará una excepción ``FrozenInstanceError``.
+
+.. code:: python
+
+    @dataclass(frozen=True)
+    class Atomo():
+        nombre: str    
+        simbolo: str
+        N: int # número atómico
+        A: int # número de masa
+
+
+.. code:: python
+
+    Ca = Atomo("Calcio", "Ca", 20, 40)
+    print(Ca)
+    Ca.A = 14
+
+--------------
+
+Ejercicios 08 (b)
+=================
+
+1. El archivo ``atomos_t.json`` contiene datos atómicos y físicos de los
+   primeros átomos de la tabla periódica. Se puede usar el módulo
+   ``json`` para leer este archivo de la siguiente manera
+
+.. code:: python
+
+   import json
+
+   with open('atomos_t.json', 'r') as file:  # Verifique que el path al archivo sea el correcto en su caso
+       atomos = json.load(file)
+
+De esta manera se crea un diccionario ``atomos`` con la información del
+archivo.
+
+-  Cree una ``dataclass`` para manejar los datos atómicos, que incluya
+   el nombre del elemento, el símbolo, el número atómico y la masa
+   atómica.
+-  Extienda la clase anterior para poder manejar el estado del material
+   a temperatura ambiente (‘State at Room Temp’). Para ello cree un
+   ``enum`` adecuado para representarlo y construya una nueva
+   ``dataclass`` adecuada.
+-  Modifique ``__repr__`` y ``__str__`` para que se imprima la
+   información de cada átomo en forma clara y bella.
+-  ¿Qué estrategia/s usaría para incorporar las temperaturas de fusión
+   (‘Melting Point’) y de ebullición (‘Boiling Point’) de los átomos de
+   la lista?
+
+--------------

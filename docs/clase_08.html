@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 8: Más sobre objetos &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 7: Persistencia de datos y módulos de biblioteca standard" href="clase_07.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 8: Más sobre objetos</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#el-decorador-classmethod">El decorador <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getters-y-setters"><em>Getters</em> y <em>Setters</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#funcion-property">Función <code class="docutils literal notranslate"><span class="pre">property</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mas-sobre-herencia">Más sobre herencia</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-08-a">Ejercicios 08 (a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enum-y-dataclasses"><code class="docutils literal notranslate"><span class="pre">Enum</span></code> y <code class="docutils literal notranslate"><span class="pre">dataclass</span></code>es</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enums"><code class="docutils literal notranslate"><span class="pre">Enum</span></code>s</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#enums-y-match">Enums y <code class="docutils literal notranslate"><span class="pre">match</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dataclasses">Dataclasses</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-08-b">Ejercicios 08 (b)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 8: Más sobre objetos</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_08.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-8-mas-sobre-objetos">
+<span id="clase-08"></span><h1>Clase 8: Más sobre objetos<a class="headerlink" href="#clase-8-mas-sobre-objetos" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<p>Hemos visto que si bien en Python todo es un objeto, esto es, una
+instancia de alguna clase con sus atributos y métodos, los mismos son
+públicos. Esto otorga gran versatilidad a la programación, pero puede
+ser un inconveniente a la hora de mantener código, debido a que el
+pretendido encapsulamiento de datos y funciones en una clase es pura
+responsabilidad del programador. Aquí veremos algunas facilidades que
+otorga Python para ayudar a crear clases robustas.</p>
+<section id="el-decorador-classmethod">
+<h2>El decorador <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code><a class="headerlink" href="#el-decorador-classmethod" title="Link to this heading"></a></h2>
+<p>En nuestra versión de la clase <code class="docutils literal notranslate"><span class="pre">Punto</span></code>, teníamos la capacidad de ir
+registrando el número de puntos que se van inicializando,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
+  <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
+
+  <span class="n">num_puntos</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">-=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número de puntos:&#39;</span><span class="p">,</span> <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span><span class="p">)</span>
+<span class="k">del</span> <span class="n">p2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número de puntos:&#39;</span><span class="p">,</span> <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Claramente la variable <code class="docutils literal notranslate"><span class="pre">num_puntos</span></code> es un dato de la clase <code class="docutils literal notranslate"><span class="pre">Punto</span></code>,
+y no de una instancia particular de la misma. Para mejorar la
+organización de este tipo de datos o métodos asociados a una clase,
+Python provee el decorador <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
+  <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
+
+  <span class="n">num_puntos</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">-=</span> <span class="mi">1</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">total</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="s2">&quot;Imprime el número total de puntos&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;En total hay </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">num_puntos</span><span class="si">}</span><span class="s2"> puntos definidos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Así como <code class="docutils literal notranslate"><span class="pre">self</span></code> debe ser el primer argumento de los métodos de
+instancia, <code class="docutils literal notranslate"><span class="pre">cls</span></code> se refiere a la propia clase y debe ser el primer
+argumento del método de clase decorado por <code class="docutils literal notranslate"><span class="pre">&#64;classmethod</span></code>. De la misma
+forma, se utiliza la palabra <code class="docutils literal notranslate"><span class="pre">cls</span></code> por convención, podría ser
+cualquier otra siempre que se mantenga la consistencia interna.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">p2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">()</span>
+<span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
+<span class="k">del</span> <span class="n">p2</span>
+<span class="n">Punto</span><span class="o">.</span><span class="n">total</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Otro ejemplo interesante es crear constructores alternativos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">nombre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">edad</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">desde_cadena</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">cadena</span><span class="p">):</span>
+        <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span> <span class="o">=</span> <span class="n">cadena</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">edad</span><span class="p">))</span>  <span class="c1"># Devuelve una nueva instancia</span>
+
+<span class="c1"># Crear una instancia desde una cadena</span>
+<span class="n">p3</span> <span class="o">=</span> <span class="n">Persona</span><span class="o">.</span><span class="n">desde_cadena</span><span class="p">(</span><span class="s2">&quot;Lionel, 37&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">nombre</span><span class="p">)</span>
+ <span class="nb">print</span><span class="p">(</span><span class="n">p3</span><span class="o">.</span><span class="n">edad</span><span class="p">)</span>
+
+<span class="n">En</span> <span class="n">el</span> <span class="n">ejercicio</span> <span class="n">de</span> <span class="err">``</span><span class="n">Polinomio</span><span class="err">``</span><span class="p">,</span> <span class="n">puede</span> <span class="n">transformar</span> <span class="n">la</span> <span class="n">función</span>
+<span class="err">``</span><span class="n">from_string</span><span class="err">``</span> <span class="n">requerida</span> <span class="n">a</span> <span class="n">un</span> <span class="n">método</span> <span class="n">de</span> <span class="n">clase</span><span class="p">,</span> <span class="n">de</span> <span class="n">forma</span> <span class="n">tal</span> <span class="n">que</span> <span class="n">se</span>
+<span class="n">pueda</span> <span class="n">crear</span> <span class="n">un</span> <span class="n">polinomio</span> <span class="n">como</span><span class="p">:</span> \<span class="err">```</span><span class="n">python</span> <span class="n">p1</span> <span class="o">=</span>
+<span class="n">Polinomio</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span><span class="err">“</span><span class="mi">4</span> <span class="n">x</span><span class="o">^</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span> <span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">2.1</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="err">”</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="getters-y-setters">
+<h2><em>Getters</em> y <em>Setters</em><a class="headerlink" href="#getters-y-setters" title="Link to this heading"></a></h2>
+<section id="funcion-property">
+<h3>Función <code class="docutils literal notranslate"><span class="pre">property</span></code><a class="headerlink" href="#funcion-property" title="Link to this heading"></a></h3>
+<p>Volvamos a nuestra clase <code class="docutils literal notranslate"><span class="pre">Punto</span></code> y veamos cómo podemos mejorarla para
+no incurrir en posibles errores.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
+  <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
+
+  <span class="n">num_puntos</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">-=</span> <span class="mi">1</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto en el espacio con coordenadas: x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto(x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;Ejecuté el objeto: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="c1">#    return str(self)</span>
+<span class="c1">#    return &quot;{}&quot;.format(self)</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">total</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="s2">&quot;Imprime el número total de puntos&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;En total hay </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">num_puntos</span><span class="si">}</span><span class="s2"> puntos definidos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>
+<span class="n">P1</span>
+</pre></div>
+</div>
+<p>Esto ocurrió porque nos olvidamos de verificar que los argumentos son
+del tipo correcto. Una manera de solucionarlo es chequear que los
+valores son del tipo correcto al crear el objeto, como hicimos
+anteriormente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
+  <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
+
+  <span class="n">num_puntos</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))):</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x, y, z deben ser números enteros o flotantes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+
+
+  <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">-=</span> <span class="mi">1</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto en el espacio con coordenadas: x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto(x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">total</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="s2">&quot;Imprime el número total de puntos&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;En total hay </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">num_puntos</span><span class="si">}</span><span class="s2"> puntos definidos&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Punto</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Sin embargo aún tendremos problemas si los usuarios lo modifican luego
+de crearlo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;b&#39;</span>
+<span class="n">P1</span>
+</pre></div>
+</div>
+<p>Una solución a esto es hacer las componentes “privadas” (por convención)
+para que los usuarios no la modifiquen directamente. El problema es que
+los usuarios tienen que poder acceder y modificarla. Una solución es
+crear métodos para darle valores (<em>setter</em>) y tomarlos (<em>getter</em>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
+   <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
+
+   <span class="n">num_puntos</span> <span class="o">=</span> <span class="mi">0</span>
+
+   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+     <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+     <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+     <span class="k">return</span> <span class="kc">None</span>
+
+   <span class="k">def</span> <span class="nf">get_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span>
+
+   <span class="k">def</span> <span class="nf">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+     <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))):</span>
+       <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x, y, z deben ser números enteros o flotantes&quot;</span><span class="p">)</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+     <span class="bp">self</span><span class="o">.</span><span class="n">_z</span> <span class="o">=</span> <span class="n">z</span>
+
+   <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
+     <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">-=</span> <span class="mi">1</span>
+
+   <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto en el espacio con coordenadas: x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="si">}</span><span class="s2">&quot;</span>
+
+   <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+     <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto(x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+   <span class="nd">@classmethod</span>
+   <span class="k">def</span> <span class="nf">total</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+     <span class="s2">&quot;Imprime el número total de puntos&quot;</span>
+     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;En total hay </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">num_puntos</span><span class="si">}</span><span class="s2"> puntos definidos&quot;</span><span class="p">)</span>
+
+<span class="o">*</span><span class="n">Por</span> <span class="n">convención</span><span class="o">*</span> <span class="n">se</span> <span class="n">denota</span> <span class="n">a</span> <span class="n">las</span> <span class="n">variables</span> <span class="n">privadas</span> <span class="n">con</span> <span class="n">un</span> <span class="n">guión</span> <span class="n">bajo</span>
+<span class="n">antes</span> <span class="k">del</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">ej</span><span class="p">,</span> <span class="err">``</span><span class="n">_x</span><span class="err">``</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">4.5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P2</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">P1</span><span class="o">.</span><span class="n">get_coordenadas</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tomemos el valor de la componente x</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Se puede hacer, pero no queremos que se haga!</span>
+<span class="n">P1</span><span class="o">.</span><span class="n">_x</span>
+</pre></div>
+</div>
+<p>Esto es un problema! Cambiamos la clase haciendo las variables x,y,z
+‘privadas’, pero eso implicó cambiarles el nombre a <code class="docutils literal notranslate"><span class="pre">_x,_y,_z</span></code>, si ya
+hay una versión de esta clase utilizada en otros programas y acceden a
+<code class="docutils literal notranslate"><span class="pre">x,y,z</span></code> ( es un comportamiento muy razonable querer modificar las
+coordenadas del punto…). Hicimos un cambio necesario, pero que puede
+afectar uno o más programas existentes y habría que rastrear y modificar
+todos (asumiendo que son nuestros). Para ello existe la función
+<code class="docutils literal notranslate"><span class="pre">property()</span></code> y el decorador correspondiente <code class="docutils literal notranslate"><span class="pre">&#64;property</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Punto</span><span class="p">:</span>
+  <span class="s2">&quot;Clase para describir un punto en el espacio&quot;</span>
+
+  <span class="n">num_puntos</span> <span class="o">=</span> <span class="mi">0</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="s2">&quot;Inicializa un punto en el espacio&quot;</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">set_coordenadas</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+
+  <span class="k">def</span> <span class="nf">get_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span>
+
+  <span class="k">def</span> <span class="nf">get_x</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_x</span>
+
+  <span class="k">def</span> <span class="nf">get_y</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span>
+
+  <span class="k">def</span> <span class="nf">get_z</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_z</span>
+
+  <span class="k">def</span> <span class="nf">set_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x debe ser número entero o flotante&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+
+  <span class="k">def</span> <span class="nf">set_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;y debe ser número entero o flotante&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+
+  <span class="k">def</span> <span class="nf">set_z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;z debe ser número entero o flotante&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_z</span> <span class="o">=</span> <span class="n">z</span>
+
+  <span class="k">def</span> <span class="nf">set_coordenadas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))):</span>
+      <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;x, y, z deben ser números enteros o flotantes&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_x</span> <span class="o">=</span> <span class="n">x</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_z</span> <span class="o">=</span> <span class="n">z</span>
+
+  <span class="k">def</span> <span class="fm">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="s2">&quot;Borra el punto y actualiza el contador&quot;</span>
+    <span class="n">Punto</span><span class="o">.</span><span class="n">num_puntos</span> <span class="o">-=</span> <span class="mi">1</span>
+
+  <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto en el espacio con coordenadas: x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="si">}</span><span class="s2">&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Punto(x = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_z</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+  <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;Ejecuté el objeto: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+<span class="c1">#    return str(self)</span>
+<span class="c1">#    return &quot;{}&quot;.format(self)</span>
+
+  <span class="nd">@classmethod</span>
+  <span class="k">def</span> <span class="nf">total</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+    <span class="s2">&quot;Imprime el número total de puntos&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;En total hay </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">num_puntos</span><span class="si">}</span><span class="s2"> puntos definidos&quot;</span><span class="p">)</span>
+
+  <span class="n">x</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_x</span><span class="p">,</span> <span class="n">set_x</span><span class="p">)</span>
+  <span class="n">y</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_y</span><span class="p">,</span> <span class="n">set_y</span><span class="p">)</span>
+  <span class="n">z</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_z</span><span class="p">,</span> <span class="n">set_z</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span> <span class="o">=</span> <span class="n">Punto</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">P1</span><span class="o">.</span><span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">P1</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;5&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">P1</span><span class="o">.</span><span class="vm">__dict__</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="mas-sobre-herencia">
+<h2>Más sobre herencia<a class="headerlink" href="#mas-sobre-herencia" title="Link to this heading"></a></h2>
+<p>Vimos cómo usar herencia para que una clase pueda derivarse desde otra,
+en nuestro caso, <code class="docutils literal notranslate"><span class="pre">Vector</span></code> era derivado de la clase <code class="docutils literal notranslate"><span class="pre">Punto</span></code>. Otro
+ejemplo sencillo podría ser el siguiente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">nombre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">edad</span>
+
+    <span class="k">def</span> <span class="nf">presentarse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola, soy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2"> y tengo </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">edad</span><span class="si">}</span><span class="s2"> años.&quot;</span>
+
+<span class="c1"># Clase derivada: Estudiante</span>
+<span class="k">class</span> <span class="nc">Estudiante</span><span class="p">(</span><span class="n">Persona</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">,</span> <span class="n">carrera</span><span class="p">):</span>
+        <span class="c1"># Se llama al constructor de Persona directamente</span>
+        <span class="n">Persona</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carrera</span> <span class="o">=</span> <span class="n">carrera</span>
+
+    <span class="k">def</span> <span class="nf">presentarse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola, soy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, tengo </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">edad</span><span class="si">}</span><span class="s2"> años y estudio </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">carrera</span><span class="si">}</span><span class="s2">.&quot;</span>
+</pre></div>
+</div>
+<p>Aquí la clase <code class="docutils literal notranslate"><span class="pre">Estudiante</span></code> deriva de la clase <code class="docutils literal notranslate"><span class="pre">Persona</span></code>, y en el
+constructor (<code class="docutils literal notranslate"><span class="pre">__init__</span></code>) de la clase estudiante, utilizamos el
+constructor de la clase base <code class="docutils literal notranslate"><span class="pre">Persona</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pedro</span> <span class="o">=</span> <span class="n">Estudiante</span><span class="p">(</span><span class="s1">&#39;Pedro&#39;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="s1">&#39;Física&#39;</span><span class="p">)</span>
+<span class="n">pedro</span><span class="o">.</span><span class="n">presentarse</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Otra posibilidad que brinda Python para referirse a los constructores de
+la clase base es utilizar la función <code class="docutils literal notranslate"><span class="pre">super()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">nombre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">edad</span>
+
+    <span class="k">def</span> <span class="nf">presentarse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola, soy </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2"> y tengo </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">edad</span><span class="si">}</span><span class="s2"> años.&quot;</span>
+
+<span class="c1"># Clase derivada: Estudiante</span>
+<span class="k">class</span> <span class="nc">Estudiante</span><span class="p">(</span><span class="n">Persona</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">,</span> <span class="n">carrera</span><span class="p">):</span>
+        <span class="c1"># Llamamos al constructor de la clase base con super()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">carrera</span> <span class="o">=</span> <span class="n">carrera</span>  <span class="c1"># Nuevo atributo para Estudiante</span>
+
+    <span class="k">def</span> <span class="nf">presentarse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Reutilizamos el método de la clase base y agregamos más información</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">presentarse</span><span class="p">()</span><span class="si">}</span><span class="s2"> Estoy estudiando </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">carrera</span><span class="si">}</span><span class="s2">.&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Uso de las clases</span>
+<span class="n">carlos</span> <span class="o">=</span> <span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Carlos&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">maria</span> <span class="o">=</span> <span class="n">Estudiante</span><span class="p">(</span><span class="s2">&quot;María&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;Ingeniería&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">carlos</span><span class="o">.</span><span class="n">presentarse</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">maria</span><span class="o">.</span><span class="n">presentarse</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-08-a">
+<h2>Ejercicios 08 (a)<a class="headerlink" href="#ejercicios-08-a" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Cree una nueva clase <code class="docutils literal notranslate"><span class="pre">Materia</span></code> que describa una materia que se
+dicta en el IB. La clase debe contener información sobre el nombre de
+la materia, los alumnos que la cursan, y los docentes que la dictan.
+Utilice las clases <code class="docutils literal notranslate"><span class="pre">Persona</span></code> y <code class="docutils literal notranslate"><span class="pre">Estudiante</span></code> y, si es necesario,
+cree nuevas clases. Además debe proveer los siguientes métodos:</p></li>
+</ol>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">agrega_estudiante</span></code> que agrega un estudiante al curso</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agrega_docente</span></code> que agrega un docente al curso</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imprime_estudiantes</span></code> que lista los estudiantes del curso</p></li>
+</ul>
+</section>
+<hr class="docutils" />
+<section id="enum-y-dataclasses">
+<h2><code class="docutils literal notranslate"><span class="pre">Enum</span></code> y <code class="docutils literal notranslate"><span class="pre">dataclass</span></code>es<a class="headerlink" href="#enum-y-dataclasses" title="Link to this heading"></a></h2>
+<p>Vamos a ver ahora dos tipos de datos que pueden ser útiles más allá de
+los objetos que uno pueda definir en Python mediante clases. Ambos tipos
+de datos se relacionan con la <em>inmutabilidad</em>, propiedad que tiene
+muchos casos de uso relevantes y es de mucha ayuda para crear código
+robusto.</p>
+<section id="enums">
+<h3><code class="docutils literal notranslate"><span class="pre">Enum</span></code>s<a class="headerlink" href="#enums" title="Link to this heading"></a></h3>
+<p>Los <code class="docutils literal notranslate"><span class="pre">enum</span></code>s (enumeraciones) son una forma de asociar simbólicamente
+un conjunto de etiquetas a un conjunto de valores constantes, y se
+introducen en Python con la versión 3.4. Los <code class="docutils literal notranslate"><span class="pre">enum</span></code> modelan un
+conjunto <em>limitado</em> de valores que una variable puede tomar, y donde
+cada valor tiene un nombre descriptivo.</p>
+<p>Para definir un <code class="docutils literal notranslate"><span class="pre">enum</span></code>, es necesario importar la clase <code class="docutils literal notranslate"><span class="pre">Enum</span></code> del
+módulo correspondiente</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ColorCMYK</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">CYAN</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">MAGENTA</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">BLACK</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>En este caso hemos definido un <code class="docutils literal notranslate"><span class="pre">enum</span></code> con tres elementos
+correspondientes a cuatro colores.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">print_color</span><span class="p">(</span><span class="n">color</span><span class="p">:</span> <span class="n">ColorCMYK</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Color  : </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Nombre : </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valor  : </span><span class="si">{</span><span class="n">color</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">print_color</span><span class="p">(</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+
+<span class="n">Atención</span><span class="p">:</span> <span class="n">Por</span> <span class="o">**</span><span class="n">convención</span><span class="o">**</span> <span class="n">se</span> <span class="n">usan</span> <span class="n">MAYÚSCULAS</span> <span class="n">para</span> <span class="n">las</span> <span class="n">opciones</span> <span class="n">que</span>
+<span class="n">puede</span> <span class="n">tener</span> <span class="n">un</span> <span class="n">Enum</span><span class="p">,</span> <span class="n">al</span> <span class="n">igual</span> <span class="n">que</span> <span class="n">en</span> <span class="n">otros</span> <span class="n">lenguajes</span> <span class="n">de</span> <span class="n">programación</span>
+<span class="n">donde</span> <span class="n">también</span> <span class="n">se</span> <span class="n">estila</span> <span class="n">usarlas</span> <span class="n">para</span> <span class="n">las</span> <span class="n">constantes</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Efectivamente los valores del Enum son constantes y no es posible
+reasignarlos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span> <span class="o">=</span> <span class="mi">42</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ColorRGB</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">RED</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">GREEN</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">BLUE</span> <span class="o">=</span> <span class="mi">3</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Color  : </span><span class="si">{</span><span class="bp">self</span><span class="si">}</span><span class="se">\n</span><span class="s2">Nombre : </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\n</span><span class="s2">Valor  : </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span>
+</pre></div>
+</div>
+<p>Se pueden comparar distintos enums:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="o">.</span><span class="n">value</span> <span class="o">==</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="o">.</span><span class="n">value</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span> <span class="o">==</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span> <span class="ow">is</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="enums-y-match">
+<h4>Enums y <code class="docutils literal notranslate"><span class="pre">match</span></code><a class="headerlink" href="#enums-y-match" title="Link to this heading"></a></h4>
+<p>Una estructura de control introducida en Python 3.10 es <code class="docutils literal notranslate"><span class="pre">match-case</span></code>,
+y puede ser interesante de usar junto con Enums. El <code class="docutils literal notranslate"><span class="pre">match-case</span></code> fue
+un pedido recurrente de la comunidad para poseer una estructura de
+control de flujo múltiple más clara que el <code class="docutils literal notranslate"><span class="pre">if-elif-else</span></code>. Se comporta
+en forma similar a los <code class="docutils literal notranslate"><span class="pre">switch</span></code> que usan otros lenguajes de
+programación. La estructura que tiene es la siguiente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">match</span> <span class="n">variable</span><span class="p">:</span>
+    <span class="k">case</span> <span class="n">patrón1</span><span class="p">:</span>
+        <span class="c1"># Código para patrón1</span>
+    <span class="k">case</span> <span class="n">patrón2</span><span class="p">:</span>
+        <span class="c1"># Código para patrón2</span>
+    <span class="o">...</span>
+    <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+        <span class="c1"># Código para el caso por defecto</span>
+</pre></div>
+</div>
+<p>Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">describe_color</span><span class="p">(</span><span class="n">color</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">color</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Amarillo&quot;</span>
+        <span class="k">case</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">CYAN</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Cian&quot;</span>
+        <span class="k">case</span> <span class="n">ColorCMYK</span><span class="o">.</span><span class="n">MAGENTA</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Magenta&quot;</span>
+        <span class="k">case</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Rojo&quot;</span>
+        <span class="k">case</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">GREEN</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Verde&quot;</span>
+        <span class="k">case</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">BLUE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Azul&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Color no reconocido&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">describe_color</span><span class="p">(</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">describe_color</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">describe_color</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">GREEN</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">describe_color</span><span class="p">(</span><span class="s2">&quot;Negro&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>La estructura <code class="docutils literal notranslate"><span class="pre">match-case</span></code> acepta patrones avanzados, comparando
+estructuras más complejas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">detecta_coordenadas</span><span class="p">(</span><span class="n">coord</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">coord</span><span class="p">:</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="s2">&quot;Origen&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;En el eje X, en </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;En el eje Y, en </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="k">case</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;En el plano: (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">)&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Coordenada no válida&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">detecta_coordenadas</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)))</span>  <span class="c1"># &quot;En el eje Y, en 5&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">detecta_coordenadas</span><span class="p">(</span><span class="s2">&quot;cero, cero&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">clasifica_lista</span><span class="p">(</span><span class="n">lista</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">lista</span><span class="p">:</span>
+        <span class="k">case</span> <span class="p">[]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lista vacía&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">case</span> <span class="p">[</span><span class="n">x</span><span class="p">]:</span>  <span class="c1"># Coincide con una lista de un solo elemento</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lista con un solo elemento: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">case</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]:</span>  <span class="c1"># Coincide con una lista de dos elementos</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lista con dos elementos: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> y </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">case</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">*</span><span class="n">resto</span><span class="p">]:</span>  <span class="c1"># Coincide con una lista de tres o más elementos</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lista con tres o más elementos: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">, y otros </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">resto</span><span class="p">)</span><span class="si">}</span><span class="s2"> elementos&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">resto</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>  <span class="c1"># Coincide con cualquier otro caso</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Lista vacía o no reconocida&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+<span class="c1"># Probar con diferentes listas</span>
+<span class="n">clasifica_lista</span><span class="p">([</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">clasifica_lista</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">])</span>
+<span class="n">clasifica_lista</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">])</span>
+<span class="n">clasifica_lista</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>
+<span class="n">clasifica_lista</span><span class="p">([])</span>
+<span class="n">clasifica_lista</span><span class="p">(</span><span class="s2">&quot;Hola&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">clasifica_lista</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+<span class="n">v</span> <span class="o">=</span> <span class="n">clasifica_lista</span><span class="p">([</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">BLACK</span><span class="p">,</span> <span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Los distintos casos posibles aceptan el operador <code class="docutils literal notranslate"><span class="pre">|</span></code> que se usa para
+agruparlos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="c1"># Definimos un Enum para los días de la semana</span>
+<span class="k">class</span> <span class="nc">Dia</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">LUNES</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">MARTES</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">MIERCOLES</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">JUEVES</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">VIERNES</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">SABADO</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">DOMINGO</span> <span class="o">=</span> <span class="mi">7</span>
+
+    <span class="c1"># Función para determinar si es día laboral o fin de semana</span>
+    <span class="k">def</span> <span class="nf">es_dia_laboral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">match</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="k">case</span> <span class="n">Dia</span><span class="o">.</span><span class="n">LUNES</span> <span class="o">|</span> <span class="n">Dia</span><span class="o">.</span><span class="n">MIERCOLES</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Tengo clases de Python 🥳&quot;</span>
+            <span class="k">case</span>  <span class="n">Dia</span><span class="o">.</span><span class="n">MARTES</span> <span class="o">|</span> <span class="n">Dia</span><span class="o">.</span><span class="n">JUEVES</span> <span class="o">|</span> <span class="n">Dia</span><span class="o">.</span><span class="n">VIERNES</span> <span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Es un día laboral 🧐&quot;</span>
+            <span class="k">case</span> <span class="n">Dia</span><span class="o">.</span><span class="n">SABADO</span> <span class="o">|</span> <span class="n">Dia</span><span class="o">.</span><span class="n">DOMINGO</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Es fin de semana 😆&quot;</span>
+            <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s2">&quot;Día no válido&quot;</span>
+
+<span class="c1"># Probar con diferentes días</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Dia</span><span class="o">.</span><span class="n">LUNES</span><span class="o">.</span><span class="n">es_dia_laboral</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Dia</span><span class="o">.</span><span class="n">SABADO</span><span class="o">.</span><span class="n">es_dia_laboral</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Dia</span><span class="o">.</span><span class="n">MIERCOLES</span><span class="o">.</span><span class="n">es_dia_laboral</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>O comparar tipos de datos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">printer_color</span><span class="p">(</span><span class="n">color</span><span class="p">:</span> <span class="n">ColorRGB</span> <span class="o">|</span> <span class="n">ColorCMYK</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">match</span> <span class="n">color</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">ColorRGB</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Usando RGB: </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">case</span> <span class="n">ColorCMYK</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Usando YMgCy: </span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Color no reconocido</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">printer_color</span><span class="p">(</span><span class="n">ColorRGB</span><span class="o">.</span><span class="n">RED</span><span class="p">)</span>
+<span class="n">printer_color</span><span class="p">(</span><span class="n">ColorCMYK</span><span class="o">.</span><span class="n">YELLOW</span><span class="p">)</span>
+<span class="n">printer_color</span><span class="p">(</span><span class="s2">&quot;Negro&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Es posible hacer comparaciones más complejas todavía, por ejemplo,
+usando clases:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">nombre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">edad</span>
+
+<span class="k">def</span> <span class="nf">saluda_a</span><span class="p">(</span><span class="n">persona</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">persona</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">Persona</span><span class="p">()</span> <span class="k">if</span> <span class="n">persona</span><span class="o">.</span><span class="n">edad</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, eres mayor de edad.&quot;</span>
+        <span class="k">case</span> <span class="n">Persona</span><span class="p">()</span> <span class="k">if</span> <span class="mi">16</span> <span class="o">&lt;=</span> <span class="n">persona</span><span class="o">.</span><span class="n">edad</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, podés manejar pero no comprar alcohol&quot;</span>
+        <span class="k">case</span> <span class="n">Persona</span><span class="p">():</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">persona</span><span class="o">.</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, eres menor de edad.&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Eres un alien&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Juan&quot;</span><span class="p">,</span><span class="mi">12</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span><span class="mi">19</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Mabel&quot;</span><span class="p">,</span><span class="mi">17</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Chewbacca&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Otra forma de hacerlo es a través del denominado match <em>posicional</em>.
+Para ello se agrega el atributo <strong>match_args</strong> a la clase, que contiene
+una tupla que representa los argumentos de creación de la clase tal como
+figuran en el <code class="docutils literal notranslate"><span class="pre">__init__</span></code>.</p>
+<blockquote>
+<div><p>Atención: consultar <a class="reference external" href="https://peps.python.org/pep-0636/">la ayuda</a>
+para comprender en profundidad cómo funciona el <code class="docutils literal notranslate"><span class="pre">match-case</span></code> cuando
+se comparan estructuras de datos complejas como las clases.</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Persona</span><span class="p">:</span>
+    <span class="n">__match_args__</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;nombre&quot;</span><span class="p">,</span><span class="s2">&quot;edad&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="n">nombre</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edad</span> <span class="o">=</span> <span class="n">edad</span>
+
+<span class="k">def</span> <span class="nf">saluda_a</span><span class="p">(</span><span class="n">persona</span><span class="p">):</span>
+    <span class="k">match</span> <span class="n">persona</span><span class="p">:</span>
+        <span class="k">case</span> <span class="n">Persona</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">)</span> <span class="k">if</span> <span class="n">edad</span> <span class="o">&gt;=</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, eres mayor de edad.&quot;</span>
+        <span class="k">case</span> <span class="n">Persona</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">)</span> <span class="k">if</span> <span class="mi">16</span> <span class="o">&lt;=</span> <span class="n">edad</span> <span class="o">&lt;</span> <span class="mi">18</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, podés manejar pero no comprar alcohol&quot;</span>
+        <span class="k">case</span> <span class="n">Persona</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">edad</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Hola </span><span class="si">{</span><span class="n">nombre</span><span class="si">}</span><span class="s2">, eres menor de edad.&quot;</span>
+        <span class="k">case</span><span class="w"> </span><span class="k">_</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Eres un alien&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Juan&quot;</span><span class="p">,</span><span class="mi">12</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Ana&quot;</span><span class="p">,</span><span class="mi">19</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="n">Persona</span><span class="p">(</span><span class="s2">&quot;Mabel&quot;</span><span class="p">,</span><span class="mi">17</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">saluda_a</span><span class="p">(</span><span class="s2">&quot;Chewbacca&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="dataclasses">
+<h3>Dataclasses<a class="headerlink" href="#dataclasses" title="Link to this heading"></a></h3>
+<p>En muchísimas situaciones uno necesita utilizar una clase con ciertos
+métodos habituales, como un constructor default. Para ello Python provee
+un módulo que define un decorador <code class="docutils literal notranslate"><span class="pre">&#64;dataclass</span></code> que los genera.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Atomo</span><span class="p">:</span>
+    <span class="n">nombre</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">simbolo</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">N</span><span class="p">:</span> <span class="nb">int</span> <span class="c1"># número atómico</span>
+    <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="c1"># número de masa</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hidrogeno</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Hidrógeno&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">helio</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Helio&quot;</span><span class="p">,</span> <span class="s2">&quot;He&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">hidrogeno</span><span class="p">)</span>
+<span class="n">hidrogeno</span>
+</pre></div>
+</div>
+<p>Entre los métodos que el decorador genera automáticamente están el
+constructor <code class="docutils literal notranslate"><span class="pre">__init__</span></code>, los métodos <code class="docutils literal notranslate"><span class="pre">__repr__</span></code> y <code class="docutils literal notranslate"><span class="pre">__str__</span></code> y el
+método <code class="docutils literal notranslate"><span class="pre">__eq__</span></code> que provee igualdad estructural:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Hidrógeno&quot;</span><span class="p">,</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h</span><span class="o">==</span><span class="n">hidrogeno</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">h</span> <span class="ow">is</span> <span class="n">hidrogeno</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Además de la sintaxis sencilla, se pueden crear dataclasses con
+argumentos default:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">StockStatus</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">DISPONIBLE</span> <span class="o">=</span> <span class="s2">&quot;En stock&quot;</span>
+    <span class="n">AGOTADO</span> <span class="o">=</span> <span class="s2">&quot;Sin stock&quot;</span>
+    <span class="n">QUEDAN_POCOS</span> <span class="o">=</span> <span class="s2">&quot;Stock bajo!&quot;</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Producto</span><span class="p">:</span>
+    <span class="n">nombre</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">precio</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="n">stock</span><span class="p">:</span> <span class="n">StockStatus</span> <span class="o">=</span> <span class="n">StockStatus</span><span class="o">.</span><span class="n">AGOTADO</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">Producto</span><span class="p">(</span><span class="s2">&quot;Laptop&quot;</span><span class="p">,</span> <span class="mf">1000.0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">Producto</span><span class="p">(</span><span class="s2">&quot;Cerveza&quot;</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">StockStatus</span><span class="o">.</span><span class="n">DISPONIBLE</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Para finalizar, es posible poblar una <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> a partir de un
+diccionario en forma sencilla, siempre y cuando las claves del
+diccionario se correspondan unívocamente con los campos de la estructura
+de la <code class="docutils literal notranslate"><span class="pre">dataclass</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cerveza</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;nombre&quot;</span><span class="p">:</span> <span class="s2">&quot;Cerveza&quot;</span><span class="p">,</span> <span class="s2">&quot;precio&quot;</span><span class="p">:</span> <span class="mf">2.5</span><span class="p">,</span> <span class="s2">&quot;stock&quot;</span><span class="p">:</span> <span class="n">StockStatus</span><span class="o">.</span><span class="n">DISPONIBLE</span> <span class="p">}</span>
+
+<span class="n">b</span> <span class="o">=</span> <span class="n">Producto</span><span class="p">(</span><span class="o">**</span><span class="n">cerveza</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="s2">&quot;Cerveza artesanal&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">nombre</span> <span class="o">=</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<p>Otra propiedad interesante que poseen las <code class="docutils literal notranslate"><span class="pre">dataclass</span></code>es consiste en
+utilizar el argumento <code class="docutils literal notranslate"><span class="pre">frozen</span></code> para evitar que los objetos sean
+modificados una vez creados. Si intentamos modificar un atributo de un
+objeto <code class="docutils literal notranslate"><span class="pre">frozen</span></code>, se lanzará una excepción <code class="docutils literal notranslate"><span class="pre">FrozenInstanceError</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Atomo</span><span class="p">():</span>
+    <span class="n">nombre</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">simbolo</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">N</span><span class="p">:</span> <span class="nb">int</span> <span class="c1"># número atómico</span>
+    <span class="n">A</span><span class="p">:</span> <span class="nb">int</span> <span class="c1"># número de masa</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Ca</span> <span class="o">=</span> <span class="n">Atomo</span><span class="p">(</span><span class="s2">&quot;Calcio&quot;</span><span class="p">,</span> <span class="s2">&quot;Ca&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Ca</span><span class="p">)</span>
+<span class="n">Ca</span><span class="o">.</span><span class="n">A</span> <span class="o">=</span> <span class="mi">14</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-08-b">
+<h2>Ejercicios 08 (b)<a class="headerlink" href="#ejercicios-08-b" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>El archivo <code class="docutils literal notranslate"><span class="pre">atomos_t.json</span></code> contiene datos atómicos y físicos de los
+primeros átomos de la tabla periódica. Se puede usar el módulo
+<code class="docutils literal notranslate"><span class="pre">json</span></code> para leer este archivo de la siguiente manera</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;atomos_t.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>  <span class="c1"># Verifique que el path al archivo sea el correcto en su caso</span>
+    <span class="n">atomos</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>De esta manera se crea un diccionario <code class="docutils literal notranslate"><span class="pre">atomos</span></code> con la información del
+archivo.</p>
+<ul class="simple">
+<li><p>Cree una <code class="docutils literal notranslate"><span class="pre">dataclass</span></code> para manejar los datos atómicos, que incluya
+el nombre del elemento, el símbolo, el número atómico y la masa
+atómica.</p></li>
+<li><p>Extienda la clase anterior para poder manejar el estado del material
+a temperatura ambiente (‘State at Room Temp’). Para ello cree un
+<code class="docutils literal notranslate"><span class="pre">enum</span></code> adecuado para representarlo y construya una nueva
+<code class="docutils literal notranslate"><span class="pre">dataclass</span></code> adecuada.</p></li>
+<li><p>Modifique <code class="docutils literal notranslate"><span class="pre">__repr__</span></code> y <code class="docutils literal notranslate"><span class="pre">__str__</span></code> para que se imprima la
+información de cada átomo en forma clara y bella.</p></li>
+<li><p>¿Qué estrategia/s usaría para incorporar las temperaturas de fusión
+(‘Melting Point’) y de ebullición (‘Boiling Point’) de los átomos de
+la lista?</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_07.html" class="btn btn-neutral float-left" title="Clase 7: Persistencia de datos y módulos de biblioteca standard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
