@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 9: Control de versiones &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 8: Más sobre objetos" href="clase_08.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Más sobre objetos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 9: Control de versiones</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#que-es-y-para-que-sirve-el-control-de-versiones">¿Qué es y para qué sirve el control de versiones?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cambios-en-paralelo">Cambios en paralelo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#historia-completa">Historia completa</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#instalacion-y-uso-una-version-breve">Instalación y uso: Una versión breve</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#instalacion">Instalación</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interfaces-graficas">Interfaces gráficas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#documentacion">Documentación</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuracion-basica">Configuración básica</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creacion-de-un-nuevo-repositorio">Creación de un nuevo repositorio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clonacion-de-un-repositorio-existente">Clonación de un repositorio existente</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ver-el-estado-actual">Ver el estado actual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#creacion-de-nuevos-archivos-y-modificacion-de-existentes">Creación de nuevos archivos y modificación de existentes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#actualizacion-de-un-repositorio-remoto">Actualización de un repositorio remoto</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#puntos-importantes">Puntos importantes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 9: Control de versiones</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_09.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-9-control-de-versiones">
+<span id="clase-09"></span><h1>Clase 9: Control de versiones<a class="headerlink" href="#clase-9-control-de-versiones" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>Esta clase está <span class="strike">copiada</span> (muy fuertemente) inspirada en las siguientes fuentes:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="http://swcarpentry.github.io/git-novice">Lecciones de Software Carpentry</a>, y la <a class="reference external" href="https://swcarpentry.github.io/git-novice-es/">versión en castellano</a>).</p></li>
+<li><p>El libro <a class="reference external" href="https://git-scm.com/book/en/v2">Pro Git</a> de Scott Chacon y Ben Straub, y la <a class="reference external" href="https://git-scm.com/book/es/">versión en castellano</a>. Ambos disponibles libremente.</p></li>
+<li><p>El libro <a class="reference external" href="http://www.packtpub.com/">Mastering git</a> escrito por Jakub Narębski.</p></li>
+</ul>
+</div>
+<section id="que-es-y-para-que-sirve-el-control-de-versiones">
+<h2>¿Qué es y para qué sirve el control de versiones?<a class="headerlink" href="#que-es-y-para-que-sirve-el-control-de-versiones" title="Link to this heading"></a></h2>
+<p>El control de versiones permite ir grabando puntos en la historia de la evolución de un proyecto. Esta capacidad nos permite:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Acceder a versiones anteriores de nuestro trabajo («undo ilimitado»)</p></li>
+<li><p>Trabajar en forma paralela con otras personas sobre un mismo documento.</p></li>
+</ul>
+</div></blockquote>
+<p>Habitualmente, nos podemos encontrar con situaciones como esta:</p>
+<figure class="align-default">
+<img alt="" src="_images/alternativa.png" />
+</figure>
+<p>o, más gracioso pero igualmente común, esta otra:</p>
+<figure class="align-default">
+<img alt="“Piled Higher and Deeper” por Jorge Cham, http://www.phdcomics.com" src="_images/phd101212s.png" />
+</figure>
+<p>Todos hemos estado en esta situación alguna vez: parece ridículo tener varias versiones casi idénticas del mismo documento. Algunos procesadores de texto nos permiten lidiar con esto un poco mejor, como por ejemplo el <a class="reference external" href="https://support.office.com/en-us/article/Track-changes-in-Word-197ba630-0f5f-4a8e-9a77-3712475e806a">Track Changes de Microsoft Word</a>, el <a class="reference external" href="https://support.google.com/docs/answer/190843?hl=en">historial de versiones de Google</a>, o el <a class="reference external" href="https://help.libreoffice.org/Common/Recording_and_Displaying_Changes">Track-changes de LibreOffice</a>.</p>
+<p>Estas herramientas permiten solucionar el problema del trabajo en colaboración. Si tenemos una versión de un archivo (documento, programa, etc) podemos compartirlo con los otros autores para modificar, y luego ir aceptando o rechazando los cambios propuestos.</p>
+<p>Algunos problemas aún aparecen cuando se trabaja intensivamente en un documento, porque al aceptar o rechazar los cambios no queda registro de cuáles eran las alternativas. Además, estos sistemas actúan sólo sobre los documentos; en nuestro caso puede haber datos, gráficos, etc que cambien (o que queremos estar seguros que no cambiaron y estamos usando la versión correcta).</p>
+<p>En el fondo, la manera de evitar esto es manteniendo una buena organización. Una posible buena manera es designar una persona responsable, que vaya llevando la contabilidad de quién hizo qué correcciones, las integre en un único documento, y vaya guardando copias de todas los documentos que recibe en un lugar separado. Cuando hay varios autores (cuatro o cinco) éste es un trabajo bastante arduo y con buenas posibilidades de pequeños errores. Los sistemas de control de versiones tratan de automatizar la mayor parte del trabajo para hacer más fácil la colaboración, manteniendo registro de los cambios que se hicieron desde que se inició el documento, y produciendo poca interferencia, permitiendo al mismo tiempo trabajar de manera similar a como lo hacemos habitualmente.</p>
+<p>Consideremos un proyecto con varios archivos y autores.
+En este esquema de trabajo, podemos compartir una versión de todos los archivos del proyecto</p>
+<section id="cambios-en-paralelo">
+<h3>Cambios en paralelo<a class="headerlink" href="#cambios-en-paralelo" title="Link to this heading"></a></h3>
+<p>Una de las ventajas de los sistemas de control de versiones es que cada autor hace su aporte en su propia copia (en paralelo)</p>
+<figure class="align-default">
+<img alt="versiones corregidas en paralelo" src="_images/versions.png" />
+</figure>
+<p>y después estos son compatibilizados e incorporados en un único documento.</p>
+<figure class="align-default">
+<img alt="Compaginando versiones corregidas en paralelo" src="_images/merge.png" />
+</figure>
+<p>En casos en que los autores trabajen en zonas distintas la compaginación se puede hacer en forma automática. Por otro lado, si dos personas cambian la misma frase obviamente se necesita tomar una decisión y la compaginación no puede (ni quiere) hacerse automáticamente.</p>
+</section>
+<section id="historia-completa">
+<h3>Historia completa<a class="headerlink" href="#historia-completa" title="Link to this heading"></a></h3>
+<p>Otra característica importante de los sistemas de control de versiones es que guardan la historia completa de todos los archivos que componen el proyecto. Imaginen, por ejemplo, que escribieron una función para resolver parte de un problema. La función no sólo hace su trabajo sino que está muy bien escrita, es elegante y funciona rápidamente. Unos días después encuentran que toda esa belleza era innecesaria, porque el problema que resuelve la función no aparece en su proyecto, y por supuesto la borra. La version oficial no tiene esa parte del código.</p>
+<p>Dos semanas, y varias líneas de código, después aparece un problema parecido y querríamos tener la función que borramos …</p>
+<p>Los sistemas de control de versiones guardan toda la información de la historia de cada archivo, con un comentario del autor. Este modo de trabajar nos permite recuperar (casi) toda la información previa, incluso aquella que en algún momento decidimos descartar.</p>
+</section>
+</section>
+<section id="instalacion-y-uso-una-version-breve">
+<h2>Instalación y uso: Una versión breve<a class="headerlink" href="#instalacion-y-uso-una-version-breve" title="Link to this heading"></a></h2>
+<section id="instalacion">
+<h3>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading"></a></h3>
+<p>Vamos a describir uno de los posibles sistemas de control de versiones, llamado <em>git</em></p>
+<p>En Linux, usando el administrador de programas, algo así como:</p>
+<p>en Ubuntu:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install git
+</pre></div>
+</div>
+<p>o usando <cite>dnf</cite> en Fedora:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo dnf install git
+</pre></div>
+</div>
+<p>En Windows, se puede descargar <a class="reference external" href="https://gitforwindows.org/">Git for Windows</a> desde <a class="reference external" href="https://github.com/git-for-windows/git/releases/latest">este enlace</a>,  ejecutar el instalador
+y seguir las instrucciones. Viene con una terminal y una interfaz gráfica.</p>
+</section>
+<section id="interfaces-graficas">
+<h3>Interfaces gráficas<a class="headerlink" href="#interfaces-graficas" title="Link to this heading"></a></h3>
+<p>Existen muchas interfaces gráficas, para todos los sistemas operativos.</p>
+<p>Ver por ejemplo <a class="reference external" href="https://gitextensions.github.io/">Git Extensions</a>,  <a class="reference external" href="https://git-cola.github.io/">git-cola</a>, <a class="reference external" href="https://github.com/FabriceSalvaire/CodeReview/">Code Review</a>,  o cualquiera de esta larga lista de <a class="reference external" href="https://git-scm.com/downloads/guis">interfaces gráficas a Git</a>.</p>
+</section>
+<section id="documentacion">
+<h3>Documentación<a class="headerlink" href="#documentacion" title="Link to this heading"></a></h3>
+<p>Buscando en internet el término <cite>git</cite> se encuentra mucha documentación. En particular el libro Pro Git tiene información muy accesible y completa.</p>
+<p>El programa se usa en la forma:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>&lt;comando&gt;<span class="w"> </span><span class="o">[</span>opciones<span class="o">]</span>
+</pre></div>
+</div>
+<p>Por ejemplo, para obtener ayuda directamente desde el programa, se puede utilizar cualquiera de las opciones:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span><span class="nb">help</span>
+$<span class="w"> </span>git<span class="w"> </span>--help
+</pre></div>
+</div>
+<p>que nos da información sobre su uso, y cuáles son los comandos disponibles.
+Si queremos obtener información sobre un comando en particular, agregamos el comando de interés. Para el comando de configuración sería:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--help
+$<span class="w"> </span>git<span class="w"> </span><span class="nb">help</span><span class="w"> </span>config
+</pre></div>
+</div>
+</section>
+<section id="configuracion-basica">
+<h3>Configuración básica<a class="headerlink" href="#configuracion-basica" title="Link to this heading"></a></h3>
+<p>Una vez que está instalado, es conveniente configurarlo desde una terminal, con los comandos:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">&quot;Juan Fiol&quot;</span>
+$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">&quot;fiol@cab.cnea.gov.ar&quot;</span>
+</pre></div>
+</div>
+<p>Si necesitamos usar un proxy para acceder fuera del lugar de trabajo:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>http.proxy<span class="w"> </span>proxy-url
+$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>https.proxy<span class="w"> </span>proxy-url
+</pre></div>
+</div>
+<p>Acá hemos usado la opción <cite>–global</cite> para que las variables configuradas se apliquen a todos los repositorios con los que trabajamos.</p>
+<p>Si necesitamos desabilitar una variable, por ejemplo el proxy, podemos hacer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span><span class="nb">unset</span><span class="w"> </span>http.proxy
+$<span class="w"> </span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span><span class="nb">unset</span><span class="w"> </span>https.proxy
+</pre></div>
+</div>
+</section>
+<section id="creacion-de-un-nuevo-repositorio">
+<h3>Creación de un nuevo repositorio<a class="headerlink" href="#creacion-de-un-nuevo-repositorio" title="Link to this heading"></a></h3>
+<p>Si ya estamos trabajando en un proyecto, tenemos algunos archivos de trabajo, sin control de versiones, y queremos empezar a controlarlo, inicializamos el repositorio local con:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>init
+</pre></div>
+</div>
+<p>Este comando sólo inicializa el repositorio, no pone ningún archivo bajo control de versiones.</p>
+</section>
+<section id="clonacion-de-un-repositorio-existente">
+<h3>Clonación de un repositorio existente<a class="headerlink" href="#clonacion-de-un-repositorio-existente" title="Link to this heading"></a></h3>
+<p>Otra situación bastante común ocurre cuando queremos tener una copia local de un proyecto (grupo de archivos) que ya existe y está siendo controlado por git. En este caso utilizamos el comando <cite>clone</cite> en la forma:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>&lt;url-del-repositorio&gt;<span class="w"> </span><span class="o">[</span>nombre-local<span class="o">]</span>
+</pre></div>
+</div>
+<p>donde el argumento <cite>nombre-local</cite> es opcional, si queremos darle a nuestra copia un nombre diferente al que tiene en el repositorio</p>
+<p>Ejemplos:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>/home/fiol/my-path/programa
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>/home/fiol/my-path/programa<span class="w"> </span>programa-de-calculo
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/fiolj/intro-python-IB.git
+$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/fiolj/intro-python-IB.git<span class="w"> </span>clase-ib
+</pre></div>
+</div>
+<p>Los dos primeros ejemplos realizan una copia de trabajo de un proyecto alojado también localmente. En el segundo y cuarto casos les estamos dando un nuevo nombre a la copia local de trabajo.</p>
+<p>En los últimos tres ejemplos estamos copiando proyectos alojados en repositorios remotos, cuyo uso es bastante popular:
+<a class="reference external" href="https://bitbucket.org/">bitbucket</a>, <a class="reference external" href="https://gitlab.com/">gitlab</a>, y <a class="reference external" href="https://github.com">github</a>.</p>
+<p>Lo que estamos haciendo con estos comandos es copiar no sólo la versión actual del proyecto sino toda su historia.
+Después de ejecutar este comando tendremos en nuestra computadora cada versión de cada uno de los archivos del proyecto, con la información de quién hizo los cambios y cuándo se hicieron.</p>
+<p>Una vez que ya tenemos una copia local de un proyecto vamos a querer trabajar: modificar los archivos, agregar nuevos, borrar alguno, etc.</p>
+</section>
+<section id="ver-el-estado-actual">
+<h3>Ver el estado actual<a class="headerlink" href="#ver-el-estado-actual" title="Link to this heading"></a></h3>
+<p>Para determinar qué archivos se cambiaron utilizamos el comando <cite>status</cite>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>my-directorio
+$<span class="w"> </span>git<span class="w"> </span>status
+</pre></div>
+</div>
+</section>
+<section id="creacion-de-nuevos-archivos-y-modificacion-de-existentes">
+<h3>Creación de nuevos archivos y modificación de existentes<a class="headerlink" href="#creacion-de-nuevos-archivos-y-modificacion-de-existentes" title="Link to this heading"></a></h3>
+<p>Después de trabajar en un archivo existente, o crear un nuevo archivo que queremos controlar, debemos agregarlo al registro de control:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>&lt;nuevo-archivo&gt;
+$<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>&lt;archivo-modificado&gt;
+</pre></div>
+</div>
+<p>Esto sólo agrega la versión actual del archivo al listado a controlar. Para incluir una copia en la base de datos del repositorio debemos realizar lo que se llama un «commit»</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Mensaje para recordar que hice con estos archivos&quot;</span>
+</pre></div>
+</div>
+<p>La opción <cite>-m</cite> y su argumento (el <em>string</em> entre comillas) es un mensaje que dejamos grabado, asociado a los cambios realizados. Puede realizarse el <cite>commit</cite> sin esta opción, y entonces <cite>git</cite> abrirá un editor de texto para que escribamos el mensaje (que no puede estar vacío).</p>
+</section>
+<section id="actualizacion-de-un-repositorio-remoto">
+<h3>Actualización de un repositorio remoto<a class="headerlink" href="#actualizacion-de-un-repositorio-remoto" title="Link to this heading"></a></h3>
+<p>Una vez que se añaden o modifican los archivos, y se agregan al repositorio local, podemos enviar los cambios a un repositorio remoto. Para ello utilizamos el comando:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>push
+</pre></div>
+</div>
+<p>De la misma manera, si queremos obtener una actualización del repositorio remoto (poque alguien más la modificó), utilizamos el (los) comando(s):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>fetch
+</pre></div>
+</div>
+<p>Este comando sólo actualiza el repositorio, pero no modifica los archivos locales. Esto se puede hacer, cuando uno quiera, luego con el comando:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>merge
+</pre></div>
+</div>
+<p>Estos dos comandos, pueden generalmente reemplazarse por un único comando:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>git<span class="w"> </span>pull
+</pre></div>
+</div>
+<p>que realizará la descarga desde el repositorio remoto y la actualización de los archivos locales en un sólo paso.</p>
+</section>
+<section id="puntos-importantes">
+<h3>Puntos importantes<a class="headerlink" href="#puntos-importantes" title="Link to this heading"></a></h3>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Control de versiones</p></td>
+<td><p>Historia de cambios y «undo» ilimitado</p></td>
+</tr>
+<tr class="row-even"><td><p>Configuración</p></td>
+<td><p><cite>git config</cite>, con la opción <cite>–global</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p>Creación</p></td>
+<td><p><cite>git init</cite> inicializa el repositorio</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><cite>git clone</cite> copia un repositorio</p></td>
+</tr>
+<tr class="row-odd"><td><p>Modificación</p></td>
+<td><p><cite>git status</cite> muestra el estado actual</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><cite>git add</cite> pone archivos bajo control</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><cite>git commit</cite> graba la versión actual</p></td>
+</tr>
+<tr class="row-even"><td><p>Explorar las versiones</p></td>
+<td><p><cite>git log</cite> muestra la historia de cambios</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><cite>git diff</cite> compara versiones</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><cite>git checkout</cite> recupera versiones previas</p></td>
+</tr>
+<tr class="row-odd"><td><p>Comunicación con remotos</p></td>
+<td><p><cite>git push</cite> Envía los cambios al remoto</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><cite>git pull</cite> copia los cambios desde remoto</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_08.html" class="btn btn-neutral float-left" title="Clase 8: Más sobre objetos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
