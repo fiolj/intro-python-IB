@@ -1,11 +1,11 @@
 .. _clase_09:
 
 
-==============================
-Clase 9: Control de versiones
-==============================
+========================================
+Clase 9: Control de versiones y módulos
+========================================
 
-====================
+==============================
 
 .. role:: strike
    :class: strike
@@ -74,9 +74,6 @@ Dos semanas, y varias líneas de código, después aparece un problema parecido 
 
 Los sistemas de control de versiones guardan toda la información de la historia de cada archivo, con un comentario del autor. Este modo de trabajar nos permite recuperar (casi) toda la información previa, incluso aquella que en algún momento decidimos descartar.
 
-
-Instalación y uso: Una versión breve
-====================================
 
 Instalación
 -----------
@@ -294,5 +291,750 @@ Puntos importantes
 +--------------------------+---------------------------------------------+
 |                          | `git pull` copia los cambios desde remoto   |
 +--------------------------+---------------------------------------------+
+
+
+
+Importando módulos
+==================
+
+Python tiene reglas para la importación de módulos a nuestro código. Un
+módulo es un archivo cuya extensión es ``.py``. Supongamos que tenemos
+un módulo ``rotacion_p.py``.
+
+1. En primer lugar, el intérprete busca un módulo denominado
+   ``rotación_p`` dentro de los módulos incorporados automáticamente. La
+   lista de dichos módulos se encuentra usando el método
+   ``sys.builtin_module_names``:
+
+.. code:: python
+
+    import sys 
+    sys.builtin_module_names
+
+.. code:: python
+
+    'rotacion_p' in sys.builtin_module_names
+
+2. En segundo lugar, busca un archivo ``rotacion_p.py`` en una lista de
+   directorios dada por el atributo ``sys.path``.
+
+.. code:: python
+
+    sys.path
+
+Este atributo contiene el directorio local (el primero que aparece en la
+lista de arriba), y una serie de directorios que provienen de - La
+variable de entorno ``PYTHONPATH`` - Un directorio dependiente de la
+instalación (en este caso,
+’/Users/flavioc/miniconda3/envs/clases/lib/python3.11\`).
+
+La manera pythonística de chequear si la variable de entorno
+``PYTHONPATH`` existe es utilizar el método ``get`` de ``os.environ``:
+
+.. code:: python
+
+    import os
+    os.environ.get('PYTHONPATH')
+
+En nuestro caso no imprime nada, pero de la misma forma se puede setear
+dicha variable de entorno:
+
+.. code:: python
+
+    os.environ['PYTHONPATH'] = '..' # seteo la variable PYTHONPATH al directorio padre del directorio actual
+    os.environ.get('PYTHONPATH')
+
+Por supuesto, todo va a depender de cómo tenemos estructurado nuestro
+código. En principio, aún cuando uno no utilice completamente las
+facilidades de Python como lenguaje orientado a objeto, agrupamos
+funciones que están relacionadas entre sí en distintos módulos. A medida
+que el código crece, es posible organizar los distintos módulos
+distribuyéndolos en directorios.
+
+Importando módulos de directorios hijos
+---------------------------------------
+
+Imaginemos que tenemos la siguente estructura de código:
+
+::
+
+   /miproyecto
+       main.py
+       /lib
+           rotacion.py
+       /graficos 
+           simple.py
+           complejo.py 
+           /tresd
+           vector.py
+
+Es sencillo importar los módulos en los directorios hijos (``lib``,
+``graficos``):
+
+.. code:: python
+
+   from graficos.simple import plot_data
+   from graficos.complejo import plot_data_complejo as plot_complejo 
+   from graficos.tresd.vector import *
+   from lib.rotacion import rotate
+
+Básicamente exponemos el módulo usando el operador ``.`` para ir
+incorporando los hijos. Por ejemplo, ``graficos.tresd.vector`` refiere
+al módulo que se encuentra en el archivo ``vector.py`` en el directorio
+``graficos.tresd``.
+
+Importando módulos desde padres o hermanos
+------------------------------------------
+
+Imports relativos
+~~~~~~~~~~~~~~~~~
+
+Para importar módulos que están en directorios padres o hermanos (estos
+últimos son directorios al mismo nivel del directorio desde el cual
+quiero importar) podemos diferentes estrategias. La primera de ellas es
+usar la importación de paquetes relativos. Para ello, cada directorio
+desde el que quiera importar debe poseer un archivo (en principio vacío)
+denominado ``__init__.py``. Esto permite a Python reconocer los
+directorios que contienen módulos aún cuando sean padres o hermanos.
+
+Veamos ahora la estructura de directorios de ``miproyecto_relativo`` con
+los archivos ``__init__.py`` agregados:
+
+::
+
+   /miproyecto
+       main.py
+       __init__.py
+       /lib
+           rotacion.py
+           __init__.py
+       /graficos 
+           __init__.py
+           simple.py
+           complejo.py 
+           /tresd
+           __init__.py
+           vector.py
+       /tests
+           test_rotacion.py
+
+Notemos que ``tests/test_rotacion.py`` tiene también un ``main``, que
+corre un test:
+
+.. code:: python
+
+   def test_rotacion():
+     v = np.array([1, 0, 0])
+     angle = np.array([0, 0, np.pi/2])
+     assert np.allclose(rotate(angle, v), np.array([0, -1, 0]))
+
+
+   if __name__ == "__main__":
+     test_rotacion()
+     print("All tests passed")  
+
+Esta es una estructura típica de Python, donde tengo tests que prueban
+funciones en un módulo dado. Notemos cómo se importa el módulo
+``rotacion`` desde ``test_rotacion.py``:
+
+.. code:: python
+
+   from ..lib.rotacion import rotate
+
+Al igual que con directorios, ``..`` se refiere al directorio padre
+relativo al directorio actual.
+
+Si probamos **desde el directorio** ``miproyecto/tests`` lo siguiente:
+
+.. code:: bash
+
+   python test_rotacion.py
+
+Nos encontraremos con el error:
+
+.. code:: python
+
+   ImportError: attempted relative import with no known parent package
+
+Para correr el test, tenemos que ir al directorio **padre** del proyecto
+y correr el main del módulo explícitamente:
+
+.. code:: bash
+
+   python -m miproyecto_relativo.tests.test_rotacion
+   All tests passed
+
+Modificando ``sys.path``
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+La forma anterior puede ser engorrosa en el caso en que se tengan muchos
+módulos en archivos distribuidos en una estructura de directorios
+complicada. Por otra parte, es posible modificar el atributo
+``sys.path`` para incluir el directorio que sea de interés. En este
+caso, modificamos ``test_rotacion.py``:
+
+.. code:: python
+
+   import sys
+   import os
+   sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+   from lib.rotacion import rotate
+
+Entonces, podemos correr desde el directorio ``tests``:
+
+.. code:: bash
+
+   python test_rotacion.py
+   All tests passed
+
+o desde su padre como
+
+.. code:: bash
+
+   python -m tests.test_rotacion
+
+o
+
+.. code:: bash
+
+   python tests/test_rotacion.py
+
+Algunos módulos (biblioteca standard) 
+======================================
+
+Los módulos pueden pensarse como bibliotecas de objetos (funciones,
+datos, etc) que pueden usarse según la necesidad. Hay una biblioteca
+standard con rutinas para muchas operaciones comunes, y además existen
+muchos paquetes específicos para distintas tareas. Veamos algunos
+ejemplos:
+
+Módulo sys
+----------
+
+Este módulo da acceso a variables que usa o mantiene el intérprete
+Python
+
+.. code:: python
+
+    import sys
+
+.. code:: python
+
+    sys.path
+
+.. code:: python
+
+    sys.getfilesystemencoding()
+
+.. code:: python
+
+    sys.getsizeof(1)
+
+.. code:: python
+
+    sys.getsizeof("hola")
+
+.. code:: python
+
+    help(sys.getsizeof)
+
+Vemos que para utilizar las variables (path) o funciones (getsizeof)
+debemos referirlo anteponiendo el módulo en el cuál está definido (sys)
+y separado por un punto.
+
+Cuando hacemos un programa, con definición de variables y funciones.
+Podemos utilizarlo como un módulo, de la misma manera que los que ya
+vienen definidos en la biblioteca standard o en los paquetes que
+instalamos.
+
+Módulo ``os``
+-------------
+
+El módulo ``os`` tiene utilidades para operar sobre nombres de archivos
+y directorios de manera segura y portable, de manera que pueda
+utilizarse en distintos sistemas operativos. Vamos a ver ejemplos de uso
+de algunas facilidades que brinda:
+
+.. code:: python
+
+    import os
+    
+    print(os.curdir)
+    print(os.pardir)
+    print (os.getcwd())
+
+.. code:: python
+
+    cur = os.getcwd()
+    par = os.path.abspath("..")
+    print(cur)
+    print(par)
+
+
+.. code:: python
+
+    print(os.path.abspath(os.curdir))
+    print(os.getcwd())
+
+.. code:: python
+
+    print(os.path.basename(cur))
+    print(os.path.splitdrive(cur)) # Útil en Windows donde hay letras que identifican las unidades de disco
+
+.. code:: python
+
+    print(os.path.commonprefix((cur, par)))
+    archivo = os.path.join(par,'este' , 'otro.dat')
+    print (archivo)
+    print (os.path.split(archivo))
+    print (os.path.splitext(archivo))
+    print (os.path.exists(archivo))
+    print (os.path.exists(cur))
+
+
+Como es aparente de estos ejemplos, se puede acceder a todos los objetos
+(funciones, variables) de un módulo utilizando simplemente la línea
+``import <modulo>`` pero puede ser tedioso escribir todo con prefijos
+(como ``os.path.abspath``) por lo que existen dos alternativas que
+pueden ser más convenientes. La primera corresponde a importar todas las
+definiciones de un módulo en forma implícita:
+
+.. code:: python
+
+    from os import *
+
+Después de esta declaración usamos los objetos de la misma manera que
+antes pero obviando la parte de ``os.``
+
+.. code:: python
+
+    path.abspath(curdir)
+
+Esto es conveniente en algunos casos pero no suele ser una buena idea en
+programas largos ya que distintos módulos pueden definir el mismo
+nombre, y se pierde información sobre su origen. Una alternativa que es
+conveniente y permite mantener mejor control es importar explícitamente
+lo que vamos a usar:
+
+.. code:: python
+
+    from os import curdir, pardir, getcwd
+    from os.path import abspath
+    print(abspath(pardir))
+    print(abspath(curdir))
+    print(abspath(getcwd()))
+
+
+Además podemos darle un nombre diferente al importar módulos u objetos
+
+.. code:: python
+
+    import os.path as path
+    from os import getenv as ge
+
+
+.. code:: python
+
+    help(ge)
+
+.. code:: python
+
+    ge('HOME')
+
+.. code:: python
+
+    path.realpath(curdir)
+
+Acá hemos importado el módulo ``os.path`` (es un sub-módulo) como
+``path`` y la función ``getenv`` del módulo ``os`` y la hemos renombrado
+``ge``.
+
+.. code:: python
+
+    curdir
+
+.. code:: python
+
+    [a for a in os.walk(curdir)]
+
+.. code:: python
+
+    help(os.walk)
+
+.. code:: python
+
+    import os
+    from os.path import join, getsize
+    for root, dirs, files in os.walk('./'):
+        print(root, "consume ", end="")
+        print(sum([getsize(join(root, name)) for name in files])/1024, end="")
+        print(" kbytes en ", len(files), "non-directory files")
+        if '.ipynb_checkpoints' in dirs:
+            dirs.remove('.ipynb_checkpoints')  # don't visit CVS directories
+
+Módulo ``glob``
+---------------
+
+El módulo ``glob`` encuentra nombres de archivos (o directorios)
+utilizando patrones similares a los de la consola. La función más
+utilizada es ``glob.glob()`` Veamos algunos ejemplos de uso:
+
+.. code:: python
+
+    import glob
+
+.. code:: python
+
+    nb_clase4= glob.glob('04*.ipynb')
+
+.. code:: python
+
+    nb_clase4
+
+.. code:: python
+
+    nb_clase4.sort()
+
+.. code:: python
+
+    nb_clase4
+
+.. code:: python
+
+    nb_clases1a4 = glob.glob('0[0-4]*.ipynb')
+
+.. code:: python
+
+    nb_clases1a4.sort()
+
+.. code:: python
+
+    for f in sorted(nb_clases1a4):
+      print('Clase en archivo {}'.format(f))
+
+Módulo ``Argparse``
+-------------------
+
+Este módulo tiene lo necesario para hacer rápidamente un programa para
+utilizar por línea de comandos, aceptando todo tipo de argumentos y
+dando información sobre su uso.
+
+.. code:: python
+
+   import argparse
+   VERSION = 1.0
+
+   parser = argparse.ArgumentParser(
+         description='"Mi programa que acepta argumentos por línea de comandos"')
+
+   parser.add_argument('-V', '--version', action='version',
+                         version='%(prog)s version {}'.format(VERSION))
+     
+   parser.add_argument('-n', '--entero', action=store, dest='n', default=1)
+
+   args = parser.parse_args()
+
+Más información en la `biblioteca
+standard <https://docs.python.org/3.6/library/argparse.html>`__ y en
+`Argparse en Python Module of the
+week <https://pymotw.com/3/argparse/index.html>`__
+
+Módulo ``re``
+-------------
+
+Este módulo provee la infraestructura para trabajar con *regular
+expressions*, es decir para encontrar expresiones que verifican “cierta
+forma general”. Veamos algunos conceptos básicos y casos más comunes de
+uso.
+
+Búsqueda de un patrón en un texto
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Empecemos con un ejemplo bastante común. Para encontrar un patrón en un
+texto podemos utilizar el método ``search()``
+
+.. code:: python
+
+    import re
+
+.. code:: python
+
+    busca = 'un'
+    texto = 'Otra vez vamos a usar "Hola Mundo"'
+    
+    match = re.search(busca, texto)
+    
+    print('Encontré "{}"\nen:\n  "{}"'.format(match.re.pattern, match.string))
+    print('En las posiciones {} a {}'.format(match.start(), match.end()))
+
+
+.. parsed-literal::
+
+    Encontré "un"
+    en:
+      "Otra vez vamos a usar "Hola Mundo""
+    En las posiciones 29 a 31
+
+
+Acá buscamos una expresión (el substring “un”). Esto es útil pero no muy
+diferente a utilizar los métodos de strings. Veamos como se definen los
+patrones.
+
+Definición de expresiones
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Vamos a buscar un patrón en un texto. Veamos cómo se definen los
+patrones a buscar.
+
+-  La mayoría de los caracteres se identifican consigo mismo (si quiero
+   encontrar “gato”, uso como patrón “gato”)
+
+-  Hay unos pocos caracteres especiales (metacaracteres) que tienen un
+   significado especial, estos son:
+
+   ::
+
+      . ^ $ * + ? { } [ ] \ | ( )
+
+-  Si queremos encontrar uno de los metacaracteres, tenemos que
+   precederlos de ``\``. Por ejemplo si queremos encontrar un corchete
+   usamos ``\[``
+
+-  Los corchetes “[” y ”]” se usan para definir una clase de caracteres,
+   que es un conjunto de caracteres que uno quiere encontrar.
+
+   -  Los caracteres a encontrar se pueden dar individualmente. Por
+      ejemplo ``[gato]`` encontrará cualquiera de ``g``, ``a``, ``t``,
+      ``o``.
+   -  Un rango de caracteres se puede dar dando dos caracteres separados
+      por un guión. Por ejemplo ``[a-z]`` dará cualquier letra entre “a”
+      y “z”. Similarmente ``[0-5][0-9]`` dará cualquier número entre
+      “00” y “59”.
+   -  Los metacaracteres pierden su significado especial dentro de los
+      corchetes. Por ejemplo ``[.*)]`` encontrará cualquiera de “.”,
+      “\*“,”)“.
+
+-  El punto ``.`` indica *cualquier caracter*
+
+-  Los símbolos ``*``, ``+``, ``?`` indican repetición:
+
+   -  ``?``: Indica 0 o 1 aparición de lo anterior
+   -  ``*``: Indica 0 o más apariciones de lo anterior
+   -  ``+``: Indica 1 o más apariciones de lo anterior
+
+-  Para encontrar una cantidad determinada de caracteres, se puede
+   agregar dicha cantidad entre llaves ``{}``. Por ejemplo, ``[a-z]{3}``
+   resultará en cualquier string de exactamente tres letras minúsculas.
+
+.. code:: python
+
+    busca = "[a-z]+@[a-z]+\.[a-z]+" # Un patrón para buscar direcciones de email
+    texto = "nombre@server.com, apellido@server1.com, nombre1995@server.com, UnNombreyApellido, nombre.apellido82@servidor.com.ar, Nombre.Apellido82@servidor.com.ar".split(',')
+    print(texto,'\n')
+    
+    for direc in texto:
+      m= re.search(busca, direc)
+      print('Para la línea:', direc)
+      if m is None:
+        print('   No encontré dirección de correo!')
+      else:
+        print('   Encontré la dirección de correo:', m.string)
+    
+
+
+
+.. parsed-literal::
+
+    ['nombre@server.com', ' apellido@server1.com', ' nombre1995@server.com', ' UnNombreyApellido', ' nombre.apellido82@servidor.com.ar', ' Nombre.Apellido82@servidor.com.ar'] 
+    
+    Para la línea: nombre@server.com
+       Encontré la dirección de correo: nombre@server.com
+    Para la línea:  apellido@server1.com
+       No encontré dirección de correo!
+    Para la línea:  nombre1995@server.com
+       No encontré dirección de correo!
+    Para la línea:  UnNombreyApellido
+       No encontré dirección de correo!
+    Para la línea:  nombre.apellido82@servidor.com.ar
+       No encontré dirección de correo!
+    Para la línea:  Nombre.Apellido82@servidor.com.ar
+       No encontré dirección de correo!
+
+
+.. parsed-literal::
+
+    <>:1: SyntaxWarning: invalid escape sequence '\.'
+    <>:1: SyntaxWarning: invalid escape sequence '\.'
+    /var/folders/lw/b464kt25373b__wh0bxy280r0000gn/T/ipykernel_50240/497915755.py:1: SyntaxWarning: invalid escape sequence '\.'
+      busca = "[a-z]+@[a-z]+\.[a-z]+" # Un patrón para buscar direcciones de email
+
+
+-  Acá la expresión ``[a-z]`` significa todos los caracteres en el rango
+   “a” hasta “z”.
+
+-  ``[a-z]+`` significa cualquier secuencia de una letra o más.
+
+-  Los corchetes también se pueden usar en la forma ``[abc]`` y entonces
+   encuentra *cualquiera* de ``a``, ``b``, o ``c``.
+
+Vemos que no encontró todas las direcciones posibles. Porque el patrón
+no está bien diseñado. Un poco mejor sería:
+
+.. code:: python
+
+    busca = "[a-zA-Z0-9.]+@[a-z.]+" # Un patrón para buscar direcciones de email
+    
+    print(texto,'\n')
+    
+    for direc in texto:
+      m= re.search(busca, direc)
+      print('Para la línea:', direc)
+      if m is None:
+        print('   No encontré dirección de correo:')
+      else:
+        print('   Encontré la dirección de correo:', m.group())
+    
+
+
+
+.. parsed-literal::
+
+    ['nombre@server.com', ' apellido@server1.com', ' nombre1995@server.com', ' UnNombreyApellido', ' nombre.apellido82@servidor.com.ar', ' Nombre.Apellido82@servidor.com.ar'] 
+    
+    Para la línea: nombre@server.com
+       Encontré la dirección de correo: nombre@server.com
+    Para la línea:  apellido@server1.com
+       Encontré la dirección de correo: apellido@server
+    Para la línea:  nombre1995@server.com
+       Encontré la dirección de correo: nombre1995@server.com
+    Para la línea:  UnNombreyApellido
+       No encontré dirección de correo:
+    Para la línea:  nombre.apellido82@servidor.com.ar
+       Encontré la dirección de correo: nombre.apellido82@servidor.com.ar
+    Para la línea:  Nombre.Apellido82@servidor.com.ar
+       Encontré la dirección de correo: Nombre.Apellido82@servidor.com.ar
+
+
+Los metacaracteres no se activan dentro de clases (adentro de
+corchetes). En el ejemplo anterior el punto ``.`` actúa como un punto y
+no como un metacaracter. En este caso, la primera parte:
+``[a-zA-Z0-9.]+`` significa: “Encontrar cualquier letra minúscula,
+mayúscula, número o punto, una o más veces cualquiera de ellos”
+
+Repetición de un patrón
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Si queremos encontrar strings que presentan la secuencia una o más veces
+podemos usar ``findall()`` que devuelve todas las ocurrencias del patrón
+que no se superponen. Por ejemplo:
+
+.. code:: python
+
+    texto = 'abbaaabbbbaaaaa'
+    
+    busca = 'ab'
+    
+    mm =  re.findall(busca, texto)
+    print(mm)    
+    print(type(mm[0]))
+    for m in mm:
+        print('Encontré {}'.format(m))
+
+
+
+.. parsed-literal::
+
+    ['ab', 'ab']
+    <class 'str'>
+    Encontré ab
+    Encontré ab
+
+
+.. code:: python
+
+    p = re.compile('abc*')
+    m= p.findall('acholaboy')
+    print(m)
+    m= p.findall('acholabcoynd sabcccs slabc labdc abc')
+    print(m)
+
+
+.. parsed-literal::
+
+    ['ab']
+    ['abc', 'abccc', 'abc', 'ab', 'abc']
+
+
+Si va a utilizar expresiones regulares es recomendable que lea más
+información en la `biblioteca
+standard <https://docs.python.org/3.6/library/re.html>`__, en `el
+HOWTO <https://docs.python.org/3.6/howto/regex.html>`__, en `Python
+Module of the week <https://pymotw.com/3/re/index.html>`__ o
+`acá <https://pynative.com/python/regex/>`__.
+
+Para practicar RegEx, `ésta es una buena
+página <https://regexone.com/>`__.
+
+Si efectivamente tiene que diseñar una expresión regular, `esta página
+puede ser útil <https://regex101.com/>`__.
+
+Ejercicios 09
+=============
+
+1. **PARA ENTREGAR**
+
+En el ejercicio 08 se creó la clase ``Materia`` que describa una materia
+que se dicta en el IB. En dicha clase también se usaron las clases
+``Persona`` y ``Estudiante``. La clase ``Materia`` provee los siguientes
+métodos:
+
+-  ``agrega_estudiante`` que agrega un estudiante al curso
+-  ``agrega_docente`` que agrega un docente al curso
+-  ``imprime_estudiantes`` que lista los estudiantes del curso
+
+Vamos a asumir que los estudiantes son alumnos de grado, de modo tal que
+las carreras posibles son Ingeniería (Nuclear, Mecánica o
+Telecomunicaciones) o Física, o son estudiantes vocacionales. En este
+ejercicio le pedimos que:
+
+-  Corrija la clase ``Estudiante`` de forma tal que sólo se puedan
+   registrar estudiantes de grado de las carreras mencionadas, o
+   estudiantes vocacionales.
+-  Extienda la clase ``Materia`` de modo tal que se pueda registrar la
+   nota de cada estudiante al finalizar el curso.
+-  Cree la clase ``Admin`` que permita imprimir los listados de
+   estudiantes de una materia y pueda expedir certificados de aprobación
+   que contengan el nombre del alumno, el nombre de la materia y la nota
+   obtenida en números y en letras. (El certificado es un archivo de
+   texto con la información mencionada).
+-  Finalmente, modifique las clases anteriores de forma tal que se
+   puedan crear y manejar materias a través de distintos años.
+
+Organice el código en distintos módulos dentro de un proyecto, con un
+``main.py`` donde se utilicen, a modo de ejemplo, las distintas
+características del código solicitadas.
+
+Para entregar el ejercicio, cree un repositorio privado en GitHub
+conteniendo el proyecto con el nombre ‘modelo-materias-ib’ y agregue
+como colaborador a ``cursopythonib``.
+
+2. Un ejercicio interesante de aplicación de expresiones regulares(\*)
+   consiste en encontrar los coeficientes y las potencias de un
+   polinomio que viene descripto como un string:
+
+   .. code:: python
+
+      polinomio = "5x^4 + 3x^2 - 2x + 7"
+
+   ..
+
+      (\*) Este no es un ejercicio fácil, y además, para extraer la
+      información requerida, es necesario poder capturar `grupos de
+      expresiones
+      regulares <https://regexone.com/lesson/capturing_groups>`__.
+
+--------------
+
+.
 
 

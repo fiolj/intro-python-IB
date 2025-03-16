@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clase 9: Control de versiones &mdash; documentación de Clases de Python - </title>
+  <title>Clase 9: Control de versiones y módulos &mdash; documentación de Clases de Python - </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
       <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
@@ -57,13 +57,10 @@
 <li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Más sobre objetos</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 9: Control de versiones</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 9: Control de versiones y módulos</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#que-es-y-para-que-sirve-el-control-de-versiones">¿Qué es y para qué sirve el control de versiones?</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cambios-en-paralelo">Cambios en paralelo</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#historia-completa">Historia completa</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#instalacion-y-uso-una-version-breve">Instalación y uso: Una versión breve</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#instalacion">Instalación</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#interfaces-graficas">Interfaces gráficas</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#documentacion">Documentación</a></li>
@@ -76,6 +73,29 @@
 <li class="toctree-l3"><a class="reference internal" href="#puntos-importantes">Puntos importantes</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#importando-modulos">Importando módulos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#importando-modulos-de-directorios-hijos">Importando módulos de directorios hijos</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#importando-modulos-desde-padres-o-hermanos">Importando módulos desde padres o hermanos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#imports-relativos">Imports relativos</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#modificando-sys-path">Modificando <code class="docutils literal notranslate"><span class="pre">sys.path</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#algunos-modulos-biblioteca-standard">Algunos módulos (biblioteca standard)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-sys">Módulo sys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-os">Módulo <code class="docutils literal notranslate"><span class="pre">os</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-glob">Módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-argparse">Módulo <code class="docutils literal notranslate"><span class="pre">Argparse</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modulo-re">Módulo <code class="docutils literal notranslate"><span class="pre">re</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#busqueda-de-un-patron-en-un-texto">Búsqueda de un patrón en un texto</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#definicion-de-expresiones">Definición de expresiones</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repeticion-de-un-patron">Repetición de un patrón</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-09">Ejercicios 09</a></li>
 </ul>
 </li>
 </ul>
@@ -102,7 +122,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Clase 9: Control de versiones</li>
+      <li class="breadcrumb-item active">Clase 9: Control de versiones y módulos</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/clase_09.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -112,8 +132,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="clase-9-control-de-versiones">
-<span id="clase-09"></span><h1>Clase 9: Control de versiones<a class="headerlink" href="#clase-9-control-de-versiones" title="Link to this heading"></a></h1>
+  <section id="clase-9-control-de-versiones-y-modulos">
+<span id="clase-09"></span><h1>Clase 9: Control de versiones y módulos<a class="headerlink" href="#clase-9-control-de-versiones-y-modulos" title="Link to this heading"></a></h1>
 <hr class="docutils" />
 <div class="admonition note">
 <p class="admonition-title">Nota</p>
@@ -165,9 +185,6 @@ En este esquema de trabajo, podemos compartir una versión de todos los archivos
 <p>Dos semanas, y varias líneas de código, después aparece un problema parecido y querríamos tener la función que borramos …</p>
 <p>Los sistemas de control de versiones guardan toda la información de la historia de cada archivo, con un comentario del autor. Este modo de trabajar nos permite recuperar (casi) toda la información previa, incluso aquella que en algún momento decidimos descartar.</p>
 </section>
-</section>
-<section id="instalacion-y-uso-una-version-breve">
-<h2>Instalación y uso: Una versión breve<a class="headerlink" href="#instalacion-y-uso-una-version-breve" title="Link to this heading"></a></h2>
 <section id="instalacion">
 <h3>Instalación<a class="headerlink" href="#instalacion" title="Link to this heading"></a></h3>
 <p>Vamos a describir uno de los posibles sistemas de control de versiones, llamado <em>git</em></p>
@@ -339,6 +356,621 @@ $<span class="w"> </span>git<span class="w"> </span>add<span class="w"> </span>&
 </tbody>
 </table>
 </section>
+</section>
+<section id="importando-modulos">
+<h2>Importando módulos<a class="headerlink" href="#importando-modulos" title="Link to this heading"></a></h2>
+<p>Python tiene reglas para la importación de módulos a nuestro código. Un
+módulo es un archivo cuya extensión es <code class="docutils literal notranslate"><span class="pre">.py</span></code>. Supongamos que tenemos
+un módulo <code class="docutils literal notranslate"><span class="pre">rotacion_p.py</span></code>.</p>
+<ol class="arabic simple">
+<li><p>En primer lugar, el intérprete busca un módulo denominado
+<code class="docutils literal notranslate"><span class="pre">rotación_p</span></code> dentro de los módulos incorporados automáticamente. La
+lista de dichos módulos se encuentra usando el método
+<code class="docutils literal notranslate"><span class="pre">sys.builtin_module_names</span></code>:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;rotacion_p&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">builtin_module_names</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>En segundo lugar, busca un archivo <code class="docutils literal notranslate"><span class="pre">rotacion_p.py</span></code> en una lista de
+directorios dada por el atributo <code class="docutils literal notranslate"><span class="pre">sys.path</span></code>.</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+</div>
+<p>Este atributo contiene el directorio local (el primero que aparece en la
+lista de arriba), y una serie de directorios que provienen de - La
+variable de entorno <code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> - Un directorio dependiente de la
+instalación (en este caso,
+’/Users/flavioc/miniconda3/envs/clases/lib/python3.11`).</p>
+<p>La manera pythonística de chequear si la variable de entorno
+<code class="docutils literal notranslate"><span class="pre">PYTHONPATH</span></code> existe es utilizar el método <code class="docutils literal notranslate"><span class="pre">get</span></code> de <code class="docutils literal notranslate"><span class="pre">os.environ</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En nuestro caso no imprime nada, pero de la misma forma se puede setear
+dicha variable de entorno:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;..&#39;</span> <span class="c1"># seteo la variable PYTHONPATH al directorio padre del directorio actual</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;PYTHONPATH&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Por supuesto, todo va a depender de cómo tenemos estructurado nuestro
+código. En principio, aún cuando uno no utilice completamente las
+facilidades de Python como lenguaje orientado a objeto, agrupamos
+funciones que están relacionadas entre sí en distintos módulos. A medida
+que el código crece, es posible organizar los distintos módulos
+distribuyéndolos en directorios.</p>
+<section id="importando-modulos-de-directorios-hijos">
+<h3>Importando módulos de directorios hijos<a class="headerlink" href="#importando-modulos-de-directorios-hijos" title="Link to this heading"></a></h3>
+<p>Imaginemos que tenemos la siguente estructura de código:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">miproyecto</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">lib</span>
+        <span class="n">rotacion</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">graficos</span>
+        <span class="n">simple</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">complejo</span><span class="o">.</span><span class="n">py</span>
+        <span class="o">/</span><span class="n">tresd</span>
+        <span class="n">vector</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Es sencillo importar los módulos en los directorios hijos (<code class="docutils literal notranslate"><span class="pre">lib</span></code>,
+<code class="docutils literal notranslate"><span class="pre">graficos</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">graficos.simple</span> <span class="kn">import</span> <span class="n">plot_data</span>
+<span class="kn">from</span> <span class="nn">graficos.complejo</span> <span class="kn">import</span> <span class="n">plot_data_complejo</span> <span class="k">as</span> <span class="n">plot_complejo</span>
+<span class="kn">from</span> <span class="nn">graficos.tresd.vector</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">lib.rotacion</span> <span class="kn">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<p>Básicamente exponemos el módulo usando el operador <code class="docutils literal notranslate"><span class="pre">.</span></code> para ir
+incorporando los hijos. Por ejemplo, <code class="docutils literal notranslate"><span class="pre">graficos.tresd.vector</span></code> refiere
+al módulo que se encuentra en el archivo <code class="docutils literal notranslate"><span class="pre">vector.py</span></code> en el directorio
+<code class="docutils literal notranslate"><span class="pre">graficos.tresd</span></code>.</p>
+</section>
+<section id="importando-modulos-desde-padres-o-hermanos">
+<h3>Importando módulos desde padres o hermanos<a class="headerlink" href="#importando-modulos-desde-padres-o-hermanos" title="Link to this heading"></a></h3>
+<section id="imports-relativos">
+<h4>Imports relativos<a class="headerlink" href="#imports-relativos" title="Link to this heading"></a></h4>
+<p>Para importar módulos que están en directorios padres o hermanos (estos
+últimos son directorios al mismo nivel del directorio desde el cual
+quiero importar) podemos diferentes estrategias. La primera de ellas es
+usar la importación de paquetes relativos. Para ello, cada directorio
+desde el que quiera importar debe poseer un archivo (en principio vacío)
+denominado <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code>. Esto permite a Python reconocer los
+directorios que contienen módulos aún cuando sean padres o hermanos.</p>
+<p>Veamos ahora la estructura de directorios de <code class="docutils literal notranslate"><span class="pre">miproyecto_relativo</span></code> con
+los archivos <code class="docutils literal notranslate"><span class="pre">__init__.py</span></code> agregados:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">miproyecto</span>
+    <span class="n">main</span><span class="o">.</span><span class="n">py</span>
+    <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">lib</span>
+        <span class="n">rotacion</span><span class="o">.</span><span class="n">py</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">graficos</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">simple</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">complejo</span><span class="o">.</span><span class="n">py</span>
+        <span class="o">/</span><span class="n">tresd</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+        <span class="n">vector</span><span class="o">.</span><span class="n">py</span>
+    <span class="o">/</span><span class="n">tests</span>
+        <span class="n">test_rotacion</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Notemos que <code class="docutils literal notranslate"><span class="pre">tests/test_rotacion.py</span></code> tiene también un <code class="docutils literal notranslate"><span class="pre">main</span></code>, que
+corre un test:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_rotacion</span><span class="p">():</span>
+  <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+  <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">])</span>
+  <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">rotate</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">v</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+  <span class="n">test_rotacion</span><span class="p">()</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All tests passed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Esta es una estructura típica de Python, donde tengo tests que prueban
+funciones en un módulo dado. Notemos cómo se importa el módulo
+<code class="docutils literal notranslate"><span class="pre">rotacion</span></code> desde <code class="docutils literal notranslate"><span class="pre">test_rotacion.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">..lib.rotacion</span> <span class="kn">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<p>Al igual que con directorios, <code class="docutils literal notranslate"><span class="pre">..</span></code> se refiere al directorio padre
+relativo al directorio actual.</p>
+<p>Si probamos <strong>desde el directorio</strong> <code class="docutils literal notranslate"><span class="pre">miproyecto/tests</span></code> lo siguiente:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test_rotacion.py
+</pre></div>
+</div>
+<p>Nos encontraremos con el error:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ne">ImportError</span><span class="p">:</span> <span class="n">attempted</span> <span class="n">relative</span> <span class="kn">import</span> <span class="nn">with</span> <span class="n">no</span> <span class="n">known</span> <span class="n">parent</span> <span class="n">package</span>
+</pre></div>
+</div>
+<p>Para correr el test, tenemos que ir al directorio <strong>padre</strong> del proyecto
+y correr el main del módulo explícitamente:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>miproyecto_relativo.tests.test_rotacion
+All<span class="w"> </span>tests<span class="w"> </span>passed
+</pre></div>
+</div>
+</section>
+<section id="modificando-sys-path">
+<h4>Modificando <code class="docutils literal notranslate"><span class="pre">sys.path</span></code><a class="headerlink" href="#modificando-sys-path" title="Link to this heading"></a></h4>
+<p>La forma anterior puede ser engorrosa en el caso en que se tengan muchos
+módulos en archivos distribuidos en una estructura de directorios
+complicada. Por otra parte, es posible modificar el atributo
+<code class="docutils literal notranslate"><span class="pre">sys.path</span></code> para incluir el directorio que sea de interés. En este
+caso, modificamos <code class="docutils literal notranslate"><span class="pre">test_rotacion.py</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">),</span> <span class="s2">&quot;..&quot;</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">lib.rotacion</span> <span class="kn">import</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+<p>Entonces, podemos correr desde el directorio <code class="docutils literal notranslate"><span class="pre">tests</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>test_rotacion.py
+All<span class="w"> </span>tests<span class="w"> </span>passed
+</pre></div>
+</div>
+<p>o desde su padre como</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>tests.test_rotacion
+</pre></div>
+</div>
+<p>o</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tests/test_rotacion.py
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="algunos-modulos-biblioteca-standard">
+<h2>Algunos módulos (biblioteca standard)<a class="headerlink" href="#algunos-modulos-biblioteca-standard" title="Link to this heading"></a></h2>
+<p>Los módulos pueden pensarse como bibliotecas de objetos (funciones,
+datos, etc) que pueden usarse según la necesidad. Hay una biblioteca
+standard con rutinas para muchas operaciones comunes, y además existen
+muchos paquetes específicos para distintas tareas. Veamos algunos
+ejemplos:</p>
+<section id="modulo-sys">
+<h3>Módulo sys<a class="headerlink" href="#modulo-sys" title="Link to this heading"></a></h3>
+<p>Este módulo da acceso a variables que usa o mantiene el intérprete
+Python</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">getfilesystemencoding</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="s2">&quot;hola&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Vemos que para utilizar las variables (path) o funciones (getsizeof)
+debemos referirlo anteponiendo el módulo en el cuál está definido (sys)
+y separado por un punto.</p>
+<p>Cuando hacemos un programa, con definición de variables y funciones.
+Podemos utilizarlo como un módulo, de la misma manera que los que ya
+vienen definidos en la biblioteca standard o en los paquetes que
+instalamos.</p>
+</section>
+<section id="modulo-os">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">os</span></code><a class="headerlink" href="#modulo-os" title="Link to this heading"></a></h3>
+<p>El módulo <code class="docutils literal notranslate"><span class="pre">os</span></code> tiene utilidades para operar sobre nombres de archivos
+y directorios de manera segura y portable, de manera que pueda
+utilizarse en distintos sistemas operativos. Vamos a ver ejemplos de uso
+de algunas facilidades que brinda:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pardir</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cur</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">par</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cur</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">par</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">cur</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitdrive</span><span class="p">(</span><span class="n">cur</span><span class="p">))</span> <span class="c1"># Útil en Windows donde hay letras que identifican las unidades de disco</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">commonprefix</span><span class="p">((</span><span class="n">cur</span><span class="p">,</span> <span class="n">par</span><span class="p">)))</span>
+<span class="n">archivo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">par</span><span class="p">,</span><span class="s1">&#39;este&#39;</span> <span class="p">,</span> <span class="s1">&#39;otro.dat&#39;</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">archivo</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">archivo</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">archivo</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">archivo</span><span class="p">))</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cur</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Como es aparente de estos ejemplos, se puede acceder a todos los objetos
+(funciones, variables) de un módulo utilizando simplemente la línea
+<code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">&lt;modulo&gt;</span></code> pero puede ser tedioso escribir todo con prefijos
+(como <code class="docutils literal notranslate"><span class="pre">os.path.abspath</span></code>) por lo que existen dos alternativas que
+pueden ser más convenientes. La primera corresponde a importar todas las
+definiciones de un módulo en forma implícita:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Después de esta declaración usamos los objetos de la misma manera que
+antes pero obviando la parte de <code class="docutils literal notranslate"><span class="pre">os.</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">curdir</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Esto es conveniente en algunos casos pero no suele ser una buena idea en
+programas largos ya que distintos módulos pueden definir el mismo
+nombre, y se pierde información sobre su origen. Una alternativa que es
+conveniente y permite mantener mejor control es importar explícitamente
+lo que vamos a usar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">curdir</span><span class="p">,</span> <span class="n">pardir</span><span class="p">,</span> <span class="n">getcwd</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">abspath</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">pardir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">curdir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">abspath</span><span class="p">(</span><span class="n">getcwd</span><span class="p">()))</span>
+</pre></div>
+</div>
+<p>Además podemos darle un nombre diferente al importar módulos u objetos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">path</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">getenv</span> <span class="k">as</span> <span class="n">ge</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">ge</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ge</span><span class="p">(</span><span class="s1">&#39;HOME&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">curdir</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Acá hemos importado el módulo <code class="docutils literal notranslate"><span class="pre">os.path</span></code> (es un sub-módulo) como
+<code class="docutils literal notranslate"><span class="pre">path</span></code> y la función <code class="docutils literal notranslate"><span class="pre">getenv</span></code> del módulo <code class="docutils literal notranslate"><span class="pre">os</span></code> y la hemos renombrado
+<code class="docutils literal notranslate"><span class="pre">ge</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">curdir</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">a</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">curdir</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">getsize</span>
+<span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">dirs</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="s1">&#39;./&#39;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;consume &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">([</span><span class="n">getsize</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">files</span><span class="p">])</span><span class="o">/</span><span class="mi">1024</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; kbytes en &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">),</span> <span class="s2">&quot;non-directory files&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;.ipynb_checkpoints&#39;</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="n">dirs</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;.ipynb_checkpoints&#39;</span><span class="p">)</span>  <span class="c1"># don&#39;t visit CVS directories</span>
+</pre></div>
+</div>
+</section>
+<section id="modulo-glob">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code><a class="headerlink" href="#modulo-glob" title="Link to this heading"></a></h3>
+<p>El módulo <code class="docutils literal notranslate"><span class="pre">glob</span></code> encuentra nombres de archivos (o directorios)
+utilizando patrones similares a los de la consola. La función más
+utilizada es <code class="docutils literal notranslate"><span class="pre">glob.glob()</span></code> Veamos algunos ejemplos de uso:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">glob</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span><span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;04*.ipynb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clase4</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clases1a4</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;0[0-4]*.ipynb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nb_clases1a4</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">nb_clases1a4</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Clase en archivo </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="modulo-argparse">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">Argparse</span></code><a class="headerlink" href="#modulo-argparse" title="Link to this heading"></a></h3>
+<p>Este módulo tiene lo necesario para hacer rápidamente un programa para
+utilizar por línea de comandos, aceptando todo tipo de argumentos y
+dando información sobre su uso.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="n">VERSION</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+<span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+      <span class="n">description</span><span class="o">=</span><span class="s1">&#39;&quot;Mi programa que acepta argumentos por línea de comandos&quot;&#39;</span><span class="p">)</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-V&#39;</span><span class="p">,</span> <span class="s1">&#39;--version&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s1">&#39;version&#39;</span><span class="p">,</span>
+                      <span class="n">version</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(prog)s</span><span class="s1"> version </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">VERSION</span><span class="p">))</span>
+
+<span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-n&#39;</span><span class="p">,</span> <span class="s1">&#39;--entero&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="n">store</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Más información en la <a class="reference external" href="https://docs.python.org/3.6/library/argparse.html">biblioteca
+standard</a> y en
+<a class="reference external" href="https://pymotw.com/3/argparse/index.html">Argparse en Python Module of the
+week</a></p>
+</section>
+<section id="modulo-re">
+<h3>Módulo <code class="docutils literal notranslate"><span class="pre">re</span></code><a class="headerlink" href="#modulo-re" title="Link to this heading"></a></h3>
+<p>Este módulo provee la infraestructura para trabajar con <em>regular
+expressions</em>, es decir para encontrar expresiones que verifican “cierta
+forma general”. Veamos algunos conceptos básicos y casos más comunes de
+uso.</p>
+<section id="busqueda-de-un-patron-en-un-texto">
+<h4>Búsqueda de un patrón en un texto<a class="headerlink" href="#busqueda-de-un-patron-en-un-texto" title="Link to this heading"></a></h4>
+<p>Empecemos con un ejemplo bastante común. Para encontrar un patrón en un
+texto podemos utilizar el método <code class="docutils literal notranslate"><span class="pre">search()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">busca</span> <span class="o">=</span> <span class="s1">&#39;un&#39;</span>
+<span class="n">texto</span> <span class="o">=</span> <span class="s1">&#39;Otra vez vamos a usar &quot;Hola Mundo&quot;&#39;</span>
+
+<span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">texto</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encontré &quot;</span><span class="si">{}</span><span class="s1">&quot;</span><span class="se">\n</span><span class="s1">en:</span><span class="se">\n</span><span class="s1">  &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">re</span><span class="o">.</span><span class="n">pattern</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">string</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;En las posiciones </span><span class="si">{}</span><span class="s1"> a </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span> <span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">()))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Encontré</span> <span class="s2">&quot;un&quot;</span>
+<span class="n">en</span><span class="p">:</span>
+  <span class="s2">&quot;Otra vez vamos a usar &quot;</span><span class="n">Hola</span> <span class="n">Mundo</span><span class="s2">&quot;&quot;</span>
+<span class="n">En</span> <span class="n">las</span> <span class="n">posiciones</span> <span class="mi">29</span> <span class="n">a</span> <span class="mi">31</span>
+</pre></div>
+</div>
+<p>Acá buscamos una expresión (el substring “un”). Esto es útil pero no muy
+diferente a utilizar los métodos de strings. Veamos como se definen los
+patrones.</p>
+</section>
+<section id="definicion-de-expresiones">
+<h4>Definición de expresiones<a class="headerlink" href="#definicion-de-expresiones" title="Link to this heading"></a></h4>
+<p>Vamos a buscar un patrón en un texto. Veamos cómo se definen los
+patrones a buscar.</p>
+<ul>
+<li><p>La mayoría de los caracteres se identifican consigo mismo (si quiero
+encontrar “gato”, uso como patrón “gato”)</p></li>
+<li><p>Hay unos pocos caracteres especiales (metacaracteres) que tienen un
+significado especial, estos son:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>. ^ $ * + ? { } [ ] \ | ( )
+</pre></div>
+</div>
+</li>
+<li><p>Si queremos encontrar uno de los metacaracteres, tenemos que
+precederlos de <code class="docutils literal notranslate"><span class="pre">\</span></code>. Por ejemplo si queremos encontrar un corchete
+usamos <code class="docutils literal notranslate"><span class="pre">\[</span></code></p></li>
+<li><p>Los corchetes “[” y ”]” se usan para definir una clase de caracteres,
+que es un conjunto de caracteres que uno quiere encontrar.</p>
+<ul class="simple">
+<li><p>Los caracteres a encontrar se pueden dar individualmente. Por
+ejemplo <code class="docutils literal notranslate"><span class="pre">[gato]</span></code> encontrará cualquiera de <code class="docutils literal notranslate"><span class="pre">g</span></code>, <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">t</span></code>,
+<code class="docutils literal notranslate"><span class="pre">o</span></code>.</p></li>
+<li><p>Un rango de caracteres se puede dar dando dos caracteres separados
+por un guión. Por ejemplo <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> dará cualquier letra entre “a”
+y “z”. Similarmente <code class="docutils literal notranslate"><span class="pre">[0-5][0-9]</span></code> dará cualquier número entre
+“00” y “59”.</p></li>
+<li><p>Los metacaracteres pierden su significado especial dentro de los
+corchetes. Por ejemplo <code class="docutils literal notranslate"><span class="pre">[.*)]</span></code> encontrará cualquiera de “.”,
+“*“,”)“.</p></li>
+</ul>
+</li>
+<li><p>El punto <code class="docutils literal notranslate"><span class="pre">.</span></code> indica <em>cualquier caracter</em></p></li>
+<li><p>Los símbolos <code class="docutils literal notranslate"><span class="pre">*</span></code>, <code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">?</span></code> indican repetición:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">?</span></code>: Indica 0 o 1 aparición de lo anterior</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">*</span></code>: Indica 0 o más apariciones de lo anterior</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">+</span></code>: Indica 1 o más apariciones de lo anterior</p></li>
+</ul>
+</li>
+<li><p>Para encontrar una cantidad determinada de caracteres, se puede
+agregar dicha cantidad entre llaves <code class="docutils literal notranslate"><span class="pre">{}</span></code>. Por ejemplo, <code class="docutils literal notranslate"><span class="pre">[a-z]{3}</span></code>
+resultará en cualquier string de exactamente tres letras minúsculas.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">busca</span> <span class="o">=</span> <span class="s2">&quot;[a-z]+@[a-z]+\.[a-z]+&quot;</span> <span class="c1"># Un patrón para buscar direcciones de email</span>
+<span class="n">texto</span> <span class="o">=</span> <span class="s2">&quot;nombre@server.com, apellido@server1.com, nombre1995@server.com, UnNombreyApellido, nombre.apellido82@servidor.com.ar, Nombre.Apellido82@servidor.com.ar&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">direc</span> <span class="ow">in</span> <span class="n">texto</span><span class="p">:</span>
+  <span class="n">m</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Para la línea:&#39;</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   No encontré dirección de correo!&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   Encontré la dirección de correo:&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">string</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[&#39;nombre@server.com&#39;, &#39; apellido@server1.com&#39;, &#39; nombre1995@server.com&#39;, &#39; UnNombreyApellido&#39;, &#39; nombre.apellido82@servidor.com.ar&#39;, &#39; Nombre.Apellido82@servidor.com.ar&#39;]
+
+Para la línea: nombre@server.com
+   Encontré la dirección de correo: nombre@server.com
+Para la línea:  apellido@server1.com
+   No encontré dirección de correo!
+Para la línea:  nombre1995@server.com
+   No encontré dirección de correo!
+Para la línea:  UnNombreyApellido
+   No encontré dirección de correo!
+Para la línea:  nombre.apellido82@servidor.com.ar
+   No encontré dirección de correo!
+Para la línea:  Nombre.Apellido82@servidor.com.ar
+   No encontré dirección de correo!
+</pre></div>
+</div>
+<pre class="literal-block">&lt;&gt;:1: SyntaxWarning: invalid escape sequence '.'
+&lt;&gt;:1: SyntaxWarning: invalid escape sequence '.'
+/var/folders/lw/b464kt25373b__wh0bxy280r0000gn/T/ipykernel_50240/497915755.py:1: SyntaxWarning: invalid escape sequence '.'
+  busca = &quot;[a-z]+&#64;[a-z]+.[a-z]+&quot; # Un patrón para buscar direcciones de email</pre>
+<ul class="simple">
+<li><p>Acá la expresión <code class="docutils literal notranslate"><span class="pre">[a-z]</span></code> significa todos los caracteres en el rango
+“a” hasta “z”.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">[a-z]+</span></code> significa cualquier secuencia de una letra o más.</p></li>
+<li><p>Los corchetes también se pueden usar en la forma <code class="docutils literal notranslate"><span class="pre">[abc]</span></code> y entonces
+encuentra <em>cualquiera</em> de <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, o <code class="docutils literal notranslate"><span class="pre">c</span></code>.</p></li>
+</ul>
+<p>Vemos que no encontró todas las direcciones posibles. Porque el patrón
+no está bien diseñado. Un poco mejor sería:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">busca</span> <span class="o">=</span> <span class="s2">&quot;[a-zA-Z0-9.]+@[a-z.]+&quot;</span> <span class="c1"># Un patrón para buscar direcciones de email</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">texto</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">direc</span> <span class="ow">in</span> <span class="n">texto</span><span class="p">:</span>
+  <span class="n">m</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Para la línea:&#39;</span><span class="p">,</span> <span class="n">direc</span><span class="p">)</span>
+  <span class="k">if</span> <span class="n">m</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   No encontré dirección de correo:&#39;</span><span class="p">)</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;   Encontré la dirección de correo:&#39;</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;nombre@server.com&#39;</span><span class="p">,</span> <span class="s1">&#39; apellido@server1.com&#39;</span><span class="p">,</span> <span class="s1">&#39; nombre1995@server.com&#39;</span><span class="p">,</span> <span class="s1">&#39; UnNombreyApellido&#39;</span><span class="p">,</span> <span class="s1">&#39; nombre.apellido82@servidor.com.ar&#39;</span><span class="p">,</span> <span class="s1">&#39; Nombre.Apellido82@servidor.com.ar&#39;</span><span class="p">]</span>
+
+<span class="n">Para</span> <span class="n">la</span> <span class="n">línea</span><span class="p">:</span> <span class="n">nombre</span><span class="nd">@server</span><span class="o">.</span><span class="n">com</span>
+   <span class="n">Encontré</span> <span class="n">la</span> <span class="n">dirección</span> <span class="n">de</span> <span class="n">correo</span><span class="p">:</span> <span class="n">nombre</span><span class="nd">@server</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Para</span> <span class="n">la</span> <span class="n">línea</span><span class="p">:</span>  <span class="n">apellido</span><span class="nd">@server1</span><span class="o">.</span><span class="n">com</span>
+   <span class="n">Encontré</span> <span class="n">la</span> <span class="n">dirección</span> <span class="n">de</span> <span class="n">correo</span><span class="p">:</span> <span class="n">apellido</span><span class="nd">@server</span>
+<span class="n">Para</span> <span class="n">la</span> <span class="n">línea</span><span class="p">:</span>  <span class="n">nombre1995</span><span class="nd">@server</span><span class="o">.</span><span class="n">com</span>
+   <span class="n">Encontré</span> <span class="n">la</span> <span class="n">dirección</span> <span class="n">de</span> <span class="n">correo</span><span class="p">:</span> <span class="n">nombre1995</span><span class="nd">@server</span><span class="o">.</span><span class="n">com</span>
+<span class="n">Para</span> <span class="n">la</span> <span class="n">línea</span><span class="p">:</span>  <span class="n">UnNombreyApellido</span>
+   <span class="n">No</span> <span class="n">encontré</span> <span class="n">dirección</span> <span class="n">de</span> <span class="n">correo</span><span class="p">:</span>
+<span class="n">Para</span> <span class="n">la</span> <span class="n">línea</span><span class="p">:</span>  <span class="n">nombre</span><span class="o">.</span><span class="n">apellido82</span><span class="nd">@servidor</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">ar</span>
+   <span class="n">Encontré</span> <span class="n">la</span> <span class="n">dirección</span> <span class="n">de</span> <span class="n">correo</span><span class="p">:</span> <span class="n">nombre</span><span class="o">.</span><span class="n">apellido82</span><span class="nd">@servidor</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">ar</span>
+<span class="n">Para</span> <span class="n">la</span> <span class="n">línea</span><span class="p">:</span>  <span class="n">Nombre</span><span class="o">.</span><span class="n">Apellido82</span><span class="nd">@servidor</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">ar</span>
+   <span class="n">Encontré</span> <span class="n">la</span> <span class="n">dirección</span> <span class="n">de</span> <span class="n">correo</span><span class="p">:</span> <span class="n">Nombre</span><span class="o">.</span><span class="n">Apellido82</span><span class="nd">@servidor</span><span class="o">.</span><span class="n">com</span><span class="o">.</span><span class="n">ar</span>
+</pre></div>
+</div>
+<p>Los metacaracteres no se activan dentro de clases (adentro de
+corchetes). En el ejemplo anterior el punto <code class="docutils literal notranslate"><span class="pre">.</span></code> actúa como un punto y
+no como un metacaracter. En este caso, la primera parte:
+<code class="docutils literal notranslate"><span class="pre">[a-zA-Z0-9.]+</span></code> significa: “Encontrar cualquier letra minúscula,
+mayúscula, número o punto, una o más veces cualquiera de ellos”</p>
+</section>
+<section id="repeticion-de-un-patron">
+<h4>Repetición de un patrón<a class="headerlink" href="#repeticion-de-un-patron" title="Link to this heading"></a></h4>
+<p>Si queremos encontrar strings que presentan la secuencia una o más veces
+podemos usar <code class="docutils literal notranslate"><span class="pre">findall()</span></code> que devuelve todas las ocurrencias del patrón
+que no se superponen. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">texto</span> <span class="o">=</span> <span class="s1">&#39;abbaaabbbbaaaaa&#39;</span>
+
+<span class="n">busca</span> <span class="o">=</span> <span class="s1">&#39;ab&#39;</span>
+
+<span class="n">mm</span> <span class="o">=</span>  <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">busca</span><span class="p">,</span> <span class="n">texto</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">mm</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">mm</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Encontré </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[&#39;ab&#39;, &#39;ab&#39;]
+&lt;class &#39;str&#39;&gt;
+Encontré ab
+Encontré ab
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s1">&#39;abc*&#39;</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;acholaboy&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="n">m</span><span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">&#39;acholabcoynd sabcccs slabc labdc abc&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;abccc&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;abc&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Si va a utilizar expresiones regulares es recomendable que lea más
+información en la <a class="reference external" href="https://docs.python.org/3.6/library/re.html">biblioteca
+standard</a>, en <a class="reference external" href="https://docs.python.org/3.6/howto/regex.html">el
+HOWTO</a>, en <a class="reference external" href="https://pymotw.com/3/re/index.html">Python
+Module of the week</a> o
+<a class="reference external" href="https://pynative.com/python/regex/">acá</a>.</p>
+<p>Para practicar RegEx, <a class="reference external" href="https://regexone.com/">ésta es una buena
+página</a>.</p>
+<p>Si efectivamente tiene que diseñar una expresión regular, <a class="reference external" href="https://regex101.com/">esta página
+puede ser útil</a>.</p>
+</section>
+</section>
+</section>
+<section id="ejercicios-09">
+<h2>Ejercicios 09<a class="headerlink" href="#ejercicios-09" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>PARA ENTREGAR</strong></p></li>
+</ol>
+<p>En el ejercicio 08 se creó la clase <code class="docutils literal notranslate"><span class="pre">Materia</span></code> que describa una materia
+que se dicta en el IB. En dicha clase también se usaron las clases
+<code class="docutils literal notranslate"><span class="pre">Persona</span></code> y <code class="docutils literal notranslate"><span class="pre">Estudiante</span></code>. La clase <code class="docutils literal notranslate"><span class="pre">Materia</span></code> provee los siguientes
+métodos:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">agrega_estudiante</span></code> que agrega un estudiante al curso</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">agrega_docente</span></code> que agrega un docente al curso</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imprime_estudiantes</span></code> que lista los estudiantes del curso</p></li>
+</ul>
+<p>Vamos a asumir que los estudiantes son alumnos de grado, de modo tal que
+las carreras posibles son Ingeniería (Nuclear, Mecánica o
+Telecomunicaciones) o Física, o son estudiantes vocacionales. En este
+ejercicio le pedimos que:</p>
+<ul class="simple">
+<li><p>Corrija la clase <code class="docutils literal notranslate"><span class="pre">Estudiante</span></code> de forma tal que sólo se puedan
+registrar estudiantes de grado de las carreras mencionadas, o
+estudiantes vocacionales.</p></li>
+<li><p>Extienda la clase <code class="docutils literal notranslate"><span class="pre">Materia</span></code> de modo tal que se pueda registrar la
+nota de cada estudiante al finalizar el curso.</p></li>
+<li><p>Cree la clase <code class="docutils literal notranslate"><span class="pre">Admin</span></code> que permita imprimir los listados de
+estudiantes de una materia y pueda expedir certificados de aprobación
+que contengan el nombre del alumno, el nombre de la materia y la nota
+obtenida en números y en letras. (El certificado es un archivo de
+texto con la información mencionada).</p></li>
+<li><p>Finalmente, modifique las clases anteriores de forma tal que se
+puedan crear y manejar materias a través de distintos años.</p></li>
+</ul>
+<p>Organice el código en distintos módulos dentro de un proyecto, con un
+<code class="docutils literal notranslate"><span class="pre">main.py</span></code> donde se utilicen, a modo de ejemplo, las distintas
+características del código solicitadas.</p>
+<p>Para entregar el ejercicio, cree un repositorio privado en GitHub
+conteniendo el proyecto con el nombre ‘modelo-materias-ib’ y agregue
+como colaborador a <code class="docutils literal notranslate"><span class="pre">cursopythonib</span></code>.</p>
+<ol class="arabic" start="2">
+<li><p>Un ejercicio interesante de aplicación de expresiones regulares(*)
+consiste en encontrar los coeficientes y las potencias de un
+polinomio que viene descripto como un string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">polinomio</span> <span class="o">=</span> <span class="s2">&quot;5x^4 + 3x^2 - 2x + 7&quot;</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>(*) Este no es un ejercicio fácil, y además, para extraer la
+información requerida, es necesario poder capturar <a class="reference external" href="https://regexone.com/lesson/capturing_groups">grupos de
+expresiones
+regulares</a>.</p>
+</div></blockquote>
+</li>
+</ol>
+<hr class="docutils" />
+<p>.</p>
 </section>
 </section>
 

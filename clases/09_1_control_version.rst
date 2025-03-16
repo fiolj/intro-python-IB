@@ -1,5 +1,5 @@
-Control de versiones
-====================
+Control de versiones y módulos
+==============================
 
 .. role:: strike
    :class: strike
@@ -68,9 +68,6 @@ Dos semanas, y varias líneas de código, después aparece un problema parecido 
 
 Los sistemas de control de versiones guardan toda la información de la historia de cada archivo, con un comentario del autor. Este modo de trabajar nos permite recuperar (casi) toda la información previa, incluso aquella que en algún momento decidimos descartar.
 
-
-Instalación y uso: Una versión breve
-------------------------------------
 
 Instalación
 ~~~~~~~~~~~
