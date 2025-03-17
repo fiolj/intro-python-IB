@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 10: Introducción a Numpy y Matplotlib &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 9: Control de versiones y módulos" href="clase_09.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Más sobre objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Control de versiones y módulos</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 10: Introducción a Numpy y Matplotlib</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduccion">Introducción</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lectura-y-escritura-de-datos-a-archivos">Lectura y escritura de datos a archivos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#caracteristicas-de-arrays-en-numpy">Características de <em>arrays</em> en <strong>Numpy</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#comparacion-de-listas-y-arrays">Comparación de listas y <em>arrays</em></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uso-de-memoria-de-listas-y-arrays">Uso de memoria de listas y arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#velocidad-de-numpy">Velocidad de <strong>Numpy</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#propiedades-de-numpy-arrays">Propiedades de <strong>Numpy</strong> arrays</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#creacion-de-arrays-en-numpy">Creación de <em>arrays</em> en <strong>Numpy</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creacion-de-arrays-unidimensionales">Creación de <em>Arrays</em> unidimensionales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#arrays-multidimensionales">Arrays multidimensionales</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generacion-de-datos-equiespaciados">Generación de datos equiespaciados</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#otras-formas-de-creacion">Otras formas de creación</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#acceso-a-los-elementos">Acceso a los elementos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#operaciones-sobre-arrays">Operaciones sobre arrays</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#operaciones-basicas">Operaciones básicas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparaciones">Comparaciones</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#funciones-definidas-en-numpy">Funciones definidas en <strong>Numpy</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-10-a">Ejercicios 10 (a)</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 10: Introducción a Numpy y Matplotlib</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_10.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-10-introduccion-a-numpy-y-matplotlib">
+<span id="clase-10"></span><h1>Clase 10: Introducción a Numpy y Matplotlib<a class="headerlink" href="#clase-10-introduccion-a-numpy-y-matplotlib" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<section id="introduccion">
+<h2>Introducción<a class="headerlink" href="#introduccion" title="Link to this heading"></a></h2>
+<p>Dos paquetes que van a resultar muy importantes para nosotros son los
+paquetes <strong>numpy</strong> y <strong>matplotlib</strong>. Como con todos los módulos, se
+cargan utilizando la palabra <code class="docutils literal notranslate"><span class="pre">import</span></code>, tal como hicimos en los
+ejemplos anteriores. Existen variantes en la manera de importar los
+módulos que son “equivalentes”. En este caso le vamos a dar un alias que
+sea más corto de tipear. Después podemos utilizar sus funciones y
+definiciones.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>               <span class="c1"># Importa el paquete numpy para trabajo numérico</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>  <span class="c1"># Importa el paquete matplotlib para graficación</span>
+</pre></div>
+</div>
+<p>Un ejemplo muy común es la graficación de datos que obtuvimos
+previamente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;data/ejemplo_plot_07_1.dat&#39;</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="lectura-y-escritura-de-datos-a-archivos">
+<h2>Lectura y escritura de datos a archivos<a class="headerlink" href="#lectura-y-escritura-de-datos-a-archivos" title="Link to this heading"></a></h2>
+<p>Numpy tiene funciones que permiten escribir y leer datos de varias
+maneras, tanto en formato <em>texto</em> como en <em>binario</em>. En general el modo
+<em>texto</em> ocupa más espacio pero puede ser leído y modificado con un
+editor.</p>
+<p>Veamos qué datos hay en el archivo:</p>
+<p>Hay dos columnas, en la primera fila hay texto, y en las siguientes hay
+valores separados por un espacio.</p>
+<p>Dos funciones simples y útiles para entrada y salida de datos son
+<code class="docutils literal notranslate"><span class="pre">np.loadtxt()</span></code> para lectura, y <code class="docutils literal notranslate"><span class="pre">np.savetxt()</span></code> para escritura.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s1">&#39;data/ejemplo_plot_07_1.dat&#39;</span><span class="p">,</span> <span class="n">unpack</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">np.loadtxt()</span></code> carga estos valores a las variables <code class="docutils literal notranslate"><span class="pre">x</span></code> e
+<code class="docutils literal notranslate"><span class="pre">y</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Vemos que, con este uso, la variable <code class="docutils literal notranslate"><span class="pre">x</span></code> contiene los valores de la
+primera columna y la variable <code class="docutils literal notranslate"><span class="pre">y</span></code> los de la segunda.</p>
+<p>Para grabar datos a un archivo le damos como primer argumento el nombre
+del archivo y como segundo los datos a guardar. Vamos a ver detalles más
+adelante.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;test.out&#39;</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="err">!</span><span class="n">head</span> <span class="n">test</span><span class="o">.</span><span class="n">out</span>
+</pre></div>
+</div>
+<p>En la primera línea hay texto explicativo, en las siguientes líneas el
+archivo tiene dos columnas.</p>
+<p>Veamos que tipo de variable son <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como vemos, el tipo de la variable <strong>no es una lista</strong> sino un nuevo
+tipo: <strong>ndarray</strong>, o simplemente <strong>array</strong>. Veamos cómo trabajar con
+ellos.</p>
+</section>
+<section id="caracteristicas-de-arrays-en-numpy">
+<h2>Características de <em>arrays</em> en <strong>Numpy</strong><a class="headerlink" href="#caracteristicas-de-arrays-en-numpy" title="Link to this heading"></a></h2>
+<p>Numpy define unas nuevas estructuras llamadas <em>ndarrays</em> o <em>arrays</em> para
+trabajar con vectores de datos, en una dimensión o más dimensiones
+(“matrices”). Los arrays son variantes de las listas de python
+preparadas para trabajar a mayor velocidad y menor consumo de memoria.
+Por ello se requiere que los arrays sean menos generales y versátiles
+que las listas usuales. Analicemos brevemente las diferencias entre
+estos tipos y las consecuencias que tendrá en su uso para nosotros.</p>
+<section id="comparacion-de-listas-y-arrays">
+<h3>Comparación de listas y <em>arrays</em><a class="headerlink" href="#comparacion-de-listas-y-arrays" title="Link to this heading"></a></h3>
+<p>Comparemos como operamos sobre un conjunto de números cuando los
+representamos por una lista, o por un array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dlist</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">4.9</span><span class="p">,</span> <span class="mf">12.3</span><span class="p">,</span> <span class="mf">27.2</span><span class="p">,</span> <span class="mf">35.8</span><span class="p">,</span> <span class="mf">70.2</span><span class="p">,</span> <span class="mf">90.</span><span class="p">,</span> <span class="mf">125.</span><span class="p">,</span> <span class="mf">180.</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dlist</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="ow">is</span> <span class="n">dlist</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dlist</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Veamos cómo se hace para operar con estos dos tipos. Si los valores
+representan ángulos en grados, hagamos la conversión a radianes (radián
+= <span class="math notranslate nohighlight">\(\pi/180\)</span> grado)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="n">drlist</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">dlist</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">drlist</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dr</span> <span class="o">=</span> <span class="n">d</span><span class="o">*</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">dr</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Vemos que el modo de trabajar es más simple ya que los array permiten
+trabajar con operaciones elemento-a-elemento mientras que para las
+listas tenemos que usar comprensiones de listas. Veamos otros ejemplos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">a</span><span class="o">*</span><span class="n">pi</span><span class="o">/</span><span class="mi">180</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">dlist</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">d</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Además de la simplicidad para trabajar con operaciones que actúan sobre
+cada elemento, el paquete tiene una gran cantidad de funciones y
+constantes definidas (como por ejemplo <code class="docutils literal notranslate"><span class="pre">np.pi</span></code> para <span class="math notranslate nohighlight">\(\pi\)</span>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">d</span><span class="p">)),</span><span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="uso-de-memoria-de-listas-y-arrays">
+<h3>Uso de memoria de listas y arrays<a class="headerlink" href="#uso-de-memoria-de-listas-y-arrays" title="Link to this heading"></a></h3>
+<p>Las listas son sucesiones de elementos, completamente generales y no
+necesariamente todos iguales. Un esquema de su representación interna se
+muestra en el siguiente gráfico para una lista de números enteros (Las
+figuras y el análisis de esta sección son de
+www.python-course.eu/numpy.php)</p>
+<figure class="align-default" id="id1">
+<img alt="Representación en memoria de una lista" src="_images/list_structure.png" />
+<figcaption>
+<p><span class="caption-text">Representación en memoria de una lista</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Básicamente en una lista se guarda información común a cualquier lista,
+un lugar de almacenamiento que referencia donde buscar cada uno de sus
+elementos (que puede ser un objeto diferente) y luego el lugar efectivo
+para guardar cada elemento. Veamos cuanta memoria se necesita para
+guardar una lista de enteros:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">getsizeof</span>
+<span class="n">lst</span> <span class="o">=</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">57</span><span class="p">]</span>
+<span class="n">size_of_list_object</span> <span class="o">=</span> <span class="n">getsizeof</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>   <span class="c1"># La lista sin sus datos</span>
+<span class="c1">#size_of_elements = getsizeof(lst[0]) + getsizeof(lst[1]) + getsizeof(lst[2])</span>
+<span class="n">size_of_elements</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">)</span>
+<span class="n">total_list_size</span> <span class="o">=</span> <span class="n">size_of_list_object</span> <span class="o">+</span> <span class="n">size_of_elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño sin considerar los elementos: &quot;</span><span class="p">,</span> <span class="n">size_of_list_object</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño de los elementos: &quot;</span><span class="p">,</span> <span class="n">size_of_elements</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño total: &quot;</span><span class="p">,</span> <span class="n">total_list_size</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Para calcular cuánta memoria se usa en cada parte de una lista
+analicemos el tamaño de distintos casos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista vacía ocupa: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista con un elem: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([</span><span class="mi">24</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Una lista con 2 elems: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">([</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un entero en Python  : </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="mi">24</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Vemos que la “Información general de listas” ocupa <strong>56 bytes</strong>, y la
+referencia a cada elemento entero ocupa adicionalmente <strong>8 bytes</strong>, por
+lo que la lista con dos elementos ocupa <strong>72 bytes</strong>. Además, cada
+elemento, un entero de Python, en este caso ocupa <strong>28 bytes</strong>, por lo
+que el tamaño total de una <strong>lista</strong> de <span class="math notranslate nohighlight">\(n\)</span> números enteros será:</p>
+<div class="math notranslate nohighlight">
+\[M_{L}(n) = 56 + n \times 8 + n \times 28\]</div>
+<p>En contraste, los <em>arrays</em> deben ser todos del mismo tipo por lo que su
+representación es más simple (por ejemplo, no es necesario guardar sus
+valores separadamente)</p>
+<figure class="align-default" id="id2">
+<img alt="Representación en memoria de una lista" src="_images/array_structure.png" />
+<figcaption>
+<p><span class="caption-text">Representación en memoria de una lista</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lst</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Para analizar como se distribuye el consumo de memoria en un array vamos
+a calcular el tamaño de cada uno de los elementos como hicimos con las
+listas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un array vacío ocupa: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un array con un elem: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">24</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un array con 2 elems: </span><span class="si">{}</span><span class="s1"> bytes&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">24</span><span class="p">,</span><span class="mi">12</span><span class="p">]))))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un entero de Numpy es: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Un entero de Numpy usa: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+</pre></div>
+</div>
+<p>Vemos que la información general sobre arrays ocupa <strong>96 bytes</strong> (en
+contraste a <strong>64</strong> para listas), y por cada elemento otros <strong>8 bytes</strong>
+adicionales (<code class="docutils literal notranslate"><span class="pre">numpy.int64</span></code> corresponde a 64 bits), por lo que el
+tamaño total será:</p>
+<div class="math notranslate nohighlight">
+\[M_{a}(n) = 96 + n \times 8\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">getsizeof</span>
+<span class="n">lst1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">))</span>
+<span class="n">total_list_size</span> <span class="o">=</span> <span class="n">getsizeof</span><span class="p">(</span><span class="n">lst1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lst1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño total de la lista: &quot;</span><span class="p">,</span> <span class="n">total_list_size</span><span class="p">)</span>
+<span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">lst1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tamaño total de array: &quot;</span><span class="p">,</span> <span class="n">getsizeof</span><span class="p">(</span><span class="n">a1</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="velocidad-de-numpy">
+<h3>Velocidad de <strong>Numpy</strong><a class="headerlink" href="#velocidad-de-numpy" title="Link to this heading"></a></h3>
+<p>Una de las grandes ventajas de usar <em>Numpy</em> está relacionada con la
+velocidad de cálculo. Veamos (superficialmente) esto</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load scripts/timing.py</span>
+<span class="c1"># Ejemplo del libro en www.python-course.eu/numpy.php</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">timeit</span> <span class="kn">import</span> <span class="n">Timer</span>
+<span class="n">Ndim</span> <span class="o">=</span> <span class="mi">200000</span>
+
+
+<span class="k">def</span> <span class="nf">pure_python_version</span><span class="p">():</span>
+  <span class="n">X</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ndim</span><span class="p">)</span>
+  <span class="n">Y</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="n">Ndim</span><span class="p">)</span>
+  <span class="n">Z</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)):</span>
+    <span class="n">Z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">Z</span>
+
+
+<span class="k">def</span> <span class="nf">numpy_version</span><span class="p">():</span>
+  <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Ndim</span><span class="p">)</span>
+  <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">Ndim</span><span class="p">)</span>
+  <span class="n">Z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">+</span> <span class="n">Y</span>
+  <span class="k">return</span> <span class="n">Z</span>
+
+<span class="n">timer_obj1</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;pure_python_version()&quot;</span><span class="p">,</span> <span class="s2">&quot;from __main__ import pure_python_version&quot;</span><span class="p">)</span>
+<span class="n">timer_obj2</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="s2">&quot;numpy_version()&quot;</span><span class="p">,</span> <span class="s2">&quot;from __main__ import numpy_version&quot;</span><span class="p">)</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">timer_obj1</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">timer_obj2</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Numpy es en este ejemplo </span><span class="si">{</span><span class="n">t1</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="si">:</span><span class="s2"> .3f</span><span class="si">}</span><span class="s2"> más rápido&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Como vemos, utilizar <em>Numpy</em> puede ser considerablemente más rápido que
+usar <em>Python puro</em>.</p>
+</section>
+<section id="propiedades-de-numpy-arrays">
+<h3>Propiedades de <strong>Numpy</strong> arrays<a class="headerlink" href="#propiedades-de-numpy-arrays" title="Link to this heading"></a></h3>
+<p>Hay tres propiedades básicas que caracterizan a un array:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">shape</span></code>: Contiene información sobre la forma que tiene un array
+(sus dimensiones: vector, matriz, o tensor)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dtype</span></code>: Es el tipo de cada uno de sus elementos (todos son
+iguales)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stride</span></code>: Contiene la información sobre como recorrer el array. Por
+ejemplo si es una matriz, tiene la información de cuántos bytes en
+memoria hay que pasar para pasar de una fila a la siguiente y de una
+columna a la siguiente.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;shape  :&#39;</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;dtype  :&#39;</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;strides:&#39;</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">strides</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Los array tienen otros atributos que nos dan información sobre sus
+características, por ejemplo <code class="docutils literal notranslate"><span class="pre">size</span></code> y <code class="docutils literal notranslate"><span class="pre">ndim</span></code> que nos dan el tamaño
+total y el número de dimensiones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Número total de elementos :&#39;</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Número de dimensiones     :&#39;</span><span class="p">,</span> <span class="n">arr</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="creacion-de-arrays-en-numpy">
+<h2>Creación de <em>arrays</em> en <strong>Numpy</strong><a class="headerlink" href="#creacion-de-arrays-en-numpy" title="Link to this heading"></a></h2>
+<p>Un <code class="docutils literal notranslate"><span class="pre">array</span></code> en numpy es un tipo de variable parecido a una lista, pero
+está optimizado para realizar trabajo numérico.</p>
+<p>Todos los elementos deben ser del mismo tipo, y además de los valores,
+contiene información sobre su tipo. Veamos algunos ejemplos de cómo
+crearlos y utilizarlos:</p>
+<section id="creacion-de-arrays-unidimensionales">
+<h3>Creación de <em>Arrays</em> unidimensionales<a class="headerlink" href="#creacion-de-arrays-unidimensionales" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.4</span> <span class="p">,</span><span class="mf">2.3</span> <span class="p">,</span><span class="mf">3.0</span> <span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;tipo de i1: </span><span class="si">{</span><span class="n">i1</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">tipo de r1: </span><span class="si">{</span><span class="n">r1</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Para i1:</span><span class="se">\n</span><span class="s2">      Número de dimensiones: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s2">      Longitud: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">i1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Para r1:</span><span class="se">\n</span><span class="s2">      Número de dimensiones: </span><span class="si">{</span><span class="n">r1</span><span class="o">.</span><span class="n">ndim</span><span class="si">}</span><span class="se">\n</span><span class="s2">      Longitud: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="arrays-multidimensionales">
+<h3>Arrays multidimensionales<a class="headerlink" href="#arrays-multidimensionales" title="Link to this heading"></a></h3>
+<p>Podemos crear explícitamente <em>arrays</em> multidimensionales con la función
+<code class="docutils literal notranslate"><span class="pre">np.array</span></code> si el argumento es una lista anidada</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="p">[</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mf">.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">.2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="p">]</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">A</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndim</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">A</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span> <span class="c1"># Ambos son equivalentes</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">A</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Vemos que la dimensión de <code class="docutils literal notranslate"><span class="pre">A</span></code> es 2, pero la longitud que me reporta
+<strong>Python</strong> corresponde al primer eje. Los <em>arrays</em> tienen un atributo
+que es la “forma” (shape)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r1</span><span class="o">.</span><span class="n">shape</span> <span class="c1"># una tupla de un solo elemento</span>
+</pre></div>
+</div>
+</section>
+<section id="generacion-de-datos-equiespaciados">
+<h3>Generación de datos equiespaciados<a class="headerlink" href="#generacion-de-datos-equiespaciados" title="Link to this heading"></a></h3>
+<p>Para obtener datos equiespaciados hay dos funciones complementarias</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">190</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">180</span><span class="p">,</span><span class="mi">19</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a2</span>
+</pre></div>
+</div>
+<p>Como vemos, ambos pueden dar resultados similares, y es una cuestión de
+conveniencia cual utilizar. El uso es:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">([</span><span class="n">start</span><span class="p">,]</span> <span class="n">stop</span><span class="p">[,</span> <span class="n">step</span><span class="p">,],</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Mientras que a <code class="docutils literal notranslate"><span class="pre">arange()</span></code> le decimos cuál es el paso a utilizar, a
+<code class="docutils literal notranslate"><span class="pre">linspace()</span></code> debemos (podemos) darle como tercer argumento el número
+de valores que queremos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Si queremos que devuelva enteros:</span>
+<span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">180.</span><span class="p">,</span><span class="mf">7.8</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Pedimos que devuelva el paso también</span>
+<span class="n">v1</span><span class="p">,</span> <span class="n">step1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">v2</span><span class="p">,</span> <span class="n">step2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">step1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">step2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">deg2rad</span><span class="p">(</span><span class="n">a2</span><span class="p">)),</span><span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Además de valores linealmente espaciados podemos obtener valores
+espaciados en escala logarítmica</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">w</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">w1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># Start y Stop son los exponentes</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">w2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">geomspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># Start y Stop son los valores</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="otras-formas-de-creacion">
+<h3>Otras formas de creación<a class="headerlink" href="#otras-formas-de-creacion" title="Link to this heading"></a></h3>
+<p>Hay otras maneras de crear <strong>numpy arrays</strong>. Algunas, de las más comunes
+es cuando necesitamos crear un array con todos ceros o unos o algún
+valor dado</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">dtype</span>                         <span class="c1"># El tipo default es float de 64 bits</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En lugar de inicializarlo en cero podemos inicializarlo con algún valor</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>     <span class="c1"># Algo similar pero inicializando a unos</span>
+</pre></div>
+</div>
+<p>Ya vimos que también podemos inicializarlos con valores “equiespaciados”
+con <code class="docutils literal notranslate"><span class="pre">np.arange()</span></code>, con <code class="docutils literal notranslate"><span class="pre">np.linspace()</span></code> o con <code class="docutils literal notranslate"><span class="pre">np.logspace()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">15</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1"># Crea un array con una secuencia (similar a la función range)</span>
+</pre></div>
+</div>
+<p>Para crear <em>arrays</em> multidimensionales usamos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En este último ejemplo hemos creado matrices con unos en la diagonal y
+ceros en todos los demás lugares.</p>
+</section>
+</section>
+<section id="acceso-a-los-elementos">
+<h2>Acceso a los elementos<a class="headerlink" href="#acceso-a-los-elementos" title="Link to this heading"></a></h2>
+<p>El acceso a los elementos tiene una forma muy parecida a la de las
+listas (pero no exactamente igual).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Si queremos uno de los elementos usamos la notación:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r1</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">r1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>y para “tajadas” (<em>slices</em>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">7</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Como con vectores unidimensionales, con arrays multidimensionales, se
+puede ubicar un elemento o usar <em>slices</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">55</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">5</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;primer y segundo elementos&quot;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Slicing parte de la segunda fila :&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Todas las filas, tercera columna :&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Primera fila   :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">es igual a :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Segunda fila   :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">es igual a :</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Primera columna:&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Última columna : </span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Segunda fila, elementos impares (0,2,...) : &#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,::</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span> <span class="s1">&#39;Segunda fila, todos los elementos pares : &#39;</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Cuando el <em>slicing</em> se hace de la forma <code class="docutils literal notranslate"><span class="pre">[i:f:s]</span></code> significa que
+tomaremos los elementos entre <code class="docutils literal notranslate"><span class="pre">i</span></code> (inicial), hasta <code class="docutils literal notranslate"><span class="pre">f</span></code> (final, no
+incluido), pero tomando sólo uno de cada <code class="docutils literal notranslate"><span class="pre">s</span></code> (stride) elementos</p>
+<img alt="_images/numpy_indexing.png" src="_images/numpy_indexing.png" />
+<p>En <a class="reference external" href="http://scipy-lectures.github.io">Scipy Lectures at
+http://scipy-lectures.github.io</a> hay
+una descripción del acceso a arrays.</p>
+</section>
+<section id="operaciones-sobre-arrays">
+<h2>Operaciones sobre arrays<a class="headerlink" href="#operaciones-sobre-arrays" title="Link to this heading"></a></h2>
+<section id="operaciones-basicas">
+<h3>Operaciones básicas<a class="headerlink" href="#operaciones-basicas" title="Link to this heading"></a></h3>
+<p>Los array se pueden usar en operaciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Suma de una constante</span>
+<span class="n">arr1</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span> <span class="n">arr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>              <span class="c1"># Creamos un segundo array</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiplicación y división por constantes y suma/resta de arrays</span>
+<span class="mi">2</span><span class="o">*</span><span class="n">arr1</span> <span class="o">-</span> <span class="n">arr</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Multiplicación entre arrays</span>
+<span class="n">arr</span> <span class="o">*</span> <span class="n">arr1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">/</span> <span class="n">arr1</span>
+</pre></div>
+</div>
+<p>Como vemos, están definidas todas las operaciones por constantes y entre
+arrays. En operaciones con constantes, se aplican sobre cada elemento
+del array. En operaciones entre arrays se realizan elemento a elemento
+(y el número de elementos de los dos array debe ser compatible).</p>
+</section>
+<section id="comparaciones">
+<h3>Comparaciones<a class="headerlink" href="#comparaciones" title="Link to this heading"></a></h3>
+<p>También se pueden comparar dos arrays elemento a elemento</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">19</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span> <span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comparación de un array con una constante</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span> <span class="o">&gt;</span> <span class="mi">12</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Comparación de un array con otro</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span> <span class="o">&gt;</span> <span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="funciones-definidas-en-numpy">
+<h3>Funciones definidas en <strong>Numpy</strong><a class="headerlink" href="#funciones-definidas-en-numpy" title="Link to this heading"></a></h3>
+<p>Algunas de las funciones definidas en numpy se aplican a cada elemento.
+Por ejemplo, las funciones matemáticas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">arr1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">arr</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-10-a">
+<h2>Ejercicios 10 (a)<a class="headerlink" href="#ejercicios-10-a" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Genere arrays en 2d, cada uno de tamaño 10x10 con:</p>
+<ol class="arabic simple">
+<li><p>Un array con valores 1 en la “diagonal principal” y 0 en el resto
+(Matriz identidad).</p></li>
+<li><p>Un array con valores 0 en la “diagonal principal” y 1 en el resto.</p></li>
+<li><p>Un array con valores 1 en los bordes y 0 en el interior.</p></li>
+<li><p>Un array con números enteros consecutivos (empezando en 1) en los
+bordes y 0 en el interior.</p></li>
+</ol>
+</li>
+<li><p>Diga qué resultado produce el siguiente código, y explíquelo</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejemplo propuesto por Jake VanderPlas</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">suma_potencias(p,</span> <span class="pre">n)</span></code> (utilizando arrays y
+<strong>Numpy</strong>) que calcule la operación</p>
+<div class="math notranslate nohighlight">
+\[s_{2} = \sum_{k=0}^{n}k^{p}\]</div>
+<p>.</p>
+</li>
+<li><p>Usando las funciones de numpy <code class="docutils literal notranslate"><span class="pre">sign</span></code> y <code class="docutils literal notranslate"><span class="pre">maximum</span></code> definir las
+siguientes funciones, que acepten como argumento un array y devuelvan
+un array con el mismo <em>shape</em>:</p></li>
+</ol>
+<ul class="simple">
+<li><p>función de Heaviside, que vale 1 para valores positivos de su
+argumento y 0 para valores negativos.</p></li>
+<li><p>La función escalón, que vale 0 para valores del argumento fuera del
+intervalo <span class="math notranslate nohighlight">\((-1,1)\)</span> y 1 para argumentos en el intervalo.</p></li>
+<li><p>La función rampa, que vale 0 para valores negativos de <span class="math notranslate nohighlight">\(x\)</span> y
+<span class="math notranslate nohighlight">\(x\)</span> para valores positivos.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_09.html" class="btn btn-neutral float-left" title="Clase 9: Control de versiones y módulos" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
