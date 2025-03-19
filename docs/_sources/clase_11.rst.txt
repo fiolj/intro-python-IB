@@ -466,3 +466,613 @@ Ejercicios 11 (a)
 
 
 
+
+Adecuación de los gráficos
+==========================
+
+Veamos un ejemplo de un gráfico completo, con modificaciones para que
+sea más útil/atractivo …
+
+.. code:: python
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    from pathlib import Path
+
+.. code:: python
+
+    fdatos = Path().cwd() / 'data/ej_oscil_aten_err.dat'
+    foname = fdatos.with_name('ej_plot_osc')
+
+.. code:: python
+
+    print(fdatos)
+
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases/data/ej_oscil_aten_err.dat
+
+
+.. code:: python
+
+    print(foname)
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases/data/ej_plot_osc
+
+
+.. code:: python
+
+    x, y, yexp = np.loadtxt(fdatos, unpack=True)
+
+.. code:: python
+
+    plt.plot(x,1+y, '-b', label="teoría")
+    plt.plot(x,1+yexp, 'or', label="medición")
+    plt.legend(loc="best", title="Mis datos")
+    plt.xlabel('Tiempo (micro-segundos)')
+    plt.ylabel("Voltaje (mV)")
+    plt.title("Medición de ayer")
+    plt.axvline(x=1, color='gray')
+    plt.axhline(color='gray')
+    plt.xlim((1.e-1,3))
+    plt.xscale('log')
+    plt.yscale('log')
+    plt.ylim((0.6, 1.4))
+    plt.savefig(foname.with_suffix('.png'))
+    plt.savefig(foname.with_suffix('.pdf'))
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_6_0.png
+
+
+Nombres de ejes y leyendas
+--------------------------
+
+Vamos ahora a agregar nombres a los ejes y a las curvas.
+
+Para agregar nombres a las curvas, tenemos que agregar un ``label``, en
+este caso en el mismo comando ``plot()``, y luego mostrarlo con
+\`legend()
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label="teoría")
+    plt.plot(x,yexp, 'or', label="medición")
+    #plt.legend()
+    plt.legend(loc="lower right", title="Mis datos")
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.legend.Legend at 0x7fe35adb8190>
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_8_1.png
+
+
+Para agregar nombres a los ejes usamos ``xlabel`` y ``ylabel``:
+
+.. code:: python
+
+    plt.plot(x,yexp, 'or', label="medición")
+    plt.plot(x,y, '-b', label="teoría")
+    plt.legend(loc="lower right", title="Mis datos")
+    plt.xlabel('Tiempo (micro-segundos)')
+    plt.ylabel("Voltaje (mV)");
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_10_0.png
+
+
+Los títulos a la figura se pueden agregar con ``title``
+
+Acá además agregamos una línea vertical y una horizontal.
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label="teoría")
+    plt.plot(x,yexp, 'or', label="medición")
+    plt.legend(loc="lower right", title="Mis datos")
+    plt.xlabel('Tiempo (micro-segundos)')
+    plt.ylabel("Voltaje (mV)")
+    plt.title("Medición de ayer")
+    plt.axvline(x=1, color='gray')
+    plt.axhline(color='gray')
+
+
+
+
+.. parsed-literal::
+
+    <matplotlib.lines.Line2D at 0x7fe35ad06990>
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_13_1.png
+
+
+Límites de graficación (vista)
+------------------------------
+
+Para cambiar los límites de graficación se puede usar las funciones
+``xlim`` para el eje horizontal y ``ylim`` para el vertical
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label="teoría")
+    plt.plot(x,yexp, 'or', label="medición")
+    plt.legend(loc="lower right", title="Mis datos")
+    plt.xlabel('Tiempo (micro-segundos)')
+    plt.ylabel("Voltaje (mV)")
+    plt.title("Medición de ayer")
+    plt.axvline(x=1, color='gray')
+    plt.axhline(color='gray')
+    plt.xlim((0,2.5))
+    plt.ylim((-0.4, 0.32))
+
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_15_1.png
+
+
+Escalas
+-------
+
+Para pasar a escala logarítmica usamos ``xscale`` o ``yscale``
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label="teoría")
+    plt.plot(x,yexp, 'or', label="medición")
+    plt.legend(loc="best", title="Mis datos")
+    plt.xlabel('Tiempo (micro-segundos)')
+    plt.ylabel("Voltaje (mV)")
+    plt.xlim((1.e-1,3))
+    plt.xscale('log')
+    plt.ylim((-0.4, 0.32))
+
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_18_1.png
+
+
+Líneas verticales y horizontales
+--------------------------------
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label="teoría")
+    plt.plot(x,yexp, 'or', label="medición")
+    plt.legend(loc="best", title="Mis datos")
+    plt.xlabel('Tiempo (micro-segundos)')
+    plt.ylabel("Voltaje (mV)")
+    plt.title("Medición de ayer")
+    plt.axvline(x=1, color='gray')
+    plt.axhline(color='gray')
+    plt.grid(which='both')
+    plt.xlim((1.e-1,3))
+    plt.xscale('log')
+    plt.ylim((-0.4, 0.32))
+
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_20_1.png
+
+
+Inclusión de ecuaciones
+-----------------------
+
+Para incluir ecuaciones se puede utilizar la notación de LaTeX para
+parte del texto. Si utilizamos una expresión encerrada entre los
+símbolos ``$``, matplotlib interpreta que está escrito en (un
+subconjunto) de LaTeX.
+
+**Matplotlib** tiene un procesador de símbolos interno para mostrar la
+notación en LaTeX que reconoce los elementos más comunes, o puede
+elegirse utilizar un procesador LaTeX externo.
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label=r"$\frac{\sin(x^2)}{[2 + \cos (x)]^2}$")
+    plt.plot(x,yexp, 'or', label="$\mathrm{Medición}$")
+    plt.legend(loc="best", title="Mis datos", fontsize='x-large')
+    plt.xlabel(r'Tiempo ($\mu$-segundos)', fontsize='x-large')
+    plt.ylabel("Voltaje (mV)", fontsize='x-large')
+    plt.title("Medición de ayer")
+    plt.axvline(x=1, color='gray')
+    plt.axhline(color='gray')
+    plt.grid(which='both')
+    plt.xlim((1.e-1,3))
+    plt.xscale('log')
+    plt.ylim((-0.4, 0.32))
+
+
+.. parsed-literal::
+
+    <>:2: SyntaxWarning: invalid escape sequence '\m'
+    <>:2: SyntaxWarning: invalid escape sequence '\m'
+    /tmp/ipykernel_6610/3688865428.py:2: SyntaxWarning: invalid escape sequence '\m'
+      plt.plot(x,yexp, 'or', label="$\mathrm{Medición}$")
+
+
+
+
+.. parsed-literal::
+
+    (-0.4, 0.32)
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_22_2.png
+
+
+Exportar las figuras
+--------------------
+
+Para guardar las figuras en alguno de los formatos disponibles
+utilizamos la función ``savefig()``.
+
+.. code:: python
+
+    plt.plot(x,y, '-b', label=r"$\frac{\sin(x^2)}{[2 + \cos (x)]^2}$")
+    plt.plot(x,yexp, 'or', label=r"$\mathrm{Medición}$")
+    plt.legend(loc="best", title="Mis datos", fontsize='x-large')
+    plt.xlabel(r'Tiempo ($\mu$-segundos)', fontsize='x-large')
+    plt.ylabel("Voltaje (mV)", fontsize='x-large')
+    plt.title("Medición de ayer")
+    plt.axvline(x=1, color='gray')
+    plt.axhline(color='gray')
+    plt.grid(which='both')
+    plt.xlim((1.e-1,3))
+    plt.xscale('log')
+    plt.ylim((-0.4, 0.32))
+    plt.savefig(foname.with_suffix('.png'))
+    plt.savefig(foname.with_suffix('.pdf'))
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_24_0.png
+
+
+.. code:: python
+
+    print(foname)
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases/data/ej_plot_osc
+
+
+.. code:: python
+
+    print(foname.with_suffix('.png'))
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/clases/data/ej_plot_osc.png
+
+
+.. code:: python
+
+    plt.savefig?
+
+
+
+.. parsed-literal::
+
+    [0;31mSignature:[0m [0mplt[0m[0;34m.[0m[0msavefig[0m[0;34m([0m[0;34m*[0m[0margs[0m[0;34m,[0m [0;34m**[0m[0mkwargs[0m[0;34m)[0m [0;34m->[0m [0;34m'None'[0m[0;34m[0m[0;34m[0m[0m
+    [0;31mDocstring:[0m
+    Save the current figure as an image or vector graphic to a file.
+    
+    Call signature::
+    
+      savefig(fname, *, transparent=None, dpi='figure', format=None,
+              metadata=None, bbox_inches=None, pad_inches=0.1,
+              facecolor='auto', edgecolor='auto', backend=None,
+              **kwargs
+             )
+    
+    The available output formats depend on the backend being used.
+    
+    Parameters
+    ----------
+    fname : str or path-like or binary file-like
+        A path, or a Python file-like object, or
+        possibly some backend-dependent object such as
+        `matplotlib.backends.backend_pdf.PdfPages`.
+    
+        If *format* is set, it determines the output format, and the file
+        is saved as *fname*.  Note that *fname* is used verbatim, and there
+        is no attempt to make the extension, if any, of *fname* match
+        *format*, and no extension is appended.
+    
+        If *format* is not set, then the format is inferred from the
+        extension of *fname*, if there is one.  If *format* is not
+        set and *fname* has no extension, then the file is saved with
+        :rc:`savefig.format` and the appropriate extension is appended to
+        *fname*.
+    
+    Other Parameters
+    ----------------
+    transparent : bool, default: :rc:`savefig.transparent`
+        If *True*, the Axes patches will all be transparent; the
+        Figure patch will also be transparent unless *facecolor*
+        and/or *edgecolor* are specified via kwargs.
+    
+        If *False* has no effect and the color of the Axes and
+        Figure patches are unchanged (unless the Figure patch
+        is specified via the *facecolor* and/or *edgecolor* keyword
+        arguments in which case those colors are used).
+    
+        The transparency of these patches will be restored to their
+        original values upon exit of this function.
+    
+        This is useful, for example, for displaying
+        a plot on top of a colored background on a web page.
+    
+    dpi : float or 'figure', default: :rc:`savefig.dpi`
+        The resolution in dots per inch.  If 'figure', use the figure's
+        dpi value.
+    
+    format : str
+        The file format, e.g. 'png', 'pdf', 'svg', ... The behavior when
+        this is unset is documented under *fname*.
+    
+    metadata : dict, optional
+        Key/value pairs to store in the image metadata. The supported keys
+        and defaults depend on the image format and backend:
+    
+        - 'png' with Agg backend: See the parameter ``metadata`` of
+          `~.FigureCanvasAgg.print_png`.
+        - 'pdf' with pdf backend: See the parameter ``metadata`` of
+          `~.backend_pdf.PdfPages`.
+        - 'svg' with svg backend: See the parameter ``metadata`` of
+          `~.FigureCanvasSVG.print_svg`.
+        - 'eps' and 'ps' with PS backend: Only 'Creator' is supported.
+    
+        Not supported for 'pgf', 'raw', and 'rgba' as those formats do not support
+        embedding metadata.
+        Does not currently support 'jpg', 'tiff', or 'webp', but may include
+        embedding EXIF metadata in the future.
+    
+    bbox_inches : str or `.Bbox`, default: :rc:`savefig.bbox`
+        Bounding box in inches: only the given portion of the figure is
+        saved.  If 'tight', try to figure out the tight bbox of the figure.
+    
+    pad_inches : float or 'layout', default: :rc:`savefig.pad_inches`
+        Amount of padding in inches around the figure when bbox_inches is
+        'tight'. If 'layout' use the padding from the constrained or
+        compressed layout engine; ignored if one of those engines is not in
+        use.
+    
+    facecolor : :mpltype:`color` or 'auto', default: :rc:`savefig.facecolor`
+        The facecolor of the figure.  If 'auto', use the current figure
+        facecolor.
+    
+    edgecolor : :mpltype:`color` or 'auto', default: :rc:`savefig.edgecolor`
+        The edgecolor of the figure.  If 'auto', use the current figure
+        edgecolor.
+    
+    backend : str, optional
+        Use a non-default backend to render the file, e.g. to render a
+        png file with the "cairo" backend rather than the default "agg",
+        or a pdf file with the "pgf" backend rather than the default
+        "pdf".  Note that the default backend is normally sufficient.  See
+        :ref:`the-builtin-backends` for a list of valid backends for each
+        file format.  Custom backends can be referenced as "module://...".
+    
+    orientation : {'landscape', 'portrait'}
+        Currently only supported by the postscript backend.
+    
+    papertype : str
+        One of 'letter', 'legal', 'executive', 'ledger', 'a0' through
+        'a10', 'b0' through 'b10'. Only supported for postscript
+        output.
+    
+    bbox_extra_artists : list of `~matplotlib.artist.Artist`, optional
+        A list of extra artists that will be considered when the
+        tight bbox is calculated.
+    
+    pil_kwargs : dict, optional
+        Additional keyword arguments that are passed to
+        `PIL.Image.Image.save` when saving the figure.
+    
+    Notes
+    -----
+    
+    .. note::
+    
+        This is the :ref:`pyplot wrapper <pyplot_interface>` for `.Figure.savefig`.
+    [0;31mFile:[0m      /usr/lib64/python3.13/site-packages/matplotlib/pyplot.py
+    [0;31mType:[0m      function
+
+
+Dos gráficos en la misma figura
+===============================
+
+Hay varias funciones que permiten poner más de un gráfico en la misma
+figura. Veamos un ejemplo utilizando la función ``subplots()``
+
+.. code:: python
+
+    # %load scripts/ejemplo_08_5.py
+    #! /usr/bin/ipython3
+    
+    """ Script realizado durante la clase 9. Dos figuras """
+    from pathlib import Path
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    plt.ion()
+    
+    #fname = 'ej_oscil_aten_err'
+    # Levantamos los datos
+    #pardir = Path("..")
+    
+    #datfile = pardir / f'data/{fname}.dat'
+    fname = fdatos.name
+    
+    x1, y1, y2 = np.loadtxt(fdatos, unpack=True)
+    # Vamos a graficar sólo algunos valores (uno de cada 5)
+    x = x1[3:-10:5]
+    y = y1[3:-10:5]
+    yexp = y2[3:-10:5]
+    
+    # Ejemplo de barras de error que dependen del eje x
+    error = 0.05 + 0.3 * np.abs(y)
+    
+    fig, (ax0, ax1) = plt.subplots(nrows=2, sharex=True)
+    ax0.errorbar(x, yexp, yerr=error, fmt='-o')
+    ax1.plot(x, 2 * (yexp - y) / (yexp + y), 'or', markersize=8)
+    
+    
+    # Límites de graficación y títulos
+    ax0.set_title('Datos con error variable')
+    ax1.set_title('Error relativo')
+    ax0.set_ylabel('Voltaje (mV)', fontsize='x-large')
+    ax1.set_xlabel(r'Tiempo ($\mu$-seg)', fontsize='x-large')
+    ax1.set_ylabel('Error relativo', fontsize='x-large')
+    ax1.set_xlim((0, 3))
+    
+    # Guardamos el resultado
+    plt.savefig(f'{fname}.png', dpi=150)
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_29_0.png
+
+
+.. code:: python
+
+    # %load scripts/ejemplo_08_5.py
+    #! /usr/bin/ipython3
+    
+    """ Script realizado durante la clase 9. Dos figuras """
+    from pathlib import Path
+    
+    import numpy as np
+    import matplotlib.pyplot as plt
+    plt.ion()
+    
+    fname = 'ej_oscil_aten_err'
+    # Levantamos los datos
+    pardir = Path("..")
+    datfile = pardir / f'data/{fname}.dat'
+    
+    x1, y1, y2 = np.loadtxt(datfile, unpack=True)
+    # Vamos a graficar sólo algunos valores (uno de cada 5)
+    x = x1[3:-10:5]
+    y = y1[3:-10:5]
+    yexp = y2[3:-10:5]
+    
+    # Ejemplo de barras de error que dependen del eje x
+    error = 0.05 + 0.3 * np.abs(y)
+    
+    fig, (ax0, ax1) = plt.subplots(figsize=(10,4), nrows=1, ncols=2)
+    ax0.errorbar(x, yexp, yerr=error, fmt='-o')
+    ax1.plot(x, 2 * (yexp - y) / (yexp + y), 'or', markersize=8)
+    
+    
+    # Límites de graficación y títulos
+    ax0.set_title('Datos con error variable')
+    ax1.set_title('Error relativo')
+    ax0.set_ylabel('Voltaje (mV)', fontsize='x-large')
+    ax1.set_xlabel(r'Tiempo ($\mu$-seg)', fontsize='x-large')
+    ax1.set_ylabel('Error relativo', fontsize='x-large')
+    ax1.set_xlim((0, 3))
+    
+    # Guardamos el resultado
+    plt.savefig(f'{fname}_B.png', dpi=150)
+
+
+
+
+.. image:: figuras/11_2_mas_visualizacion_30_0.png
+
+
+En este ejemplo utilizamos un enfoque diferente al utilizado
+anteriormente. Matplotlib presenta también una interface orientada a
+objetos. La función ``subplots()`` devuelve un par ``fig, axis`` que son
+dos objetos utilizados para representar la *figura* y un *eje*. Los
+métodos de estos objetos presentan funcionalidad similar a las funciones
+del módulo ``pyplot``.
+
+--------------
+
+Ejercicios 11 (b)
+=================
+
+2. Para la función definida a trozos:
+
+   .. math::
+
+
+      f(x) =
+      \begin{cases}
+        f_{1}(x) = x^{2}/8 & - \pi < x \le \pi/2  \\
+        f_{2}(x) = -0.3 x  & \pi/2 < x < \pi \\
+        f_{3}(x) = -(x - 2 \pi)^{2}/6 & \pi \le x \le 5 \pi/2 \\
+        f_{4}(x) = (x - 2 \pi)/5 & 5 \pi/2 < x \le 3 \pi
+        \end{cases}
+
+   realizar la siguiente figura de la manera más fiel posible.
+
+   .. image:: figuras/ejercicio_08_1.png
+
+
+
+   **Pistas:** Buscar información sobre ``plt.text()``,
+   ``plt.fill_between()`` y sobre ``plt.xticks`` y ``plt.yticks``.
+
+3. Rehacer la siguiente figura:
+
+   .. image:: figuras/ejercicio_08_2.png
+
+
+
+--------------
+
+.
+
+
+
