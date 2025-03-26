@@ -1193,13 +1193,23 @@ equiespaciados de <span class="math notranslate nohighlight">\(t\)</span> entre 
 <section id="indexado-con-secuencias-de-indices">
 <h3>Indexado con secuencias de índices<a class="headerlink" href="#indexado-con-secuencias-de-indices" title="Link to this heading"></a></h3>
 <p>Consideremos un vector simple, y elijamos algunos de sus elementos</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">)</span>
 <span class="n">x</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span> <span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.</span> <span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.</span> <span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.</span> <span class="p">])</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard slicing</span>
 <span class="n">v1</span><span class="o">=</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 <span class="n">v1</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Esta es la manera simple de seleccionar elementos de un array, y como
@@ -1214,11 +1224,16 @@ además seleccionar partes de un array usando otro array de índices:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i1</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.</span>  <span class="mf">0.5</span> <span class="mf">1.</span>  <span class="mf">1.5</span> <span class="mf">2.</span>  <span class="mf">2.5</span> <span class="mf">3.</span> <span class="p">]</span>
+<span class="p">[</span><span class="mf">0.5</span> <span class="mf">1.5</span> <span class="mf">3.</span>  <span class="mf">0.</span> <span class="p">]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">v1</span><span class="o">.</span><span class="n">base</span> <span class="ow">is</span> <span class="n">x</span><span class="o">.</span><span class="n">base</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">v2</span><span class="o">.</span><span class="n">base</span> <span class="ow">is</span> <span class="n">x</span><span class="o">.</span><span class="n">base</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
+<span class="kc">False</span>
 </pre></div>
 </div>
 <p>Los índices negativos funcionan en exactamente la misma manera que en el
@@ -1234,6 +1249,13 @@ dimensiones (<code class="docutils literal notranslate"><span class="pre">shape<
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;v3 shape:&#39;</span><span class="p">,</span> <span class="n">v3</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">0.</span>  <span class="mf">0.5</span> <span class="mf">1.</span>  <span class="mf">1.5</span> <span class="mf">2.</span>  <span class="mf">2.5</span> <span class="mf">3.</span> <span class="p">]</span>
+<span class="p">[[</span><span class="mf">0.5</span> <span class="mf">0.</span> <span class="p">]</span>
+ <span class="p">[</span><span class="mf">1.</span>  <span class="mf">0.5</span><span class="p">]]</span>
+<span class="n">x</span>  <span class="n">shape</span><span class="p">:</span> <span class="p">(</span><span class="mi">7</span><span class="p">,)</span>
+<span class="n">v3</span> <span class="n">shape</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
 </section>
 <section id="indices-de-arrays-multidimensionales">
 <h3>Índices de arrays multidimensionales<a class="headerlink" href="#indices-de-arrays-multidimensionales" title="Link to this heading"></a></h3>
@@ -1241,18 +1263,36 @@ dimensiones (<code class="docutils literal notranslate"><span class="pre">shape<
 <span class="n">y</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">5.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">3.5</span><span class="p">,</span>  <span class="mf">2.5</span><span class="p">,</span>  <span class="mf">1.5</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>                     <span class="c1"># Primera fila</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>                     <span class="c1"># Última fila</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">12.5</span> <span class="mf">11.5</span> <span class="mf">10.5</span>  <span class="mf">9.5</span><span class="p">]</span>
+<span class="p">[</span><span class="mf">4.5</span> <span class="mf">3.5</span> <span class="mf">2.5</span> <span class="mf">1.5</span><span class="p">]</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>       <span class="c1"># Primera y última fila</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">12.5</span> <span class="mf">11.5</span> <span class="mf">10.5</span>  <span class="mf">9.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">4.5</span>  <span class="mf">3.5</span>  <span class="mf">2.5</span>  <span class="mf">1.5</span><span class="p">]]</span>
+</pre></div>
+</div>
 <p>Si usamos más de un array de índices para seleccionar elementos de un
 array multidimensional, cada array de índices se refiere a una dimensión
 diferente. Consideremos el array <code class="docutils literal notranslate"><span class="pre">y</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">12.5</span> <span class="mf">11.5</span> <span class="mf">10.5</span>  <span class="mf">9.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">8.5</span>  <span class="mf">7.5</span>  <span class="mf">6.5</span>  <span class="mf">5.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">4.5</span>  <span class="mf">3.5</span>  <span class="mf">2.5</span>  <span class="mf">1.5</span><span class="p">]]</span>
 </pre></div>
 </div>
 <img alt="_images/adv_index.png" src="_images/adv_index.png" />
@@ -1262,6 +1302,9 @@ diferente. Consideremos el array <code class="docutils literal notranslate"><spa
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
 <span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">11.5</span>  <span class="mf">6.5</span>  <span class="mf">9.5</span>  <span class="mf">7.5</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
@@ -1274,15 +1317,35 @@ creamos una matriz de coniciones <code class="docutils literal notranslate"><spa
 <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]</span>
+ <span class="p">[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]</span>
+ <span class="p">[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Es necesario dar el tipo de los elementos para que sean lógicos</span>
 <span class="kc">False</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]])</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="o">=</span> <span class="kc">True</span>                    <span class="c1"># Aplico la notación de índice avanzado</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="kc">False</span>  <span class="kc">True</span> <span class="kc">False</span>  <span class="kc">True</span><span class="p">]</span>
+ <span class="p">[</span><span class="kc">False</span>  <span class="kc">True</span>  <span class="kc">True</span> <span class="kc">False</span><span class="p">]</span>
+ <span class="p">[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">5.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">3.5</span><span class="p">,</span>  <span class="mf">2.5</span><span class="p">,</span>  <span class="mf">1.5</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>Como vemos, <code class="docutils literal notranslate"><span class="pre">c</span></code> es una matriz con la misma forma que <code class="docutils literal notranslate"><span class="pre">y</span></code>. Esto
@@ -1294,10 +1357,18 @@ verdadero:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">yy</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">11.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">yy</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="mi">2</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">12.5</span> <span class="mf">11.5</span> <span class="mf">10.5</span>  <span class="mf">9.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">8.5</span>  <span class="mf">7.5</span>  <span class="mf">6.5</span>  <span class="mf">5.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">4.5</span>  <span class="mf">3.5</span>  <span class="mf">2.5</span>  <span class="mf">1.5</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>Esta es una notación potente. Por ejemplo, si en el array anterior
@@ -1308,15 +1379,29 @@ ejemplo, los valores mayores a 7)</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">12.5</span> <span class="mf">11.5</span> <span class="mf">10.5</span>  <span class="mf">9.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">8.5</span>  <span class="mf">7.5</span>  <span class="mf">6.5</span>  <span class="mf">5.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">4.5</span>  <span class="mf">3.5</span>  <span class="mf">2.5</span>  <span class="mf">1.5</span><span class="p">]]</span>
+<span class="p">[[</span> <span class="kc">True</span>  <span class="kc">True</span>  <span class="kc">True</span>  <span class="kc">True</span><span class="p">]</span>
+ <span class="p">[</span> <span class="kc">True</span>  <span class="kc">True</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]</span>
+ <span class="p">[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]]</span>
+</pre></div>
+</div>
 <p>El resultado de una comparación es un array donde cada elemento es un
 variable lógica (<code class="docutils literal notranslate"><span class="pre">True</span></code> o <code class="docutils literal notranslate"><span class="pre">False</span></code>). Podemos utilizarlo para
 seleccionar los valores que cumplen la condición dada. Por ejemplo</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="n">c1</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">,</span>  <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">])</span>
+</pre></div>
+</div>
 <p>De la misma manera, si queremos todos los valores entre 4 y 7
 (incluidos), podemos hacer</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="mi">7</span><span class="p">)</span> <span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">6.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>Como mostramos en este ejemplo, no es necesario crear la matriz de
@@ -1328,6 +1413,9 @@ función <code class="docutils literal notranslate"><span class="pre">nonzero</s
 <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">c1</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
 <p>Esta es la notación de avanzada de índices, y nos dice que los elementos
 cuya condición es diferente de cero (<code class="docutils literal notranslate"><span class="pre">True</span></code>) están en las posiciones:
 <code class="docutils literal notranslate"><span class="pre">[1,2],</span> <span class="pre">[1,3],</span> <span class="pre">[2,0]</span></code>.</p>
@@ -1336,13 +1424,29 @@ cuya condición es diferente de cero (<code class="docutils literal notranslate"
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;indy =&#39;</span><span class="p">,</span> <span class="n">indy</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">indx</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">indy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">3</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">indx</span><span class="p">,</span> <span class="n">indy</span><span class="p">):</span>
   <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;y[</span><span class="si">{}</span><span class="s1">,</span><span class="si">{}</span><span class="s1">]=</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">=</span><span class="mf">6.5</span>
+<span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span><span class="o">=</span><span class="mf">5.5</span>
+<span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mf">4.5</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">c1</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">c1</span><span class="p">)))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">c1</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]),</span> <span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+<span class="p">[[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">1</span> <span class="mi">3</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">2</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">6.5</span> <span class="mf">5.5</span> <span class="mf">4.5</span><span class="p">]</span>
 </pre></div>
 </div>
 <p>El resultado de <code class="docutils literal notranslate"><span class="pre">nonzero()</span></code> se puede utilizar directamente para elegir
@@ -1360,13 +1464,29 @@ array unidimensional como condición</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]</span>
+ <span class="p">[</span><span class="kc">False</span> <span class="kc">False</span>  <span class="kc">True</span>  <span class="kc">True</span><span class="p">]</span>
+ <span class="p">[</span> <span class="kc">True</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]]</span>
+<span class="p">[</span><span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span>  <span class="kc">True</span>  <span class="kc">True</span>  <span class="kc">True</span> <span class="kc">False</span> <span class="kc">False</span> <span class="kc">False</span><span class="p">]</span>
+<span class="p">[[</span><span class="mf">12.5</span> <span class="mf">11.5</span> <span class="mf">10.5</span>  <span class="mf">9.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">8.5</span>  <span class="mf">7.5</span>  <span class="mf">6.5</span>  <span class="mf">5.5</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mf">4.5</span>  <span class="mf">3.5</span>  <span class="mf">2.5</span>  <span class="mf">1.5</span><span class="p">]]</span>
+<span class="p">[</span><span class="mf">6.5</span> <span class="mf">5.5</span> <span class="mf">4.5</span><span class="p">]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">c2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int32&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">c3</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">int32</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">compress</span><span class="p">(</span><span class="n">c3</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">6.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">])</span>
 </pre></div>
 </div>
 <p>La función <code class="docutils literal notranslate"><span class="pre">extract</span></code> es equivalente a convertir los dos vectores
@@ -1375,7 +1495,13 @@ array unidimensional como condición</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">6.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">c1</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mf">6.5</span> <span class="mf">5.5</span> <span class="mf">4.5</span><span class="p">]</span>
 </pre></div>
 </div>
 </section>
@@ -1384,10 +1510,23 @@ array unidimensional como condición</p>
 <p>La función <code class="docutils literal notranslate"><span class="pre">where</span></code> permite operar condicionalmente sobre algunos
 elementos. Por ejemplo, si queremos convolucionar el vector <code class="docutils literal notranslate"><span class="pre">y</span></code> con un
 escalón localizado en la región <code class="docutils literal notranslate"><span class="pre">[2,8]</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">5.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">3.5</span><span class="p">,</span>  <span class="mf">2.5</span><span class="p">,</span>  <span class="mf">1.5</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span>  <span class="p">(</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">)</span> <span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">yy</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span> <span class="p">,</span> <span class="mf">0.</span> <span class="p">,</span> <span class="mf">0.</span> <span class="p">,</span> <span class="mf">0.</span> <span class="p">],</span>
+       <span class="p">[</span><span class="mf">0.</span> <span class="p">,</span> <span class="mf">7.5</span><span class="p">,</span> <span class="mf">6.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.</span> <span class="p">]])</span>
 </pre></div>
 </div>
 <p>Por ejemplo, para implementar la función de Heaviside</p>
@@ -1399,9 +1538,16 @@ escalón localizado en la región <code class="docutils literal notranslate"><sp
 <span class="n">H</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">H</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7f8ce41a7390</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/12_2_indexado_55_1.png" src="_images/12_2_indexado_55_1.png" />
 </section>
 </section>
 <section id="extension-de-las-dimensiones-broadcasting">
@@ -1418,8 +1564,16 @@ mismas dimensiones que <code class="docutils literal notranslate"><span class="p
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">5.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">4.5</span><span class="p">,</span>  <span class="mf">3.5</span><span class="p">,</span>  <span class="mf">2.5</span><span class="p">,</span>  <span class="mf">1.5</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y4</span> <span class="o">=</span> <span class="mi">4</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">((</span><span class="n">y</span> <span class="o">&gt;</span> <span class="n">y4</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">))</span> <span class="c1"># np.all devuelve True si **TODOS** los elementos son iguales</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">True</span>
 </pre></div>
 </div>
 <p>De la misma manera, hay veces que podemos operar sobre arrays de
@@ -1427,10 +1581,25 @@ distintas dimensiones</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y4</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">,</span> <span class="mf">4.</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">+</span> <span class="n">y4</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">16.5</span><span class="p">,</span> <span class="mf">15.5</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">5.5</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span> <span class="o">+</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mf">16.5</span><span class="p">,</span> <span class="mf">15.5</span><span class="p">,</span> <span class="mf">14.5</span><span class="p">,</span> <span class="mf">13.5</span><span class="p">],</span>
+       <span class="p">[</span><span class="mf">12.5</span><span class="p">,</span> <span class="mf">11.5</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">,</span>  <span class="mf">9.5</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mf">8.5</span><span class="p">,</span>  <span class="mf">7.5</span><span class="p">,</span>  <span class="mf">6.5</span><span class="p">,</span>  <span class="mf">5.5</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p>Como vemos eso es igual a <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">+</span> <span class="pre">4*np.ones(y.shape)</span></code>. En general, si
@@ -1452,13 +1621,31 @@ tiene menor dimensión se llena con <code class="docutils literal notranslate"><
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">4</span><span class="p">,)</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="mi">3</span><span class="p">,)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">30</span><span class="p">]]</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">xx</span><span class="o">+</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">30</span> <span class="mi">31</span> <span class="mi">32</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>Lo que está pasando es algo así como:</p>
@@ -1477,10 +1664,28 @@ originales:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">xxx</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mi">0</span>  <span class="mi">0</span>  <span class="mi">0</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">10</span> <span class="mi">10</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">20</span> <span class="mi">20</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">30</span> <span class="mi">30</span> <span class="mi">30</span><span class="p">]]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">yyy</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span><span class="p">]]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">xxx</span> <span class="o">+</span> <span class="n">yyy</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span> <span class="mi">0</span>  <span class="mi">1</span>  <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">20</span> <span class="mi">21</span> <span class="mi">22</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">30</span> <span class="mi">31</span> <span class="mi">32</span><span class="p">]]</span>
 </pre></div>
 </div>
 </section>
@@ -1497,17 +1702,75 @@ arrays y devuelve su unión a lo largo de un eje.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;b=</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span>
+ <span class="p">[[</span><span class="mi">1</span> <span class="mi">2</span><span class="p">]</span>
+ <span class="p">[</span><span class="mi">3</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="n">b</span><span class="o">=</span>
+ <span class="p">[[</span> <span class="mi">5</span>  <span class="mi">6</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">7</span>  <span class="mi">8</span><span class="p">]</span>
+ <span class="p">[</span> <span class="mi">9</span> <span class="mi">10</span><span class="p">]]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># El eje 0 es el primero, y corresponde a apilamiento vertical</span>
 <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>          <span class="c1"># axis=0 es el default</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>    <span class="c1"># Une siempre verticalmente (primer eje)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">5</span><span class="p">,</span>  <span class="mi">6</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">7</span><span class="p">,</span>  <span class="mi">8</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]],</span>
+
+       <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">)))</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">)))</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Veamos cómo utilizar esto cuando tenemos más dimensiones.</p>
@@ -1517,9 +1780,43 @@ arrays y devuelve su unión a lo largo de un eje.</p>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">d: shape=</span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span><span class="n">d</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">c</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+ <span class="p">[[[</span> <span class="mi">1</span>  <span class="mi">2</span><span class="p">]</span>
+  <span class="p">[</span> <span class="mi">3</span>  <span class="mi">4</span><span class="p">]]</span>
+
+ <span class="p">[[</span><span class="o">-</span><span class="mi">1</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+  <span class="p">[</span><span class="o">-</span><span class="mi">3</span> <span class="o">-</span><span class="mi">4</span><span class="p">]]]</span>
+
+<span class="n">d</span><span class="p">:</span> <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+ <span class="p">[[[</span>  <span class="mi">5</span>   <span class="mi">6</span><span class="p">]</span>
+  <span class="p">[</span>  <span class="mi">7</span>   <span class="mi">8</span><span class="p">]]</span>
+
+ <span class="p">[[</span>  <span class="mi">9</span>  <span class="mi">10</span><span class="p">]</span>
+  <span class="p">[</span> <span class="o">-</span><span class="mi">5</span>  <span class="o">-</span><span class="mi">6</span><span class="p">]]</span>
+
+ <span class="p">[[</span> <span class="o">-</span><span class="mi">7</span>  <span class="o">-</span><span class="mi">8</span><span class="p">]</span>
+  <span class="p">[</span> <span class="o">-</span><span class="mi">9</span> <span class="o">-</span><span class="mi">10</span><span class="p">]]]</span>
+</pre></div>
+</div>
 <p>Como tienen todas las dimensiones iguales, excepto la primera, podemos
 concatenarlos a lo largo del eje 0 (verticalmente)</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[[</span>  <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span>  <span class="mi">3</span><span class="p">,</span>   <span class="mi">4</span><span class="p">]],</span>
+
+       <span class="p">[[</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>  <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span> <span class="o">-</span><span class="mi">3</span><span class="p">,</span>  <span class="o">-</span><span class="mi">4</span><span class="p">]],</span>
+
+       <span class="p">[[</span>  <span class="mi">5</span><span class="p">,</span>   <span class="mi">6</span><span class="p">],</span>
+        <span class="p">[</span>  <span class="mi">7</span><span class="p">,</span>   <span class="mi">8</span><span class="p">]],</span>
+
+       <span class="p">[[</span>  <span class="mi">9</span><span class="p">,</span>  <span class="mi">10</span><span class="p">],</span>
+        <span class="p">[</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span>  <span class="o">-</span><span class="mi">6</span><span class="p">]],</span>
+
+       <span class="p">[[</span> <span class="o">-</span><span class="mi">7</span><span class="p">,</span>  <span class="o">-</span><span class="mi">8</span><span class="p">],</span>
+        <span class="p">[</span> <span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">]]])</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">e</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1527,6 +1824,23 @@ concatenarlos a lo largo del eje 0 (verticalmente)</p>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="p">[[[</span>  <span class="mi">1</span>   <span class="mi">2</span><span class="p">]</span>
+  <span class="p">[</span>  <span class="mi">3</span>   <span class="mi">4</span><span class="p">]]</span>
+
+ <span class="p">[[</span> <span class="o">-</span><span class="mi">1</span>  <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+  <span class="p">[</span> <span class="o">-</span><span class="mi">3</span>  <span class="o">-</span><span class="mi">4</span><span class="p">]]</span>
+
+ <span class="p">[[</span>  <span class="mi">5</span>   <span class="mi">6</span><span class="p">]</span>
+  <span class="p">[</span>  <span class="mi">7</span>   <span class="mi">8</span><span class="p">]]</span>
+
+ <span class="p">[[</span>  <span class="mi">9</span>  <span class="mi">10</span><span class="p">]</span>
+  <span class="p">[</span> <span class="o">-</span><span class="mi">5</span>  <span class="o">-</span><span class="mi">6</span><span class="p">]]</span>
+
+ <span class="p">[[</span> <span class="o">-</span><span class="mi">7</span>  <span class="o">-</span><span class="mi">8</span><span class="p">]</span>
+  <span class="p">[</span> <span class="o">-</span><span class="mi">9</span> <span class="o">-</span><span class="mi">10</span><span class="p">]]]</span>
 </pre></div>
 </div>
 </section>
@@ -1537,13 +1851,28 @@ recibir un error porque la forma de los <code class="docutils literal notranslat
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">T</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mi">5</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">9</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">6</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">9</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>              <span class="c1"># Como vstack pero horizontalmente</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">9</span><span class="p">],</span>
+       <span class="p">[</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">6</span><span class="p">,</span>  <span class="mi">8</span><span class="p">,</span> <span class="mi">10</span><span class="p">]])</span>
 </pre></div>
 </div>
 <img alt="_images/ilust_hstack.png" src="_images/ilust_hstack.png" />
@@ -1558,6 +1887,92 @@ distribuciones más comunes. Veamos que hay en el módulo</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">dir</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;BitGenerator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Generator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;MT19937&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;PCG64&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;PCG64DXSM&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;Philox&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;RandomState&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;SFC64&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;SeedSequence&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__RandomState_ctor&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__all__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__builtins__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__cached__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__doc__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__file__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__loader__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__name__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__package__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__path__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;__spec__&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_bounded_integers&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_common&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_generator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_mt19937&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_pcg64&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_philox&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_pickle&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;_sfc64&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;beta&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;binomial&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;bit_generator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;bytes&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;chisquare&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;choice&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;default_rng&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;dirichlet&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;exponential&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;f&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;gamma&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;geometric&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;get_bit_generator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;get_state&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;gumbel&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;hypergeometric&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;laplace&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;logistic&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;lognormal&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;logseries&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;mtrand&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;multinomial&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;multivariate_normal&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;negative_binomial&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;noncentral_chisquare&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;noncentral_f&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;normal&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;pareto&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;permutation&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;poisson&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;power&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;rand&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;randint&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;randn&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;random&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;random_integers&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;random_sample&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;ranf&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;rayleigh&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;sample&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;seed&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;set_bit_generator&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;set_state&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;shuffle&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;standard_cauchy&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;standard_exponential&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;standard_gamma&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;standard_normal&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;standard_t&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;test&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;triangular&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;uniform&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;vonmises&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;wald&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;weibull&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;zipf&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 <section id="distribucion-uniforme">
 <h3>Distribución uniforme<a class="headerlink" href="#distribucion-uniforme" title="Link to this heading"></a></h3>
 <p>Si elegimos números al azar con una distribución de probabilidad
@@ -1568,12 +1983,29 @@ dado es simplemente proporcional al tamaño del intervalo.</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mf">0.77353213</span> <span class="mf">0.05443592</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.63091082</span> <span class="mf">0.87762008</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.50968171</span> <span class="mf">0.52013453</span><span class="p">]</span>
+ <span class="p">[</span><span class="mf">0.68691932</span> <span class="mf">0.21860516</span><span class="p">]]</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="mf">0.98834011</span><span class="p">,</span> <span class="mf">0.76279841</span><span class="p">,</span> <span class="mf">0.43694902</span><span class="p">,</span> <span class="mf">0.76506827</span><span class="p">,</span> <span class="mf">0.77258936</span><span class="p">,</span>
+       <span class="mf">0.79519259</span><span class="p">,</span> <span class="mf">0.66414221</span><span class="p">,</span> <span class="mf">0.05143199</span><span class="p">])</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">)</span>
 </pre></div>
 </div>
+<pre class="literal-block">Help on built-in function random:
+
+random(...) method of numpy.random.mtrand.RandomState instance
+    random(size=None)
+
+    Return random floats in the half-open interval [0.0, 1.0). Alias for
+    <cite>random_sample</cite> to ease forward-porting to the new random API.</pre>
 <p>Como se infiere de este resultado, la función <code class="docutils literal notranslate"><span class="pre">random</span></code> (o
 <code class="docutils literal notranslate"><span class="pre">random_sample</span></code>) nos da una distribución de puntos aleatorios entre 0
 y 1, uniformemente distribuidos.</p>
@@ -1581,9 +2013,102 @@ y 1, uniformemente distribuidos.</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+<img alt="_images/12_2_indexado_102_0.png" src="_images/12_2_indexado_102_0.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">)</span>
 </pre></div>
 </div>
+<pre class="literal-block">Help on built-in function uniform:
+
+uniform(...) method of numpy.random.mtrand.RandomState instance
+    uniform(low=0.0, high=1.0, size=None)
+
+    Draw samples from a uniform distribution.
+
+    Samples are uniformly distributed over the half-open interval
+    <code class="docutils literal notranslate"><span class="pre">[low,</span> <span class="pre">high)</span></code> (includes low, but excludes high).  In other words,
+    any value within the given interval is equally likely to be drawn
+    by <cite>uniform</cite>.
+
+    .. note::
+        New code should use the <cite>~numpy.random.Generator.uniform</cite>
+        method of a <cite>~numpy.random.Generator</cite> instance instead;
+        please see the <span class="xref std std-ref">random-quick-start</span>.
+
+    Parameters
+    ----------
+    low : float or array_like of floats, optional
+        Lower boundary of the output interval.  All values generated will be
+        greater than or equal to low.  The default value is 0.
+    high : float or array_like of floats
+        Upper boundary of the output interval.  All values generated will be
+        less than or equal to high.  The high limit may be included in the
+        returned array of floats due to floating-point rounding in the
+        equation <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">+</span> <span class="pre">(high-low)</span> <span class="pre">*</span> <span class="pre">random_sample()</span></code>.  The default value
+        is 1.0.
+    size : int or tuple of ints, optional
+        Output shape.  If the given shape is, e.g., <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">n,</span> <span class="pre">k)</span></code>, then
+        <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">*</span> <span class="pre">n</span> <span class="pre">*</span> <span class="pre">k</span></code> samples are drawn.  If size is <code class="docutils literal notranslate"><span class="pre">None</span></code> (default),
+        a single value is returned if <code class="docutils literal notranslate"><span class="pre">low</span></code> and <code class="docutils literal notranslate"><span class="pre">high</span></code> are both scalars.
+        Otherwise, <code class="docutils literal notranslate"><span class="pre">np.broadcast(low,</span> <span class="pre">high).size</span></code> samples are drawn.
+
+    Returns
+    -------
+    out : ndarray or scalar
+        Drawn samples from the parameterized uniform distribution.
+
+    See Also
+    --------
+    randint : Discrete uniform distribution, yielding integers.
+    random_integers : Discrete uniform distribution over the closed
+                      interval <code class="docutils literal notranslate"><span class="pre">[low,</span> <span class="pre">high]</span></code>.
+    random_sample : Floats uniformly distributed over <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1)</span></code>.
+    random : Alias for <cite>random_sample</cite>.
+    rand : Convenience function that accepts dimensions as input, e.g.,
+           <code class="docutils literal notranslate"><span class="pre">rand(2,2)</span></code> would generate a 2-by-2 array of floats,
+           uniformly distributed over <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1)</span></code>.
+    random.Generator.uniform: which should be used for new code.
+
+    Notes
+    -----
+    The probability density function of the uniform distribution is
+
+    .. math:: p(x) = frac{1}{b - a}
+
+    anywhere within the interval <code class="docutils literal notranslate"><span class="pre">[a,</span> <span class="pre">b)</span></code>, and zero elsewhere.
+
+    When <code class="docutils literal notranslate"><span class="pre">high</span></code> == <code class="docutils literal notranslate"><span class="pre">low</span></code>, values of <code class="docutils literal notranslate"><span class="pre">low</span></code> will be returned.
+    If <code class="docutils literal notranslate"><span class="pre">high</span></code> &lt; <code class="docutils literal notranslate"><span class="pre">low</span></code>, the results are officially undefined
+    and may eventually raise an error, i.e. do not rely on this
+    function to behave when passed arguments satisfying that
+    inequality condition. The <code class="docutils literal notranslate"><span class="pre">high</span></code> limit may be included in the
+    returned array of floats due to floating-point rounding in the
+    equation <code class="docutils literal notranslate"><span class="pre">low</span> <span class="pre">+</span> <span class="pre">(high-low)</span> <span class="pre">*</span> <span class="pre">random_sample()</span></code>. For example:
+
+    &gt;&gt;&gt; x = np.float32(5*0.99999999)
+    &gt;&gt;&gt; x
+    5.0
+
+
+    Examples
+    --------
+    Draw samples from the distribution:
+
+    &gt;&gt;&gt; s = np.random.uniform(-1,0,1000)
+
+    All values are within the given interval:
+
+    &gt;&gt;&gt; np.all(s &gt;= -1)
+    True
+    &gt;&gt;&gt; np.all(s &lt; 0)
+    True
+
+    Display the histogram of the samples, along with the
+    probability density function:
+
+    &gt;&gt;&gt; import matplotlib.pyplot as plt
+    &gt;&gt;&gt; count, bins, ignored = plt.hist(s, 15, density=True)
+    &gt;&gt;&gt; plt.plot(bins, np.ones_like(bins), linewidth=2, color='r')
+    &gt;&gt;&gt; plt.show()</pre>
 </section>
 <section id="distribucion-normal-gaussiana">
 <h3>Distribución normal (Gaussiana)<a class="headerlink" href="#distribucion-normal-gaussiana" title="Link to this heading"></a></h3>
@@ -1603,7 +2128,13 @@ el ancho de la distribución - <code class="docutils literal notranslate"><span 
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+<img alt="_images/12_2_indexado_106_0.png" src="_images/12_2_indexado_106_0.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span> <span class="mf">0.11780435</span><span class="p">,</span>  <span class="mf">1.28718452</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.2371482</span> <span class="p">,</span>  <span class="mf">0.25642115</span><span class="p">,</span>  <span class="mf">0.48641144</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">0.77539794</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.94139996</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.63183151</span><span class="p">,</span>  <span class="mf">1.20248485</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.14988268</span><span class="p">],</span>
+       <span class="p">[</span><span class="o">-</span><span class="mf">0.45626031</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.56964373</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.63874459</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.97250852</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.06173517</span><span class="p">]])</span>
 </pre></div>
 </div>
 </section>
@@ -1618,10 +2149,24 @@ y <em>Matplotlib</em></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">3.2347818</span> <span class="p">,</span> <span class="o">-</span><span class="mf">2.88784424</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.54090668</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.19396912</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.84703156</span><span class="p">,</span>
+       <span class="o">-</span><span class="mf">1.500094</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">1.15315644</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.80621888</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.45928132</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.11234376</span><span class="p">,</span>
+        <span class="mf">0.2345938</span> <span class="p">,</span>  <span class="mf">0.58153135</span><span class="p">,</span>  <span class="mf">0.92846891</span><span class="p">,</span>  <span class="mf">1.27540647</span><span class="p">,</span>  <span class="mf">1.62234403</span><span class="p">,</span>
+        <span class="mf">1.96928159</span><span class="p">,</span>  <span class="mf">2.31621915</span><span class="p">,</span>  <span class="mf">2.66315671</span><span class="p">,</span>  <span class="mf">3.01009427</span><span class="p">,</span>  <span class="mf">3.35703183</span><span class="p">,</span>
+        <span class="mf">3.70396939</span><span class="p">])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">13</span><span class="p">,</span>  <span class="mi">33</span><span class="p">,</span>  <span class="mi">65</span><span class="p">,</span> <span class="mi">135</span><span class="p">,</span> <span class="mi">214</span><span class="p">,</span> <span class="mi">369</span><span class="p">,</span> <span class="mi">471</span><span class="p">,</span> <span class="mi">524</span><span class="p">,</span> <span class="mi">498</span><span class="p">,</span> <span class="mi">546</span><span class="p">,</span> <span class="mi">447</span><span class="p">,</span> <span class="mi">305</span><span class="p">,</span>
+       <span class="mi">162</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span>  <span class="mi">57</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span>   <span class="mi">8</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">h</span><span class="o">.</span><span class="n">size</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">21</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>La función retorna <code class="docutils literal notranslate"><span class="pre">b</span></code>: los límites de los intervalos en el eje x y
@@ -1634,15 +2179,20 @@ y <em>Matplotlib</em></p>
 <span class="c1">#plt.show()</span>
 </pre></div>
 </div>
+<img alt="_images/12_2_indexado_115_0.png" src="_images/12_2_indexado_115_0.png" />
 <p><strong>Matplotlib</strong> tiene una función similar, que directamente realiza el
 gráfico</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">h1</span><span class="p">,</span> <span class="n">b1</span><span class="p">,</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
 <span class="c1">#x1 = (b1[:-1] + b1[1:])/2</span>
 <span class="c1">#plt.plot(x1, h1, &#39;-k&#39;, lw=4)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#plt.show()</span>
 </pre></div>
 </div>
+<img alt="_images/12_2_indexado_117_0.png" src="_images/12_2_indexado_117_0.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">h1</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">b1</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">20</span> <span class="mi">21</span>
 </pre></div>
 </div>
 <p>Veamos otro ejemplo, agregando algún otro argumento opcional</p>
@@ -1651,6 +2201,7 @@ gráfico</p>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
+<img alt="_images/12_2_indexado_120_0.png" src="_images/12_2_indexado_120_0.png" />
 <p>En este último ejemplo, cambiamos la orientación a <code class="docutils literal notranslate"><span class="pre">horizontal</span></code> y
 además normalizamos los resultados, de manera tal que la integral bajo
 (a la izquierda de, en este caso) la curva sea igual a 1.</p>
@@ -1675,9 +2226,103 @@ veces, y queremos saber cuál es la probabilidad de obtener cara
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;$n$ (veces &quot;cara&quot;)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;$n$ (veces &quot;cara&quot;)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/12_2_indexado_123_1.png" src="_images/12_2_indexado_123_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">binomial</span><span class="p">)</span>
 </pre></div>
 </div>
+<pre class="literal-block">Help on built-in function binomial:
+
+binomial(...) method of numpy.random.mtrand.RandomState instance
+    binomial(n, p, size=None)
+
+    Draw samples from a binomial distribution.
+
+    Samples are drawn from a binomial distribution with specified
+    parameters, n trials and p probability of success where
+    n an integer &gt;= 0 and p is in the interval [0,1]. (n may be
+    input as a float, but it is truncated to an integer in use)
+
+    .. note::
+        New code should use the <cite>~numpy.random.Generator.binomial</cite>
+        method of a <cite>~numpy.random.Generator</cite> instance instead;
+        please see the <span class="xref std std-ref">random-quick-start</span>.
+
+    Parameters
+    ----------
+    n : int or array_like of ints
+        Parameter of the distribution, &gt;= 0. Floats are also accepted,
+        but they will be truncated to integers.
+    p : float or array_like of floats
+        Parameter of the distribution, &gt;= 0 and &lt;=1.
+    size : int or tuple of ints, optional
+        Output shape.  If the given shape is, e.g., <code class="docutils literal notranslate"><span class="pre">(m,</span> <span class="pre">n,</span> <span class="pre">k)</span></code>, then
+        <code class="docutils literal notranslate"><span class="pre">m</span> <span class="pre">*</span> <span class="pre">n</span> <span class="pre">*</span> <span class="pre">k</span></code> samples are drawn.  If size is <code class="docutils literal notranslate"><span class="pre">None</span></code> (default),
+        a single value is returned if <code class="docutils literal notranslate"><span class="pre">n</span></code> and <code class="docutils literal notranslate"><span class="pre">p</span></code> are both scalars.
+        Otherwise, <code class="docutils literal notranslate"><span class="pre">np.broadcast(n,</span> <span class="pre">p).size</span></code> samples are drawn.
+
+    Returns
+    -------
+    out : ndarray or scalar
+        Drawn samples from the parameterized binomial distribution, where
+        each sample is equal to the number of successes over the n trials.
+
+    See Also
+    --------
+    scipy.stats.binom : probability density function, distribution or
+        cumulative density function, etc.
+    random.Generator.binomial: which should be used for new code.
+
+    Notes
+    -----
+    The probability density for the binomial distribution is
+
+    .. math:: P(N) = binom{n}{N}p^N(1-p)^{n-N},
+
+    where <span class="math notranslate nohighlight">\(n\)</span> is the number of trials, <span class="math notranslate nohighlight">\(p\)</span> is the probability
+    of success, and <span class="math notranslate nohighlight">\(N\)</span> is the number of successes.
+
+    When estimating the standard error of a proportion in a population by
+    using a random sample, the normal distribution works well unless the
+    product p*n &lt;=5, where p = population proportion estimate, and n =
+    number of samples, in which case the binomial distribution is used
+    instead. For example, a sample of 15 people shows 4 who are left
+    handed, and 11 who are right handed. Then p = 4/15 = 27%. 0.27*15 = 4,
+    so the binomial distribution should be used in this case.
+
+    References
+    ----------
+    .. [1] Dalgaard, Peter, &quot;Introductory Statistics with R&quot;,
+           Springer-Verlag, 2002.
+    .. [2] Glantz, Stanton A. &quot;Primer of Biostatistics.&quot;, McGraw-Hill,
+           Fifth Edition, 2002.
+    .. [3] Lentner, Marvin, &quot;Elementary Applied Statistics&quot;, Bogden
+           and Quigley, 1972.
+    .. [4] Weisstein, Eric W. &quot;Binomial Distribution.&quot; From MathWorld--A
+           Wolfram Web Resource.
+           <a class="reference external" href="http://mathworld.wolfram.com/BinomialDistribution.html">http://mathworld.wolfram.com/BinomialDistribution.html</a>
+    .. [5] Wikipedia, &quot;Binomial distribution&quot;,
+           <a class="reference external" href="https://en.wikipedia.org/wiki/Binomial_distribution">https://en.wikipedia.org/wiki/Binomial_distribution</a>
+
+    Examples
+    --------
+    Draw samples from the distribution:
+
+    &gt;&gt;&gt; n, p = 10, .5  # number of trials, probability of each trial
+    &gt;&gt;&gt; s = np.random.binomial(n, p, 1000)
+    # result of flipping a coin 10 times, tested 1000 times.
+
+    A real world example. A company drills 9 wild-cat oil exploration
+    wells, each with an estimated probability of success of 0.1. All nine
+    wells fail. What is the probability of that happening?
+
+    Let's do 20,000 trials of the model, and count the number that
+    generate zero positive results.
+
+    &gt;&gt;&gt; sum(np.random.binomial(9, 0.1, 20000) == 0)/20000.
+    # answer = 0.38885, or 38%.</pre>
 <p>Este gráfico ilustra la probabilidad de obtener <span class="math notranslate nohighlight">\(n\)</span> veces un lado
 (cara) si tiramos 100 veces una moneda, como función de <span class="math notranslate nohighlight">\(n\)</span>.</p>
 </section>
