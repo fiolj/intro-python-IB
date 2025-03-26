@@ -21,7 +21,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Entrega de ejercicios" href="entregas_ejercicios.html" />
-    <link rel="prev" title="Clase 11: Visualización" href="clase_11.html" /> 
+    <link rel="prev" title="Clase 12: Más información sobre Numpy" href="clase_12.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -61,6 +61,7 @@
 <li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Control de versiones y módulos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Introducción a Numpy y Matplotlib</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Más información sobre <strong>Numpy</strong></a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul class="current">
@@ -75,6 +76,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-08">Ejercicios de Clase 08</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-10">Ejercicios de Clase 10</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-11">Ejercicios de Clase 11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-de-clase-12">Ejercicios de Clase 12</a></li>
 </ul>
 </li>
 </ul>
@@ -1079,13 +1081,189 @@ también. Las líneas deben ser más gruesas (sugerencia: ~4), los
 símbolos de mayor tamaño (sugerencia ~10).</p></li>
 </ol>
 </section>
+<section id="ejercicios-de-clase-12">
+<h2>Ejercicios de Clase 12<a class="headerlink" href="#ejercicios-de-clase-12" title="Link to this heading"></a></h2>
+<ol class="arabic">
+<li><p>Escribir una función <code class="docutils literal notranslate"><span class="pre">mas_cercano(a,</span> <span class="pre">x)</span></code> que tome dos argumentos:
+un <em>array</em> <code class="docutils literal notranslate"><span class="pre">a</span></code> y un escalar <code class="docutils literal notranslate"><span class="pre">x</span></code>, y devuelva el número de <code class="docutils literal notranslate"><span class="pre">a</span></code>
+más cercano a <code class="docutils literal notranslate"><span class="pre">x</span></code>. Utilice los métodos discutidos.</p>
+<p>Pruebe la función con un array <code class="docutils literal notranslate"><span class="pre">a</span></code> de números, creado usando:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>y un valor <code class="docutils literal notranslate"><span class="pre">x=0.5</span></code>.</p>
+</li>
+<li><p>Cree una función que calcule la posición y velocidad de una partícula
+en caída libre para condiciones iniciales dadas (<span class="math notranslate nohighlight">\(h_{0}\)</span>,
+<span class="math notranslate nohighlight">\(v_{0}\)</span>), y un valor de gravedad dados. Se utilizará la
+convención de que alturas y velocidades positivas corresponden a
+vectores apuntando hacia arriba (una velocidad positiva significa que
+la partícula se aleja de la tierra).</p>
+<ul class="simple">
+<li><p>La función debe realizar el cálculo de la velocidad y altura para
+un conjunto de tiempos equiespaciados.</p></li>
+<li><p>Los valores de velocidad inicial, altura inicial, valor de
+gravedad, y número de puntos deben ser argumentos de la función
+con valores por defecto adecuadamente provistos.</p></li>
+<li><p>La tabla de valores debe darse hasta que la partícula toca el piso
+(valor <span class="math notranslate nohighlight">\(h=0\)</span>).</p></li>
+<li><p>Guarde los resultados en tres columnas (t, v(t), h(t)) en un
+archivo de nombre “caida_vel_alt.dat”</p></li>
+<li><p>donde “vel” corresponde al valor de la velocidad inicial y “alt”
+al de la altura inicial.</p></li>
+<li><p>Realice tres gráficos, mostrando:</p>
+<ol class="arabic simple">
+<li><p>altura como función del tiempo (altura en el eje vertical y
+tiempo en el horizontal)</p></li>
+<li><p>velocidad como función del tiempo</p></li>
+<li><p>altura como función de la velocidad</p></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>Queremos realizar numéricamente la integral</p>
+<div class="math notranslate nohighlight">
+\[\int_{a}^{b}f(x)dx\]</div>
+<p>utilizando el método de los trapecios. Para eso partimos el intervalo
+<span class="math notranslate nohighlight">\([a,b]\)</span> en <span class="math notranslate nohighlight">\(N\)</span> subintervalos y aproximamos la curva en
+cada subintervalo por una recta</p>
+</li>
+</ol>
+<img alt="_images/trapez_rule_wiki.png" src="_images/trapez_rule_wiki.png" />
+<p>La línea azul representa la función <span class="math notranslate nohighlight">\(f(x)\)</span> y la línea roja la
+interpolación por una recta (figura de
+<a class="reference external" href="https://en.wikipedia.org/wiki/Trapezoidal_rule">https://en.wikipedia.org/wiki/Trapezoidal_rule</a>)</p>
+<p>Si llamamos <span class="math notranslate nohighlight">\(x_{i}\)</span> (<span class="math notranslate nohighlight">\(i=0,\ldots,n,\)</span> con <span class="math notranslate nohighlight">\(x_{0}=a\)</span> y
+<span class="math notranslate nohighlight">\(x_{n}=b\)</span>) los puntos equiespaciados, entonces queda</p>
+<div class="math notranslate nohighlight">
+\[\int_{a}^{b}f(x)dx\approx\frac{h}{2}\sum_{i=1}^{n}\left(f(x_{i})+f(x_{i-1})\right).\]</div>
+<p>En todos los casos utilice <em>arrays</em> y operaciones entre <em>arrays</em> para
+realizar las siguientes funciones</p>
+<ul>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">trapz(x,</span> <span class="pre">y)</span></code> que reciba dos arrays
+unidimensionales <code class="docutils literal notranslate"><span class="pre">x</span></code> e <code class="docutils literal notranslate"><span class="pre">y</span></code> y aplique la fórmula de los trapecios.</p></li>
+<li><p>Escriba una función <code class="docutils literal notranslate"><span class="pre">trapzf(f,</span> <span class="pre">a,</span> <span class="pre">b,</span> <span class="pre">npts=100)</span></code> que recibe una
+función <code class="docutils literal notranslate"><span class="pre">f</span></code>, los límites <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code> y el número de puntos a
+utilizar <code class="docutils literal notranslate"><span class="pre">npts</span></code>, y devuelve el valor de la integral por trapecios.</p></li>
+<li><p>Escriba una función que calcule la integral logarítmica de Euler:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{Li}(t) = \int_2^t \frac{1}{\ln x} dx\]</div>
+<p>usando la función ´trapzf´ para valores de
+<code class="docutils literal notranslate"><span class="pre">npts=10,</span> <span class="pre">20,</span> <span class="pre">30,</span> <span class="pre">40,</span> <span class="pre">50,</span> <span class="pre">60</span></code></p>
+</li>
+<li><p>Grafique las curvas obtenidas en el punto precedente para valores
+equiespaciados de <span class="math notranslate nohighlight">\(t\)</span> entre 2 y 10.</p></li>
+</ul>
+<ol class="arabic" start="4">
+<li><p>Vamos a estudiar la frecuencia de aparición de cada dígito en la
+serie de Fibonacci, generada siguiendo las reglas:</p>
+<div class="math notranslate nohighlight">
+\[a_{1} = a_{2} = 1, \quad a_{i} = a_{i-1} + a_{i-2}.\]</div>
+<p>Se pide:</p>
+<ol class="arabic">
+<li><p>Crear una función que acepta como argumento un número entero
+<span class="math notranslate nohighlight">\(N\)</span> y retorna una secuencia (lista, tupla, diccionario o
+<em>array</em>) con los elementos de la serie de Fibonacci.</p></li>
+<li><p>Crear una función que devuelva un histograma de ocurrencia de cada
+uno de los dígitos en el primer lugar del número. Por ejemplo para
+los primeros 8 valores (<span class="math notranslate nohighlight">\(N=8\)</span>): <span class="math notranslate nohighlight">\(1,1,2,3,5,8,13,21\)</span>
+tendremos que el <span class="math notranslate nohighlight">\(1\)</span> aparece 3 veces, el <span class="math notranslate nohighlight">\(2\)</span> aparece
+<span class="math notranslate nohighlight">\(2\)</span> veces, <span class="math notranslate nohighlight">\(3, 5, 8\)</span> una vez. Normalizar los datos
+dividiendo por el número de valores <span class="math notranslate nohighlight">\(N\)</span>.</p></li>
+<li><p>Utilizando las dos funciones anteriores graficar el histograma
+para un número <span class="math notranslate nohighlight">\(N\)</span> grande y comparar los resultados con la
+ley de Benford</p>
+<div class="math notranslate nohighlight">
+\[P(n) = \log_{10}\left(1+ \frac{1}{d} \right).\]</div>
+</li>
+</ol>
+</li>
+<li><p><strong>PARA ENTREGAR:</strong> Estimar el valor de π usando diferentes métodos
+basados en el método de Monte Carlo:</p>
+<ol class="arabic simple">
+<li><p>Crear una función para calcular el valor de <span class="math notranslate nohighlight">\(\pi\)</span> usando el
+“método de cociente de áreas”. Para ello:</p></li>
+</ol>
+<ul class="simple">
+<li><p>Generar puntos en el plano dentro del cuadrado de lado unidad cuyo
+lado inferior va de <span class="math notranslate nohighlight">\(x=0\)</span> a <span class="math notranslate nohighlight">\(x=1\)</span></p></li>
+<li><p>Contar cuantos puntos caen dentro del (cuarto de) círculo unidad.
+Este número tiende a ser proporcional al área del círculo</p></li>
+<li><p>La estimación de <span class="math notranslate nohighlight">\(\pi\)</span> será igual a cuatro veces el cociente
+de números dentro del círculo dividido por el número total de
+puntos.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p>Crear una función para calcular el valor de <span class="math notranslate nohighlight">\(\pi\)</span> usando el
+“método del valor medio”: Este método se basa en la idea de que el
+valor medio de una función se puede calcular de dos maneras
+diferentes. Por un lado es el promedio de los valores de la
+función si tomamos argumentos al azar en forma aleatoria con una
+distribución uniforme. Por otro lado, el valor medio verifica la
+siguiente fórmula integral:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\langle f \rangle = \frac{1}{b-a} \int_{a}^{b} f(x)\, dx\]</div>
+<p>Tomando la función particular <span class="math notranslate nohighlight">\(f(x)= \sqrt{1- x^{2}}\)</span> entre
+<span class="math notranslate nohighlight">\(x=0\)</span> y <span class="math notranslate nohighlight">\(x=1\)</span>, obtenemos:</p>
+<div class="math notranslate nohighlight">
+\[\langle f \rangle = \int_{0}^{1} \sqrt{1- x^{2}}\, dx = \frac{\pi}{4}\]</div>
+<p>Entonces, tenemos que estimar el valor medio de la función <span class="math notranslate nohighlight">\(f\)</span>
+y, mediante la relación entre las dos formas de calcular el valor
+medio obtener <span class="math notranslate nohighlight">\(\pi = 4 \langle f(x) \rangle\)</span>.</p>
+<p>Para obtener el valor medio de la función tomamos <span class="math notranslate nohighlight">\(X\)</span> como una
+variable aleatoria entre 0 y 1 con distribución uniforme, y el valor
+promedio de <span class="math notranslate nohighlight">\(f(X)\)</span> es justamente <span class="math notranslate nohighlight">\(\langle f \rangle\)</span>. Su
+función debe entonces</p>
+<ul class="simple">
+<li><p>Generar puntos aleatoriamente en el intervalo <span class="math notranslate nohighlight">\([0,1]\)</span></p></li>
+<li><p>Calcular el valor medio de <span class="math notranslate nohighlight">\(f(x)\)</span> para los puntos aleatorios
+<span class="math notranslate nohighlight">\(x\)</span>.</p></li>
+<li><p>El resultado va a ser igual al valor de la integral, y por lo
+tanto a <span class="math notranslate nohighlight">\(\pi/4\)</span>.</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>Utilizar las funciones anteriores con diferentes valores para el
+número total de puntos <span class="math notranslate nohighlight">\(N\)</span>. En particular, hacerlo para 20
+valores de <span class="math notranslate nohighlight">\(N\)</span> equiespaciados logarítmicamente entre 100 y
+10000. Para cada valor de <span class="math notranslate nohighlight">\(N\)</span> calcular la estimación de
+<span class="math notranslate nohighlight">\(\pi\)</span>. Realizar un gráfico con el valor estimado como
+función del número <span class="math notranslate nohighlight">\(N\)</span> con los dos métodos (dos curvas en un
+solo gráfico)</p></li>
+<li><p>Para <span class="math notranslate nohighlight">\(N=15000\)</span> repetir el “experimento” muchas veces (al
+menos 1000) y realizar un histograma de los valores obtenidos para
+<span class="math notranslate nohighlight">\(\pi\)</span> con cada método. Graficar el histograma y calcular la
+desviación standard. Superponer una función Gaussiana con el mismo
+ancho. El gráfico debe ser similar al siguiente (<em>el estilo de
+graficación no tiene que ser el mismo</em>)</p></li>
+</ol>
+<img alt="_images/ejercicio_09_1.png" src="_images/ejercicio_09_1.png" />
+<ol class="arabic simple" start="5">
+<li><p>El método de la aguja del bufón se puede utilizar para estimar el
+valor de <span class="math notranslate nohighlight">\(\pi\)</span>, y consiste en tirar agujas (o palitos,
+fósforos, etc) al azar sobre una superficie rayada</p></li>
+</ol>
+<img alt="_images/Streicholz-Pi-wiki.jpg" src="_images/Streicholz-Pi-wiki.jpg" />
+<p>Por simplicidad vamos a considerar que la distancia entre rayas
+<span class="math notranslate nohighlight">\(t\)</span> es mayor que la longitud de las agujas <span class="math notranslate nohighlight">\(\ell\)</span></p>
+<img alt="_images/Buffon_needle_wiki.png" src="_images/Buffon_needle_wiki.png" />
+<p>La probabilidad de que una aguja cruce una línea será:</p>
+<div class="math notranslate nohighlight">
+\[P = \frac{2 \ell}{t\, \pi}\]</div>
+<p>por lo que podemos calcular el valor de <span class="math notranslate nohighlight">\(\pi\)</span> si estimamos la
+probabilidad <span class="math notranslate nohighlight">\(P\)</span>. Realizar una función que estime <span class="math notranslate nohighlight">\(\pi\)</span>
+utilizando este método y repetir las comparaciones de los dos puntos
+anteriores pero ahora utilizando este método y el de las áreas.</p>
+</li>
+</ol>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
-        <a href="clase_11.html" class="btn btn-neutral float-left" title="Clase 11: Visualización" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="clase_12.html" class="btn btn-neutral float-left" title="Clase 12: Más información sobre Numpy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
         <a href="entregas_ejercicios.html" class="btn btn-neutral float-right" title="Entrega de ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

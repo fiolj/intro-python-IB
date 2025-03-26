@@ -1,0 +1,203 @@
+Ejercicios de Clase 12
+----------------------
+
+
+1. Escribir una función ``mas_cercano(a, x)`` que tome dos argumentos:
+   un *array* ``a`` y un escalar ``x``, y devuelva el número de ``a``
+   más cercano a ``x``. Utilice los métodos discutidos.
+
+   Pruebe la función con un array ``a`` de números, creado usando:
+
+   .. code:: python
+
+      a = np.random.uniform(size=100)
+
+   y un valor ``x=0.5``.
+
+2. Cree una función que calcule la posición y velocidad de una partícula
+   en caída libre para condiciones iniciales dadas (:math:`h_{0}`,
+   :math:`v_{0}`), y un valor de gravedad dados. Se utilizará la
+   convención de que alturas y velocidades positivas corresponden a
+   vectores apuntando hacia arriba (una velocidad positiva significa que
+   la partícula se aleja de la tierra).
+
+   -  La función debe realizar el cálculo de la velocidad y altura para
+      un conjunto de tiempos equiespaciados.
+
+   -  Los valores de velocidad inicial, altura inicial, valor de
+      gravedad, y número de puntos deben ser argumentos de la función
+      con valores por defecto adecuadamente provistos.
+
+   -  La tabla de valores debe darse hasta que la partícula toca el piso
+      (valor :math:`h=0`).
+
+   -  Guarde los resultados en tres columnas (t, v(t), h(t)) en un
+      archivo de nombre “caida_vel_alt.dat”
+
+   -  donde “vel” corresponde al valor de la velocidad inicial y “alt”
+      al de la altura inicial.
+
+   -  Realice tres gráficos, mostrando:
+
+      1. altura como función del tiempo (altura en el eje vertical y
+         tiempo en el horizontal)
+      2. velocidad como función del tiempo
+      3. altura como función de la velocidad
+
+3. Queremos realizar numéricamente la integral
+
+   .. math::
+
+
+        \int_{a}^{b}f(x)dx
+        
+
+   utilizando el método de los trapecios. Para eso partimos el intervalo
+   :math:`[a,b]` en :math:`N` subintervalos y aproximamos la curva en
+   cada subintervalo por una recta
+
+.. image:: figuras/trapez_rule_wiki.png
+
+
+
+La línea azul representa la función :math:`f(x)` y la línea roja la
+interpolación por una recta (figura de
+https://en.wikipedia.org/wiki/Trapezoidal_rule)
+
+Si llamamos :math:`x_{i}` (:math:`i=0,\ldots,n,` con :math:`x_{0}=a` y
+:math:`x_{n}=b`) los puntos equiespaciados, entonces queda
+
+.. math::
+
+
+        \int_{a}^{b}f(x)dx\approx\frac{h}{2}\sum_{i=1}^{n}\left(f(x_{i})+f(x_{i-1})\right).
+     
+
+En todos los casos utilice *arrays* y operaciones entre *arrays* para
+realizar las siguientes funciones
+
+-  Escriba una función ``trapz(x, y)`` que reciba dos arrays
+   unidimensionales ``x`` e ``y`` y aplique la fórmula de los trapecios.
+
+-  Escriba una función ``trapzf(f, a, b, npts=100)`` que recibe una
+   función ``f``, los límites ``a``, ``b`` y el número de puntos a
+   utilizar ``npts``, y devuelve el valor de la integral por trapecios.
+
+-  Escriba una función que calcule la integral logarítmica de Euler:
+
+   .. math:: \mathrm{Li}(t) = \int_2^t \frac{1}{\ln x} dx
+
+   usando la función ´trapzf´ para valores de
+   ``npts=10, 20, 30, 40, 50, 60``
+
+-  Grafique las curvas obtenidas en el punto precedente para valores
+   equiespaciados de :math:`t` entre 2 y 10.
+
+4. Vamos a estudiar la frecuencia de aparición de cada dígito en la
+   serie de Fibonacci, generada siguiendo las reglas:
+
+   .. math:: a_{1} = a_{2} = 1, \quad a_{i} = a_{i-1} + a_{i-2}.
+
+   Se pide:
+
+   1. Crear una función que acepta como argumento un número entero
+      :math:`N` y retorna una secuencia (lista, tupla, diccionario o
+      *array*) con los elementos de la serie de Fibonacci.
+   2. Crear una función que devuelva un histograma de ocurrencia de cada
+      uno de los dígitos en el primer lugar del número. Por ejemplo para
+      los primeros 8 valores (:math:`N=8`): :math:`1,1,2,3,5,8,13,21`
+      tendremos que el :math:`1` aparece 3 veces, el :math:`2` aparece
+      :math:`2` veces, :math:`3, 5, 8` una vez. Normalizar los datos
+      dividiendo por el número de valores :math:`N`.
+   3. Utilizando las dos funciones anteriores graficar el histograma
+      para un número :math:`N` grande y comparar los resultados con la
+      ley de Benford
+
+      .. math:: P(n) = \log_{10}\left(1+ \frac{1}{d} \right). 
+
+5. **PARA ENTREGAR:** Estimar el valor de π usando diferentes métodos
+   basados en el método de Monte Carlo:
+
+   1. Crear una función para calcular el valor de :math:`\pi` usando el
+      “método de cociente de áreas”. Para ello:
+
+   -  Generar puntos en el plano dentro del cuadrado de lado unidad cuyo
+      lado inferior va de :math:`x=0` a :math:`x=1`
+   -  Contar cuantos puntos caen dentro del (cuarto de) círculo unidad.
+      Este número tiende a ser proporcional al área del círculo
+   -  La estimación de :math:`\pi` será igual a cuatro veces el cociente
+      de números dentro del círculo dividido por el número total de
+      puntos.
+
+   2. Crear una función para calcular el valor de :math:`\pi` usando el
+      “método del valor medio”: Este método se basa en la idea de que el
+      valor medio de una función se puede calcular de dos maneras
+      diferentes. Por un lado es el promedio de los valores de la
+      función si tomamos argumentos al azar en forma aleatoria con una
+      distribución uniforme. Por otro lado, el valor medio verifica la
+      siguiente fórmula integral:
+
+   .. math::  \langle f \rangle = \frac{1}{b-a} \int_{a}^{b} f(x)\, dx 
+
+   Tomando la función particular :math:`f(x)= \sqrt{1- x^{2}}` entre
+   :math:`x=0` y :math:`x=1`, obtenemos:
+
+   .. math::  \langle f \rangle = \int_{0}^{1} \sqrt{1- x^{2}}\, dx = \frac{\pi}{4} 
+
+   Entonces, tenemos que estimar el valor medio de la función :math:`f`
+   y, mediante la relación entre las dos formas de calcular el valor
+   medio obtener :math:`\pi = 4 \langle f(x) \rangle`.
+
+   Para obtener el valor medio de la función tomamos :math:`X` como una
+   variable aleatoria entre 0 y 1 con distribución uniforme, y el valor
+   promedio de :math:`f(X)` es justamente :math:`\langle f \rangle`. Su
+   función debe entonces
+
+   -  Generar puntos aleatoriamente en el intervalo :math:`[0,1]`
+   -  Calcular el valor medio de :math:`f(x)` para los puntos aleatorios
+      :math:`x`.
+   -  El resultado va a ser igual al valor de la integral, y por lo
+      tanto a :math:`\pi/4`.
+
+   3. Utilizar las funciones anteriores con diferentes valores para el
+      número total de puntos :math:`N`. En particular, hacerlo para 20
+      valores de :math:`N` equiespaciados logarítmicamente entre 100 y
+      10000. Para cada valor de :math:`N` calcular la estimación de
+      :math:`\pi`. Realizar un gráfico con el valor estimado como
+      función del número :math:`N` con los dos métodos (dos curvas en un
+      solo gráfico)
+
+   4. Para :math:`N=15000` repetir el “experimento” muchas veces (al
+      menos 1000) y realizar un histograma de los valores obtenidos para
+      :math:`\pi` con cada método. Graficar el histograma y calcular la
+      desviación standard. Superponer una función Gaussiana con el mismo
+      ancho. El gráfico debe ser similar al siguiente (*el estilo de
+      graficación no tiene que ser el mismo*)
+
+   .. image:: figuras/ejercicio_09_1.png
+
+
+
+   5. El método de la aguja del bufón se puede utilizar para estimar el
+      valor de :math:`\pi`, y consiste en tirar agujas (o palitos,
+      fósforos, etc) al azar sobre una superficie rayada
+
+   .. image:: figuras/Streicholz-Pi-wiki.jpg
+
+
+
+   Por simplicidad vamos a considerar que la distancia entre rayas
+   :math:`t` es mayor que la longitud de las agujas :math:`\ell`
+
+   .. image:: figuras/Buffon_needle_wiki.png
+
+
+
+   La probabilidad de que una aguja cruce una línea será:
+
+   .. math::  P = \frac{2 \ell}{t\, \pi} 
+
+   por lo que podemos calcular el valor de :math:`\pi` si estimamos la
+   probabilidad :math:`P`. Realizar una función que estime :math:`\pi`
+   utilizando este método y repetir las comparaciones de los dos puntos
+   anteriores pero ahora utilizando este método y el de las áreas.
