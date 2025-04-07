@@ -100,6 +100,16 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-13-c">Ejercicios 13 (c)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#trabajo-simple-con-imagenes">Trabajo simple con imágenes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#analisis-de-la-imagen">Análisis de la imagen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#histograma-de-intensidades">Histograma de intensidades</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cortes-en-una-direccion">Cortes en una dirección</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#trabajando-con-metadatos-de-la-imagen">Trabajando con metadatos de la imagen</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-13-d">Ejercicios 13 (d)</a></li>
 </ul>
 </li>
 </ul>
@@ -2784,6 +2794,291 @@ que resulta de sumar las gaussianas en una misma figura.</p></li>
 máximo y el ancho de cada una de las Gaussianas obtenidas.</p></li>
 </ol>
 </li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="trabajo-simple-con-imagenes">
+<h2>Trabajo simple con imágenes<a class="headerlink" href="#trabajo-simple-con-imagenes" title="Link to this heading"></a></h2>
+<p>Vamos a empezar leyendo y mostrando algunas imágenes, para entender cómo
+es su representación. Existen numerosos módulos que permiten manejar
+imágenes, desde el ubicuo <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, pasando por <code class="docutils literal notranslate"><span class="pre">PIL</span></code>
+(<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pillow</span></code>) hasta openCV
+(<code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">opencv-python</span></code>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+</pre></div>
+</div>
+<p>El siguiente ejemplo es una figura tomada de algunas pruebas que hicimos
+en el laboratorio hace unos años. Es el resultado de la medición de
+flujo en toberas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imag1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo.jpg&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;La imagen &quot;imag1&quot; es del tipo: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">imag1</span><span class="p">)</span><span class="si">}</span><span class="s1"> con &quot;shape&quot; </span><span class="si">{</span><span class="n">imag1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag1</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>La imagen &quot;imag1&quot; es del tipo: &lt;class &#39;numpy.ndarray&#39;&gt; con &quot;shape&quot; (272, 652, 3)
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_3_1.png" src="_images/13_3_imagenes_3_1.png" />
+<p>La representación de la imagen es una matriz, donde cada elemento
+corresponde a un pixel, y cada pixel tiene tres valores. El elemento
+<code class="docutils literal notranslate"><span class="pre">[0,0]</span></code> corresponde al pixel ubicado en la esquina superior izquierda,
+el elemento <code class="docutils literal notranslate"><span class="pre">[-1,0]</span></code> al pixel ubicado en la esquina inferior
+izquierda, mientras que el <code class="docutils literal notranslate"><span class="pre">[0,-1]</span></code> a la esquina superior derecha:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag1</span><span class="p">)</span>
+<span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;[0,0]&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{},</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;[-1,0]&quot;</span><span class="p">,(</span><span class="mi">0</span><span class="p">,</span><span class="mi">272</span><span class="p">),</span> <span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="mi">240</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{},</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">&quot;[0,-1]&quot;</span><span class="p">,(</span><span class="mi">652</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">510</span><span class="p">,</span><span class="mi">40</span><span class="p">),</span> <span class="n">arrowprops</span><span class="o">=</span><span class="p">{},</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_5_0.png" src="_images/13_3_imagenes_5_0.png" />
+<p>En consecuencia podemos ver qué valores toma cada pixel</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">imag1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>             <span class="c1"># El primer elemento</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imag1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>             <span class="c1"># El segundo elemento</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imag1</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span><span class="n">imag1</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>  <span class="c1"># y sus valores mínimo y máximo</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">65</span> <span class="mi">65</span> <span class="mi">65</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">66</span> <span class="mi">66</span> <span class="mi">66</span><span class="p">]</span>
+<span class="mi">0</span> <span class="mi">255</span>
+</pre></div>
+</div>
+<p>Como vemos en cada pixel el valor está dado por un array de tres números
+enteros</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imag1</span><span class="o">.</span><span class="n">dtype</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dtype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">imag1</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>           <span class="c1"># El primer elemento del primer pixel</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="mi">65</span> <span class="mi">65</span> <span class="mi">65</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Como originalmente teníamos una figura en escala de grises, podemos
+convertir los tres colores a una simple escala, por ejemplo promediando
+los tres valores. La función <code class="docutils literal notranslate"><span class="pre">imread()</span></code> puede interpretar la figura
+como una escala de grises con los argumentos adecuados:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo.jpg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo_gray.jpg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imag2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo_gray.jpg&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La variable <code class="docutils literal notranslate"><span class="pre">imag2</span></code> contiene ahora una matriz con las dimensiones de
+la imagen (272 x 652) pero con sólo un valor por cada pixel</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">imag2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imag2</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">272</span><span class="p">,</span> <span class="mi">652</span><span class="p">)</span>
+<span class="mi">65</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_16_0.png" src="_images/13_3_imagenes_16_0.png" />
+<hr class="docutils" />
+<p><strong>Nota</strong> ¿Qué pasó acá?</p>
+<p>La función <code class="docutils literal notranslate"><span class="pre">imshow()</span></code> está interpretando el valor de cada pixel como
+una posición en una cierta escala de colores (<strong>colormap</strong>). Como no
+especificamos cuál queremos utilizar, se usó el cmap <em>default</em>.</p>
+<hr class="docutils" />
+<p>Especifiquemos el <strong>colormap</strong> a utilizar para la graficación:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_19_0.png" src="_images/13_3_imagenes_19_0.png" />
+<p>Los <code class="docutils literal notranslate"><span class="pre">cmap</span></code> aparecen también en el contexto de graficación de gráficos
+de contorno (<code class="docutils literal notranslate"><span class="pre">contour()</span></code> y <code class="docutils literal notranslate"><span class="pre">contourf()</span></code>).</p>
+<p>Al asociar un valor a un mapa de colores, la misma imagen puede
+mostrarse de diferente maneras. Veamos otros ejemplos de <em>colormap</em></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_21_0.png" src="_images/13_3_imagenes_21_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno_r&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_22_0.png" src="_images/13_3_imagenes_22_0.png" />
+<p>La referencia de ubicación de los <code class="docutils literal notranslate"><span class="pre">cmap</span></code> existentes está en:
+<a class="reference external" href="http://matplotlib.org/examples/color/colormaps_reference.html">http://matplotlib.org/examples/color/colormaps_reference.html</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray_r&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_24_0.png" src="_images/13_3_imagenes_24_0.png" />
+<section id="analisis-de-la-imagen">
+<h3>Análisis de la imagen<a class="headerlink" href="#analisis-de-la-imagen" title="Link to this heading"></a></h3>
+<p>La imagen es una representación en mapa de colores de lo valores en la
+matriz. Esta es una representación que da muy buena información
+cualitativa sobre las características de los datos. Para analizar los
+datos a veces es más fácil hacer cortes o promediar en alguna dirección
+los datos.</p>
+<section id="histograma-de-intensidades">
+<h4>Histograma de intensidades<a class="headerlink" href="#histograma-de-intensidades" title="Link to this heading"></a></h4>
+<p>Un ejemplo es el cálculo de un histograma de intensidades, analizando
+toda la imagen.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">hist</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">bin_centers</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">bin_edges</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Intensidad&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">200</span><span class="p">));</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_27_0.png" src="_images/13_3_imagenes_27_0.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos una figura con los dos gráficos</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="c1"># En el gráfico de la izquierda mostramos la imagen en escala de grises</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>   <span class="c1"># Eliminamos los dos ejes</span>
+<span class="c1">#</span>
+<span class="c1"># Graficamos a la derecha el histograma</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">bin_centers</span><span class="p">,</span> <span class="n">hist</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="mf">0.85</span><span class="o">*</span><span class="n">hist</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="s1">&#39;Histograma&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>   <span class="c1"># Sólo valores en el eje x</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=-</span><span class="mf">0.20</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">left</span><span class="o">=-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_28_0.png" src="_images/13_3_imagenes_28_0.png" />
+<p>Estos histogramas, son útiles pero no dan información sobre las
+variaciones de intensidad con la posición. De alguna manera estamos
+integrando demasiado. Cuando vemos la imagen, vemos un mapa de
+intensidad en dos dimensiones. Al hacer el histograma sobre toda la
+figura perdemos completamente la información sobre la posición.</p>
+</section>
+<section id="cortes-en-una-direccion">
+<h4>Cortes en una dirección<a class="headerlink" href="#cortes-en-una-direccion" title="Link to this heading"></a></h4>
+<p>Un análisis intermedio podemos hacerlo haciendo cortes a lo largo de
+alguna línea y analizando la intensidad. Por ejemplo, podemos elegir una
+línea vertical en un punto <span class="math notranslate nohighlight">\(x_0\)</span>, y analizar como varía la
+intensidad a lo largo de esa línea:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">imag2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span><span class="o">/</span><span class="mi">9</span><span class="p">)</span>      <span class="c1"># Elegimos un punto en el eje x</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;posición en eje x=</span><span class="si">{</span><span class="n">x0</span><span class="si">}</span><span class="s1"> de un total de </span><span class="si">{</span><span class="n">imag2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">posición</span> <span class="n">en</span> <span class="n">eje</span> <span class="n">x</span><span class="o">=</span><span class="mi">507</span> <span class="n">de</span> <span class="n">un</span> <span class="n">total</span> <span class="n">de</span> <span class="mi">652</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Creamos la figura con dos subplots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax2</span><span class="p">,</span> <span class="n">ax1</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="c1"># graficamos la imagen en el subplot de la derecha</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imag2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">gray</span><span class="p">)</span>
+<span class="c1"># y agregamos la línea vertical en el punto elegido</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.05</span><span class="o">*</span><span class="n">x0</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;$x_</span><span class="si">{0}</span><span class="s1">$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;x-large&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;C0&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="c1"># Creamos linea como un array 1D con los datos a lo largo de la línea deseada</span>
+<span class="c1"># y la graficamos</span>
+<span class="n">linea</span> <span class="o">=</span> <span class="n">imag2</span><span class="p">[:,</span><span class="n">x0</span><span class="p">]</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">linea</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Corte&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;posición en eje $y$ (pixels)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Intensidad&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;best&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">linea</span><span class="p">)))</span>
+<span class="c1"># Ajustamos el margen izquierdo y la distancia entre los dos subplots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=-</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="_images/13_3_imagenes_32_0.png" src="_images/13_3_imagenes_32_0.png" />
+</section>
+</section>
+<section id="trabajando-con-metadatos-de-la-imagen">
+<h3>Trabajando con metadatos de la imagen<a class="headerlink" href="#trabajando-con-metadatos-de-la-imagen" title="Link to this heading"></a></h3>
+<p>En la sección anterior vimos cómo trabajar con la imagen propiamente
+dicha, que representa como un arreglo tridimensional de <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.
+Además, es posible que la imagen contenga <em>metadatos</em>, esto es,
+información asociada a la imagen que puede ser de utilidad.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span><span class="p">(</span><span class="n">imag2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">numpy</span><span class="o">.</span><span class="n">ndarray</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">img3</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo.jpg&#39;</span><span class="p">)</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">img3</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PIL</span><span class="o">.</span><span class="n">JpegImagePlugin</span><span class="o">.</span><span class="n">JpegImageFile</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">metadata</span> <span class="o">=</span> <span class="n">img3</span><span class="o">.</span><span class="n">info</span>
+<span class="n">metadata</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;jfif&#39;</span><span class="p">:</span> <span class="mi">257</span><span class="p">,</span> <span class="s1">&#39;jfif_version&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;jfif_unit&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;jfif_density&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">86</span><span class="p">,</span> <span class="mi">86</span><span class="p">)}</span>
+</pre></div>
+</div>
+<p>Una de las ventajas del formato <em>png</em> es que soporta metadatos
+arbitrarios, con lo cual podemos usar un plugin del modulo <code class="docutils literal notranslate"><span class="pre">PIL</span></code> para
+escribirlos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">PIL.PngImagePlugin</span> <span class="kn">import</span> <span class="n">PngInfo</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">new_metadata</span> <span class="o">=</span> <span class="n">PngInfo</span><span class="p">()</span>
+<span class="n">new_metadata</span><span class="o">.</span><span class="n">add_text</span><span class="p">(</span><span class="s2">&quot;Autor&quot;</span><span class="p">,</span> <span class="s2">&quot;F. Ulano&quot;</span><span class="p">)</span>
+<span class="n">new_metadata</span><span class="o">.</span><span class="n">add_text</span><span class="p">(</span><span class="s2">&quot;Descripción&quot;</span><span class="p">,</span> <span class="s2">&quot;Imagen de flujo en toberas&quot;</span><span class="p">)</span>
+<span class="c1"># Agregamos la vieja metadata</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">new_metadata</span><span class="o">.</span><span class="n">add_itxt</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+    <span class="c1"># new_metadata.add_text(k, str(v))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Guardamos la imagen con la nueva metadata</span>
+<span class="n">img3</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo_meta.png&#39;</span><span class="p">,</span> <span class="n">pnginfo</span><span class="o">=</span><span class="n">new_metadata</span><span class="p">)</span>
+<span class="c1"># Leemos la nueva imagen</span>
+<span class="n">img4</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo_meta.png&#39;</span><span class="p">)</span>
+<span class="c1"># Mostramos la metadata</span>
+<span class="n">img4</span><span class="o">.</span><span class="n">info</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="p">{</span><span class="s1">&#39;Autor&#39;</span><span class="p">:</span> <span class="s1">&#39;F. Ulano&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;Descripción&#39;</span><span class="p">:</span> <span class="s1">&#39;Imagen de flujo en toberas&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;jfif&#39;</span><span class="p">:</span> <span class="s1">&#39;257&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;jfif_version&#39;</span><span class="p">:</span> <span class="s1">&#39;(1, 1)&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;jfif_unit&#39;</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;jfif_density&#39;</span><span class="p">:</span> <span class="s1">&#39;(86, 86)&#39;</span><span class="p">}</span>
+
+
+
+<span class="n">Otros</span> <span class="n">formatos</span> <span class="n">de</span> <span class="n">imágenes</span> <span class="p">(</span><span class="n">jpeg</span><span class="p">,</span> <span class="n">por</span> <span class="n">ejemplo</span><span class="p">)</span> <span class="n">no</span> <span class="n">soportan</span> <span class="n">la</span>
+<span class="n">inclusión</span> <span class="n">de</span> <span class="n">metadata</span> <span class="n">arbitraria</span><span class="o">.</span> <span class="n">En</span> <span class="n">cada</span> <span class="n">caso</span> <span class="n">será</span> <span class="n">necesario</span>
+<span class="n">recurrir</span> <span class="n">a</span> <span class="n">módulos</span> <span class="n">específicos</span> <span class="n">para</span> <span class="n">cada</span> <span class="n">tipo</span> <span class="n">de</span> <span class="n">imagen</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>En el caso de usar <code class="docutils literal notranslate"><span class="pre">Image.open</span></code> de <code class="docutils literal notranslate"><span class="pre">PIL</span></code> para leer el archivo de la
+imagen, obtendremos la imagen propiamente dicha con</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">imagen</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;figuras/imagen_flujo.jpg&#39;</span><span class="p">)</span>  <span class="c1"># Cambiar por la ruta de la imagen</span>
+<span class="n">imagen_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">imagen</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">imagen_array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Imprime las dimensiones de la imagen</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">272</span><span class="p">,</span> <span class="mi">652</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-13-d">
+<h2>Ejercicios 13 (d)<a class="headerlink" href="#ejercicios-13-d" title="Link to this heading"></a></h2>
+<ol class="arabic simple" start="5">
+<li><p>Modificar el ejemplo anterior para presentar en una figura tres
+gráficos, agregando a la izquierda un panel donde se muestre un corte
+horizontal. El corte debe estar en la mitad del gráfico
+(<span class="math notranslate nohighlight">\(y_{0}=136\)</span>). En la figura debe mostrar la posición del corte
+(similarmente a como se hizo con el corte en <span class="math notranslate nohighlight">\(x\)</span>) con una línea
+de otro color.</p></li>
+<li><p>Dada una imagen en color (por ejemplo, <code class="docutils literal notranslate"><span class="pre">figuras/babbage.png</span></code>),
+escribe un programa que calcule y grafique los histogramas de los
+tres canales de color (rojo, verde y azul) en un único gráfico. Cada
+canal debe representarse con su color correspondiente.</p></li>
 </ol>
 <hr class="docutils" />
 </section>
