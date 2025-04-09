@@ -1388,6 +1388,15 @@ valores <em>del mismo tipo</em> y un conjunto de etiquetas denominado <em>índic
 <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>0    1
+1    4
+2    4
+3    2
+dtype: int64
+&lt;class &#39;pandas.core.series.Series&#39;&gt;
+int64
+</pre></div>
+</div>
 <p>En este ejemplo, <code class="docutils literal notranslate"><span class="pre">s</span></code> es una serie que contiene elementos <code class="docutils literal notranslate"><span class="pre">int64</span></code>.</p>
 <blockquote>
 <div><p>Los tipos de datos son extensiones de aquellos que utiliza <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
@@ -1401,11 +1410,19 @@ los índices con el método <code class="docutils literal notranslate"><span cla
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">array</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">NumpyExtensionArray</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">Length</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <p>El tipo <code class="docutils literal notranslate"><span class="pre">NumpyExtensionArray</span></code> es una clase que encapsula al tipo array
 de <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, pero ha permitido agregarle flexibilidad para acomodar las
 características de datos más generales.</p>
 <p>Por otra parte, los índices se obtienen como:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RangeIndex</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Los índices son inmutables, en el mismo sentido que los caracteres de un
@@ -1415,9 +1432,37 @@ string. Es decir, no se pueden cambiar ciertos índices, pero se puede
 <span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+      <span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="o">----&gt;</span> <span class="mi">2</span> <span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">indexes</span><span class="o">/</span><span class="n">base</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5371</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Index</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+   <span class="mi">5369</span> <span class="nd">@final</span>
+   <span class="mi">5370</span> <span class="k">def</span> <span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="o">-&gt;</span> <span class="mi">5371</span>     <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Index does not support mutable operations&quot;</span><span class="p">)</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">Index</span> <span class="n">does</span> <span class="ow">not</span> <span class="n">support</span> <span class="n">mutable</span> <span class="n">operations</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nuevo_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span>
 <span class="n">s</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">nuevo_index</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>    <span class="mi">1</span>
+<span class="n">b</span>    <span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">4</span>
+<span class="n">d</span>    <span class="mi">2</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
 </pre></div>
 </div>
 <p>Se puede también construir una nueva serie indicando los índices
@@ -1426,10 +1471,25 @@ específicamente en el constructor con el argumento <code class="docutils litera
 <span class="nb">print</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">arquero</span>       <span class="mi">1</span>
+<span class="n">defensores</span>    <span class="mi">4</span>
+<span class="n">medios</span>        <span class="mi">4</span>
+<span class="n">delanteros</span>    <span class="mi">2</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <p>Existen otras maneras de crear series en <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, como por ejemplo a
 partir de arreglos de <code class="docutils literal notranslate"><span class="pre">numpy</span></code></p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rnd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">rnd</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">0.370947</span>
+<span class="mi">1</span>    <span class="mf">1.600918</span>
+<span class="mi">2</span>    <span class="mf">0.161127</span>
+<span class="mi">3</span>   <span class="o">-</span><span class="mf">0.929294</span>
+<span class="mi">4</span>   <span class="o">-</span><span class="mf">0.121632</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 <p>A partir de otras variables</p>
@@ -1439,10 +1499,26 @@ partir de arreglos de <code class="docutils literal notranslate"><span class="pr
 <span class="n">s3</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>    <span class="mi">1</span>
+<span class="n">b</span>    <span class="mi">2</span>
+<span class="n">c</span>    <span class="mi">3</span>
+<span class="n">d</span>    <span class="mi">4</span>
+<span class="n">e</span>    <span class="mi">5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <p>o usando diccionarios:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;e&quot;</span> <span class="p">}</span>
 <span class="n">s4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>    <span class="n">a</span>
+<span class="mi">2</span>    <span class="n">b</span>
+<span class="mi">3</span>    <span class="n">c</span>
+<span class="mi">4</span>    <span class="n">d</span>
+<span class="mi">5</span>    <span class="n">e</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">string</span>
 </pre></div>
 </div>
 <p>Asimismo, se puede usar el argumento <code class="docutils literal notranslate"><span class="pre">dtype</span></code> (igual que en NumPy) para
@@ -1454,12 +1530,28 @@ de datos (por ejemplo, <code class="docutils literal notranslate"><span class="p
 <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mi">4</span>
+<span class="mi">1</span>    <span class="mi">5</span>
+<span class="mi">2</span>    <span class="mi">6</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">string</span>
+<span class="mi">45</span>
+</pre></div>
+</div>
 <section id="accediendo-a-los-valores">
 <h3>Accediendo a los valores<a class="headerlink" href="#accediendo-a-los-valores" title="Link to this heading"></a></h3>
 <p>Se puede acceder a los valores de una serie a través del índice como si
 fuera un array:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">42</span> <span class="p">],</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>     <span class="mi">4</span>
+<span class="n">b</span>     <span class="mi">8</span>
+<span class="n">c</span>    <span class="mi">15</span>
+<span class="n">d</span>    <span class="mi">16</span>
+<span class="n">e</span>    <span class="mi">23</span>
+<span class="n">f</span>    <span class="mi">42</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tercer elemento: </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -1471,11 +1563,46 @@ fuera un array:</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una máscara:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Tercer</span> <span class="n">elemento</span><span class="p">:</span> <span class="mi">15</span>
+<span class="o">&lt;</span><span class="n">NumpyExtensionArray</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">42</span><span class="p">]</span>
+<span class="n">Length</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">Con</span> <span class="n">un</span> <span class="n">rango</span><span class="p">:</span>
+<span class="n">b</span>      <span class="mi">8</span>
+<span class="n">c</span>    <span class="mi">108</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">Con</span> <span class="n">los</span> <span class="n">índices</span><span class="p">:</span>
+<span class="n">a</span>      <span class="mi">4</span>
+<span class="n">c</span>    <span class="mi">108</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">Con</span> <span class="n">una</span> <span class="n">máscara</span><span class="p">:</span>
+<span class="n">c</span>    <span class="mi">108</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una lista de índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Con</span> <span class="n">una</span> <span class="n">lista</span> <span class="n">de</span> <span class="n">índices</span><span class="p">:</span>
+<span class="n">a</span>    <span class="mi">4</span>
+<span class="n">b</span>    <span class="mi">8</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
+<pre class="literal-block">/tmp/ipykernel_213536/1722261588.py:1: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use <cite>ser.iloc[pos]</cite>
+  print(f&quot;Con una lista de índices:n{s[[0,1]]}&quot;)</pre>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una lista de índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una lista de índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="w"> </span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Con</span> <span class="n">una</span> <span class="n">lista</span> <span class="n">de</span> <span class="n">índices</span><span class="p">:</span>
+<span class="n">a</span>     <span class="mi">4</span>
+<span class="n">d</span>    <span class="mi">16</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">Con</span> <span class="n">una</span> <span class="n">lista</span> <span class="n">de</span> <span class="n">índices</span><span class="p">:</span>
+<span class="n">a</span>     <span class="mi">4</span>
+<span class="n">d</span>    <span class="mi">16</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
 </pre></div>
 </div>
 </section>
@@ -1489,10 +1616,33 @@ mismo con la etiqueta correspondiente:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>    <span class="mi">1</span>
+<span class="n">b</span>    <span class="mi">2</span>
+<span class="n">c</span>    <span class="mi">3</span>
+<span class="n">d</span>    <span class="mi">4</span>
+<span class="n">e</span>    <span class="mi">5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">a</span>      <span class="mi">1</span>
+<span class="n">b</span>    <span class="mi">100</span>
+<span class="n">c</span>      <span class="mi">3</span>
+<span class="n">d</span>      <span class="mi">4</span>
+<span class="n">e</span>      <span class="mi">5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <p>En caso en que dicha etiqueta no exista dentro del índice de la serie,
 se agrega el valor:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>      <span class="mi">1</span>
+<span class="n">b</span>    <span class="mi">100</span>
+<span class="n">c</span>      <span class="mi">3</span>
+<span class="n">d</span>      <span class="mi">4</span>
+<span class="n">e</span>      <span class="mi">5</span>
+<span class="n">f</span>    <span class="mi">200</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
 </pre></div>
 </div>
 <p>Para eliminar valores, se utiliza el método <code class="docutils literal notranslate"><span class="pre">.drop</span></code>. Por defecto se
@@ -1504,8 +1654,31 @@ valor en la misma serie, es necesario usar el argumento opcional
 <span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>      <span class="mi">1</span>
+<span class="n">b</span>    <span class="mi">100</span>
+<span class="n">c</span>      <span class="mi">3</span>
+<span class="n">d</span>      <span class="mi">4</span>
+<span class="n">e</span>      <span class="mi">5</span>
+<span class="n">f</span>    <span class="mi">200</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">a</span>      <span class="mi">1</span>
+<span class="n">c</span>      <span class="mi">3</span>
+<span class="n">d</span>      <span class="mi">4</span>
+<span class="n">e</span>      <span class="mi">5</span>
+<span class="n">f</span>    <span class="mi">200</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>      <span class="mi">1</span>
+<span class="n">c</span>      <span class="mi">3</span>
+<span class="n">d</span>      <span class="mi">4</span>
+<span class="n">e</span>      <span class="mi">5</span>
+<span class="n">f</span>    <span class="mi">200</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generando un nuevo objeto</span>
@@ -1515,7 +1688,77 @@ valor en la misma serie, es necesario usar el argumento opcional
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v equals w: </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>    <span class="kc">True</span>
+<span class="n">c</span>    <span class="kc">True</span>
+<span class="n">d</span>    <span class="kc">True</span>
+<span class="n">e</span>    <span class="kc">True</span>
+<span class="n">f</span>    <span class="kc">True</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
+<span class="n">v</span> <span class="ow">is</span> <span class="n">w</span><span class="p">:</span> <span class="kc">False</span>
+<span class="n">v</span> <span class="n">equals</span> <span class="n">w</span><span class="p">:</span> <span class="kc">True</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># KeyError: &quot;[&#39;b&#39;] not found in axis&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">KeyError</span>                                  <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">21</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="o">----&gt;</span> <span class="mi">1</span> <span class="n">v</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># KeyError: &quot;[&#39;b&#39;] not found in axis&quot;</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">series</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">5347</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Series</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">inplace</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+   <span class="mi">5250</span> <span class="k">def</span> <span class="nf">drop</span><span class="p">(</span>
+   <span class="mi">5251</span>     <span class="bp">self</span><span class="p">,</span>
+   <span class="mi">5252</span>     <span class="n">labels</span><span class="p">:</span> <span class="n">IndexLabel</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+   <span class="mi">5259</span>     <span class="n">errors</span><span class="p">:</span> <span class="n">IgnoreRaise</span> <span class="o">=</span> <span class="s2">&quot;raise&quot;</span><span class="p">,</span>
+   <span class="mi">5260</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Series</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+   <span class="mi">5261</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">   5262     Return Series with specified index labels removed.</span>
+<span class="s2">   5263</span>
+<span class="s2">   (...)</span>
+<span class="s2">   5345     dtype: float64</span>
+<span class="s2">   5346     &quot;&quot;&quot;</span>
+<span class="o">-&gt;</span> <span class="mi">5347</span>     <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span>
+   <span class="mi">5348</span>         <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+   <span class="mi">5349</span>         <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">,</span>
+   <span class="mi">5350</span>         <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+   <span class="mi">5351</span>         <span class="n">columns</span><span class="o">=</span><span class="n">columns</span><span class="p">,</span>
+   <span class="mi">5352</span>         <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span>
+   <span class="mi">5353</span>         <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">,</span>
+   <span class="mi">5354</span>         <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">,</span>
+   <span class="mi">5355</span>     <span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">generic</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4785</span><span class="p">,</span> <span class="ow">in</span> <span class="n">NDFrame</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">inplace</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+   <span class="mi">4783</span> <span class="k">for</span> <span class="n">axis</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+   <span class="mi">4784</span>     <span class="k">if</span> <span class="n">labels</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="o">-&gt;</span> <span class="mi">4785</span>         <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">_drop_axis</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+   <span class="mi">4787</span> <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+   <span class="mi">4788</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_update_inplace</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">generic</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">4827</span><span class="p">,</span> <span class="ow">in</span> <span class="n">NDFrame</span><span class="o">.</span><span class="n">_drop_axis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">errors</span><span class="p">,</span> <span class="n">only_slice</span><span class="p">)</span>
+   <span class="mi">4825</span>         <span class="n">new_axis</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+   <span class="mi">4826</span>     <span class="k">else</span><span class="p">:</span>
+<span class="o">-&gt;</span> <span class="mi">4827</span>         <span class="n">new_axis</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="n">errors</span><span class="p">)</span>
+   <span class="mi">4828</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="n">axis</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">(</span><span class="n">new_axis</span><span class="p">)</span>
+   <span class="mi">4830</span> <span class="c1"># Case for non-unique axis</span>
+   <span class="mi">4831</span> <span class="k">else</span><span class="p">:</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">indexes</span><span class="o">/</span><span class="n">base</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">7070</span><span class="p">,</span> <span class="ow">in</span> <span class="n">Index</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">errors</span><span class="p">)</span>
+   <span class="mi">7068</span> <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+   <span class="mi">7069</span>     <span class="k">if</span> <span class="n">errors</span> <span class="o">!=</span> <span class="s2">&quot;ignore&quot;</span><span class="p">:</span>
+<span class="o">-&gt;</span> <span class="mi">7070</span>         <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">labels</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2"> not found in axis&quot;</span><span class="p">)</span>
+   <span class="mi">7071</span>     <span class="n">indexer</span> <span class="o">=</span> <span class="n">indexer</span><span class="p">[</span><span class="o">~</span><span class="n">mask</span><span class="p">]</span>
+   <span class="mi">7072</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">indexer</span><span class="p">)</span>
+
+
+<span class="ne">KeyError</span><span class="p">:</span> <span class="s2">&quot;[&#39;b&#39;] not found in axis&quot;</span>
 </pre></div>
 </div>
 <section id="tipos-de-datos">
@@ -1530,12 +1773,53 @@ particular:</p>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tipo de objeto del elemento </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">index</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>0    1
+1    a
+2    b
+3    c
+dtype: object
+Tipo de objeto del elemento 0: &lt;class &#39;int&#39;&gt;
+Tipo de objeto del elemento 1: &lt;class &#39;str&#39;&gt;
+Tipo de objeto del elemento 2: &lt;class &#39;str&#39;&gt;
+Tipo de objeto del elemento 3: &lt;class &#39;str&#39;&gt;
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suma de enteros: </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suma de enteros: </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Error</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Suma</span> <span class="n">de</span> <span class="n">enteros</span><span class="p">:</span> <span class="mi">4</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">23</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+      <span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suma de enteros: </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="o">----&gt;</span> <span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suma de enteros: </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Error</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">can</span> <span class="n">only</span> <span class="n">concatenate</span> <span class="nb">str</span> <span class="p">(</span><span class="ow">not</span> <span class="s2">&quot;int&quot;</span><span class="p">)</span> <span class="n">to</span> <span class="nb">str</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concat de str  : </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;d&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concat de str  : </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Error</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Concat</span> <span class="n">de</span> <span class="nb">str</span>  <span class="p">:</span> <span class="n">ad</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">TypeError</span>                                 <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">24</span><span class="p">],</span> <span class="n">line</span> <span class="mi">2</span>
+      <span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concat de str  : </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;d&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="o">----&gt;</span> <span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concat de str  : </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Error</span>
+
+
+<span class="ne">TypeError</span><span class="p">:</span> <span class="n">can</span> <span class="n">only</span> <span class="n">concatenate</span> <span class="nb">str</span> <span class="p">(</span><span class="ow">not</span> <span class="s2">&quot;int&quot;</span><span class="p">)</span> <span class="n">to</span> <span class="nb">str</span>
 </pre></div>
 </div>
 <p>Si bien entonces se pueden usar series con objetos con distintos tipos,
@@ -1548,18 +1832,31 @@ se recomienda que el tipo de dato sea homogéneo.</p>
 La manera en que <code class="docutils literal notranslate"><span class="pre">pandas</span></code> representa estos datos faltantes es a través
 de <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>, el tipo de dato de <code class="docutils literal notranslate"><span class="pre">numpy</span></code> que representa <em>not a
 number</em>, para aquellos tipos de datos heredados de <code class="docutils literal notranslate"><span class="pre">numpy</span></code>:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">snan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
- <span class="nb">print</span><span class="p">(</span><span class="n">snan</span><span class="p">)</span>
-
-<span class="n">Notar</span> <span class="n">que</span> <span class="n">si</span> <span class="n">bien</span> <span class="n">los</span> <span class="n">datos</span> <span class="n">existentes</span> <span class="n">son</span> <span class="n">de</span> <span class="n">tipo</span> <span class="n">entero</span><span class="p">,</span> <span class="n">al</span>
-<span class="n">utilizar</span> <span class="err">``</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="err">``</span> <span class="n">para</span> <span class="n">representar</span> <span class="n">un</span> <span class="n">dato</span> <span class="n">inexistente</span><span class="p">,</span> <span class="n">el</span> <span class="n">tipo</span> <span class="n">de</span>
-<span class="n">dato</span> <span class="n">de</span> <span class="n">la</span> <span class="n">serie</span> <span class="n">se</span> <span class="n">promueve</span> <span class="n">a</span> <span class="err">``</span><span class="n">float64</span><span class="err">``</span><span class="o">.</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">snan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">snan</span><span class="p">)</span>
 </pre></div>
 </div>
+<pre class="literal-block"> 0    1.0
+ 1    4.0
+ 2    NaN
+ 3    2.0
+ dtype: float64
+
+
+Notar que si bien los datos existentes son de tipo entero, al
+utilizar <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> para representar un dato inexistente, el tipo de
+dato de la serie se promueve a <code class="docutils literal notranslate"><span class="pre">float64</span></code>.</pre>
 <p>De la misma forma, se puede usar <code class="docutils literal notranslate"><span class="pre">None</span></code> para representar el dato
 faltante:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">snone</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">snone</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">1.0</span>
+<span class="mi">1</span>    <span class="mf">4.0</span>
+<span class="mi">2</span>    <span class="n">NaN</span>
+<span class="mi">3</span>    <span class="mf">5.0</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 <p>En el caso de cadenas de caracteres, se puede usar <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> o
@@ -1570,6 +1867,14 @@ defecto.</p>
 <span class="n">smixed_str</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>       <span class="n">a</span>
+<span class="mi">1</span>       <span class="n">b</span>
+<span class="mi">2</span>     <span class="n">NaN</span>
+<span class="mi">3</span>    <span class="kc">None</span>
+<span class="mi">4</span>       <span class="n">d</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+</pre></div>
+</div>
 <p>Esto tiene el inconveniente evidente de que el elemento faltante no está
 representado unívocamente por un solo valor. Para solventar este
 problema, se puede crear la serie con el tipo <code class="docutils literal notranslate"><span class="pre">string</span></code>:</p>
@@ -1577,22 +1882,55 @@ problema, se puede crear la serie con el tipo <code class="docutils literal notr
 <span class="nb">print</span><span class="p">(</span><span class="n">smixed_str2</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>       <span class="n">a</span>
+<span class="mi">1</span>       <span class="n">b</span>
+<span class="mi">2</span>    <span class="o">&lt;</span><span class="n">NA</span><span class="o">&gt;</span>
+<span class="mi">3</span>    <span class="o">&lt;</span><span class="n">NA</span><span class="o">&gt;</span>
+<span class="mi">4</span>       <span class="n">d</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">string</span>
+</pre></div>
+</div>
 <p>En este caso, el singlete <code class="docutils literal notranslate"><span class="pre">NA</span></code> representa unívocamente el dato
 faltante. En cualquier caso, se cuenta con el método <code class="docutils literal notranslate"><span class="pre">.isna</span></code>, que
 retorna una serie de <code class="docutils literal notranslate"><span class="pre">boolean</span></code> donde los valores faltantes son
 verdaderos (<code class="docutils literal notranslate"><span class="pre">True</span></code>):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
- <span class="nb">print</span><span class="p">(</span><span class="n">smixed_str2</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
-
-<span class="n">Atención</span><span class="p">,</span> <span class="n">la</span> <span class="n">cadena</span> <span class="n">de</span> <span class="n">caracteres</span> <span class="n">vacía</span> <span class="err">``</span><span class="s1">&#39;&#39;</span><span class="err">``</span> <span class="o">*</span><span class="n">NO</span><span class="o">*</span> <span class="n">se</span> <span class="n">considera</span> <span class="n">un</span>
-<span class="n">dato</span> <span class="n">inexistente</span><span class="o">.</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">smixed_str2</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
 </pre></div>
 </div>
+<pre class="literal-block"> 0    False
+ 1    False
+ 2     True
+ 3     True
+ 4    False
+ dtype: bool
+ 0    False
+ 1    False
+ 2     True
+ 3     True
+ 4    False
+ dtype: bool
+
+
+Atención, la cadena de caracteres vacía <code class="docutils literal notranslate"><span class="pre">''</span></code> <em>NO</em> se considera un
+dato inexistente.</pre>
 <p>Puede ser útil en algunos casos poder filtrar los datos inexistentes.
 Para eso se utiliza el método <code class="docutils literal notranslate"><span class="pre">.dropna</span></code>, que crea una nueva serie sin
 dichos datos:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>       <span class="n">a</span>
+<span class="mi">1</span>       <span class="n">b</span>
+<span class="mi">2</span>     <span class="n">NaN</span>
+<span class="mi">3</span>    <span class="kc">None</span>
+<span class="mi">4</span>       <span class="n">d</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+<span class="mi">0</span>    <span class="n">a</span>
+<span class="mi">1</span>    <span class="n">b</span>
+<span class="mi">4</span>    <span class="n">d</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
 </pre></div>
 </div>
 </section>
@@ -1608,10 +1946,52 @@ con NumPy, y sigan las convenciones de Python. He aquí algunos ejemplos:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">0.5</span>
+<span class="mi">1</span>    <span class="mf">0.5</span>
+<span class="mi">2</span>    <span class="mf">0.5</span>
+<span class="mi">3</span>    <span class="mf">0.5</span>
+<span class="mi">4</span>    <span class="mf">0.5</span>
+<span class="mi">5</span>    <span class="mf">0.5</span>
+<span class="mi">6</span>    <span class="mf">0.5</span>
+<span class="mi">7</span>    <span class="mf">0.5</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+<span class="mi">0</span>    <span class="mf">0.855919</span>
+<span class="mi">1</span>    <span class="mf">0.316680</span>
+<span class="mi">2</span>    <span class="mf">0.188950</span>
+<span class="mi">3</span>    <span class="mf">0.535831</span>
+<span class="mi">4</span>    <span class="mf">0.767803</span>
+<span class="mi">5</span>    <span class="mf">0.836171</span>
+<span class="mi">6</span>    <span class="mf">0.225345</span>
+<span class="mi">7</span>    <span class="mf">0.559054</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+<span class="mf">0.5357193052760575</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shifted</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">ones</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">shifted</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">shifted</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shifted</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">0.355919</span>
+<span class="mi">1</span>   <span class="o">-</span><span class="mf">0.183320</span>
+<span class="mi">2</span>   <span class="o">-</span><span class="mf">0.311050</span>
+<span class="mi">3</span>    <span class="mf">0.035831</span>
+<span class="mi">4</span>    <span class="mf">0.267803</span>
+<span class="mi">5</span>    <span class="mf">0.336171</span>
+<span class="mi">6</span>   <span class="o">-</span><span class="mf">0.274655</span>
+<span class="mi">7</span>    <span class="mf">0.059054</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+<span class="mf">0.0357193052760575</span>
+<span class="mi">0</span>    <span class="mf">0.355919</span>
+<span class="mi">1</span>    <span class="mf">0.183320</span>
+<span class="mi">2</span>    <span class="mf">0.311050</span>
+<span class="mi">3</span>    <span class="mf">0.035831</span>
+<span class="mi">4</span>    <span class="mf">0.267803</span>
+<span class="mi">5</span>    <span class="mf">0.336171</span>
+<span class="mi">6</span>    <span class="mf">0.274655</span>
+<span class="mi">7</span>    <span class="mf">0.059054</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 <p>Además de poder interactuar con NumPy en forma transparente, existen
@@ -1627,6 +2007,18 @@ algunos métodos útiles para trabajar con los datos de una serie:</p>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El más viejo :&quot;</span><span class="p">,</span> <span class="n">seru</span><span class="o">.</span><span class="n">idxmax</span><span class="p">())</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Person</span> <span class="n">Series</span><span class="p">:</span>
+
+<span class="n">Pedro</span>     <span class="mi">19</span>
+<span class="n">Oscar</span>     <span class="mi">30</span>
+<span class="n">Carlos</span>    <span class="mi">27</span>
+<span class="n">David</span>     <span class="mi">26</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+<span class="n">Edad</span> <span class="n">promedio</span><span class="p">:</span> <span class="mf">25.5</span>
+<span class="n">Edad</span> <span class="k">del</span> <span class="n">más</span> <span class="n">viejo</span> <span class="p">:</span> <span class="mi">30</span>
+<span class="n">El</span> <span class="n">más</span> <span class="n">viejo</span> <span class="p">:</span> <span class="n">Oscar</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temperaturas_ciudades</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;Buenos Aires&quot;</span><span class="p">:</span> <span class="mf">17.6</span><span class="p">,</span>
     <span class="s2">&quot;Córdoba&quot;</span><span class="p">:</span> <span class="mf">18.0</span><span class="p">,</span>
@@ -1639,9 +2031,25 @@ algunos métodos útiles para trabajar con los datos de una serie:</p>
 <span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Buenos</span> <span class="n">Aires</span>    <span class="mf">17.6</span>
+<span class="n">Córdoba</span>         <span class="mf">18.0</span>
+<span class="n">Rosario</span>         <span class="mf">18.0</span>
+<span class="n">Mendoza</span>         <span class="mf">16.0</span>
+<span class="n">Santa</span> <span class="n">Fe</span>        <span class="mf">21.3</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">otras_ciudades</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Buenos Aires&#39;</span><span class="p">,</span> <span class="s1">&#39;Córdoba&#39;</span><span class="p">,</span> <span class="s1">&#39;Rosario&#39;</span><span class="p">,</span> <span class="s1">&#39;Mendoza&#39;</span><span class="p">,</span> <span class="s1">&#39;Salta&#39;</span><span class="p">]</span>
 <span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">temperaturas_ciudades</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">otras_ciudades</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Buenos</span> <span class="n">Aires</span>    <span class="mf">17.6</span>
+<span class="n">Córdoba</span>         <span class="mf">18.0</span>
+<span class="n">Rosario</span>         <span class="mf">18.0</span>
+<span class="n">Mendoza</span>         <span class="mf">16.0</span>
+<span class="n">Salta</span>            <span class="n">NaN</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_ciudades2</span> <span class="o">=</span> <span class="p">{</span>
@@ -1654,10 +2062,35 @@ algunos métodos útiles para trabajar con los datos de una serie:</p>
 <span class="n">temp2</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Mendoza</span>     <span class="mf">20.0</span>
+<span class="n">Salta</span>       <span class="mf">17.2</span>
+<span class="n">Santa</span> <span class="n">Fe</span>    <span class="mf">18.6</span>
+<span class="n">San</span> <span class="n">Juan</span>    <span class="mf">19.3</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Buenos</span> <span class="n">Aires</span>    <span class="mf">17.6</span>
+<span class="n">Córdoba</span>         <span class="mf">18.0</span>
+<span class="n">Rosario</span>         <span class="mf">18.0</span>
+<span class="n">Mendoza</span>         <span class="mf">16.0</span>
+<span class="n">Salta</span>            <span class="n">NaN</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">temp</span> <span class="o">+</span> <span class="n">temp2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Buenos</span> <span class="n">Aires</span>     <span class="n">NaN</span>
+<span class="n">Córdoba</span>          <span class="n">NaN</span>
+<span class="n">Mendoza</span>         <span class="mf">18.0</span>
+<span class="n">Rosario</span>          <span class="n">NaN</span>
+<span class="n">Salta</span>            <span class="n">NaN</span>
+<span class="n">San</span> <span class="n">Juan</span>         <span class="n">NaN</span>
+<span class="n">Santa</span> <span class="n">Fe</span>         <span class="n">NaN</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 </section>
@@ -1667,14 +2100,25 @@ algunos métodos útiles para trabajar con los datos de una serie:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Rosario&#39;</span> <span class="ow">in</span> <span class="n">temp2</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kc">False</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp2_dict</span> <span class="o">=</span> <span class="n">temp2</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">temp2_dict</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">temp2_dict</span><span class="p">))</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{&#39;Mendoza&#39;: 20.0, &#39;Salta&#39;: 17.2, &#39;Santa Fe&#39;: 18.6, &#39;San Juan&#39;: 19.3}
+&lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp2_json</span> <span class="o">=</span> <span class="n">temp2</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">temp2_json</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">temp2_json</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>{&quot;Mendoza&quot;:20.0,&quot;Salta&quot;:17.2,&quot;Santa Fe&quot;:18.6,&quot;San Juan&quot;:19.3}
+&lt;class &#39;str&#39;&gt;
 </pre></div>
 </div>
 </section>

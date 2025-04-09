@@ -1446,6 +1446,18 @@ valores *del mismo tipo* y un conjunto de etiquetas denominado *índice*:
     print(type(s))
     print(s.dtype)
 
+
+.. parsed-literal::
+
+    0    1
+    1    4
+    2    4
+    3    2
+    dtype: int64
+    <class 'pandas.core.series.Series'>
+    int64
+
+
 En este ejemplo, ``s`` es una serie que contiene elementos ``int64``.
 
    Los tipos de datos son extensiones de aquellos que utiliza ``numpy``.
@@ -1462,6 +1474,17 @@ los índices con el método ``.index``:
 
     s.array
 
+
+
+
+.. parsed-literal::
+
+    <NumpyExtensionArray>
+    [1, 4, 4, 2]
+    Length: 4, dtype: int64
+
+
+
 El tipo ``NumpyExtensionArray`` es una clase que encapsula al tipo array
 de ``numpy``, pero ha permitido agregarle flexibilidad para acomodar las
 características de datos más generales.
@@ -1472,6 +1495,15 @@ Por otra parte, los índices se obtienen como:
 
     s.index 
 
+
+
+
+.. parsed-literal::
+
+    RangeIndex(start=0, stop=4, step=1)
+
+
+
 Los índices son inmutables, en el mismo sentido que los caracteres de un
 string. Es decir, no se pueden cambiar ciertos índices, pero se puede
 *reasignar* el índice de una serie completamente:
@@ -1481,11 +1513,48 @@ string. Es decir, no se pueden cambiar ciertos índices, pero se puede
     print(s.index[2])
     s.index[2] = 5
 
+
+.. parsed-literal::
+
+    2
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[5], line 2
+          1 print(s.index[2])
+    ----> 2 s.index[2] = 5
+
+
+    File /usr/lib64/python3.13/site-packages/pandas/core/indexes/base.py:5371, in Index.__setitem__(self, key, value)
+       5369 @final
+       5370 def __setitem__(self, key, value) -> None:
+    -> 5371     raise TypeError("Index does not support mutable operations")
+
+
+    TypeError: Index does not support mutable operations
+
+
 .. code:: python
 
     nuevo_index = index=['a','b','c','d']
     s.index = nuevo_index
     print(s)
+
+
+.. parsed-literal::
+
+    a    1
+    b    4
+    c    4
+    d    2
+    dtype: int64
+
 
 Se puede también construir una nueva serie indicando los índices
 específicamente en el constructor con el argumento ``index=``:
@@ -1495,6 +1564,16 @@ específicamente en el constructor con el argumento ``index=``:
     s2 = pd.Series([1,4,4,2], index=['arquero','defensores','medios','delanteros'])
     print(s2)
 
+
+.. parsed-literal::
+
+    arquero       1
+    defensores    4
+    medios        4
+    delanteros    2
+    dtype: int64
+
+
 Existen otras maneras de crear series en ``pandas``, como por ejemplo a
 partir de arreglos de ``numpy``
 
@@ -1502,6 +1581,17 @@ partir de arreglos de ``numpy``
 
     rnd = pd.Series(np.random.randn(5))
     print(rnd)
+
+
+.. parsed-literal::
+
+    0    0.370947
+    1    1.600918
+    2    0.161127
+    3   -0.929294
+    4   -0.121632
+    dtype: float64
+
 
 A partir de otras variables
 
@@ -1512,6 +1602,20 @@ A partir de otras variables
     s3 = pd.Series(values, index=index)
     s3
 
+
+
+
+.. parsed-literal::
+
+    a    1
+    b    2
+    c    3
+    d    4
+    e    5
+    dtype: int64
+
+
+
 o usando diccionarios:
 
 .. code:: python
@@ -1519,6 +1623,17 @@ o usando diccionarios:
     d = { 1: "a", 2: "b", 3: "c", 4: "d", 5: "e" }
     s4 = pd.Series(d,dtype='string')
     print(s4)
+
+
+.. parsed-literal::
+
+    1    a
+    2    b
+    3    c
+    4    d
+    5    e
+    dtype: string
+
 
 Asimismo, se puede usar el argumento ``dtype`` (igual que en NumPy) para
 indicar el tipo de dato que se quiere utilizar al crear la serie. Pandas
@@ -1531,6 +1646,16 @@ de datos (por ejemplo, ``string``) propios
     print(n)
     print(n[0]+n[1])
 
+
+.. parsed-literal::
+
+    0    4
+    1    5
+    2    6
+    dtype: string
+    45
+
+
 Accediendo a los valores
 ------------------------
 
@@ -1542,6 +1667,18 @@ fuera un array:
     s = pd.Series([ 4, 8, 15, 16, 23, 42 ],index = ['a','b','c','d','e','f'])
     print(s)
 
+
+.. parsed-literal::
+
+    a     4
+    b     8
+    c    15
+    d    16
+    e    23
+    f    42
+    dtype: int64
+
+
 .. code:: python
 
     print(f"Tercer elemento: {s.array[2]}")
@@ -1552,14 +1689,62 @@ fuera un array:
     print(f"Con los índices:\n{s[['a','c']]}")
     print(f"Con una máscara:\n{s[s > 100]}")
 
+
+.. parsed-literal::
+
+    Tercer elemento: 15
+    <NumpyExtensionArray>
+    [4, 8, 108, 16, 23, 42]
+    Length: 6, dtype: int64
+    Con un rango:
+    b      8
+    c    108
+    dtype: int64
+    Con los índices:
+    a      4
+    c    108
+    dtype: int64
+    Con una máscara:
+    c    108
+    dtype: int64
+
+
 .. code:: python
 
     print(f"Con una lista de índices:\n{s[[0,1]]}")
+
+
+.. parsed-literal::
+
+    Con una lista de índices:
+    a    4
+    b    8
+    dtype: int64
+
+
+.. parsed-literal::
+
+    /tmp/ipykernel_213536/1722261588.py:1: FutureWarning: Series.__getitem__ treating keys as positions is deprecated. In a future version, integer keys will always be treated as labels (consistent with DataFrame behavior). To access a value by position, use `ser.iloc[pos]`
+      print(f"Con una lista de índices:\n{s[[0,1]]}")
+
 
 .. code:: python
 
     print(f"Con una lista de índices:\n{s.iloc[[0,3]]}") 
     print(f"Con una lista de índices:\n{s[ s.index[[0,3]] ]}")
+
+
+.. parsed-literal::
+
+    Con una lista de índices:
+    a     4
+    d    16
+    dtype: int64
+    Con una lista de índices:
+    a     4
+    d    16
+    dtype: int64
+
 
 Modificando valores
 -------------------
@@ -1574,6 +1759,23 @@ mismo con la etiqueta correspondiente:
     v['b'] = 100
     print(v)
 
+
+.. parsed-literal::
+
+    a    1
+    b    2
+    c    3
+    d    4
+    e    5
+    dtype: int64
+    a      1
+    b    100
+    c      3
+    d      4
+    e      5
+    dtype: int64
+
+
 En caso en que dicha etiqueta no exista dentro del índice de la serie,
 se agrega el valor:
 
@@ -1581,6 +1783,18 @@ se agrega el valor:
 
     v['f'] = 200
     print(v)
+
+
+.. parsed-literal::
+
+    a      1
+    b    100
+    c      3
+    d      4
+    e      5
+    f    200
+    dtype: int64
+
 
 Para eliminar valores, se utiliza el método ``.drop``. Por defecto se
 genera una nueva serie con el valor eliminado, para poder eliminar el
@@ -1593,10 +1807,39 @@ valor en la misma serie, es necesario usar el argumento opcional
     print(v)
     print(w)
 
+
+.. parsed-literal::
+
+    a      1
+    b    100
+    c      3
+    d      4
+    e      5
+    f    200
+    dtype: int64
+    a      1
+    c      3
+    d      4
+    e      5
+    f    200
+    dtype: int64
+
+
 .. code:: python
 
     v.drop('b', inplace=True)
     print(v)
+
+
+.. parsed-literal::
+
+    a      1
+    c      3
+    d      4
+    e      5
+    f    200
+    dtype: int64
+
 
 .. code:: python
 
@@ -1606,9 +1849,86 @@ valor en la misma serie, es necesario usar el argumento opcional
     print(f"v is w: {v is w}")
     print(f"v equals w: {v.equals(w)}")
 
+
+.. parsed-literal::
+
+    a    True
+    c    True
+    d    True
+    e    True
+    f    True
+    dtype: bool
+    v is w: False
+    v equals w: True
+
+
 .. code:: python
 
     v.drop(['b'], inplace=True) # KeyError: "['b'] not found in axis"
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    KeyError                                  Traceback (most recent call last)
+
+    Cell In[21], line 1
+    ----> 1 v.drop(['b'], inplace=True) # KeyError: "['b'] not found in axis"
+
+
+    File /usr/lib64/python3.13/site-packages/pandas/core/series.py:5347, in Series.drop(self, labels, axis, index, columns, level, inplace, errors)
+       5250 def drop(
+       5251     self,
+       5252     labels: IndexLabel | None = None,
+       (...)
+       5259     errors: IgnoreRaise = "raise",
+       5260 ) -> Series | None:
+       5261     """
+       5262     Return Series with specified index labels removed.
+       5263 
+       (...)
+       5345     dtype: float64
+       5346     """
+    -> 5347     return super().drop(
+       5348         labels=labels,
+       5349         axis=axis,
+       5350         index=index,
+       5351         columns=columns,
+       5352         level=level,
+       5353         inplace=inplace,
+       5354         errors=errors,
+       5355     )
+
+
+    File /usr/lib64/python3.13/site-packages/pandas/core/generic.py:4785, in NDFrame.drop(self, labels, axis, index, columns, level, inplace, errors)
+       4783 for axis, labels in axes.items():
+       4784     if labels is not None:
+    -> 4785         obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+       4787 if inplace:
+       4788     self._update_inplace(obj)
+
+
+    File /usr/lib64/python3.13/site-packages/pandas/core/generic.py:4827, in NDFrame._drop_axis(self, labels, axis, level, errors, only_slice)
+       4825         new_axis = axis.drop(labels, level=level, errors=errors)
+       4826     else:
+    -> 4827         new_axis = axis.drop(labels, errors=errors)
+       4828     indexer = axis.get_indexer(new_axis)
+       4830 # Case for non-unique axis
+       4831 else:
+
+
+    File /usr/lib64/python3.13/site-packages/pandas/core/indexes/base.py:7070, in Index.drop(self, labels, errors)
+       7068 if mask.any():
+       7069     if errors != "ignore":
+    -> 7070         raise KeyError(f"{labels[mask].tolist()} not found in axis")
+       7071     indexer = indexer[~mask]
+       7072 return self.delete(indexer)
+
+
+    KeyError: "['b'] not found in axis"
+
 
 Tipos de datos
 ~~~~~~~~~~~~~~
@@ -1625,15 +1945,71 @@ particular:
     for index,elem in s.items(): 
         print(f"Tipo de objeto del elemento {index}: {type(s[index])}")
 
+
+.. parsed-literal::
+
+    0    1
+    1    a
+    2    b
+    3    c
+    dtype: object
+    Tipo de objeto del elemento 0: <class 'int'>
+    Tipo de objeto del elemento 1: <class 'str'>
+    Tipo de objeto del elemento 2: <class 'str'>
+    Tipo de objeto del elemento 3: <class 'str'>
+
+
 .. code:: python
 
     print(f"Suma de enteros: {s[0] + 3}")
     print(f"Suma de enteros: {s[1] + 3}") # Error
 
+
+.. parsed-literal::
+
+    Suma de enteros: 4
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[23], line 2
+          1 print(f"Suma de enteros: {s[0] + 3}")
+    ----> 2 print(f"Suma de enteros: {s[1] + 3}") # Error
+
+
+    TypeError: can only concatenate str (not "int") to str
+
+
 .. code:: python
 
     print(f"Concat de str  : {s[1] + 'd'}")
     print(f"Concat de str  : {s[1] + 3}") # Error
+
+
+.. parsed-literal::
+
+    Concat de str  : ad
+
+
+::
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    Cell In[24], line 2
+          1 print(f"Concat de str  : {s[1] + 'd'}")
+    ----> 2 print(f"Concat de str  : {s[1] + 3}") # Error
+
+
+    TypeError: can only concatenate str (not "int") to str
+
 
 Si bien entonces se pueden usar series con objetos con distintos tipos,
 se recomienda que el tipo de dato sea homogéneo.
@@ -1651,6 +2027,16 @@ number*, para aquellos tipos de datos heredados de ``numpy``:
     snan = pd.Series([1,4,np.nan,2])
     print(snan)
 
+
+.. parsed-literal::
+
+    0    1.0
+    1    4.0
+    2    NaN
+    3    2.0
+    dtype: float64
+
+
    Notar que si bien los datos existentes son de tipo entero, al
    utilizar ``np.nan`` para representar un dato inexistente, el tipo de
    dato de la serie se promueve a ``float64``.
@@ -1663,6 +2049,16 @@ faltante:
     snone = pd.Series([1,4,None,5])
     print(snone)
 
+
+.. parsed-literal::
+
+    0    1.0
+    1    4.0
+    2    NaN
+    3    5.0
+    dtype: float64
+
+
 En el caso de cadenas de caracteres, se puede usar ``np.nan`` o
 ``None``. Si no se indica el tipo de dato a través de ``dtype``, se
 promueve el tipo de dato de la serie a ``object``, como sucede por
@@ -1673,6 +2069,20 @@ defecto.
     smixed_str = pd.Series(['a','b',np.nan,None,'d'])
     smixed_str
 
+
+
+
+.. parsed-literal::
+
+    0       a
+    1       b
+    2     NaN
+    3    None
+    4       d
+    dtype: object
+
+
+
 Esto tiene el inconveniente evidente de que el elemento faltante no está
 representado unívocamente por un solo valor. Para solventar este
 problema, se puede crear la serie con el tipo ``string``:
@@ -1681,6 +2091,17 @@ problema, se puede crear la serie con el tipo ``string``:
 
     smixed_str2 = pd.Series(['a','b',np.nan,None,'d'],dtype='string')
     print(smixed_str2)
+
+
+.. parsed-literal::
+
+    0       a
+    1       b
+    2    <NA>
+    3    <NA>
+    4       d
+    dtype: string
+
 
 En este caso, el singlete ``NA`` representa unívocamente el dato
 faltante. En cualquier caso, se cuenta con el método ``.isna``, que
@@ -1691,6 +2112,23 @@ verdaderos (``True``):
 
     print(smixed_str.isna())
     print(smixed_str2.isna())
+
+
+.. parsed-literal::
+
+    0    False
+    1    False
+    2     True
+    3     True
+    4    False
+    dtype: bool
+    0    False
+    1    False
+    2     True
+    3     True
+    4    False
+    dtype: bool
+
 
    Atención, la cadena de caracteres vacía ``''`` *NO* se considera un
    dato inexistente.
@@ -1703,6 +2141,21 @@ dichos datos:
 
     print(smixed_str)
     print(smixed_str.dropna())
+
+
+.. parsed-literal::
+
+    0       a
+    1       b
+    2     NaN
+    3    None
+    4       d
+    dtype: object
+    0    a
+    1    b
+    4    d
+    dtype: object
+
 
 Operando con series
 -------------------
@@ -1719,12 +2172,60 @@ con NumPy, y sigan las convenciones de Python. He aquí algunos ejemplos:
     print(t)
     print(t.mean())
 
+
+.. parsed-literal::
+
+    0    0.5
+    1    0.5
+    2    0.5
+    3    0.5
+    4    0.5
+    5    0.5
+    6    0.5
+    7    0.5
+    dtype: float64
+    0    0.855919
+    1    0.316680
+    2    0.188950
+    3    0.535831
+    4    0.767803
+    5    0.836171
+    6    0.225345
+    7    0.559054
+    dtype: float64
+    0.5357193052760575
+
+
 .. code:: python
 
     shifted = t - ones 
     print(shifted)
     print(shifted.mean())
     print(np.abs(shifted))
+
+
+.. parsed-literal::
+
+    0    0.355919
+    1   -0.183320
+    2   -0.311050
+    3    0.035831
+    4    0.267803
+    5    0.336171
+    6   -0.274655
+    7    0.059054
+    dtype: float64
+    0.0357193052760575
+    0    0.355919
+    1    0.183320
+    2    0.311050
+    3    0.035831
+    4    0.267803
+    5    0.336171
+    6    0.274655
+    7    0.059054
+    dtype: float64
+
 
 Además de poder interactuar con NumPy en forma transparente, existen
 algunos métodos útiles para trabajar con los datos de una serie:
@@ -1741,6 +2242,21 @@ algunos métodos útiles para trabajar con los datos de una serie:
     print("Edad del más viejo :", seru.max())
     print("El más viejo :", seru.idxmax())
 
+
+.. parsed-literal::
+
+    Person Series:
+    
+    Pedro     19
+    Oscar     30
+    Carlos    27
+    David     26
+    dtype: int64
+    Edad promedio: 25.5
+    Edad del más viejo : 30
+    El más viejo : Oscar
+
+
 .. code:: python
 
     temperaturas_ciudades = {
@@ -1754,11 +2270,33 @@ algunos métodos útiles para trabajar con los datos de una serie:
     temp = pd.Series(temperaturas_ciudades)
     print(temp)
 
+
+.. parsed-literal::
+
+    Buenos Aires    17.6
+    Córdoba         18.0
+    Rosario         18.0
+    Mendoza         16.0
+    Santa Fe        21.3
+    dtype: float64
+
+
 .. code:: python
 
     otras_ciudades = ['Buenos Aires', 'Córdoba', 'Rosario', 'Mendoza', 'Salta']
     temp = pd.Series(temperaturas_ciudades, index=otras_ciudades)
     print(temp)
+
+
+.. parsed-literal::
+
+    Buenos Aires    17.6
+    Córdoba         18.0
+    Rosario         18.0
+    Mendoza         16.0
+    Salta            NaN
+    dtype: float64
+
 
 .. code:: python
 
@@ -1771,13 +2309,50 @@ algunos métodos útiles para trabajar con los datos de una serie:
     temp2 = pd.Series(temp_ciudades2)
     temp2
 
+
+
+
+.. parsed-literal::
+
+    Mendoza     20.0
+    Salta       17.2
+    Santa Fe    18.6
+    San Juan    19.3
+    dtype: float64
+
+
+
 .. code:: python
 
     print(temp)
 
+
+.. parsed-literal::
+
+    Buenos Aires    17.6
+    Córdoba         18.0
+    Rosario         18.0
+    Mendoza         16.0
+    Salta            NaN
+    dtype: float64
+
+
 .. code:: python
 
     print((temp + temp2)/2)
+
+
+.. parsed-literal::
+
+    Buenos Aires     NaN
+    Córdoba          NaN
+    Mendoza         18.0
+    Rosario          NaN
+    Salta            NaN
+    San Juan         NaN
+    Santa Fe         NaN
+    dtype: float64
+
 
 Misceláneas
 -----------
@@ -1788,17 +2363,40 @@ Algunas otras operaciones interesantes:
 
     'Rosario' in temp2
 
+
+
+
+.. parsed-literal::
+
+    False
+
+
+
 .. code:: python
 
     temp2_dict = temp2.to_dict()
     print(temp2_dict)
     print(type(temp2_dict))
 
+
+.. parsed-literal::
+
+    {'Mendoza': 20.0, 'Salta': 17.2, 'Santa Fe': 18.6, 'San Juan': 19.3}
+    <class 'dict'>
+
+
 .. code:: python
 
     temp2_json = temp2.to_json() 
     print(temp2_json)
     print(type(temp2_json))
+
+
+.. parsed-literal::
+
+    {"Mendoza":20.0,"Salta":17.2,"Santa Fe":18.6,"San Juan":19.3}
+    <class 'str'>
+
 
 --------------
 
