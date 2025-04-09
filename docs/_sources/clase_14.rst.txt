@@ -2471,3 +2471,1511 @@ Ejercicios 14(b)
    y evalúe nuevamente ``s[-1]``. ¿Qué conclusiones puede sacar?
 
 --------------
+
+Estructuras de datos en ``pandas``: ``DataFrame``\ s
+====================================================
+
+Hemos visto que una serie en ``pandas`` es representa una colección de
+valores indexados por sendas etiquetas. La extensión natural (?) de una
+serie es una colección con múltiples valores arreglados en columnas
+indexados por una misma colección de etiquetas. Es decir, una tabla… La
+estructura que representa tablas en ``pandas`` se llama *DataFrame*. Un
+``DataFrame`` tiene un índice de filas (como las series) y un índice de
+columnas.
+
+   Se puede pensar un ``DataFrame`` como un diccionario de series que
+   comparten un mismo índice.
+
+Como las series, es habitual construir un ``DataFrame`` a partir de un
+diccionario. Veamos el siguiente diccionario para comenzar a trabajar.
+Como siempre, importamos los módulos indispensables:
+
+.. code:: python
+
+    import numpy as np
+    import pandas as pd
+
+.. code:: python
+
+    data = {
+        "Titulo": [
+            "La piedra filosofal",
+            "La cámara secreta",
+            "El prisionero de Azkaban",
+            "El cáliz de fuego",
+            "La orden del Fénix",
+            "El misterio del príncipe",
+            "Las reliquias de la muerte"
+        ],
+        "Año de edición": [1997, 1998, 1999, 2000, 2003, 2005, 2007],
+        "Páginas": [223, 251, 317, 636, 766, 607, 607],
+    }
+    
+    df = pd.DataFrame(data)
+    df
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Titulo</th>
+          <th>Año de edición</th>
+          <th>Páginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>La piedra filosofal</td>
+          <td>1997</td>
+          <td>223</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>La cámara secreta</td>
+          <td>1998</td>
+          <td>251</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>El prisionero de Azkaban</td>
+          <td>1999</td>
+          <td>317</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>El cáliz de fuego</td>
+          <td>2000</td>
+          <td>636</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>La orden del Fénix</td>
+          <td>2003</td>
+          <td>766</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>El misterio del príncipe</td>
+          <td>2005</td>
+          <td>607</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Las reliquias de la muerte</td>
+          <td>2007</td>
+          <td>607</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+El diccionario de origen asigna a cada clave una lista de elementos.
+Hemos generado un ``DataFrame`` a partir de un diccionario: los índices
+de filas se generan automáticamente, mientras que los índices (o
+etiquetas) de las columnas corresponden a las claves de cada una de las
+listas del diccionario.
+
+   Si las listas que componen el diccionario de origen no son iguales,
+   ``pd.DataFrame`` dará un error
+   ``ValueError: All arrays must be of the same length``.
+
+Una conveniencia interesante en Jupyter Notebooks es que se puede
+imprimir la tabla en forma elegante:
+
+.. code:: python
+
+    print(df) 
+    display(df)
+    df # también funciona 
+
+
+.. parsed-literal::
+
+                           Titulo  Año de edición  Páginas
+    0         La piedra filosofal            1997      223
+    1           La cámara secreta            1998      251
+    2    El prisionero de Azkaban            1999      317
+    3           El cáliz de fuego            2000      636
+    4          La orden del Fénix            2003      766
+    5    El misterio del príncipe            2005      607
+    6  Las reliquias de la muerte            2007      607
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Titulo</th>
+          <th>Año de edición</th>
+          <th>Páginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>La piedra filosofal</td>
+          <td>1997</td>
+          <td>223</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>La cámara secreta</td>
+          <td>1998</td>
+          <td>251</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>El prisionero de Azkaban</td>
+          <td>1999</td>
+          <td>317</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>El cáliz de fuego</td>
+          <td>2000</td>
+          <td>636</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>La orden del Fénix</td>
+          <td>2003</td>
+          <td>766</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>El misterio del príncipe</td>
+          <td>2005</td>
+          <td>607</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Las reliquias de la muerte</td>
+          <td>2007</td>
+          <td>607</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Titulo</th>
+          <th>Año de edición</th>
+          <th>Páginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>La piedra filosofal</td>
+          <td>1997</td>
+          <td>223</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>La cámara secreta</td>
+          <td>1998</td>
+          <td>251</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>El prisionero de Azkaban</td>
+          <td>1999</td>
+          <td>317</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>El cáliz de fuego</td>
+          <td>2000</td>
+          <td>636</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>La orden del Fénix</td>
+          <td>2003</td>
+          <td>766</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>El misterio del príncipe</td>
+          <td>2005</td>
+          <td>607</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Las reliquias de la muerte</td>
+          <td>2007</td>
+          <td>607</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Eventualmente uno podría querer ver sólo algunas filas:
+
+.. code:: python
+
+    display(df.head()) # muestra las primeras 5 filas
+    display(df.tail()) # muestra las últimas 5 filas
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Titulo</th>
+          <th>Año de edición</th>
+          <th>Páginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>La piedra filosofal</td>
+          <td>1997</td>
+          <td>223</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>La cámara secreta</td>
+          <td>1998</td>
+          <td>251</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>El prisionero de Azkaban</td>
+          <td>1999</td>
+          <td>317</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>El cáliz de fuego</td>
+          <td>2000</td>
+          <td>636</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>La orden del Fénix</td>
+          <td>2003</td>
+          <td>766</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Titulo</th>
+          <th>Año de edición</th>
+          <th>Páginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>2</th>
+          <td>El prisionero de Azkaban</td>
+          <td>1999</td>
+          <td>317</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>El cáliz de fuego</td>
+          <td>2000</td>
+          <td>636</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>La orden del Fénix</td>
+          <td>2003</td>
+          <td>766</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>El misterio del príncipe</td>
+          <td>2005</td>
+          <td>607</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Las reliquias de la muerte</td>
+          <td>2007</td>
+          <td>607</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+El ``DataFrame`` usa la variable ``index`` como en las series, y la
+variable ``columns`` para describir las etiquetas de las columnas. Por
+ejemplo:
+
+.. code:: python
+
+    df2 = pd.DataFrame(data, index = ["a", "b", "c", "d", "e", "f", "g"], columns = ["Titulo", "Páginas", "Año de edición"])
+    df2
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Titulo</th>
+          <th>Páginas</th>
+          <th>Año de edición</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>La piedra filosofal</td>
+          <td>223</td>
+          <td>1997</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>La cámara secreta</td>
+          <td>251</td>
+          <td>1998</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>El prisionero de Azkaban</td>
+          <td>317</td>
+          <td>1999</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>El cáliz de fuego</td>
+          <td>636</td>
+          <td>2000</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>La orden del Fénix</td>
+          <td>766</td>
+          <td>2003</td>
+        </tr>
+        <tr>
+          <th>f</th>
+          <td>El misterio del príncipe</td>
+          <td>607</td>
+          <td>2005</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>Las reliquias de la muerte</td>
+          <td>607</td>
+          <td>2007</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Notar que el orden de la lista de etiquetas que se pasa a ``columns`` se
+mantiene al crear el ``DataFrame``. La lista que se usa en la creación
+de un ``DataFrame`` usando ``columns`` debe contener exactamente los
+mismos valores que las claves del diccionario, sino generará una columna
+con datos faltantes.
+
+Para acceder a las etiquetas de filas y columnas, usamos los métodos
+``.index`` y ``.columns``.
+
+.. code:: python
+
+    print(f"Indices de filas: {df2.index}")
+    print(f"Indices de columnas: {df2.columns}")
+
+
+.. parsed-literal::
+
+    Indices de filas: Index(['a', 'b', 'c', 'd', 'e', 'f', 'g'], dtype='object')
+    Indices de columnas: Index(['Titulo', 'Páginas', 'Año de edición'], dtype='object')
+
+
+Accediendo a los valores
+------------------------
+
+Para acceder a las columnas podemos usar:
+
+.. code:: python
+
+    print(f"Valores de las filas: {df2.values}")
+    print(f"Valores de las columnas: {type(df2.values)}")    
+
+
+.. parsed-literal::
+
+    Valores de las filas: [['La piedra filosofal' 223 1997]
+     ['La cámara secreta' 251 1998]
+     ['El prisionero de Azkaban' 317 1999]
+     ['El cáliz de fuego' 636 2000]
+     ['La orden del Fénix' 766 2003]
+     ['El misterio del príncipe' 607 2005]
+     ['Las reliquias de la muerte' 607 2007]]
+    Valores de las columnas: <class 'numpy.ndarray'>
+
+
+El resultado de esta operación nos devuelve un arreglo 2D de NumPy, cuyo
+tipo de dato será el mínimo que pueda contener los tipos de datos de las
+columnas que lo componen. Por ejemplo, si nuestras columnas tienen datos
+en ``float32`` y ``float64``, el tipo del arreglo de NumPy resultante
+será ``float64``. En el caso anterior, los tipos de datos de las
+columnas son:
+
+.. code:: python
+
+    df2.dtypes
+
+
+
+
+.. parsed-literal::
+
+    Titulo            object
+    Páginas            int64
+    Año de edición     int64
+    dtype: object
+
+
+
+Es decir que los datos en ``int64`` de las columnas ``Páginas`` y
+``Año de edición`` se promueven a ``object``.
+
+El acceso a ciertas columnas en particular se hace como en los
+diccionarios:
+
+.. code:: python
+
+    titulos = df2["Titulo"]
+    print("La columna 'Titulo'")
+    print(f"{titulos}")
+    print(f"Tipo de la columna 'Titulo': {type(titulos)}")
+    print(f"Valores de la columna 'Titulo': {titulos.values}")
+    print(f"Tipo de la columna 'Titulo' .values: {type(titulos.values)}")
+
+
+.. parsed-literal::
+
+    La columna 'Titulo'
+    a           La piedra filosofal
+    b             La cámara secreta
+    c      El prisionero de Azkaban
+    d             El cáliz de fuego
+    e            La orden del Fénix
+    f      El misterio del príncipe
+    g    Las reliquias de la muerte
+    Name: Titulo, dtype: object
+    Tipo de la columna 'Titulo': <class 'pandas.core.series.Series'>
+    Valores de la columna 'Titulo': ['La piedra filosofal' 'La cámara secreta' 'El prisionero de Azkaban'
+     'El cáliz de fuego' 'La orden del Fénix' 'El misterio del príncipe'
+     'Las reliquias de la muerte']
+    Tipo de la columna 'Titulo' .values: <class 'numpy.ndarray'>
+
+
+Vemos que una columna en un ``DataFrame`` de ``pandas`` es representada
+efectivamente por una serie, de este modo, sus valores (obtenidos
+mediante ``.values``) serán un arreglo de NumPy, como vimos antes.
+
+En el caso en que la etiqueta de una columna no contenga espacios, se
+puede acceder a la misma con el operador ``.``:
+
+.. code:: python
+
+    df2.Titulo # es lo mismo que df2['Titulo']
+
+
+
+
+.. parsed-literal::
+
+    a           La piedra filosofal
+    b             La cámara secreta
+    c      El prisionero de Azkaban
+    d             El cáliz de fuego
+    e            La orden del Fénix
+    f      El misterio del príncipe
+    g    Las reliquias de la muerte
+    Name: Titulo, dtype: object
+
+
+
+   Si uno quisiera usar esta propiedad en forma exhaustiva para todas
+   las columnas, debería reemplazar las etiquetas de las mismas por
+   nombres de variables válidos en Python
+
+.. code:: python
+
+    df2.columns = ["titulo", "paginas", "primer_edicion"]
+    df2
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>titulo</th>
+          <th>paginas</th>
+          <th>primer_edicion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>La piedra filosofal</td>
+          <td>223</td>
+          <td>1997</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>La cámara secreta</td>
+          <td>251</td>
+          <td>1998</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>El prisionero de Azkaban</td>
+          <td>317</td>
+          <td>1999</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>El cáliz de fuego</td>
+          <td>636</td>
+          <td>2000</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>La orden del Fénix</td>
+          <td>766</td>
+          <td>2003</td>
+        </tr>
+        <tr>
+          <th>f</th>
+          <td>El misterio del príncipe</td>
+          <td>607</td>
+          <td>2005</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>Las reliquias de la muerte</td>
+          <td>607</td>
+          <td>2007</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    df2.primer_edicion
+
+
+
+
+.. parsed-literal::
+
+    a    1997
+    b    1998
+    c    1999
+    d    2000
+    e    2003
+    f    2005
+    g    2007
+    Name: primer_edicion, dtype: int64
+
+
+
+   En el caso en que uno cree un ``DataFrame`` desde una base de datos,
+   una buena práctica es mantener la consistencia entre las etiquetas de
+   las columnas del ``DataFrame`` y las de la base de datos.
+
+Se puede acceder a una determinada fila usando las etiquetas través de
+``.loc`` o con índices enteros con ``.iloc``:
+
+.. code:: python
+
+    print(f"Primer libro:\n{df2.iloc[0]}")
+    print(f"Segundo libro:\n{df2.loc['b']}")
+    print(f"Último libro:\n{df2.iloc[-1]}")
+
+
+
+.. parsed-literal::
+
+    Primer libro:
+    titulo            La piedra filosofal
+    paginas                           223
+    primer_edicion                   1997
+    Name: a, dtype: object
+    Segundo libro:
+    titulo            La cámara secreta
+    paginas                         251
+    primer_edicion                 1998
+    Name: b, dtype: object
+    Último libro:
+    titulo            Las reliquias de la muerte
+    paginas                                  607
+    primer_edicion                          2007
+    Name: g, dtype: object
+
+
+Y se puede acceder a un elemento particular de la tabla:
+
+.. code:: python
+
+    print(f"Título primer libro: {df2.iloc[0].titulo}")
+    print(f"Año de edición del segundo libro: {df2.loc['b', 'primer_edicion']}")
+    print(f"Año de edición del último libro: {df2.iloc[-1, 2]}")
+
+
+.. parsed-literal::
+
+    Título primer libro: La piedra filosofal
+    Año de edición del segundo libro: 1998
+    Año de edición del último libro: 2007
+
+
+La figura presenta los distintos tipos de acceso a los datos de un
+``DataFrame``
+
+.. image:: figuras/loc.png
+
+
+
+
+
+   Si se quisiera acceder a ciertas regiones de la tabla, se pueden
+   reemplazar los valores individuales por rangos, tal como uno haría
+   con NumPy
+
+.. code:: python
+
+    df2.loc[['a','d'],["titulo", "paginas"]]
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>titulo</th>
+          <th>paginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>La piedra filosofal</td>
+          <td>223</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>El cáliz de fuego</td>
+          <td>636</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    df2.loc[:'d',["titulo", "primer_edicion"]]
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>titulo</th>
+          <th>primer_edicion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>La piedra filosofal</td>
+          <td>1997</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>La cámara secreta</td>
+          <td>1998</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>El prisionero de Azkaban</td>
+          <td>1999</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>El cáliz de fuego</td>
+          <td>2000</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    df2.iloc[0:3, :2]
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>titulo</th>
+          <th>paginas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>La piedra filosofal</td>
+          <td>223</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>La cámara secreta</td>
+          <td>251</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>El prisionero de Azkaban</td>
+          <td>317</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+También se puede acceder a una parte de la tabla a partir de la
+aplicación de una condición. Veamos por ejemplo qué libros salieron en
+el siglo XXI. Para eso vemos qué elementos tienen valor de
+``primera_edicion`` mayor a 2000:
+
+.. code:: python
+
+    df2['primer_edicion'] > 2000
+
+
+
+
+.. parsed-literal::
+
+    a    False
+    b    False
+    c    False
+    d    False
+    e     True
+    f     True
+    g     True
+    Name: primer_edicion, dtype: bool
+
+
+
+.. code:: python
+
+    df2[df2['primer_edicion'] > 2000]
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>titulo</th>
+          <th>paginas</th>
+          <th>primer_edicion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>e</th>
+          <td>La orden del Fénix</td>
+          <td>766</td>
+          <td>2003</td>
+        </tr>
+        <tr>
+          <th>f</th>
+          <td>El misterio del príncipe</td>
+          <td>607</td>
+          <td>2005</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>Las reliquias de la muerte</td>
+          <td>607</td>
+          <td>2007</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    print(type(df2[df2['primer_edicion'] > 2000]))
+
+
+.. parsed-literal::
+
+    <class 'pandas.core.frame.DataFrame'>
+
+
+Modificando valores
+-------------------
+
+Retomemos nuestro ``DataFrame`` inicial y agreguémosle una columna con
+la calificación promedio de cada libro dada por los lectores:
+
+.. code:: python
+
+    df = pd.DataFrame(data)
+    display(df)
+
+.. code:: python
+
+    df['Calificación'] = [4.5, 4.3, 4.6, 4.8, 4.7, 4.9, 4.9]
+    df
+
+Supongamos que queremos agregar una columna ``Siglo`` con el siglo en
+que fue escrito cada libro. Empecemos creando una columna:
+
+.. code:: python
+
+    df['Siglo'] = ""
+    df
+
+Esto crea la columna ``Siglo`` que no existe en la tabla, y le asigna el
+valor ``""`` a todas las filas. Podríamos haber completado la columna
+con una lista *con la misma cantidad de filas que la tabla*, pero mejor
+vamos a seleccionar aquellos libros del siglo XX, y completaremos los
+correspondientes valores en la nueva columna. Lo mismo haremos con los
+del siglo XXI:
+
+.. code:: python
+
+    df.loc[df['Año de edición'] <= 2000, 'Siglo'] = 'XX'
+    df.loc[df['Año de edición'] > 2000, 'Siglo'] = 'XXI'
+    df
+
+Uno podría hacer algo como lo siguiente (se llama *chaining*):
+
+.. code:: python
+
+    df.loc[df['Año de edición'] <= 2000]['Siglo'] = 'siglo XX'
+    df
+
+¿Qué pasó? Por la forma en que ``pandas`` obtiene los valores pedidos
+por la máscara ``df['Año de edición'] <= 2000``, el proceso de
+*chaining* genera un ``DataFrame`` intermedio que es el que se pretende
+modificar con ``['Siglo']``. El resultado es que ``df`` no se modifica.
+
+   Para evitar estos inconvenientes, no se recomienda usar *chaining* al
+   hacer modificaciones en los ``DataFrame``\ s.
+
+Para borrar filas o columnas, usamos ``.drop``:
+
+.. code:: python
+
+    df = df.drop(3)
+    df
+
+.. code:: python
+
+    df
+
+.. code:: python
+
+    df.drop('Siglo',axis=1) # no modifica el dataframe original
+    display(df)
+    df.drop('Siglo',axis=1, inplace=True) # modifica el dataframe original 
+    display(df)
+
+Supongamos ahora que tenemos un ``DataFrame`` (o una serie) con el
+número de capítulos de los libros:
+
+.. code:: python
+
+    capitulos_data = {
+        "Titulo": [
+            "The Philosopher's Stone",
+            "The Chamber of Secrets",
+            "The Prisoner of Azkaban",
+            "The Goblet of Fire",
+            "The Order of the Phoenix",
+            "The Half-Blood Prince",
+            "The Deathly Hallows"
+        ],
+        "Capítulos": [17, 18, 22, 37, 38, 30, 36]
+    }
+    
+    capitulos = pd.DataFrame(capitulos_data)
+    display(capitulos)
+
+Quisiéramos agregar los datos de los capítulos a la primer tabla:
+
+.. code:: python
+
+    df['Capítulos'] = capitulos['Capítulos'] 
+    display(df)
+
+La columna queda agregada correctamente, y *no* se agrega el dato en el
+libro 3 porque ya no está en ``df``. Viceversa, si queremos agregar el
+número de páginas desde ``df`` a la tabla de ``capítulos``:
+
+.. code:: python
+
+    capitulos['Páginas'] = df['Páginas']
+    display(capitulos)
+
+Vemos como naturalmente completa con ``Nan`` el dato inexistente. Este
+comportamiento es consistente en todos los casos, ya sea copiando una
+sola columna o varias, o copiando partes de la tabla utilizando listas o
+rangos para su definición.
+
+Operaciones con ``DataFrames``
+------------------------------
+
+Vamos a ver algunas operaciones de las muchas que se pueden hacer con
+``DataFrame``\ s.
+
+   Recordemos que la representación interna de los ``DataFrame``\ s es
+   equivalente a los arreglos de NumPy, con lo cual siempre se podrán
+   realizar cálculos a través de las funciones y métodos que provee
+   dicha biblioteca.
+
+Aritméticas
+~~~~~~~~~~~
+
+.. code:: python
+
+    s1 = pd.DataFrame(np.arange(1,11).reshape(5,2), index = ['a', 'b', 'c', 'd', 'e'],columns=['A', 'B'])   
+    s2 = pd.DataFrame(np.arange(1,11).reshape(2,5).T, index = ['a', 'g', 'h', 'd', 'e'],columns=['A', 'B'])
+    display(s1,s2)
+
+.. code:: python
+
+    1/s1
+
+.. code:: python
+
+    s1 - 42
+
+Al usar dos o más ``DataFrame``\ s, el proceso de alineamiento de datos
+de acuerdo a las etiquetas de las filas introduce automáticamente los
+datos faltantes. Por lo tanto, aquellos valores que faltan no serán, en
+este caso, sumados y resultarán también en un dato inexistente:
+
+.. code:: python
+
+    s1+s2
+
+Es posible operar con ``DataFrame``\ s asignando un valor definido a los
+datos inexistentes, con el argumento ``fill_value``:
+
+.. code:: python
+
+    # Función de convenciencia para mostrar dos tablas una al lado de la otra
+    
+    from IPython.display import display, HTML
+    
+    def display_side_by_side(dfs:list, captions:list):
+        """Display tables side by side to save vertical space
+        Input:
+            dfs: list of pandas.DataFrame
+            captions: list of table captions
+        """
+        output = ""
+        combined = dict(zip(captions, dfs))
+        for caption, df in combined.items():
+            output += df.style.set_table_attributes("style='display:inline'").set_caption(caption)._repr_html_()
+            output += "\xa0\xa0\xa0"
+        display(HTML(output))
+
+.. code:: python
+
+    display_side_by_side([s1,s2],['s1','s2'])
+
+.. code:: python
+
+    display_side_by_side([s1,s2,s2.add(s1, fill_value=0)],['s1','s2','s2+s1'])
+
+.. code:: python
+
+    s3 = pd.DataFrame(np.array([1,2]*5).reshape(5,2), index = ['a', 'g', 'h', 'd', 'e'],columns=['A', 'C'])
+    display(s3)
+
+
+La misma alineación de datos ocurre con las columnas:
+
+.. code:: python
+
+    display_side_by_side([s1,s3],['s1','s3'])
+
+.. code:: python
+
+    s1+s3
+
+En el caso anterior, la columna B (C) no está en el ``DataFrame`` s3
+(s1), por lo tanto se completan como inexistentes. Si se utiliza
+``fill_value``, se completan aquellos datos con ``fill_value`` que están
+en alguno de los ``DataFrame``\ s.
+
+   Si el dato no existe en ninguno de los ``DataFrame``\ s, permanece
+   como inexistente
+
+.. code:: python
+
+    display_side_by_side([s1,s3,s3.add(s1, fill_value=0)],['s1','s3','s3+s1'])
+
+.. code:: python
+
+    s3.mul(s1,fill_value=1) # s3*s1
+
+En resumen, las operaciones realizan una unión entre los
+``DataFrame``\ s, y luego, en aquellos casos en que es factible, se
+ejecuta la operación elemento a elemento.
+
+Operaciones entre ``DataFrame`` y ``Series``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+También se pueden hacer operaciones matemáticas entre ``DataFrame`` y
+``Series`` de manera similar. Sin embargo, hay que aclarar cómo se
+desarrollan las operaciones dado que mientras ``DataFrame`` representa
+una estructura 2D, ``Series`` es unidimensional. Por defecto, ``pandas``
+propaga la serie por filas, al igual que NumPy. Esta extensión
+automática de los datos se conoce como *broadcasting*:
+
+.. code:: python
+
+    arr2D = np.arange(12).reshape(4,3)
+    arr1D = np.array([3,4,5])
+    print(arr2D)
+    print(arr1D)
+    print(np.broadcast_to(arr1D, arr2D.shape))
+    print(arr2D-arr1D)
+
+
+.. code:: python
+
+    df = pd.DataFrame(arr2D, columns = ['A', 'B', 'C'])
+    v = pd.Series(arr1D, index = ['A', 'B', 'C'])
+    display_side_by_side([df, pd.DataFrame(v)], ['df', 'v'])
+    df - arr1D  # broadcasting por filas, DataFrame - array 1D
+
+.. code:: python
+
+    df - v  # broadcasting por filas, DataFrame - Serie
+
+.. code:: python
+
+    v - df
+
+Se puede hacer el *broadcasting* en forma explícita, usando el argumento
+``axis``: - Por columnas: ``axis = "index"`` (o ``axis = 0``) - Por
+filas: ``axis = "columns"`` (o ``axis = 1``) que indica qué índice debe
+alinearse.
+
+.. code:: python
+
+    w = df['A']
+    print(w)
+    print(df)
+    df.sub(w, axis='index') # alinea por filas, broadcasting por columnas, DataFrame - Serie
+
+.. code:: python
+
+    df.sub(w, axis=0) # alinea por filas, broadcasting por columnas, DataFrame - Serie
+
+.. code:: python
+
+    df.sub(w, axis=1) # alínea por columnas, broadcasting por filas explícito, DataFrame - Serie
+
+En este último caso, dado que los índices de ``w`` y ``df`` son todos
+distintos, se realiza la unión y se completa con ``NaN``.
+
+   **ATENCIÓN**: el eje (``axis``) es aquel en el cual se van a alinear
+   los índices. Así, ``axis=0`` implica **emparejar** los índices de
+   filas y **propagar** por columnas. De la misma manera, ``axis=1``
+   implica **emparejar** los índices de columnas y **propagar** por
+   filas.
+
+Orden
+~~~~~
+
+Para ordenar ``DataFrame``\ s se usa el método ``.sort_index()``
+
+.. code:: python
+
+    df = pd.DataFrame(np.random.rand(4,3), index= ['c','d','a','b'], columns = ['B', 'C', 'A'])
+    df
+
+
+.. code:: python
+
+    df.sort_index() # ordena por los índices de filas
+
+.. code:: python
+
+    df.sort_index(axis=1) # ordena por los índices de columnas
+
+Pasando el argumento ``ascending`` (booleano) se puede cambiar el orden
+por defecto, que corresponde a ``ascending=True``. Se puede ordenar
+también de acuerdo a los valores de una (o múltiples) columnas
+utilizando el método ``sort_values``:
+
+.. code:: python
+
+    df.sort_values('B')
+
+En el caso en que existieran valores faltantes, estos se ordenan al
+final por defecto, excepto que se pase el argumento opcional
+``na_position='first'``.
+
+Una operación útil es *ranking*, esto es, asignar un valor desde 1 hasta
+el número de datos de acuerdo a un orden, desde el valor más bajo al más
+alto:
+
+.. code:: python
+
+    s = pd.Series(np.random.rand(5))
+    s 
+
+.. code:: python
+
+    s.rank()
+
+.. code:: python
+
+    display_side_by_side([df, df.rank(axis=0)],['df','df.rank->0']) # ordena a lo largo de columnas
+    display_side_by_side([df, df.rank(axis=1)],['df','df.rank->1']) # ordena a lo largo de filas
+
+Estadística
+~~~~~~~~~~~
+
+Es muy común en el análisis de datos tener que calcular valores
+estadísticos que caracterizan la muestra. ``pandas`` provee una serie de
+métodos para realizar estos cálculos.
+
+.. code:: python
+
+    df = pd.DataFrame(np.random.rand(4,3), index= ['a','b','c','d'], columns = ['A', 'B', 'C'])
+    df
+
+
+.. code:: python
+
+    df.describe()
+
+Cada una de las magnitudes se corresponde a algún parámetro estadístico.
+
+Estas operaciones devuelven un nuevo ``DataFrame``. Por ejemplo:
+
+.. code:: python
+
+    df.sum()
+
+retorna un ``DataFrame`` donde los índices corresponden a las etiquetas
+de cada columna.
+
+   Por defecto, los valores inexistentes (NA, Null, etc.) no son tenidos
+   en cuenta al realizar estas operaciones.
+
+.. code:: python
+
+    df['A'].sum()
+
+Aplicación de funciones y map
+-----------------------------
+
+Es posible también aplicar funciones, por ejemplo
+
+.. code:: python
+
+    df
+
+.. code:: python
+
+    def f(x):
+        return x.max() - x.min()
+    
+    df.apply(f) # aplica la función a cada columna, por defecto axis=0
+
+
+.. code:: python
+
+    df.apply(f, axis=1) # aplica la función a cada fila, axis=1
+
+.. code:: python
+
+    df.apply(lambda x: x.max()-x.min(), axis=1) # por columnas, igual que df.apply(f, axis='columns')
+
+.. code:: python
+
+    df['mean'] = df.mean(axis=1)
+    df
+
+Puede ser necesario aplicar determinada función a todos los valores del
+``DataFrame``, con ``map``:
+
+.. code:: python
+
+    def round2(x):
+        return round(x, 2)
+    
+    
+    display_side_by_side([df, df.map(round2)], ['df', 'df.map(round2)']) # aplica la función a cada elemento del DataFrame
+
+--------------
+
+Ejercicio 14(c)
+---------------
+
+6. El archivo ‘clima argentina 1981 2010.txt’ contiene datos climáticos
+   significativos de las distintas estaciones meteorológicas del
+   Servicio Meteorológico Nacional.
+
+-  Inspeccione el archivo y diseñe un tipo ``DataFrame`` adecuado para
+   contener dichos datos.
+
+-  Lea el archivo y cree el ``DataFrame`` que diseño en el item
+   anterior.
+
+-  Cree una función para obtener el promedio anual de las magnitudes
+   climáticas referidas en el archivo. La función debe recibir como
+   argumentos el ``DataFrame``, el nombre de la estación meteorológica y
+   la magnitud, y devolver un valor (``float``) con el promedio.
+
+-  Genere un ``DataFrame`` que represente todas las magnitudes promedio
+   para cada estación meteorológica, usando la función del item
+   anterior.
+
+-  Cree funciones para poder realizar gráficos comparativos de los datos
+   meteorológicos. En particular, reproduzca
+
+   -  El gráfico de Valores Medios de Temperatura y Precipitación
+   -  El gráfico de Valores extremos de Temperatura, usando la
+      temperatura máxima y la mínima de cada mes.
+
+que se pueden ver en el `sitio de estadísticas del Servicio
+Meteorológico Nacional <https://www.smn.gob.ar/estadisticas>`__.
+
+--------------

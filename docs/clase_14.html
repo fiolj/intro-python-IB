@@ -89,6 +89,20 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-b">Ejercicios 14(b)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estructuras-de-datos-en-pandas-dataframes">Estructuras de datos en <code class="docutils literal notranslate"><span class="pre">pandas</span></code>: <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Accediendo a los valores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Modificando valores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operaciones-con-dataframes">Operaciones con <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aritmeticas">Aritméticas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#operaciones-entre-dataframe-y-series">Operaciones entre <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> y <code class="docutils literal notranslate"><span class="pre">Series</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#orden">Orden</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#estadistica">Estadística</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aplicacion-de-funciones-y-map">Aplicación de funciones y map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-14-c">Ejercicio 14(c)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2186,7 +2200,1256 @@ suponiendo que el precio del kWH/mes es de $3145.</p></li>
 <p>y evalúe nuevamente <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code>. ¿Qué conclusiones puede sacar?</p>
 </li>
 </ol>
+</section>
 <hr class="docutils" />
+<section id="estructuras-de-datos-en-pandas-dataframes">
+<h2>Estructuras de datos en <code class="docutils literal notranslate"><span class="pre">pandas</span></code>: <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s<a class="headerlink" href="#estructuras-de-datos-en-pandas-dataframes" title="Link to this heading"></a></h2>
+<p>Hemos visto que una serie en <code class="docutils literal notranslate"><span class="pre">pandas</span></code> es representa una colección de
+valores indexados por sendas etiquetas. La extensión natural (?) de una
+serie es una colección con múltiples valores arreglados en columnas
+indexados por una misma colección de etiquetas. Es decir, una tabla… La
+estructura que representa tablas en <code class="docutils literal notranslate"><span class="pre">pandas</span></code> se llama <em>DataFrame</em>. Un
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> tiene un índice de filas (como las series) y un índice de
+columnas.</p>
+<blockquote>
+<div><p>Se puede pensar un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> como un diccionario de series que
+comparten un mismo índice.</p>
+</div></blockquote>
+<p>Como las series, es habitual construir un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> a partir de un
+diccionario. Veamos el siguiente diccionario para comenzar a trabajar.
+Como siempre, importamos los módulos indispensables:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Titulo&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;La piedra filosofal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La cámara secreta&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El prisionero de Azkaban&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El cáliz de fuego&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;La orden del Fénix&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;El misterio del príncipe&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Las reliquias de la muerte&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Año de edición&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1997</span><span class="p">,</span> <span class="mi">1998</span><span class="p">,</span> <span class="mi">1999</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2003</span><span class="p">,</span> <span class="mi">2005</span><span class="p">,</span> <span class="mi">2007</span><span class="p">],</span>
+    <span class="s2">&quot;Páginas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">223</span><span class="p">,</span> <span class="mi">251</span><span class="p">,</span> <span class="mi">317</span><span class="p">,</span> <span class="mi">636</span><span class="p">,</span> <span class="mi">766</span><span class="p">,</span> <span class="mi">607</span><span class="p">,</span> <span class="mi">607</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Titulo</th>
+      <th>Año de edición</th>
+      <th>Páginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>La piedra filosofal</td>
+      <td>1997</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>La cámara secreta</td>
+      <td>1998</td>
+      <td>251</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>El prisionero de Azkaban</td>
+      <td>1999</td>
+      <td>317</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>El cáliz de fuego</td>
+      <td>2000</td>
+      <td>636</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>La orden del Fénix</td>
+      <td>2003</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>El misterio del príncipe</td>
+      <td>2005</td>
+      <td>607</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Las reliquias de la muerte</td>
+      <td>2007</td>
+      <td>607</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>El diccionario de origen asigna a cada clave una lista de elementos.
+Hemos generado un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> a partir de un diccionario: los índices
+de filas se generan automáticamente, mientras que los índices (o
+etiquetas) de las columnas corresponden a las claves de cada una de las
+listas del diccionario.</p>
+<blockquote>
+<div><p>Si las listas que componen el diccionario de origen no son iguales,
+<code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code> dará un error
+<code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">All</span> <span class="pre">arrays</span> <span class="pre">must</span> <span class="pre">be</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">length</span></code>.</p>
+</div></blockquote>
+<p>Una conveniencia interesante en Jupyter Notebooks es que se puede
+imprimir la tabla en forma elegante:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span> <span class="c1"># también funciona</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                       <span class="n">Titulo</span>  <span class="n">Año</span> <span class="n">de</span> <span class="n">edición</span>  <span class="n">Páginas</span>
+<span class="mi">0</span>         <span class="n">La</span> <span class="n">piedra</span> <span class="n">filosofal</span>            <span class="mi">1997</span>      <span class="mi">223</span>
+<span class="mi">1</span>           <span class="n">La</span> <span class="n">cámara</span> <span class="n">secreta</span>            <span class="mi">1998</span>      <span class="mi">251</span>
+<span class="mi">2</span>    <span class="n">El</span> <span class="n">prisionero</span> <span class="n">de</span> <span class="n">Azkaban</span>            <span class="mi">1999</span>      <span class="mi">317</span>
+<span class="mi">3</span>           <span class="n">El</span> <span class="n">cáliz</span> <span class="n">de</span> <span class="n">fuego</span>            <span class="mi">2000</span>      <span class="mi">636</span>
+<span class="mi">4</span>          <span class="n">La</span> <span class="n">orden</span> <span class="k">del</span> <span class="n">Fénix</span>            <span class="mi">2003</span>      <span class="mi">766</span>
+<span class="mi">5</span>    <span class="n">El</span> <span class="n">misterio</span> <span class="k">del</span> <span class="n">príncipe</span>            <span class="mi">2005</span>      <span class="mi">607</span>
+<span class="mi">6</span>  <span class="n">Las</span> <span class="n">reliquias</span> <span class="n">de</span> <span class="n">la</span> <span class="n">muerte</span>            <span class="mi">2007</span>      <span class="mi">607</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Titulo</th>
+      <th>Año de edición</th>
+      <th>Páginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>La piedra filosofal</td>
+      <td>1997</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>La cámara secreta</td>
+      <td>1998</td>
+      <td>251</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>El prisionero de Azkaban</td>
+      <td>1999</td>
+      <td>317</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>El cáliz de fuego</td>
+      <td>2000</td>
+      <td>636</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>La orden del Fénix</td>
+      <td>2003</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>El misterio del príncipe</td>
+      <td>2005</td>
+      <td>607</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Las reliquias de la muerte</td>
+      <td>2007</td>
+      <td>607</td>
+    </tr>
+  </tbody>
+</table>
+</div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Titulo</th>
+      <th>Año de edición</th>
+      <th>Páginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>La piedra filosofal</td>
+      <td>1997</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>La cámara secreta</td>
+      <td>1998</td>
+      <td>251</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>El prisionero de Azkaban</td>
+      <td>1999</td>
+      <td>317</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>El cáliz de fuego</td>
+      <td>2000</td>
+      <td>636</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>La orden del Fénix</td>
+      <td>2003</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>El misterio del príncipe</td>
+      <td>2005</td>
+      <td>607</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Las reliquias de la muerte</td>
+      <td>2007</td>
+      <td>607</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Eventualmente uno podría querer ver sólo algunas filas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span> <span class="c1"># muestra las primeras 5 filas</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">())</span> <span class="c1"># muestra las últimas 5 filas</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Titulo</th>
+      <th>Año de edición</th>
+      <th>Páginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>La piedra filosofal</td>
+      <td>1997</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>La cámara secreta</td>
+      <td>1998</td>
+      <td>251</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>El prisionero de Azkaban</td>
+      <td>1999</td>
+      <td>317</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>El cáliz de fuego</td>
+      <td>2000</td>
+      <td>636</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>La orden del Fénix</td>
+      <td>2003</td>
+      <td>766</td>
+    </tr>
+  </tbody>
+</table>
+</div><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Titulo</th>
+      <th>Año de edición</th>
+      <th>Páginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2</th>
+      <td>El prisionero de Azkaban</td>
+      <td>1999</td>
+      <td>317</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>El cáliz de fuego</td>
+      <td>2000</td>
+      <td>636</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>La orden del Fénix</td>
+      <td>2003</td>
+      <td>766</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>El misterio del príncipe</td>
+      <td>2005</td>
+      <td>607</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Las reliquias de la muerte</td>
+      <td>2007</td>
+      <td>607</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>El <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> usa la variable <code class="docutils literal notranslate"><span class="pre">index</span></code> como en las series, y la
+variable <code class="docutils literal notranslate"><span class="pre">columns</span></code> para describir las etiquetas de las columnas. Por
+ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="s2">&quot;e&quot;</span><span class="p">,</span> <span class="s2">&quot;f&quot;</span><span class="p">,</span> <span class="s2">&quot;g&quot;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Titulo&quot;</span><span class="p">,</span> <span class="s2">&quot;Páginas&quot;</span><span class="p">,</span> <span class="s2">&quot;Año de edición&quot;</span><span class="p">])</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Titulo</th>
+      <th>Páginas</th>
+      <th>Año de edición</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>La piedra filosofal</td>
+      <td>223</td>
+      <td>1997</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>La cámara secreta</td>
+      <td>251</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>El prisionero de Azkaban</td>
+      <td>317</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>El cáliz de fuego</td>
+      <td>636</td>
+      <td>2000</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>La orden del Fénix</td>
+      <td>766</td>
+      <td>2003</td>
+    </tr>
+    <tr>
+      <th>f</th>
+      <td>El misterio del príncipe</td>
+      <td>607</td>
+      <td>2005</td>
+    </tr>
+    <tr>
+      <th>g</th>
+      <td>Las reliquias de la muerte</td>
+      <td>607</td>
+      <td>2007</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Notar que el orden de la lista de etiquetas que se pasa a <code class="docutils literal notranslate"><span class="pre">columns</span></code> se
+mantiene al crear el <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. La lista que se usa en la creación
+de un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> usando <code class="docutils literal notranslate"><span class="pre">columns</span></code> debe contener exactamente los
+mismos valores que las claves del diccionario, sino generará una columna
+con datos faltantes.</p>
+<p>Para acceder a las etiquetas de filas y columnas, usamos los métodos
+<code class="docutils literal notranslate"><span class="pre">.index</span></code> y <code class="docutils literal notranslate"><span class="pre">.columns</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Indices de filas: </span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">index</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Indices de columnas: </span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">columns</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Indices</span> <span class="n">de</span> <span class="n">filas</span><span class="p">:</span> <span class="n">Index</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+<span class="n">Indices</span> <span class="n">de</span> <span class="n">columnas</span><span class="p">:</span> <span class="n">Index</span><span class="p">([</span><span class="s1">&#39;Titulo&#39;</span><span class="p">,</span> <span class="s1">&#39;Páginas&#39;</span><span class="p">,</span> <span class="s1">&#39;Año de edición&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="id1">
+<h3>Accediendo a los valores<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p>Para acceder a las columnas podemos usar:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valores de las filas: </span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valores de las columnas: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">df2</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Valores de las filas: [[&#39;La piedra filosofal&#39; 223 1997]
+ [&#39;La cámara secreta&#39; 251 1998]
+ [&#39;El prisionero de Azkaban&#39; 317 1999]
+ [&#39;El cáliz de fuego&#39; 636 2000]
+ [&#39;La orden del Fénix&#39; 766 2003]
+ [&#39;El misterio del príncipe&#39; 607 2005]
+ [&#39;Las reliquias de la muerte&#39; 607 2007]]
+Valores de las columnas: &lt;class &#39;numpy.ndarray&#39;&gt;
+</pre></div>
+</div>
+<p>El resultado de esta operación nos devuelve un arreglo 2D de NumPy, cuyo
+tipo de dato será el mínimo que pueda contener los tipos de datos de las
+columnas que lo componen. Por ejemplo, si nuestras columnas tienen datos
+en <code class="docutils literal notranslate"><span class="pre">float32</span></code> y <code class="docutils literal notranslate"><span class="pre">float64</span></code>, el tipo del arreglo de NumPy resultante
+será <code class="docutils literal notranslate"><span class="pre">float64</span></code>. En el caso anterior, los tipos de datos de las
+columnas son:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Titulo</span>            <span class="nb">object</span>
+<span class="n">Páginas</span>            <span class="n">int64</span>
+<span class="n">Año</span> <span class="n">de</span> <span class="n">edición</span>     <span class="n">int64</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+</pre></div>
+</div>
+<p>Es decir que los datos en <code class="docutils literal notranslate"><span class="pre">int64</span></code> de las columnas <code class="docutils literal notranslate"><span class="pre">Páginas</span></code> y
+<code class="docutils literal notranslate"><span class="pre">Año</span> <span class="pre">de</span> <span class="pre">edición</span></code> se promueven a <code class="docutils literal notranslate"><span class="pre">object</span></code>.</p>
+<p>El acceso a ciertas columnas en particular se hace como en los
+diccionarios:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">titulos</span> <span class="o">=</span> <span class="n">df2</span><span class="p">[</span><span class="s2">&quot;Titulo&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;La columna &#39;Titulo&#39;&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">titulos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tipo de la columna &#39;Titulo&#39;: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">titulos</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Valores de la columna &#39;Titulo&#39;: </span><span class="si">{</span><span class="n">titulos</span><span class="o">.</span><span class="n">values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tipo de la columna &#39;Titulo&#39; .values: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">titulos</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>La columna &#39;Titulo&#39;
+a           La piedra filosofal
+b             La cámara secreta
+c      El prisionero de Azkaban
+d             El cáliz de fuego
+e            La orden del Fénix
+f      El misterio del príncipe
+g    Las reliquias de la muerte
+Name: Titulo, dtype: object
+Tipo de la columna &#39;Titulo&#39;: &lt;class &#39;pandas.core.series.Series&#39;&gt;
+Valores de la columna &#39;Titulo&#39;: [&#39;La piedra filosofal&#39; &#39;La cámara secreta&#39; &#39;El prisionero de Azkaban&#39;
+ &#39;El cáliz de fuego&#39; &#39;La orden del Fénix&#39; &#39;El misterio del príncipe&#39;
+ &#39;Las reliquias de la muerte&#39;]
+Tipo de la columna &#39;Titulo&#39; .values: &lt;class &#39;numpy.ndarray&#39;&gt;
+</pre></div>
+</div>
+<p>Vemos que una columna en un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> de <code class="docutils literal notranslate"><span class="pre">pandas</span></code> es representada
+efectivamente por una serie, de este modo, sus valores (obtenidos
+mediante <code class="docutils literal notranslate"><span class="pre">.values</span></code>) serán un arreglo de NumPy, como vimos antes.</p>
+<p>En el caso en que la etiqueta de una columna no contenga espacios, se
+puede acceder a la misma con el operador <code class="docutils literal notranslate"><span class="pre">.</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">Titulo</span> <span class="c1"># es lo mismo que df2[&#39;Titulo&#39;]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">a</span>           <span class="n">La</span> <span class="n">piedra</span> <span class="n">filosofal</span>
+ <span class="n">b</span>             <span class="n">La</span> <span class="n">cámara</span> <span class="n">secreta</span>
+ <span class="n">c</span>      <span class="n">El</span> <span class="n">prisionero</span> <span class="n">de</span> <span class="n">Azkaban</span>
+ <span class="n">d</span>             <span class="n">El</span> <span class="n">cáliz</span> <span class="n">de</span> <span class="n">fuego</span>
+ <span class="n">e</span>            <span class="n">La</span> <span class="n">orden</span> <span class="k">del</span> <span class="n">Fénix</span>
+ <span class="n">f</span>      <span class="n">El</span> <span class="n">misterio</span> <span class="k">del</span> <span class="n">príncipe</span>
+ <span class="n">g</span>    <span class="n">Las</span> <span class="n">reliquias</span> <span class="n">de</span> <span class="n">la</span> <span class="n">muerte</span>
+ <span class="n">Name</span><span class="p">:</span> <span class="n">Titulo</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+
+
+
+<span class="n">Si</span> <span class="n">uno</span> <span class="n">quisiera</span> <span class="n">usar</span> <span class="n">esta</span> <span class="n">propiedad</span> <span class="n">en</span> <span class="n">forma</span> <span class="n">exhaustiva</span> <span class="n">para</span> <span class="n">todas</span>
+<span class="n">las</span> <span class="n">columnas</span><span class="p">,</span> <span class="n">debería</span> <span class="n">reemplazar</span> <span class="n">las</span> <span class="n">etiquetas</span> <span class="n">de</span> <span class="n">las</span> <span class="n">mismas</span> <span class="n">por</span>
+<span class="n">nombres</span> <span class="n">de</span> <span class="n">variables</span> <span class="n">válidos</span> <span class="n">en</span> <span class="n">Python</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;titulo&quot;</span><span class="p">,</span> <span class="s2">&quot;paginas&quot;</span><span class="p">,</span> <span class="s2">&quot;primer_edicion&quot;</span><span class="p">]</span>
+<span class="n">df2</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>titulo</th>
+      <th>paginas</th>
+      <th>primer_edicion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>La piedra filosofal</td>
+      <td>223</td>
+      <td>1997</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>La cámara secreta</td>
+      <td>251</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>El prisionero de Azkaban</td>
+      <td>317</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>El cáliz de fuego</td>
+      <td>636</td>
+      <td>2000</td>
+    </tr>
+    <tr>
+      <th>e</th>
+      <td>La orden del Fénix</td>
+      <td>766</td>
+      <td>2003</td>
+    </tr>
+    <tr>
+      <th>f</th>
+      <td>El misterio del príncipe</td>
+      <td>607</td>
+      <td>2005</td>
+    </tr>
+    <tr>
+      <th>g</th>
+      <td>Las reliquias de la muerte</td>
+      <td>607</td>
+      <td>2007</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">primer_edicion</span>
+</pre></div>
+</div>
+<pre class="literal-block"> a    1997
+ b    1998
+ c    1999
+ d    2000
+ e    2003
+ f    2005
+ g    2007
+ Name: primer_edicion, dtype: int64
+
+
+
+En el caso en que uno cree un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> desde una base de datos,
+una buena práctica es mantener la consistencia entre las etiquetas de
+las columnas del <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> y las de la base de datos.</pre>
+<p>Se puede acceder a una determinada fila usando las etiquetas través de
+<code class="docutils literal notranslate"><span class="pre">.loc</span></code> o con índices enteros con <code class="docutils literal notranslate"><span class="pre">.iloc</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Primer libro:</span><span class="se">\n</span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Segundo libro:</span><span class="se">\n</span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Último libro:</span><span class="se">\n</span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Primer</span> <span class="n">libro</span><span class="p">:</span>
+<span class="n">titulo</span>            <span class="n">La</span> <span class="n">piedra</span> <span class="n">filosofal</span>
+<span class="n">paginas</span>                           <span class="mi">223</span>
+<span class="n">primer_edicion</span>                   <span class="mi">1997</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+<span class="n">Segundo</span> <span class="n">libro</span><span class="p">:</span>
+<span class="n">titulo</span>            <span class="n">La</span> <span class="n">cámara</span> <span class="n">secreta</span>
+<span class="n">paginas</span>                         <span class="mi">251</span>
+<span class="n">primer_edicion</span>                 <span class="mi">1998</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+<span class="n">Último</span> <span class="n">libro</span><span class="p">:</span>
+<span class="n">titulo</span>            <span class="n">Las</span> <span class="n">reliquias</span> <span class="n">de</span> <span class="n">la</span> <span class="n">muerte</span>
+<span class="n">paginas</span>                                  <span class="mi">607</span>
+<span class="n">primer_edicion</span>                          <span class="mi">2007</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">g</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+</pre></div>
+</div>
+<p>Y se puede acceder a un elemento particular de la tabla:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Título primer libro: </span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">titulo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Año de edición del segundo libro: </span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;primer_edicion&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Año de edición del último libro: </span><span class="si">{</span><span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Título</span> <span class="n">primer</span> <span class="n">libro</span><span class="p">:</span> <span class="n">La</span> <span class="n">piedra</span> <span class="n">filosofal</span>
+<span class="n">Año</span> <span class="n">de</span> <span class="n">edición</span> <span class="k">del</span> <span class="n">segundo</span> <span class="n">libro</span><span class="p">:</span> <span class="mi">1998</span>
+<span class="n">Año</span> <span class="n">de</span> <span class="n">edición</span> <span class="k">del</span> <span class="n">último</span> <span class="n">libro</span><span class="p">:</span> <span class="mi">2007</span>
+</pre></div>
+</div>
+<p>La figura presenta los distintos tipos de acceso a los datos de un
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],[</span><span class="s2">&quot;titulo&quot;</span><span class="p">,</span> <span class="s2">&quot;paginas&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>titulo</th>
+      <th>paginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>La piedra filosofal</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>El cáliz de fuego</td>
+      <td>636</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">loc</span><span class="p">[:</span><span class="s1">&#39;d&#39;</span><span class="p">,[</span><span class="s2">&quot;titulo&quot;</span><span class="p">,</span> <span class="s2">&quot;primer_edicion&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>titulo</th>
+      <th>primer_edicion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>La piedra filosofal</td>
+      <td>1997</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>La cámara secreta</td>
+      <td>1998</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>El prisionero de Azkaban</td>
+      <td>1999</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>El cáliz de fuego</td>
+      <td>2000</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>titulo</th>
+      <th>paginas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>La piedra filosofal</td>
+      <td>223</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>La cámara secreta</td>
+      <td>251</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>El prisionero de Azkaban</td>
+      <td>317</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>También se puede acceder a una parte de la tabla a partir de la
+aplicación de una condición. Veamos por ejemplo qué libros salieron en
+el siglo XXI. Para eso vemos qué elementos tienen valor de
+<code class="docutils literal notranslate"><span class="pre">primera_edicion</span></code> mayor a 2000:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;primer_edicion&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">a</span>    <span class="kc">False</span>
+<span class="n">b</span>    <span class="kc">False</span>
+<span class="n">c</span>    <span class="kc">False</span>
+<span class="n">d</span>    <span class="kc">False</span>
+<span class="n">e</span>     <span class="kc">True</span>
+<span class="n">f</span>     <span class="kc">True</span>
+<span class="n">g</span>     <span class="kc">True</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">primer_edicion</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df2</span><span class="p">[</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;primer_edicion&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">]</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>titulo</th>
+      <th>paginas</th>
+      <th>primer_edicion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>e</th>
+      <td>La orden del Fénix</td>
+      <td>766</td>
+      <td>2003</td>
+    </tr>
+    <tr>
+      <th>f</th>
+      <td>El misterio del príncipe</td>
+      <td>607</td>
+      <td>2005</td>
+    </tr>
+    <tr>
+      <th>g</th>
+      <td>Las reliquias de la muerte</td>
+      <td>607</td>
+      <td>2007</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">df2</span><span class="p">[</span><span class="n">df2</span><span class="p">[</span><span class="s1">&#39;primer_edicion&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">]))</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3>Modificando valores<a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<p>Retomemos nuestro <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> inicial y agreguémosle una columna con
+la calificación promedio de cada libro dada por los lectores:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Calificación&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.3</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">,</span> <span class="mf">4.8</span><span class="p">,</span> <span class="mf">4.7</span><span class="p">,</span> <span class="mf">4.9</span><span class="p">,</span> <span class="mf">4.9</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<p>Supongamos que queremos agregar una columna <code class="docutils literal notranslate"><span class="pre">Siglo</span></code> con el siglo en
+que fue escrito cada libro. Empecemos creando una columna:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Siglo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<p>Esto crea la columna <code class="docutils literal notranslate"><span class="pre">Siglo</span></code> que no existe en la tabla, y le asigna el
+valor <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code> a todas las filas. Podríamos haber completado la columna
+con una lista <em>con la misma cantidad de filas que la tabla</em>, pero mejor
+vamos a seleccionar aquellos libros del siglo XX, y completaremos los
+correspondientes valores en la nueva columna. Lo mismo haremos con los
+del siglo XXI:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Año de edición&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="p">,</span> <span class="s1">&#39;Siglo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;XX&#39;</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Año de edición&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">2000</span><span class="p">,</span> <span class="s1">&#39;Siglo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;XXI&#39;</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<p>Uno podría hacer algo como lo siguiente (se llama <em>chaining</em>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Año de edición&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2000</span><span class="p">][</span><span class="s1">&#39;Siglo&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;siglo XX&#39;</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<p>¿Qué pasó? Por la forma en que <code class="docutils literal notranslate"><span class="pre">pandas</span></code> obtiene los valores pedidos
+por la máscara <code class="docutils literal notranslate"><span class="pre">df['Año</span> <span class="pre">de</span> <span class="pre">edición']</span> <span class="pre">&lt;=</span> <span class="pre">2000</span></code>, el proceso de
+<em>chaining</em> genera un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> intermedio que es el que se pretende
+modificar con <code class="docutils literal notranslate"><span class="pre">['Siglo']</span></code>. El resultado es que <code class="docutils literal notranslate"><span class="pre">df</span></code> no se modifica.</p>
+<blockquote>
+<div><p>Para evitar estos inconvenientes, no se recomienda usar <em>chaining</em> al
+hacer modificaciones en los <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s.</p>
+</div></blockquote>
+<p>Para borrar filas o columnas, usamos <code class="docutils literal notranslate"><span class="pre">.drop</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Siglo&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># no modifica el dataframe original</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Siglo&#39;</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># modifica el dataframe original</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Supongamos ahora que tenemos un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> (o una serie) con el
+número de capítulos de los libros:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">capitulos_data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Titulo&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="s2">&quot;The Philosopher&#39;s Stone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The Chamber of Secrets&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The Prisoner of Azkaban&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The Goblet of Fire&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The Order of the Phoenix&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The Half-Blood Prince&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;The Deathly Hallows&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;Capítulos&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">37</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">36</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">capitulos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">capitulos_data</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">capitulos</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Quisiéramos agregar los datos de los capítulos a la primer tabla:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Capítulos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">capitulos</span><span class="p">[</span><span class="s1">&#39;Capítulos&#39;</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La columna queda agregada correctamente, y <em>no</em> se agrega el dato en el
+libro 3 porque ya no está en <code class="docutils literal notranslate"><span class="pre">df</span></code>. Viceversa, si queremos agregar el
+número de páginas desde <code class="docutils literal notranslate"><span class="pre">df</span></code> a la tabla de <code class="docutils literal notranslate"><span class="pre">capítulos</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">capitulos</span><span class="p">[</span><span class="s1">&#39;Páginas&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Páginas&#39;</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">capitulos</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Vemos como naturalmente completa con <code class="docutils literal notranslate"><span class="pre">Nan</span></code> el dato inexistente. Este
+comportamiento es consistente en todos los casos, ya sea copiando una
+sola columna o varias, o copiando partes de la tabla utilizando listas o
+rangos para su definición.</p>
+</section>
+<section id="operaciones-con-dataframes">
+<h3>Operaciones con <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code><a class="headerlink" href="#operaciones-con-dataframes" title="Link to this heading"></a></h3>
+<p>Vamos a ver algunas operaciones de las muchas que se pueden hacer con
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s.</p>
+<blockquote>
+<div><p>Recordemos que la representación interna de los <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s es
+equivalente a los arreglos de NumPy, con lo cual siempre se podrán
+realizar cálculos a través de las funciones y métodos que provee
+dicha biblioteca.</p>
+</div></blockquote>
+<section id="aritmeticas">
+<h4>Aritméticas<a class="headerlink" href="#aritmeticas" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="o">/</span><span class="n">s1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span> <span class="o">-</span> <span class="mi">42</span>
+</pre></div>
+</div>
+<p>Al usar dos o más <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s, el proceso de alineamiento de datos
+de acuerdo a las etiquetas de las filas introduce automáticamente los
+datos faltantes. Por lo tanto, aquellos valores que faltan no serán, en
+este caso, sumados y resultarán también en un dato inexistente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span><span class="o">+</span><span class="n">s2</span>
+</pre></div>
+</div>
+<p>Es posible operar con <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s asignando un valor definido a los
+datos inexistentes, con el argumento <code class="docutils literal notranslate"><span class="pre">fill_value</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Función de convenciencia para mostrar dos tablas una al lado de la otra</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="k">def</span> <span class="nf">display_side_by_side</span><span class="p">(</span><span class="n">dfs</span><span class="p">:</span><span class="nb">list</span><span class="p">,</span> <span class="n">captions</span><span class="p">:</span><span class="nb">list</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Display tables side by side to save vertical space</span>
+<span class="sd">    Input:</span>
+<span class="sd">        dfs: list of pandas.DataFrame</span>
+<span class="sd">        captions: list of table captions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">combined</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">captions</span><span class="p">,</span> <span class="n">dfs</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">caption</span><span class="p">,</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">combined</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="n">df</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">set_table_attributes</span><span class="p">(</span><span class="s2">&quot;style=&#39;display:inline&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_caption</span><span class="p">(</span><span class="n">caption</span><span class="p">)</span><span class="o">.</span><span class="n">_repr_html_</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\xa0\xa0\xa0</span><span class="s2">&quot;</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">output</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_side_by_side</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">],[</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span><span class="s1">&#39;s2&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_side_by_side</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)],[</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span><span class="s1">&#39;s2&#39;</span><span class="p">,</span><span class="s1">&#39;s2+s1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">s3</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La misma alineación de datos ocurre con las columnas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_side_by_side</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span><span class="n">s3</span><span class="p">],[</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span><span class="s1">&#39;s3&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s1</span><span class="o">+</span><span class="n">s3</span>
+</pre></div>
+</div>
+<p>En el caso anterior, la columna B (C) no está en el <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> s3
+(s1), por lo tanto se completan como inexistentes. Si se utiliza
+<code class="docutils literal notranslate"><span class="pre">fill_value</span></code>, se completan aquellos datos con <code class="docutils literal notranslate"><span class="pre">fill_value</span></code> que están
+en alguno de los <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s.</p>
+<blockquote>
+<div><p>Si el dato no existe en ninguno de los <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s, permanece
+como inexistente</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_side_by_side</span><span class="p">([</span><span class="n">s1</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">s3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)],[</span><span class="s1">&#39;s1&#39;</span><span class="p">,</span><span class="s1">&#39;s3&#39;</span><span class="p">,</span><span class="s1">&#39;s3+s1&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s3</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">fill_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># s3*s1</span>
+</pre></div>
+</div>
+<p>En resumen, las operaciones realizan una unión entre los
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s, y luego, en aquellos casos en que es factible, se
+ejecuta la operación elemento a elemento.</p>
+</section>
+<section id="operaciones-entre-dataframe-y-series">
+<h4>Operaciones entre <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> y <code class="docutils literal notranslate"><span class="pre">Series</span></code><a class="headerlink" href="#operaciones-entre-dataframe-y-series" title="Link to this heading"></a></h4>
+<p>También se pueden hacer operaciones matemáticas entre <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> y
+<code class="docutils literal notranslate"><span class="pre">Series</span></code> de manera similar. Sin embargo, hay que aclarar cómo se
+desarrollan las operaciones dado que mientras <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> representa
+una estructura 2D, <code class="docutils literal notranslate"><span class="pre">Series</span></code> es unidimensional. Por defecto, <code class="docutils literal notranslate"><span class="pre">pandas</span></code>
+propaga la serie por filas, al igual que NumPy. Esta extensión
+automática de los datos se conoce como <em>broadcasting</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">arr2D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">arr1D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr1D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">broadcast_to</span><span class="p">(</span><span class="n">arr1D</span><span class="p">,</span> <span class="n">arr2D</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2D</span><span class="o">-</span><span class="n">arr1D</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">arr2D</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">arr1D</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<span class="n">display_side_by_side</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">v</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">-</span> <span class="n">arr1D</span>  <span class="c1"># broadcasting por filas, DataFrame - array 1D</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">-</span> <span class="n">v</span>  <span class="c1"># broadcasting por filas, DataFrame - Serie</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">-</span> <span class="n">df</span>
+</pre></div>
+</div>
+<p>Se puede hacer el <em>broadcasting</em> en forma explícita, usando el argumento
+<code class="docutils literal notranslate"><span class="pre">axis</span></code>: - Por columnas: <code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">&quot;index&quot;</span></code> (o <code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">0</span></code>) - Por
+filas: <code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">&quot;columns&quot;</span></code> (o <code class="docutils literal notranslate"><span class="pre">axis</span> <span class="pre">=</span> <span class="pre">1</span></code>) que indica qué índice debe
+alinearse.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span> <span class="c1"># alinea por filas, broadcasting por columnas, DataFrame - Serie</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># alinea por filas, broadcasting por columnas, DataFrame - Serie</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># alínea por columnas, broadcasting por filas explícito, DataFrame - Serie</span>
+</pre></div>
+</div>
+<p>En este último caso, dado que los índices de <code class="docutils literal notranslate"><span class="pre">w</span></code> y <code class="docutils literal notranslate"><span class="pre">df</span></code> son todos
+distintos, se realiza la unión y se completa con <code class="docutils literal notranslate"><span class="pre">NaN</span></code>.</p>
+<blockquote>
+<div><p><strong>ATENCIÓN</strong>: el eje (<code class="docutils literal notranslate"><span class="pre">axis</span></code>) es aquel en el cual se van a alinear
+los índices. Así, <code class="docutils literal notranslate"><span class="pre">axis=0</span></code> implica <strong>emparejar</strong> los índices de
+filas y <strong>propagar</strong> por columnas. De la misma manera, <code class="docutils literal notranslate"><span class="pre">axis=1</span></code>
+implica <strong>emparejar</strong> los índices de columnas y <strong>propagar</strong> por
+filas.</p>
+</div></blockquote>
+</section>
+<section id="orden">
+<h4>Orden<a class="headerlink" href="#orden" title="Link to this heading"></a></h4>
+<p>Para ordenar <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s se usa el método <code class="docutils literal notranslate"><span class="pre">.sort_index()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span> <span class="c1"># ordena por los índices de filas</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># ordena por los índices de columnas</span>
+</pre></div>
+</div>
+<p>Pasando el argumento <code class="docutils literal notranslate"><span class="pre">ascending</span></code> (booleano) se puede cambiar el orden
+por defecto, que corresponde a <code class="docutils literal notranslate"><span class="pre">ascending=True</span></code>. Se puede ordenar
+también de acuerdo a los valores de una (o múltiples) columnas
+utilizando el método <code class="docutils literal notranslate"><span class="pre">sort_values</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En el caso en que existieran valores faltantes, estos se ordenan al
+final por defecto, excepto que se pase el argumento opcional
+<code class="docutils literal notranslate"><span class="pre">na_position='first'</span></code>.</p>
+<p>Una operación útil es <em>ranking</em>, esto es, asignar un valor desde 1 hasta
+el número de datos de acuerdo a un orden, desde el valor más bajo al más
+alto:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">rank</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">display_side_by_side</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)],[</span><span class="s1">&#39;df&#39;</span><span class="p">,</span><span class="s1">&#39;df.rank-&gt;0&#39;</span><span class="p">])</span> <span class="c1"># ordena a lo largo de columnas</span>
+<span class="n">display_side_by_side</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">rank</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)],[</span><span class="s1">&#39;df&#39;</span><span class="p">,</span><span class="s1">&#39;df.rank-&gt;1&#39;</span><span class="p">])</span> <span class="c1"># ordena a lo largo de filas</span>
+</pre></div>
+</div>
+</section>
+<section id="estadistica">
+<h4>Estadística<a class="headerlink" href="#estadistica" title="Link to this heading"></a></h4>
+<p>Es muy común en el análisis de datos tener que calcular valores
+estadísticos que caracterizan la muestra. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provee una serie de
+métodos para realizar estos cálculos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Cada una de las magnitudes se corresponde a algún parámetro estadístico.</p>
+<p>Estas operaciones devuelven un nuevo <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. Por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>retorna un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> donde los índices corresponden a las etiquetas
+de cada columna.</p>
+<blockquote>
+<div><p>Por defecto, los valores inexistentes (NA, Null, etc.) no son tenidos
+en cuenta al realizar estas operaciones.</p>
+</div></blockquote>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="aplicacion-de-funciones-y-map">
+<h3>Aplicación de funciones y map<a class="headerlink" href="#aplicacion-de-funciones-y-map" title="Link to this heading"></a></h3>
+<p>Es posible también aplicar funciones, por ejemplo</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># aplica la función a cada columna, por defecto axis=0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># aplica la función a cada fila, axis=1</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># por columnas, igual que df.apply(f, axis=&#39;columns&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<p>Puede ser necesario aplicar determinada función a todos los valores del
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, con <code class="docutils literal notranslate"><span class="pre">map</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">round2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+
+<span class="n">display_side_by_side</span><span class="p">([</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">round2</span><span class="p">)],</span> <span class="p">[</span><span class="s1">&#39;df&#39;</span><span class="p">,</span> <span class="s1">&#39;df.map(round2)&#39;</span><span class="p">])</span> <span class="c1"># aplica la función a cada elemento del DataFrame</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-14-c">
+<h3>Ejercicio 14(c)<a class="headerlink" href="#ejercicio-14-c" title="Link to this heading"></a></h3>
+<ol class="arabic simple" start="6">
+<li><p>El archivo ‘clima argentina 1981 2010.txt’ contiene datos climáticos
+significativos de las distintas estaciones meteorológicas del
+Servicio Meteorológico Nacional.</p></li>
+</ol>
+<ul class="simple">
+<li><p>Inspeccione el archivo y diseñe un tipo <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> adecuado para
+contener dichos datos.</p></li>
+<li><p>Lea el archivo y cree el <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> que diseño en el item
+anterior.</p></li>
+<li><p>Cree una función para obtener el promedio anual de las magnitudes
+climáticas referidas en el archivo. La función debe recibir como
+argumentos el <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, el nombre de la estación meteorológica y
+la magnitud, y devolver un valor (<code class="docutils literal notranslate"><span class="pre">float</span></code>) con el promedio.</p></li>
+<li><p>Genere un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> que represente todas las magnitudes promedio
+para cada estación meteorológica, usando la función del item
+anterior.</p></li>
+<li><p>Cree funciones para poder realizar gráficos comparativos de los datos
+meteorológicos. En particular, reproduzca</p>
+<ul>
+<li><p>El gráfico de Valores Medios de Temperatura y Precipitación</p></li>
+<li><p>El gráfico de Valores extremos de Temperatura, usando la
+temperatura máxima y la mínima de cada mes.</p></li>
+</ul>
+</li>
+</ul>
+<p>que se pueden ver en el <a class="reference external" href="https://www.smn.gob.ar/estadisticas">sitio de estadísticas del Servicio
+Meteorológico Nacional</a>.</p>
+<hr class="docutils" />
+</section>
 </section>
 </section>
 
