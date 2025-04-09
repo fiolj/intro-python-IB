@@ -1,0 +1,1499 @@
+.. _clase_14:
+
+
+======================================
+Clase 14: Input/Output con ``pandas``
+======================================
+
+===========================
+
+Para poder leer o escribir datos, ``pandas`` provee una serie de métodos
+específicos para todos los tipos de datos estructurados usuales, ya sea
+en formato texto o binario. Los métodos para leer de archivos se
+reconocen por el prefijo ``.read_``, mientras que para escribir usaremos
+``.to_``. Para cada formato particular de archivo, estos métodos
+aceptarán un conjunto de argumentos adicionales que permiten adecuar
+nuestro código.
+
+   Si se usa VSCode, se puede instalar la extensión `Data
+   Wrangler <https://marketplace.visualstudio.com/items?itemName=ms-toolsai.datawrangler>`__
+   que permite inspeccionar ``DataFrames``. Puede ser útil cuando uno
+   trabaja con muchos datos.
+
+JSON
+====
+
+JSON (JavaScript Object Notation) es un formato estándar de estructura
+de datos en modo texto, legible y de amplio uso en internet.
+
+.. code:: python
+
+    import pandas as pd
+    from pathlib import Path
+
+.. code:: python
+
+    atomos_path = Path.cwd().parent / 'data' / 'atomos'
+    print(atomos_path)
+
+
+.. parsed-literal::
+
+    /home/fiol/Clases/IntPython/clases-python/data/atomos
+
+
+.. code:: python
+
+    df = pd.read_json(atomos_path / 'atomos.json')
+    df
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Element</th>
+          <th>Symbol</th>
+          <th>Atomic Number</th>
+          <th>Atomic Mass (u)</th>
+          <th>Density (g/cm³)</th>
+          <th>Melting Point (K)</th>
+          <th>Boiling Point (K)</th>
+          <th>Electronegativity</th>
+          <th>State at Room Temp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>Hydrogen</td>
+          <td>H</td>
+          <td>1</td>
+          <td>1.0080</td>
+          <td>0.000090</td>
+          <td>14.01</td>
+          <td>20.28</td>
+          <td>2.20</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>Helium</td>
+          <td>He</td>
+          <td>2</td>
+          <td>4.0026</td>
+          <td>0.000179</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>Lithium</td>
+          <td>Li</td>
+          <td>3</td>
+          <td>6.9400</td>
+          <td>0.534000</td>
+          <td>453.69</td>
+          <td>1615.00</td>
+          <td>0.98</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Beryllium</td>
+          <td>Be</td>
+          <td>4</td>
+          <td>9.0122</td>
+          <td>1.850000</td>
+          <td>1560.00</td>
+          <td>2742.00</td>
+          <td>1.57</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>Boron</td>
+          <td>B</td>
+          <td>5</td>
+          <td>10.8100</td>
+          <td>2.340000</td>
+          <td>2349.00</td>
+          <td>4200.00</td>
+          <td>2.04</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>Carbon</td>
+          <td>C</td>
+          <td>6</td>
+          <td>12.0110</td>
+          <td>2.267000</td>
+          <td>3800.00</td>
+          <td>4300.00</td>
+          <td>2.55</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Nitrogen</td>
+          <td>N</td>
+          <td>7</td>
+          <td>14.0070</td>
+          <td>0.001251</td>
+          <td>63.15</td>
+          <td>77.36</td>
+          <td>3.04</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>Oxygen</td>
+          <td>O</td>
+          <td>8</td>
+          <td>15.9990</td>
+          <td>0.001429</td>
+          <td>54.36</td>
+          <td>90.20</td>
+          <td>3.44</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td>Fluorine</td>
+          <td>F</td>
+          <td>9</td>
+          <td>18.9980</td>
+          <td>0.001696</td>
+          <td>53.48</td>
+          <td>85.03</td>
+          <td>3.98</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>9</th>
+          <td>Neon</td>
+          <td>Ne</td>
+          <td>10</td>
+          <td>20.1800</td>
+          <td>0.000900</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>Gas</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    df.dtypes
+
+
+
+
+.. parsed-literal::
+
+    Element                object
+    Symbol                 object
+    Atomic Number           int64
+    Atomic Mass (u)       float64
+    Density (g/cm³)       float64
+    Melting Point (K)     float64
+    Boiling Point (K)     float64
+    Electronegativity     float64
+    State at Room Temp     object
+    dtype: object
+
+
+
+.. code:: python
+
+    df.columns
+
+
+
+
+.. parsed-literal::
+
+    Index(['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)',
+           'Density (g/cm³)', 'Melting Point (K)', 'Boiling Point (K)',
+           'Electronegativity', 'State at Room Temp'],
+          dtype='object')
+
+
+
+Renombremos algunas columnas para que no tengan etiquetas tan complejas
+
+.. code:: python
+
+    df.rename(columns={'Density (g/cm³)': 'Density'}, inplace=True)
+    df.rename(columns={'Melting Point (K)': 'Melting Point'}, inplace=True)
+    df.columns
+
+
+
+
+.. parsed-literal::
+
+    Index(['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)', 'Density',
+           'Melting Point', 'Boiling Point (K)', 'Electronegativity',
+           'State at Room Temp'],
+          dtype='object')
+
+
+
+Extraigamos los datos atómicos (masa y número atómico) y escribámoslo en
+un json:
+
+.. code:: python
+
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']]
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Element</th>
+          <th>Symbol</th>
+          <th>Atomic Number</th>
+          <th>Atomic Mass (u)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>Hydrogen</td>
+          <td>H</td>
+          <td>1</td>
+          <td>1.0080</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>Helium</td>
+          <td>He</td>
+          <td>2</td>
+          <td>4.0026</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>Lithium</td>
+          <td>Li</td>
+          <td>3</td>
+          <td>6.9400</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Beryllium</td>
+          <td>Be</td>
+          <td>4</td>
+          <td>9.0122</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>Boron</td>
+          <td>B</td>
+          <td>5</td>
+          <td>10.8100</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>Carbon</td>
+          <td>C</td>
+          <td>6</td>
+          <td>12.0110</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Nitrogen</td>
+          <td>N</td>
+          <td>7</td>
+          <td>14.0070</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>Oxygen</td>
+          <td>O</td>
+          <td>8</td>
+          <td>15.9990</td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td>Fluorine</td>
+          <td>F</td>
+          <td>9</td>
+          <td>18.9980</td>
+        </tr>
+        <tr>
+          <th>9</th>
+          <td>Neon</td>
+          <td>Ne</td>
+          <td>10</td>
+          <td>20.1800</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']].to_json(atomos_path / 'prop_atomos.json')
+
+.. code:: python
+
+    # Guarda sólo los valores
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']].to_json(atomos_path / 'prop_atomos_values.json', orient='values')
+    
+    # Guarda los registros indexados por el índice del DataFrame
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']].to_json(atomos_path / 'prop_atomos_index.json', orient='index')
+    
+    # Guarda los registros indexados por el nombre de las columnas, valor por defecto
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']].to_json(atomos_path / 'prop_atomos_columns.json', orient='columns')
+    
+    # Guarda los registros en formato de lista de diccionarios, sin indices
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']].to_json(atomos_path / 'prop_atomos_records.json', orient='records')
+
+
+CSV
+---
+
+Podríamos querer escribirlos como valores separados por comas (u otro
+delimitador):
+
+.. code:: python
+
+    df[['Element', 'Symbol', 'Atomic Number', 'Atomic Mass (u)']].to_csv(atomos_path / 'prop_atomos.csv', sep='|')
+
+Vemos que en ambos casos también guarda el índice en el archivo
+
+Si queremos que no guarde el índice, pasamos el argumento opcional
+``index=False``.
+
+.. code:: python
+
+    df.to_csv(atomos_path / 'prop_atomos_noindex.csv', sep='|', index=False)
+
+Se puede ver que al guardar el ``.csv``, los elementos inexistentes de
+la tabla (``NaN``) se guardan como cadenas de caracteres vacías. Se
+puede indicar otro tipo de valor para esos casos:
+
+.. code:: python
+
+    df.to_csv(atomos_path / 'prop_atomos_noheader2.csv', sep='|', index=False, na_rep='N/A')
+
+Formatos binarios
+=================
+
+En algunos casos como leer o escribir de archivos binarios, es necesario
+instalar algunos módulos. Por ejemplo, si queremos leer archivos
+``.parquet``, tenemos que instalar ``pyarrow``.
+
+-  ``.parquet``: ``conda install pyarrow``
+-  ``.xls(x)``: ``conda install openpyxl xlrd``
+-  ``hdf5``: ``conda install pytables``
+
+.. code:: python
+
+    df.to_parquet(atomos_path / 'prop_atomos.parquet')
+
+.. code:: python
+
+    dfp = pd.read_parquet(atomos_path / 'prop_atomos.parquet')
+    dfp
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Element</th>
+          <th>Symbol</th>
+          <th>Atomic Number</th>
+          <th>Atomic Mass (u)</th>
+          <th>Density</th>
+          <th>Melting Point</th>
+          <th>Boiling Point (K)</th>
+          <th>Electronegativity</th>
+          <th>State at Room Temp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>Hydrogen</td>
+          <td>H</td>
+          <td>1</td>
+          <td>1.0080</td>
+          <td>0.000090</td>
+          <td>14.01</td>
+          <td>20.28</td>
+          <td>2.20</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>Helium</td>
+          <td>He</td>
+          <td>2</td>
+          <td>4.0026</td>
+          <td>0.000179</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>Lithium</td>
+          <td>Li</td>
+          <td>3</td>
+          <td>6.9400</td>
+          <td>0.534000</td>
+          <td>453.69</td>
+          <td>1615.00</td>
+          <td>0.98</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>Beryllium</td>
+          <td>Be</td>
+          <td>4</td>
+          <td>9.0122</td>
+          <td>1.850000</td>
+          <td>1560.00</td>
+          <td>2742.00</td>
+          <td>1.57</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>Boron</td>
+          <td>B</td>
+          <td>5</td>
+          <td>10.8100</td>
+          <td>2.340000</td>
+          <td>2349.00</td>
+          <td>4200.00</td>
+          <td>2.04</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>Carbon</td>
+          <td>C</td>
+          <td>6</td>
+          <td>12.0110</td>
+          <td>2.267000</td>
+          <td>3800.00</td>
+          <td>4300.00</td>
+          <td>2.55</td>
+          <td>Solid</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>Nitrogen</td>
+          <td>N</td>
+          <td>7</td>
+          <td>14.0070</td>
+          <td>0.001251</td>
+          <td>63.15</td>
+          <td>77.36</td>
+          <td>3.04</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>Oxygen</td>
+          <td>O</td>
+          <td>8</td>
+          <td>15.9990</td>
+          <td>0.001429</td>
+          <td>54.36</td>
+          <td>90.20</td>
+          <td>3.44</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td>Fluorine</td>
+          <td>F</td>
+          <td>9</td>
+          <td>18.9980</td>
+          <td>0.001696</td>
+          <td>53.48</td>
+          <td>85.03</td>
+          <td>3.98</td>
+          <td>Gas</td>
+        </tr>
+        <tr>
+          <th>9</th>
+          <td>Neon</td>
+          <td>Ne</td>
+          <td>10</td>
+          <td>20.1800</td>
+          <td>0.000900</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>Gas</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Web
+~~~
+
+.. code:: python
+
+    # URL que contiene una tabla HTML
+    url = "https://en.wikipedia.org/wiki/List_of_countries_by_population"
+    
+    # Leer todas las tablas de la página
+    tablas = pd.read_html(url)
+
+
+.. code:: python
+
+    print(f"Encontré {len(tablas)} tablas")
+    print(type(tablas))
+    
+    # La función devuelve una lista de DataFrames, cada uno correspondiente a una tabla en la página
+    # Normalmente querrás seleccionar una tabla específica
+    tabla_poblacion = tablas[0]  # Primera tabla de la página
+    
+    # Mostrar las primeras filas
+    tabla_poblacion.head()
+
+
+.. parsed-literal::
+
+    Encontré 3 tablas
+    <class 'list'>
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>Location</th>
+          <th>Population</th>
+          <th>% of world</th>
+          <th>Date</th>
+          <th>Source (official or from the United Nations)</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>World</td>
+          <td>8136397260</td>
+          <td>100%</td>
+          <td>6 Apr 2025</td>
+          <td>UN projection[1][3]</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>India</td>
+          <td>1413324000</td>
+          <td>17.3%</td>
+          <td>1 Mar 2025</td>
+          <td>Official projection[4]</td>
+          <td>[b]</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>China</td>
+          <td>1408280000</td>
+          <td>17.2%</td>
+          <td>31 Dec 2024</td>
+          <td>Official estimate[5]</td>
+          <td>[c]</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>United States</td>
+          <td>340110988</td>
+          <td>4.2%</td>
+          <td>1 Jul 2024</td>
+          <td>Official estimate[6]</td>
+          <td>[d]</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>Indonesia</td>
+          <td>282477584</td>
+          <td>3.5%</td>
+          <td>30 Jun 2024</td>
+          <td>National annual projection[7]</td>
+          <td>NaN</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Cuando se pone difícil
+======================
+
+En muchas situaciones los archivos pueden tener datos estructurados de
+alguna manera que no permiten directamente su lectura con ``pandas``.
+
+.. code:: python
+
+    smn_path = Path.cwd().parent / 'data' / 'smn'
+
+.. code:: python
+
+    pronostico = pd.read_csv(smn_path / 'pronostico_header4.txt')
+    pronostico
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>************************************************************************************************</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Producto basado en un modelo de pronóstico numérico del tiempo</th>
+          <td></td>
+        </tr>
+        <tr>
+          <th>por lo tanto puede diferir del pronostico emitido por el SMN</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>************************************************************************************************</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>AEROPARQUE</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>================================================================================================</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>...</th>
+          <td>...</td>
+        </tr>
+        <tr>
+          <th>06/DIC/2024 12Hs.        13.1       314 |  12         0.0</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>06/DIC/2024 15Hs.        16.2       297 |  15         0.0</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>06/DIC/2024 18Hs.        15.2       304 |  23         0.0</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>06/DIC/2024 21Hs.         9.1       308 |  17         0.0</th>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>================================================================================================</th>
+          <td>NaN</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>187 rows × 1 columns</p>
+    </div>
+
+
+
+Probemos usando ``read_fwf``, que es capaz de leer tablas con columnas
+de ancho fijo:
+
+.. code:: python
+
+    pronostico = pd.read_fwf(smn_path / 'pronostico_header4.txt',skiprows=5)
+    pronostico.head(10)
+
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>AEROPARQUE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>==============================================...</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>FECHA *          TEMPERATURA      VIENTO      ...</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>(DIR | KM/H)</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>==============================================...</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>02/DIC/2024 00Hs.        16.0       236 |  17 ...</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>02/DIC/2024 03Hs.        14.4       196 |  18 ...</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>02/DIC/2024 06Hs.        10.6       190 |   8 ...</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>02/DIC/2024 09Hs.        14.9       221 |  11 ...</td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td>02/DIC/2024 12Hs.        19.2       249 |  12 ...</td>
+        </tr>
+        <tr>
+          <th>9</th>
+          <td>02/DIC/2024 15Hs.        21.6       241 |  15 ...</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Como se esperaba, no parece ser la solución porque la estructura del
+archivo no es estrictamente de columnas de ancho fijo, sino de secciones
+de columnas de ancho fijo. Entonces tenemos que preprocesar el archivo
+para llegar a obtener esas secciones:
+
+.. code:: python
+
+    with open(smn_path / 'pronostico_5dias20250408.txt', 'r') as file:
+        content = file.read()
+    
+    # Dividir el contenido en secciones por aeropuerto
+    sep =  "================================================================================================"
+    sections = content.split(sep)
+    for i,s in enumerate(sections[0:5]):
+        print(f"Sección {i} {'-'*80}")
+        print(f"{s}")
+
+
+.. parsed-literal::
+
+    Sección 0 --------------------------------------------------------------------------------
+    ************************************************************************************************
+     Producto basado en un modelo de pronóstico numérico del tiempo, 
+     por lo tanto puede diferir del pronostico emitido por el SMN
+     ************************************************************************************************
+     
+     AEROPARQUE
+     
+    Sección 1 --------------------------------------------------------------------------------
+    
+          FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                         (DIR | KM/H)                        
+     
+    Sección 2 --------------------------------------------------------------------------------
+    
+      08/ABR/2025 00Hs.        15.4       116 |  27         7.5 
+      08/ABR/2025 03Hs.        15.6       112 |  25         3.0 
+      08/ABR/2025 06Hs.        16.0       114 |  26         3.0 
+      08/ABR/2025 09Hs.        16.3       115 |  26         1.7 
+      08/ABR/2025 12Hs.        16.6       123 |  22         1.1 
+      08/ABR/2025 15Hs.        17.0       123 |  24         0.9 
+      08/ABR/2025 18Hs.        16.7       117 |  24         1.8 
+      08/ABR/2025 21Hs.        16.6       104 |  22         1.4 
+      09/ABR/2025 00Hs.        16.7       100 |  22         0.6 
+      09/ABR/2025 03Hs.        16.2       110 |  21         1.2 
+      09/ABR/2025 06Hs.        16.0       107 |  18         1.3 
+      09/ABR/2025 09Hs.        16.1        99 |  18         1.9 
+      09/ABR/2025 12Hs.        17.3        99 |  14         0.7 
+      09/ABR/2025 15Hs.        19.9       106 |  19         0.4 
+      09/ABR/2025 18Hs.        18.2       104 |  17         0.0 
+      09/ABR/2025 21Hs.        17.1       108 |  16         0.0 
+      10/ABR/2025 00Hs.        17.1       109 |  15         0.0 
+      10/ABR/2025 03Hs.        17.6       104 |  16         0.0 
+      10/ABR/2025 06Hs.        17.0        94 |  13         0.0 
+      10/ABR/2025 09Hs.        18.2        98 |  13         0.0 
+      10/ABR/2025 12Hs.        19.7       102 |  11         0.1 
+      10/ABR/2025 15Hs.        21.3       138 |  12         0.0 
+      10/ABR/2025 18Hs.        19.5       120 |  14         0.0 
+      10/ABR/2025 21Hs.        18.6       109 |   8         0.2 
+      11/ABR/2025 00Hs.        17.2        22 |   4         0.0 
+      11/ABR/2025 03Hs.        14.8        35 |   6         0.0 
+      11/ABR/2025 06Hs.        15.2        26 |   4         0.0 
+      11/ABR/2025 09Hs.        17.5        30 |   2         0.0 
+      11/ABR/2025 12Hs.        19.6         6 |   3         0.2 
+      11/ABR/2025 15Hs.        22.8       326 |   3         0.0 
+      11/ABR/2025 18Hs.        20.1       187 |   4         0.0 
+      11/ABR/2025 21Hs.        18.2       115 |   3         0.0 
+      12/ABR/2025 00Hs.        16.6       292 |   3         0.0 
+      12/ABR/2025 03Hs.        15.1       254 |   6         0.0 
+      12/ABR/2025 06Hs.        14.4       239 |   6         0.0 
+      12/ABR/2025 09Hs.        17.6       213 |   6         0.0 
+      12/ABR/2025 12Hs.        22.4       149 |   7         0.0 
+      12/ABR/2025 15Hs.        22.8       123 |   8         0.0 
+      12/ABR/2025 18Hs.        19.5        72 |   4         0.0 
+      12/ABR/2025 21Hs.        17.0        95 |   8         0.0 
+     
+    Sección 3 --------------------------------------------------------------------------------
+    
+     AZUL_AERO
+     
+    Sección 4 --------------------------------------------------------------------------------
+    
+          FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                         (DIR | KM/H)                        
+     
+
+
+.. code:: python
+
+    print("Estación : ", sections[0])
+    print("Header : ", sections[1])
+    print("Pronóstico : ", sections[2])
+
+
+
+.. parsed-literal::
+
+    Estación :  ************************************************************************************************
+     Producto basado en un modelo de pronóstico numérico del tiempo, 
+     por lo tanto puede diferir del pronostico emitido por el SMN
+     ************************************************************************************************
+     
+     AEROPARQUE
+     
+    Header :  
+          FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                         (DIR | KM/H)                        
+     
+    Pronóstico :  
+      08/ABR/2025 00Hs.        15.4       116 |  27         7.5 
+      08/ABR/2025 03Hs.        15.6       112 |  25         3.0 
+      08/ABR/2025 06Hs.        16.0       114 |  26         3.0 
+      08/ABR/2025 09Hs.        16.3       115 |  26         1.7 
+      08/ABR/2025 12Hs.        16.6       123 |  22         1.1 
+      08/ABR/2025 15Hs.        17.0       123 |  24         0.9 
+      08/ABR/2025 18Hs.        16.7       117 |  24         1.8 
+      08/ABR/2025 21Hs.        16.6       104 |  22         1.4 
+      09/ABR/2025 00Hs.        16.7       100 |  22         0.6 
+      09/ABR/2025 03Hs.        16.2       110 |  21         1.2 
+      09/ABR/2025 06Hs.        16.0       107 |  18         1.3 
+      09/ABR/2025 09Hs.        16.1        99 |  18         1.9 
+      09/ABR/2025 12Hs.        17.3        99 |  14         0.7 
+      09/ABR/2025 15Hs.        19.9       106 |  19         0.4 
+      09/ABR/2025 18Hs.        18.2       104 |  17         0.0 
+      09/ABR/2025 21Hs.        17.1       108 |  16         0.0 
+      10/ABR/2025 00Hs.        17.1       109 |  15         0.0 
+      10/ABR/2025 03Hs.        17.6       104 |  16         0.0 
+      10/ABR/2025 06Hs.        17.0        94 |  13         0.0 
+      10/ABR/2025 09Hs.        18.2        98 |  13         0.0 
+      10/ABR/2025 12Hs.        19.7       102 |  11         0.1 
+      10/ABR/2025 15Hs.        21.3       138 |  12         0.0 
+      10/ABR/2025 18Hs.        19.5       120 |  14         0.0 
+      10/ABR/2025 21Hs.        18.6       109 |   8         0.2 
+      11/ABR/2025 00Hs.        17.2        22 |   4         0.0 
+      11/ABR/2025 03Hs.        14.8        35 |   6         0.0 
+      11/ABR/2025 06Hs.        15.2        26 |   4         0.0 
+      11/ABR/2025 09Hs.        17.5        30 |   2         0.0 
+      11/ABR/2025 12Hs.        19.6         6 |   3         0.2 
+      11/ABR/2025 15Hs.        22.8       326 |   3         0.0 
+      11/ABR/2025 18Hs.        20.1       187 |   4         0.0 
+      11/ABR/2025 21Hs.        18.2       115 |   3         0.0 
+      12/ABR/2025 00Hs.        16.6       292 |   3         0.0 
+      12/ABR/2025 03Hs.        15.1       254 |   6         0.0 
+      12/ABR/2025 06Hs.        14.4       239 |   6         0.0 
+      12/ABR/2025 09Hs.        17.6       213 |   6         0.0 
+      12/ABR/2025 12Hs.        22.4       149 |   7         0.0 
+      12/ABR/2025 15Hs.        22.8       123 |   8         0.0 
+      12/ABR/2025 18Hs.        19.5        72 |   4         0.0 
+      12/ABR/2025 21Hs.        17.0        95 |   8         0.0 
+     
+
+
+La lista ``sections`` contiene secciones que corresponden a una estación
+meteorológica, cuyos nombres son:
+
+.. code:: python
+
+    print(sections[0].split('\n')[-2].strip()) # tratamiento especial para remover el comentario
+    print(sections[3].strip())
+    print(sections[6].strip())
+
+
+.. parsed-literal::
+
+    AEROPARQUE
+    AZUL_AERO
+    BAHIA_BLANCA_AERO
+
+
+   La primer sección debe trabajarse a mano debido al comentario que
+   posee el archivo
+
+Las siguientes serían las secciones de headers que en principio no nos
+harían falta:
+
+.. code:: python
+
+    print(sections[1].strip())
+    print(sections[4].strip())
+    print(sections[7].strip())
+
+
+.. parsed-literal::
+
+    FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                         (DIR | KM/H)
+    FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                         (DIR | KM/H)
+    FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                         (DIR | KM/H)
+
+
+Finalmente tenemos las secciones con los datos:
+
+.. code:: python
+
+    print(sections[2].split('\n')[:5])
+    print(sections[5].split('\n')[:5])
+    print(sections[8].split('\n')[:5])
+
+
+.. parsed-literal::
+
+    ['', '  08/ABR/2025 00Hs.        15.4       116 |  27         7.5 ', '  08/ABR/2025 03Hs.        15.6       112 |  25         3.0 ', '  08/ABR/2025 06Hs.        16.0       114 |  26         3.0 ', '  08/ABR/2025 09Hs.        16.3       115 |  26         1.7 ']
+    ['', '  08/ABR/2025 00Hs.        10.3       109 |  15         0.0 ', '  08/ABR/2025 03Hs.         9.3       124 |  12         0.0 ', '  08/ABR/2025 06Hs.         8.9       134 |  11         0.0 ', '  08/ABR/2025 09Hs.        12.6       122 |  18         0.0 ']
+    ['', '  08/ABR/2025 00Hs.        13.5        35 |  20         0.0 ', '  08/ABR/2025 03Hs.        11.7        31 |  16         0.0 ', '  08/ABR/2025 06Hs.        10.7        42 |  12         0.0 ', '  08/ABR/2025 09Hs.        12.6        50 |  15         0.0 ']
+
+
+Ahora sí podemos usar ``read_fwf`` para transformar las secciones en
+``DataFrame``\ s. Para ello tenemos que convertir cada ``section`` (que
+es un string) en un tipo de buffer en memoria que se comporte como un
+archivo. Obsérvese que si hacemos:
+
+.. code:: python
+
+    from io import StringIO 
+    
+    with StringIO(sections[5]) as data_io:
+        df_malo = pd.read_fwf(data_io)
+        
+    df_malo.head()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>08/ABR/2025</th>
+          <th>00Hs.</th>
+          <th>10.3</th>
+          <th>109</th>
+          <th>|</th>
+          <th>15</th>
+          <th>0.0</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>08/ABR/2025</td>
+          <td>03Hs.</td>
+          <td>9.3</td>
+          <td>124</td>
+          <td>|</td>
+          <td>12</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>08/ABR/2025</td>
+          <td>06Hs.</td>
+          <td>8.9</td>
+          <td>134</td>
+          <td>|</td>
+          <td>11</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>08/ABR/2025</td>
+          <td>09Hs.</td>
+          <td>12.6</td>
+          <td>122</td>
+          <td>|</td>
+          <td>18</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>08/ABR/2025</td>
+          <td>12Hs.</td>
+          <td>19.4</td>
+          <td>95</td>
+          <td>|</td>
+          <td>22</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>08/ABR/2025</td>
+          <td>15Hs.</td>
+          <td>21.4</td>
+          <td>99</td>
+          <td>|</td>
+          <td>28</td>
+          <td>0.0</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Es decir que la primer fila del *stream* es tomada como los nombres de
+las columnas. Tenemos que pasar el argumento opcional ``names`` para
+definir los nombres de las columnas:
+
+.. code:: python
+
+    with StringIO(sections[2]) as data_io:
+        df = pd.read_fwf(data_io,names=['fecha','h','t','v_dir','l','v_vel','precip'])
+        
+    df.head()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>fecha</th>
+          <th>h</th>
+          <th>t</th>
+          <th>v_dir</th>
+          <th>l</th>
+          <th>v_vel</th>
+          <th>precip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>08/ABR/2025</td>
+          <td>00Hs.</td>
+          <td>15.4</td>
+          <td>116</td>
+          <td>|</td>
+          <td>27</td>
+          <td>7.5</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>08/ABR/2025</td>
+          <td>03Hs.</td>
+          <td>15.6</td>
+          <td>112</td>
+          <td>|</td>
+          <td>25</td>
+          <td>3.0</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>08/ABR/2025</td>
+          <td>06Hs.</td>
+          <td>16.0</td>
+          <td>114</td>
+          <td>|</td>
+          <td>26</td>
+          <td>3.0</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>08/ABR/2025</td>
+          <td>09Hs.</td>
+          <td>16.3</td>
+          <td>115</td>
+          <td>|</td>
+          <td>26</td>
+          <td>1.7</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>08/ABR/2025</td>
+          <td>12Hs.</td>
+          <td>16.6</td>
+          <td>123</td>
+          <td>|</td>
+          <td>22</td>
+          <td>1.1</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Para terminar podemos eliminar la columna ``l`` que no aporta
+información:
+
+.. code:: python
+
+    df.drop(columns=['l'],inplace=True)
+    df.head()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>fecha</th>
+          <th>h</th>
+          <th>t</th>
+          <th>v_dir</th>
+          <th>v_vel</th>
+          <th>precip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>08/ABR/2025</td>
+          <td>00Hs.</td>
+          <td>15.4</td>
+          <td>116</td>
+          <td>27</td>
+          <td>7.5</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>08/ABR/2025</td>
+          <td>03Hs.</td>
+          <td>15.6</td>
+          <td>112</td>
+          <td>25</td>
+          <td>3.0</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>08/ABR/2025</td>
+          <td>06Hs.</td>
+          <td>16.0</td>
+          <td>114</td>
+          <td>26</td>
+          <td>3.0</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>08/ABR/2025</td>
+          <td>09Hs.</td>
+          <td>16.3</td>
+          <td>115</td>
+          <td>26</td>
+          <td>1.7</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>08/ABR/2025</td>
+          <td>12Hs.</td>
+          <td>16.6</td>
+          <td>123</td>
+          <td>22</td>
+          <td>1.1</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
++-----+
+| ##  |
+| Eje |
+| rci |
+| cio |
+| 14  |
+| (a) |
++-----+
+| Co  |
+| mpl |
+| ete |
+| la  |
+| ta  |
+| bla |
+| de  |
+| da  |
+| tos |
+| del |
+| e   |
+| jem |
+| plo |
+| de  |
+| cla |
+| se. |
+| P   |
+| ara |
+| e   |
+| llo |
+| u   |
+| til |
+| ice |
+| el  |
+| a   |
+| rch |
+| ivo |
+| con |
+| los |
+| pr  |
+| onó |
+| sti |
+| cos |
+| com |
+| ple |
+| tos |
+| p   |
+| ara |
+| to  |
+| das |
+| las |
+| es  |
+| tac |
+| ion |
+| es, |
+| ``  |
+| pro |
+| nos |
+| tic |
+| o_5 |
+| dia |
+| s20 |
+| 250 |
+| 408 |
+| .tx |
+| t`` |
+| y   |
++-----+
+| -   |
+| A   |
+| gre |
+| gue |
+| una |
+| c   |
+| olu |
+| mna |
+| con |
+| el  |
+| nom |
+| bre |
+| de  |
+| la  |
+| es  |
+| tac |
+| ión |
+| al  |
+| Dat |
+| aFr |
+| ame |
+| -   |
+| P   |
+| roc |
+| ese |
+| to  |
+| das |
+| las |
+| e   |
+| sta |
+| cio |
+| nes |
++-----+
+
+

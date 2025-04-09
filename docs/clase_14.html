@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 14: Input/Output con pandas &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 13: Introducción al paquete Scipy" href="clase_13.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Más sobre objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Control de versiones y módulos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Introducción a Numpy y Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#json">JSON</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#csv">CSV</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#formatos-binarios">Formatos binarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cuando-se-pone-dificil">Cuando se pone difícil</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 14: Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_14.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-14-input-output-con-pandas">
+<span id="clase-14"></span><h1>Clase 14: Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#clase-14-input-output-con-pandas" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<p>Para poder leer o escribir datos, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provee una serie de métodos
+específicos para todos los tipos de datos estructurados usuales, ya sea
+en formato texto o binario. Los métodos para leer de archivos se
+reconocen por el prefijo <code class="docutils literal notranslate"><span class="pre">.read_</span></code>, mientras que para escribir usaremos
+<code class="docutils literal notranslate"><span class="pre">.to_</span></code>. Para cada formato particular de archivo, estos métodos
+aceptarán un conjunto de argumentos adicionales que permiten adecuar
+nuestro código.</p>
+<blockquote>
+<div><p>Si se usa VSCode, se puede instalar la extensión <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-toolsai.datawrangler">Data
+Wrangler</a>
+que permite inspeccionar <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code>. Puede ser útil cuando uno
+trabaja con muchos datos.</p>
+</div></blockquote>
+<section id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h2>
+<p>JSON (JavaScript Object Notation) es un formato estándar de estructura
+de datos en modo texto, legible y de amplio uso en internet.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atomos_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s1">&#39;atomos&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">atomos_path</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">fiol</span><span class="o">/</span><span class="n">Clases</span><span class="o">/</span><span class="n">IntPython</span><span class="o">/</span><span class="n">clases</span><span class="o">-</span><span class="n">python</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">atomos</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;atomos.json&#39;</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Element</th>
+      <th>Symbol</th>
+      <th>Atomic Number</th>
+      <th>Atomic Mass (u)</th>
+      <th>Density (g/cm³)</th>
+      <th>Melting Point (K)</th>
+      <th>Boiling Point (K)</th>
+      <th>Electronegativity</th>
+      <th>State at Room Temp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Hydrogen</td>
+      <td>H</td>
+      <td>1</td>
+      <td>1.0080</td>
+      <td>0.000090</td>
+      <td>14.01</td>
+      <td>20.28</td>
+      <td>2.20</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Helium</td>
+      <td>He</td>
+      <td>2</td>
+      <td>4.0026</td>
+      <td>0.000179</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lithium</td>
+      <td>Li</td>
+      <td>3</td>
+      <td>6.9400</td>
+      <td>0.534000</td>
+      <td>453.69</td>
+      <td>1615.00</td>
+      <td>0.98</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Beryllium</td>
+      <td>Be</td>
+      <td>4</td>
+      <td>9.0122</td>
+      <td>1.850000</td>
+      <td>1560.00</td>
+      <td>2742.00</td>
+      <td>1.57</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Boron</td>
+      <td>B</td>
+      <td>5</td>
+      <td>10.8100</td>
+      <td>2.340000</td>
+      <td>2349.00</td>
+      <td>4200.00</td>
+      <td>2.04</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Carbon</td>
+      <td>C</td>
+      <td>6</td>
+      <td>12.0110</td>
+      <td>2.267000</td>
+      <td>3800.00</td>
+      <td>4300.00</td>
+      <td>2.55</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Nitrogen</td>
+      <td>N</td>
+      <td>7</td>
+      <td>14.0070</td>
+      <td>0.001251</td>
+      <td>63.15</td>
+      <td>77.36</td>
+      <td>3.04</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Oxygen</td>
+      <td>O</td>
+      <td>8</td>
+      <td>15.9990</td>
+      <td>0.001429</td>
+      <td>54.36</td>
+      <td>90.20</td>
+      <td>3.44</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Fluorine</td>
+      <td>F</td>
+      <td>9</td>
+      <td>18.9980</td>
+      <td>0.001696</td>
+      <td>53.48</td>
+      <td>85.03</td>
+      <td>3.98</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Neon</td>
+      <td>Ne</td>
+      <td>10</td>
+      <td>20.1800</td>
+      <td>0.000900</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Gas</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Element                object
+Symbol                 object
+Atomic Number           int64
+Atomic Mass (u)       float64
+Density (g/cm³)       float64
+Melting Point (K)     float64
+Boiling Point (K)     float64
+Electronegativity     float64
+State at Room Temp     object
+dtype: object
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Index</span><span class="p">([</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Density (g/cm³)&#39;</span><span class="p">,</span> <span class="s1">&#39;Melting Point (K)&#39;</span><span class="p">,</span> <span class="s1">&#39;Boiling Point (K)&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Electronegativity&#39;</span><span class="p">,</span> <span class="s1">&#39;State at Room Temp&#39;</span><span class="p">],</span>
+      <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Renombremos algunas columnas para que no tengan etiquetas tan complejas</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Density (g/cm³)&#39;</span><span class="p">:</span> <span class="s1">&#39;Density&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Melting Point (K)&#39;</span><span class="p">:</span> <span class="s1">&#39;Melting Point&#39;</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Index</span><span class="p">([</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">,</span> <span class="s1">&#39;Density&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;Melting Point&#39;</span><span class="p">,</span> <span class="s1">&#39;Boiling Point (K)&#39;</span><span class="p">,</span> <span class="s1">&#39;Electronegativity&#39;</span><span class="p">,</span>
+       <span class="s1">&#39;State at Room Temp&#39;</span><span class="p">],</span>
+      <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Extraigamos los datos atómicos (masa y número atómico) y escribámoslo en
+un json:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Element</th>
+      <th>Symbol</th>
+      <th>Atomic Number</th>
+      <th>Atomic Mass (u)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Hydrogen</td>
+      <td>H</td>
+      <td>1</td>
+      <td>1.0080</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Helium</td>
+      <td>He</td>
+      <td>2</td>
+      <td>4.0026</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lithium</td>
+      <td>Li</td>
+      <td>3</td>
+      <td>6.9400</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Beryllium</td>
+      <td>Be</td>
+      <td>4</td>
+      <td>9.0122</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Boron</td>
+      <td>B</td>
+      <td>5</td>
+      <td>10.8100</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Carbon</td>
+      <td>C</td>
+      <td>6</td>
+      <td>12.0110</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Nitrogen</td>
+      <td>N</td>
+      <td>7</td>
+      <td>14.0070</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Oxygen</td>
+      <td>O</td>
+      <td>8</td>
+      <td>15.9990</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Fluorine</td>
+      <td>F</td>
+      <td>9</td>
+      <td>18.9980</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Neon</td>
+      <td>Ne</td>
+      <td>10</td>
+      <td>20.1800</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Guarda sólo los valores</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos_values.json&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;values&#39;</span><span class="p">)</span>
+
+<span class="c1"># Guarda los registros indexados por el índice del DataFrame</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos_index.json&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+
+<span class="c1"># Guarda los registros indexados por el nombre de las columnas, valor por defecto</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos_columns.json&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+
+<span class="c1"># Guarda los registros en formato de lista de diccionarios, sin indices</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos_records.json&#39;</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;records&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="csv">
+<h3>CSV<a class="headerlink" href="#csv" title="Link to this heading"></a></h3>
+<p>Podríamos querer escribirlos como valores separados por comas (u otro
+delimitador):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Vemos que en ambos casos también guarda el índice en el archivo</p>
+<p>Si queremos que no guarde el índice, pasamos el argumento opcional
+<code class="docutils literal notranslate"><span class="pre">index=False</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos_noindex.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Se puede ver que al guardar el <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, los elementos inexistentes de
+la tabla (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>) se guardan como cadenas de caracteres vacías. Se
+puede indicar otro tipo de valor para esos casos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos_noheader2.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="formatos-binarios">
+<h2>Formatos binarios<a class="headerlink" href="#formatos-binarios" title="Link to this heading"></a></h2>
+<p>En algunos casos como leer o escribir de archivos binarios, es necesario
+instalar algunos módulos. Por ejemplo, si queremos leer archivos
+<code class="docutils literal notranslate"><span class="pre">.parquet</span></code>, tenemos que instalar <code class="docutils literal notranslate"><span class="pre">pyarrow</span></code>.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.parquet</span></code>: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pyarrow</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">.xls(x)</span></code>: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">openpyxl</span> <span class="pre">xlrd</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hdf5</span></code>: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">pytables</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos.parquet&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dfp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos.parquet&#39;</span><span class="p">)</span>
+<span class="n">dfp</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Element</th>
+      <th>Symbol</th>
+      <th>Atomic Number</th>
+      <th>Atomic Mass (u)</th>
+      <th>Density</th>
+      <th>Melting Point</th>
+      <th>Boiling Point (K)</th>
+      <th>Electronegativity</th>
+      <th>State at Room Temp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Hydrogen</td>
+      <td>H</td>
+      <td>1</td>
+      <td>1.0080</td>
+      <td>0.000090</td>
+      <td>14.01</td>
+      <td>20.28</td>
+      <td>2.20</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Helium</td>
+      <td>He</td>
+      <td>2</td>
+      <td>4.0026</td>
+      <td>0.000179</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Lithium</td>
+      <td>Li</td>
+      <td>3</td>
+      <td>6.9400</td>
+      <td>0.534000</td>
+      <td>453.69</td>
+      <td>1615.00</td>
+      <td>0.98</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Beryllium</td>
+      <td>Be</td>
+      <td>4</td>
+      <td>9.0122</td>
+      <td>1.850000</td>
+      <td>1560.00</td>
+      <td>2742.00</td>
+      <td>1.57</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Boron</td>
+      <td>B</td>
+      <td>5</td>
+      <td>10.8100</td>
+      <td>2.340000</td>
+      <td>2349.00</td>
+      <td>4200.00</td>
+      <td>2.04</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Carbon</td>
+      <td>C</td>
+      <td>6</td>
+      <td>12.0110</td>
+      <td>2.267000</td>
+      <td>3800.00</td>
+      <td>4300.00</td>
+      <td>2.55</td>
+      <td>Solid</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Nitrogen</td>
+      <td>N</td>
+      <td>7</td>
+      <td>14.0070</td>
+      <td>0.001251</td>
+      <td>63.15</td>
+      <td>77.36</td>
+      <td>3.04</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Oxygen</td>
+      <td>O</td>
+      <td>8</td>
+      <td>15.9990</td>
+      <td>0.001429</td>
+      <td>54.36</td>
+      <td>90.20</td>
+      <td>3.44</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Fluorine</td>
+      <td>F</td>
+      <td>9</td>
+      <td>18.9980</td>
+      <td>0.001696</td>
+      <td>53.48</td>
+      <td>85.03</td>
+      <td>3.98</td>
+      <td>Gas</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Neon</td>
+      <td>Ne</td>
+      <td>10</td>
+      <td>20.1800</td>
+      <td>0.000900</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>Gas</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL que contiene una tabla HTML</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://en.wikipedia.org/wiki/List_of_countries_by_population&quot;</span>
+
+<span class="c1"># Leer todas las tablas de la página</span>
+<span class="n">tablas</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encontré </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">tablas</span><span class="p">)</span><span class="si">}</span><span class="s2"> tablas&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">tablas</span><span class="p">))</span>
+
+<span class="c1"># La función devuelve una lista de DataFrames, cada uno correspondiente a una tabla en la página</span>
+<span class="c1"># Normalmente querrás seleccionar una tabla específica</span>
+<span class="n">tabla_poblacion</span> <span class="o">=</span> <span class="n">tablas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># Primera tabla de la página</span>
+
+<span class="c1"># Mostrar las primeras filas</span>
+<span class="n">tabla_poblacion</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Encontré 3 tablas
+&lt;class &#39;list&#39;&gt;
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Location</th>
+      <th>Population</th>
+      <th>% of world</th>
+      <th>Date</th>
+      <th>Source (official or from the United Nations)</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>World</td>
+      <td>8136397260</td>
+      <td>100%</td>
+      <td>6 Apr 2025</td>
+      <td>UN projection[1][3]</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>India</td>
+      <td>1413324000</td>
+      <td>17.3%</td>
+      <td>1 Mar 2025</td>
+      <td>Official projection[4]</td>
+      <td>[b]</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>China</td>
+      <td>1408280000</td>
+      <td>17.2%</td>
+      <td>31 Dec 2024</td>
+      <td>Official estimate[5]</td>
+      <td>[c]</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>United States</td>
+      <td>340110988</td>
+      <td>4.2%</td>
+      <td>1 Jul 2024</td>
+      <td>Official estimate[6]</td>
+      <td>[d]</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Indonesia</td>
+      <td>282477584</td>
+      <td>3.5%</td>
+      <td>30 Jun 2024</td>
+      <td>National annual projection[7]</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></section>
+<section id="cuando-se-pone-dificil">
+<h2>Cuando se pone difícil<a class="headerlink" href="#cuando-se-pone-dificil" title="Link to this heading"></a></h2>
+<p>En muchas situaciones los archivos pueden tener datos estructurados de
+alguna manera que no permiten directamente su lectura con <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smn_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s1">&#39;smn&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pronostico</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">smn_path</span> <span class="o">/</span> <span class="s1">&#39;pronostico_header4.txt&#39;</span><span class="p">)</span>
+<span class="n">pronostico</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>************************************************************************************************</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Producto basado en un modelo de pronóstico numérico del tiempo</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>por lo tanto puede diferir del pronostico emitido por el SMN</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>************************************************************************************************</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>AEROPARQUE</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>================================================================================================</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>06/DIC/2024 12Hs.        13.1       314 |  12         0.0</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>06/DIC/2024 15Hs.        16.2       297 |  15         0.0</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>06/DIC/2024 18Hs.        15.2       304 |  23         0.0</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>06/DIC/2024 21Hs.         9.1       308 |  17         0.0</th>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>================================================================================================</th>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>187 rows × 1 columns</p>
+</div><p>Probemos usando <code class="docutils literal notranslate"><span class="pre">read_fwf</span></code>, que es capaz de leer tablas con columnas
+de ancho fijo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pronostico</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_fwf</span><span class="p">(</span><span class="n">smn_path</span> <span class="o">/</span> <span class="s1">&#39;pronostico_header4.txt&#39;</span><span class="p">,</span><span class="n">skiprows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">pronostico</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AEROPARQUE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>==============================================...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>FECHA *          TEMPERATURA      VIENTO      ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>(DIR | KM/H)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>==============================================...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>02/DIC/2024 00Hs.        16.0       236 |  17 ...</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>02/DIC/2024 03Hs.        14.4       196 |  18 ...</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>02/DIC/2024 06Hs.        10.6       190 |   8 ...</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>02/DIC/2024 09Hs.        14.9       221 |  11 ...</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>02/DIC/2024 12Hs.        19.2       249 |  12 ...</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>02/DIC/2024 15Hs.        21.6       241 |  15 ...</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Como se esperaba, no parece ser la solución porque la estructura del
+archivo no es estrictamente de columnas de ancho fijo, sino de secciones
+de columnas de ancho fijo. Entonces tenemos que preprocesar el archivo
+para llegar a obtener esas secciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">smn_path</span> <span class="o">/</span> <span class="s1">&#39;pronostico_5dias20250408.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="n">content</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="c1"># Dividir el contenido en secciones por aeropuerto</span>
+<span class="n">sep</span> <span class="o">=</span>  <span class="s2">&quot;================================================================================================&quot;</span>
+<span class="n">sections</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sep</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">5</span><span class="p">]):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sección </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="s1">&#39;-&#39;</span><span class="o">*</span><span class="mi">80</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<pre class="literal-block">Sección 0 --------------------------------------------------------------------------------
+<strong>********************************************************************************************</strong>
+ Producto basado en un modelo de pronóstico numérico del tiempo,
+ por lo tanto puede diferir del pronostico emitido por el SMN
+ <strong>********************************************************************************************</strong>
+
+ AEROPARQUE
+
+Sección 1 --------------------------------------------------------------------------------
+
+      FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                     (DIR | KM/H)
+
+Sección 2 --------------------------------------------------------------------------------
+
+  08/ABR/2025 00Hs.        15.4       116 |  27         7.5
+  08/ABR/2025 03Hs.        15.6       112 |  25         3.0
+  08/ABR/2025 06Hs.        16.0       114 |  26         3.0
+  08/ABR/2025 09Hs.        16.3       115 |  26         1.7
+  08/ABR/2025 12Hs.        16.6       123 |  22         1.1
+  08/ABR/2025 15Hs.        17.0       123 |  24         0.9
+  08/ABR/2025 18Hs.        16.7       117 |  24         1.8
+  08/ABR/2025 21Hs.        16.6       104 |  22         1.4
+  09/ABR/2025 00Hs.        16.7       100 |  22         0.6
+  09/ABR/2025 03Hs.        16.2       110 |  21         1.2
+  09/ABR/2025 06Hs.        16.0       107 |  18         1.3
+  09/ABR/2025 09Hs.        16.1        99 |  18         1.9
+  09/ABR/2025 12Hs.        17.3        99 |  14         0.7
+  09/ABR/2025 15Hs.        19.9       106 |  19         0.4
+  09/ABR/2025 18Hs.        18.2       104 |  17         0.0
+  09/ABR/2025 21Hs.        17.1       108 |  16         0.0
+  10/ABR/2025 00Hs.        17.1       109 |  15         0.0
+  10/ABR/2025 03Hs.        17.6       104 |  16         0.0
+  10/ABR/2025 06Hs.        17.0        94 |  13         0.0
+  10/ABR/2025 09Hs.        18.2        98 |  13         0.0
+  10/ABR/2025 12Hs.        19.7       102 |  11         0.1
+  10/ABR/2025 15Hs.        21.3       138 |  12         0.0
+  10/ABR/2025 18Hs.        19.5       120 |  14         0.0
+  10/ABR/2025 21Hs.        18.6       109 |   8         0.2
+  11/ABR/2025 00Hs.        17.2        22 |   4         0.0
+  11/ABR/2025 03Hs.        14.8        35 |   6         0.0
+  11/ABR/2025 06Hs.        15.2        26 |   4         0.0
+  11/ABR/2025 09Hs.        17.5        30 |   2         0.0
+  11/ABR/2025 12Hs.        19.6         6 |   3         0.2
+  11/ABR/2025 15Hs.        22.8       326 |   3         0.0
+  11/ABR/2025 18Hs.        20.1       187 |   4         0.0
+  11/ABR/2025 21Hs.        18.2       115 |   3         0.0
+  12/ABR/2025 00Hs.        16.6       292 |   3         0.0
+  12/ABR/2025 03Hs.        15.1       254 |   6         0.0
+  12/ABR/2025 06Hs.        14.4       239 |   6         0.0
+  12/ABR/2025 09Hs.        17.6       213 |   6         0.0
+  12/ABR/2025 12Hs.        22.4       149 |   7         0.0
+  12/ABR/2025 15Hs.        22.8       123 |   8         0.0
+  12/ABR/2025 18Hs.        19.5        72 |   4         0.0
+  12/ABR/2025 21Hs.        17.0        95 |   8         0.0
+
+Sección 3 --------------------------------------------------------------------------------
+
+ AZUL_AERO
+
+Sección 4 --------------------------------------------------------------------------------
+
+      FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                     (DIR | KM/H)</pre>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Estación : &quot;</span><span class="p">,</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Header : &quot;</span><span class="p">,</span> <span class="n">sections</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pronóstico : &quot;</span><span class="p">,</span> <span class="n">sections</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+<pre class="literal-block">Estación :  <strong>********************************************************************************************</strong>
+ Producto basado en un modelo de pronóstico numérico del tiempo,
+ por lo tanto puede diferir del pronostico emitido por el SMN
+ <strong>********************************************************************************************</strong>
+
+ AEROPARQUE
+
+Header :
+      FECHA *          TEMPERATURA      VIENTO      PRECIPITACION(mm)
+                                     (DIR | KM/H)
+
+Pronóstico :
+  08/ABR/2025 00Hs.        15.4       116 |  27         7.5
+  08/ABR/2025 03Hs.        15.6       112 |  25         3.0
+  08/ABR/2025 06Hs.        16.0       114 |  26         3.0
+  08/ABR/2025 09Hs.        16.3       115 |  26         1.7
+  08/ABR/2025 12Hs.        16.6       123 |  22         1.1
+  08/ABR/2025 15Hs.        17.0       123 |  24         0.9
+  08/ABR/2025 18Hs.        16.7       117 |  24         1.8
+  08/ABR/2025 21Hs.        16.6       104 |  22         1.4
+  09/ABR/2025 00Hs.        16.7       100 |  22         0.6
+  09/ABR/2025 03Hs.        16.2       110 |  21         1.2
+  09/ABR/2025 06Hs.        16.0       107 |  18         1.3
+  09/ABR/2025 09Hs.        16.1        99 |  18         1.9
+  09/ABR/2025 12Hs.        17.3        99 |  14         0.7
+  09/ABR/2025 15Hs.        19.9       106 |  19         0.4
+  09/ABR/2025 18Hs.        18.2       104 |  17         0.0
+  09/ABR/2025 21Hs.        17.1       108 |  16         0.0
+  10/ABR/2025 00Hs.        17.1       109 |  15         0.0
+  10/ABR/2025 03Hs.        17.6       104 |  16         0.0
+  10/ABR/2025 06Hs.        17.0        94 |  13         0.0
+  10/ABR/2025 09Hs.        18.2        98 |  13         0.0
+  10/ABR/2025 12Hs.        19.7       102 |  11         0.1
+  10/ABR/2025 15Hs.        21.3       138 |  12         0.0
+  10/ABR/2025 18Hs.        19.5       120 |  14         0.0
+  10/ABR/2025 21Hs.        18.6       109 |   8         0.2
+  11/ABR/2025 00Hs.        17.2        22 |   4         0.0
+  11/ABR/2025 03Hs.        14.8        35 |   6         0.0
+  11/ABR/2025 06Hs.        15.2        26 |   4         0.0
+  11/ABR/2025 09Hs.        17.5        30 |   2         0.0
+  11/ABR/2025 12Hs.        19.6         6 |   3         0.2
+  11/ABR/2025 15Hs.        22.8       326 |   3         0.0
+  11/ABR/2025 18Hs.        20.1       187 |   4         0.0
+  11/ABR/2025 21Hs.        18.2       115 |   3         0.0
+  12/ABR/2025 00Hs.        16.6       292 |   3         0.0
+  12/ABR/2025 03Hs.        15.1       254 |   6         0.0
+  12/ABR/2025 06Hs.        14.4       239 |   6         0.0
+  12/ABR/2025 09Hs.        17.6       213 |   6         0.0
+  12/ABR/2025 12Hs.        22.4       149 |   7         0.0
+  12/ABR/2025 15Hs.        22.8       123 |   8         0.0
+  12/ABR/2025 18Hs.        19.5        72 |   4         0.0
+  12/ABR/2025 21Hs.        17.0        95 |   8         0.0</pre>
+<p>La lista <code class="docutils literal notranslate"><span class="pre">sections</span></code> contiene secciones que corresponden a una estación
+meteorológica, cuyos nombres son:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="c1"># tratamiento especial para remover el comentario</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">AEROPARQUE</span>
+ <span class="n">AZUL_AERO</span>
+ <span class="n">BAHIA_BLANCA_AERO</span>
+
+
+<span class="n">La</span> <span class="n">primer</span> <span class="n">sección</span> <span class="n">debe</span> <span class="n">trabajarse</span> <span class="n">a</span> <span class="n">mano</span> <span class="n">debido</span> <span class="n">al</span> <span class="n">comentario</span> <span class="n">que</span>
+<span class="n">posee</span> <span class="n">el</span> <span class="n">archivo</span>
+</pre></div>
+</div>
+<p>Las siguientes serían las secciones de headers que en principio no nos
+harían falta:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FECHA</span> <span class="o">*</span>          <span class="n">TEMPERATURA</span>      <span class="n">VIENTO</span>      <span class="n">PRECIPITACION</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+                                     <span class="p">(</span><span class="n">DIR</span> <span class="o">|</span> <span class="n">KM</span><span class="o">/</span><span class="n">H</span><span class="p">)</span>
+<span class="n">FECHA</span> <span class="o">*</span>          <span class="n">TEMPERATURA</span>      <span class="n">VIENTO</span>      <span class="n">PRECIPITACION</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+                                     <span class="p">(</span><span class="n">DIR</span> <span class="o">|</span> <span class="n">KM</span><span class="o">/</span><span class="n">H</span><span class="p">)</span>
+<span class="n">FECHA</span> <span class="o">*</span>          <span class="n">TEMPERATURA</span>      <span class="n">VIENTO</span>      <span class="n">PRECIPITACION</span><span class="p">(</span><span class="n">mm</span><span class="p">)</span>
+                                     <span class="p">(</span><span class="n">DIR</span> <span class="o">|</span> <span class="n">KM</span><span class="o">/</span><span class="n">H</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finalmente tenemos las secciones con los datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[:</span><span class="mi">5</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 00Hs.        15.4       116 |  27         7.5 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 03Hs.        15.6       112 |  25         3.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 06Hs.        16.0       114 |  26         3.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 09Hs.        16.3       115 |  26         1.7 &#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 00Hs.        10.3       109 |  15         0.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 03Hs.         9.3       124 |  12         0.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 06Hs.         8.9       134 |  11         0.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 09Hs.        12.6       122 |  18         0.0 &#39;</span><span class="p">]</span>
+<span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 00Hs.        13.5        35 |  20         0.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 03Hs.        11.7        31 |  16         0.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 06Hs.        10.7        42 |  12         0.0 &#39;</span><span class="p">,</span> <span class="s1">&#39;  08/ABR/2025 09Hs.        12.6        50 |  15         0.0 &#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Ahora sí podemos usar <code class="docutils literal notranslate"><span class="pre">read_fwf</span></code> para transformar las secciones en
+<code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>s. Para ello tenemos que convertir cada <code class="docutils literal notranslate"><span class="pre">section</span></code> (que
+es un string) en un tipo de buffer en memoria que se comporte como un
+archivo. Obsérvese que si hacemos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="k">with</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span> <span class="k">as</span> <span class="n">data_io</span><span class="p">:</span>
+    <span class="n">df_malo</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_fwf</span><span class="p">(</span><span class="n">data_io</span><span class="p">)</span>
+
+<span class="n">df_malo</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>08/ABR/2025</th>
+      <th>00Hs.</th>
+      <th>10.3</th>
+      <th>109</th>
+      <th>|</th>
+      <th>15</th>
+      <th>0.0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>08/ABR/2025</td>
+      <td>03Hs.</td>
+      <td>9.3</td>
+      <td>124</td>
+      <td>|</td>
+      <td>12</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>08/ABR/2025</td>
+      <td>06Hs.</td>
+      <td>8.9</td>
+      <td>134</td>
+      <td>|</td>
+      <td>11</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>08/ABR/2025</td>
+      <td>09Hs.</td>
+      <td>12.6</td>
+      <td>122</td>
+      <td>|</td>
+      <td>18</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>08/ABR/2025</td>
+      <td>12Hs.</td>
+      <td>19.4</td>
+      <td>95</td>
+      <td>|</td>
+      <td>22</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>08/ABR/2025</td>
+      <td>15Hs.</td>
+      <td>21.4</td>
+      <td>99</td>
+      <td>|</td>
+      <td>28</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Es decir que la primer fila del <em>stream</em> es tomada como los nombres de
+las columnas. Tenemos que pasar el argumento opcional <code class="docutils literal notranslate"><span class="pre">names</span></code> para
+definir los nombres de las columnas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">sections</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="k">as</span> <span class="n">data_io</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_fwf</span><span class="p">(</span><span class="n">data_io</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fecha&#39;</span><span class="p">,</span><span class="s1">&#39;h&#39;</span><span class="p">,</span><span class="s1">&#39;t&#39;</span><span class="p">,</span><span class="s1">&#39;v_dir&#39;</span><span class="p">,</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="s1">&#39;v_vel&#39;</span><span class="p">,</span><span class="s1">&#39;precip&#39;</span><span class="p">])</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fecha</th>
+      <th>h</th>
+      <th>t</th>
+      <th>v_dir</th>
+      <th>l</th>
+      <th>v_vel</th>
+      <th>precip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>08/ABR/2025</td>
+      <td>00Hs.</td>
+      <td>15.4</td>
+      <td>116</td>
+      <td>|</td>
+      <td>27</td>
+      <td>7.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>08/ABR/2025</td>
+      <td>03Hs.</td>
+      <td>15.6</td>
+      <td>112</td>
+      <td>|</td>
+      <td>25</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>08/ABR/2025</td>
+      <td>06Hs.</td>
+      <td>16.0</td>
+      <td>114</td>
+      <td>|</td>
+      <td>26</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>08/ABR/2025</td>
+      <td>09Hs.</td>
+      <td>16.3</td>
+      <td>115</td>
+      <td>|</td>
+      <td>26</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>08/ABR/2025</td>
+      <td>12Hs.</td>
+      <td>16.6</td>
+      <td>123</td>
+      <td>|</td>
+      <td>22</td>
+      <td>1.1</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Para terminar podemos eliminar la columna <code class="docutils literal notranslate"><span class="pre">l</span></code> que no aporta
+información:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;l&#39;</span><span class="p">],</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fecha</th>
+      <th>h</th>
+      <th>t</th>
+      <th>v_dir</th>
+      <th>v_vel</th>
+      <th>precip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>08/ABR/2025</td>
+      <td>00Hs.</td>
+      <td>15.4</td>
+      <td>116</td>
+      <td>27</td>
+      <td>7.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>08/ABR/2025</td>
+      <td>03Hs.</td>
+      <td>15.6</td>
+      <td>112</td>
+      <td>25</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>08/ABR/2025</td>
+      <td>06Hs.</td>
+      <td>16.0</td>
+      <td>114</td>
+      <td>26</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>08/ABR/2025</td>
+      <td>09Hs.</td>
+      <td>16.3</td>
+      <td>115</td>
+      <td>26</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>08/ABR/2025</td>
+      <td>12Hs.</td>
+      <td>16.6</td>
+      <td>123</td>
+      <td>22</td>
+      <td>1.1</td>
+    </tr>
+  </tbody>
+</table>
+</div><table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>##
+Eje
+rci
+cio
+14
+(a)</p></td>
+</tr>
+<tr class="row-even"><td><p>Co
+mpl
+ete
+la
+ta
+bla
+de
+da
+tos
+del
+e
+jem
+plo
+de
+cla
+se.
+P
+ara
+e
+llo
+u
+til
+ice
+el
+a
+rch
+ivo
+con
+los
+pr
+onó
+sti
+cos
+com
+ple
+tos
+p
+ara
+to
+das
+las
+es
+tac
+ion
+es,
+``
+pro
+nos
+tic
+o_5
+dia
+s20
+250
+408
+.tx
+t``
+y</p></td>
+</tr>
+<tr class="row-odd"><td><ul class="simple">
+<li></li>
+</ul>
+<p>A
+gre
+gue
+una
+c
+olu
+mna
+con
+el
+nom
+bre
+de
+la
+es
+tac
+ión
+al
+Dat
+aFr
+ame
+-
+P
+roc
+ese
+to
+das
+las
+e
+sta
+cio
+nes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_13.html" class="btn btn-neutral float-left" title="Clase 13: Introducción al paquete Scipy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
