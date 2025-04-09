@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clase 14: Input/Output con pandas &mdash; documentación de Clases de Python - </title>
+  <title>Clase 14: Introducción a pandas &mdash; documentación de Clases de Python - </title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
       <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
@@ -17,6 +17,7 @@
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/translations.js?v=efdbd0b9"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Ejercicios" href="ejercicios.html" />
@@ -62,13 +63,32 @@
 <li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Visualización</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Más información sobre <strong>Numpy</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Introducción al paquete Scipy</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#json">JSON</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#csv">CSV</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 14: Introducción a <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#input-output-con-pandas">Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#csv">CSV</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#formatos-binarios">Formatos binarios</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cuando-se-pone-dificil">Cuando se pone difícil</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#formatos-binarios">Formatos binarios</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#web">Web</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#cuando-se-pone-dificil">Cuando se pone difícil</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-14-a">Ejercicio 14(a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#estructuras-de-datos-en-pandas-series">Estructuras de datos en <code class="docutils literal notranslate"><span class="pre">pandas</span></code>: Series</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#accediendo-a-los-valores">Accediendo a los valores</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#modificando-valores">Modificando valores</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tipos-de-datos">Tipos de datos</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#valores-que-faltan">Valores que faltan</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#operando-con-series">Operando con series</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#miscelaneas">Misceláneas</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicios-14-b">Ejercicios 14(b)</a></li>
 </ul>
 </li>
 </ul>
@@ -95,7 +115,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Clase 14: Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code></li>
+      <li class="breadcrumb-item active">Clase 14: Introducción a <code class="docutils literal notranslate"><span class="pre">pandas</span></code></li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/clase_14.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
       </li>
@@ -105,9 +125,22 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="clase-14-input-output-con-pandas">
-<span id="clase-14"></span><h1>Clase 14: Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#clase-14-input-output-con-pandas" title="Link to this heading"></a></h1>
+  <section id="clase-14-introduccion-a-pandas">
+<span id="clase-14"></span><h1>Clase 14: Introducción a <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#clase-14-introduccion-a-pandas" title="Link to this heading"></a></h1>
 <hr class="docutils" />
+<p>El análisis y consumo de grandes cantidades de información requiere
+herramientas que permitan limpiar, filtrar, agrupar los datos. Una de
+las bibliotecas fundamentales para ello es <code class="docutils literal notranslate"><span class="pre">pandas</span></code>. <code class="docutils literal notranslate"><span class="pre">pandas</span></code>
+contiene estructuras de datos y funciones que permiten la manipulación
+de los datos en forma rápida. <code class="docutils literal notranslate"><span class="pre">pandas</span></code> está inspirada fuertemente en
+<code class="docutils literal notranslate"><span class="pre">numpy</span></code>, en el sentido en que adopta en su diseño el estilo idiomático
+de <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. La diferencia principal radica en que <code class="docutils literal notranslate"><span class="pre">numpy</span></code> se utiliza
+para conjuntos de datos homogéneos, mientras que <code class="docutils literal notranslate"><span class="pre">pandas</span></code> está
+diseñada para trabajar con tablas o datos heterogéneos.</p>
+<p>Otra biblioteca con características similares es
+<a class="reference external" href="https://docs.pola.rs/">polars</a></p>
+<section id="input-output-con-pandas">
+<h2>Input/Output con <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#input-output-con-pandas" title="Link to this heading"></a></h2>
 <p>Para poder leer o escribir datos, <code class="docutils literal notranslate"><span class="pre">pandas</span></code> provee una serie de métodos
 específicos para todos los tipos de datos estructurados usuales, ya sea
 en formato texto o binario. Los métodos para leer de archivos se
@@ -122,7 +155,7 @@ que permite inspeccionar <code class="docutils literal notranslate"><span class=
 trabaja con muchos datos.</p>
 </div></blockquote>
 <section id="json">
-<h2>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h2>
+<h3>JSON<a class="headerlink" href="#json" title="Link to this heading"></a></h3>
 <p>JSON (JavaScript Object Notation) es un formato estándar de estructura
 de datos en modo texto, legible y de amplio uso en internet.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -447,7 +480,7 @@ un json:</p>
 </pre></div>
 </div>
 <section id="csv">
-<h3>CSV<a class="headerlink" href="#csv" title="Link to this heading"></a></h3>
+<h4>CSV<a class="headerlink" href="#csv" title="Link to this heading"></a></h4>
 <p>Podríamos querer escribirlos como valores separados por comas (u otro
 delimitador):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Element&#39;</span><span class="p">,</span> <span class="s1">&#39;Symbol&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Number&#39;</span><span class="p">,</span> <span class="s1">&#39;Atomic Mass (u)&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">atomos_path</span> <span class="o">/</span> <span class="s1">&#39;prop_atomos.csv&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
@@ -468,7 +501,7 @@ puede indicar otro tipo de valor para esos casos:</p>
 </section>
 </section>
 <section id="formatos-binarios">
-<h2>Formatos binarios<a class="headerlink" href="#formatos-binarios" title="Link to this heading"></a></h2>
+<h3>Formatos binarios<a class="headerlink" href="#formatos-binarios" title="Link to this heading"></a></h3>
 <p>En algunos casos como leer o escribir de archivos binarios, es necesario
 instalar algunos módulos. Por ejemplo, si queremos leer archivos
 <code class="docutils literal notranslate"><span class="pre">.parquet</span></code>, tenemos que instalar <code class="docutils literal notranslate"><span class="pre">pyarrow</span></code>.</p>
@@ -636,7 +669,9 @@ instalar algunos módulos. Por ejemplo, si queremos leer archivos
     </tr>
   </tbody>
 </table>
-</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL que contiene una tabla HTML</span>
+</div><section id="web">
+<h4>Web<a class="headerlink" href="#web" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># URL que contiene una tabla HTML</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://en.wikipedia.org/wiki/List_of_countries_by_population&quot;</span>
 
 <span class="c1"># Leer todas las tablas de la página</span>
@@ -733,8 +768,9 @@ instalar algunos módulos. Por ejemplo, si queremos leer archivos
   </tbody>
 </table>
 </div></section>
+</section>
 <section id="cuando-se-pone-dificil">
-<h2>Cuando se pone difícil<a class="headerlink" href="#cuando-se-pone-dificil" title="Link to this heading"></a></h2>
+<h3>Cuando se pone difícil<a class="headerlink" href="#cuando-se-pone-dificil" title="Link to this heading"></a></h3>
 <p>En muchas situaciones los archivos pueden tener datos estructurados de
 alguna manera que no permiten directamente su lectura con <code class="docutils literal notranslate"><span class="pre">pandas</span></code>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smn_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s1">&#39;data&#39;</span> <span class="o">/</span> <span class="s1">&#39;smn&#39;</span>
@@ -1322,111 +1358,391 @@ información:</p>
     </tr>
   </tbody>
 </table>
-</div><table class="docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p>##
-Eje
-rci
-cio
-14
-(a)</p></td>
-</tr>
-<tr class="row-even"><td><p>Co
-mpl
-ete
-la
-ta
-bla
-de
-da
-tos
-del
-e
-jem
-plo
-de
-cla
-se.
-P
-ara
-e
-llo
-u
-til
-ice
-el
-a
-rch
-ivo
-con
-los
-pr
-onó
-sti
-cos
-com
-ple
-tos
-p
-ara
-to
-das
-las
-es
-tac
-ion
-es,
-``
-pro
-nos
-tic
-o_5
-dia
-s20
-250
-408
-.tx
-t``
-y</p></td>
-</tr>
-<tr class="row-odd"><td><ul class="simple">
-<li></li>
+</div></section>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-14-a">
+<h2>Ejercicio 14(a)<a class="headerlink" href="#ejercicio-14-a" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Complete la tabla de datos del ejemplo de clase. Para ello utilice el
+archivo con los pronósticos completos para todas las estaciones,
+<code class="docutils literal notranslate"><span class="pre">pronostico_5dias20250408.txt</span></code> y</p></li>
+</ol>
+<ul class="simple">
+<li><p>Agregue una columna con el nombre de la estación al DataFrame</p></li>
+<li><p>Procese todas las estaciones</p></li>
 </ul>
-<p>A
-gre
-gue
-una
-c
-olu
-mna
-con
-el
-nom
-bre
-de
-la
-es
-tac
-ión
-al
-Dat
-aFr
-ame
--
-P
-roc
-ese
-to
-das
-las
-e
-sta
-cio
-nes</p>
-</td>
-</tr>
-</tbody>
-</table>
+</section>
+<hr class="docutils" />
+<section id="estructuras-de-datos-en-pandas-series">
+<h2>Estructuras de datos en <code class="docutils literal notranslate"><span class="pre">pandas</span></code>: Series<a class="headerlink" href="#estructuras-de-datos-en-pandas-series" title="Link to this heading"></a></h2>
+<p>Las series son un objeto unidimensional que contiene una secuencia de
+valores <em>del mismo tipo</em> y un conjunto de etiquetas denominado <em>índice</em>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En este ejemplo, <code class="docutils literal notranslate"><span class="pre">s</span></code> es una serie que contiene elementos <code class="docutils literal notranslate"><span class="pre">int64</span></code>.</p>
+<blockquote>
+<div><p>Los tipos de datos son extensiones de aquellos que utiliza <code class="docutils literal notranslate"><span class="pre">numpy</span></code>.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Notar que usando directamente la función <code class="docutils literal notranslate"><span class="pre">print</span></code> obtenemos una
+representación textual de la serie.</p>
+</div></blockquote>
+<p>Se puede acceder a los valores de la serie con el método <code class="docutils literal notranslate"><span class="pre">.array</span></code>, y a
+los índices con el método <code class="docutils literal notranslate"><span class="pre">.index</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">array</span>
+</pre></div>
+</div>
+<p>El tipo <code class="docutils literal notranslate"><span class="pre">NumpyExtensionArray</span></code> es una clase que encapsula al tipo array
+de <code class="docutils literal notranslate"><span class="pre">numpy</span></code>, pero ha permitido agregarle flexibilidad para acomodar las
+características de datos más generales.</p>
+<p>Por otra parte, los índices se obtienen como:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+<p>Los índices son inmutables, en el mismo sentido que los caracteres de un
+string. Es decir, no se pueden cambiar ciertos índices, pero se puede
+<em>reasignar</em> el índice de una serie completamente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">nuevo_index</span> <span class="o">=</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span>
+<span class="n">s</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">nuevo_index</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Se puede también construir una nueva serie indicando los índices
+específicamente en el constructor con el argumento <code class="docutils literal notranslate"><span class="pre">index=</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;arquero&#39;</span><span class="p">,</span><span class="s1">&#39;defensores&#39;</span><span class="p">,</span><span class="s1">&#39;medios&#39;</span><span class="p">,</span><span class="s1">&#39;delanteros&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Existen otras maneras de crear series en <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, como por ejemplo a
+partir de arreglos de <code class="docutils literal notranslate"><span class="pre">numpy</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rnd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rnd</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>A partir de otras variables</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
+<span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">]</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+<span class="n">s3</span>
+</pre></div>
+</div>
+<p>o usando diccionarios:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;c&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;d&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;e&quot;</span> <span class="p">}</span>
+<span class="n">s4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Asimismo, se puede usar el argumento <code class="docutils literal notranslate"><span class="pre">dtype</span></code> (igual que en NumPy) para
+indicar el tipo de dato que se quiere utilizar al crear la serie. Pandas
+soporta los tipos de datos de NumPy, además de proveer sus propios tipos
+de datos (por ejemplo, <code class="docutils literal notranslate"><span class="pre">string</span></code>) propios</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<section id="accediendo-a-los-valores">
+<h3>Accediendo a los valores<a class="headerlink" href="#accediendo-a-los-valores" title="Link to this heading"></a></h3>
+<p>Se puede acceder a los valores de una serie a través del índice como si
+fuera un array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">42</span> <span class="p">],</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">,</span><span class="s1">&#39;f&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tercer elemento: </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">s</span><span class="o">.</span><span class="n">array</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">108</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con un rango:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con los índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una máscara:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una lista de índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una lista de índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">iloc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Con una lista de índices:</span><span class="se">\n</span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="w"> </span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span><span class="w"> </span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="modificando-valores">
+<h3>Modificando valores<a class="headerlink" href="#modificando-valores" title="Link to this heading"></a></h3>
+<p>Para modificar un valor dentro de una serie de <code class="docutils literal notranslate"><span class="pre">pandas</span></code>, se accede al
+mismo con la etiqueta correspondiente:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;e&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="n">v</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En caso en que dicha etiqueta no exista dentro del índice de la serie,
+se agrega el valor:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Para eliminar valores, se utiliza el método <code class="docutils literal notranslate"><span class="pre">.drop</span></code>. Por defecto se
+genera una nueva serie con el valor eliminado, para poder eliminar el
+valor en la misma serie, es necesario usar el argumento opcional
+<code class="docutils literal notranslate"><span class="pre">inplace</span></code> como <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">w</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generando un nuevo objeto</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">==</span><span class="n">w</span><span class="p">)</span>
+<span class="c1"># Comparando objetos</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v is w: </span><span class="si">{</span><span class="n">v</span><span class="w"> </span><span class="ow">is</span><span class="w"> </span><span class="n">w</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;v equals w: </span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">equals</span><span class="p">(</span><span class="n">w</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">v</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># KeyError: &quot;[&#39;b&#39;] not found in axis&quot;</span>
+</pre></div>
+</div>
+<section id="tipos-de-datos">
+<h4>Tipos de datos<a class="headerlink" href="#tipos-de-datos" title="Link to this heading"></a></h4>
+<p>Como último comentario, obsérvese que si uno pretende crear una serie
+con valores de distinto tipo, el tipo de la serie se promueve al tipo
+general <code class="docutils literal notranslate"><span class="pre">object</span></code>, sin embargo cada elemento es reconocido con su tipo
+particular:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">elem</span> <span class="ow">in</span> <span class="n">s</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tipo de objeto del elemento </span><span class="si">{</span><span class="n">index</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">index</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suma de enteros: </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Suma de enteros: </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Error</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concat de str  : </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;d&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Concat de str  : </span><span class="si">{</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># Error</span>
+</pre></div>
+</div>
+<p>Si bien entonces se pueden usar series con objetos con distintos tipos,
+se recomienda que el tipo de dato sea homogéneo.</p>
+</section>
+</section>
+<section id="valores-que-faltan">
+<h3>Valores que faltan<a class="headerlink" href="#valores-que-faltan" title="Link to this heading"></a></h3>
+<p>Es muy común al procesar datos que uno encuentre valores que no existen.
+La manera en que <code class="docutils literal notranslate"><span class="pre">pandas</span></code> representa estos datos faltantes es a través
+de <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>, el tipo de dato de <code class="docutils literal notranslate"><span class="pre">numpy</span></code> que representa <em>not a
+number</em>, para aquellos tipos de datos heredados de <code class="docutils literal notranslate"><span class="pre">numpy</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">snan</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+ <span class="nb">print</span><span class="p">(</span><span class="n">snan</span><span class="p">)</span>
+
+<span class="n">Notar</span> <span class="n">que</span> <span class="n">si</span> <span class="n">bien</span> <span class="n">los</span> <span class="n">datos</span> <span class="n">existentes</span> <span class="n">son</span> <span class="n">de</span> <span class="n">tipo</span> <span class="n">entero</span><span class="p">,</span> <span class="n">al</span>
+<span class="n">utilizar</span> <span class="err">``</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="err">``</span> <span class="n">para</span> <span class="n">representar</span> <span class="n">un</span> <span class="n">dato</span> <span class="n">inexistente</span><span class="p">,</span> <span class="n">el</span> <span class="n">tipo</span> <span class="n">de</span>
+<span class="n">dato</span> <span class="n">de</span> <span class="n">la</span> <span class="n">serie</span> <span class="n">se</span> <span class="n">promueve</span> <span class="n">a</span> <span class="err">``</span><span class="n">float64</span><span class="err">``</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>De la misma forma, se puede usar <code class="docutils literal notranslate"><span class="pre">None</span></code> para representar el dato
+faltante:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">snone</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">snone</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En el caso de cadenas de caracteres, se puede usar <code class="docutils literal notranslate"><span class="pre">np.nan</span></code> o
+<code class="docutils literal notranslate"><span class="pre">None</span></code>. Si no se indica el tipo de dato a través de <code class="docutils literal notranslate"><span class="pre">dtype</span></code>, se
+promueve el tipo de dato de la serie a <code class="docutils literal notranslate"><span class="pre">object</span></code>, como sucede por
+defecto.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smixed_str</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="n">smixed_str</span>
+</pre></div>
+</div>
+<p>Esto tiene el inconveniente evidente de que el elemento faltante no está
+representado unívocamente por un solo valor. Para solventar este
+problema, se puede crear la serie con el tipo <code class="docutils literal notranslate"><span class="pre">string</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smixed_str2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">smixed_str2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En este caso, el singlete <code class="docutils literal notranslate"><span class="pre">NA</span></code> representa unívocamente el dato
+faltante. En cualquier caso, se cuenta con el método <code class="docutils literal notranslate"><span class="pre">.isna</span></code>, que
+retorna una serie de <code class="docutils literal notranslate"><span class="pre">boolean</span></code> donde los valores faltantes son
+verdaderos (<code class="docutils literal notranslate"><span class="pre">True</span></code>):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
+ <span class="nb">print</span><span class="p">(</span><span class="n">smixed_str2</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
+
+<span class="n">Atención</span><span class="p">,</span> <span class="n">la</span> <span class="n">cadena</span> <span class="n">de</span> <span class="n">caracteres</span> <span class="n">vacía</span> <span class="err">``</span><span class="s1">&#39;&#39;</span><span class="err">``</span> <span class="o">*</span><span class="n">NO</span><span class="o">*</span> <span class="n">se</span> <span class="n">considera</span> <span class="n">un</span>
+<span class="n">dato</span> <span class="n">inexistente</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Puede ser útil en algunos casos poder filtrar los datos inexistentes.
+Para eso se utiliza el método <code class="docutils literal notranslate"><span class="pre">.dropna</span></code>, que crea una nueva serie sin
+dichos datos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">smixed_str</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="operando-con-series">
+<h3>Operando con series<a class="headerlink" href="#operando-con-series" title="Link to this heading"></a></h3>
+<p>Las operaciones con series han sido diseñadas para que sean compatibles
+con NumPy, y sigan las convenciones de Python. He aquí algunos ejemplos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ones</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span><span class="o">*</span><span class="mf">0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ones</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">shifted</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-</span> <span class="n">ones</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shifted</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">shifted</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">shifted</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Además de poder interactuar con NumPy en forma transparente, existen
+algunos métodos útiles para trabajar con los datos de una serie:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Pedro&#39;</span><span class="p">:</span><span class="mi">19</span><span class="p">,</span> <span class="s1">&#39;Oscar&#39;</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;Carlos&#39;</span><span class="p">:</span> <span class="mi">27</span><span class="p">,</span> <span class="s1">&#39;David&#39;</span><span class="p">:</span> <span class="mi">26</span><span class="p">}</span>
+<span class="n">seru</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Person Series:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">seru</span><span class="p">)</span>
+
+<span class="c1"># Perform operations on the Series</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edad promedio:&quot;</span><span class="p">,</span> <span class="n">seru</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Edad del más viejo :&quot;</span><span class="p">,</span> <span class="n">seru</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;El más viejo :&quot;</span><span class="p">,</span> <span class="n">seru</span><span class="o">.</span><span class="n">idxmax</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temperaturas_ciudades</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Buenos Aires&quot;</span><span class="p">:</span> <span class="mf">17.6</span><span class="p">,</span>
+    <span class="s2">&quot;Córdoba&quot;</span><span class="p">:</span> <span class="mf">18.0</span><span class="p">,</span>
+    <span class="s2">&quot;Rosario&quot;</span><span class="p">:</span> <span class="mf">18.0</span><span class="p">,</span>
+    <span class="s2">&quot;Mendoza&quot;</span><span class="p">:</span> <span class="mf">16.0</span><span class="p">,</span>
+    <span class="s2">&quot;Santa Fe&quot;</span><span class="p">:</span> <span class="mf">21.3</span>
+
+<span class="p">}</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">temperaturas_ciudades</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">otras_ciudades</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Buenos Aires&#39;</span><span class="p">,</span> <span class="s1">&#39;Córdoba&#39;</span><span class="p">,</span> <span class="s1">&#39;Rosario&#39;</span><span class="p">,</span> <span class="s1">&#39;Mendoza&#39;</span><span class="p">,</span> <span class="s1">&#39;Salta&#39;</span><span class="p">]</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">temperaturas_ciudades</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">otras_ciudades</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp_ciudades2</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Mendoza&quot;</span><span class="p">:</span> <span class="mf">20.0</span><span class="p">,</span>
+    <span class="s2">&quot;Salta&quot;</span><span class="p">:</span> <span class="mf">17.2</span><span class="p">,</span>
+    <span class="s2">&quot;Santa Fe&quot;</span><span class="p">:</span> <span class="mf">18.6</span><span class="p">,</span>
+    <span class="s2">&quot;San Juan&quot;</span><span class="p">:</span> <span class="mf">19.3</span>
+<span class="p">}</span>
+<span class="n">temp2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">temp_ciudades2</span><span class="p">)</span>
+<span class="n">temp2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">((</span><span class="n">temp</span> <span class="o">+</span> <span class="n">temp2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="miscelaneas">
+<h3>Misceláneas<a class="headerlink" href="#miscelaneas" title="Link to this heading"></a></h3>
+<p>Algunas otras operaciones interesantes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;Rosario&#39;</span> <span class="ow">in</span> <span class="n">temp2</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp2_dict</span> <span class="o">=</span> <span class="n">temp2</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp2_dict</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">temp2_dict</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temp2_json</span> <span class="o">=</span> <span class="n">temp2</span><span class="o">.</span><span class="n">to_json</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">temp2_json</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">temp2_json</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+<hr class="docutils" />
+<section id="ejercicios-14-b">
+<h2>Ejercicios 14(b)<a class="headerlink" href="#ejercicios-14-b" title="Link to this heading"></a></h2>
+<ol class="arabic" start="2">
+<li><p>Si no lo ha adivinado, los datos de la serie <code class="docutils literal notranslate"><span class="pre">seru</span></code> corresponden a
+las edades de los integrantes de la banda Serú Girán, al momento de
+conformarse, en el año 1978. Encuentre los años de nacimiento de cada
+uno de sus integrantes.</p></li>
+<li><p>Una de las funciones más usadas en redes neuronales es <em>softmax</em>,
+cuyo objetivo es convertir los resultados de las distintas etapas del
+procesamiento de una red en probabilidades. Los primeros pueden ser
+números reales de cualquier valor, mientras que las probabilidades
+deben estar acotadas al intervalo [0,1]. La función <em>softmax</em>
+aplicada a un conjunto de valores <span class="math notranslate nohighlight">\(z_1,\cdots,z_n\)</span> se calcula
+como</p>
+<div class="math notranslate nohighlight">
+\[\sigma(z_i) = \frac {e^{z_i}} { \sum_{i=1}^n e^{z_i}}\]</div>
+<ul class="simple">
+<li><p>Cree una serie con 10 valores al azar entre 0 y 5</p></li>
+<li><p>Obtenga la serie resultante de la aplicación de <em>softmax</em> a la
+serie anterior</p></li>
+</ul>
+</li>
+<li><p>El siguiente es un diccionario que representa el consumo eléctrico
+mensual de ciertos artefactos eléctricos:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">consumo_electrico</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;Artefacto&quot;</span><span class="p">:</span> <span class="p">[</span>
+     <span class="s2">&quot;Heladera&quot;</span><span class="p">,</span> <span class="s2">&quot;Lavarropa&quot;</span><span class="p">,</span> <span class="s2">&quot;Microondas&quot;</span><span class="p">,</span> <span class="s2">&quot;Aire Acondicionado&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;Televisor&quot;</span><span class="p">,</span> <span class="s2">&quot;Computadora&quot;</span><span class="p">,</span> <span class="s2">&quot;Lámpara LED&quot;</span><span class="p">,</span> <span class="s2">&quot;Secador de Pelo&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;Horno Eléctrico&quot;</span><span class="p">,</span> <span class="s2">&quot;Ventilador&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;Consumo Promedio (kWh/mes)&quot;</span><span class="p">:</span> <span class="p">[</span>
+     <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">8</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Obtenga los tres artefactos de mayor consumo.</p></li>
+<li><p>Encuentre los artefactos que consumen más de 15 kWH/mes.</p></li>
+<li><p>Calcule el consumo anual de cada artefacto, y el costo que implica
+suponiendo que el precio del kWH/mes es de $3145.</p></li>
+</ul>
+</li>
+<li><p>Un problema de índices enteros. Supongamos que tenemos la serie</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">3.0</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>es decir,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">0.0</span>
+<span class="mi">1</span>    <span class="mf">1.0</span>
+<span class="mi">2</span>    <span class="mf">2.0</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+<p>¿Cuál es el resultado esperado de s[-1]? ¿Cuál es el real? Evalúe
+<code class="docutils literal notranslate"><span class="pre">s[-2:-1]</span></code> y también <code class="docutils literal notranslate"><span class="pre">s.iloc[-1]</span></code>. Considere ahora la serie</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">3.0</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>y evalúe nuevamente <code class="docutils literal notranslate"><span class="pre">s[-1]</span></code>. ¿Qué conclusiones puede sacar?</p>
+</li>
+</ol>
+<hr class="docutils" />
 </section>
 </section>
 

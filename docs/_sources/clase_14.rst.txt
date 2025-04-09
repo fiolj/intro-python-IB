@@ -1,10 +1,26 @@
 .. _clase_14:
 
 
-======================================
-Clase 14: Input/Output con ``pandas``
-======================================
+====================================
+Clase 14: Introducción a ``pandas``
+====================================
 
+=========================
+
+El análisis y consumo de grandes cantidades de información requiere
+herramientas que permitan limpiar, filtrar, agrupar los datos. Una de
+las bibliotecas fundamentales para ello es ``pandas``. ``pandas``
+contiene estructuras de datos y funciones que permiten la manipulación
+de los datos en forma rápida. ``pandas`` está inspirada fuertemente en
+``numpy``, en el sentido en que adopta en su diseño el estilo idiomático
+de ``numpy``. La diferencia principal radica en que ``numpy`` se utiliza
+para conjuntos de datos homogéneos, mientras que ``pandas`` está
+diseñada para trabajar con tablas o datos heterogéneos.
+
+Otra biblioteca con características similares es
+`polars <https://docs.pola.rs/>`__
+
+Input/Output con ``pandas``
 ===========================
 
 Para poder leer o escribir datos, ``pandas`` provee una serie de métodos
@@ -21,7 +37,7 @@ nuestro código.
    trabaja con muchos datos.
 
 JSON
-====
+----
 
 JSON (JavaScript Object Notation) es un formato estándar de estructura
 de datos en modo texto, legible y de amplio uso en internet.
@@ -399,7 +415,7 @@ un json:
 
 
 CSV
----
+~~~
 
 Podríamos querer escribirlos como valores separados por comas (u otro
 delimitador):
@@ -426,7 +442,7 @@ puede indicar otro tipo de valor para esos casos:
     df.to_csv(atomos_path / 'prop_atomos_noheader2.csv', sep='|', index=False, na_rep='N/A')
 
 Formatos binarios
-=================
+-----------------
 
 En algunos casos como leer o escribir de archivos binarios, es necesario
 instalar algunos módulos. Por ejemplo, si queremos leer archivos
@@ -720,7 +736,7 @@ Web
 
 
 Cuando se pone difícil
-======================
+----------------------
 
 En muchas situaciones los archivos pueden tener datos estructurados de
 alguna manera que no permiten directamente su lectura con ``pandas``.
@@ -1396,104 +1412,464 @@ información:
 
 
 
-+-----+
-| ##  |
-| Eje |
-| rci |
-| cio |
-| 14  |
-| (a) |
-+-----+
-| Co  |
-| mpl |
-| ete |
-| la  |
-| ta  |
-| bla |
-| de  |
-| da  |
-| tos |
-| del |
-| e   |
-| jem |
-| plo |
-| de  |
-| cla |
-| se. |
-| P   |
-| ara |
-| e   |
-| llo |
-| u   |
-| til |
-| ice |
-| el  |
-| a   |
-| rch |
-| ivo |
-| con |
-| los |
-| pr  |
-| onó |
-| sti |
-| cos |
-| com |
-| ple |
-| tos |
-| p   |
-| ara |
-| to  |
-| das |
-| las |
-| es  |
-| tac |
-| ion |
-| es, |
-| ``  |
-| pro |
-| nos |
-| tic |
-| o_5 |
-| dia |
-| s20 |
-| 250 |
-| 408 |
-| .tx |
-| t`` |
-| y   |
-+-----+
-| -   |
-| A   |
-| gre |
-| gue |
-| una |
-| c   |
-| olu |
-| mna |
-| con |
-| el  |
-| nom |
-| bre |
-| de  |
-| la  |
-| es  |
-| tac |
-| ión |
-| al  |
-| Dat |
-| aFr |
-| ame |
-| -   |
-| P   |
-| roc |
-| ese |
-| to  |
-| das |
-| las |
-| e   |
-| sta |
-| cio |
-| nes |
-+-----+
+--------------
+
+Ejercicio 14(a)
+===============
+
+1. Complete la tabla de datos del ejemplo de clase. Para ello utilice el
+   archivo con los pronósticos completos para todas las estaciones,
+   ``pronostico_5dias20250408.txt`` y
+
+-  Agregue una columna con el nombre de la estación al DataFrame
+-  Procese todas las estaciones
+
+--------------
 
 
+
+Estructuras de datos en ``pandas``: Series
+==========================================
+
+Las series son un objeto unidimensional que contiene una secuencia de
+valores *del mismo tipo* y un conjunto de etiquetas denominado *índice*:
+
+.. code:: python
+
+    import numpy as np
+    import pandas as pd 
+
+.. code:: python
+
+    s = pd.Series([1,4,4,2])
+    print(s)
+    print(type(s))
+    print(s.dtype)
+
+En este ejemplo, ``s`` es una serie que contiene elementos ``int64``.
+
+   Los tipos de datos son extensiones de aquellos que utiliza ``numpy``.
+
+..
+
+   Notar que usando directamente la función ``print`` obtenemos una
+   representación textual de la serie.
+
+Se puede acceder a los valores de la serie con el método ``.array``, y a
+los índices con el método ``.index``:
+
+.. code:: python
+
+    s.array
+
+El tipo ``NumpyExtensionArray`` es una clase que encapsula al tipo array
+de ``numpy``, pero ha permitido agregarle flexibilidad para acomodar las
+características de datos más generales.
+
+Por otra parte, los índices se obtienen como:
+
+.. code:: python
+
+    s.index 
+
+Los índices son inmutables, en el mismo sentido que los caracteres de un
+string. Es decir, no se pueden cambiar ciertos índices, pero se puede
+*reasignar* el índice de una serie completamente:
+
+.. code:: python
+
+    print(s.index[2])
+    s.index[2] = 5
+
+.. code:: python
+
+    nuevo_index = index=['a','b','c','d']
+    s.index = nuevo_index
+    print(s)
+
+Se puede también construir una nueva serie indicando los índices
+específicamente en el constructor con el argumento ``index=``:
+
+.. code:: python
+
+    s2 = pd.Series([1,4,4,2], index=['arquero','defensores','medios','delanteros'])
+    print(s2)
+
+Existen otras maneras de crear series en ``pandas``, como por ejemplo a
+partir de arreglos de ``numpy``
+
+.. code:: python
+
+    rnd = pd.Series(np.random.randn(5))
+    print(rnd)
+
+A partir de otras variables
+
+.. code:: python
+
+    values = [1,2,3,4,5]
+    index = ['a','b','c','d','e']
+    s3 = pd.Series(values, index=index)
+    s3
+
+o usando diccionarios:
+
+.. code:: python
+
+    d = { 1: "a", 2: "b", 3: "c", 4: "d", 5: "e" }
+    s4 = pd.Series(d,dtype='string')
+    print(s4)
+
+Asimismo, se puede usar el argumento ``dtype`` (igual que en NumPy) para
+indicar el tipo de dato que se quiere utilizar al crear la serie. Pandas
+soporta los tipos de datos de NumPy, además de proveer sus propios tipos
+de datos (por ejemplo, ``string``) propios
+
+.. code:: python
+
+    n = pd.Series([4,5,6], dtype='string')
+    print(n)
+    print(n[0]+n[1])
+
+Accediendo a los valores
+------------------------
+
+Se puede acceder a los valores de una serie a través del índice como si
+fuera un array:
+
+.. code:: python
+
+    s = pd.Series([ 4, 8, 15, 16, 23, 42 ],index = ['a','b','c','d','e','f'])
+    print(s)
+
+.. code:: python
+
+    print(f"Tercer elemento: {s.array[2]}")
+    s.array[2] = 108
+    print(s.array)
+    
+    print(f"Con un rango:\n{s[1:3]}")
+    print(f"Con los índices:\n{s[['a','c']]}")
+    print(f"Con una máscara:\n{s[s > 100]}")
+
+.. code:: python
+
+    print(f"Con una lista de índices:\n{s[[0,1]]}")
+
+.. code:: python
+
+    print(f"Con una lista de índices:\n{s.iloc[[0,3]]}") 
+    print(f"Con una lista de índices:\n{s[ s.index[[0,3]] ]}")
+
+Modificando valores
+-------------------
+
+Para modificar un valor dentro de una serie de ``pandas``, se accede al
+mismo con la etiqueta correspondiente:
+
+.. code:: python
+
+    v = pd.Series([1,2,3,4,5], index=['a','b','c','d','e'])
+    print(v)
+    v['b'] = 100
+    print(v)
+
+En caso en que dicha etiqueta no exista dentro del índice de la serie,
+se agrega el valor:
+
+.. code:: python
+
+    v['f'] = 200
+    print(v)
+
+Para eliminar valores, se utiliza el método ``.drop``. Por defecto se
+genera una nueva serie con el valor eliminado, para poder eliminar el
+valor en la misma serie, es necesario usar el argumento opcional
+``inplace`` como ``True``.
+
+.. code:: python
+
+    w = v.drop('b')
+    print(v)
+    print(w)
+
+.. code:: python
+
+    v.drop('b', inplace=True)
+    print(v)
+
+.. code:: python
+
+    # Generando un nuevo objeto
+    print(v==w)
+    # Comparando objetos
+    print(f"v is w: {v is w}")
+    print(f"v equals w: {v.equals(w)}")
+
+.. code:: python
+
+    v.drop(['b'], inplace=True) # KeyError: "['b'] not found in axis"
+
+Tipos de datos
+~~~~~~~~~~~~~~
+
+Como último comentario, obsérvese que si uno pretende crear una serie
+con valores de distinto tipo, el tipo de la serie se promueve al tipo
+general ``object``, sin embargo cada elemento es reconocido con su tipo
+particular:
+
+.. code:: python
+
+    s = pd.Series([1,'a','b','c'])
+    print(s)
+    for index,elem in s.items(): 
+        print(f"Tipo de objeto del elemento {index}: {type(s[index])}")
+
+.. code:: python
+
+    print(f"Suma de enteros: {s[0] + 3}")
+    print(f"Suma de enteros: {s[1] + 3}") # Error
+
+.. code:: python
+
+    print(f"Concat de str  : {s[1] + 'd'}")
+    print(f"Concat de str  : {s[1] + 3}") # Error
+
+Si bien entonces se pueden usar series con objetos con distintos tipos,
+se recomienda que el tipo de dato sea homogéneo.
+
+Valores que faltan
+------------------
+
+Es muy común al procesar datos que uno encuentre valores que no existen.
+La manera en que ``pandas`` representa estos datos faltantes es a través
+de ``np.nan``, el tipo de dato de ``numpy`` que representa *not a
+number*, para aquellos tipos de datos heredados de ``numpy``:
+
+.. code:: python
+
+    snan = pd.Series([1,4,np.nan,2])
+    print(snan)
+
+   Notar que si bien los datos existentes son de tipo entero, al
+   utilizar ``np.nan`` para representar un dato inexistente, el tipo de
+   dato de la serie se promueve a ``float64``.
+
+De la misma forma, se puede usar ``None`` para representar el dato
+faltante:
+
+.. code:: python
+
+    snone = pd.Series([1,4,None,5])
+    print(snone)
+
+En el caso de cadenas de caracteres, se puede usar ``np.nan`` o
+``None``. Si no se indica el tipo de dato a través de ``dtype``, se
+promueve el tipo de dato de la serie a ``object``, como sucede por
+defecto.
+
+.. code:: python
+
+    smixed_str = pd.Series(['a','b',np.nan,None,'d'])
+    smixed_str
+
+Esto tiene el inconveniente evidente de que el elemento faltante no está
+representado unívocamente por un solo valor. Para solventar este
+problema, se puede crear la serie con el tipo ``string``:
+
+.. code:: python
+
+    smixed_str2 = pd.Series(['a','b',np.nan,None,'d'],dtype='string')
+    print(smixed_str2)
+
+En este caso, el singlete ``NA`` representa unívocamente el dato
+faltante. En cualquier caso, se cuenta con el método ``.isna``, que
+retorna una serie de ``boolean`` donde los valores faltantes son
+verdaderos (``True``):
+
+.. code:: python
+
+    print(smixed_str.isna())
+    print(smixed_str2.isna())
+
+   Atención, la cadena de caracteres vacía ``''`` *NO* se considera un
+   dato inexistente.
+
+Puede ser útil en algunos casos poder filtrar los datos inexistentes.
+Para eso se utiliza el método ``.dropna``, que crea una nueva serie sin
+dichos datos:
+
+.. code:: python
+
+    print(smixed_str)
+    print(smixed_str.dropna())
+
+Operando con series
+-------------------
+
+Las operaciones con series han sido diseñadas para que sean compatibles
+con NumPy, y sigan las convenciones de Python. He aquí algunos ejemplos:
+
+.. code:: python
+
+    ones = pd.Series(np.ones(8))*0.5
+    print(ones)
+    
+    t = pd.Series(np.random.rand(8))
+    print(t)
+    print(t.mean())
+
+.. code:: python
+
+    shifted = t - ones 
+    print(shifted)
+    print(shifted.mean())
+    print(np.abs(shifted))
+
+Además de poder interactuar con NumPy en forma transparente, existen
+algunos métodos útiles para trabajar con los datos de una serie:
+
+.. code:: python
+
+    data = {'Pedro':19, 'Oscar': 30, 'Carlos': 27, 'David': 26}
+    seru = pd.Series(data)
+    print("Person Series:\n")
+    print(seru)
+    
+    # Perform operations on the Series
+    print("Edad promedio:", seru.mean())
+    print("Edad del más viejo :", seru.max())
+    print("El más viejo :", seru.idxmax())
+
+.. code:: python
+
+    temperaturas_ciudades = {
+        "Buenos Aires": 17.6,
+        "Córdoba": 18.0,
+        "Rosario": 18.0,
+        "Mendoza": 16.0,
+        "Santa Fe": 21.3
+    
+    }
+    temp = pd.Series(temperaturas_ciudades)
+    print(temp)
+
+.. code:: python
+
+    otras_ciudades = ['Buenos Aires', 'Córdoba', 'Rosario', 'Mendoza', 'Salta']
+    temp = pd.Series(temperaturas_ciudades, index=otras_ciudades)
+    print(temp)
+
+.. code:: python
+
+    temp_ciudades2 = {
+        "Mendoza": 20.0,
+        "Salta": 17.2,
+        "Santa Fe": 18.6,
+        "San Juan": 19.3
+    }
+    temp2 = pd.Series(temp_ciudades2)
+    temp2
+
+.. code:: python
+
+    print(temp)
+
+.. code:: python
+
+    print((temp + temp2)/2)
+
+Misceláneas
+-----------
+
+Algunas otras operaciones interesantes:
+
+.. code:: python
+
+    'Rosario' in temp2
+
+.. code:: python
+
+    temp2_dict = temp2.to_dict()
+    print(temp2_dict)
+    print(type(temp2_dict))
+
+.. code:: python
+
+    temp2_json = temp2.to_json() 
+    print(temp2_json)
+    print(type(temp2_json))
+
+--------------
+
+Ejercicios 14(b)
+================
+
+2. Si no lo ha adivinado, los datos de la serie ``seru`` corresponden a
+   las edades de los integrantes de la banda Serú Girán, al momento de
+   conformarse, en el año 1978. Encuentre los años de nacimiento de cada
+   uno de sus integrantes.
+
+3. Una de las funciones más usadas en redes neuronales es *softmax*,
+   cuyo objetivo es convertir los resultados de las distintas etapas del
+   procesamiento de una red en probabilidades. Los primeros pueden ser
+   números reales de cualquier valor, mientras que las probabilidades
+   deben estar acotadas al intervalo [0,1]. La función *softmax*
+   aplicada a un conjunto de valores :math:`z_1,\cdots,z_n` se calcula
+   como
+
+   .. math::
+
+
+      \sigma(z_i) = \frac {e^{z_i}} { \sum_{i=1}^n e^{z_i}}
+
+   -  Cree una serie con 10 valores al azar entre 0 y 5
+   -  Obtenga la serie resultante de la aplicación de *softmax* a la
+      serie anterior
+
+4. El siguiente es un diccionario que representa el consumo eléctrico
+   mensual de ciertos artefactos eléctricos:
+
+   .. code:: python
+
+      consumo_electrico = {
+        "Artefacto": [
+           "Heladera", "Lavarropa", "Microondas", "Aire Acondicionado", 
+           "Televisor", "Computadora", "Lámpara LED", "Secador de Pelo", 
+           "Horno Eléctrico", "Ventilador"
+        ],
+        "Consumo Promedio (kWh/mes)": [
+           30, 10, 15, 120, 20, 12, 2, 3, 25, 8
+        ]
+      }
+
+   -  Obtenga los tres artefactos de mayor consumo.
+   -  Encuentre los artefactos que consumen más de 15 kWH/mes.
+   -  Calcule el consumo anual de cada artefacto, y el costo que implica
+      suponiendo que el precio del kWH/mes es de $3145.
+
+5. Un problema de índices enteros. Supongamos que tenemos la serie
+
+   .. code:: python
+
+      s = pd.Series(np.arange(3.0))
+
+   es decir,
+
+   .. code:: python
+
+       0    0.0
+       1    1.0
+       2    2.0
+       dtype: float64
+
+   ¿Cuál es el resultado esperado de s[-1]? ¿Cuál es el real? Evalúe
+   ``s[-2:-1]`` y también ``s.iloc[-1]``. Considere ahora la serie
+
+   .. code:: python
+
+      s = pd.Series(np.arange(3.0), index=['a','b','c'])
+
+   y evalúe nuevamente ``s[-1]``. ¿Qué conclusiones puede sacar?
+
+--------------
