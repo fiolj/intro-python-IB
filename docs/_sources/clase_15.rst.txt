@@ -973,9 +973,163 @@ columnas conteniendo unos y ceros, por ejemplo:
     df = pd.DataFrame({'key': ['a','a','b','d','a','c','c'],'datos': np.random.standard_normal(7)})
     df
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>key</th>
+          <th>datos</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>a</td>
+          <td>-0.680732</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>a</td>
+          <td>0.021716</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>b</td>
+          <td>0.722098</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>d</td>
+          <td>-0.671279</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>a</td>
+          <td>1.547057</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>c</td>
+          <td>-0.880381</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>c</td>
+          <td>-0.633695</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     pd.get_dummies(df['key'],dtype=int) # crea variables dummy
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>a</th>
+          <th>b</th>
+          <th>c</th>
+          <th>d</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>1</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>0</td>
+          <td>0</td>
+          <td>1</td>
+          <td>0</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Manejando índices múltiples
 ===========================
@@ -1004,6 +1158,26 @@ consiste en utilizar tuplas como índices para etiquetar cada fila:
     print(type(index))
     index
 
+
+.. parsed-literal::
+
+    <class 'pandas.core.indexes.multi.MultiIndex'>
+
+
+
+
+.. parsed-literal::
+
+    MultiIndex([('Buenos Aires', 'Zapatos', 2022),
+                ('Buenos Aires',    'Ropa', 2022),
+                ('Buenos Aires',    'Ropa', 2023),
+                (     'Córdoba', 'Zapatos', 2023),
+                (     'Córdoba',    'Ropa', 2023),
+                (     'Rosario', 'Zapatos', 2023)],
+               names=['Ciudad', 'Producto', 'Año'])
+
+
+
 .. code:: python
 
     # Datos
@@ -1017,6 +1191,87 @@ consiste en utilizar tuplas como índices para etiquetar cada fila:
     df = pd.DataFrame(data, index=index)
     df
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>Ventas</th>
+          <th>Costo</th>
+        </tr>
+        <tr>
+          <th>Ciudad</th>
+          <th>Producto</th>
+          <th>Año</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="3" valign="top">Buenos Aires</th>
+          <th>Zapatos</th>
+          <th>2022</th>
+          <td>200</td>
+          <td>120</td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top">Ropa</th>
+          <th>2022</th>
+          <td>150</td>
+          <td>80</td>
+        </tr>
+        <tr>
+          <th>2023</th>
+          <td>300</td>
+          <td>180</td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top">Córdoba</th>
+          <th>Zapatos</th>
+          <th>2023</th>
+          <td>400</td>
+          <td>240</td>
+        </tr>
+        <tr>
+          <th>Ropa</th>
+          <th>2023</th>
+          <td>250</td>
+          <td>150</td>
+        </tr>
+        <tr>
+          <th>Rosario</th>
+          <th>Zapatos</th>
+          <th>2023</th>
+          <td>500</td>
+          <td>300</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 Si queremos obtener ciertas filas específicas, usamos ``.loc``.
 
 .. code:: python
@@ -1024,6 +1279,17 @@ Si queremos obtener ciertas filas específicas, usamos ``.loc``.
     # Acceso por niveles del índice
     print("\nDatos de 'Buenos Aires' en 2022:")
     print(df.loc[("Buenos Aires", slice(None), 2022), :])
+
+
+.. parsed-literal::
+
+    
+    Datos de 'Buenos Aires' en 2022:
+                                Ventas  Costo
+    Ciudad       Producto Año                
+    Buenos Aires Zapatos  2022     200    120
+                 Ropa     2022     150     80
+
 
 La función ``slice`` se usa para determinar el rango de filas en cada
 componente del índice. ``slice(None)`` implica usar todos los valores
@@ -1043,6 +1309,18 @@ método ``.groupby()``, que agrupa los valores de acuerdo al nivel
     print("\nVentas totales por ciudad:")
     print(df.groupby(level="Ciudad")["Ventas"].sum())
 
+
+.. parsed-literal::
+
+    
+    Ventas totales por ciudad:
+    Ciudad
+    Buenos Aires    650
+    Córdoba         650
+    Rosario         500
+    Name: Ventas, dtype: int64
+
+
 Si uno quisiera calcular el monto total de ventas por ciudad y por año,
 por ejemplo, se podría hacer:
 
@@ -1051,6 +1329,95 @@ por ejemplo, se podría hacer:
     # Agrupar por 'Ciudad' y 'Año' y sumar el costo
     df["Total"] = df["Ventas"] * df["Costo"]
     df
+
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>Ventas</th>
+          <th>Costo</th>
+          <th>Total</th>
+        </tr>
+        <tr>
+          <th>Ciudad</th>
+          <th>Producto</th>
+          <th>Año</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="3" valign="top">Buenos Aires</th>
+          <th>Zapatos</th>
+          <th>2022</th>
+          <td>200</td>
+          <td>120</td>
+          <td>24000</td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top">Ropa</th>
+          <th>2022</th>
+          <td>150</td>
+          <td>80</td>
+          <td>12000</td>
+        </tr>
+        <tr>
+          <th>2023</th>
+          <td>300</td>
+          <td>180</td>
+          <td>54000</td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top">Córdoba</th>
+          <th>Zapatos</th>
+          <th>2023</th>
+          <td>400</td>
+          <td>240</td>
+          <td>96000</td>
+        </tr>
+        <tr>
+          <th>Ropa</th>
+          <th>2023</th>
+          <td>250</td>
+          <td>150</td>
+          <td>37500</td>
+        </tr>
+        <tr>
+          <th>Rosario</th>
+          <th>Zapatos</th>
+          <th>2023</th>
+          <td>500</td>
+          <td>300</td>
+          <td>150000</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
 
 
 .. code:: python
@@ -1062,6 +1429,18 @@ por ejemplo, se podría hacer:
     print(costo_anual_ciudad_x_año)
 
 
+
+.. parsed-literal::
+
+    Costo anual por ciudad por año:
+    Ciudad        Año 
+    Buenos Aires  2022     36000
+                  2023     54000
+    Córdoba       2023    133500
+    Rosario       2023    150000
+    Name: Total, dtype: int64
+
+
 .. code:: python
 
     costo_anual_ciudad = df.groupby(level=["Ciudad"])["Total"].sum()
@@ -1069,6 +1448,17 @@ por ejemplo, se podría hacer:
     # Mostrar el resultado
     print("Costo anual por ciudad:")
     print(costo_anual_ciudad)
+
+
+.. parsed-literal::
+
+    Costo anual por ciudad:
+    Ciudad
+    Buenos Aires     90000
+    Córdoba         133500
+    Rosario         150000
+    Name: Total, dtype: int64
+
 
 Apilando y desapilando
 ======================
@@ -1079,9 +1469,132 @@ Otra operación es apilar o desapilar el dataframe de índices múltiples:
 
     df.unstack() # desapila el índice
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead tr th {
+            text-align: left;
+        }
+    
+        .dataframe thead tr:last-of-type th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th colspan="2" halign="left">Ventas</th>
+          <th colspan="2" halign="left">Costo</th>
+          <th colspan="2" halign="left">Total</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Año</th>
+          <th>2022</th>
+          <th>2023</th>
+          <th>2022</th>
+          <th>2023</th>
+          <th>2022</th>
+          <th>2023</th>
+        </tr>
+        <tr>
+          <th>Ciudad</th>
+          <th>Producto</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="2" valign="top">Buenos Aires</th>
+          <th>Ropa</th>
+          <td>150.0</td>
+          <td>300.0</td>
+          <td>80.0</td>
+          <td>180.0</td>
+          <td>12000.0</td>
+          <td>54000.0</td>
+        </tr>
+        <tr>
+          <th>Zapatos</th>
+          <td>200.0</td>
+          <td>NaN</td>
+          <td>120.0</td>
+          <td>NaN</td>
+          <td>24000.0</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th rowspan="2" valign="top">Córdoba</th>
+          <th>Ropa</th>
+          <td>NaN</td>
+          <td>250.0</td>
+          <td>NaN</td>
+          <td>150.0</td>
+          <td>NaN</td>
+          <td>37500.0</td>
+        </tr>
+        <tr>
+          <th>Zapatos</th>
+          <td>NaN</td>
+          <td>400.0</td>
+          <td>NaN</td>
+          <td>240.0</td>
+          <td>NaN</td>
+          <td>96000.0</td>
+        </tr>
+        <tr>
+          <th>Rosario</th>
+          <th>Zapatos</th>
+          <td>NaN</td>
+          <td>500.0</td>
+          <td>NaN</td>
+          <td>300.0</td>
+          <td>NaN</td>
+          <td>150000.0</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     df.unstack().columns
+
+
+
+
+.. parsed-literal::
+
+    MultiIndex([('Ventas', 2022),
+                ('Ventas', 2023),
+                ( 'Costo', 2022),
+                ( 'Costo', 2023),
+                ( 'Total', 2022),
+                ( 'Total', 2023)],
+               names=[None, 'Año'])
+
+
 
 Tal como se ve en el ejemplo anterior, **las columnas también pueden ser
 descriptas con índices jerárquicos**
@@ -1089,6 +1602,129 @@ descriptas con índices jerárquicos**
 .. code:: python
 
     df.unstack().unstack() # desapila el índice
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead tr th {
+            text-align: left;
+        }
+    
+        .dataframe thead tr:last-of-type th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="4" halign="left">Ventas</th>
+          <th colspan="4" halign="left">Costo</th>
+          <th colspan="4" halign="left">Total</th>
+        </tr>
+        <tr>
+          <th>Año</th>
+          <th colspan="2" halign="left">2022</th>
+          <th colspan="2" halign="left">2023</th>
+          <th colspan="2" halign="left">2022</th>
+          <th colspan="2" halign="left">2023</th>
+          <th colspan="2" halign="left">2022</th>
+          <th colspan="2" halign="left">2023</th>
+        </tr>
+        <tr>
+          <th>Producto</th>
+          <th>Ropa</th>
+          <th>Zapatos</th>
+          <th>Ropa</th>
+          <th>Zapatos</th>
+          <th>Ropa</th>
+          <th>Zapatos</th>
+          <th>Ropa</th>
+          <th>Zapatos</th>
+          <th>Ropa</th>
+          <th>Zapatos</th>
+          <th>Ropa</th>
+          <th>Zapatos</th>
+        </tr>
+        <tr>
+          <th>Ciudad</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Buenos Aires</th>
+          <td>150.0</td>
+          <td>200.0</td>
+          <td>300.0</td>
+          <td>NaN</td>
+          <td>80.0</td>
+          <td>120.0</td>
+          <td>180.0</td>
+          <td>NaN</td>
+          <td>12000.0</td>
+          <td>24000.0</td>
+          <td>54000.0</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>Córdoba</th>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>250.0</td>
+          <td>400.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>150.0</td>
+          <td>240.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>37500.0</td>
+          <td>96000.0</td>
+        </tr>
+        <tr>
+          <th>Rosario</th>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>500.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>300.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>150000.0</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Categorías
 ==========
@@ -1101,23 +1737,87 @@ repetidos.
     s = pd.Series(["Pequeño", "Mediano", "Grande", "Pequeño", "Grande", "Mediano"])
     s
 
+
+
+
+.. parsed-literal::
+
+    0    Pequeño
+    1    Mediano
+    2     Grande
+    3    Pequeño
+    4     Grande
+    5    Mediano
+    dtype: object
+
+
+
 .. code:: python
 
     s_cat = s.astype("category")
     s_cat
+
+
+
+
+.. parsed-literal::
+
+    0    Pequeño
+    1    Mediano
+    2     Grande
+    3    Pequeño
+    4     Grande
+    5    Mediano
+    dtype: category
+    Categories (3, object): ['Grande', 'Mediano', 'Pequeño']
+
+
 
 .. code:: python
 
     s_cat.cat.categories
 
 
+
+
+
+.. parsed-literal::
+
+    Index(['Grande', 'Mediano', 'Pequeño'], dtype='object')
+
+
+
 .. code:: python
 
     s_cat.cat.codes
 
+
+
+
+.. parsed-literal::
+
+    0    2
+    1    1
+    2    0
+    3    2
+    4    0
+    5    1
+    dtype: int8
+
+
+
 .. code:: python
 
     dict(enumerate(s_cat.cat.categories))
+
+
+
+
+.. parsed-literal::
+
+    {0: 'Grande', 1: 'Mediano', 2: 'Pequeño'}
+
+
 
 En el caso de un ``DataFrame``, uno puede convertir una columna en una
 categoría reasignandola:
@@ -1129,14 +1829,109 @@ categoría reasignandola:
     df = pd.DataFrame({'precios':precios,'tamaño':s})
     df
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>precios</th>
+          <th>tamaño</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>100</td>
+          <td>Pequeño</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>200</td>
+          <td>Mediano</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>300</td>
+          <td>Grande</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>150</td>
+          <td>Pequeño</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>250</td>
+          <td>Grande</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>180</td>
+          <td>Mediano</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     df['tamaño']
+
+
+
+
+.. parsed-literal::
+
+    0    Pequeño
+    1    Mediano
+    2     Grande
+    3    Pequeño
+    4     Grande
+    5    Mediano
+    Name: tamaño, dtype: object
+
+
 
 .. code:: python
 
     df['tamaño'] = df['tamaño'].astype('category')
     df['tamaño']
+
+
+
+
+.. parsed-literal::
+
+    0    Pequeño
+    1    Mediano
+    2     Grande
+    3    Pequeño
+    4     Grande
+    5    Mediano
+    Name: tamaño, dtype: category
+    Categories (3, object): ['Grande', 'Mediano', 'Pequeño']
+
+
 
 El beneficio principal del uso de categorías tiene que ver con la
 eficiencia en la memoria y en las operaciones:
@@ -1153,18 +1948,37 @@ eficiencia en la memoria y en las operaciones:
     print(s.memory_usage(deep=True))
     print(s_cat.memory_usage(deep=True))
 
+
+.. parsed-literal::
+
+    500000132
+    10000504
+
+
 .. code:: python
 
     %timeit s.value_counts()
+
+
+.. parsed-literal::
+
+    363 ms ± 15.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+
 
 .. code:: python
 
     %timeit s_cat.value_counts()
 
+
+.. parsed-literal::
+
+    38.9 ms ± 2.77 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+
+
 --------------
 
-Ejercicio 15(a)
-===============
+Ejercicio 15 (a)
+================
 
 1. Retome el ``DataFrame`` creado en el ejercicio 14(a), y genere un
    nuevo ``DataFrame`` utilizando adecuadamente índices jerárquicos.
