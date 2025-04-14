@@ -55,7 +55,7 @@ de datos en modo texto, legible y de amplio uso en internet.
 
 .. parsed-literal::
 
-    /home/fiol/Clases/IntPython/clases-python/data/atomos
+    /Users/flavioc/Library/Mobile Documents/com~apple~CloudDocs/Documents/cursos/Python/GitLab/clase-python/data/atomos
 
 
 .. code:: python
@@ -687,9 +687,9 @@ Web
         <tr>
           <th>0</th>
           <td>World</td>
-          <td>8136397260</td>
+          <td>8137000000</td>
           <td>100%</td>
-          <td>6 Apr 2025</td>
+          <td>10 Apr 2025</td>
           <td>UN projection[1][3]</td>
           <td>NaN</td>
         </tr>
@@ -1262,6 +1262,107 @@ definir los nombres de las columnas:
           <th>l</th>
           <th>v_vel</th>
           <th>precip</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>08/ABR/2025</td>
+          <td>00Hs.</td>
+          <td>15.4</td>
+          <td>116</td>
+          <td>|</td>
+          <td>27</td>
+          <td>7.5</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>08/ABR/2025</td>
+          <td>03Hs.</td>
+          <td>15.6</td>
+          <td>112</td>
+          <td>|</td>
+          <td>25</td>
+          <td>3.0</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>08/ABR/2025</td>
+          <td>06Hs.</td>
+          <td>16.0</td>
+          <td>114</td>
+          <td>|</td>
+          <td>26</td>
+          <td>3.0</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>08/ABR/2025</td>
+          <td>09Hs.</td>
+          <td>16.3</td>
+          <td>115</td>
+          <td>|</td>
+          <td>26</td>
+          <td>1.7</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>08/ABR/2025</td>
+          <td>12Hs.</td>
+          <td>16.6</td>
+          <td>123</td>
+          <td>|</td>
+          <td>22</td>
+          <td>1.1</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+   Si el archivo no contiene headers, y se desea que se generen
+   automáticamente como una secuencia numérica (0, 1, 2, …), se puede
+   usar la opción ``header=None`` en cualquiera de los métodos ``read_``
+   de pandas.
+
+.. code:: python
+
+    with StringIO(sections[2]) as data_io:
+        df_auto = pd.read_fwf(data_io,header=None)
+        
+    df_auto.head()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>0</th>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
         </tr>
       </thead>
       <tbody>
@@ -3935,7 +4036,7 @@ Uno podría hacer algo como lo siguiente (se llama *chaining*):
 
 .. parsed-literal::
 
-    /tmp/ipykernel_227983/1865813456.py:1: SettingWithCopyWarning: 
+    /var/folders/lw/b464kt25373b__wh0bxy280r0000gn/T/ipykernel_4395/1865813456.py:1: SettingWithCopyWarning: 
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
@@ -4676,13 +4777,244 @@ Aritméticas
     s2 = pd.DataFrame(np.arange(1,11).reshape(2,5).T, index = ['a', 'g', 'h', 'd', 'e'],columns=['A', 'B'])
     display(s1,s2)
 
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>3</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>5</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>7</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>9</td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>1</td>
+          <td>6</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>2</td>
+          <td>7</td>
+        </tr>
+        <tr>
+          <th>h</th>
+          <td>3</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>4</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>5</td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 .. code:: python
 
     1/s1
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>1.000000</td>
+          <td>0.500000</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.333333</td>
+          <td>0.250000</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.200000</td>
+          <td>0.166667</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.142857</td>
+          <td>0.125000</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>0.111111</td>
+          <td>0.100000</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     s1 - 42
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>-41</td>
+          <td>-40</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>-39</td>
+          <td>-38</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>-37</td>
+          <td>-36</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>-35</td>
+          <td>-34</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>-33</td>
+          <td>-32</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Al usar dos o más ``DataFrame``\ s, el proceso de alineamiento de datos
 de acuerdo a las etiquetas de las filas introduce automáticamente los
@@ -4692,6 +5024,75 @@ este caso, sumados y resultarán también en un dato inexistente:
 .. code:: python
 
     s1+s2
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>2.0</td>
+          <td>8.0</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>11.0</td>
+          <td>17.0</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>14.0</td>
+          <td>20.0</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>h</th>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Es posible operar con ``DataFrame``\ s asignando un valor definido a los
 datos inexistentes, con el argumento ``fill_value``:
@@ -4719,14 +5120,290 @@ datos inexistentes, con el argumento ``fill_value``:
 
     display_side_by_side([s1,s2],['s1','s2'])
 
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_9cc2c" style='display:inline'>
+      <caption>s1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_9cc2c_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_9cc2c_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_9cc2c_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_9cc2c_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_9cc2c_row0_col1" class="data row0 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_9cc2c_level0_row1" class="row_heading level0 row1" >b</th>
+          <td id="T_9cc2c_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_9cc2c_row1_col1" class="data row1 col1" >4</td>
+        </tr>
+        <tr>
+          <th id="T_9cc2c_level0_row2" class="row_heading level0 row2" >c</th>
+          <td id="T_9cc2c_row2_col0" class="data row2 col0" >5</td>
+          <td id="T_9cc2c_row2_col1" class="data row2 col1" >6</td>
+        </tr>
+        <tr>
+          <th id="T_9cc2c_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_9cc2c_row3_col0" class="data row3 col0" >7</td>
+          <td id="T_9cc2c_row3_col1" class="data row3 col1" >8</td>
+        </tr>
+        <tr>
+          <th id="T_9cc2c_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_9cc2c_row4_col0" class="data row4 col0" >9</td>
+          <td id="T_9cc2c_row4_col1" class="data row4 col1" >10</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_51bfa" style='display:inline'>
+      <caption>s2</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_51bfa_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_51bfa_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_51bfa_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_51bfa_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_51bfa_row0_col1" class="data row0 col1" >6</td>
+        </tr>
+        <tr>
+          <th id="T_51bfa_level0_row1" class="row_heading level0 row1" >g</th>
+          <td id="T_51bfa_row1_col0" class="data row1 col0" >2</td>
+          <td id="T_51bfa_row1_col1" class="data row1 col1" >7</td>
+        </tr>
+        <tr>
+          <th id="T_51bfa_level0_row2" class="row_heading level0 row2" >h</th>
+          <td id="T_51bfa_row2_col0" class="data row2 col0" >3</td>
+          <td id="T_51bfa_row2_col1" class="data row2 col1" >8</td>
+        </tr>
+        <tr>
+          <th id="T_51bfa_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_51bfa_row3_col0" class="data row3 col0" >4</td>
+          <td id="T_51bfa_row3_col1" class="data row3 col1" >9</td>
+        </tr>
+        <tr>
+          <th id="T_51bfa_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_51bfa_row4_col0" class="data row4 col0" >5</td>
+          <td id="T_51bfa_row4_col1" class="data row4 col1" >10</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
 .. code:: python
 
     display_side_by_side([s1,s2,s2.add(s1, fill_value=0)],['s1','s2','s2+s1'])
+
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_9903b" style='display:inline'>
+      <caption>s1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_9903b_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_9903b_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_9903b_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_9903b_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_9903b_row0_col1" class="data row0 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_9903b_level0_row1" class="row_heading level0 row1" >b</th>
+          <td id="T_9903b_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_9903b_row1_col1" class="data row1 col1" >4</td>
+        </tr>
+        <tr>
+          <th id="T_9903b_level0_row2" class="row_heading level0 row2" >c</th>
+          <td id="T_9903b_row2_col0" class="data row2 col0" >5</td>
+          <td id="T_9903b_row2_col1" class="data row2 col1" >6</td>
+        </tr>
+        <tr>
+          <th id="T_9903b_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_9903b_row3_col0" class="data row3 col0" >7</td>
+          <td id="T_9903b_row3_col1" class="data row3 col1" >8</td>
+        </tr>
+        <tr>
+          <th id="T_9903b_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_9903b_row4_col0" class="data row4 col0" >9</td>
+          <td id="T_9903b_row4_col1" class="data row4 col1" >10</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_85b3d" style='display:inline'>
+      <caption>s2</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_85b3d_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_85b3d_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_85b3d_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_85b3d_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_85b3d_row0_col1" class="data row0 col1" >6</td>
+        </tr>
+        <tr>
+          <th id="T_85b3d_level0_row1" class="row_heading level0 row1" >g</th>
+          <td id="T_85b3d_row1_col0" class="data row1 col0" >2</td>
+          <td id="T_85b3d_row1_col1" class="data row1 col1" >7</td>
+        </tr>
+        <tr>
+          <th id="T_85b3d_level0_row2" class="row_heading level0 row2" >h</th>
+          <td id="T_85b3d_row2_col0" class="data row2 col0" >3</td>
+          <td id="T_85b3d_row2_col1" class="data row2 col1" >8</td>
+        </tr>
+        <tr>
+          <th id="T_85b3d_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_85b3d_row3_col0" class="data row3 col0" >4</td>
+          <td id="T_85b3d_row3_col1" class="data row3 col1" >9</td>
+        </tr>
+        <tr>
+          <th id="T_85b3d_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_85b3d_row4_col0" class="data row4 col0" >5</td>
+          <td id="T_85b3d_row4_col1" class="data row4 col1" >10</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_59c46" style='display:inline'>
+      <caption>s2+s1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_59c46_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_59c46_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_59c46_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_59c46_row0_col0" class="data row0 col0" >2.000000</td>
+          <td id="T_59c46_row0_col1" class="data row0 col1" >8.000000</td>
+        </tr>
+        <tr>
+          <th id="T_59c46_level0_row1" class="row_heading level0 row1" >b</th>
+          <td id="T_59c46_row1_col0" class="data row1 col0" >3.000000</td>
+          <td id="T_59c46_row1_col1" class="data row1 col1" >4.000000</td>
+        </tr>
+        <tr>
+          <th id="T_59c46_level0_row2" class="row_heading level0 row2" >c</th>
+          <td id="T_59c46_row2_col0" class="data row2 col0" >5.000000</td>
+          <td id="T_59c46_row2_col1" class="data row2 col1" >6.000000</td>
+        </tr>
+        <tr>
+          <th id="T_59c46_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_59c46_row3_col0" class="data row3 col0" >11.000000</td>
+          <td id="T_59c46_row3_col1" class="data row3 col1" >17.000000</td>
+        </tr>
+        <tr>
+          <th id="T_59c46_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_59c46_row4_col0" class="data row4 col0" >14.000000</td>
+          <td id="T_59c46_row4_col1" class="data row4 col1" >20.000000</td>
+        </tr>
+        <tr>
+          <th id="T_59c46_level0_row5" class="row_heading level0 row5" >g</th>
+          <td id="T_59c46_row5_col0" class="data row5 col0" >2.000000</td>
+          <td id="T_59c46_row5_col1" class="data row5 col1" >7.000000</td>
+        </tr>
+        <tr>
+          <th id="T_59c46_level0_row6" class="row_heading level0 row6" >h</th>
+          <td id="T_59c46_row6_col0" class="data row6 col0" >3.000000</td>
+          <td id="T_59c46_row6_col1" class="data row6 col1" >8.000000</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
 
 .. code:: python
 
     s3 = pd.DataFrame(np.array([1,2]*5).reshape(5,2), index = ['a', 'g', 'h', 'd', 'e'],columns=['A', 'C'])
     display(s3)
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>h</th>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
 
 
 La misma alineación de datos ocurre con las columnas:
@@ -4735,9 +5412,171 @@ La misma alineación de datos ocurre con las columnas:
 
     display_side_by_side([s1,s3],['s1','s3'])
 
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_28c80" style='display:inline'>
+      <caption>s1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_28c80_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_28c80_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_28c80_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_28c80_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_28c80_row0_col1" class="data row0 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_28c80_level0_row1" class="row_heading level0 row1" >b</th>
+          <td id="T_28c80_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_28c80_row1_col1" class="data row1 col1" >4</td>
+        </tr>
+        <tr>
+          <th id="T_28c80_level0_row2" class="row_heading level0 row2" >c</th>
+          <td id="T_28c80_row2_col0" class="data row2 col0" >5</td>
+          <td id="T_28c80_row2_col1" class="data row2 col1" >6</td>
+        </tr>
+        <tr>
+          <th id="T_28c80_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_28c80_row3_col0" class="data row3 col0" >7</td>
+          <td id="T_28c80_row3_col1" class="data row3 col1" >8</td>
+        </tr>
+        <tr>
+          <th id="T_28c80_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_28c80_row4_col0" class="data row4 col0" >9</td>
+          <td id="T_28c80_row4_col1" class="data row4 col1" >10</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_0796e" style='display:inline'>
+      <caption>s3</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_0796e_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_0796e_level0_col1" class="col_heading level0 col1" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_0796e_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_0796e_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_0796e_row0_col1" class="data row0 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_0796e_level0_row1" class="row_heading level0 row1" >g</th>
+          <td id="T_0796e_row1_col0" class="data row1 col0" >1</td>
+          <td id="T_0796e_row1_col1" class="data row1 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_0796e_level0_row2" class="row_heading level0 row2" >h</th>
+          <td id="T_0796e_row2_col0" class="data row2 col0" >1</td>
+          <td id="T_0796e_row2_col1" class="data row2 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_0796e_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_0796e_row3_col0" class="data row3 col0" >1</td>
+          <td id="T_0796e_row3_col1" class="data row3 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_0796e_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_0796e_row4_col0" class="data row4 col0" >1</td>
+          <td id="T_0796e_row4_col1" class="data row4 col1" >2</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
 .. code:: python
 
     s1+s3
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>2.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>8.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>10.0</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>h</th>
+          <td>NaN</td>
+          <td>NaN</td>
+          <td>NaN</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 En el caso anterior, la columna B (C) no está en el ``DataFrame`` s3
 (s1), por lo tanto se completan como inexistentes. Si se utiliza
@@ -4751,9 +5590,228 @@ en alguno de los ``DataFrame``\ s.
 
     display_side_by_side([s1,s3,s3.add(s1, fill_value=0)],['s1','s3','s3+s1'])
 
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_32f79" style='display:inline'>
+      <caption>s1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_32f79_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_32f79_level0_col1" class="col_heading level0 col1" >B</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_32f79_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_32f79_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_32f79_row0_col1" class="data row0 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_32f79_level0_row1" class="row_heading level0 row1" >b</th>
+          <td id="T_32f79_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_32f79_row1_col1" class="data row1 col1" >4</td>
+        </tr>
+        <tr>
+          <th id="T_32f79_level0_row2" class="row_heading level0 row2" >c</th>
+          <td id="T_32f79_row2_col0" class="data row2 col0" >5</td>
+          <td id="T_32f79_row2_col1" class="data row2 col1" >6</td>
+        </tr>
+        <tr>
+          <th id="T_32f79_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_32f79_row3_col0" class="data row3 col0" >7</td>
+          <td id="T_32f79_row3_col1" class="data row3 col1" >8</td>
+        </tr>
+        <tr>
+          <th id="T_32f79_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_32f79_row4_col0" class="data row4 col0" >9</td>
+          <td id="T_32f79_row4_col1" class="data row4 col1" >10</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_35edd" style='display:inline'>
+      <caption>s3</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_35edd_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_35edd_level0_col1" class="col_heading level0 col1" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_35edd_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_35edd_row0_col0" class="data row0 col0" >1</td>
+          <td id="T_35edd_row0_col1" class="data row0 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_35edd_level0_row1" class="row_heading level0 row1" >g</th>
+          <td id="T_35edd_row1_col0" class="data row1 col0" >1</td>
+          <td id="T_35edd_row1_col1" class="data row1 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_35edd_level0_row2" class="row_heading level0 row2" >h</th>
+          <td id="T_35edd_row2_col0" class="data row2 col0" >1</td>
+          <td id="T_35edd_row2_col1" class="data row2 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_35edd_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_35edd_row3_col0" class="data row3 col0" >1</td>
+          <td id="T_35edd_row3_col1" class="data row3 col1" >2</td>
+        </tr>
+        <tr>
+          <th id="T_35edd_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_35edd_row4_col0" class="data row4 col0" >1</td>
+          <td id="T_35edd_row4_col1" class="data row4 col1" >2</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_917ac" style='display:inline'>
+      <caption>s3+s1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_917ac_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_917ac_level0_col1" class="col_heading level0 col1" >B</th>
+          <th id="T_917ac_level0_col2" class="col_heading level0 col2" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_917ac_level0_row0" class="row_heading level0 row0" >a</th>
+          <td id="T_917ac_row0_col0" class="data row0 col0" >2.000000</td>
+          <td id="T_917ac_row0_col1" class="data row0 col1" >2.000000</td>
+          <td id="T_917ac_row0_col2" class="data row0 col2" >2.000000</td>
+        </tr>
+        <tr>
+          <th id="T_917ac_level0_row1" class="row_heading level0 row1" >b</th>
+          <td id="T_917ac_row1_col0" class="data row1 col0" >3.000000</td>
+          <td id="T_917ac_row1_col1" class="data row1 col1" >4.000000</td>
+          <td id="T_917ac_row1_col2" class="data row1 col2" >nan</td>
+        </tr>
+        <tr>
+          <th id="T_917ac_level0_row2" class="row_heading level0 row2" >c</th>
+          <td id="T_917ac_row2_col0" class="data row2 col0" >5.000000</td>
+          <td id="T_917ac_row2_col1" class="data row2 col1" >6.000000</td>
+          <td id="T_917ac_row2_col2" class="data row2 col2" >nan</td>
+        </tr>
+        <tr>
+          <th id="T_917ac_level0_row3" class="row_heading level0 row3" >d</th>
+          <td id="T_917ac_row3_col0" class="data row3 col0" >8.000000</td>
+          <td id="T_917ac_row3_col1" class="data row3 col1" >8.000000</td>
+          <td id="T_917ac_row3_col2" class="data row3 col2" >2.000000</td>
+        </tr>
+        <tr>
+          <th id="T_917ac_level0_row4" class="row_heading level0 row4" >e</th>
+          <td id="T_917ac_row4_col0" class="data row4 col0" >10.000000</td>
+          <td id="T_917ac_row4_col1" class="data row4 col1" >10.000000</td>
+          <td id="T_917ac_row4_col2" class="data row4 col2" >2.000000</td>
+        </tr>
+        <tr>
+          <th id="T_917ac_level0_row5" class="row_heading level0 row5" >g</th>
+          <td id="T_917ac_row5_col0" class="data row5 col0" >1.000000</td>
+          <td id="T_917ac_row5_col1" class="data row5 col1" >nan</td>
+          <td id="T_917ac_row5_col2" class="data row5 col2" >2.000000</td>
+        </tr>
+        <tr>
+          <th id="T_917ac_level0_row6" class="row_heading level0 row6" >h</th>
+          <td id="T_917ac_row6_col0" class="data row6 col0" >1.000000</td>
+          <td id="T_917ac_row6_col1" class="data row6 col1" >nan</td>
+          <td id="T_917ac_row6_col2" class="data row6 col2" >2.000000</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
 .. code:: python
 
     s3.mul(s1,fill_value=1) # s3*s1
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>1.0</td>
+          <td>2.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>3.0</td>
+          <td>4.0</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>5.0</td>
+          <td>6.0</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>7.0</td>
+          <td>8.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <th>e</th>
+          <td>9.0</td>
+          <td>10.0</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <th>g</th>
+          <td>1.0</td>
+          <td>NaN</td>
+          <td>2.0</td>
+        </tr>
+        <tr>
+          <th>h</th>
+          <td>1.0</td>
+          <td>NaN</td>
+          <td>2.0</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 En resumen, las operaciones realizan una unión entre los
 ``DataFrame``\ s, y luego, en aquellos casos en que es factible, se
@@ -4772,27 +5830,335 @@ automática de los datos se conoce como *broadcasting*:
 .. code:: python
 
     arr2D = np.arange(12).reshape(4,3)
-    arr1D = np.array([3,4,5])
-    print(arr2D)
-    print(arr1D)
+    arr1D = np.array([3,2,1])
+    print('arr2D\n',arr2D)
+    print('arr1D\n',arr1D)
+    print('Broadcast')
     print(np.broadcast_to(arr1D, arr2D.shape))
     print(arr2D-arr1D)
+
+
+
+.. parsed-literal::
+
+    arr2D
+     [[ 0  1  2]
+     [ 3  4  5]
+     [ 6  7  8]
+     [ 9 10 11]]
+    arr1D
+     [3 2 1]
+    Broadcast
+    [[3 2 1]
+     [3 2 1]
+     [3 2 1]
+     [3 2 1]]
+    [[-3 -1  1]
+     [ 0  2  4]
+     [ 3  5  7]
+     [ 6  8 10]]
 
 
 .. code:: python
 
     df = pd.DataFrame(arr2D, columns = ['A', 'B', 'C'])
     v = pd.Series(arr1D, index = ['A', 'B', 'C'])
-    display_side_by_side([df, pd.DataFrame(v)], ['df', 'v'])
+    display_side_by_side([df, pd.DataFrame(v),pd.DataFrame(np.broadcast_to(v, df.shape), columns=['A','B','C'])], ['df', 'v', 'broadcast'])
     df - arr1D  # broadcasting por filas, DataFrame - array 1D
+
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_ea86b" style='display:inline'>
+      <caption>df</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_ea86b_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_ea86b_level0_col1" class="col_heading level0 col1" >B</th>
+          <th id="T_ea86b_level0_col2" class="col_heading level0 col2" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_ea86b_level0_row0" class="row_heading level0 row0" >0</th>
+          <td id="T_ea86b_row0_col0" class="data row0 col0" >0</td>
+          <td id="T_ea86b_row0_col1" class="data row0 col1" >1</td>
+          <td id="T_ea86b_row0_col2" class="data row0 col2" >2</td>
+        </tr>
+        <tr>
+          <th id="T_ea86b_level0_row1" class="row_heading level0 row1" >1</th>
+          <td id="T_ea86b_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_ea86b_row1_col1" class="data row1 col1" >4</td>
+          <td id="T_ea86b_row1_col2" class="data row1 col2" >5</td>
+        </tr>
+        <tr>
+          <th id="T_ea86b_level0_row2" class="row_heading level0 row2" >2</th>
+          <td id="T_ea86b_row2_col0" class="data row2 col0" >6</td>
+          <td id="T_ea86b_row2_col1" class="data row2 col1" >7</td>
+          <td id="T_ea86b_row2_col2" class="data row2 col2" >8</td>
+        </tr>
+        <tr>
+          <th id="T_ea86b_level0_row3" class="row_heading level0 row3" >3</th>
+          <td id="T_ea86b_row3_col0" class="data row3 col0" >9</td>
+          <td id="T_ea86b_row3_col1" class="data row3 col1" >10</td>
+          <td id="T_ea86b_row3_col2" class="data row3 col2" >11</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_c671d" style='display:inline'>
+      <caption>v</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_c671d_level0_col0" class="col_heading level0 col0" >0</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_c671d_level0_row0" class="row_heading level0 row0" >A</th>
+          <td id="T_c671d_row0_col0" class="data row0 col0" >3</td>
+        </tr>
+        <tr>
+          <th id="T_c671d_level0_row1" class="row_heading level0 row1" >B</th>
+          <td id="T_c671d_row1_col0" class="data row1 col0" >2</td>
+        </tr>
+        <tr>
+          <th id="T_c671d_level0_row2" class="row_heading level0 row2" >C</th>
+          <td id="T_c671d_row2_col0" class="data row2 col0" >1</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_4d1fa" style='display:inline'>
+      <caption>broadcast</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_4d1fa_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_4d1fa_level0_col1" class="col_heading level0 col1" >B</th>
+          <th id="T_4d1fa_level0_col2" class="col_heading level0 col2" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_4d1fa_level0_row0" class="row_heading level0 row0" >0</th>
+          <td id="T_4d1fa_row0_col0" class="data row0 col0" >3</td>
+          <td id="T_4d1fa_row0_col1" class="data row0 col1" >2</td>
+          <td id="T_4d1fa_row0_col2" class="data row0 col2" >1</td>
+        </tr>
+        <tr>
+          <th id="T_4d1fa_level0_row1" class="row_heading level0 row1" >1</th>
+          <td id="T_4d1fa_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_4d1fa_row1_col1" class="data row1 col1" >2</td>
+          <td id="T_4d1fa_row1_col2" class="data row1 col2" >1</td>
+        </tr>
+        <tr>
+          <th id="T_4d1fa_level0_row2" class="row_heading level0 row2" >2</th>
+          <td id="T_4d1fa_row2_col0" class="data row2 col0" >3</td>
+          <td id="T_4d1fa_row2_col1" class="data row2 col1" >2</td>
+          <td id="T_4d1fa_row2_col2" class="data row2 col2" >1</td>
+        </tr>
+        <tr>
+          <th id="T_4d1fa_level0_row3" class="row_heading level0 row3" >3</th>
+          <td id="T_4d1fa_row3_col0" class="data row3 col0" >3</td>
+          <td id="T_4d1fa_row3_col1" class="data row3 col1" >2</td>
+          <td id="T_4d1fa_row3_col2" class="data row3 col2" >1</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>-3</td>
+          <td>-1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>3</td>
+          <td>5</td>
+          <td>7</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>6</td>
+          <td>8</td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
     df - v  # broadcasting por filas, DataFrame - Serie
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>-3</td>
+          <td>-1</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>2</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>3</td>
+          <td>5</td>
+          <td>7</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>6</td>
+          <td>8</td>
+          <td>10</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     v - df
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>3</td>
+          <td>1</td>
+          <td>-1</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>-2</td>
+          <td>-4</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>-3</td>
+          <td>-5</td>
+          <td>-7</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-6</td>
+          <td>-8</td>
+          <td>-10</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Se puede hacer el *broadcasting* en forma explícita, usando el argumento
 ``axis``: - Por columnas: ``axis = "index"`` (o ``axis = 0``) - Por
@@ -4802,26 +6168,361 @@ alinearse.
 .. code:: python
 
     w = df['A']
-    print(w)
-    print(df)
+    display_side_by_side([df, pd.DataFrame(w)], ['df', 'w'])
     df.sub(w, axis='index') # alinea por filas, broadcasting por columnas, DataFrame - Serie
 
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_aa686" style='display:inline'>
+      <caption>df</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_aa686_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_aa686_level0_col1" class="col_heading level0 col1" >B</th>
+          <th id="T_aa686_level0_col2" class="col_heading level0 col2" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_aa686_level0_row0" class="row_heading level0 row0" >0</th>
+          <td id="T_aa686_row0_col0" class="data row0 col0" >0</td>
+          <td id="T_aa686_row0_col1" class="data row0 col1" >1</td>
+          <td id="T_aa686_row0_col2" class="data row0 col2" >2</td>
+        </tr>
+        <tr>
+          <th id="T_aa686_level0_row1" class="row_heading level0 row1" >1</th>
+          <td id="T_aa686_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_aa686_row1_col1" class="data row1 col1" >4</td>
+          <td id="T_aa686_row1_col2" class="data row1 col2" >5</td>
+        </tr>
+        <tr>
+          <th id="T_aa686_level0_row2" class="row_heading level0 row2" >2</th>
+          <td id="T_aa686_row2_col0" class="data row2 col0" >6</td>
+          <td id="T_aa686_row2_col1" class="data row2 col1" >7</td>
+          <td id="T_aa686_row2_col2" class="data row2 col2" >8</td>
+        </tr>
+        <tr>
+          <th id="T_aa686_level0_row3" class="row_heading level0 row3" >3</th>
+          <td id="T_aa686_row3_col0" class="data row3 col0" >9</td>
+          <td id="T_aa686_row3_col1" class="data row3 col1" >10</td>
+          <td id="T_aa686_row3_col2" class="data row3 col2" >11</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_ac10a" style='display:inline'>
+      <caption>w</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_ac10a_level0_col0" class="col_heading level0 col0" >A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_ac10a_level0_row0" class="row_heading level0 row0" >0</th>
+          <td id="T_ac10a_row0_col0" class="data row0 col0" >0</td>
+        </tr>
+        <tr>
+          <th id="T_ac10a_level0_row1" class="row_heading level0 row1" >1</th>
+          <td id="T_ac10a_row1_col0" class="data row1 col0" >3</td>
+        </tr>
+        <tr>
+          <th id="T_ac10a_level0_row2" class="row_heading level0 row2" >2</th>
+          <td id="T_ac10a_row2_col0" class="data row2 col0" >6</td>
+        </tr>
+        <tr>
+          <th id="T_ac10a_level0_row3" class="row_heading level0 row3" >3</th>
+          <td id="T_ac10a_row3_col0" class="data row3 col0" >9</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
-    df.sub(w, axis=0) # alinea por filas, broadcasting por columnas, DataFrame - Serie
+    df.sub(w, axis=0) # alinea por filas, broadcasting por columnas, DataFrame - Serie, idem axis='index'
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
-    df.sub(w, axis=1) # alínea por columnas, broadcasting por filas explícito, DataFrame - Serie
+    t = pd.Series([3,2,1,0], index = ['A', 'B', 'C', 'D'])
+    display_side_by_side([df, pd.DataFrame(t)], ['df', 't'])
+
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_c5e89" style='display:inline'>
+      <caption>df</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_c5e89_level0_col0" class="col_heading level0 col0" >A</th>
+          <th id="T_c5e89_level0_col1" class="col_heading level0 col1" >B</th>
+          <th id="T_c5e89_level0_col2" class="col_heading level0 col2" >C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_c5e89_level0_row0" class="row_heading level0 row0" >0</th>
+          <td id="T_c5e89_row0_col0" class="data row0 col0" >0</td>
+          <td id="T_c5e89_row0_col1" class="data row0 col1" >1</td>
+          <td id="T_c5e89_row0_col2" class="data row0 col2" >2</td>
+        </tr>
+        <tr>
+          <th id="T_c5e89_level0_row1" class="row_heading level0 row1" >1</th>
+          <td id="T_c5e89_row1_col0" class="data row1 col0" >3</td>
+          <td id="T_c5e89_row1_col1" class="data row1 col1" >4</td>
+          <td id="T_c5e89_row1_col2" class="data row1 col2" >5</td>
+        </tr>
+        <tr>
+          <th id="T_c5e89_level0_row2" class="row_heading level0 row2" >2</th>
+          <td id="T_c5e89_row2_col0" class="data row2 col0" >6</td>
+          <td id="T_c5e89_row2_col1" class="data row2 col1" >7</td>
+          <td id="T_c5e89_row2_col2" class="data row2 col2" >8</td>
+        </tr>
+        <tr>
+          <th id="T_c5e89_level0_row3" class="row_heading level0 row3" >3</th>
+          <td id="T_c5e89_row3_col0" class="data row3 col0" >9</td>
+          <td id="T_c5e89_row3_col1" class="data row3 col1" >10</td>
+          <td id="T_c5e89_row3_col2" class="data row3 col2" >11</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_0c48d" style='display:inline'>
+      <caption>t</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_0c48d_level0_col0" class="col_heading level0 col0" >0</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_0c48d_level0_row0" class="row_heading level0 row0" >A</th>
+          <td id="T_0c48d_row0_col0" class="data row0 col0" >3</td>
+        </tr>
+        <tr>
+          <th id="T_0c48d_level0_row1" class="row_heading level0 row1" >B</th>
+          <td id="T_0c48d_row1_col0" class="data row1 col0" >2</td>
+        </tr>
+        <tr>
+          <th id="T_0c48d_level0_row2" class="row_heading level0 row2" >C</th>
+          <td id="T_0c48d_row2_col0" class="data row2 col0" >1</td>
+        </tr>
+        <tr>
+          <th id="T_0c48d_level0_row3" class="row_heading level0 row3" >D</th>
+          <td id="T_0c48d_row3_col0" class="data row3 col0" >0</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
+.. code:: python
+
+    df.sub(t, axis=1) # alínea por columnas, broadcasting por filas explícito, DataFrame - Serie
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>-3</td>
+          <td>-1</td>
+          <td>1</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>2</td>
+          <td>4</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>3</td>
+          <td>5</td>
+          <td>7</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>6</td>
+          <td>8</td>
+          <td>10</td>
+          <td>NaN</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 En este último caso, dado que los índices de ``w`` y ``df`` son todos
 distintos, se realiza la unión y se completa con ``NaN``.
 
-   **ATENCIÓN**: el eje (``axis``) es aquel en el cual se van a alinear
-   los índices. Así, ``axis=0`` implica **emparejar** los índices de
-   filas y **propagar** por columnas. De la misma manera, ``axis=1``
-   implica **emparejar** los índices de columnas y **propagar** por
-   filas.
+   **En Resumen**: el eje (``axis``) es aquel en el cual se van a
+   alinear los índices. Así, ``axis=0`` implica **emparejar** los
+   índices de filas y **propagar** por columnas. De la misma manera,
+   ``axis=1`` implica **emparejar** los índices de columnas y
+   **propagar** por filas.
 
 Orden
 ~~~~~
@@ -4830,17 +6531,194 @@ Para ordenar ``DataFrame``\ s se usa el método ``.sort_index()``
 
 .. code:: python
 
-    df = pd.DataFrame(np.random.rand(4,3), index= ['c','d','a','b'], columns = ['B', 'C', 'A'])
-    df
+    dfo = pd.DataFrame(np.random.rand(4,3), index= ['c','d','a','b'], columns = ['B', 'C', 'A'])
+    dfo
+
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B</th>
+          <th>C</th>
+          <th>A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>c</th>
+          <td>0.418944</td>
+          <td>0.068121</td>
+          <td>0.048130</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.806613</td>
+          <td>0.019062</td>
+          <td>0.667398</td>
+        </tr>
+        <tr>
+          <th>a</th>
+          <td>0.669787</td>
+          <td>0.863514</td>
+          <td>0.040332</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.355176</td>
+          <td>0.184925</td>
+          <td>0.580247</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
 
 
 .. code:: python
 
-    df.sort_index() # ordena por los índices de filas
+    dfo.sort_index() # ordena por los índices de filas
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B</th>
+          <th>C</th>
+          <th>A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>0.669787</td>
+          <td>0.863514</td>
+          <td>0.040332</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.355176</td>
+          <td>0.184925</td>
+          <td>0.580247</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.418944</td>
+          <td>0.068121</td>
+          <td>0.048130</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.806613</td>
+          <td>0.019062</td>
+          <td>0.667398</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
-    df.sort_index(axis=1) # ordena por los índices de columnas
+    dfo.sort_index(axis=1) # ordena por los índices de columnas
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>c</th>
+          <td>0.048130</td>
+          <td>0.418944</td>
+          <td>0.068121</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.667398</td>
+          <td>0.806613</td>
+          <td>0.019062</td>
+        </tr>
+        <tr>
+          <th>a</th>
+          <td>0.040332</td>
+          <td>0.669787</td>
+          <td>0.863514</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.580247</td>
+          <td>0.355176</td>
+          <td>0.184925</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Pasando el argumento ``ascending`` (booleano) se puede cambiar el orden
 por defecto, que corresponde a ``ascending=True``. Se puede ordenar
@@ -4849,11 +6727,261 @@ utilizando el método ``sort_values``:
 
 .. code:: python
 
-    df.sort_values('B')
+    dfo.sort_values('B')
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B</th>
+          <th>C</th>
+          <th>A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>b</th>
+          <td>0.355176</td>
+          <td>0.184925</td>
+          <td>0.580247</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.418944</td>
+          <td>0.068121</td>
+          <td>0.048130</td>
+        </tr>
+        <tr>
+          <th>a</th>
+          <td>0.669787</td>
+          <td>0.863514</td>
+          <td>0.040332</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.806613</td>
+          <td>0.019062</td>
+          <td>0.667398</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 En el caso en que existieran valores faltantes, estos se ordenan al
 final por defecto, excepto que se pase el argumento opcional
 ``na_position='first'``.
+
+.. code:: python
+
+    dfo.loc['c','A'] = None 
+    dfo.loc['a','C'] = None
+    dfo
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B</th>
+          <th>C</th>
+          <th>A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>c</th>
+          <td>0.418944</td>
+          <td>0.068121</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.806613</td>
+          <td>0.019062</td>
+          <td>0.667398</td>
+        </tr>
+        <tr>
+          <th>a</th>
+          <td>0.669787</td>
+          <td>NaN</td>
+          <td>0.040332</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.355176</td>
+          <td>0.184925</td>
+          <td>0.580247</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    dfo.sort_values('C')
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B</th>
+          <th>C</th>
+          <th>A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>d</th>
+          <td>0.806613</td>
+          <td>0.019062</td>
+          <td>0.667398</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.418944</td>
+          <td>0.068121</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.355176</td>
+          <td>0.184925</td>
+          <td>0.580247</td>
+        </tr>
+        <tr>
+          <th>a</th>
+          <td>0.669787</td>
+          <td>NaN</td>
+          <td>0.040332</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+.. code:: python
+
+    dfo.sort_values('C',na_position='first') # coloca los NaN al principio
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>B</th>
+          <th>C</th>
+          <th>A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>0.669787</td>
+          <td>NaN</td>
+          <td>0.040332</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.806613</td>
+          <td>0.019062</td>
+          <td>0.667398</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.418944</td>
+          <td>0.068121</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.355176</td>
+          <td>0.184925</td>
+          <td>0.580247</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Una operación útil es *ranking*, esto es, asignar un valor desde 1 hasta
 el número de datos de acuerdo a un orden, desde el valor más bajo al más
@@ -4861,17 +6989,216 @@ alto:
 
 .. code:: python
 
-    s = pd.Series(np.random.rand(5))
+    s = pd.Series(np.random.rand(6))
     s 
+
+
+
+
+.. parsed-literal::
+
+    0    0.094662
+    1    0.910300
+    2    0.628287
+    3    0.888667
+    4    0.239859
+    5    0.435444
+    dtype: float64
+
+
 
 .. code:: python
 
     s.rank()
 
+
+
+
+.. parsed-literal::
+
+    0    1.0
+    1    6.0
+    2    4.0
+    3    5.0
+    4    2.0
+    5    3.0
+    dtype: float64
+
+
+
 .. code:: python
 
-    display_side_by_side([df, df.rank(axis=0)],['df','df.rank->0']) # ordena a lo largo de columnas
-    display_side_by_side([df, df.rank(axis=1)],['df','df.rank->1']) # ordena a lo largo de filas
+    display_side_by_side([dfo, df.rank(axis=0)],['df','df.rank->0']) # ordena a lo largo de columnas
+    display_side_by_side([dfo, df.rank(axis=1)],['df','df.rank->1']) # ordena a lo largo de filas
+
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_6b83b" style='display:inline'>
+      <caption>df</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_6b83b_level0_col0" class="col_heading level0 col0" >B</th>
+          <th id="T_6b83b_level0_col1" class="col_heading level0 col1" >C</th>
+          <th id="T_6b83b_level0_col2" class="col_heading level0 col2" >A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_6b83b_level0_row0" class="row_heading level0 row0" >c</th>
+          <td id="T_6b83b_row0_col0" class="data row0 col0" >0.418944</td>
+          <td id="T_6b83b_row0_col1" class="data row0 col1" >0.068121</td>
+          <td id="T_6b83b_row0_col2" class="data row0 col2" >nan</td>
+        </tr>
+        <tr>
+          <th id="T_6b83b_level0_row1" class="row_heading level0 row1" >d</th>
+          <td id="T_6b83b_row1_col0" class="data row1 col0" >0.806613</td>
+          <td id="T_6b83b_row1_col1" class="data row1 col1" >0.019062</td>
+          <td id="T_6b83b_row1_col2" class="data row1 col2" >0.667398</td>
+        </tr>
+        <tr>
+          <th id="T_6b83b_level0_row2" class="row_heading level0 row2" >a</th>
+          <td id="T_6b83b_row2_col0" class="data row2 col0" >0.669787</td>
+          <td id="T_6b83b_row2_col1" class="data row2 col1" >nan</td>
+          <td id="T_6b83b_row2_col2" class="data row2 col2" >0.040332</td>
+        </tr>
+        <tr>
+          <th id="T_6b83b_level0_row3" class="row_heading level0 row3" >b</th>
+          <td id="T_6b83b_row3_col0" class="data row3 col0" >0.355176</td>
+          <td id="T_6b83b_row3_col1" class="data row3 col1" >0.184925</td>
+          <td id="T_6b83b_row3_col2" class="data row3 col2" >0.580247</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_9bfdd" style='display:inline'>
+      <caption>df.rank->0</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_9bfdd_level0_col0" class="col_heading level0 col0" >B</th>
+          <th id="T_9bfdd_level0_col1" class="col_heading level0 col1" >C</th>
+          <th id="T_9bfdd_level0_col2" class="col_heading level0 col2" >A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_9bfdd_level0_row0" class="row_heading level0 row0" >c</th>
+          <td id="T_9bfdd_row0_col0" class="data row0 col0" >3.000000</td>
+          <td id="T_9bfdd_row0_col1" class="data row0 col1" >3.000000</td>
+          <td id="T_9bfdd_row0_col2" class="data row0 col2" >nan</td>
+        </tr>
+        <tr>
+          <th id="T_9bfdd_level0_row1" class="row_heading level0 row1" >d</th>
+          <td id="T_9bfdd_row1_col0" class="data row1 col0" >1.000000</td>
+          <td id="T_9bfdd_row1_col1" class="data row1 col1" >1.000000</td>
+          <td id="T_9bfdd_row1_col2" class="data row1 col2" >3.000000</td>
+        </tr>
+        <tr>
+          <th id="T_9bfdd_level0_row2" class="row_heading level0 row2" >a</th>
+          <td id="T_9bfdd_row2_col0" class="data row2 col0" >4.000000</td>
+          <td id="T_9bfdd_row2_col1" class="data row2 col1" >nan</td>
+          <td id="T_9bfdd_row2_col2" class="data row2 col2" >1.000000</td>
+        </tr>
+        <tr>
+          <th id="T_9bfdd_level0_row3" class="row_heading level0 row3" >b</th>
+          <td id="T_9bfdd_row3_col0" class="data row3 col0" >2.000000</td>
+          <td id="T_9bfdd_row3_col1" class="data row3 col1" >2.000000</td>
+          <td id="T_9bfdd_row3_col2" class="data row3 col2" >2.000000</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_4bb70" style='display:inline'>
+      <caption>df</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_4bb70_level0_col0" class="col_heading level0 col0" >B</th>
+          <th id="T_4bb70_level0_col1" class="col_heading level0 col1" >C</th>
+          <th id="T_4bb70_level0_col2" class="col_heading level0 col2" >A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_4bb70_level0_row0" class="row_heading level0 row0" >c</th>
+          <td id="T_4bb70_row0_col0" class="data row0 col0" >0.418944</td>
+          <td id="T_4bb70_row0_col1" class="data row0 col1" >0.068121</td>
+          <td id="T_4bb70_row0_col2" class="data row0 col2" >nan</td>
+        </tr>
+        <tr>
+          <th id="T_4bb70_level0_row1" class="row_heading level0 row1" >d</th>
+          <td id="T_4bb70_row1_col0" class="data row1 col0" >0.806613</td>
+          <td id="T_4bb70_row1_col1" class="data row1 col1" >0.019062</td>
+          <td id="T_4bb70_row1_col2" class="data row1 col2" >0.667398</td>
+        </tr>
+        <tr>
+          <th id="T_4bb70_level0_row2" class="row_heading level0 row2" >a</th>
+          <td id="T_4bb70_row2_col0" class="data row2 col0" >0.669787</td>
+          <td id="T_4bb70_row2_col1" class="data row2 col1" >nan</td>
+          <td id="T_4bb70_row2_col2" class="data row2 col2" >0.040332</td>
+        </tr>
+        <tr>
+          <th id="T_4bb70_level0_row3" class="row_heading level0 row3" >b</th>
+          <td id="T_4bb70_row3_col0" class="data row3 col0" >0.355176</td>
+          <td id="T_4bb70_row3_col1" class="data row3 col1" >0.184925</td>
+          <td id="T_4bb70_row3_col2" class="data row3 col2" >0.580247</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_b47ac" style='display:inline'>
+      <caption>df.rank->1</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_b47ac_level0_col0" class="col_heading level0 col0" >B</th>
+          <th id="T_b47ac_level0_col1" class="col_heading level0 col1" >C</th>
+          <th id="T_b47ac_level0_col2" class="col_heading level0 col2" >A</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_b47ac_level0_row0" class="row_heading level0 row0" >c</th>
+          <td id="T_b47ac_row0_col0" class="data row0 col0" >1.000000</td>
+          <td id="T_b47ac_row0_col1" class="data row0 col1" >2.000000</td>
+          <td id="T_b47ac_row0_col2" class="data row0 col2" >nan</td>
+        </tr>
+        <tr>
+          <th id="T_b47ac_level0_row1" class="row_heading level0 row1" >d</th>
+          <td id="T_b47ac_row1_col0" class="data row1 col0" >1.000000</td>
+          <td id="T_b47ac_row1_col1" class="data row1 col1" >2.000000</td>
+          <td id="T_b47ac_row1_col2" class="data row1 col2" >3.000000</td>
+        </tr>
+        <tr>
+          <th id="T_b47ac_level0_row2" class="row_heading level0 row2" >a</th>
+          <td id="T_b47ac_row2_col0" class="data row2 col0" >2.000000</td>
+          <td id="T_b47ac_row2_col1" class="data row2 col1" >nan</td>
+          <td id="T_b47ac_row2_col2" class="data row2 col2" >1.000000</td>
+        </tr>
+        <tr>
+          <th id="T_b47ac_level0_row3" class="row_heading level0 row3" >b</th>
+          <td id="T_b47ac_row3_col0" class="data row3 col0" >2.000000</td>
+          <td id="T_b47ac_row3_col1" class="data row3 col1" >3.000000</td>
+          <td id="T_b47ac_row3_col2" class="data row3 col2" >1.000000</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
 
 Estadística
 ~~~~~~~~~~~
@@ -4886,9 +7213,151 @@ métodos para realizar estos cálculos.
     df
 
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>0.711472</td>
+          <td>0.983656</td>
+          <td>0.994762</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.311838</td>
+          <td>0.437919</td>
+          <td>0.161758</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.660619</td>
+          <td>0.438597</td>
+          <td>0.103547</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.351929</td>
+          <td>0.735494</td>
+          <td>0.331338</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     df.describe()
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>count</th>
+          <td>4.000000</td>
+          <td>4.000000</td>
+          <td>4.000000</td>
+        </tr>
+        <tr>
+          <th>mean</th>
+          <td>0.508964</td>
+          <td>0.648917</td>
+          <td>0.397851</td>
+        </tr>
+        <tr>
+          <th>std</th>
+          <td>0.206177</td>
+          <td>0.263502</td>
+          <td>0.409504</td>
+        </tr>
+        <tr>
+          <th>min</th>
+          <td>0.311838</td>
+          <td>0.437919</td>
+          <td>0.103547</td>
+        </tr>
+        <tr>
+          <th>25%</th>
+          <td>0.341906</td>
+          <td>0.438428</td>
+          <td>0.147206</td>
+        </tr>
+        <tr>
+          <th>50%</th>
+          <td>0.506274</td>
+          <td>0.587046</td>
+          <td>0.246548</td>
+        </tr>
+        <tr>
+          <th>75%</th>
+          <td>0.673332</td>
+          <td>0.797535</td>
+          <td>0.497194</td>
+        </tr>
+        <tr>
+          <th>max</th>
+          <td>0.711472</td>
+          <td>0.983656</td>
+          <td>0.994762</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Cada una de las magnitudes se corresponde a algún parámetro estadístico.
 
@@ -4897,6 +7366,18 @@ Estas operaciones devuelven un nuevo ``DataFrame``. Por ejemplo:
 .. code:: python
 
     df.sum()
+
+
+
+
+.. parsed-literal::
+
+    A    2.035858
+    B    2.595666
+    C    1.591406
+    dtype: float64
+
+
 
 retorna un ``DataFrame`` donde los índices corresponden a las etiquetas
 de cada columna.
@@ -4908,6 +7389,15 @@ de cada columna.
 
     df['A'].sum()
 
+
+
+
+.. parsed-literal::
+
+    2.0358575881644327
+
+
+
 Aplicación de funciones y map
 -----------------------------
 
@@ -4915,28 +7405,201 @@ Es posible también aplicar funciones, por ejemplo
 
 .. code:: python
 
-    df
+    dff = pd.DataFrame(np.random.rand(4,3), index= ['a','b','c','d'], columns = ['A', 'B', 'C'])
+    dff
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>0.019723</td>
+          <td>0.198121</td>
+          <td>0.323953</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.227239</td>
+          <td>0.482820</td>
+          <td>0.386698</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.761306</td>
+          <td>0.512203</td>
+          <td>0.455078</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.865883</td>
+          <td>0.513571</td>
+          <td>0.903414</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
     def f(x):
         return x.max() - x.min()
     
-    df.apply(f) # aplica la función a cada columna, por defecto axis=0
+    dff.apply(f) # aplica la función a cada columna, por defecto axis=0
+
+
+
+
+
+.. parsed-literal::
+
+    A    0.846160
+    B    0.315450
+    C    0.579461
+    dtype: float64
+
 
 
 .. code:: python
 
-    df.apply(f, axis=1) # aplica la función a cada fila, axis=1
+    dff.apply(f, axis=1) # aplica la función a cada fila, axis=1
+
+
+
+
+.. parsed-literal::
+
+    a    0.304229
+    b    0.255582
+    c    0.306228
+    d    0.389843
+    dtype: float64
+
+
 
 .. code:: python
 
-    df.apply(lambda x: x.max()-x.min(), axis=1) # por columnas, igual que df.apply(f, axis='columns')
+    dff.apply(lambda x: x.max()-x.min(), axis=1) # por columnas, igual que df.apply(f, axis='columns')
+
+
+
+
+.. parsed-literal::
+
+    a    0.304229
+    b    0.255582
+    c    0.306228
+    d    0.389843
+    dtype: float64
+
+
+
+La siguiente operación calcular el promedio de las columnas de un
+``DataFrame`` e incorporarlos como una columna nueva:
 
 .. code:: python
 
-    df['mean'] = df.mean(axis=1)
-    df
+    dff['mean'] = dff.mean(axis=1)
+    dff
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>mean</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>a</th>
+          <td>0.019723</td>
+          <td>0.198121</td>
+          <td>0.323953</td>
+          <td>0.180599</td>
+        </tr>
+        <tr>
+          <th>b</th>
+          <td>0.227239</td>
+          <td>0.482820</td>
+          <td>0.386698</td>
+          <td>0.365586</td>
+        </tr>
+        <tr>
+          <th>c</th>
+          <td>0.761306</td>
+          <td>0.512203</td>
+          <td>0.455078</td>
+          <td>0.576196</td>
+        </tr>
+        <tr>
+          <th>d</th>
+          <td>0.865883</td>
+          <td>0.513571</td>
+          <td>0.903414</td>
+          <td>0.760956</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
+Cuál es el resultado de ``dff['mean'] = dff.mean(axis=0)``?
+
+.. code:: python
+
+    #dff.drop('mean', axis=1, inplace=True) # elimina la columna 'mean'
+    #dff.mean(axis=0)
+    #dff['mean'] = dff.mean(axis=0)
 
 Puede ser necesario aplicar determinada función a todos los valores del
 ``DataFrame``, con ``map``:
@@ -4948,6 +7611,101 @@ Puede ser necesario aplicar determinada función a todos los valores del
     
     
     display_side_by_side([df, df.map(round2)], ['df', 'df.map(round2)']) # aplica la función a cada elemento del DataFrame
+
+
+
+.. raw:: html
+
+    <style type="text/css">
+    </style>
+    <table id="T_f20ba" style='display:inline'>
+      <caption>df</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_f20ba_level0_col0" class="col_heading level0 col0" >B</th>
+          <th id="T_f20ba_level0_col1" class="col_heading level0 col1" >C</th>
+          <th id="T_f20ba_level0_col2" class="col_heading level0 col2" >A</th>
+          <th id="T_f20ba_level0_col3" class="col_heading level0 col3" >mean</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_f20ba_level0_row0" class="row_heading level0 row0" >c</th>
+          <td id="T_f20ba_row0_col0" class="data row0 col0" >0.549993</td>
+          <td id="T_f20ba_row0_col1" class="data row0 col1" >0.773075</td>
+          <td id="T_f20ba_row0_col2" class="data row0 col2" >nan</td>
+          <td id="T_f20ba_row0_col3" class="data row0 col3" >0.661534</td>
+        </tr>
+        <tr>
+          <th id="T_f20ba_level0_row1" class="row_heading level0 row1" >d</th>
+          <td id="T_f20ba_row1_col0" class="data row1 col0" >0.102100</td>
+          <td id="T_f20ba_row1_col1" class="data row1 col1" >0.540780</td>
+          <td id="T_f20ba_row1_col2" class="data row1 col2" >0.801569</td>
+          <td id="T_f20ba_row1_col3" class="data row1 col3" >0.481483</td>
+        </tr>
+        <tr>
+          <th id="T_f20ba_level0_row2" class="row_heading level0 row2" >a</th>
+          <td id="T_f20ba_row2_col0" class="data row2 col0" >0.702952</td>
+          <td id="T_f20ba_row2_col1" class="data row2 col1" >nan</td>
+          <td id="T_f20ba_row2_col2" class="data row2 col2" >0.023094</td>
+          <td id="T_f20ba_row2_col3" class="data row2 col3" >0.363023</td>
+        </tr>
+        <tr>
+          <th id="T_f20ba_level0_row3" class="row_heading level0 row3" >b</th>
+          <td id="T_f20ba_row3_col0" class="data row3 col0" >0.294768</td>
+          <td id="T_f20ba_row3_col1" class="data row3 col1" >0.602947</td>
+          <td id="T_f20ba_row3_col2" class="data row3 col2" >0.187982</td>
+          <td id="T_f20ba_row3_col3" class="data row3 col3" >0.361899</td>
+        </tr>
+      </tbody>
+    </table>
+       <style type="text/css">
+    </style>
+    <table id="T_eb703" style='display:inline'>
+      <caption>df.map(round2)</caption>
+      <thead>
+        <tr>
+          <th class="blank level0" >&nbsp;</th>
+          <th id="T_eb703_level0_col0" class="col_heading level0 col0" >B</th>
+          <th id="T_eb703_level0_col1" class="col_heading level0 col1" >C</th>
+          <th id="T_eb703_level0_col2" class="col_heading level0 col2" >A</th>
+          <th id="T_eb703_level0_col3" class="col_heading level0 col3" >mean</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th id="T_eb703_level0_row0" class="row_heading level0 row0" >c</th>
+          <td id="T_eb703_row0_col0" class="data row0 col0" >0.550000</td>
+          <td id="T_eb703_row0_col1" class="data row0 col1" >0.770000</td>
+          <td id="T_eb703_row0_col2" class="data row0 col2" >nan</td>
+          <td id="T_eb703_row0_col3" class="data row0 col3" >0.660000</td>
+        </tr>
+        <tr>
+          <th id="T_eb703_level0_row1" class="row_heading level0 row1" >d</th>
+          <td id="T_eb703_row1_col0" class="data row1 col0" >0.100000</td>
+          <td id="T_eb703_row1_col1" class="data row1 col1" >0.540000</td>
+          <td id="T_eb703_row1_col2" class="data row1 col2" >0.800000</td>
+          <td id="T_eb703_row1_col3" class="data row1 col3" >0.480000</td>
+        </tr>
+        <tr>
+          <th id="T_eb703_level0_row2" class="row_heading level0 row2" >a</th>
+          <td id="T_eb703_row2_col0" class="data row2 col0" >0.700000</td>
+          <td id="T_eb703_row2_col1" class="data row2 col1" >nan</td>
+          <td id="T_eb703_row2_col2" class="data row2 col2" >0.020000</td>
+          <td id="T_eb703_row2_col3" class="data row2 col3" >0.360000</td>
+        </tr>
+        <tr>
+          <th id="T_eb703_level0_row3" class="row_heading level0 row3" >b</th>
+          <td id="T_eb703_row3_col0" class="data row3 col0" >0.290000</td>
+          <td id="T_eb703_row3_col1" class="data row3 col1" >0.600000</td>
+          <td id="T_eb703_row3_col2" class="data row3 col2" >0.190000</td>
+          <td id="T_eb703_row3_col3" class="data row3 col3" >0.360000</td>
+        </tr>
+      </tbody>
+    </table>
+       
+
 
 --------------
 

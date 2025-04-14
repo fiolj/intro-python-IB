@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 15: Más pandas &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 14: Introducción a pandas" href="clase_14.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Más sobre objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Control de versiones y módulos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Introducción a Numpy y Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_14.html">Clase 14: Introducción a <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 15: Más <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#manejando-datos-faltantes">Manejando datos faltantes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#indicadores">Indicadores</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manejando-indices-multiples">Manejando índices múltiples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#agrupando">Agrupando</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#apilando-y-desapilando">Apilando y desapilando</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#categorias">Categorías</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-15-a">Ejercicio 15(a)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graficando-dataframes">Graficando <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejercicio-15-b">Ejercicio 15 (b)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 15: Más <code class="docutils literal notranslate"><span class="pre">pandas</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_15.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-15-mas-pandas">
+<span id="clase-15"></span><h1>Clase 15: Más <code class="docutils literal notranslate"><span class="pre">pandas</span></code><a class="headerlink" href="#clase-15-mas-pandas" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<section id="manejando-datos-faltantes">
+<h2>Manejando datos faltantes<a class="headerlink" href="#manejando-datos-faltantes" title="Link to this heading"></a></h2>
+<p>Hemos visto que <code class="docutils literal notranslate"><span class="pre">pandas</span></code> automágicamente es capaz de manejar valores
+faltantes o inexistentes, a través de distintas etiquetas como <code class="docutils literal notranslate"><span class="pre">NaN</span></code>,
+<code class="docutils literal notranslate"><span class="pre">NA</span></code>, etc., dependiendo del tipo de dato que se esté utilizando. Más
+allá de la lectura de los datos, muchos de los métodos nativos de
+<code class="docutils literal notranslate"><span class="pre">pandas</span></code> son capaces de trabajar aún cuando falten datos. Sin embargo,
+puede ser necesario intervenir efectivamente sobre esos datos para poder
+continuar con ese procesamiento.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span><span class="s1">&#39;moto&#39;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="s1">&#39;bicicleta&#39;</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.0</span><span class="p">,</span><span class="kc">None</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="n">d</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vehículos&#39;</span><span class="p">,</span><span class="s1">&#39;ruedas&#39;</span><span class="p">])</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="c1"># equivalente a s[s.notna()]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># equivalente a s.dropna(axis=&#39;columns&#39;)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="c1"># elimina las filas que tengan todos los valores nulos</span>
+</pre></div>
+</div>
+<p>También se puede usar el argumento ‘thresh=’ para acotar la cantidad de
+valores inexistentes que se quieren eliminar. Por ejemplo, <code class="docutils literal notranslate"><span class="pre">thresh=3</span></code>
+eliminará todas aquellas filas que tienen 3 o más valores faltantes.</p>
+<p>Es posible también que uno no pueda trabajar con valores inexistentes, y
+tiene que cambiarlos por algún valor. Para ello está el método
+<code class="docutils literal notranslate"><span class="pre">fillna</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="mi">7</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">])</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># rellena los valores nulos con 0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span> <span class="c1"># rellena los valores nulos con 0, 1 y 2 respectivamente</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span> <span class="c1"># rellena los valores nulos con el valor anterior</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># rellena los valores nulos con el valor anterior en la misma fila</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">bfill</span><span class="p">()</span> <span class="c1"># rellena los valores nulos con el valor siguiente</span>
+</pre></div>
+</div>
+<p>Estos métodos para reemplazar de valores inexistentes son un caso
+particular de un método para reemplazar valores en forma general,
+denominado <code class="docutils literal notranslate"><span class="pre">replace</span></code> y puede ser útil para reemplazar valores que, por
+alguna razón, se encuentran fuera del rango esperado de los datos (un
+precio negativo, una edad mayor a 120 años, etc.). Veamos cómo funciona:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">23</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span><span class="mi">12</span><span class="p">,</span><span class="mi">27</span><span class="p">,</span><span class="o">-</span><span class="mi">9</span><span class="p">])</span>
+<span class="n">p</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="c1"># reemplaza -9 por NaN</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="o">-</span><span class="mi">9</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span> <span class="c1"># reemplaza -9 por NaN y 23 por 0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">&lt;</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]),[</span><span class="mi">86</span><span class="p">,</span><span class="mi">22</span><span class="p">])</span> <span class="c1"># encuentro los valores &lt; 0 y los reemplazo por 86 y 22 respectivamente</span>
+
+<span class="n">Notar</span> <span class="n">que</span> <span class="n">el</span> <span class="n">método</span> <span class="err">``</span><span class="n">replace</span><span class="err">``</span> <span class="n">genera</span> <span class="n">un</span> <span class="n">nuevo</span> <span class="n">dato</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="indicadores">
+<h2>Indicadores<a class="headerlink" href="#indicadores" title="Link to this heading"></a></h2>
+<p>Otro tipo de transformación para el modelado estadístico es convertir
+una variable en un <em>indicador</em>. Si una columna en un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> tiene
+k valores distintos, se derivará una matriz o <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> con k
+columnas conteniendo unos y ceros, por ejemplo:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;key&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">,</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">],</span><span class="s1">&#39;datos&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">7</span><span class="p">)})</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;key&#39;</span><span class="p">],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span> <span class="c1"># crea variables dummy</span>
+</pre></div>
+</div>
+</section>
+<section id="manejando-indices-multiples">
+<h2>Manejando índices múltiples<a class="headerlink" href="#manejando-indices-multiples" title="Link to this heading"></a></h2>
+<p>Hemos visto hasta ahora que los índices nos etiquetan cada una de las
+filas de un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>. Pandas tiene la posibilidad de utilizar
+índices múltiples o <em>jerárquicos</em> con el objeto de añadir
+dimensionalidad a las tablas. La implementación de esta característica
+consiste en utilizar tuplas como índices para etiquetar cada fila:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Índices jerárquicos: ciudades, productos, años</span>
+<span class="n">index</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;Buenos Aires&quot;</span><span class="p">,</span> <span class="s2">&quot;Zapatos&quot;</span><span class="p">,</span> <span class="mi">2022</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Buenos Aires&quot;</span><span class="p">,</span> <span class="s2">&quot;Ropa&quot;</span><span class="p">,</span> <span class="mi">2022</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Buenos Aires&quot;</span><span class="p">,</span> <span class="s2">&quot;Ropa&quot;</span><span class="p">,</span> <span class="mi">2023</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Córdoba&quot;</span><span class="p">,</span> <span class="s2">&quot;Zapatos&quot;</span><span class="p">,</span> <span class="mi">2023</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Córdoba&quot;</span><span class="p">,</span> <span class="s2">&quot;Ropa&quot;</span><span class="p">,</span> <span class="mi">2023</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Rosario&quot;</span><span class="p">,</span> <span class="s2">&quot;Zapatos&quot;</span><span class="p">,</span> <span class="mi">2023</span><span class="p">),</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">MultiIndex</span><span class="o">.</span><span class="n">from_tuples</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">,</span> <span class="s2">&quot;Producto&quot;</span><span class="p">,</span> <span class="s2">&quot;Año&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">index</span><span class="p">))</span>
+<span class="n">index</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Datos</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Ventas&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">500</span><span class="p">],</span>
+    <span class="s2">&quot;Costo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">120</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">240</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<p>Si queremos obtener ciertas filas específicas, usamos <code class="docutils literal notranslate"><span class="pre">.loc</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Acceso por niveles del índice</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Datos de &#39;Buenos Aires&#39; en 2022:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[(</span><span class="s2">&quot;Buenos Aires&quot;</span><span class="p">,</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="mi">2022</span><span class="p">),</span> <span class="p">:])</span>
+</pre></div>
+</div>
+<p>La función <code class="docutils literal notranslate"><span class="pre">slice</span></code> se usa para determinar el rango de filas en cada
+componente del índice. <code class="docutils literal notranslate"><span class="pre">slice(None)</span></code> implica usar todos los valores
+posibles para dicha componente del índice.</p>
+<section id="agrupando">
+<h3>Agrupando<a class="headerlink" href="#agrupando" title="Link to this heading"></a></h3>
+<p>La potencia de los índices múltiples radica en poder agrupar datos de
+acuerdo a una determinada componente del índice. Para ello se utiliza el
+método <code class="docutils literal notranslate"><span class="pre">.groupby()</span></code>, que agrupa los valores de acuerdo al nivel
+(<code class="docutils literal notranslate"><span class="pre">level</span></code>) indicado:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Resumen por nivel del índice</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Ventas totales por ciudad:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">)[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Si uno quisiera calcular el monto total de ventas por ciudad y por año,
+por ejemplo, se podría hacer:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Agrupar por &#39;Ciudad&#39; y &#39;Año&#39; y sumar el costo</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;Total&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Ventas&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Costo&quot;</span><span class="p">]</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">costo_anual_ciudad_x_año</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">,</span> <span class="s2">&quot;Año&quot;</span><span class="p">])[</span><span class="s2">&quot;Total&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Mostrar el resultado</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Costo anual por ciudad por año:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">costo_anual_ciudad_x_año</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">costo_anual_ciudad</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Ciudad&quot;</span><span class="p">])[</span><span class="s2">&quot;Total&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># Mostrar el resultado</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Costo anual por ciudad:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">costo_anual_ciudad</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="apilando-y-desapilando">
+<h2>Apilando y desapilando<a class="headerlink" href="#apilando-y-desapilando" title="Link to this heading"></a></h2>
+<p>Otra operación es apilar o desapilar el dataframe de índices múltiples:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span> <span class="c1"># desapila el índice</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">columns</span>
+</pre></div>
+</div>
+<p>Tal como se ve en el ejemplo anterior, <strong>las columnas también pueden ser
+descriptas con índices jerárquicos</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span> <span class="c1"># desapila el índice</span>
+</pre></div>
+</div>
+</section>
+<section id="categorias">
+<h2>Categorías<a class="headerlink" href="#categorias" title="Link to this heading"></a></h2>
+<p>Es muy posible que en nuestro conjunto de datos tengamos valores
+repetidos.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s2">&quot;Pequeño&quot;</span><span class="p">,</span> <span class="s2">&quot;Mediano&quot;</span><span class="p">,</span> <span class="s2">&quot;Grande&quot;</span><span class="p">,</span> <span class="s2">&quot;Pequeño&quot;</span><span class="p">,</span> <span class="s2">&quot;Grande&quot;</span><span class="p">,</span> <span class="s2">&quot;Mediano&quot;</span><span class="p">])</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s_cat</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">)</span>
+<span class="n">s_cat</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s_cat</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s_cat</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">codes</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">dict</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">s_cat</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>En el caso de un <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>, uno puede convertir una columna en una
+categoría reasignandola:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">precios</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">250</span><span class="p">,</span> <span class="mi">180</span><span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;precios&#39;</span><span class="p">:</span><span class="n">precios</span><span class="p">,</span><span class="s1">&#39;tamaño&#39;</span><span class="p">:</span><span class="n">s</span><span class="p">})</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tamaño&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;tamaño&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tamaño&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tamaño&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>El beneficio principal del uso de categorías tiene que ver con la
+eficiencia en la memoria y en las operaciones:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">N</span> <span class="o">=</span> <span class="mi">10_000_000</span>
+
+<span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="o">*</span> <span class="p">(</span><span class="n">N</span><span class="o">//</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">s_cat</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">s_cat</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">s</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">s_cat</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<hr class="docutils" />
+<section id="ejercicio-15-a">
+<h2>Ejercicio 15(a)<a class="headerlink" href="#ejercicio-15-a" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Retome el <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> creado en el ejercicio 14(a), y genere un
+nuevo <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code> utilizando adecuadamente índices jerárquicos.</p></li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="graficando-dataframes">
+<h2>Graficando <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code><a class="headerlink" href="#graficando-dataframes" title="Link to this heading"></a></h2>
+<p>Vamos a ver brevemente cómo usar <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> para graficar
+<code class="docutils literal notranslate"><span class="pre">DataFrames</span></code> de <code class="docutils literal notranslate"><span class="pre">pandas</span></code>. La mecánica para utilizar otras
+bibliotecas de graficación (<code class="docutils literal notranslate"><span class="pre">seaborn</span></code>, <code class="docutils literal notranslate"><span class="pre">plotly</span></code>, etc.) es similar</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(),</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2021-1-1&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+<span class="n">s</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;random series&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;r--&#39;</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Random Series&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2019-1-1&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Random DataFrame&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r--&#39;</span><span class="p">,</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span><span class="s1">&#39;b.&#39;</span><span class="p">,</span><span class="s1">&#39;co-&#39;</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Podría ser interesante graficar una columna respecto de otra, en lugar
+de usar el índice como etiquetas del eje x:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Y se pueden hacer fácilmente <a class="reference external" href="https://pandas.pydata.org/docs/user_guide/visualization.html#other-plots">otros tipos de
+gráficos</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<section id="ejercicio-15-b">
+<h3>Ejercicio 15 (b)<a class="headerlink" href="#ejercicio-15-b" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p>En el archivo <code class="docutils literal notranslate"><span class="pre">com3500.csv</span></code> se encuentra la cotización promedio del
+dolar en Argentina desde 2002. Lea el archivo en un DataFrame de
+pandas y</p></li>
+</ol>
+<ul class="simple">
+<li><p>Realice un gráfico claro y bello</p></li>
+<li><p>Observe que la información del mes está dada en <code class="docutils literal notranslate"><span class="pre">nombre_del_mes-xx</span></code>
+donde <code class="docutils literal notranslate"><span class="pre">xx</span></code> es el año. Separe dicha columna en dos, una
+correspondiente al mes, y otra correspondiente al año.</p></li>
+<li><p>Agrupe la información por año y grafique la evolución del precio del
+dólar por año.</p></li>
+</ul>
+<hr class="docutils" />
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_14.html" class="btn btn-neutral float-left" title="Clase 14: Introducción a pandas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

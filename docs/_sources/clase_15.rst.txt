@@ -1,0 +1,420 @@
+.. _clase_15:
+
+
+=========================
+Clase 15: Más ``pandas``
+=========================
+
+==============
+
+Manejando datos faltantes
+=========================
+
+Hemos visto que ``pandas`` automágicamente es capaz de manejar valores
+faltantes o inexistentes, a través de distintas etiquetas como ``NaN``,
+``NA``, etc., dependiendo del tipo de dato que se esté utilizando. Más
+allá de la lectura de los datos, muchos de los métodos nativos de
+``pandas`` son capaces de trabajar aún cuando falten datos. Sin embargo,
+puede ser necesario intervenir efectivamente sobre esos datos para poder
+continuar con ese procesamiento.
+
+.. code:: python
+
+    import numpy as np 
+    import pandas as pd
+
+.. code:: python
+
+    d = np.array([['auto','moto',np.nan,None,'bicicleta'],[4,2,0.0,None,2]])
+    d
+
+
+.. code:: python
+
+    s = pd.DataFrame(d.T,columns=['vehículos','ruedas'])
+    s
+
+.. code:: python
+
+    s.isna()
+
+
+.. code:: python
+
+    s.dropna() # equivalente a s[s.notna()]
+
+.. code:: python
+
+    s.dropna(axis=1) # equivalente a s.dropna(axis='columns')
+
+.. code:: python
+
+    s.dropna(how='all') # elimina las filas que tengan todos los valores nulos
+
+También se puede usar el argumento ‘thresh=’ para acotar la cantidad de
+valores inexistentes que se quieren eliminar. Por ejemplo, ``thresh=3``
+eliminará todas aquellas filas que tienen 3 o más valores faltantes.
+
+Es posible también que uno no pueda trabajar con valores inexistentes, y
+tiene que cambiarlos por algún valor. Para ello está el método
+``fillna``.
+
+.. code:: python
+
+    df = pd.DataFrame(np.random.standard_normal((7, 3)),columns=['A','B','C'])
+    
+    df.iloc[:4,2] = np.nan
+    df.iloc[1:3,0] = None 
+    
+    df
+
+.. code:: python
+
+    df.fillna(0) # rellena los valores nulos con 0
+
+.. code:: python
+
+    df.fillna({'A':0,'C':2}) # rellena los valores nulos con 0, 1 y 2 respectivamente
+
+.. code:: python
+
+    df.ffill() # rellena los valores nulos con el valor anterior
+
+.. code:: python
+
+    df.ffill(axis=1) # rellena los valores nulos con el valor anterior en la misma fila
+
+.. code:: python
+
+    df.bfill() # rellena los valores nulos con el valor siguiente
+
+Estos métodos para reemplazar de valores inexistentes son un caso
+particular de un método para reemplazar valores en forma general,
+denominado ``replace`` y puede ser útil para reemplazar valores que, por
+alguna razón, se encuentran fuera del rango esperado de los datos (un
+precio negativo, una edad mayor a 120 años, etc.). Veamos cómo funciona:
+
+.. code:: python
+
+    p = pd.Series([23,4,-8,12,27,-9])
+    p
+
+.. code:: python
+
+    p.replace(-9,np.nan) # reemplaza -9 por NaN
+
+.. code:: python
+
+    p.replace({-9:np.nan,-8:0}) # reemplaza -9 por NaN y 23 por 0
+
+.. code:: python
+
+    p<0 
+
+.. code:: python
+
+    p[p < 0]
+
+.. code:: python
+
+    list(p[p < 0])
+
+.. code:: python
+
+    p.replace(list(p[p < 0]),[86,22]) # encuentro los valores < 0 y los reemplazo por 86 y 22 respectivamente
+
+   Notar que el método ``replace`` genera un nuevo dato.
+
+Indicadores
+===========
+
+Otro tipo de transformación para el modelado estadístico es convertir
+una variable en un *indicador*. Si una columna en un ``DataFrame`` tiene
+k valores distintos, se derivará una matriz o ``DataFrame`` con k
+columnas conteniendo unos y ceros, por ejemplo:
+
+.. code:: python
+
+    df = pd.DataFrame({'key': ['a','a','b','d','a','c','c'],'datos': np.random.standard_normal(7)})
+    df
+
+.. code:: python
+
+    pd.get_dummies(df['key'],dtype=int) # crea variables dummy
+
+Manejando índices múltiples
+===========================
+
+Hemos visto hasta ahora que los índices nos etiquetan cada una de las
+filas de un ``DataFrame``. Pandas tiene la posibilidad de utilizar
+índices múltiples o *jerárquicos* con el objeto de añadir
+dimensionalidad a las tablas. La implementación de esta característica
+consiste en utilizar tuplas como índices para etiquetar cada fila:
+
+.. code:: python
+
+    # Índices jerárquicos: ciudades, productos, años
+    index = [
+        ("Buenos Aires", "Zapatos", 2022),
+        ("Buenos Aires", "Ropa", 2022),
+        ("Buenos Aires", "Ropa", 2023),
+        ("Córdoba", "Zapatos", 2023),
+        ("Córdoba", "Ropa", 2023),
+        ("Rosario", "Zapatos", 2023),
+    ]
+
+.. code:: python
+
+    index = pd.MultiIndex.from_tuples(index, names=["Ciudad", "Producto", "Año"])
+    print(type(index))
+    index
+
+.. code:: python
+
+    # Datos
+    data = {
+        "Ventas": [200, 150, 300, 400, 250, 500],
+        "Costo": [120, 80, 180, 240, 150, 300]
+    }
+
+.. code:: python
+
+    df = pd.DataFrame(data, index=index)
+    df
+
+Si queremos obtener ciertas filas específicas, usamos ``.loc``.
+
+.. code:: python
+
+    # Acceso por niveles del índice
+    print("\nDatos de 'Buenos Aires' en 2022:")
+    print(df.loc[("Buenos Aires", slice(None), 2022), :])
+
+La función ``slice`` se usa para determinar el rango de filas en cada
+componente del índice. ``slice(None)`` implica usar todos los valores
+posibles para dicha componente del índice.
+
+Agrupando
+---------
+
+La potencia de los índices múltiples radica en poder agrupar datos de
+acuerdo a una determinada componente del índice. Para ello se utiliza el
+método ``.groupby()``, que agrupa los valores de acuerdo al nivel
+(``level``) indicado:
+
+.. code:: python
+
+    # Resumen por nivel del índice
+    print("\nVentas totales por ciudad:")
+    print(df.groupby(level="Ciudad")["Ventas"].sum())
+
+Si uno quisiera calcular el monto total de ventas por ciudad y por año,
+por ejemplo, se podría hacer:
+
+.. code:: python
+
+    # Agrupar por 'Ciudad' y 'Año' y sumar el costo
+    df["Total"] = df["Ventas"] * df["Costo"]
+    df
+
+
+.. code:: python
+
+    costo_anual_ciudad_x_año = df.groupby(level=["Ciudad", "Año"])["Total"].sum()
+    
+    # Mostrar el resultado
+    print("Costo anual por ciudad por año:")
+    print(costo_anual_ciudad_x_año)
+
+
+.. code:: python
+
+    costo_anual_ciudad = df.groupby(level=["Ciudad"])["Total"].sum()
+    
+    # Mostrar el resultado
+    print("Costo anual por ciudad:")
+    print(costo_anual_ciudad)
+
+Apilando y desapilando
+======================
+
+Otra operación es apilar o desapilar el dataframe de índices múltiples:
+
+.. code:: python
+
+    df.unstack() # desapila el índice
+
+.. code:: python
+
+    df.unstack().columns
+
+Tal como se ve en el ejemplo anterior, **las columnas también pueden ser
+descriptas con índices jerárquicos**
+
+.. code:: python
+
+    df.unstack().unstack() # desapila el índice
+
+Categorías
+==========
+
+Es muy posible que en nuestro conjunto de datos tengamos valores
+repetidos.
+
+.. code:: python
+
+    s = pd.Series(["Pequeño", "Mediano", "Grande", "Pequeño", "Grande", "Mediano"])
+    s
+
+.. code:: python
+
+    s_cat = s.astype("category")
+    s_cat
+
+.. code:: python
+
+    s_cat.cat.categories
+
+
+.. code:: python
+
+    s_cat.cat.codes
+
+.. code:: python
+
+    dict(enumerate(s_cat.cat.categories))
+
+En el caso de un ``DataFrame``, uno puede convertir una columna en una
+categoría reasignandola:
+
+.. code:: python
+
+    precios = [100, 200, 300, 150, 250, 180]
+    
+    df = pd.DataFrame({'precios':precios,'tamaño':s})
+    df
+
+.. code:: python
+
+    df['tamaño']
+
+.. code:: python
+
+    df['tamaño'] = df['tamaño'].astype('category')
+    df['tamaño']
+
+El beneficio principal del uso de categorías tiene que ver con la
+eficiencia en la memoria y en las operaciones:
+
+.. code:: python
+
+    N = 10_000_000
+    
+    s = pd.Series(['a','b','c','d']* (N//4))
+    s_cat = s.astype('category')
+
+.. code:: python
+
+    print(s.memory_usage(deep=True))
+    print(s_cat.memory_usage(deep=True))
+
+.. code:: python
+
+    %timeit s.value_counts()
+
+.. code:: python
+
+    %timeit s_cat.value_counts()
+
+--------------
+
+Ejercicio 15(a)
+===============
+
+1. Retome el ``DataFrame`` creado en el ejercicio 14(a), y genere un
+   nuevo ``DataFrame`` utilizando adecuadamente índices jerárquicos.
+
+--------------
+
+
+
+Graficando ``DataFrames``
+=========================
+
+Vamos a ver brevemente cómo usar ``matplotlib`` para graficar
+``DataFrames`` de ``pandas``. La mecánica para utilizar otras
+bibliotecas de graficación (``seaborn``, ``plotly``, etc.) es similar
+
+.. code:: python
+
+    import pandas as pd
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+.. code:: python
+
+    s = pd.Series(np.random.standard_normal(1000).cumsum(), index=pd.date_range('2021-1-1', periods=1000))
+    s
+
+.. code:: python
+
+    s.plot()
+
+.. code:: python
+
+    s.plot(label='random series',style='r--',legend=True, title='Random Series', grid=True)
+
+.. code:: python
+
+    df = pd.DataFrame({'A': np.random.standard_normal(100)+2, 'B': np.random.standard_normal(100), 'C': np.random.standard_normal(100)-2, 'D': np.random.randn(100) }, index=pd.date_range('2019-1-1', periods=100))
+    df.plot()
+
+.. code:: python
+
+    df.plot(legend=True, title='Random DataFrame', grid=True, style=['r--','g-','b.','co-'], kind='line')
+
+.. code:: python
+
+    fig, axes = plt.subplots(2, 2)
+    
+    df['A'].plot(ax=axes[0,0], legend=True, title=df.columns[0])
+    df['B'].plot(ax=axes[0,1], legend=True, title=df.columns[1])
+    df['C'].plot(ax=axes[1,0], legend=True, title=df.columns[2])
+    df['D'].plot(ax=axes[1,1], legend=True, title=df.columns[3])
+
+Podría ser interesante graficar una columna respecto de otra, en lugar
+de usar el índice como etiquetas del eje x:
+
+.. code:: python
+
+    df.plot(x='A', y='B', kind='scatter')
+
+.. code:: python
+
+    plt.plot(df['A'],df['B'])
+    plt.plot(df['B'],df['D'])
+
+Y se pueden hacer fácilmente `otros tipos de
+gráficos <https://pandas.pydata.org/docs/user_guide/visualization.html#other-plots>`__:
+
+.. code:: python
+
+    df.iloc[:10].abs().plot.bar()
+
+--------------
+
+Ejercicio 15 (b)
+----------------
+
+1. En el archivo ``com3500.csv`` se encuentra la cotización promedio del
+   dolar en Argentina desde 2002. Lea el archivo en un DataFrame de
+   pandas y
+
+-  Realice un gráfico claro y bello
+-  Observe que la información del mes está dada en ``nombre_del_mes-xx``
+   donde ``xx`` es el año. Separe dicha columna en dos, una
+   correspondiente al mes, y otra correspondiente al año.
+-  Agrupe la información por año y grafique la evolución del precio del
+   dólar por año.
+
+--------------
