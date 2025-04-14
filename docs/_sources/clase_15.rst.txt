@@ -29,27 +29,305 @@ continuar con ese procesamiento.
     d
 
 
+
+
+
+.. parsed-literal::
+
+    array([['auto', 'moto', nan, None, 'bicicleta'],
+           [4, 2, 0.0, None, 2]], dtype=object)
+
+
+
 .. code:: python
 
     s = pd.DataFrame(d.T,columns=['vehículos','ruedas'])
     s
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>vehículos</th>
+          <th>ruedas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>auto</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>moto</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>NaN</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>None</td>
+          <td>None</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>bicicleta</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
     s.isna()
 
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>vehículos</th>
+          <th>ruedas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>False</td>
+          <td>False</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>False</td>
+          <td>False</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>True</td>
+          <td>False</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>True</td>
+          <td>True</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>False</td>
+          <td>False</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     s.dropna() # equivalente a s[s.notna()]
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>vehículos</th>
+          <th>ruedas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>auto</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>moto</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>bicicleta</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
     s.dropna(axis=1) # equivalente a s.dropna(axis='columns')
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+        </tr>
+        <tr>
+          <th>1</th>
+        </tr>
+        <tr>
+          <th>2</th>
+        </tr>
+        <tr>
+          <th>3</th>
+        </tr>
+        <tr>
+          <th>4</th>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     s.dropna(how='all') # elimina las filas que tengan todos los valores nulos
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>vehículos</th>
+          <th>ruedas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>auto</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>moto</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>NaN</td>
+          <td>0.0</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>bicicleta</td>
+          <td>2</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 También se puede usar el argumento ‘thresh=’ para acotar la cantidad de
 valores inexistentes que se quieren eliminar. Por ejemplo, ``thresh=3``
@@ -68,25 +346,487 @@ tiene que cambiarlos por algún valor. Para ello está el método
     
     df
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0.377913</td>
+          <td>-0.770393</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>NaN</td>
+          <td>-0.009935</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>NaN</td>
+          <td>0.904126</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-0.077318</td>
+          <td>-0.022459</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0.827397</td>
+          <td>2.037912</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0.047666</td>
+          <td>-1.048824</td>
+          <td>0.248140</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>-0.943052</td>
+          <td>1.499018</td>
+          <td>0.048949</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     df.fillna(0) # rellena los valores nulos con 0
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0.377913</td>
+          <td>-0.770393</td>
+          <td>0.000000</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0.000000</td>
+          <td>-0.009935</td>
+          <td>0.000000</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>0.000000</td>
+          <td>0.904126</td>
+          <td>0.000000</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-0.077318</td>
+          <td>-0.022459</td>
+          <td>0.000000</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0.827397</td>
+          <td>2.037912</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0.047666</td>
+          <td>-1.048824</td>
+          <td>0.248140</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>-0.943052</td>
+          <td>1.499018</td>
+          <td>0.048949</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
     df.fillna({'A':0,'C':2}) # rellena los valores nulos con 0, 1 y 2 respectivamente
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0.377913</td>
+          <td>-0.770393</td>
+          <td>2.000000</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0.000000</td>
+          <td>-0.009935</td>
+          <td>2.000000</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>0.000000</td>
+          <td>0.904126</td>
+          <td>2.000000</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-0.077318</td>
+          <td>-0.022459</td>
+          <td>2.000000</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0.827397</td>
+          <td>2.037912</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0.047666</td>
+          <td>-1.048824</td>
+          <td>0.248140</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>-0.943052</td>
+          <td>1.499018</td>
+          <td>0.048949</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     df.ffill() # rellena los valores nulos con el valor anterior
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0.377913</td>
+          <td>-0.770393</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0.377913</td>
+          <td>-0.009935</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>0.377913</td>
+          <td>0.904126</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-0.077318</td>
+          <td>-0.022459</td>
+          <td>NaN</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0.827397</td>
+          <td>2.037912</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0.047666</td>
+          <td>-1.048824</td>
+          <td>0.248140</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>-0.943052</td>
+          <td>1.499018</td>
+          <td>0.048949</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 .. code:: python
 
     df.ffill(axis=1) # rellena los valores nulos con el valor anterior en la misma fila
 
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0.377913</td>
+          <td>-0.770393</td>
+          <td>-0.770393</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>NaN</td>
+          <td>-0.009935</td>
+          <td>-0.009935</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>NaN</td>
+          <td>0.904126</td>
+          <td>0.904126</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-0.077318</td>
+          <td>-0.022459</td>
+          <td>-0.022459</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0.827397</td>
+          <td>2.037912</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0.047666</td>
+          <td>-1.048824</td>
+          <td>0.248140</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>-0.943052</td>
+          <td>1.499018</td>
+          <td>0.048949</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
+
 .. code:: python
 
     df.bfill() # rellena los valores nulos con el valor siguiente
+
+
+
+
+.. raw:: html
+
+    <div>
+    <style scoped>
+        .dataframe tbody tr th:only-of-type {
+            vertical-align: middle;
+        }
+    
+        .dataframe tbody tr th {
+            vertical-align: top;
+        }
+    
+        .dataframe thead th {
+            text-align: right;
+        }
+    </style>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>0.377913</td>
+          <td>-0.770393</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>-0.077318</td>
+          <td>-0.009935</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>-0.077318</td>
+          <td>0.904126</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>-0.077318</td>
+          <td>-0.022459</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0.827397</td>
+          <td>2.037912</td>
+          <td>-0.418672</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>0.047666</td>
+          <td>-1.048824</td>
+          <td>0.248140</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>-0.943052</td>
+          <td>1.499018</td>
+          <td>0.048949</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+
 
 Estos métodos para reemplazar de valores inexistentes son un caso
 particular de un método para reemplazar valores en forma general,
@@ -99,31 +839,126 @@ precio negativo, una edad mayor a 120 años, etc.). Veamos cómo funciona:
     p = pd.Series([23,4,-8,12,27,-9])
     p
 
+
+
+
+.. parsed-literal::
+
+    0    23
+    1     4
+    2    -8
+    3    12
+    4    27
+    5    -9
+    dtype: int64
+
+
+
 .. code:: python
 
     p.replace(-9,np.nan) # reemplaza -9 por NaN
+
+
+
+
+.. parsed-literal::
+
+    0    23.0
+    1     4.0
+    2    -8.0
+    3    12.0
+    4    27.0
+    5     NaN
+    dtype: float64
+
+
 
 .. code:: python
 
     p.replace({-9:np.nan,-8:0}) # reemplaza -9 por NaN y 23 por 0
 
+
+
+
+.. parsed-literal::
+
+    0    23.0
+    1     4.0
+    2     0.0
+    3    12.0
+    4    27.0
+    5     NaN
+    dtype: float64
+
+
+
 .. code:: python
 
     p<0 
+
+
+
+
+.. parsed-literal::
+
+    0    False
+    1    False
+    2     True
+    3    False
+    4    False
+    5     True
+    dtype: bool
+
+
 
 .. code:: python
 
     p[p < 0]
 
+
+
+
+.. parsed-literal::
+
+    2   -8
+    5   -9
+    dtype: int64
+
+
+
 .. code:: python
 
     list(p[p < 0])
+
+
+
+
+.. parsed-literal::
+
+    [-8, -9]
+
+
 
 .. code:: python
 
     p.replace(list(p[p < 0]),[86,22]) # encuentro los valores < 0 y los reemplazo por 86 y 22 respectivamente
 
-   Notar que el método ``replace`` genera un nuevo dato.
+
+
+
+.. parsed-literal::
+
+    0    23
+    1     4
+    2    86
+    3    12
+    4    27
+    5    22
+    dtype: int64
+
+
+
+   **Nota:** el método ``replace()`` genera un nuevo dato.
 
 Indicadores
 ===========

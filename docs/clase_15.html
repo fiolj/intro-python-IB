@@ -133,23 +133,250 @@ continuar con ese procesamiento.</p>
 <span class="n">d</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="s1">&#39;moto&#39;</span><span class="p">,</span> <span class="n">nan</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="s1">&#39;bicicleta&#39;</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;vehículos&#39;</span><span class="p">,</span><span class="s1">&#39;ruedas&#39;</span><span class="p">])</span>
 <span class="n">s</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vehículos</th>
+      <th>ruedas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>auto</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>moto</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>bicicleta</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="c1"># equivalente a s[s.notna()]</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vehículos</th>
+      <th>ruedas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span> <span class="c1"># equivalente a s[s.notna()]</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># equivalente a s.dropna(axis=&#39;columns&#39;)</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vehículos</th>
+      <th>ruedas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>auto</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>moto</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>bicicleta</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># equivalente a s.dropna(axis=&#39;columns&#39;)</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="c1"># elimina las filas que tengan todos los valores nulos</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+    </tr>
+    <tr>
+      <th>1</th>
+    </tr>
+    <tr>
+      <th>2</th>
+    </tr>
+    <tr>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>4</th>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="c1"># elimina las filas que tengan todos los valores nulos</span>
 </pre></div>
 </div>
-<p>También se puede usar el argumento ‘thresh=’ para acotar la cantidad de
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>vehículos</th>
+      <th>ruedas</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>auto</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>moto</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>bicicleta</td>
+      <td>2</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>También se puede usar el argumento ‘thresh=’ para acotar la cantidad de
 valores inexistentes que se quieren eliminar. Por ejemplo, <code class="docutils literal notranslate"><span class="pre">thresh=3</span></code>
 eliminará todas aquellas filas que tienen 3 o más valores faltantes.</p>
 <p>Es posible también que uno no pueda trabajar con valores inexistentes, y
@@ -163,22 +390,430 @@ tiene que cambiarlos por algún valor. Para ello está el método
 <span class="n">df</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># rellena los valores nulos con 0</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.377913</td>
+      <td>-0.770393</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>-0.009935</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.904126</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.077318</td>
+      <td>-0.022459</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.827397</td>
+      <td>2.037912</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.047666</td>
+      <td>-1.048824</td>
+      <td>0.248140</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-0.943052</td>
+      <td>1.499018</td>
+      <td>0.048949</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># rellena los valores nulos con 0</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span> <span class="c1"># rellena los valores nulos con 0, 1 y 2 respectivamente</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.377913</td>
+      <td>-0.770393</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000000</td>
+      <td>-0.009935</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000000</td>
+      <td>0.904126</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.077318</td>
+      <td>-0.022459</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.827397</td>
+      <td>2.037912</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.047666</td>
+      <td>-1.048824</td>
+      <td>0.248140</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-0.943052</td>
+      <td>1.499018</td>
+      <td>0.048949</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">})</span> <span class="c1"># rellena los valores nulos con 0, 1 y 2 respectivamente</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span> <span class="c1"># rellena los valores nulos con el valor anterior</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.377913</td>
+      <td>-0.770393</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.000000</td>
+      <td>-0.009935</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.000000</td>
+      <td>0.904126</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.077318</td>
+      <td>-0.022459</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.827397</td>
+      <td>2.037912</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.047666</td>
+      <td>-1.048824</td>
+      <td>0.248140</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-0.943052</td>
+      <td>1.499018</td>
+      <td>0.048949</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">()</span> <span class="c1"># rellena los valores nulos con el valor anterior</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># rellena los valores nulos con el valor anterior en la misma fila</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.377913</td>
+      <td>-0.770393</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.377913</td>
+      <td>-0.009935</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.377913</td>
+      <td>0.904126</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.077318</td>
+      <td>-0.022459</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.827397</td>
+      <td>2.037912</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.047666</td>
+      <td>-1.048824</td>
+      <td>0.248140</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-0.943052</td>
+      <td>1.499018</td>
+      <td>0.048949</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">ffill</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># rellena los valores nulos con el valor anterior en la misma fila</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">bfill</span><span class="p">()</span> <span class="c1"># rellena los valores nulos con el valor siguiente</span>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.377913</td>
+      <td>-0.770393</td>
+      <td>-0.770393</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>NaN</td>
+      <td>-0.009935</td>
+      <td>-0.009935</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>0.904126</td>
+      <td>0.904126</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.077318</td>
+      <td>-0.022459</td>
+      <td>-0.022459</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.827397</td>
+      <td>2.037912</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.047666</td>
+      <td>-1.048824</td>
+      <td>0.248140</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-0.943052</td>
+      <td>1.499018</td>
+      <td>0.048949</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">bfill</span><span class="p">()</span> <span class="c1"># rellena los valores nulos con el valor siguiente</span>
 </pre></div>
 </div>
-<p>Estos métodos para reemplazar de valores inexistentes son un caso
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>A</th>
+      <th>B</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.377913</td>
+      <td>-0.770393</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.077318</td>
+      <td>-0.009935</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.077318</td>
+      <td>0.904126</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.077318</td>
+      <td>-0.022459</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.827397</td>
+      <td>2.037912</td>
+      <td>-0.418672</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.047666</td>
+      <td>-1.048824</td>
+      <td>0.248140</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>-0.943052</td>
+      <td>1.499018</td>
+      <td>0.048949</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Estos métodos para reemplazar de valores inexistentes son un caso
 particular de un método para reemplazar valores en forma general,
 denominado <code class="docutils literal notranslate"><span class="pre">replace</span></code> y puede ser útil para reemplazar valores que, por
 alguna razón, se encuentran fuera del rango esperado de los datos (un
@@ -187,26 +822,79 @@ precio negativo, una edad mayor a 120 años, etc.). Veamos cómo funciona:</p>
 <span class="n">p</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mi">23</span>
+<span class="mi">1</span>     <span class="mi">4</span>
+<span class="mi">2</span>    <span class="o">-</span><span class="mi">8</span>
+<span class="mi">3</span>    <span class="mi">12</span>
+<span class="mi">4</span>    <span class="mi">27</span>
+<span class="mi">5</span>    <span class="o">-</span><span class="mi">9</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span> <span class="c1"># reemplaza -9 por NaN</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">23.0</span>
+<span class="mi">1</span>     <span class="mf">4.0</span>
+<span class="mi">2</span>    <span class="o">-</span><span class="mf">8.0</span>
+<span class="mi">3</span>    <span class="mf">12.0</span>
+<span class="mi">4</span>    <span class="mf">27.0</span>
+<span class="mi">5</span>     <span class="n">NaN</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="o">-</span><span class="mi">9</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span> <span class="c1"># reemplaza -9 por NaN y 23 por 0</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mf">23.0</span>
+<span class="mi">1</span>     <span class="mf">4.0</span>
+<span class="mi">2</span>     <span class="mf">0.0</span>
+<span class="mi">3</span>    <span class="mf">12.0</span>
+<span class="mi">4</span>    <span class="mf">27.0</span>
+<span class="mi">5</span>     <span class="n">NaN</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">&lt;</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="kc">False</span>
+<span class="mi">1</span>    <span class="kc">False</span>
+<span class="mi">2</span>     <span class="kc">True</span>
+<span class="mi">3</span>    <span class="kc">False</span>
+<span class="mi">4</span>    <span class="kc">False</span>
+<span class="mi">5</span>     <span class="kc">True</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="nb">bool</span>
 </pre></div>
 </div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2</span>   <span class="o">-</span><span class="mi">8</span>
+<span class="mi">5</span>   <span class="o">-</span><span class="mi">9</span>
+<span class="n">dtype</span><span class="p">:</span> <span class="n">int64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]),[</span><span class="mi">86</span><span class="p">,</span><span class="mi">22</span><span class="p">])</span> <span class="c1"># encuentro los valores &lt; 0 y los reemplazo por 86 y 22 respectivamente</span>
-
-<span class="n">Notar</span> <span class="n">que</span> <span class="n">el</span> <span class="n">método</span> <span class="err">``</span><span class="n">replace</span><span class="err">``</span> <span class="n">genera</span> <span class="n">un</span> <span class="n">nuevo</span> <span class="n">dato</span><span class="o">.</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">9</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="n">p</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]),[</span><span class="mi">86</span><span class="p">,</span><span class="mi">22</span><span class="p">])</span> <span class="c1"># encuentro los valores &lt; 0 y los reemplazo por 86 y 22 respectivamente</span>
+</pre></div>
+</div>
+<pre class="literal-block"> 0    23
+ 1     4
+ 2    86
+ 3    12
+ 4    27
+ 5    22
+ dtype: int64
+
+
+
+<strong>Nota:</strong> el método <code class="docutils literal notranslate"><span class="pre">replace()</span></code> genera un nuevo dato.</pre>
 </section>
 <section id="indicadores">
 <h2>Indicadores<a class="headerlink" href="#indicadores" title="Link to this heading"></a></h2>
