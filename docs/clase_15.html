@@ -17,6 +17,7 @@
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/translations.js?v=efdbd0b9"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
     <link rel="next" title="Ejercicios" href="ejercicios.html" />
@@ -73,10 +74,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#apilando-y-desapilando">Apilando y desapilando</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#categorias">Categorías</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicio-15-a">Ejercicio 15 (a)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#graficando-dataframes">Graficando <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#ejercicio-15-b">Ejercicio 15 (b)</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#graficando-dataframes">Graficando <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ejercicio-15-b">Ejercicio 15(b)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analisis-de-codigo-problema-de-niveles">Análisis de código: Problema de niveles</a></li>
 </ul>
 </li>
 </ul>
@@ -1752,19 +1752,49 @@ bibliotecas de graficación (<code class="docutils literal notranslate"><span cl
 <span class="n">s</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2021</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">01</span>     <span class="mf">0.446463</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">02</span>     <span class="mf">0.979651</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">03</span>     <span class="mf">1.640311</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">04</span>     <span class="mf">0.619966</span>
+<span class="mi">2021</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">05</span>     <span class="mf">0.561815</span>
+                <span class="o">...</span>
+<span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">23</span>   <span class="o">-</span><span class="mf">30.301808</span>
+<span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">24</span>   <span class="o">-</span><span class="mf">30.761436</span>
+<span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">25</span>   <span class="o">-</span><span class="mf">30.141886</span>
+<span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">26</span>   <span class="o">-</span><span class="mf">30.961800</span>
+<span class="mi">2023</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">27</span>   <span class="o">-</span><span class="mf">31.042287</span>
+<span class="n">Freq</span><span class="p">:</span> <span class="n">D</span><span class="p">,</span> <span class="n">Length</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_3_1.png" src="_images/15_2_pandas_y_plot_3_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;random series&#39;</span><span class="p">,</span><span class="n">style</span><span class="o">=</span><span class="s1">&#39;r--&#39;</span><span class="p">,</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Random Series&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="s1">&#39;Random Series&#39;</span><span class="p">}</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_4_1.png" src="_images/15_2_pandas_y_plot_4_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s1">&#39;2019-1-1&#39;</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
 <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_5_1.png" src="_images/15_2_pandas_y_plot_5_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Random DataFrame&#39;</span><span class="p">,</span> <span class="n">grid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r--&#39;</span><span class="p">,</span><span class="s1">&#39;g-&#39;</span><span class="p">,</span><span class="s1">&#39;b.&#39;</span><span class="p">,</span><span class="s1">&#39;co-&#39;</span><span class="p">],</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;line&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="s1">&#39;Random DataFrame&#39;</span><span class="p">}</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_6_1.png" src="_images/15_2_pandas_y_plot_6_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -1773,24 +1803,41 @@ bibliotecas de graficación (<code class="docutils literal notranslate"><span cl
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;center&#39;</span><span class="p">:</span> <span class="s1">&#39;D&#39;</span><span class="p">}</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_7_1.png" src="_images/15_2_pandas_y_plot_7_1.png" />
 <p>Podría ser interesante graficar una columna respecto de otra, en lugar
 de usar el índice como etiquetas del eje x:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="n">xlabel</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s1">&#39;B&#39;</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_9_1.png" src="_images/15_2_pandas_y_plot_9_1.png" />
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">],</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;D&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="o">&lt;</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">Line2D</span> <span class="n">at</span> <span class="mh">0x7f13c0a2c410</span><span class="o">&gt;</span><span class="p">]</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_10_1.png" src="_images/15_2_pandas_y_plot_10_1.png" />
 <p>Y se pueden hacer fácilmente <a class="reference external" href="https://pandas.pydata.org/docs/user_guide/visualization.html#other-plots">otros tipos de
 gráficos</a>:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Axes</span><span class="p">:</span> <span class="o">&gt;</span>
+</pre></div>
+</div>
+<img alt="_images/15_2_pandas_y_plot_12_1.png" src="_images/15_2_pandas_y_plot_12_1.png" />
+</section>
 <hr class="docutils" />
 <section id="ejercicio-15-b">
-<h3>Ejercicio 15 (b)<a class="headerlink" href="#ejercicio-15-b" title="Link to this heading"></a></h3>
-<ol class="arabic simple">
+<h2>Ejercicio 15(b)<a class="headerlink" href="#ejercicio-15-b" title="Link to this heading"></a></h2>
+<ol class="arabic simple" start="2">
 <li><p>En el archivo <code class="docutils literal notranslate"><span class="pre">com3500.csv</span></code> se encuentra la cotización promedio del
 dolar en Argentina desde 2002. Lea el archivo en un DataFrame de
 pandas y</p></li>
@@ -1803,8 +1850,191 @@ correspondiente al mes, y otra correspondiente al año.</p></li>
 <li><p>Agrupe la información por año y grafique la evolución del precio del
 dólar por año.</p></li>
 </ul>
-<hr class="docutils" />
 </section>
+<hr class="docutils" />
+<section id="analisis-de-codigo-problema-de-niveles">
+<h2>Análisis de código: Problema de niveles<a class="headerlink" href="#analisis-de-codigo-problema-de-niveles" title="Link to this heading"></a></h2>
+<p>Se define un <em>nivel</em> como una colección de números naturales. Un nivel
+tiene status de <em>válido</em> si la colección de números es estrictamente
+ascendente o estrictamente descendente. En caso contrario el nivel se
+declara <em>inválido</em> . Por ejemplo, <code class="docutils literal notranslate"><span class="pre">[9,</span> <span class="pre">7,</span> <span class="pre">6,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> es descendente,
+dado que</p>
+<div class="math notranslate nohighlight">
+\[9 &gt; 7 &gt; 6 &gt; 2 &gt;1 .\]</div>
+<p>El nivel <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">7]</span></code> es ascendente ya que</p>
+<div class="math notranslate nohighlight">
+\[1 &lt; 2 &lt; 3 &lt; 4 &lt; 7.\]</div>
+<p>Ambos son niveles válidos. Sin embargo, <code class="docutils literal notranslate"><span class="pre">[7,</span> <span class="pre">9,</span> <span class="pre">6,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> es un nivel
+inválido, dado que</p>
+<div class="math notranslate nohighlight">
+\[7 &lt; 9 ,\]</div>
+<p>pero</p>
+<div class="math notranslate nohighlight">
+\[9 &gt; 6 &gt; 2 &gt; 1 .\]</div>
+<p>El nivel <code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> tampoco es un nivel válido ya que los dos
+primeros valores son iguales.</p>
+<p>Existe una tercera categoría para el status de un nivel. Un nivel se
+define como <em>tolerable</em> si y sólo si removiendo <strong>exactamente</strong> uno de
+sus elementos, el nivel es estrictamente descendente o ascendente. Por
+ejemplo, <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">6,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> es un nivel tolerable dado que si se
+remueve el elemento <code class="docutils literal notranslate"><span class="pre">7</span></code>, el nivel es estrictamente descendente.</p>
+<p>Hemos recibido un código <strong>(data/codigo2.py)</strong> que verifica si un
+conjunto de niveles es válido o tolerable.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load ../data/codigo2.py</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">VALIDO</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">TOLERABLE</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">INVALIDO</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="c1"># Niveles de prueba para el problema</span>
+<span class="n">niveles</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">7 6 4 2 1</span>
+<span class="s2">9 7 6 2 1</span>
+<span class="s2">1 3 2 4 5</span>
+<span class="s2">8 6 4 4 1</span>
+<span class="s2">1 3 6 7 9</span>
+<span class="s2">1 2 7 8 9</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+<span class="k">def</span> <span class="nf">ascending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="k">def</span> <span class="nf">descending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span> <span class="nf">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="n">ascending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Ascendente&quot;</span>
+    <span class="k">elif</span> <span class="n">descending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;Descendente&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;ZigZag&quot;</span>
+
+<span class="k">def</span> <span class="nf">testea_niveles</span><span class="p">(</span><span class="n">niveles</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span> <span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="n">niveles</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">remove_one</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">nivel</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">nivel</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">)]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">))]</span>
+
+<span class="k">def</span> <span class="nf">testea_niveles_menos_uno</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">):</span>
+
+    <span class="n">all_status</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="n">niveles2d</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">nivel</span><span class="p">,</span> <span class="n">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">))</span>
+        <span class="n">nivel_status</span> <span class="o">=</span> <span class="n">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">nivel_status</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">INVALIDO</span><span class="p">:</span>
+            <span class="n">nivel_menos_uno</span> <span class="o">=</span> <span class="n">remove_one</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span>
+            <span class="n">nivel_status</span> <span class="o">=</span> <span class="n">testea_niveles</span><span class="p">(</span><span class="n">nivel_menos_uno</span><span class="p">)</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">TOLERABLE</span> <span class="k">if</span> <span class="n">State</span><span class="o">.</span><span class="n">VALIDO</span> <span class="ow">in</span> <span class="n">nivel_status</span> <span class="k">else</span> <span class="n">State</span><span class="o">.</span><span class="n">INVALIDO</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">VALIDO</span>
+
+        <span class="n">all_status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">all_status</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1">#</span>
+    <span class="c1">#   Prueba</span>
+    <span class="c1">#</span>
+
+    <span class="n">niveles2d</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">niveles</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="n">niveles2d</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nivel</span><span class="p">]</span> <span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="n">niveles2d</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">)</span>
+
+    <span class="n">niveles_menos_uno</span> <span class="o">=</span> <span class="n">remove_one</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">testea_niveles_menos_uno</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">)</span>
+
+    <span class="c1">#</span>
+    <span class="c1">#   Niveles de archivo</span>
+    <span class="c1">#</span>
+    <span class="c1"># Leer archivo niveles.txt</span>
+    <span class="n">niveles_from_file</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;niveles.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">niveles_from_file</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">niveles_from_file</span><span class="p">)</span>
+
+    <span class="n">status_of_niveles_from_file</span> <span class="o">=</span> <span class="n">testea_niveles_menos_uno</span><span class="p">(</span><span class="n">niveles_from_file</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span>  <span class="n">status_of_niveles_from_file</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+    <span class="c1"># Leer los status correctos de status_niveles.txt</span>
+    <span class="n">status_correctos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;status_niveles.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">status_correctos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="c1"># Comparación</span>
+    <span class="k">for</span> <span class="n">sf</span><span class="p">,</span><span class="n">sc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">status_of_niveles_from_file</span><span class="p">,</span> <span class="n">status_correctos</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">sf</span> <span class="o">==</span> <span class="n">State</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]]</span>
+<span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="n">Descendente</span>
+<span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="n">Descendente</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span> <span class="n">ZigZag</span>
+<span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="n">Descendente</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span> <span class="n">Ascendente</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---------------------------------------------------------------------------</span>
+
+<span class="ne">FileNotFoundError</span>                         <span class="n">Traceback</span> <span class="p">(</span><span class="n">most</span> <span class="n">recent</span> <span class="n">call</span> <span class="n">last</span><span class="p">)</span>
+
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">82</span>
+     <span class="mi">77</span> <span class="c1">#</span>
+     <span class="mi">78</span> <span class="c1">#   Niveles de archivo</span>
+     <span class="mi">79</span> <span class="c1">#</span>
+     <span class="mi">80</span> <span class="c1"># Leer archivo niveles.txt</span>
+     <span class="mi">81</span> <span class="n">niveles_from_file</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="o">---&gt;</span> <span class="mi">82</span> <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;niveles.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+     <span class="mi">83</span>     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+     <span class="mi">84</span>         <span class="n">niveles_from_file</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
+
+
+<span class="n">File</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="mf">.13</span><span class="o">/</span><span class="n">site</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">IPython</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">interactiveshell</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">324</span><span class="p">,</span> <span class="ow">in</span> <span class="n">_modified_open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="mi">317</span> <span class="k">if</span> <span class="n">file</span> <span class="ow">in</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">}:</span>
+    <span class="mi">318</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+    <span class="mi">319</span>         <span class="sa">f</span><span class="s2">&quot;IPython won&#39;t let you open fd=</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2"> by default &quot;</span>
+    <span class="mi">320</span>         <span class="s2">&quot;as it is likely to crash IPython. If you know what you are doing, &quot;</span>
+    <span class="mi">321</span>         <span class="s2">&quot;you can use builtins&#39; open.&quot;</span>
+    <span class="mi">322</span>     <span class="p">)</span>
+<span class="o">--&gt;</span> <span class="mi">324</span> <span class="k">return</span> <span class="n">io_open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="ne">FileNotFoundError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">2</span><span class="p">]</span> <span class="n">No</span> <span class="n">such</span> <span class="n">file</span> <span class="ow">or</span> <span class="n">directory</span><span class="p">:</span> <span class="s1">&#39;niveles.txt&#39;</span>
+</pre></div>
+</div>
+<p>El código contiene un conjunto de niveles de ejemplo, sin embargo, no
+parece dar los resultados esperados. Por favor:</p>
+<ul class="simple">
+<li><p>Corrija los errores que encuentre en el código.</p></li>
+<li><p>Escriba comentarios en el código sobre el error que encontró y cómo
+lo resolvió.</p></li>
+<li><p>Escriba los <em>docstrings</em> y otros comentarios pertinentes que
+<strong>mejoren</strong> la lectura del código.</p></li>
+</ul>
+<p>Nuestro cliente nos ha provisto de un archivo de niveles
+<code class="docutils literal notranslate"><span class="pre">&lt;niveles.txt&gt;</span></code>, y sus correspondientes status (válido, inválido o
+tolerable) en el archivo <code class="docutils literal notranslate"><span class="pre">&lt;status_niveles.txt&gt;</span></code>.</p>
+<ul class="simple">
+<li><p>Verifique que las correcciones realizadas con estos datos.</p></li>
+</ul>
 </section>
 </section>
 
