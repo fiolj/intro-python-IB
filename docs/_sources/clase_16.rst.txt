@@ -1,241 +1,130 @@
 .. _clase_16:
 
 
-=======================================================
-Clase 16: Implementación de Juego de palabras “Jumblr”
-=======================================================
+=================
+Clase 16: ``uv``
+=================
 
---------------------------------------------
+------
 
-El código en ``ord_palabras_corr.py`` contiene algunas funciones para
-implementar un juego que consiste en elegir al azar 7 letras (que pueden
-ser repetidas) y con ellas formar todas las palabras posibles.
+Hasta ahora hemos utilizado ``conda`` para manejar las dependencias de
+un código de Python. ``conda`` es una aplicación que permite crear
+*ambientes*, esto es, colecciones de módulos interdependientes en
+conjunto con una versión de Python en particular.
 
-.. code:: python
+En los últimos años han aparecido otras aplicaciones que permiten
+manejar dependencias *por proyecto*. Esto es algo habitual en otros
+lenguajes, pero ha comenzado a ganar popularidad en Python. Herramientas
+como ``poetry`` o ``uv`` permiten instalar módulos para un proyecto
+particular que reside en un determinado directorio.
 
-    # %load data/ord_palabras_corr.py
-    #!/usr/bin/env python
-    
-    """
-    ## Ejercicio de análisis de código
-    
-    Debe analizar el código, agregar comentarios, corregir los errores y completar partes del código, acorde a las instrucciones.
-    """
-    from pathlib import Path
-    from random import sample
-    
-    alfabeto_counts = {'a': 12,  'e': 12,  'u': 5,  'o': 9,  'v': 1,  'ñ': 1,  'q': 1,  'g': 2,  'd': 5,
-                       'y': 1,  'b': 2,  'h': 2,  'p': 2,  'c': 4,  'n': 5,  'x': 1,  'r': 5,  's': 6,
-                       'l': 4,  'j': 1,  'z': 1,  'f': 1,  't': 4,  'i': 6,  'm': 2
-                       }
-    alfabeto = list(alfabeto_counts)
-    pesos = list(alfabeto_counts)
-    
-    min_length = 1  # Longitud mínima de las palabras a considerar
-    
-    
-    def selecciona_letras(cantidad=7):
-      return sample(alfabeto, counts=pesos, k=cantidad)
-    
-    
-    def my_normalize(s_in):
-      """
-      COMPLETAR descripción!!!
-      """
-      acentuadas = "áäàâéëèêíïìîóöòôúüùû"
-      normalitas = "aaaaeeeeiiiioooouuuu"
-      tabla = str.maketrans(acentuadas, normalitas)
-      return s_in.translate(tabla)
-    
-    
-    def process_words(filename):
-      """
-      COMPLETAR descripción!!!
-      """
-      words = {}
-      with filename.open() as fi:
-        for line in fi:
-          w = my_normalize(line.strip())
-          Lw = len(w)
-          if Lw >= min_length:
-            continue
-    
-          if Lw not in words:
-            words[Lw] = [w]
-          else:
-            words[Lw].append(w)
-    
-      return words
-    
-    
-    def buscar_palabras(palabras, letras):
-      """
-      COMPLETAR descripción!!!
-      """
-      encontradas = []
-      for pal in palabras:
-        if palabra_in_letras(pal, letras):
-          encontradas.append(pal)
-      return encontradas
-    
-    
-    def palabra_in_letras(pal, letras):
-      """
-      COMPLETAR descripción!!!
-      """
-      fichas = letras
-      for k in pal:
-        if k in fichas:
-          fichas.remove(k)
-        else:
-          return False
-      else:
-        return True
-    
-    
-    def escribir_solucion(fname, letras, posibles):
-      """
-      COMPLETAR CÓDIGO!!!
-    
-      Función para escribir en el archivo la información de la solución
-    
-      fname: nombre del archivo
-    
-      letras: string con las letras que salieron sorteadas
-    
-      posibles: diccionario con la solución del problema
-    
-      Ejemplo:
-      Si los argumentos son:
-      fname = 'salida.txt'
-      letras = 'mredfec'
-      posibles = {6: ['merced'],
-                  5: ['ceder', 'mecer'],
-                  2: ['ce', 'cm', 'de', 'de', 'fe', 'me'],
-                  3: ['efe', 'eme', 'ere', 'red'],
-                  1: ['e']
-                  }
-    
-      entonces la función deberá escribir en el archivo salida.txt el siguiente texto:
-    
-      Para el conjunto de letras: m, r, e, d, f, e, c:
-    
-      - 1 palabra de 1 letra:  e
-      - 6 palabras de 2 letras:  ce, cm, de, de, fe, me
-      - 4 palabras de 3 letras:  efe, eme, ere, red
-      - 2 palabras de 5 letras:  ceder, mecer
-      - 1 palabra de 6 letras:  merced
-    
-      """
-      # ######################################################################
-      # COMPLETAR CÓDIGO!!!
-      pass
-      # ######################################################################
-    
-    
-    if __name__ == '__main__':
-    
-      # ######################################################################
-      # COMPLETAR CÓDIGO!!!
-      fname = None
-      # ######################################################################
-    
-      palabras = process_words(fname)
-      letras = selecciona_letras()
-    
-      posibles = {}
-      for n, pal in palabras.items():
-        todas = buscar_palabras(pal, letras)
-        posibles[n] = todas
-    
-      # ######################################################################
-      # COMPLETAR descripción!!!
-      counter = 0
-      fout = fname.with_stem(f"salida_{counter}")
-      while fout.exists():
-        counter += 1
-        fout = fname.with_stem(f"salida_{counter}")
-    
-      escribir_solucion(fout, letras, posibles)
+Otra de las ventajas que ofrecen estas nuevas aplicaciones es su
+velocidad: en su creación se ha puesto el foco en que la carga de
+dependencias sea rápida y consistente.
+
+Para instalar ``uv``, pueden referirse `a la
+documentación <https://docs.astral.sh/uv/getting-started/installation/>`__.
+
+Creando proyectos
+=================
+
+Para crear un proyecto con ``uv`` hacemos
+
+.. code:: sh
+
+   uv init uv-demo
+
+donde ``uv-demo`` es el nombre del proyecto.
+
+En este caso ``uv`` crea un directorio denominado ``uv-demo`` con varios
+archivos en él: - ``README.md``: el readme del proyecto - ``hello.py``:
+Una plantilla mínima de código - ``pyproject.toml``: Un archivo de
+configuración del proyecto - ``.python-version``: La versión de python
+que está asociada al proyecto.
+
+Cómo corremos entonces ``hello.py``? Por lo pronto, la versión de python
+que se usará es aquella que venimos usando hasta ahora, que es la del
+ambiente que instalamos con ``conda``.
+
+Sin embargo, ``uv`` permite crear ambientes virtuales asociados al
+proyecto con:
+
+.. code:: sh
+
+   uv venv --python=python3.13
+
+donde con la opción ``--python`` indicamos qué versión de Python
+queremos utilizar.
+
+Para activar este entorno particular de nuestro proyecto hacemos:
+
+::
+
+   source .venv/bin/activate 
+
+o en Windows
+
+.. code:: sh
+
+   .venv\Scripts\activate
+
+y corremos python en forma habitual. Para desactivar el entorno,
+
+::
+
+   deactivate
+
+Corriendo con ``uv run``
+------------------------
+
+Podemos también correr el código con
+
+::
+
+   uv run hello.py
+
+En este caso, ``uv`` utilizará la versión de python de acuerdo al
+siguiente orden de prioridades: - Instalaciones de python incluidas en
+la variable del sistema UV_PYTHON_INSTALL_DIR. - Un interprete de Python
+en el PATH tales como python, python3, o python3.x en macOS y Linux, o
+python.exe en Windows. - Si existe el archivo ``.python-version``,
+utilizará esa versión de Python. Si la versión de python no existe,
+creará un ambiente virtual en el directorio ``.venv`` con esa versión.
+
+   Atención: ``uv`` ejecutará el código con el intérprete de Python que
+   verifique las condiciones de la variable ``require-python`` en
+   ``pyproject.toml``. Si no encontrara una versión adecuada, dará un
+   error y sugerirá las acciones correspondientes.
+
+Entonces: - ``.python-version`` → Define qué intérprete se usa -
+``requires-python`` en ``pyproject.toml`` → Define qué versiones son
+compatibles con tu código
+
+Agregando dependencias
+----------------------
+
+Para agregar dependencias al proyecto, usamos ``uv add``
+
+.. code:: sh
+
+   uv add matplotlib pandas
+
+Y notaremos que se agregan los módulos en las dependencias del proyecto
+en ``pyproject.toml``.
+
+   ``uv`` es más eficiente y veloz al manejar las dependencias. Pruébelo
+   Ud. mismo.
+
+Para agregar dependencias, también se puede editar el archivo
+``pyproject.toml``, en la variable ``[dependencies]``
+
+Existen diferentes formas de especificar requisitos de versión:
+
+-  ``>=3.10``: Python 3.10 o superior
+-  ``>=3.10,<3.12``: Python 3.10 o 3.11, pero no 3.12
+-  ``==3.10``: Exactamente Python 3.10
+-  ``~=3.10``: Compatible con Python 3.10.x (cualquier versión menor)
 
 
-Por ejemplo, si el conjunto de letras que se elige al azar es: "m, r, e,
-d, f, e, c" la solución será:
-
-   -  1 palabra de 1 letra: e
-   -  6 palabras de 2 letras: ce, cm, de, de, fe, me
-   -  4 palabras de 3 letras: efe, eme, ere, red
-   -  2 palabras de 5 letras: ceder, mecer
-   -  1 palabra de 6 letras: merced
-
-Sin embargo, este código contiene varios errores que deben ser
-identificados y corregidos.
-
-Tareas:
-=======
-
-1. Leer e interpretar el código, agregando todos los comentarios
-   necesarios.
-2. Completar las partes del código que faltan, y que están claramente
-   indicadas
-3. Encontrar y corregir todos los errores en el código. Asegúrese que el
-   programa pueda:
-
-   -  Leer correctamente el archivo de entrada ``palabras.words``
-   -  Escribir los resultados en un archivo de salida acorde al ejemplo
-
-4. Explicar brevemente cada error encontrado y cómo se solucionó
-
-Ejemplos de salida:
--------------------
-
-Para ayudarlo en las tareas proveemos de algunos resultados correctos al
-ejecutar el código.
-
--  Ejemplo 1:
-
-   ::
-
-      Para el conjunto de letras: i, c, t, e, c, x, o:
-
-      - 3 palabras de 1 letra:  o, e, o
-      - 5 palabras de 2 letras:  ce, oc, te, te, ti
-      - 4 palabras de 3 letras:  eco, etc, tio, tic
-      - 2 palabras de 4 letras:  cito, oxte
-      - 2 palabras de 5 letras:  etico, exito
-
--  Ejemplo 2:
-
-   ::
-
-      Para el conjunto de letras: a, a, c, r, i, i, f:
-
-      - 1 palabra de 1 letra:  a
-      - 3 palabras de 2 letras:  ca, fa, ir
-      - 8 palabras de 3 letras:  aca, ara, cia, fia, ira, ira, ria, rai
-      - 8 palabras de 4 letras:  arca, ciar, faca, fiar, frac, iria, rafa, rifa
-      - 3 palabras de 5 letras:  afiar, cifra, rafia
-      - 1 palabra de 6 letras:  africa
-
--  Ejemplo 3:
-
-   ::
-
-      Para el conjunto de letras: a, a, b, e, l, g, r:
-
-      - 2 palabras de 1 letra:  a, e
-      - 7 palabras de 2 letras:  el, al, be, ea, el, la, le
-      - 8 palabras de 3 letras:  ala, ala, ara, bar, era, era, gel, lar
-      - 14 palabras de 4 letras:  area, abar, abra, alar, alea, alga, baga, bala, brea, eral, lega, lera, raba, real
-      - 23 palabras de 5 letras:  alabe, arabe, argel, albar, alear, algar, bagar, bagre, balar, balea, belga, braga, brega, erala, garla, gleba, greba, labra, lagar, legar, legra, ralea, regla
-      - 9 palabras de 6 letras:  alarbe, albear, alegar, alegra, arable, balear, gabela, galera, regala
-      - 2 palabras de 7 letras:  algebra, balagre
-
-.. note::  El código a considerar ``ord_palabras_corr.py`` se
-     encuentra en el directorio **data/** que renombrará de la forma usual
-     ``16_Apellido.py``. El archivo con los datos **palabras.words** se
-     encuentra en el mismo lugar.
-  
-  
 
 
