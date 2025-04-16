@@ -17,10 +17,9 @@
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script src="_static/translations.js?v=efdbd0b9"></script>
-        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="search" title="Búsqueda" href="search.html" />
-    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="next" title="Clase 16: Implementación de Juego de palabras “Jumblr”" href="clase_16.html" />
     <link rel="prev" title="Clase 14: Introducción a pandas" href="clase_14.html" /> 
 </head>
 
@@ -76,9 +75,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#ejercicio-15-a">Ejercicio 15 (a)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#graficando-dataframes">Graficando <code class="docutils literal notranslate"><span class="pre">DataFrames</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ejercicio-15-b">Ejercicio 15(b)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#analisis-de-codigo-problema-de-niveles">Análisis de código: Problema de niveles</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="clase_16.html">Clase 16: Implementación de Juego de palabras “Jumblr”</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
 <ul>
@@ -1850,155 +1849,7 @@ correspondiente al mes, y otra correspondiente al año.</p></li>
 <li><p>Agrupe la información por año y grafique la evolución del precio del
 dólar por año.</p></li>
 </ul>
-</section>
 <hr class="docutils" />
-<section id="analisis-de-codigo-problema-de-niveles">
-<h2>Análisis de código: Problema de niveles<a class="headerlink" href="#analisis-de-codigo-problema-de-niveles" title="Link to this heading"></a></h2>
-<p>Se define un <em>nivel</em> como una colección de números naturales. Un nivel
-tiene status de <em>válido</em> si la colección de números es estrictamente
-ascendente o estrictamente descendente. En caso contrario el nivel se
-declara <em>inválido</em> . Por ejemplo, <code class="docutils literal notranslate"><span class="pre">[9,</span> <span class="pre">7,</span> <span class="pre">6,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> es descendente,
-dado que</p>
-<div class="math notranslate nohighlight">
-\[9 &gt; 7 &gt; 6 &gt; 2 &gt;1 .\]</div>
-<p>El nivel <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">7]</span></code> es ascendente ya que</p>
-<div class="math notranslate nohighlight">
-\[1 &lt; 2 &lt; 3 &lt; 4 &lt; 7.\]</div>
-<p>Ambos son niveles válidos. Sin embargo, <code class="docutils literal notranslate"><span class="pre">[7,</span> <span class="pre">9,</span> <span class="pre">6,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> es un nivel
-inválido, dado que</p>
-<div class="math notranslate nohighlight">
-\[7 &lt; 9 ,\]</div>
-<p>pero</p>
-<div class="math notranslate nohighlight">
-\[9 &gt; 6 &gt; 2 &gt; 1 .\]</div>
-<p>El nivel <code class="docutils literal notranslate"><span class="pre">[2,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> tampoco es un nivel válido ya que los dos
-primeros valores son iguales.</p>
-<p>Existe una tercera categoría para el status de un nivel. Un nivel se
-define como <em>tolerable</em> si y sólo si removiendo <strong>exactamente</strong> uno de
-sus elementos, el nivel es estrictamente descendente o ascendente. Por
-ejemplo, <code class="docutils literal notranslate"><span class="pre">[</span> <span class="pre">7,</span> <span class="pre">9,</span> <span class="pre">6,</span> <span class="pre">2,</span> <span class="pre">1]</span></code> es un nivel tolerable dado que si se
-remueve el elemento <code class="docutils literal notranslate"><span class="pre">7</span></code>, el nivel es estrictamente descendente.</p>
-<p>Hemos recibido un código <strong>(data/codigo2.py)</strong> que verifica si un
-conjunto de niveles es válido o tolerable.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load ../data/codigo2.py</span>
-<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
-
-<span class="k">class</span> <span class="nc">State</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="n">VALIDO</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">TOLERABLE</span> <span class="o">=</span> <span class="mi">2</span>
-    <span class="n">INVALIDO</span> <span class="o">=</span> <span class="mi">3</span>
-
-<span class="c1"># Niveles de prueba para el problema</span>
-<span class="n">niveles</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">7 6 4 2 1</span>
-<span class="s2">9 7 6 2 1</span>
-<span class="s2">1 3 2 4 5</span>
-<span class="s2">8 6 4 4 1</span>
-<span class="s2">1 3 6 7 9</span>
-<span class="s2">1 2 7 8 9</span>
-<span class="s2">&quot;&quot;&quot;</span>
-
-<span class="k">def</span> <span class="nf">ascending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
-
-<span class="k">def</span> <span class="nf">descending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">nivel</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">return</span> <span class="kc">False</span>
-    <span class="k">return</span> <span class="kc">True</span>
-
-
-<span class="k">def</span> <span class="nf">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
-
-    <span class="k">if</span> <span class="n">ascending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;Ascendente&quot;</span>
-    <span class="k">elif</span> <span class="n">descending</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;Descendente&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;ZigZag&quot;</span>
-
-<span class="k">def</span> <span class="nf">testea_niveles</span><span class="p">(</span><span class="n">niveles</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span> <span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="n">niveles</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">remove_one</span><span class="p">(</span><span class="n">nivel</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[</span><span class="n">nivel</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">n</span><span class="p">]</span> <span class="o">+</span> <span class="n">nivel</span><span class="p">[</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">)]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nivel</span><span class="p">))]</span>
-
-<span class="k">def</span> <span class="nf">testea_niveles_menos_uno</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">):</span>
-
-    <span class="n">all_status</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="n">niveles2d</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">nivel</span><span class="p">,</span> <span class="n">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">))</span>
-        <span class="n">nivel_status</span> <span class="o">=</span> <span class="n">testea_nivel</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="n">nivel_status</span> <span class="o">==</span> <span class="n">State</span><span class="o">.</span><span class="n">INVALIDO</span><span class="p">:</span>
-            <span class="n">nivel_menos_uno</span> <span class="o">=</span> <span class="n">remove_one</span><span class="p">(</span><span class="n">nivel</span><span class="p">)</span>
-            <span class="n">nivel_status</span> <span class="o">=</span> <span class="n">testea_niveles</span><span class="p">(</span><span class="n">nivel_menos_uno</span><span class="p">)</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">TOLERABLE</span> <span class="k">if</span> <span class="n">State</span><span class="o">.</span><span class="n">VALIDO</span> <span class="ow">in</span> <span class="n">nivel_status</span> <span class="k">else</span> <span class="n">State</span><span class="o">.</span><span class="n">INVALIDO</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">status</span> <span class="o">=</span> <span class="n">State</span><span class="o">.</span><span class="n">VALIDO</span>
-
-        <span class="n">all_status</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">status</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">all_status</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1">#</span>
-    <span class="c1">#   Prueba</span>
-    <span class="c1">#</span>
-
-    <span class="n">niveles2d</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">niveles</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-    <span class="n">niveles2d</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nivel</span><span class="p">]</span> <span class="k">for</span> <span class="n">nivel</span> <span class="ow">in</span> <span class="n">niveles2d</span><span class="p">]</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">)</span>
-
-    <span class="n">niveles_menos_uno</span> <span class="o">=</span> <span class="n">remove_one</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="n">testea_niveles_menos_uno</span><span class="p">(</span><span class="n">niveles2d</span><span class="p">)</span>
-
-    <span class="c1">#</span>
-    <span class="c1">#   Niveles de archivo</span>
-    <span class="c1">#</span>
-    <span class="c1"># Leer archivo niveles.txt</span>
-    <span class="n">niveles_from_file</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;niveles.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">niveles_from_file</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()])</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="n">niveles_from_file</span><span class="p">)</span>
-
-    <span class="n">status_of_niveles_from_file</span> <span class="o">=</span> <span class="n">testea_niveles_menos_uno</span><span class="p">(</span><span class="n">niveles_from_file</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span>  <span class="n">status_of_niveles_from_file</span><span class="p">]:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
-
-    <span class="c1"># Leer los status correctos de status_niveles.txt</span>
-    <span class="n">status_correctos</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;status_niveles.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">status_correctos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-
-    <span class="c1"># Comparación</span>
-    <span class="k">for</span> <span class="n">sf</span><span class="p">,</span><span class="n">sc</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">status_of_niveles_from_file</span><span class="p">,</span> <span class="n">status_correctos</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">sf</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">sf</span> <span class="o">==</span> <span class="n">State</span><span class="p">[</span><span class="n">sc</span><span class="p">]</span>
-</pre></div>
-</div>
-<p>El código contiene un conjunto de niveles de ejemplo, sin embargo, no
-parece dar los resultados esperados. Por favor:</p>
-<ul class="simple">
-<li><p>Corrija los errores que encuentre en el código.</p></li>
-<li><p>Escriba comentarios en el código sobre el error que encontró y cómo
-lo resolvió.</p></li>
-<li><p>Escriba los <em>docstrings</em> y otros comentarios pertinentes que
-<strong>mejoren</strong> la lectura del código.</p></li>
-</ul>
-<p>Nuestro cliente nos ha provisto de un archivo de niveles
-<code class="docutils literal notranslate"><span class="pre">&lt;niveles.txt&gt;</span></code>, y sus correspondientes status (válido, inválido o
-tolerable) en el archivo <code class="docutils literal notranslate"><span class="pre">&lt;status_niveles.txt&gt;</span></code>.</p>
-<ul class="simple">
-<li><p>Verifique que las correcciones realizadas con estos datos.</p></li>
-</ul>
 </section>
 </section>
 
@@ -2007,7 +1858,7 @@ tolerable) en el archivo <code class="docutils literal notranslate"><span class=
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
         <a href="clase_14.html" class="btn btn-neutral float-left" title="Clase 14: Introducción a pandas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="clase_16.html" class="btn btn-neutral float-right" title="Clase 16: Implementación de Juego de palabras “Jumblr”" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
