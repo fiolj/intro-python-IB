@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clase 16: Implementación de Juego de palabras “Jumblr” &mdash; documentación de Clases de Python - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=0df96459" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=330c1f8c" />
+      <link rel="stylesheet" type="text/css" href="_static/rtd_overrides.css?v=5bd222a9" />
+
+  
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=e2bb6099"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="_static/translations.js?v=efdbd0b9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Ejercicios" href="ejercicios.html" />
+    <link rel="prev" title="Clase 15: Más pandas" href="clase_15.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Clases de Python
+              <img src="_static/logo.svg" class="logo" alt="Logotipo"/>
+          </a>
+              <div class="version">
+                IB - 2025
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Dictado de las clases</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="clase_00.html">Clase 0: Introducción al lenguaje Python orientado a Ingenierías y Física</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_01.html">Clase 1: Introducción al lenguaje</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_02.html">Clase 2: Modularización y tipos compuestos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_03.html">Clase 3: Tipos complejos y control de flujo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_04.html">Clase 4: Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_05.html">Clase 5: Más características de Funciones</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_06.html">Clase 6: Objetos y administración de errores</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_07.html">Clase 7: Persistencia de datos y módulos de biblioteca standard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_08.html">Clase 8: Más sobre objetos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_09.html">Clase 9: Control de versiones y módulos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_10.html">Clase 10: Introducción a Numpy y Matplotlib</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_11.html">Clase 11: Visualización</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_12.html">Clase 12: Más información sobre <strong>Numpy</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_13.html">Clase 13: Introducción al paquete Scipy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_14.html">Clase 14: Introducción a <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="clase_15.html">Clase 15: Más <code class="docutils literal notranslate"><span class="pre">pandas</span></code></a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Clase 16: Implementación de Juego de palabras “Jumblr”</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tareas">Tareas:</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ejemplos-de-salida">Ejemplos de salida:</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Ejercicios de Clase</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ejercicios.html">Ejercicios</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="entregas_ejercicios.html">Entrega de ejercicios</a></li>
+<li class="toctree-l1"><a class="reference internal" href="programa_detalle.html">Programa Detallado</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Clases de Python</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clase 16: Implementación de Juego de palabras “Jumblr”</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/clase_16.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clase-16-implementacion-de-juego-de-palabras-jumblr">
+<span id="clase-16"></span><h1>Clase 16: Implementación de Juego de palabras “Jumblr”<a class="headerlink" href="#clase-16-implementacion-de-juego-de-palabras-jumblr" title="Link to this heading"></a></h1>
+<hr class="docutils" />
+<p>El código en <code class="docutils literal notranslate"><span class="pre">ej_jumblr_corr.py</span></code> contiene algunas funciones para
+implementar un juego que consiste en elegir al azar 7 letras (que pueden
+ser repetidas) y con ellas formar todas las palabras posibles.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># %load data/ord_palabras_corr.py</span>
+<span class="c1">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">## Ejercicio de análisis de código</span>
+
+<span class="sd">Debe analizar el código, agregar comentarios, corregir los errores y completar partes del código, acorde a las instrucciones.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">sample</span>
+
+<span class="n">alfabeto_counts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>  <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>  <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>  <span class="s1">&#39;o&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>  <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;ñ&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;q&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;g&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                   <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="s1">&#39;h&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="s1">&#39;p&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>  <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>  <span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>  <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>  <span class="s1">&#39;s&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+                   <span class="s1">&#39;l&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>  <span class="s1">&#39;j&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;z&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;f&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>  <span class="s1">&#39;t&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>  <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>  <span class="s1">&#39;m&#39;</span><span class="p">:</span> <span class="mi">2</span>
+                   <span class="p">}</span>
+<span class="n">alfabeto</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">alfabeto_counts</span><span class="p">)</span>
+<span class="n">pesos</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">alfabeto_counts</span><span class="p">)</span>
+
+<span class="n">min_length</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Longitud mínima de las palabras a considerar</span>
+
+
+<span class="k">def</span> <span class="nf">selecciona_letras</span><span class="p">(</span><span class="n">cantidad</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+  <span class="k">return</span> <span class="n">sample</span><span class="p">(</span><span class="n">alfabeto</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">pesos</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">cantidad</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">my_normalize</span><span class="p">(</span><span class="n">s_in</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  COMPLETAR descripción!!!</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">acentuadas</span> <span class="o">=</span> <span class="s2">&quot;áäàâéëèêíïìîóöòôúüùû&quot;</span>
+  <span class="n">normalitas</span> <span class="o">=</span> <span class="s2">&quot;aaaaeeeeiiiioooouuuu&quot;</span>
+  <span class="n">tabla</span> <span class="o">=</span> <span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="n">acentuadas</span><span class="p">,</span> <span class="n">normalitas</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">s_in</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">tabla</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">process_words</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  COMPLETAR descripción!!!</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">words</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">with</span> <span class="n">filename</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">fi</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">fi</span><span class="p">:</span>
+      <span class="n">w</span> <span class="o">=</span> <span class="n">my_normalize</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+      <span class="n">Lw</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+      <span class="k">if</span> <span class="n">Lw</span> <span class="o">&gt;=</span> <span class="n">min_length</span><span class="p">:</span>
+        <span class="k">continue</span>
+
+      <span class="k">if</span> <span class="n">Lw</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span>
+        <span class="n">words</span><span class="p">[</span><span class="n">Lw</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">w</span><span class="p">]</span>
+      <span class="k">else</span><span class="p">:</span>
+        <span class="n">words</span><span class="p">[</span><span class="n">Lw</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+
+  <span class="k">return</span> <span class="n">words</span>
+
+
+<span class="k">def</span> <span class="nf">buscar_palabras</span><span class="p">(</span><span class="n">palabras</span><span class="p">,</span> <span class="n">letras</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  COMPLETAR descripción!!!</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">encontradas</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">for</span> <span class="n">pal</span> <span class="ow">in</span> <span class="n">palabras</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">palabra_in_letras</span><span class="p">(</span><span class="n">pal</span><span class="p">,</span> <span class="n">letras</span><span class="p">):</span>
+      <span class="n">encontradas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pal</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">encontradas</span>
+
+
+<span class="k">def</span> <span class="nf">palabra_in_letras</span><span class="p">(</span><span class="n">pal</span><span class="p">,</span> <span class="n">letras</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  COMPLETAR descripción!!!</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">fichas</span> <span class="o">=</span> <span class="n">letras</span>
+  <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">pal</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fichas</span><span class="p">:</span>
+      <span class="n">fichas</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="kc">False</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+
+<span class="k">def</span> <span class="nf">escribir_solucion</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">letras</span><span class="p">,</span> <span class="n">posibles</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  COMPLETAR CÓDIGO!!!</span>
+
+<span class="sd">  Función para escribir en el archivo la información de la solución</span>
+
+<span class="sd">  fname: nombre del archivo</span>
+
+<span class="sd">  letras: string con las letras que salieron sorteadas</span>
+
+<span class="sd">  posibles: diccionario con la solución del problema</span>
+
+<span class="sd">  Ejemplo:</span>
+<span class="sd">  Si los argumentos son:</span>
+<span class="sd">  fname = &#39;salida.txt&#39;</span>
+<span class="sd">  letras = &#39;mredfec&#39;</span>
+<span class="sd">  posibles = {6: [&#39;merced&#39;],</span>
+<span class="sd">              5: [&#39;ceder&#39;, &#39;mecer&#39;],</span>
+<span class="sd">              2: [&#39;ce&#39;, &#39;cm&#39;, &#39;de&#39;, &#39;de&#39;, &#39;fe&#39;, &#39;me&#39;],</span>
+<span class="sd">              3: [&#39;efe&#39;, &#39;eme&#39;, &#39;ere&#39;, &#39;red&#39;],</span>
+<span class="sd">              1: [&#39;e&#39;]</span>
+<span class="sd">              }</span>
+
+<span class="sd">  entonces la función deberá escribir en el archivo salida.txt el siguiente texto:</span>
+
+<span class="sd">  Para el conjunto de letras: m, r, e, d, f, e, c:</span>
+
+<span class="sd">  - 1 palabra de 1 letra:  e</span>
+<span class="sd">  - 6 palabras de 2 letras:  ce, cm, de, de, fe, me</span>
+<span class="sd">  - 4 palabras de 3 letras:  efe, eme, ere, red</span>
+<span class="sd">  - 2 palabras de 5 letras:  ceder, mecer</span>
+<span class="sd">  - 1 palabra de 6 letras:  merced</span>
+
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="c1"># ######################################################################</span>
+  <span class="c1"># COMPLETAR CÓDIGO!!!</span>
+  <span class="k">pass</span>
+  <span class="c1"># ######################################################################</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+  <span class="c1"># ######################################################################</span>
+  <span class="c1"># COMPLETAR CÓDIGO!!!</span>
+  <span class="n">fname</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="c1"># ######################################################################</span>
+
+  <span class="n">palabras</span> <span class="o">=</span> <span class="n">process_words</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+  <span class="n">letras</span> <span class="o">=</span> <span class="n">selecciona_letras</span><span class="p">()</span>
+
+  <span class="n">posibles</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">pal</span> <span class="ow">in</span> <span class="n">palabras</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">todas</span> <span class="o">=</span> <span class="n">buscar_palabras</span><span class="p">(</span><span class="n">pal</span><span class="p">,</span> <span class="n">letras</span><span class="p">)</span>
+    <span class="n">posibles</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">todas</span>
+
+  <span class="c1"># ######################################################################</span>
+  <span class="c1"># COMPLETAR descripción!!!</span>
+  <span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">fout</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">with_stem</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;salida_</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">while</span> <span class="n">fout</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">fout</span> <span class="o">=</span> <span class="n">fname</span><span class="o">.</span><span class="n">with_stem</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;salida_</span><span class="si">{</span><span class="n">counter</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+  <span class="n">escribir_solucion</span><span class="p">(</span><span class="n">fout</span><span class="p">,</span> <span class="n">letras</span><span class="p">,</span> <span class="n">posibles</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Por ejemplo, si el conjunto de letras que se elige al azar es: «m, r, e,
+d, f, e, c» la solución será:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>1 palabra de 1 letra: e</p></li>
+<li><p>6 palabras de 2 letras: ce, cm, de, de, fe, me</p></li>
+<li><p>4 palabras de 3 letras: efe, eme, ere, red</p></li>
+<li><p>2 palabras de 5 letras: ceder, mecer</p></li>
+<li><p>1 palabra de 6 letras: merced</p></li>
+</ul>
+</div></blockquote>
+<p>Sin embargo, este código contiene varios errores que deben ser
+identificados y corregidos.</p>
+<section id="tareas">
+<h2>Tareas:<a class="headerlink" href="#tareas" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Leer e interpretar el código, agregando todos los comentarios
+necesarios.</p></li>
+<li><p>Completar las partes del código que faltan, y que están claramente
+indicadas</p></li>
+<li><p>Encontrar y corregir todos los errores en el código. Asegúrese que el
+programa pueda:</p>
+<ul class="simple">
+<li><p>Leer correctamente el archivo de entrada <code class="docutils literal notranslate"><span class="pre">palabras.words</span></code></p></li>
+<li><p>Escribir los resultados en un archivo de salida acorde al ejemplo</p></li>
+</ul>
+</li>
+<li><p>Explicar brevemente cada error encontrado y cómo se solucionó</p></li>
+</ol>
+<section id="ejemplos-de-salida">
+<h3>Ejemplos de salida:<a class="headerlink" href="#ejemplos-de-salida" title="Link to this heading"></a></h3>
+<p>Para ayudarlo en las tareas proveemos de algunos resultados correctos al
+ejecutar el código.</p>
+<ul>
+<li><p>Ejemplo 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Para</span> <span class="n">el</span> <span class="n">conjunto</span> <span class="n">de</span> <span class="n">letras</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span>
+
+<span class="o">-</span> <span class="mi">3</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">1</span> <span class="n">letra</span><span class="p">:</span>  <span class="n">o</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">o</span>
+<span class="o">-</span> <span class="mi">5</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">2</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">ce</span><span class="p">,</span> <span class="n">oc</span><span class="p">,</span> <span class="n">te</span><span class="p">,</span> <span class="n">te</span><span class="p">,</span> <span class="n">ti</span>
+<span class="o">-</span> <span class="mi">4</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">3</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">eco</span><span class="p">,</span> <span class="n">etc</span><span class="p">,</span> <span class="n">tio</span><span class="p">,</span> <span class="n">tic</span>
+<span class="o">-</span> <span class="mi">2</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">4</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">cito</span><span class="p">,</span> <span class="n">oxte</span>
+<span class="o">-</span> <span class="mi">2</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">5</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">etico</span><span class="p">,</span> <span class="n">exito</span>
+</pre></div>
+</div>
+</li>
+<li><p>Ejemplo 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Para</span> <span class="n">el</span> <span class="n">conjunto</span> <span class="n">de</span> <span class="n">letras</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">f</span><span class="p">:</span>
+
+<span class="o">-</span> <span class="mi">1</span> <span class="n">palabra</span> <span class="n">de</span> <span class="mi">1</span> <span class="n">letra</span><span class="p">:</span>  <span class="n">a</span>
+<span class="o">-</span> <span class="mi">3</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">2</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">ca</span><span class="p">,</span> <span class="n">fa</span><span class="p">,</span> <span class="n">ir</span>
+<span class="o">-</span> <span class="mi">8</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">3</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">aca</span><span class="p">,</span> <span class="n">ara</span><span class="p">,</span> <span class="n">cia</span><span class="p">,</span> <span class="n">fia</span><span class="p">,</span> <span class="n">ira</span><span class="p">,</span> <span class="n">ira</span><span class="p">,</span> <span class="n">ria</span><span class="p">,</span> <span class="n">rai</span>
+<span class="o">-</span> <span class="mi">8</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">4</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">arca</span><span class="p">,</span> <span class="n">ciar</span><span class="p">,</span> <span class="n">faca</span><span class="p">,</span> <span class="n">fiar</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="n">iria</span><span class="p">,</span> <span class="n">rafa</span><span class="p">,</span> <span class="n">rifa</span>
+<span class="o">-</span> <span class="mi">3</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">5</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">afiar</span><span class="p">,</span> <span class="n">cifra</span><span class="p">,</span> <span class="n">rafia</span>
+<span class="o">-</span> <span class="mi">1</span> <span class="n">palabra</span> <span class="n">de</span> <span class="mi">6</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">africa</span>
+</pre></div>
+</div>
+</li>
+<li><p>Ejemplo 3:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Para</span> <span class="n">el</span> <span class="n">conjunto</span> <span class="n">de</span> <span class="n">letras</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span>
+
+<span class="o">-</span> <span class="mi">2</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">1</span> <span class="n">letra</span><span class="p">:</span>  <span class="n">a</span><span class="p">,</span> <span class="n">e</span>
+<span class="o">-</span> <span class="mi">7</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">2</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">el</span><span class="p">,</span> <span class="n">al</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="n">ea</span><span class="p">,</span> <span class="n">el</span><span class="p">,</span> <span class="n">la</span><span class="p">,</span> <span class="n">le</span>
+<span class="o">-</span> <span class="mi">8</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">3</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">ala</span><span class="p">,</span> <span class="n">ala</span><span class="p">,</span> <span class="n">ara</span><span class="p">,</span> <span class="n">bar</span><span class="p">,</span> <span class="n">era</span><span class="p">,</span> <span class="n">era</span><span class="p">,</span> <span class="n">gel</span><span class="p">,</span> <span class="n">lar</span>
+<span class="o">-</span> <span class="mi">14</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">4</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">area</span><span class="p">,</span> <span class="n">abar</span><span class="p">,</span> <span class="n">abra</span><span class="p">,</span> <span class="n">alar</span><span class="p">,</span> <span class="n">alea</span><span class="p">,</span> <span class="n">alga</span><span class="p">,</span> <span class="n">baga</span><span class="p">,</span> <span class="n">bala</span><span class="p">,</span> <span class="n">brea</span><span class="p">,</span> <span class="n">eral</span><span class="p">,</span> <span class="n">lega</span><span class="p">,</span> <span class="n">lera</span><span class="p">,</span> <span class="n">raba</span><span class="p">,</span> <span class="n">real</span>
+<span class="o">-</span> <span class="mi">23</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">5</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">alabe</span><span class="p">,</span> <span class="n">arabe</span><span class="p">,</span> <span class="n">argel</span><span class="p">,</span> <span class="n">albar</span><span class="p">,</span> <span class="n">alear</span><span class="p">,</span> <span class="n">algar</span><span class="p">,</span> <span class="n">bagar</span><span class="p">,</span> <span class="n">bagre</span><span class="p">,</span> <span class="n">balar</span><span class="p">,</span> <span class="n">balea</span><span class="p">,</span> <span class="n">belga</span><span class="p">,</span> <span class="n">braga</span><span class="p">,</span> <span class="n">brega</span><span class="p">,</span> <span class="n">erala</span><span class="p">,</span> <span class="n">garla</span><span class="p">,</span> <span class="n">gleba</span><span class="p">,</span> <span class="n">greba</span><span class="p">,</span> <span class="n">labra</span><span class="p">,</span> <span class="n">lagar</span><span class="p">,</span> <span class="n">legar</span><span class="p">,</span> <span class="n">legra</span><span class="p">,</span> <span class="n">ralea</span><span class="p">,</span> <span class="n">regla</span>
+<span class="o">-</span> <span class="mi">9</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">6</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">alarbe</span><span class="p">,</span> <span class="n">albear</span><span class="p">,</span> <span class="n">alegar</span><span class="p">,</span> <span class="n">alegra</span><span class="p">,</span> <span class="n">arable</span><span class="p">,</span> <span class="n">balear</span><span class="p">,</span> <span class="n">gabela</span><span class="p">,</span> <span class="n">galera</span><span class="p">,</span> <span class="n">regala</span>
+<span class="o">-</span> <span class="mi">2</span> <span class="n">palabras</span> <span class="n">de</span> <span class="mi">7</span> <span class="n">letras</span><span class="p">:</span>  <span class="n">algebra</span><span class="p">,</span> <span class="n">balagre</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Nota</p>
+<p>El código a considerar <code class="docutils literal notranslate"><span class="pre">ej_jumblr_corr.py</span></code> se encuentra
+en el directorio <strong>data/</strong> que renombrará de la forma usual
+<code class="docutils literal notranslate"><span class="pre">16_Apellido.py</span></code>. El archivo con los datos <strong>palabras.words</strong> se
+encuentra en el mismo lugar.</p>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="clase_15.html" class="btn btn-neutral float-left" title="Clase 15: Más pandas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="ejercicios.html" class="btn btn-neutral float-right" title="Ejercicios" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor IB - 2025, Juan Fiol.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
