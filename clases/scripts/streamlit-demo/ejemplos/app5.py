@@ -25,7 +25,7 @@ function_type = st.sidebar.selectbox(
     ["seno", "coseno", "tangente"]
 )
 
-amplitude = st.sidebar.slider("Amplitud:", 0.1, 5.0, 1.0, 0.1)
+amplitude = st.sidebar.slider("Amplitud:", 0.1, 5.0 , 1.0, 0.1)
 frequency = st.sidebar.slider("Frecuencia:", 0.1, 5.0, 1.0, 0.1)
 phase = st.sidebar.slider("Fase:", 0.0, 2*np.pi, 0.0, 0.1)
 

@@ -34,7 +34,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Columna 1")
-    st.write("Contenido de la columna 1")
+    st.write("Contenido de la primera columna")
     st.pyplot(fig)
 
 with col2:
